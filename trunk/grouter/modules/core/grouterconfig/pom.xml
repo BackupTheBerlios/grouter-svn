@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>org.grouter</groupId>
+        <artifactId>grouter</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <inceptionYear>2005</inceptionYear>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grouter</groupId>
+    <artifactId>grouterconfig</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Grouter config artifact</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+		<!--dependency>
+  			<groupId>xmlbeans</groupId>
+  			<artifactId>jsr173api</artifactId>
+  			<version>2.0.0</version>
+		</dependency-->
+        
+          
+  
+        <!-- dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-libs</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>relaxngDatatype</artifactId>
+            <version>1.5</version>
+        </dependency -->
+
+
+
+
+    </dependencies>
+
+    <!-- Build section          -->
+    <build>
+        <!-- sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${maven.build.dir}/${jaxb.src.outdir}</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.ser</include>
+                </includes>
+            </resource>
+        </resources -->
+
+        <!-- Usage of this plugin: http://mojo.codehaus.org/xmlbeans-maven-plugin/xmlbeans-mojo.html -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xmlbeans-maven-plugin</artifactId>
+                <version>2.0-beta-1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>xmlbeans</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+                <configuration>
+                    <schemaDirectory>src/xsd</schemaDirectory>
+                </configuration>
+            </plugin>
+            <!--plugin>
+	    	<groupId>maven</groupId>
+	    	<artifactId>maven-castor-plugin</artifactId>
+	    	<version>1.2</version>
+	    	<executions>
+	    	    <execution>
+	    	        <goals>
+	    	                 <goal>generate</goal>
+	    	              </goals>
+	    	           </execution>
+	    	        </executions>
+	    	        <inherited>true</inherited>
+	    	        <configuration>
+	    	           <schema>src/xsd</schema>
+	    	        </configuration>
+            </plugin-->
+        </plugins>
+    </build>
+
+
+</project>
