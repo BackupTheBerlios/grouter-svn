@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+	See http://maven.apache.org/reference/plugins/xdoc/
+-->
+<document>
+  <properties>
+    <author email="user@company.com">John Doe</author>
+    <title>Index</title>
+  </properties>
+  <head>
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="Welcome">
+
+      <!-- Within sections, any XHTML can be used -->
+      <p>Hi!</p>
+
+      <!-- in addition to XHTML, any number of subsections can be within a section -->
+      <subsection name="Introduction">
+        <p>Subsection!</p>
+      </subsection>
+    </section>
+
+    <section name="Goal">
+
+      <!-- You can also include preformatted source blocks in the document -->
+      <source>
+code line 1
+code line 2
+      </source>
+    </section>
+  
+  <!-- footer will be placed above the (c) -->
+
+     <footer>
+      <A href="http://developer.berlios.de/">
+        <img src="http://www.berlios.de/images/berliOS_small_logo.png" width="124" height="32" border="0" alt="BerliOS Logo"/>
+      </A>
+   </footer>
+
+  </body>
+  
+</document>

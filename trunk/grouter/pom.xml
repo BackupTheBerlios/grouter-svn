@@ -1,0 +1,237 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"> 
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grouter</groupId>
+    <artifactId>grouter</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>grouter parent project</name>
+    <url>http://grouter.berlios.de/</url>
+  
+    <!-- 
+    	If you have any internal repository you put it here. 
+    -->
+    <repositories>
+       <repository>
+                <id>maven2</id>
+                <name>ibiblio repository</name>
+                <url>http://www.ibiblio.org/maven2</url>
+                <!--mirrorOf>central</mirrorOf-->
+        </repository>
+    
+       <!-- repository>
+                <id>maven2</id>
+                <name>Danish Maven2 repository</name>
+                <url>http://mirrors.sunsite.dk/maven2</url-->
+                <!--mirrorOf>central</mirrorOf-->
+        <!--/repository -->
+        <!--repository>
+            <id>maven2</id>
+            <name>Default Maven2 repository</name>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository-->
+    </repositories>
+
+    <!-- 
+    	Put all global dependencies here instead of spreading them out in 
+    	different child modules. 
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <!-- Dependencies to J2EE spec - using geronimo generated -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>geronimo-spec</groupId>
+            <artifactId>geronimo-spec-jms</artifactId>
+            <version>1.1-rc4</version>
+        </dependency>
+        <dependency>
+            <groupId>geronimo-spec</groupId>
+            <artifactId>geronimo-spec-ejb</artifactId>
+            <version>2.1-rc4</version>
+        </dependency>
+        
+
+	
+	<groupId>org.hibernate</groupId>
+	      <artifactId>hibernate</artifactId>
+	      <version>3.1beta3</version>  
+
+        <dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate</artifactId>
+	      <version>3.1beta3</version>  
+		
+		<exclusions>
+	      	        <exclusion>
+	      	          <groupId>ant</groupId>
+	      	          <artifactId>ant</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>odmg</groupId>
+	      	          <artifactId>odmg</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>c3p0</groupId>
+	      	          <artifactId>c3p0</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>proxool</groupId>
+	      	          <artifactId>proxool</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>opensymphony</groupId>
+	      	          <artifactId>oscache</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>swarmcache</groupId>
+	      	          <artifactId>swarmcache</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>jboss</groupId>
+	      	          <artifactId>jboss-cache</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>javax.security</groupId>
+	      	          <artifactId>jacc</artifactId>
+	      	        </exclusion>
+	      	        <exclusion>
+	      	          <groupId>javax.transaction</groupId>
+	      	          <artifactId>jta</artifactId>
+	      	        </exclusion>
+      		</exclusions>
+    	</dependency>    	
+    </dependencies>
+
+
+    <!-- Is this good or not...
+    dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate</artifactId>
+                <version>3.0.5</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement -->
+
+
+
+    <organization>
+        <name>grouter</name>
+        <url>http://developer.berlios.org/grouter</url>
+    </organization>
+
+    <!-- 
+   	Use mvn deploy to deploy your build artifacts to the
+    	ssh server specified in the repository section. 
+   	Use mvn site-deploy to deploy your site (html) to the
+    	server specified using ssh in the site section.
+    -->
+    <distributionManagement>
+      <repository>
+        <id>codehaus</id>
+        <name>Maven Codehaus Repository</name>
+        <url>scp://beaver.codehaus.org/dist</url>
+      </repository>
+      <site>
+                <id>website</id>
+                <url>scp://www.mycompany.com/www/docs/project/</url>
+      </site>
+    </distributionManagement>
+
+
+    <!--scm>
+      <connection>scm:svn:svn://svn.berlios.org/cargo/scm/grouter/trunk</connection>
+      <developerConnection>scm:svn:svn://svn.berlios.org/cargo/scm/grouter/trunk</developerConnection>
+      <url>http://svn.berlios.org/</url> 
+    </scm
+    -->
+
+
+    <!-- Put all modules to be built inte this section. -->
+    <modules>
+        <module>modules/domain</module>
+        <module>modules/common</module>
+        <module>modules/feeder/feeder</module>
+        <module>modules/feeder/feederconfig</module>
+    </modules>
+
+    <!-- Need this to set java version using compiler plugin -->
+    <build>
+        <!--
+        Use defaults
+        directory>target</directory>
+        <outputDirectory>target/classes</outputDirectory>
+        <finalName>${artifactId}-${version}</finalName>
+        <testOutputDirectory>target/test-classes</testOutputDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <resources>
+            <resource>
+            <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+            <directory>src/test/resources</directory>
+            </testResource>
+        </testResources
+        -->
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <!--plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-war-plugin</artifactId>
+           <configuration>
+           <warSourceDirectory >src/webapp</warSourceDirectory >
+           </configuration>
+       </plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <locales>en</locales>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+</project>

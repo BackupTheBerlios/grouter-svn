@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+	See http://maven.apache.org/using/site.html for more info.
+-->
+<project name="Siri - Domain">
+  <bannerLeft>
+    <name>Berlios</name>
+    <src>http://developer.berlios.de/images/berliOS_logo.png</src>
+    <href>http://developer.berlios.de/</href>
+  </bannerLeft>
+  <bannerRight>
+    <name>Berlios</name>
+    <src>SIRI</src>
+    <href>http://siri.berlios.de/</href>
+  </bannerRight>
+  <body>
+    <links>
+      <item name="Siri" href="http://siri.berlios.de/" />
+      <item name="Maven 2" href="http://maven.apache.org/maven2/"/>
+    </links>
+
+    <menu name="Siri">
+      <item name="Introduction" href="index.html"/>
+      <item name="Download" href="download.html"/>
+      <item name="Release Notes" href="release-notes.html" />
+      <item name="General Information" href="about.html"/>
+      <item name="For Siri Users" href="users.html"/>
+      <item name="Road Map" href="roadmap.html" />
+      
+      
+    </menu>
+	
+    ${reports}
+
+  </body>
+</project>

@@ -1,0 +1,19 @@
+Initial import of a project
+export SVN_SSH="ssh -l loginname"
+svn -m "import comment" import svn+ssh://svn.berlios.de/svnroot/repos/yourproject/trunk
+
+Adding a file (you need top make a commit)
+svn add file_or_dir_name
+
+Deleting a file (you need top make a commit)
+svn delete file_or_dir_name
+
+List
+svn list
+
+Commit
+svn commit -m "Saving recent changes"
+
+See what files have changed
+svn status
+
