@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>umlmodels</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>com.tssap.selena.model.modeling_nature</nature>
+		<nature>com.borland.selena.uml20.uml20_nature</nature>
+		<nature>com.tssap.selena.model.design_nature</nature>
+		<nature>com.borland.selena.profile.umlincolor.umlincolornature20</nature>
+		<nature>com.borland.tg.j2ee.profile.ejb.ejbstandardprofile.ejb21_profile_standardnature</nature>
+		<nature>com.borland.selena.profile.sdp.sdp20nature</nature>
+		<nature>com.borland.tg.j2ee.profile.ejb.ejbstandardprofile.ejb_profile_standardnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Suspended Root</name>
+			<type>2</type>
+			<location>SuspendedRootVariable</location>
+		</link>
+	</linkedResources>
+</projectDescription>

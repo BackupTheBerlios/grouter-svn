@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FeederConfig name="siri"
+              xmlns="http://feeder.siri.org/config.xsd"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://feeder.siri.org/config.xsd ../xsd/config.xsd"
+              xsi:noNamespaceSchemaLocation="../xsd/config.xsd">
+    <GlobalSettings>
+        <ArchiveHandler>
+            <!--xs:enumeration value="Every 10 seconds@0/10 * * * * ?"/>
+                   <xs:enumeration value="Every 10 minutes@* 0/10 * * * ?"/>
+                   <xs:enumeration value="Every 30 seconds@* 0/30 * * * ?"/>
+                   <xs:enumeration value="Every 1 minute@0 0 * * * ?"/>
+                   <xs:enumeration value="Every 60 minutes@* 1 * * * ?"/>
+                   <xs:enumeration value="Every 10 minutes@0/10 * * * * ?"/-->
+            <CronJob>Every 10 minutes@0 0 0-23 * * ?</CronJob>
+        </ArchiveHandler>
+        <Email  sendintervallInMilliSeconds="10000">
+            <smtp>
+                <smtpserver id="1">mailserverl</smtpserver>
+                <smtpserver id="2">mailserver2</smtpserver>
+            </smtp>
+            <pop>
+                <popserver id="1">mailserverl</popserver>
+                <popserver id="2">mailserver2</popserver>
+            </pop>
+            <imap>
+                <imapserver id="1">mailserverl</imapserver>
+                <imapserver id="2">mailserver2</imapserver>
+            </imap>
+        </Email>
+    </GlobalSettings>
+    
+    <FeederNode type="file-file" id="filetest-filetest" createuniquename="true" usesrelativerootpath="false">
+        <infolder>
+            <infolderpath>in</infolderpath>
+            <intervallInMilliSeconds>5000</intervallInMilliSeconds>
+            <skipfirstblankline>false</skipfirstblankline>
+            <infoldersendchunks sendinfolderchunkson="false">
+                <infolderchunksize>10</infolderchunksize>
+                <infolderchunkthreshold>10</infolderchunkthreshold>
+            </infoldersendchunks>
+        </infolder>
+        <outfolder>
+            <outfolderpath>out</outfolderpath>
+        </outfolder>
+        <backup backuphandleron="true" archiveron="true">
+            <backupfolderpath>backup/</backupfolderpath>
+            <archivefolderpath>archived/</archivefolderpath>
+        </backup>
+        <transform transformon="false"/>
+        <error  errorhandleron="true">
+            <errorfolderpath>error/</errorfolderpath>
+            <errorinfofolderpath>error_info</errorinfofolderpath>
+            <sortonresend>false</sortonresend>
+            <CronJob>Every minute@0/20 * * * * ?</CronJob>
+            <errornotification errornotificationon="true">
+                <notifyeveryintervallInMilliSeconds>180000</notifyeveryintervallInMilliSeconds>
+                <numberoferrors>1</numberoferrors>
+                <emailnotification>
+                    <emailonfailure>/template/emailerrornotification.xml</emailonfailure>
+                </emailnotification>
+                <sms>
+                    <smsonfailure>/template/down.xml</smsonfailure>
+                    <smsservice>/in</smsservice>
+                </sms>
+            </errornotification>
+        </error>
+        <inactivity inactivityOn="false">
+            <maxInactivityPeriodInMilliSeconds>120000</maxInactivityPeriodInMilliSeconds>
+            <emailOnInactivity>/template/erroronincativity.xml</emailOnInactivity>
+        </inactivity>
+        <!--applicationlogger>
+            <appender type="RollingFileAppender">
+                <maxfilesize>100KB</maxfilesize>
+                <maxbackupindex>10</maxbackupindex>
+            </appender>
+            <logpattern>%d{yyyy-MM-dd HH:mm:ss};%p;%t;%x;%m;%n</logpattern>
+            <logfolderpath>/log</logfolderpath>
+            <loglevel>DEBUG</loglevel>
+        </applicationlogger>
+        <messagelogger>
+            <appender type="DailyRollingFileAppender">
+                <rollingschedule>'.'yyyy-MM-dd-a</rollingschedule>
+            </appender>
+            <logpattern>%d{yyyy-MM-dd HH:mm:ss};%p;%t;%x;%m;%n</logpattern>
+            <logfolderpath>/log</logfolderpath>
+            <loglevel>DEBUG</loglevel>
+        </messagelogger-->
+    </FeederNode>
+</FeederConfig>

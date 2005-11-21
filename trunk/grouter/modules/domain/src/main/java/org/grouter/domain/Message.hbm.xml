@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    <class name="org.grouter.domain.Message" table="MESSAGE">
+        <id column="MESSAGEID" name="id" type="java.lang.String">
+            <generator class="uuid"/>
+        </id>
+        <property name="creationTime" not-null="false" type="timestamp" column="CREATEDTIMESTAMP"/>
+        <property name="message" not-null="false" type="java.lang.String" column="MESSAGECONTENT"/>
+        <set name="receivers" cascade="all" lazy="true" inverse="true" table="RECEIVER">
+            <key>
+                <column name="RECEIVERID" not-null="true"/>
+                <!-- id column in other table -->
+            </key>
+            <one-to-many class="org.grouter.domain.Receiver"/>
+        </set>
+
+        <!-- column is for this table -->
+        <many-to-one
+                name="sender"
+                not-null="false"
+                class="org.grouter.domain.Sender"
+                column="SENDERID"
+                cascade="none">
+        </many-to-one>
+    </class>
+</hibernate-mapping>

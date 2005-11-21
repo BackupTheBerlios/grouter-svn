@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+  <class name="org.grouter.domain.systemuser.SystemUser" table="SYTEMUSER" >
+     <!--<cache usage="read-write"/>-->
+     <id column="USERID" name="id" type="java.lang.Long">
+      <generator class="hilo"/>
+    </id>
+    <property name="name" column="USERNAME" type="java.lang.String" not-null="true"/>
+    <property name="fullName" column="FULLNAME" type="java.lang.String"/>  <!--not-null="true"-->
+    <property name="description" column="DESCRIPTION" type="java.lang.String"/>
+    <property name="active" column="ACTIVE" type="java.lang.Boolean" not-null="true"/>
+    <property name="loginRetries" column="LOGINRETRIES" type="java.lang.Integer" not-null="true"/>
+    <property name="validFrom" column="VALIDFROM" type="java.util.Calendar"/>
+    <property name="validTo" column="VALIDTO" type="java.util.Calendar"/>
+    
+
+    <set name="passwords" cascade="all" inverse="true" order-by="PASSWORDID">
+      <key column="USERID" not-null="true" />
+      <one-to-many class="org.grouter.domain.systemuser.Password"
+        />
+    </set>
+    <set name="groups" table="GROUPUSER" order-by="GROUPID" >
+      <key column="USERID"/>
+      <many-to-many
+        unique="true"
+        column="GROUPID"
+        class="org.grouter.domain.systemuser.SystemGroup"
+      />
+    </set>
+    <one-to-one name="currentPassword"
+      class="org.grouter.domain.systemuser.Password"
+      cascade="all"/>
+  </class>
+</hibernate-mapping>

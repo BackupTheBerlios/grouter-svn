@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    <class name="org.grouter.domain.Receiver" table="RECEIVER">
+        <id column="RECEIVERID" name="id" type="java.lang.String">
+            <generator class="assigned"/>
+        </id>
+        <!-- "transactional|read-write|nonstrict-read-write|read-only -->
+        <!-- cache usage="read-only" / -->
+        <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
+        <!--many-to-one
+            name="receivers"
+            not-null="false"
+            class="Receivers"
+            column="MESSAGEID"
+            cascade="none">
+        </many-to-one-->
+    </class>
+</hibernate-mapping>

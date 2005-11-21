@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
+        <!--property name="url"><value>jdbc:hsqldb:db/test</value></property-->
+        <property name="url"><value>jdbc:hsqldb:mem:domaintest</value></property>
+        <property name="username"><value>sa</value></property>
+        <!-- Make sure <value> tags are on same line - if they're not,
+             authentication will fail -->
+        <property name="password"><value></value></property>
+    </bean>
+
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory1" class="org.springframework.orm.hibernate.LocalSessionFactoryBean">
+        <property name="dataSource"><ref local="dataSource1"/></property>
+        <property name="mappingResources">
+            <list>
+                <value>org/grouter/domain/systemuser/SystemUser.hbm.xml</value>
+                <value>org/grouter/domain/systemuser/SystemGroup.hbm.xml</value>
+                <value>org/grouter/domain/systemuser/Password.hbm.xml</value>
+                <value>org/grouter/domain/Message.hbm.xml</value>
+                <value>org/grouter/domain/Receiver.hbm.xml</value>
+                <value>org/grouter/domain/Sender.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">net.sf.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <!-- bean id="transactionManager1" class="org.springframework.orm.hibernate.HibernateTransactionManager" -->
+    <bean id="transactionManager1" class="org.grouter.common.hibernate.HibernateUtilContextAware">
+        <property name="sessionFactory"><ref local="sessionFactory1"/></property>
+    </bean>
+
+    <bean id="hibernateDAOFactory" class="org.grouter.domain.dao.hibernate.HibernateDAOFactory">
+    </bean>
+
+    <bean id="DAOFactory" class="org.grouter.domain.dao.DAOFactory">
+        <property name="DEFAULT"><ref local="hibernateDAOFactory"/></property>
+    </bean>
+    
+    <bean id="systemUserDAO" class="org.grouter.domain.dao.hibernate.SystemUserDAOHibernate">
+        <!-- property name="sessionFactory"><ref local="sessionFactory1"/></property -->
+    </bean>
+
+    <bean id="messageService" class="org.grouter.domain.servicelayer.pojoservice.MessageService">
+        <property name="systemUserDAO"><ref local="systemUserDAO"/></property>
+    </bean>
+
+    <bean id="messageServiceManager"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager"><ref local="transactionManager1"/></property>
+        <property name="target"><ref local="messageService"/></property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="createSystemUser">PROPAGATION_REQUIRED</prop>
+                <!-- prop key="getOrderList">PROPAGATION_REQUIRED</prop -->
+            </props>
+        </property>
+    </bean>
+</beans>

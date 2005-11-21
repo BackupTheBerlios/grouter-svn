@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    <class name="org.grouter.domain.systemuser.SystemGroup" table="SYSTEMGROUP" >
+        <!--<cache usage="read-write"/>-->
+        <id column="GROUPID" name="id" type="java.lang.Long">
+            <generator class="hilo">
+            </generator>
+        </id>
+        <property name="groupName" column="GROUPNAME" type="java.lang.String" not-null="true"/>
+    </class>
+</hibernate-mapping>
