@@ -23,7 +23,7 @@
     </appender>
 
 
-    <category name="org.grouter.siri" additivity="false">
+    <category name="org.grouter" additivity="false">
         <priority value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </category>

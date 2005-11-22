@@ -39,7 +39,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+	<!-- Pull the version from the parent-->
+	<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+           
+        </dependency>
 
 
     </dependencies>
