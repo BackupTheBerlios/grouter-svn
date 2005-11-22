@@ -182,8 +182,8 @@
     <modules>
         <module>modules/domain</module>
         <module>modules/common</module>
-        <module>modules/feeder/feeder</module>
-        <module>modules/feeder/feederconfig</module>
+        <module>modules/core/grouter/grouter</module>
+        <module>modules/core/grouter/grouterconfig</module>
     </modules>
 
     <!-- Need this to set java version using compiler plugin -->
