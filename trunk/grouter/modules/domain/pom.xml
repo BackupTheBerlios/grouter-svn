@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.grouter.siri</groupId>
+            <groupId>org.grouter.grouter</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

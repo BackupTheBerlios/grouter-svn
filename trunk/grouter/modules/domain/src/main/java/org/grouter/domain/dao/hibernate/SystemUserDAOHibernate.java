@@ -32,22 +32,6 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
 
     public void createSystemUser(SystemUserDTO systemUserDTO)
     {
-        //String userName, String password, String fullName, String description, Calendar validFrom,
-          //                       Calendar validTo, boolean active, boolean temporaryPassword, int loginRetries, Calendar passwordLastChanged
-        logger.debug("Trying to store new user");
-//         SystemUser systemUser = new SystemUser("a user name","Donald Duck","is a duck",true,3,validFrom,validTo);
-        //Session session = HibernateUtil.getSession();
-
-        //getSession().beginTransaction();
-
-        try
-        {
-            getSession().save(systemUser);
-
-        }
-        finally
-        {
-        }
-
+  
     }
 }
