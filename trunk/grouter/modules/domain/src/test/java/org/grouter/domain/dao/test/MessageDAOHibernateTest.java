@@ -21,31 +21,13 @@ public class MessageDAOHibernateTest extends TestCaseWithData
 
     public void finder() throws Exception
     {
-         MessageDAO messageDAO = DAOFACTORY.getMessageDAO();
-
- 
-        Message amessage = messageDAO.findById(super.message.getId(), false);
+         //MessageDAO messageDAO = DAOFACTORY.getMessageDAO();
+        //Message amessage = messageDAO.findById(super.message.getId(), false);
 
     }
 
 
     public void testSaveMessage() throws Exception
     {
-
-        Message message = new Message("a test message",null,null);
-        Session s = sessionFactory.getCurrentSession();
-      //  ThreadLocalSessionContext.bind(s);
-        s.beginTransaction();
-
-        s.save(message);
-
-        s.getTransaction().commit();
-
-     //   ThreadLocalSessionContext.unbind(sessionFactory).close(); // Only needed for non-JTA
-
-//MessageDAO messageDao = DAOFACTORY.getMessageDAO();
-
-//messageDao.saveOrUpdate(message);
-
     }
 }
