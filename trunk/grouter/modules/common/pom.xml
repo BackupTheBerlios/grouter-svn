@@ -10,7 +10,7 @@
     <artifactId>common</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>Siri common artifact</name>
+    <name>grouter common artifact</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
