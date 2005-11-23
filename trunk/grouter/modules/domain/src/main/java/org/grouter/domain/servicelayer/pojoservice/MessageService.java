@@ -24,7 +24,7 @@ public class MessageService
     {
         log.debug("In create system user...");
 
-        //systemUserDAO.createSystemUser(systemUserDTO);
+        systemUserDAO.createSystemUser(systemUserDTO);
 
 
     }

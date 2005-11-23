@@ -128,7 +128,7 @@
       <file leaf-file-name="MessageService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/servicelayer/pojoservice/MessageService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="222" selection-end="222" vertical-scroll-proportion="0.18433735">
+            <state line="19" column="13" selection-start="523" selection-end="523" vertical-scroll-proportion="0.6757322">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -136,37 +136,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SystemDAOHibernateTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/SystemDAOHibernateTest.java">
+      <file leaf-file-name="HibernateDAOFactory.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/HibernateDAOFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="10" selection-start="1653" selection-end="1653" vertical-scroll-proportion="0.8156626">
+            <state line="51" column="52" selection-start="2038" selection-end="2038" vertical-scroll-proportion="0.9288703">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/modules/domain/pom.xml">
+      <file leaf-file-name="MessageServiceTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/service/test/MessageServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="75" selection-start="911" selection-end="911" vertical-scroll-proportion="-0.12650603">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DAOFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/DAOFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="18" selection-start="857" selection-end="857" vertical-scroll-proportion="0.47108433">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SystemUserDAO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/SystemUserDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="17" selection-start="159" selection-end="159" vertical-scroll-proportion="0.12289157">
+            <state line="18" column="4" selection-start="538" selection-end="607" vertical-scroll-proportion="0.40376568">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -177,7 +159,7 @@
       <file leaf-file-name="HibernateTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/HibernateTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="49" selection-start="773" selection-end="773" vertical-scroll-proportion="0.40963855">
+            <state line="52" column="0" selection-start="2321" selection-end="2321" vertical-scroll-proportion="0.11087866">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -185,49 +167,57 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SystemUserDAOTemplateHibernate.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/SystemUserDAOTemplateHibernate.java">
+      <file leaf-file-name="TestCaseWithData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/TestCaseWithData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="8" selection-start="2996" selection-end="3073" vertical-scroll-proportion="0.8122699">
+            <state line="59" column="27" selection-start="2085" selection-end="2085" vertical-scroll-proportion="1.0251046">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConfigHandler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/router/grouterconfig/src/main/java/org/siri/config/ConfigHandler.java">
+      <file leaf-file-name="GenericDAO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/GenericDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="20" selection-start="162" selection-end="162" vertical-scroll-proportion="0.18773006">
+            <state line="20" column="17" selection-start="678" selection-end="678" vertical-scroll-proportion="0.6757322">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SystemUserDAO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/SystemUserDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="0" selection-start="212" selection-end="212" vertical-scroll-proportion="0.28451884">
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1132673873000" expanded="true" signature="217:624" placeholder="/**...*/" />
-                <marker date="1132673873000" expanded="true" signature="851:892" placeholder="{...}" />
-                <marker date="1132673873000" expanded="true" signature="898:909" placeholder="/**...*/" />
-                <marker date="1132673873000" expanded="true" signature="957:1439" placeholder="{...}" />
-                <marker date="1132673873000" expanded="true" signature="1445:1914" placeholder="/**...*/" />
-                <marker date="1132673873000" expanded="true" signature="1974:2615" placeholder="{...}" />
-                <marker date="1132673873000" expanded="true" signature="2621:2810" placeholder="/**...*/" />
-                <marker date="1132673873000" expanded="true" signature="2871:3113" placeholder="{...}" />
-                <marker date="1132673873000" expanded="true" signature="3119:3625" placeholder="/**...*/" />
-                <marker date="1132673873000" expanded="true" signature="3710:4067" placeholder="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageDAOHibernateTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/MessageDAOHibernateTest.java">
+      <file leaf-file-name="GenericHibernateDAO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/GenericHibernateDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="94" selection-start="873" selection-end="873" vertical-scroll-proportion="0.5325301">
+            <state line="9" column="0" selection-start="194" selection-end="194" vertical-scroll-proportion="0.14225942">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log4j.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/domain/src/config/log4j.xml">
+      <file leaf-file-name="DAOFactory.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/DAOFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="8" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.71686745">
+            <state line="20" column="22" selection-start="713" selection-end="713" vertical-scroll-proportion="0.73434126">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="applicationContext.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/domain/src/config/spring/applicationContext.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="62" selection-start="2921" selection-end="2921" vertical-scroll-proportion="0.91841006">
               <folding />
             </state>
           </provider>
@@ -297,8 +287,8 @@
     <option name="IS_SET_METHOD_ICONS_ENABLED" value="true" />
   </component>
   <component name="ModuleEditorState">
-    <option name="LAST_EDITED_MODULE_NAME" value="common" />
-    <option name="LAST_EDITED_TAB_NAME" value="Dependencies" />
+    <option name="LAST_EDITED_MODULE_NAME" value="domain" />
+    <option name="LAST_EDITED_TAB_NAME" value="Libraries (Classpath)" />
   </component>
   <component name="NamedScopeManager" />
   <component name="PackagesPane">
@@ -354,6 +344,68 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
+        <option name="myItemId" value="servicelayer" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pojoservice" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="org.grouter.domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="servicelayer" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="dto" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="org.grouter.domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="service.test" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="org.grouter.domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
         <option name="myItemId" value="dao" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
@@ -384,6 +436,46 @@
       <PATH_ELEMENT>
         <option name="myItemId" value="grouter.ipr" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="org.grouter.domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="dao" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="hibernate" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="org.grouter.common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
     </PATH>
   </component>
@@ -472,6 +564,74 @@
         <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test\java" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test\java\org\grouter\domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test\java\org\grouter\domain\service\test" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test\java" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test\java\org\grouter\domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src\test\java\org\grouter\domain\dao\test" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\domain\src" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
     </PATH>
     <PATH>
       <PATH_ELEMENT>
@@ -500,13 +660,79 @@
         <option name="myItemId" value="grouter.ipr" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
       </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common\src" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="grouter.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common\src" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common\src\main" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common\src\main\java" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:C:\gepo\grouter\grouter\modules\common\src\main\java\org\grouter\common" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
     </PATH>
   </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" splitterProportion="0.5">
+    <navigator currentView="PackagesPane" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -535,6 +761,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.grouter.domain.service.test" />
       <recent name="org.siri.dao.hibernate" />
       <recent name="org.siri.dao.test" />
       <recent name="org.siri.domain" />
@@ -550,13 +777,13 @@
   <component name="RestoreUpdateTree" />
   <component name="RunManager">
     <activeType name="JUnit" />
-    <tempConfiguration selected="true" default="false" name="SystemDAOHibernateTest.finder" type="JUnit" factoryName="JUnit">
+    <tempConfiguration selected="true" default="false" name="MessageServiceTest.doSomething" type="JUnit" factoryName="JUnit">
       <module name="domain" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="org.grouter.domain.dao.test" />
-      <option name="MAIN_CLASS_NAME" value="org.grouter.domain.dao.test.SystemDAOHibernateTest" />
-      <option name="METHOD_NAME" value="finder" />
+      <option name="PACKAGE_NAME" value="org.grouter.domain.service.test" />
+      <option name="MAIN_CLASS_NAME" value="org.grouter.domain.service.test.MessageServiceTest" />
+      <option name="METHOD_NAME" value="doSomething" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
@@ -657,11 +884,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1288" height="1004" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.22977346" order="0" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.29126215" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32842582" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.2691057" order="1" x="948" y="118" width="307" height="883" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32842582" order="8" />
@@ -670,7 +897,7 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="8" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.50962627" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.39071348" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="3" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.398641" order="4" />
@@ -748,125 +975,124 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/GenericHibernateDAO.java">
+    <entry file="file://$PROJECT_DIR$/modules/common/src/main/java/org/grouter/common/hibernate/HibernateUtilContextAware.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="22" selection-start="959" selection-end="959" vertical-scroll-proportion="0.020481927">
+        <state line="52" column="21" selection-start="2350" selection-end="2350" vertical-scroll-proportion="0.3766871">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/common/src/main/java/org/grouter/common/hibernate/BinaryBlobUserType.java">
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/MessageDAOHibernate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="19" selection-start="496" selection-end="496" vertical-scroll-proportion="0.60600376">
+        <state line="24" column="31" selection-start="624" selection-end="624" vertical-scroll-proportion="0.8535565">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/config/spring/applicationContext.xml">
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/service/test/SpringTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="38" selection-start="2351" selection-end="2351" vertical-scroll-proportion="0.40900564">
-          <folding />
+        <state line="16" column="13" selection-start="505" selection-end="505" vertical-scroll-proportion="0.5690377">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/servicelayer/dto/SystemUserDTO.java">
+    <entry file="file://$PROJECT_DIR$/modules/common/src/main/java/org/grouter/common/logging/Log4JInit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="89" selection-end="89" vertical-scroll-proportion="0.031894933">
+        <state line="29" column="70" selection-start="735" selection-end="786" vertical-scroll-proportion="0.44060475">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/SystemUserDAOHibernate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="2" selection-start="2" selection-end="2" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/config/log4j.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="8" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.71686745">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/MessageDAOHibernateTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="94" selection-start="873" selection-end="873" vertical-scroll-proportion="0.5325301">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/router/grouterconfig/src/main/java/org/siri/config/ConfigHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="20" selection-start="162" selection-end="162" vertical-scroll-proportion="0.18773006">
+        <state line="24" column="17" selection-start="662" selection-end="662" vertical-scroll-proportion="0.6046025">
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1132673873000" expanded="true" signature="217:624" placeholder="/**...*/" />
-            <marker date="1132673873000" expanded="true" signature="851:892" placeholder="{...}" />
-            <marker date="1132673873000" expanded="true" signature="898:909" placeholder="/**...*/" />
-            <marker date="1132673873000" expanded="true" signature="957:1439" placeholder="{...}" />
-            <marker date="1132673873000" expanded="true" signature="1445:1914" placeholder="/**...*/" />
-            <marker date="1132673873000" expanded="true" signature="1974:2615" placeholder="{...}" />
-            <marker date="1132673873000" expanded="true" signature="2621:2810" placeholder="/**...*/" />
-            <marker date="1132673873000" expanded="true" signature="2871:3113" placeholder="{...}" />
-            <marker date="1132673873000" expanded="true" signature="3119:3625" placeholder="/**...*/" />
-            <marker date="1132673873000" expanded="true" signature="3710:4067" placeholder="{...}" />
+            <marker date="1132764108937" expanded="false" signature="50:306" placeholder="..." />
+            <marker date="1132764108937" expanded="true" signature="308:417" placeholder="/**...*/" />
+            <marker date="1132764108937" expanded="true" signature="636:643" placeholder="{...}" />
+            <marker date="1132764108937" expanded="true" signature="700:749" placeholder="{...}" />
+            <marker date="1132764108937" expanded="true" signature="849:922" placeholder="{...}" />
+            <marker date="1132764108937" expanded="true" signature="990:1000" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/SystemUserDAOTemplateHibernate.java">
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/config/spring/applicationContext.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="8" selection-start="2996" selection-end="3073" vertical-scroll-proportion="0.8122699">
+        <state line="56" column="62" selection-start="2921" selection-end="2921" vertical-scroll-proportion="0.91841006">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/DAOFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="22" selection-start="713" selection-end="713" vertical-scroll-proportion="0.73434126">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/GenericHibernateDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="194" selection-end="194" vertical-scroll-proportion="0.14225942">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/SystemUserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="212" selection-end="212" vertical-scroll-proportion="0.28451884">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/GenericDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="17" selection-start="678" selection-end="678" vertical-scroll-proportion="0.6757322">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/TestCaseWithData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="27" selection-start="2085" selection-end="2085" vertical-scroll-proportion="1.0251046">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/HibernateTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="49" selection-start="773" selection-end="773" vertical-scroll-proportion="0.40963855">
+        <state line="52" column="0" selection-start="2321" selection-end="2321" vertical-scroll-proportion="0.11087866">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/SystemUserDAO.java">
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/service/test/MessageServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="17" selection-start="159" selection-end="159" vertical-scroll-proportion="0.12289157">
+        <state line="18" column="4" selection-start="538" selection-end="607" vertical-scroll-proportion="0.40376568">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/DAOFactory.java">
+    <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/dao/hibernate/HibernateDAOFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="18" selection-start="857" selection-end="857" vertical-scroll-proportion="0.47108433">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="75" selection-start="911" selection-end="911" vertical-scroll-proportion="-0.12650603">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/domain/src/test/java/org/grouter/domain/dao/test/SystemDAOHibernateTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="10" selection-start="1653" selection-end="1653" vertical-scroll-proportion="0.8156626">
+        <state line="51" column="52" selection-start="2038" selection-end="2038" vertical-scroll-proportion="0.9288703">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/domain/src/main/java/org/grouter/domain/servicelayer/pojoservice/MessageService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="222" selection-end="222" vertical-scroll-proportion="0.18433735">
+        <state line="19" column="13" selection-start="523" selection-end="523" vertical-scroll-proportion="0.6757322">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

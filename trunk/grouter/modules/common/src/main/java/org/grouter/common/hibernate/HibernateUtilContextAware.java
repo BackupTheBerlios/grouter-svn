@@ -49,6 +49,11 @@ public class HibernateUtilContextAware
     private static SessionFactory sessionFactory;
 
 
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        HibernateUtilContextAware.sessionFactory = sessionFactory;
+    }
+
     /**
      * Method should be called initially to set up configuration and sessionfactory
      * for this helper class.
@@ -66,8 +71,8 @@ public class HibernateUtilContextAware
         if(config != null)
         {
             log.info("Use given configuration from calee, no Configuration and SessionFactory existed previously.");
-            configuration = config;
-            sessionFactory = configuration.buildSessionFactory();
+            HibernateUtilContextAware.configuration = config;
+            HibernateUtilContextAware.sessionFactory = configuration.buildSessionFactory();
         }
         else if(config == null)
         {
@@ -128,7 +133,7 @@ public class HibernateUtilContextAware
      */
     public static Configuration getConfiguration()
     {
-        return configuration;
+        return HibernateUtilContextAware.configuration;
     }
 
     /**
@@ -173,8 +178,8 @@ public class HibernateUtilContextAware
         getSessionFactory().close();
 
         // Clear static variables
-        configuration = null;
-        sessionFactory = null;
+        HibernateUtilContextAware.configuration = null;
+        HibernateUtilContextAware.sessionFactory = null;
     }
 
 
@@ -188,7 +193,7 @@ public class HibernateUtilContextAware
     public static void rebuildSessionFactory()
     {
         log.debug("Using current Configuration for rebuild.");
-        rebuildSessionFactory(configuration);
+        rebuildSessionFactory(HibernateUtilContextAware.configuration);
     }
 
     /**

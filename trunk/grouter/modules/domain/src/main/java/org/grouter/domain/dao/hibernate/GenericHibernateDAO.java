@@ -31,9 +31,8 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
         this.session = session;
     }
 
-     public GenericHibernateDAO()
+    public GenericHibernateDAO()
     {
-        
     }
 
     protected Session getSession()

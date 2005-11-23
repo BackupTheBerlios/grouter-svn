@@ -28,8 +28,6 @@ public abstract class HibernateTest extends TestCase
 
     static
     {
-        //HibernateUtil.setOfflineMode();
-
         Configuration config = new Configuration().
                 setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect").
                 setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver").
@@ -50,8 +48,6 @@ public abstract class HibernateTest extends TestCase
                 addClass(Sender.class);
 
         HibernateUtilContextAware.buildSessionFactory(config);
-
-
 
         sessionFactory = HibernateUtilContextAware.getSessionFactory();
     }

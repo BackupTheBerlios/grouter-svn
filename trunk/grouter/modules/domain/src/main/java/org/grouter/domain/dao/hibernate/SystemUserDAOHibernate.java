@@ -20,7 +20,6 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
 
     public SystemUserDAOHibernate()
     {
-        
     }
 
     public SystemUserDAOHibernate(Session session)

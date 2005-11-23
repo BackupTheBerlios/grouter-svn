@@ -10,10 +10,8 @@
     <url>http://maven.apache.org</url>
     <dependencies>
     	<dependency>
-    		<groupId>springframework</groupId>
-	        <artifactId>spring</artifactId>
-	        <version>1.2.5</version>
-	        <scope>compile</scope>
+    		<groupId>org.springframework</groupId>
+		<artifactId>spring</artifactId>
         </dependency>
         <dependency>
 	        <groupId>junit</groupId>

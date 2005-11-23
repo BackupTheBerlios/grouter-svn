@@ -46,6 +46,9 @@
     </bean>
 
     <bean id="hibernateDAOFactory" class="org.grouter.domain.dao.hibernate.HibernateDAOFactory">
+
+        <property name="sessionFactory"><ref local="sessionFactory1"/></property>
+
     </bean>
 
     <!-- bean id="DAOFactory" class="org.grouter.domain.dao.DAOFactory">

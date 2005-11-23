@@ -1,10 +1,13 @@
 package org.grouter.domain.dao.hibernate;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.grouter.domain.dao.MessageDAO;
 import org.grouter.domain.dao.DAOFactory;
 import org.grouter.domain.dao.SystemUserDAO;
 import org.grouter.common.hibernate.HibernateUtilContextAware;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Returns Hibernate-specific instances of DAOs.
@@ -28,9 +31,28 @@ import org.grouter.common.hibernate.HibernateUtilContextAware;
  */
 public class HibernateDAOFactory extends DAOFactory
 {
+    private static Log log = LogFactory.getLog(HibernateDAOFactory.class);
+    SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+
+
     protected Session getCurrentSession()
     {
-        return HibernateUtilContextAware.getSessionFactory().getCurrentSession();
+        if(sessionFactory == null)
+        {//we have not been injected with a sessionfactory... so we get one from a util class
+            log.debug("Using util to get session");
+            return HibernateUtilContextAware.getSessionFactory().getCurrentSession();
+        }
+        else
+        {
+            log.debug("Using injected sessionfactory");
+            return sessionFactory.getCurrentSession();
+        }
+
     }
 
     // Add your DAO interfaces below here
