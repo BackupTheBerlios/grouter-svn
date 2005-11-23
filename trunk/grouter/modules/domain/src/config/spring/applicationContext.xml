@@ -3,6 +3,7 @@
         "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+    <!-- Hibernate datasouce to be "springed". -->
     <bean id="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
         <!--property name="url"><value>jdbc:hsqldb:db/test</value></property-->
@@ -14,7 +15,7 @@
     </bean>
 
     <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory1" class="org.springframework.orm.hibernate.LocalSessionFactoryBean">
+    <bean id="sessionFactory1" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource"><ref local="dataSource1"/></property>
         <property name="mappingResources">
             <list>
@@ -28,7 +29,7 @@
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">net.sf.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
                 <prop key="hibernate.connection.autocommit">true</prop>
                 <prop key="hibernate.current_session_context_class">thread</prop>
@@ -47,9 +48,9 @@
     <bean id="hibernateDAOFactory" class="org.grouter.domain.dao.hibernate.HibernateDAOFactory">
     </bean>
 
-    <bean id="DAOFactory" class="org.grouter.domain.dao.DAOFactory">
+    <!-- bean id="DAOFactory" class="org.grouter.domain.dao.DAOFactory">
         <property name="DEFAULT"><ref local="hibernateDAOFactory"/></property>
-    </bean>
+    </bean-->
     
     <bean id="systemUserDAO" class="org.grouter.domain.dao.hibernate.SystemUserDAOHibernate">
         <!-- property name="sessionFactory"><ref local="sessionFactory1"/></property -->

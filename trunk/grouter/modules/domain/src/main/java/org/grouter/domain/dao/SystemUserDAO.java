@@ -24,6 +24,8 @@ public UserInfo getUserAccountInfo(Long userId) throws Exception ;
 public void removeUser (Long id) throws Exception ;
 public void removeUser (String userName) throws Exception ;
 public boolean userExists (String userName) throws Exception ;
-public boolean userExists (Long id) throws Exception ;*/
+public boolean userExists (Long id) throws Exception ;
+*/
+
 }
 

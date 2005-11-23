@@ -18,6 +18,10 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
 {
     Logger logger = Logger.getLogger(SystemUserDAOHibernate.class);
 
+    public SystemUserDAOHibernate()
+    {
+        
+    }
 
     public SystemUserDAOHibernate(Session session)
     {
