@@ -14,6 +14,12 @@ import java.util.*;
  */
 public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> implements MessageDAO
 {
+    /**
+     * For reflection purposes, i.e. Spring needs this.
+     */
+    public MessageDAOHibernate()
+    {
+    }
 
     public MessageDAOHibernate(Session session)
     {

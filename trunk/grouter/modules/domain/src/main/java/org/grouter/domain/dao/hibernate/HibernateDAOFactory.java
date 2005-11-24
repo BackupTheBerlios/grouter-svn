@@ -34,7 +34,12 @@ public class HibernateDAOFactory extends DAOFactory
     private static Log log = LogFactory.getLog(HibernateDAOFactory.class);
     SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
+    /**
+     * Used to spring in the session factory for Hibernate.
+     * @param sessionFactory
+     */
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
         this.sessionFactory = sessionFactory;
     }
 
@@ -44,12 +49,12 @@ public class HibernateDAOFactory extends DAOFactory
     {
         if(sessionFactory == null)
         {//we have not been injected with a sessionfactory... so we get one from a util class
-            log.debug("Using util to get session");
+            log.debug("############ Using util to get session");
             return HibernateUtilContextAware.getSessionFactory().getCurrentSession();
         }
         else
         {
-            log.debug("Using injected sessionfactory");
+            log.debug("############### Using injected sessionfactory");
             return sessionFactory.getCurrentSession();
         }
 

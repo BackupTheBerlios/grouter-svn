@@ -6,13 +6,9 @@ package org.grouter.domain.service.test;
  * @author Georges Polyzois
  */
 
-import org.grouter.common.logging.Log4JInit;
 import org.grouter.domain.servicelayer.pojoservice.MessageService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import junit.framework.TestCase;
 
 public class MessageServiceTest extends SpringTest
 {
@@ -25,8 +21,10 @@ public class MessageServiceTest extends SpringTest
      */
     public void doSomething() throws Exception
     {
+        //SystemUserDTO systemUserDTO = new SystemUserDTO("");
+
         MessageService ref = (MessageService)factory.getBean(beanName);
-        ref.createSystemUser(null);
+        ref.createSystemUser(systemUser);
 
     }
 }

@@ -15,7 +15,7 @@
     </bean>
 
     <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory1" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource"><ref local="dataSource1"/></property>
         <property name="mappingResources">
             <list>
@@ -40,32 +40,30 @@
     </bean>
 
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-    <bean id="transactionManager1" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
     <!-- bean id="transactionManager1" class="org.grouter.common.hibernate.HibernateUtilContextAware" -->
-        <property name="sessionFactory"><ref local="sessionFactory1"/></property>
+        <property name="sessionFactory"><ref local="sessionFactory"/></property>
     </bean>
 
     <bean id="hibernateDAOFactory" class="org.grouter.domain.dao.hibernate.HibernateDAOFactory">
-
-        <property name="sessionFactory"><ref local="sessionFactory1"/></property>
+        <property name="sessionFactory"><ref local="sessionFactory"/></property>
 
     </bean>
 
-    <!-- bean id="DAOFactory" class="org.grouter.domain.dao.DAOFactory">
-        <property name="DEFAULT"><ref local="hibernateDAOFactory"/></property>
-    </bean-->
-    
-    <bean id="systemUserDAO" class="org.grouter.domain.dao.hibernate.SystemUserDAOHibernate">
-        <!-- property name="sessionFactory"><ref local="sessionFactory1"/></property -->
+    <!-- bean id="systemUserDAO" class="org.grouter.domain.dao.hibernate.SystemUserDAOHibernate">
     </bean>
+
+    <bean id="messageDAO" class="org.grouter.domain.dao.hibernate.MessageDAOHibernate">
+    </bean -->
 
     <bean id="messageService" class="org.grouter.domain.servicelayer.pojoservice.MessageService">
-        <property name="systemUserDAO"><ref local="systemUserDAO"/></property>
+        <!-- property name="systemUserDAO"><ref local="systemUserDAO"/></property>
+        <property name="messageDAO"><ref local="messageDAO"/></property -->
     </bean>
 
     <bean id="messageServiceManager"
           class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager"><ref local="transactionManager1"/></property>
+        <property name="transactionManager"><ref local="transactionManager"/></property>
         <property name="target"><ref local="messageService"/></property>
         <property name="transactionAttributes">
             <props>

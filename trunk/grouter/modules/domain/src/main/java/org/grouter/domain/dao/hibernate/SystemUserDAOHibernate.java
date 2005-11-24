@@ -3,7 +3,6 @@ package org.grouter.domain.dao.hibernate;
 import org.hibernate.*;
 import org.grouter.domain.dao.SystemUserDAO;
 import org.grouter.domain.Message;
-import org.grouter.domain.servicelayer.dto.SystemUserDTO;
 import org.grouter.domain.systemuser.SystemUser;
 import org.apache.log4j.Logger;
 
@@ -18,8 +17,10 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
 {
     Logger logger = Logger.getLogger(SystemUserDAOHibernate.class);
 
-    public SystemUserDAOHibernate()
-    {
+    /**
+     * For reflection purposes, i.e. Spring needs this.
+     */
+    public SystemUserDAOHibernate()       {
     }
 
     public SystemUserDAOHibernate(Session session)
@@ -33,8 +34,8 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
         return getSession().createCriteria(concreteClass).list();
     }
 
-    public void createSystemUser(SystemUserDTO systemUserDTO)
+    public void createSystemUser(SystemUser systemUser)
     {
-  
+
     }
 }

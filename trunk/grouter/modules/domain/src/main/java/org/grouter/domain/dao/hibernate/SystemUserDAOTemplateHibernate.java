@@ -3,7 +3,6 @@ package org.grouter.domain.dao.hibernate;
 import org.hibernate.*;
 import org.grouter.domain.dao.SystemUserDAO;
 import org.grouter.domain.Message;
-import org.grouter.domain.servicelayer.dto.SystemUserDTO;
 import org.grouter.domain.systemuser.SystemUser;
 import org.grouter.common.hibernate.HibernateTemplate;
 import org.grouter.common.hibernate.HibernateTemplateHandler;
@@ -83,7 +82,7 @@ public class SystemUserDAOTemplateHibernate extends GenericHibernateDAO<SystemUs
         }
     }
 
-    public void createSystemUser(SystemUserDTO systemUserDTO) {
+    public void createSystemUser(SystemUser systemUser) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 }
