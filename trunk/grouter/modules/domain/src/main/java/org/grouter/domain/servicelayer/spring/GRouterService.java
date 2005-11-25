@@ -1,0 +1,50 @@
+package org.grouter.domain.servicelayer.spring;
+
+import static org.grouter.domain.dao.DAOFactory.FactoryType.HIBERNATESPRING;
+import org.grouter.domain.dao.SystemUserDAO;
+import org.grouter.domain.dao.MessageDAO;
+import org.grouter.domain.dao.DAOFactory;
+import org.grouter.domain.systemuser.SystemUser;
+import org.grouter.domain.Message;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+
+/**
+ * GRouterService will expose services for clients - gswing and gweb.
+ *
+ * Methods and their transaction demarcation attributes are handled
+ * in the Spring applicationContext.xml file.
+ *
+ * @author Georges Polyzois
+ *
+ */
+public class GRouterService
+{
+    private static Log log = LogFactory.getLog(GRouterService.class);
+    private SystemUserDAO systemUserDAO;
+    private MessageDAO messageDAO;
+
+    public GRouterService()
+    {
+    }
+
+    public void createSystemUser(SystemUser systemUser)
+    {
+        log.debug("In create system user...");
+        systemUserDAO = DAOFactory.getFactory(HIBERNATESPRING).getSystemUserDAO();////DAOFactory.DEFAULT.getSystemUserDAO();
+        systemUserDAO.createSystemUser(systemUser);
+    }
+
+    public Message findMessagesForNode(String nodeId)
+    {
+        log.debug("In findMessage...");
+        //messageDAO = DAOFactory.getFactory(DAOFactory.FactoryType.HIBERNATESPRING).getMessageDAO();
+        //Message message = (Message)messageDAO.findById(messageId,false);
+        //log.debug(message);
+        //return message;
+    }
+
+
+
+}

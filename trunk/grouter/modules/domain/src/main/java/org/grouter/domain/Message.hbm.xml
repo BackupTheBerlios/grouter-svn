@@ -24,5 +24,14 @@
                 column="SENDERID"
                 cascade="none">
         </many-to-one>
+
+         <!-- column is for this table -->
+        <many-to-one
+                name="node"
+                not-null="false"
+                class="org.grouter.domain.Node"
+                column="NODEID"
+                cascade="none">
+        </many-to-one>
     </class>
 </hibernate-mapping>

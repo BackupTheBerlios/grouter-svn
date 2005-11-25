@@ -13,4 +13,7 @@ import java.util.*;
 public interface MessageDAO extends GenericDAO<Message, String>
 {
     public List<Message> findConcrete(Class concreteClass);
+
+    public List<Message> findMessagesForNode(String nodeId);
+
 }

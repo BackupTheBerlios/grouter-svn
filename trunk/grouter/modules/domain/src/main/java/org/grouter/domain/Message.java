@@ -14,8 +14,9 @@ public class Message
 	private Set<Receiver> receivers = new HashSet();
 	private Sender sender;
 	private Timestamp creationTime;
+    private Node node;
 
-	public Message()
+    public Message()
 	{
 	}
 
@@ -23,6 +24,16 @@ public class Message
 	{
 		return creationTime;
 	}
+
+    public Node getNode()
+    {
+        return node;
+    }
+
+    public void setNode(Node node)
+    {
+        this.node = node;
+    }
 
 	public void setCreationTime(Timestamp creationTime)
 	{

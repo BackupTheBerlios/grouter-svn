@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    <class name="org.grouter.domain.GRouter" table="GROUTER">
+        <id column="GROUTERID" name="id" type="java.lang.String">
+            <generator class="uuid"/>
+        </id>
+        <property name="startedOn" not-null="false" type="timestamp" column="MODIFIEDON"/>
+        <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
+        <property name="upTime" not-null="false" type="java.lang.Long" column="UPTIME"/>
+
+        <set name="nodes" cascade="all" lazy="true" inverse="true" table="NODE">
+            <key>
+                <column name="NODEID" not-null="true"/>
+                <!-- id column in other table -->
+            </key>
+            <one-to-many class="org.grouter.domain.Message"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

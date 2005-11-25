@@ -20,7 +20,8 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
     /**
      * For reflection purposes, i.e. Spring needs this.
      */
-    public SystemUserDAOHibernate()       {
+    public SystemUserDAOHibernate()
+    {
     }
 
     public SystemUserDAOHibernate(Session session)
@@ -37,5 +38,25 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
     public void createSystemUser(SystemUser systemUser)
     {
 
+    }
+
+    public void removeUser(Long id)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void removeUser(String userName)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean userExists(String userName)
+    {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean userExists(Long id)
+    {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

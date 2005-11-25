@@ -9,11 +9,11 @@ public class Sender
 	 * @directed true
 	 */
 	private Address address;
-
 	private String id;
-
 	private String name;
-
+    /**
+	 * No duplicate elements and the ordering is not relevant for us -> Set
+	 */
 	private Set<Message> messages;
 
 	public Sender()
@@ -49,7 +49,6 @@ public class Sender
 	public Sender(String name)
 	{
 		this.name = name;
-
 	}
 
 	public void setName(String name)

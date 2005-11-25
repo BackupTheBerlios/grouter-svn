@@ -3,7 +3,6 @@ package org.grouter.domain.dao.hibernate;
 import org.hibernate.*;
 import org.grouter.domain.dao.MessageDAO;
 import org.grouter.domain.Message;
-import org.grouter.domain.systemuser.SystemUser;
 
 import java.util.*;
 
@@ -32,13 +31,13 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
         return getSession().createCriteria(concreteClass).list();
     }
 
-
-    public void doFind(String searchparam)
+    
+    public List<Message> findMessagesForNode(String nodeId)
     {
-       /*
-       String hsql = "from Message obj where obj.userName = : inparametertillmetodtyp";
-       Query qr = session.createQuery(hsql);
-       Message result = (Message) qr.setParameter(dittsökattribut ,searchparam).uniqueresult();
-       */
+        String hsql = "from Message obj where obj.nodeId = : nodeId";
+        Query qr = getSession().createQuery(hsql);
+        List<Message> result = (List<Message>) qr.setParameter("nodeId",nodeId).list();
+        return result;
     }
+
 }

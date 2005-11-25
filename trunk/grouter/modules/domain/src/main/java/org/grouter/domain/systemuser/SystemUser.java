@@ -14,7 +14,13 @@ public class SystemUser implements Serializable
 {
     private Long id ;
     private String name;
+    /**
+	 * No duplicate elements and the ordering is not relevant for us -> Set
+	 */
     private Set groups ;
+    /**
+	 * No duplicate elements and the ordering is not relevant for us -> Set
+	 */
     private Set passwords ;
     private Password currentPassword ;
     private String fullName ;

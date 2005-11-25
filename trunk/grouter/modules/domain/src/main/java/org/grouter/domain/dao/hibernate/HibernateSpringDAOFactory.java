@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.grouter.domain.dao.MessageDAO;
 import org.grouter.domain.dao.DAOFactory;
 import org.grouter.domain.dao.SystemUserDAO;
-import org.grouter.common.hibernate.HibernateUtilContextAware;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -25,17 +24,31 @@ import org.apache.commons.logging.LogFactory;
  * because they can't extend or implement an interface and they can't include
  * constructors.
  *
- * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
- *
  * @author Georges Polyzois
  */
-public class HibernateDAOFactory extends DAOFactory
+public class HibernateSpringDAOFactory extends DAOFactory
 {
-    private static Log log = LogFactory.getLog(HibernateDAOFactory.class);
+    private static Log log = LogFactory.getLog(HibernateSpringDAOFactory.class);
+    /** Injected into this instance from Spring. */
+    SessionFactory sessionFactory;
+
+    public HibernateSpringDAOFactory()
+    {
+    }
+
+    /**
+     * Used to spring in the session factory for Hibernate.
+     * @param sessionFactory
+     */
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        this.sessionFactory = sessionFactory;
+    }
+
 
     protected Session getCurrentSession()
     {
-        return HibernateUtilContextAware.getSessionFactory().getCurrentSession();
+        return sessionFactory.getCurrentSession();
     }
 
     // Add your DAO interfaces below here
@@ -44,7 +57,8 @@ public class HibernateDAOFactory extends DAOFactory
         return new MessageDAOHibernate(getCurrentSession());
     }
 
-    public SystemUserDAO getSystemUserDAO() {
+    public SystemUserDAO getSystemUserDAO()
+    {
         return new SystemUserDAOHibernate(getCurrentSession());
     }
 }
