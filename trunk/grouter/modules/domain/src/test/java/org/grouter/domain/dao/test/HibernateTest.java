@@ -10,9 +10,7 @@ import org.grouter.common.hibernate.HibernateUtilContextAware;
 import org.grouter.domain.systemuser.SystemUser;
 import org.grouter.domain.systemuser.SystemGroup;
 import org.grouter.domain.systemuser.Password;
-import org.grouter.domain.Message;
-import org.grouter.domain.Receiver;
-import org.grouter.domain.Sender;
+import org.grouter.domain.*;
 import junit.framework.TestCase;
 
 public abstract class HibernateTest extends TestCase
@@ -45,6 +43,8 @@ public abstract class HibernateTest extends TestCase
                 addClass(Password.class).
                 addClass(Message.class).
                 addClass(Receiver.class).
+                addClass(GRouter.class).
+                addClass(Node.class).
                 addClass(Sender.class);
 
         HibernateUtilContextAware.buildSessionFactory(config);

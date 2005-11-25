@@ -22,11 +22,9 @@ public class SystemDAOHibernateTest extends TestCaseWithData
      */
     public void finder() throws Exception
     {
-        /*
         SystemUserDAO systemUserDAO = DAOFACTORY.getSystemUserDAO();
         SystemUser systemUser = systemUserDAO.findById(super.systemUser1.getId(), false);
         assertNotNull("One user with id : " + super.systemUser1.getId()  ,systemUser);
-        */
     }
 
     /**
@@ -37,7 +35,6 @@ public class SystemDAOHibernateTest extends TestCaseWithData
      */
     public void update() throws Exception
     {
-        /*
         SystemUserDAO systemUserDAO = DAOFACTORY.getSystemUserDAO();
         SystemUser systemUser = systemUserDAO.findById(super.systemUser1.getId(), false);
         assertNotNull("One user with id : " + super.systemUser1.getId()  ,systemUser);
@@ -46,7 +43,6 @@ public class SystemDAOHibernateTest extends TestCaseWithData
         systemUserDAO.saveOrUpdate(systemUser);
         SystemUser systemUserAltered = systemUserDAO.findById(super.systemUser1.getId(), false);
         assertEquals(expected,systemUserAltered.getName());
-        */
     }
 
 }

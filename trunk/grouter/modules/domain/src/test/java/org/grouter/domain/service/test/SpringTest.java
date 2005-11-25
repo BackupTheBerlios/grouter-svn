@@ -2,6 +2,7 @@ package org.grouter.domain.service.test;
 
 import junit.framework.TestCase;
 import org.grouter.common.logging.Log4JInit;
+import org.grouter.common.jndi.GlobalBeanLocator;
 import org.grouter.domain.systemuser.SystemUser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +36,10 @@ public class SpringTest extends TestCase
         inThreeDays.roll(Calendar.DAY_OF_YEAR, 3);
         inFiveDays.roll(Calendar.DAY_OF_YEAR, 5);
         nextWeek.roll(Calendar.WEEK_OF_YEAR, true);
+
+        //Init global factory for DAOFactory to work
+        GlobalBeanLocator.setBeanFactory(factory);
+
 
         systemUser = new SystemUser("Albert","Albert Einstein","genious",true,3, Calendar.getInstance(),nextWeek );
     }
