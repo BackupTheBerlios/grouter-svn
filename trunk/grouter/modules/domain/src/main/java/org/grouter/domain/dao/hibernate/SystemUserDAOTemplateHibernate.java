@@ -85,4 +85,20 @@ public class SystemUserDAOTemplateHibernate extends GenericHibernateDAO<SystemUs
     public void createSystemUser(SystemUser systemUser) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    public void removeUser(Long id) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void removeUser(String userName) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean userExists(String userName) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean userExists(Long id) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

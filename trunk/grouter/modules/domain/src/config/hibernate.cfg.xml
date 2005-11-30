@@ -57,6 +57,8 @@
         <mapping resource="org/siri/domain/Sender.hbm.xml"/>
         <mapping resource="org/siri/domain/Receiver.hbm.xml"/>
         <mapping resource="org/siri/domain/Message.hbm.xml"/>
+        <mapping resource="org/siri/domain/Node.hbm.xml"/>
+        <mapping resource="org/siri/domain/GRouter.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

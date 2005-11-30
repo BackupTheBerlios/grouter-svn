@@ -20,6 +20,7 @@
     <orderEntry type="library" name="hib-3.1.rc3" level="project" />
     <orderEntry type="library" name="commons-logging-1.0.4" level="project" />
     <orderEntry type="library" name="spring-core-1.2.6" level="project" />
+    <orderEntry type="library" name="org" level="project" />
     <orderEntryProperties />
   </component>
   <component name="org.mevenide.idea.module.ModuleSettings">

@@ -43,6 +43,7 @@ public class GRouterService
         //Message message = (Message)messageDAO.findById(messageId,false);
         //log.debug(message);
         //return message;
+        return null;
     }
 
 

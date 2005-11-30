@@ -20,15 +20,20 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.commons.io.FileUtils;
 
-//import org.exolab.castor.builder.SourceGenerator;
 
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 
+
+
 /**
+ * A code generator which will be invoked to generate sources for an
+ * corba idl file or xml schema file.
+ *
  * @goal generate
- * @phase generate-sources
+ * @phase generate-sources    injected when maven hits build process phase
+ *                            generate-sources
  * @description Build a .java files from idl, compile them and produce a jar.
  */
 public class JacorbPlugin  extends AbstractMojo
