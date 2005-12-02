@@ -1,3 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ | Root element for a Maven 2 project is the project element. If you
+ | do not understand everyting stated here try reading up on xml schema
+ | files.
+ |
+ |     xmlns="http://maven.apache.org/POM/4.0.0"
+ | means that Defins a namespace for
+ |                                              Maven 2
+ |
+ |
+ |      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ | means that elements and data types used in the schema (schema, element,
+ | complexType, string etc.) come from the "http://www.w3.org/2001/XMLSchema"
+ | namespace and should be prefixed with xs:
+ |
+ -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!--
@@ -32,7 +51,7 @@
         <dependency>
             <groupId>org.grouter</groupId>
             <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
