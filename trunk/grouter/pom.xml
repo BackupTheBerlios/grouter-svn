@@ -111,6 +111,20 @@
             <artifactId>commons-lang</artifactId>
             <version>2.1</version>
         </dependency>
+	<!-- remove this when hibernate 3.1 is final and pom is ok -->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>logkit</groupId>
+            <artifactId>logkit</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+
+
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
@@ -155,6 +169,11 @@
                 <groupId>geronimo-spec</groupId>
                 <artifactId>geronimo-spec-activation</artifactId>
                 <version>1.0.2-rc4</version>
+            </dependency>
+            <dependency>
+                <groupId>geronimo-spec</groupId>
+                <artifactId>geronimo-spec-jta</artifactId>
+                <version>1.0.1B-rc4</version>
             </dependency>
             <dependency>
                 <groupId>geronimo-spec</groupId>
