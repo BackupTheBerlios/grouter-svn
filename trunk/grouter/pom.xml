@@ -1,23 +1,35 @@
+<!--
+| If you use a good editor like Intlellij and specify the xsi:schemalocations
+| the editor should be able to pick upp the schema and use it for validation
+| and auto completion on xml elements in your pom.xml
+| The xmlns attribute specifies the dfault namespace for this xml document.
+| Many (all?) eleemnts can be referenced using their xml element name. Some cruicial
+| ones you should now about include:
+| ${project.version}   - the version of the artifact produced by the project
+| ${basedir}           - the projects root location, from which you can specify the src
+                         directory relatively to the projects (pom.xml) home location
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!--
     | This is the version for the POM model Maven 2 uses, it is something
     | you will probably never change (unless Maven decides to upgrade
     | the version number - but then you probably have to look through
-    | the whole pom.xml file)
+    | the whole pom.xml file). It has a corresponding schema on
+    | http://maven.apache.org/maven-v4_0_0.xsd
     -->
     <modelVersion>4.0.0</modelVersion>
     <!--
     | The groupId element is a unique identifier of the organization
     | or group that created the project. This value is used to group
-    | all jars for a project into directories. E.g. in this example
-    | GroupId will generate a folder structure of $MVNREPOS/org/grouter
+    | all artifacts (jars, wars, ears, poms etc) for a project into
+    | directories. E.g. in this example
+    | GroupId will generate a folder structure of $M2_REPO/org/grouter
     | on a mvn install. You will notice that many artifacts at ibiblio
     | do not use this type of structure (org.something)- instead they
     | place the groupId(folder) in the root structure. Maven encourages
     | you to use your reverse www address as a starting point for
-    | this element, so a e.g. org.apache.jakarta.commons would be a
-    | good candidate.
+    | this element.
     -->
     <groupId>org.grouter</groupId>
     <!--
@@ -31,35 +43,56 @@
     <!--
     | The packaging element tells you what type of artifact will be
     | produced. There are several type of artifacts supported, like
-    | war and ear type artifacts. The packaging element can also play a
-    | part in customizing the build process.
+    | war and ear type artifacts.
     -->
     <packaging>pom</packaging>
     <!--
     | The version elelent is appended to the artifactId. During development
-    | you should use a SNAPSHOT dependency. What it means is that
-    | if you are working towards a 2.0 release then as a developer
-    | you enter 2.0-SNAPSHOT
+    | you should/could use a SNAPSHOT dependency.
+    | What are SNAPSHOT dependencies and how could they be used? Say you have
+    | a CI server watching cvs and doing rebuilds of your project artifacts
+    | and thereafter an install of the artifacts in the remote repostiory
+    | (remote for the developers, local for the CI server). If the project team
+    | uses binary SNAPSHOT dependencies they will on a daily basis get new
+    | binaries from the remote repository to their local repository. This means
+    | they will be on the bleeding edge of development - a matter of choice.
     -->
     <version>1.0-SNAPSHOT</version>
     <!--
     | Description will go to generated documentation reports.
     -->
     <description>GRouter is aimed to provide routing mechanism for messages
-    with destinations including jms, ejb, file, email etc.</description>
+        with destinations including jms, ejb, file, email etc.</description>
     <!--
-    | A name used for documentation.
+    | A name used for documentation and in the command console showing the
+    | dependency order of a multi project build.
     -->
     <name>grouter parent project</name>
     <!--
-    | Url used for documentation.
+    | Url used for documentation reports.
     -->
     <url>http://grouter.berlios.de/</url>
 
 
     <!--
-    | The developers element describe the committers to a project. Enter
-    | all the project developers committing to the project.
+    | This is where we put all child modules to be built. In Maven 1
+    | the reactor plugin was used and you pointed to a root directory from w
+    | where is would start a traversal for project.xml file - this is
+    | no longer the case. Instead we explicitly point to all child modules
+    | which makes the build process a lot more faster.
+    -->
+    <modules>
+        <module>modules/common</module>
+        <module>modules/domain</module>
+        <!--module>modules/router/grouter</module>
+       <module>modules/router/grouterconfig</module -->
+    </modules>
+
+
+
+    <!--
+    | The developers element describe the committers to a project. Will produced
+    | in the documentation.
     -->
     <developers>
         <developer>
@@ -78,8 +111,8 @@
 
     <!--
     | If you have any internal repository you will have to put them here.
-    | This is great if e.g. you are working offline or you are producing
-    | project specific plugins you want to distribute to developer in
+    | This is great if e.g. you are working offline (not allowed Internet
+    | access). or you are producing project specific plugins you want to distribute to developer in
     | the project transparently.
     -->
     <repositories>
@@ -90,9 +123,35 @@
         </repository>
     </repositories>
 
+
+
+    <!--
+    | If you want to use an internal repository for plugin management. This
+    | is good for putting slightly modified plugins in a corporate environment.
+    | A use case could be if you want to use the castor plugin - but that
+    | plugin has dependency on castor 0.9.7 and you must use castor 0.9.9.1
+    | This can also be specified at the plugin level in you pom.xml - but I
+    | had problems getting this to work (maven2 version 2.0.1) for multi project
+    | builds.
+    -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>internalplugins</id>
+            <name>Internal plugins or modified plugins</name>
+            <url>http://internals.corporate.server/mavenrepository</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <!--
     | Put all global dependencies here instead of spreading them out in
     | different child modules - an oo way of handling dependencies.
+    | The difference of putting a dependency in this section compare to the
+    | dependecy managment section is that dependencies in this section get
+    | inherited by all child poms - this might be desired for some
+    | 3rd party dependencies like log4j. Putting the dependency in the
+    | dependencyManagement section forces the owner of a child pom to explicitly
+    | state a dependency - however with no version since that should
+    | always be handled in the root pom.
     -->
     <dependencies>
         <dependency>
@@ -111,7 +170,6 @@
             <artifactId>commons-lang</artifactId>
             <version>2.1</version>
         </dependency>
-	<!-- remove this when hibernate 3.1 is final and pom is ok -->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
@@ -122,9 +180,6 @@
             <artifactId>logkit</artifactId>
             <version>2.0</version>
         </dependency>
-
-
-
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
@@ -139,9 +194,9 @@
 
 
     <!--
-    | Put semi-global dependencies here, i.e. dependencies which
-    | should be inherited by some of the child modules/projects of this
-    | parent, but not all.
+    | Dependencies that should be inherited by some of the child poms
+    | of this parent, but not all. Child poms need not enter version
+    | since it is inherited from the root/parent pom.
     -->
     <dependencyManagement>
         <dependencies>
@@ -258,6 +313,9 @@
     -->
     <reporting>
         <plugins>
+            <!--
+            |  This report is generated from POM meta data.
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -274,6 +332,17 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+            <!--
+            |  This is another plugin for producing reports on how much
+            | unit tests we are doing. Remember that plugins run in
+            | their own classloader. Dependencies can be put into the
+            | plugin (or if you modify a plugin and put it into an interla
+            | plugrepos you can alter it in the plugins dependency section of
+            | the pom)
+            -->
+            <plugin>
+                <artifactId>maven-clover-plugin</artifactId>
             </plugin>
         </plugins>
     </reporting>
@@ -341,20 +410,6 @@
         <developerConnection>https://developername@svn.berlios.de/svnroot/repos/grouter/trunk</developerConnection>
         <url>http://svn.berlios.de/wsvn/grouter</url>
     </scm>
-
-    <!--
-    | This is where we put all child modules to be built. In Maven 1
-    | the reactor plugin was used and you pointed to a root directory from w
-    | where is would start a traversal for project.xml file - this is
-    | no longer the case. Instead we explicitly point to all child modules
-    | which makes the build process a lot more faster.
-    -->
-    <modules>
-        <module>modules/common</module>
-        <module>modules/domain</module>
-        <!--module>modules/router/grouter</module>
-        <module>modules/router/grouterconfig</module -->
-    </modules>
 
 
     <!--
@@ -469,11 +524,11 @@
                     <archive>
                         <manifest>
                             <mainClass>none</mainClass>
-                            <packageName>org.grouter</packageName>
+                            <packageName>${package}</packageName>
                         </manifest>
                         <manifestEntries>
                             <mode>development</mode>
-                            <url>${pom.url}</url>
+                            <url>${project.url}</url>
                         </manifestEntries>
                     </archive>
                 </configuration>
