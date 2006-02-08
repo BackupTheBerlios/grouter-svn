@@ -36,8 +36,7 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
     {
         String hsql = "from Message obj where obj.nodeId = : nodeId";
         Query qr = getSession().createQuery(hsql);
-        List<Message> result = (List<Message>) qr.setParameter("nodeId",nodeId).list();
-        return result;
+        return (List<Message>) qr.setParameter("nodeId",nodeId).list();
     }
 
 }

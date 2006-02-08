@@ -8,10 +8,10 @@ import java.util.HashSet;
  */
 public class Country
 {
-	String id;
-	String name;
-	String timeZone;
-	Set<Address> addresses = new HashSet();
+	private String id;
+	private String name;
+	private String timeZone;
+	private Set<Address> addresses = new HashSet();
 
 	public Set<Address> getAddresses()
 	{

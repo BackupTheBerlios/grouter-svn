@@ -75,10 +75,10 @@ public abstract class HibernateTest extends TestCase
             }
             finally
             {
-                if(session == null || session.getTransaction() == null)
+                boolean isSessionOrTransactionNull = (session == null || session.getTransaction() == null);
+                if(isSessionOrTransactionNull)
                 {
                     log.error("SessionFactory not properly initialised - no session retrieved!");
-                    return;
                 }
                 if (!rollback)
                 {

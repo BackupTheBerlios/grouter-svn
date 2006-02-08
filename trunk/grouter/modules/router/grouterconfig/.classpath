@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="M2_REPO/xmlbeans/xbean/2.0.0/xbean-2.0.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/xmlbeans/xmlbeans-jsr173-api/2.0.0/xmlbeans-jsr173-api-2.0.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/siri/feederconfig/1.0-SNAPSHOT/feederconfig-1.0-SNAPSHOT.jar"/>
-	<classpathentry kind="output" path="classes"/>
-</classpath>

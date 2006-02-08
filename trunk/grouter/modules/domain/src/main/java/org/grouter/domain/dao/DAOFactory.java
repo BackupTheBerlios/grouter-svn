@@ -26,7 +26,7 @@ public abstract class DAOFactory
     // public static final DAOFactory EJB3_PERSISTENCE = new org.hibernate.ce.auction.dao.ejb3.Ejb3DAOFactory();
     public static DAOFactory HIBERNATE = new org.grouter.domain.dao.hibernate.HibernateDAOFactory();
     public static DAOFactory DEFAULT = HIBERNATE;
-    public enum FactoryType {EJB3_PERSISTENCE,HIBERNATE,HIBERNATESPRING};
+    public enum FactoryType {EJB3_PERSISTENCE,HIBERNATE,HIBERNATESPRING}
 
     public static DAOFactory getFactory(FactoryType factoryType)
     {
@@ -40,8 +40,7 @@ public abstract class DAOFactory
             }
             case HIBERNATESPRING:
             {
-                HibernateSpringDAOFactory factory = (HibernateSpringDAOFactory)GlobalBeanLocator.getBean("hibernateSpringDAOFactory");
-                return factory; 
+                return (HibernateSpringDAOFactory)GlobalBeanLocator.getBean("hibernateSpringDAOFactory");
             }
         }
         return null;

@@ -6,10 +6,10 @@ package org.grouter.domain;
  */
 public class Address
 {
-	String id;
-	String name;
-	String address;
-	Country country;
+	private String id;
+	private String name;
+	private String address;
+	private Country country;
 
 	public String getId()
 	{

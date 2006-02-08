@@ -4,7 +4,6 @@ import java.util.Set;
 
 public class Sender
 {
-
 	/**
 	 * @directed true
 	 */

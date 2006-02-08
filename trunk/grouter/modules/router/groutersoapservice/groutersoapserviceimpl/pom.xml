@@ -108,8 +108,9 @@
 								url="${project.build.directory}/generated-source/axis/ws-grouterservice.wsdl" verbose="true" testcase="false" serverside="true" skeletondeploy="true">
 									<mapping namespace="http://grouter.org/ws/grouterservice/${project.version}" package="org.grouter.core.GRouterServiceImpl"/>
 								</axis-wsdl2java>
+								
 								<echo>creating the server config wsdd.</echo>
-								<java logerror="yes" classname="org.apache.axis.utils.Admin" fork="true" dir="${project.build.directory}/">
+								<java logerror="yes" classname="org.apache.axis.utils.Admin" fork="true" dir="${project.build.directory}/generated-source/">
 									<arg value="server"/>
 									<arg value="${project.build.directory}/generated-source/axis/ws-grouterservicewewewewew.wsdd"/>
 								</java>
