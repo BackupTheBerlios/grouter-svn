@@ -17,3 +17,20 @@ svn commit -m "Saving recent changes"
 See what files have changed
 svn status
 
+
+To login at BerliOS use:
+$ ssh -l leon shell.berlios.de
+
+The project directory for html documents can be found at:
+/home/groups/phial/htdocs
+
+The project directory for ftp downloads can be found at:
+/home/groups/ftp/pub/phial
+
+To transfer files to these directories use Secure Copy:
+
+$ scp local.html leon@shell.berlios.de:/home/groups/phial/htdocs
+
+or
+
+$ scp local.tar.gz leon@shell.berlios.de:/home/groups/ftp/pub/phial
