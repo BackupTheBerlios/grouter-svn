@@ -3,7 +3,7 @@
 
     <parent>
         <groupId>org.grouter</groupId>
-        <artifactId>grouter</artifactId>
+        <artifactId>platform</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <inceptionYear>2005</inceptionYear>
