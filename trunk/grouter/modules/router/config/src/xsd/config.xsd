@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  targetNamespace="http://feeder.siri.org/config.xsd"
+            xmlns="http://feeder.siri.org/config.xsd"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:mstns="http://feeder.siri.org/config.xsd"
+            elementFormDefault="qualified">
+	<!-- Root element  -->
+	<xs:element name="FeederConfig">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GlobalSettings" type="globalSettingsType"/>
+				<xs:element name="FeederNode" type="feederNodeType" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- First level 	-->		
+	<!-- GlobalSettings -->	
+	<xs:complexType name="globalSettingsType">
+		<xs:sequence>
+			<xs:element name="ArchiveHandler" type="archivehandlerType"/>
+			<xs:element name="Email" type="emailType"/>
+			<!-- xs:element ref="FeederRootPath"/ -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- FeederNode -->
+	<xs:complexType name="feederNodeType">
+		<xs:sequence>
+			<xs:element name="poll" type="pollType" minOccurs="0"/>
+			<xs:element name="infolder" type="infolderType" minOccurs="0"/>
+			<xs:element name="emailsettings" type="emailsettingsType" minOccurs="0"/>
+			<xs:element name="outfolder" type="outfolderType" minOccurs="0"/>
+			<xs:element name="backup" type="backupType" minOccurs="0"/>
+			<xs:element name="transform" type="transformType" minOccurs="0"/>
+			<xs:element name="error" type="errorType"/>
+			<xs:element name="inactivity" type="inactivityType"/>
+			<xs:element name="nameservice" type="nameserviceType" minOccurs="0"/>
+			<!-- xs:element name="applicationlogger" type="loggingType"/>
+			<xs:element name="messagelogger" type="loggingType"/ -->
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string" use="required"/>
+		<xs:attribute name="id" use="required"/>
+		<xs:attribute name="usesrelativerootpath" type="xs:boolean" use="required"/>
+		<xs:attribute name="createuniquename" type="xs:boolean"/>
+	</xs:complexType>
+	
+	<!-- FeederNode::pollType -->
+	<xs:complexType name="pollType">
+		<xs:sequence>
+			<xs:element ref="message"/>
+			<xs:element ref="intervallInMilliSeconds"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- FeederNode::infolderType -->
+	<xs:complexType name="infolderType">
+		<xs:sequence>
+			<xs:element ref="infolderpath"/>
+			<xs:element ref="intervallInMilliSeconds"/>
+			<xs:element ref="skipfirstblankline"/>
+			<xs:element ref="sortalpha" minOccurs="0"/>
+			<xs:element name="infoldersendchunks" type="infoldersendchunksType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- FeederNode::emailsettingsType -->
+	<xs:complexType name="emailsettingsType">	
+        <xs:sequence>
+			<xs:element ref="emailbatchsize"/>
+			<xs:element ref="emailsendintervallInMilliSeconds"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- FeederNode::outfolderType -->
+	<xs:complexType name="outfolderType">
+		<xs:sequence>
+			<xs:element ref="outfolderpath"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- FeederNode::backupType -->	
+	<xs:complexType name="backupType">
+		<xs:sequence>
+			<xs:element ref="backupfolderpath"/>
+			<xs:element ref="archivefolderpath"/>
+			<xs:element ref="sortalpha" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="backuphandleron" type="xs:boolean" use="required"/>
+		<xs:attribute name="archiveron" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	
+	<!-- FeederNode::transformType -->	
+	<xs:complexType name="transformType">
+		<xs:sequence>
+			<xs:element name="transformfile" type="transformfileType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="transformon" type="xs:boolean" use="required"/>
+	</xs:complexType>
+
+	<!-- FeederNode::errorType -->	
+	<xs:complexType name="errorType">
+		<xs:sequence>
+			<xs:element ref="errorfolderpath"/>
+			<xs:element ref="errorinfofolderpath"/>
+			<xs:element ref="sortonresend"/>
+			<xs:element ref="CronJob"/>
+			<xs:element name="errornotification" type="errornotificationType"/>
+		</xs:sequence>
+		<xs:attribute name="errorhandleron" type="xs:boolean" use="required"/>
+	</xs:complexType>
+
+	<!-- FeederNode::inactivityType -->		
+	<xs:complexType name="inactivityType">
+		<xs:sequence>
+			<xs:element ref="maxInactivityPeriodInMilliSeconds" minOccurs="0"/>
+			<xs:element ref="emailOnInactivity" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="inactivityOn" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	
+	<!-- FeederNode::nameserviceType -->		
+	<xs:complexType name="nameserviceType">
+		<xs:sequence>
+			<xs:element ref="iorpath"/>
+			<xs:element ref="objectname"/>
+			<xs:element ref="objectmethod"/>
+			<xs:element ref="paramtype"/>
+			<xs:element ref="reconnectToObjectInMilliSeconds"/>
+			<xs:element ref="reconnectToObjectPolicy"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="appenderType">
+		<xs:sequence>
+			<xs:element ref="maxfilesize" minOccurs="0"/>
+			<xs:element ref="maxbackupindex" minOccurs="0"/>
+			<xs:element ref="rollingschedule" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:element name="archivefolderpath" type="xs:anyURI"/>
+	<xs:complexType name="archivehandlerType">
+		<xs:sequence>
+			<xs:element ref="CronJob"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="backupfolderpath" type="xs:anyURI"/>
+	<xs:element name="emailbatchsize" type="xs:short"/>
+	<xs:complexType name="emailnotificationType">
+		<xs:sequence>
+			<xs:element ref="emailonfailure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="emailonfailure" type="xs:anyURI"/>
+	<xs:element name="emailsendintervallInMilliSeconds" type="xs:long"/>
+	<xs:element name="emailservice" type="xs:anyURI"/>
+	
+	<xs:element name="maxInactivityPeriodInMilliSeconds" type="xs:long"/>
+	<xs:element name="emailOnInactivity" type="xs:anyURI"/>
+	
+	<xs:element name="errorfolderpath" type="xs:anyURI"/>
+	<xs:element name="errorinfofolderpath" type="xs:anyURI"/>
+
+	<xs:complexType name="errornotificationType">
+		<xs:sequence>
+			<xs:element ref="notifyeveryintervallInMilliSeconds" minOccurs="0"/>
+			<xs:element ref="numberoferrors" minOccurs="0"/>
+			<xs:element name="emailnotification" type="emailnotificationType" minOccurs="0"/>
+			<xs:element name="sms" type="smsType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="errornotificationon" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	<xs:element name="notifyeveryintervallInMilliSeconds" type="xs:long"/>
+	<xs:element name="infolderchunksize" type="xs:short"/>
+	<xs:element name="infolderchunkthreshold" type="xs:short"/>
+	<xs:element name="infolderpath" type="xs:anyURI"/>
+	<xs:complexType name="infoldersendchunksType">
+		<xs:sequence>
+			<xs:element ref="infolderchunksize"/>
+			<xs:element ref="infolderchunkthreshold"/>
+		</xs:sequence>
+		<xs:attribute name="sendinfolderchunkson" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	<xs:element name="CronJob" type="cronintervallType"/>
+	<xs:simpleType name="cronintervallType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="intervallInMilliSeconds">
+		<xs:simpleType>
+			<xs:restriction base="xs:long">
+				<xs:minInclusive value="2000"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="logfolderpath" type="xs:anyURI"/>
+	<!--xs:complexType name="loggingType">
+		<xs:sequence>
+			<xs:element name="appender" type="appenderType"/>
+			<xs:element ref="logpattern"/>
+			<xs:element ref="logfolderpath"/>
+			<xs:element ref="loglevel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="logpattern" type="xs:string"/>
+	<xs:element name="loglevel" type="loglevelType"/>
+	<xs:simpleType name="loglevelType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DEBUG"/>
+			<xs:enumeration value="INFO"/>
+			<xs:enumeration value="WARN"/>
+			<xs:enumeration value="ERROR"/>
+			<xs:enumeration value="FATAL"/>
+		</xs:restriction>
+	</xs:simpleType-->
+	<xs:element name="maxbackupindex" type="xs:short"/>
+	<xs:element name="maxfilesize" type="xs:string"/>
+	<xs:element name="rollingschedule" type="xs:string"/>
+	<xs:element name="message" type="xs:string"/>
+	
+	<xs:element name="iorpath" type="xs:anyURI"/>
+	<xs:element name="objectmethod" type="xs:string"/>
+	<xs:element name="objectname" type="xs:string"/>
+	<xs:element name="paramtype" type="xs:string"/>
+	<xs:element name="reconnectToObjectInMilliSeconds" type="xs:long"/>
+	<xs:element name="reconnectToObjectPolicy" type="reconnectToObjectPolicyType"/>
+	<xs:simpleType name="reconnectToObjectPolicyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="reconnectOnNewMessage"/>
+			<xs:enumeration value="reconnectForever"/>
+			<xs:enumeration value="doNotReconnect"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="numberoferrors" type="xs:short"/>
+	<xs:element name="outfolderpath" type="xs:anyURI"/>
+	<xs:element name="servicerootpath" type="xs:anyURI"/>
+	<xs:element name="skipfirstblankline" type="xs:boolean"/>
+	<xs:complexType name="smsType">
+		<xs:sequence>
+			<xs:element ref="smsonfailure"/>
+			<xs:element ref="smsservice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="smsonfailure" type="xs:anyURI"/>
+	<xs:element name="smsservice" type="xs:anyURI"/>
+	<xs:element name="sortalpha" type="xs:boolean"/>
+	<xs:element name="sortonresend" type="xs:boolean"/>
+	
+	<xs:complexType name="transformfileType">
+		<xs:simpleContent>
+			<xs:extension base="transformfileSimpleType">
+				<xs:attribute name="transformmessage" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="transformfileSimpleType">
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
+	<xs:complexType name="emailType">
+		<xs:sequence>
+			<xs:element name="smtp" type="smtpType" minOccurs="0"/>
+			<xs:element name="pop" type="popType" minOccurs="0"/>
+			<xs:element name="imap" type="imapType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="sendintervallInMilliSeconds" type="xs:long" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="imapType">
+		<xs:sequence>
+			<xs:element name="imapserver" type="imapserverType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="imapserverType">
+		<xs:simpleContent>
+			<xs:extension base="imapserverSimpleType">
+				<xs:attribute name="id" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="imapserverSimpleType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="popType">
+		<xs:sequence>
+			<xs:element name="popserver" type="popserverType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="popserverType">
+		<xs:simpleContent>
+			<xs:extension base="popserverSimpleType">
+				<xs:attribute name="id" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="popserverSimpleType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="smtpType">
+		<xs:sequence>
+			<xs:element name="smtpserver" type="smtpserverType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="smtpserverType">
+		<xs:simpleContent>
+			<xs:extension base="smtpserverSimpleType">
+				<xs:attribute name="id" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="smtpserverSimpleType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+</xs:schema>
