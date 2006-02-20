@@ -17,11 +17,12 @@ public class SystemUser implements Serializable
     /**
 	 * No duplicate elements and the ordering is not relevant for us -> Set
 	 */
-    private Set groups ;
+    private Set<SystemGroup> groups = new HashSet();
+    
     /**
 	 * No duplicate elements and the ordering is not relevant for us -> Set
 	 */
-    private Set passwords ;
+    private Set<Password> passwords = new HashSet();
     private Password currentPassword ;
     private String fullName ;
     private String description ;
@@ -78,8 +79,9 @@ public class SystemUser implements Serializable
 
     public void addPassword (Password password)
     {
-        passwords.add(password) ;
+        this.getPasswords().add(password);
     }
+
     public void setName (String name)
     {
         this.name = name ;

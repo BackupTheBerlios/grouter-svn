@@ -9,13 +9,12 @@
         <property name="modifiedOn" not-null="false" type="timestamp" column="MODIFIEDON"/>
         <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
 
-        <set name="messages" cascade="all" lazy="true" inverse="true" table="MESSAGES">
+        <!--set name="messages" cascade="all" lazy="true" inverse="true" table="MESSAGES">
             <key>
                 <column name="MESSAGEID" not-null="true"/>
-                <!-- id column in other table -->
             </key>
             <one-to-many class="org.grouter.domain.Message"/>
-        </set>
+        </set-->
 
         <!-- column is for this table -->
         <many-to-one

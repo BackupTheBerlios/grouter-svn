@@ -22,6 +22,7 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
      */
     public SystemUserDAOHibernate()
     {
+        super(SystemUser.class);
     }
 
     public SystemUserDAOHibernate(Session session)
@@ -35,9 +36,9 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
         return getSession().createCriteria(concreteClass).list();
     }
 
-    public void createSystemUser(SystemUser systemUser)
+    public SystemUser createSystemUser(SystemUser systemUser)
     {
-
+        return saveOrUpdate(systemUser);
     }
 
     public void removeUser(Long id)
@@ -58,5 +59,10 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
     public boolean userExists(Long id)
     {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    protected void setSession(Session s)
+    {
+        session = s;
     }
 }

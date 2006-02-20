@@ -10,14 +10,32 @@
         <!-- cache usage="read-only" / -->
         <property name="name" not-null="false" type="java.lang.String" column="MESSAGE"/>
 
-        <!-- Inverse end. set-key-column-name is the foreign key in the sets-table  -->
+        <!--
+            The key element is the name of the foreign key in the MESSAGE table (the
+            parent's id or in this case the Senders id).
+            The one-to-many element is the class name of other side of the raltionships (the
+            child class name).
+
+            Tables:
+                 MESSAGE
+                 ID     NAME     CREATIONTIME       SENDERID_FK
+            
+                 SENDER
+                 ID     NAME
+         -->
         <set name="messages" cascade="all" lazy="true" inverse="true" table="MESSAGE">
             <key>
-                <column name="MESSAGEID" not-null="true"/>
-                <!-- id column in other table -->
+                <column name="SENDERID" not-null="true"/>
             </key>
             <one-to-many class="org.grouter.domain.Message"/>
         </set>
+
+        <!--set name="books" inverse="false" >
+			<key>
+				<column name="customer_fk"></column>
+			</key>
+			<one-to-many class="Book" />
+		</set-->
 
     </class>
 </hibernate-mapping>

@@ -13,10 +13,13 @@ import org.grouter.domain.systemuser.Password;
 import org.grouter.domain.*;
 import junit.framework.TestCase;
 
-public abstract class HibernateTest extends TestCase
+/**
+ * Unit test configuration is coded in here.
+ */
+public abstract class TestHibernate extends TestCase
 {
     Log4JInit log4j = new Log4JInit();
-    private static Log log = LogFactory.getLog(HibernateTest.class);
+    private static Log log = LogFactory.getLog(TestHibernate.class);
 
     protected final DAOFactory DAOFACTORY = DAOFactory.HIBERNATE;
     protected static SessionFactory sessionFactory;
@@ -29,22 +32,24 @@ public abstract class HibernateTest extends TestCase
         Configuration config = new Configuration().
                 setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect").
                 setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver").
-                setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:domaintest").
+                //setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:domaintest").
+                setProperty("hibernate.connection.url", "jdbc:hsqldb:hsql://localhost:9001/grouter_alias").
                 setProperty("hibernate.connection.username", "sa").
                 setProperty("hibernate.connection.password", "").
                 setProperty("hibernate.connection.pool_size", "1").
                 setProperty("hibernate.connection.autocommit", "true").
                 setProperty("hibernate.cache.provider_class", "org.hibernate.cache.HashtableCacheProvider").
-                setProperty("hibernate.hbm2ddl.auto", "create-drop").
+                //setProperty("hibernate.hbm2ddl.auto", "create").  //create-drop
                 setProperty("hibernate.show_sql", "true").
                 setProperty("hibernate.current_session_context_class", "thread").
+                setProperty("hibernate.jdbc.batch_size", "0").
                 addClass(SystemUser.class).
                 addClass(SystemGroup.class).
                 addClass(Password.class).
                 addClass(Message.class).
                 addClass(Receiver.class).
-                addClass(GRouter.class).
-                addClass(Node.class).
+                //addClass(GRouter.class).
+
                 addClass(Sender.class);
 
         HibernateUtilContextAware.buildSessionFactory(config);
@@ -72,6 +77,7 @@ public abstract class HibernateTest extends TestCase
             catch(Throwable thr)
             {
                 log.error(thr,thr);
+                throw thr;
             }
             finally
             {

@@ -5,8 +5,7 @@
     <class name="org.grouter.domain.systemuser.SystemGroup" table="SYSTEMGROUP" >
         <!--<cache usage="read-write"/>-->
         <id column="GROUPID" name="id" type="java.lang.Long">
-            <generator class="hilo">
-            </generator>
+            <generator class="hilo"/>
         </id>
         <property name="groupName" column="GROUPNAME" type="java.lang.String" not-null="true"/>
     </class>

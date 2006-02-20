@@ -1,4 +1,4 @@
-package org.grouter.domain.service.test;
+package org.grouter.domain.servicelayer.spring;
 
 import junit.framework.TestCase;
 import org.grouter.common.logging.Log4JInit;
@@ -13,16 +13,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Created by IntelliJ IDEA.
- * User: geopol
- * Date: 2005-nov-23
- * Time: 16:20:58
- * To change this template use File | Settings | File Templates.
+ *  Initialize Spring and setup up some basic data for unit tests.
+ *
  */
-public class SpringTest extends TestCase
+public abstract class TestGrouterServiceInit extends TestCase
 {
     private Log4JInit log4j = new Log4JInit();
-    private static Log log = LogFactory.getLog(SpringTest.class);
+    private static Log log = LogFactory.getLog(TestGrouterServiceInit.class);
     private final static String BEANSCONFIGFILE = "spring/applicationContext.xml";
     protected static BeanFactory factory;
     protected static SystemUser systemUser;
@@ -32,14 +29,14 @@ public class SpringTest extends TestCase
 
     static
     {
+        // Spring init
         factory = new ClassPathXmlApplicationContext(BEANSCONFIGFILE);
+        GlobalBeanLocator.setBeanFactory(factory);
+
+        // Data
         inThreeDays.roll(Calendar.DAY_OF_YEAR, 3);
         inFiveDays.roll(Calendar.DAY_OF_YEAR, 5);
         nextWeek.roll(Calendar.WEEK_OF_YEAR, true);
-
-        //Init global factory for DAOFactory to work
-        GlobalBeanLocator.setBeanFactory(factory);
-
 
         systemUser = new SystemUser("Albert","Albert Einstein","genious",true,3, Calendar.getInstance(),nextWeek );
     }

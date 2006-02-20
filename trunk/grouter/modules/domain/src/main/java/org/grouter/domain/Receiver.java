@@ -1,51 +1,70 @@
 package org.grouter.domain;
 
+import java.util.Set;
+import java.util.HashSet;
+
 public class Receiver
 {
-	/**
-	 * @directed true
-	 */
-	private Address address;
-	private String id;
-	private String name;
-	private Message message;
+    /**
+     * @directed true
+     */
+    private Address address;
+    private String id;
+    private String name;
+    private Set<Message> messages = new HashSet();
 
-	public Receiver()
-	{
-	}
+    public Set<Message> getMessages()
+    {
+        return messages;
+    }
 
-	public Message getMessage()
-	{
-		return message;
-	}
+    public void setMessages(Set<Message> messages)
+    {
+        this.messages = messages;
+    }
 
-	public void setMessage(Message message)
-	{
-		this.message = message;
-	}
+    public Receiver()
+    {
+    }
 
-	public String getName()
-	{
-		return name;
-	}
+    public Receiver(String name)
+    {
+        this.name = name;
+    }
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
 
-	public String getId()
-	{
-		return id;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public Receiver(String name)
-	{
-		this.name = name;
-	}
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
-	private void setId(String id)
-	{
-		this.id = id;
-	}
+    public String getId()
+    {
+        return id;
+    }
+
+
+    private void setId(String id)
+    {
+        this.id = id;
+    }
+
+    public void addToMessages(Message message)
+    {
+        this.getMessages().add(message);
+        //message.addToReceivers(this);
+    }
+
+    public void removeFromMessages(Message message)
+    {
+        this.getMessages().remove(message);
+        //message.removeFromReceivers(this);
+    }
+
+
 }

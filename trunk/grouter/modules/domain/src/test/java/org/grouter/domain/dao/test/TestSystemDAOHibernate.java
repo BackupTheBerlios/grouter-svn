@@ -6,15 +6,14 @@ package org.grouter.domain.dao.test;
  * @author Georges Polyzois
  */
 
-import org.grouter.domain.dao.test.TestCaseWithData;
 import org.grouter.domain.dao.SystemUserDAO;
 import org.grouter.domain.systemuser.SystemUser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SystemDAOHibernateTest extends TestCaseWithData
+public class TestSystemDAOHibernate extends TestData
 {
-    private static Log log = LogFactory.getLog(SystemDAOHibernateTest.class);
+    private static Log log = LogFactory.getLog(TestSystemDAOHibernate.class);
 
     /**
      * Checks if the loaded user is found.

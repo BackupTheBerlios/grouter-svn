@@ -18,6 +18,7 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
      */
     public MessageDAOHibernate()
     {
+        super(Message.class);
     }
 
     public MessageDAOHibernate(Session session)
@@ -37,6 +38,11 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
         String hsql = "from Message obj where obj.nodeId = : nodeId";
         Query qr = getSession().createQuery(hsql);
         return (List<Message>) qr.setParameter("nodeId",nodeId).list();
+    }
+
+    public void setSession(Session s)
+    {
+        session = s;
     }
 
 }

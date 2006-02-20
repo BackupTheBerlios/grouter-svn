@@ -3,6 +3,7 @@ package org.grouter.domain;
 import org.apache.log4j.Logger;
 
 import java.util.Set;
+import java.util.HashSet;
 import java.sql.Timestamp;
 
 /**
@@ -13,7 +14,7 @@ public class GRouter
     private static Logger logger = Logger.getLogger(GRouter.class);
     private String id;
     private String name;
-    private Set<Node> nodes;
+    private Set<Node> nodes = new HashSet();
     private Timestamp startedOn;
     private long upTime;
 

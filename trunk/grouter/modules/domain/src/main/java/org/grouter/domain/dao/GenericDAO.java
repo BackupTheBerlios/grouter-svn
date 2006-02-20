@@ -22,7 +22,7 @@ public interface GenericDAO<T, ID extends Serializable>
 {
     T findById(ID id, boolean lock);
     List<T> findAll();
-    List<T> findByExample(T exampleInstance);
+    List<T> findByExample(T exampleInstance, String... excludeProperty);
     T saveOrUpdate(T entity);
     void delete(T entity);
 }

@@ -20,23 +20,28 @@ import java.io.Serializable;
  *
  * @author Georges Polyzois
  */
-public class GenericHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID>
+public abstract class GenericHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID>
 {
     private Class<T> entityClass;
-    private Session session;
+    protected Session session;
 
-    public GenericHibernateDAO(Class<T> persistentClass, Session session)
-    {
+    protected GenericHibernateDAO(Class<T> persistentClass) {
+        this.entityClass = persistentClass;
+    }
+
+    public GenericHibernateDAO(Class<T> persistentClass, Session session) {
         this.entityClass = persistentClass;
         this.session = session;
     }
 
-    public GenericHibernateDAO()
-    {
-    }
+    protected abstract void setSession(Session s);
 
     protected Session getSession()
     {
+        if (session == null)
+        {
+            throw new IllegalStateException("Session has not been set on DAO before usage");
+        }
         return session;
     }
 
@@ -56,7 +61,6 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
         {
             entity = (T) getSession().load(getEntityClass(), id);
         }
-
         return entity;
     }
 
@@ -67,9 +71,14 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> findByExample(T exampleInstance)
-    {
-        return findByCriteria(Example.create(exampleInstance));
+    public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
+        Criteria crit = getSession().createCriteria(getEntityClass());
+        Example example =  Example.create(exampleInstance);
+        for (String exclude : excludeProperty) {
+            example.excludeProperty(exclude);
+        }
+        crit.add(example);
+        return crit.list();
     }
 
     @SuppressWarnings("unchecked")

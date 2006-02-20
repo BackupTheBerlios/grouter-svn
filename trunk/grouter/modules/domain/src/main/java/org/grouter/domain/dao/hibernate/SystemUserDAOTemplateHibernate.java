@@ -21,14 +21,14 @@ import java.util.*;
  *
  *
  */
-public class SystemUserDAOTemplateHibernate extends GenericHibernateDAO<SystemUser, Long> implements SystemUserDAO
+public class SystemUserDAOTemplateHibernate //extends GenericHibernateDAO<SystemUser, Long> implements SystemUserDAO
 {
     Logger logger = Logger.getLogger(SystemUserDAOTemplateHibernate.class);
 
 
     public SystemUserDAOTemplateHibernate(Session session)
     {
-        super(SystemUser.class, session);
+   //     super(SystemUser.class, session);
     }
 
     @SuppressWarnings("unchecked")
@@ -82,8 +82,9 @@ public class SystemUserDAOTemplateHibernate extends GenericHibernateDAO<SystemUs
         }
     }
 
-    public void createSystemUser(SystemUser systemUser) {
+    public Long createSystemUser(SystemUser systemUser) {
         //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     public void removeUser(Long id) {

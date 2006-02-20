@@ -8,30 +8,42 @@
         </id>
         <property name="creationTime" not-null="false" type="timestamp" column="CREATEDTIMESTAMP"/>
         <property name="message" not-null="false" type="java.lang.String" column="MESSAGECONTENT"/>
-        <set name="receivers" cascade="all" lazy="true" inverse="true" table="RECEIVER">
-            <key>
-                <column name="RECEIVERID" not-null="true"/>
-                <!-- id column in other table -->
-            </key>
-            <one-to-many class="org.grouter.domain.Receiver"/>
+
+        <set name="receivers" table="RECEIVER_MESSAGE" inverse="true" lazy="true" cascade="all">
+            <key column="MESSAGEID"/>
+            <many-to-many class="org.grouter.domain.Receiver" column="RECEIVERID"/>
         </set>
 
-        <!-- column is for this table -->
+
+        <!--set name="receivers" cascade="all" lazy="true" inverse="true" table="RECEIVER">
+            <key>
+                <column name="RECEIVERID" not-null="true"/>
+            </key>
+            <one-to-many class="org.grouter.domain.Receiver"/>
+        </set-->
+
+        <!-- The column attribute is for the FK residing in this table from the table SENDER.
+        Tables:
+                 MESSAGE
+                 ID     NAME     CREATIONTIME       SENDERID_FK
+                 SENDER
+                 ID     NAME
+        -->
         <many-to-one
                 name="sender"
-                not-null="false"
+                not-null="true"
                 class="org.grouter.domain.Sender"
                 column="SENDERID"
-                cascade="none">
+                cascade="save-update,persist">
         </many-to-one>
 
-         <!-- column is for this table -->
-        <many-to-one
+        <!-- column is for this table -->
+        <!--many-to-one
                 name="node"
                 not-null="false"
                 class="org.grouter.domain.Node"
                 column="NODEID"
                 cascade="none">
-        </many-to-one>
+        </many-to-one-->
     </class>
 </hibernate-mapping>

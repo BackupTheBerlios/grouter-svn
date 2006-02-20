@@ -4,17 +4,22 @@
 <hibernate-mapping>
     <class name="org.grouter.domain.Receiver" table="RECEIVER">
         <id column="RECEIVERID" name="id" type="java.lang.String">
-            <generator class="assigned"/>
+            <generator class="uuid"/>
         </id>
         <!-- "transactional|read-write|nonstrict-read-write|read-only -->
         <!-- cache usage="read-only" / -->
         <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
         <!--many-to-one
-            name="receivers"
-            not-null="false"
-            class="Receivers"
+            name="messages"
+            not-null="true"
+            class="Message"
             column="MESSAGEID"
             cascade="none">
         </many-to-one-->
+        <set name="messages" table="RECEIVER_MESSAGE" inverse="true">
+            <key column="RECEVIERID"/>
+            <many-to-many class="org.grouter.domain.Message" column="MESSAGEID"/>
+        </set>
+
     </class>
 </hibernate-mapping>

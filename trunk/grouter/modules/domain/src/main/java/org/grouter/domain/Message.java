@@ -40,7 +40,12 @@ public class Message
 		this.creationTime = creationTime;
 	}
 
-	public Message(String message, Set<Receiver> receivers, Sender sender)
+    public Message(String message)
+    {
+        this.message = message;
+    }
+
+    public Message(String message, Set<Receiver> receivers, Sender sender)
 	{
 		/*
 		 * if (message == null || receivers == null || sender == null) { throw new IllegalArgumentException("Non null
@@ -69,7 +74,7 @@ public class Message
 	/**
 	 * Prevent direct access to this Set.
 	 * 
-	 * @return
+	 * @return Set<Receiver>
 	 */
 	protected Set<Receiver> getReceivers()
 	{
@@ -109,8 +114,8 @@ public class Message
 	public void addToReceivers(Receiver receiver)
 	{
 		this.getReceivers().add(receiver);
-		receiver.setMessage(this);
-	}
+        //receiver.addToMessages(this);
+    }
 
 	/**
 	 * Enforce bi-directionality in Java - nothing special but needs to be done (in cotrast to ejb cmp).
@@ -120,7 +125,7 @@ public class Message
 	public void removeFromReceivers(Receiver receiver)
 	{
 		this.getReceivers().remove(receiver);
-		receiver.setMessage(null);
+        //receiver.removeFromMessages(this);
 	}
 
 }

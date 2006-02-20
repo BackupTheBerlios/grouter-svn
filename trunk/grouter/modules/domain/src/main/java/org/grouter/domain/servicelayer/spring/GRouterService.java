@@ -29,12 +29,20 @@ public class GRouterService
     {
     }
 
-    public void createSystemUser(SystemUser systemUser)
+    public SystemUser createSystemUser(SystemUser systemUser)
     {
-        log.debug("In create system user...");
+        log.debug("In createSystemUser..." );
         systemUserDAO = DAOFactory.getFactory(HIBERNATESPRING).getSystemUserDAO();////DAOFactory.DEFAULT.getSystemUserDAO();
-        systemUserDAO.createSystemUser(systemUser);
+        return systemUserDAO.createSystemUser(systemUser);
     }
+
+    public SystemUser findSystemUser(Long systemUserId)
+    {
+        log.debug("In findSystemUser...");
+        systemUserDAO = DAOFactory.getFactory(HIBERNATESPRING).getSystemUserDAO();////DAOFactory.DEFAULT.getSystemUserDAO();
+        return systemUserDAO.findById(systemUserId,false);
+    }
+
 
     public Message findMessagesForNode(String nodeId)
     {

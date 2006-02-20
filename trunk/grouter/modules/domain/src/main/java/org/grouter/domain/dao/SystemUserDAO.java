@@ -5,7 +5,7 @@ import org.grouter.domain.systemuser.SystemUser;
 
 public interface SystemUserDAO extends GenericDAO<SystemUser, Long>
 {
-    void createSystemUser(SystemUser systemUser);
+    SystemUser createSystemUser(SystemUser systemUser);
     void removeUser(Long id);
     void removeUser(String userName);
     boolean userExists(String userName);

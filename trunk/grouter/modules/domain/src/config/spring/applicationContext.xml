@@ -3,8 +3,8 @@
         "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-    <!-- Hibernate datasouce to be "springed". -->
-    <bean id="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!-- Hibernate datasouce to be injected. -->
+    <bean id="dataSourceHsqldb" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
         <!-- if external process use this property name="url"><value>jdbc:hsqldb:db/test</value></property-->
         <property name="url"><value>jdbc:hsqldb:mem:domaintest</value></property>
@@ -15,7 +15,7 @@
 
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="dataSource"><ref local="dataSource1"/></property>
+        <property name="dataSource"><ref local="dataSourceHsqldb"/></property>
         <property name="mappingResources">
             <list>
                 <value>org/grouter/domain/systemuser/SystemUser.hbm.xml</value>
@@ -24,6 +24,7 @@
                 <value>org/grouter/domain/Message.hbm.xml</value>
                 <value>org/grouter/domain/Receiver.hbm.xml</value>
                 <value>org/grouter/domain/Sender.hbm.xml</value>
+                <value>org/grouter/domain/Node.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -54,7 +55,7 @@
         <property name="sessionFactory"><ref local="sessionFactory"/></property>
     </bean>
 
-    <bean id="messageService" class="org.grouter.domain.servicelayer.spring.GRouterService">
+    <bean id="grouterService" class="org.grouter.domain.servicelayer.spring.GRouterService">
     </bean>
 
     <!-- Proxy to use for a transaction demarcated messageservice. Rollback is only done for
@@ -63,7 +64,7 @@
     <bean id="messageServiceManager"
           class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager"><ref local="transactionManager"/></property>
-        <property name="target"><ref local="messageService"/></property>
+        <property name="target"><ref local="grouterService"/></property>
         <property name="transactionAttributes">
             <props>
                 <prop key="createSystemUser">PROPAGATION_REQUIRED</prop>

@@ -54,11 +54,11 @@
         <property name="current_session_context_class">thread</property>
 
         <!-- Domain mapping files. -->
-        <mapping resource="org/siri/domain/Sender.hbm.xml"/>
-        <mapping resource="org/siri/domain/Receiver.hbm.xml"/>
-        <mapping resource="org/siri/domain/Message.hbm.xml"/>
-        <mapping resource="org/siri/domain/Node.hbm.xml"/>
-        <mapping resource="org/siri/domain/GRouter.hbm.xml"/>
+        <mapping resource="org/grouter/domain/Sender.hbm.xml"/>
+        <mapping resource="org/grouter/domain/Receiver.hbm.xml"/>
+        <mapping resource="org/grouter/domain/Message.hbm.xml"/>
+        <mapping resource="org/grouter/domain/Node.hbm.xml"/>
+        <mapping resource="org/grouter/domain/GRouter.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

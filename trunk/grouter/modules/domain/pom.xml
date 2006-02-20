@@ -25,18 +25,18 @@
     -->
     <parent>
         <groupId>org.grouter</groupId>
-        <artifactId>grouter</artifactId>
+        <artifactId>platform</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <!--
     | See parent for explanations
     -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.grouter</groupId>
+    <groupId>org.grouter.platform</groupId>
     <artifactId>domain</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>grouter domain artifact</name>
+    <name>${groupId} :: ${artifactId}</name>
     <url>http://maven.apache.org</url>
 
     <!--
@@ -49,7 +49,7 @@
      -->
     <dependencies>
         <dependency>
-            <groupId>org.grouter</groupId>
+            <groupId>org.grouter.platform</groupId>
             <artifactId>common</artifactId>
             <version>${version}</version>
         </dependency>
