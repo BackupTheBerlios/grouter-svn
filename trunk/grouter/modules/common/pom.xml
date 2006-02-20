@@ -13,10 +13,7 @@
     <name>${groupId} :: ${artifactId}</name>
     <url>http://maven.apache.org</url>
     <dependencies>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-        </dependency>
+        
         <dependency>
 		<groupId>geronimo-spec</groupId>
 	            <artifactId>geronimo-spec-jms</artifactId>

@@ -15,7 +15,7 @@ import java.net.URL;
 public class Log4JInit
 {
     static
-    {
+    {    
         try
         {
             String log4jconf = System.getProperty("log4j.configuration");
