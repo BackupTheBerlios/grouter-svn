@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+ <globalConfiguration>
+  <parameter name="adminPassword" value="admin"/>
+  <parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <parameter name="dotNetSoapEncFix" value="true"/>
+  <parameter name="disablePrettyXML" value="true"/>
+  <parameter name="sendMultiRefs" value="true"/>
+  <parameter name="sendXsiTypes" value="true"/>
+  <parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <parameter name="sendXMLDeclaration" value="true"/>
+  <requestFlow>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="session"/>
+   </handler>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="request"/>
+    <parameter name="extension" value=".jwr"/>
+   </handler>
+  </requestFlow>
+ </globalConfiguration>
+ <handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <service name="AdminService" provider="java:MSG">
+  <parameter name="allowedMethods" value="AdminService"/>
+  <parameter name="enableRemoteAdmin" value="false"/>
+  <parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <namespace>http://xml.apache.org/axis/wsdd/</namespace>
+ </service>
+ <service name="Version" provider="java:RPC">
+  <parameter name="allowedMethods" value="getVersion"/>
+  <parameter name="className" value="org.apache.axis.Version"/>
+ </service>
+ <service name="GRouterService" provider="java:RPC">
+  <operation name="getServices" qname="ns1:getServices" returnQName="getServicesReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://grouter.org/ws/grouterservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <fault class="org.grouter.ws.grouterservice.ServicesException" qname="ns1:fault" type="ns1:ServicesException"/>
+   <fault class="org.grouter.ws.grouterservice.DomainException" qname="ns1:fault" type="ns1:DomainException"/>
+  </operation>
+  <operation name="getServicesNoException" qname="ns2:getServicesNoException" returnQName="getServicesNoExceptionReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://grouter.org/ws/grouterservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <parameter name="in0" type="xsd:string"/>
+  </operation>
+  <parameter name="wsdlServicePort" value="GRouterService"/>
+  <parameter name="className" value="org.grouter.ws.grouterservice.GRouterServiceImpl"/>
+  <parameter name="typeMappingVersion" value="1.2"/>
+  <parameter name="allowedMethods" value="getServices getServicesNoException"/>
+  <parameter name="wsdlServiceElement" value="GRouterService"/>
+  <parameter name="wsdlTargetNamespace" value="http://grouter.org/ws/grouterservice"/>
+  <parameter name="wsdlPortType" value="GRouterService"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="schemaUnqualified" value="http://grouter.org/ws/grouterservice"/>
+  <typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" qname="ns3:DomainException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:org.grouter.ws.grouterservice.DomainException" xmlns:ns3="http://grouter.org/ws/grouterservice"/>
+  <typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" qname="ns4:ServicesException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:org.grouter.ws.grouterservice.ServicesException" xmlns:ns4="http://grouter.org/ws/grouterservice"/>
+ </service>
+ <transport name="http">
+  <requestFlow>
+   <handler type="URLMapper"/>
+   <handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </requestFlow>
+  <parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+ </transport>
+ <transport name="local">
+  <responseFlow>
+   <handler type="LocalResponder"/>
+  </responseFlow>
+ </transport>
+</deployment>

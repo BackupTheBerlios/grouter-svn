@@ -1,0 +1,155 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.grouter.platform</groupId>
+        <artifactId>webservice</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <inceptionYear>2005</inceptionYear>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grouter.platform.webservice</groupId>
+    <artifactId>ws-service-client</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>${groupId} :: ${artifactId}</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <!-- added for the custom ant based wsdl generation for webservices to work -->
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis-jaxrpc</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis-ant</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis-saaj</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis-wsdl4j</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>1.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant-trax</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.grouter.platform.webservice</groupId>
+                        <artifactId>ws-service</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>axis</groupId>
+                        <artifactId>axis-jaxrpc</artifactId>
+                        <version>1.3</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>axis</groupId>
+                        <artifactId>axis-ant</artifactId>
+                        <version>1.3</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>axis</groupId>
+                        <artifactId>axis-saaj</artifactId>
+                        <version>1.3</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>axis</groupId>
+                        <artifactId>axis-wsdl4j</artifactId>
+                        <version>1.5.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>axis</groupId>
+                        <artifactId>axis</artifactId>
+                        <version>1.3</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>javax.mail</groupId>
+                                <artifactId>mail</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>javax.activation</groupId>
+                                <artifactId>activation</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>ant</groupId>
+                        <artifactId>ant-trax</artifactId>
+                        <version>1.6.2</version>
+                    </dependency>
+
+                </dependencies>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <tasks>
+                                <property name="mavenruntimeclasspath" refid="maven.runtime.classpath"/>
+                                <mkdir dir="${project.build.directory}"/>
+                                <mkdir dir="${project.build.directory}/generated-source"/>
+                                <mkdir dir="${project.build.directory}/generated-source/axis"/>
+                                <taskdef name="axis-java2wsdl" classname="org.apache.axis.tools.ant.wsdl.Java2WsdlAntTask" classpathref="maven.dependency.classpath"/>
+                                <taskdef name="axis-wsdl2java" classname="org.apache.axis.tools.ant.wsdl.Wsdl2javaAntTask" classpathref="maven.dependency.classpath"/>
+
+                                <!-- see http://ws.apache.org/axis/java/ant/axis-java2wsdl.html for more options to this Ant task -->
+                                <echo>## Generating WSDL for GrouterService</echo>
+
+                                <axis-java2wsdl style="rpc"
+                                                use="encoded"
+                                                namespace="http://grouter.org/ws/grouterservice"
+                                                location="http://localhost:8080/axis/services/GRouterService"
+                                                serviceelementname="GRouterService"
+                                                classname="org.grouter.ws.grouterservice.GRouterService"
+                                                output="${project.build.directory}/generated-source/axis/ws-grouter.wsdl"/>
+
+                                <!-- see http://ws.apache.org/axis/java/ant/axis-wsdl2java.html -->
+                                <echo>## Generating WSDD for GRouterService</echo>
+                                <axis-wsdl2java output="${project.build.directory}/generated-source/axis/"
+                                                serverside="false"
+                                                url="${project.build.directory}/generated-source/axis/ws-grouter.wsdl"
+                                                verbose="true"
+                                                testcase="false">
+                                                <!--mapping namespace="http://localhost:8080/grouter/services/GRouterService"
+                                                package="org.grouter.ws.grouterservice.GRouterService"/-->
+                                </axis-wsdl2java>
+                            </tasks>
+                            <sourceRoot>${project.build.directory}/generated-source/axis</sourceRoot>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

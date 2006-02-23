@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" basedir="." default="copy_to_tomcat">
+    <!-- Where to get source from-->
+    <property name="tomcat_deploy_dir" value="C:\java\grouter-tomcat-5.5.15\webapps"/>
+
+    <target name="copy_to_tomcat">
+        <echo>Copying source from ${tomcat_deploy_dir}</echo>
+        <copy todir="${tomcat_deploy_dir}">
+            <fileset file="./target/grouter">
+                <include name="**/*.jsp"/>
+                <include name="**/*.html"/>
+                <include name="**/*.wsdd"/>
+                <include name="**/*.class"/>
+                <include name="**/web.xml"/>
+                <include name="**/*.jar"/>
+                <!--exclude name="**/*.jar" /-->
+            </fileset>
+        </copy>
+         <copy todir="${tomcat_deploy_dir}">
+            <fileset file="./target/grouter">
+                <include name="**/ws-service-1.0-SNAPSHOT.jar"/>
+            </fileset>
+        </copy>
+        <!--copy todir="${tomcat_deploy_dir}/WEB-INF">
+            <fileset file="./target/grouter/WEB-INF">
+                <include name="server-config.wsdd"/>
+            </fileset>
+        </copy-->
+
+    </target>
+</project>
