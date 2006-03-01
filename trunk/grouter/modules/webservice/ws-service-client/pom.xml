@@ -126,7 +126,7 @@
                                 <axis-java2wsdl style="rpc"
                                                 use="encoded"
                                                 namespace="http://grouter.org/ws/grouterservice"
-                                                location="http://localhost:8080/axis/services/GRouterService"
+                                                location="http://localhost:8080/grouter/services/GRouterService"
                                                 serviceelementname="GRouterService"
                                                 classname="org.grouter.ws.grouterservice.GRouterService"
                                                 output="${project.build.directory}/generated-source/axis/ws-grouter.wsdl"/>

@@ -1,5 +1,5 @@
 <project relativePaths="false" version="4">
-  <component assert-keyword="false" project-jdk-name="java version 1.5.0_06" name="ProjectRootManager" version="2"></component>
+  <component assert-keyword="false" name="ProjectRootManager" project-jdk-name="java version 1.5.0_06" version="2"></component>
   <component name="CodeStyleManager">
     <option value="true" name="USE_DEFAULT_CODE_STYLE_SCHEME"></option>
     <option value="" name="CODE_STYLE_SCHEME"></option>
@@ -73,6 +73,12 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module filepath="$PROJECT_DIR$/ws-service-client.iml"/></modules>
+      <module filepath="$PROJECT_DIR$/ws-service-client.iml"></module>
+      <module filepath="$PROJECT_DIR$/ws-service-client.iml"></module>
+      <module filepath="$PROJECT_DIR$/ws-service-client.iml"></module>
+      <module filepath="$PROJECT_DIR$/ws-service-client.iml"></module>
+      <module filepath="$PROJECT_DIR$/ws-service-client.iml"></module>
+      <module filepath="$PROJECT_DIR$/ws-service-client.iml"/>
+    </modules>
   </component>
 </project>
