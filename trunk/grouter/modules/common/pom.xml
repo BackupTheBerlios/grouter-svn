@@ -13,24 +13,27 @@
     <name>${groupId} :: ${artifactId}</name>
     <url>http://maven.apache.org</url>
     <dependencies>
-        
         <dependency>
-		<groupId>geronimo-spec</groupId>
-	            <artifactId>geronimo-spec-jms</artifactId>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-	            <groupId>geronimo-spec</groupId>
-	            <artifactId>geronimo-spec-ejb</artifactId>
-        </dependency>  
+            <groupId>geronimo-spec</groupId>
+            <artifactId>geronimo-spec-jms</artifactId>
+        </dependency>
         <dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring</artifactId>
-	</dependency>
+            <groupId>geronimo-spec</groupId>
+            <artifactId>geronimo-spec-ejb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.0.4</version>
-            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>logkit</groupId>
@@ -46,9 +49,9 @@
                 </exclusion>
             </exclusions>
         </dependency>
-	<dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>           
+            <artifactId>hibernate</artifactId>
         </dependency>
     </dependencies>
 </project>
