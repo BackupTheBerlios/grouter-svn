@@ -4,7 +4,7 @@
 package org.grouter.common.jms;
 
 
-import static org.grouter.common.jndi.GenericServiceLocator.*;
+import static org.grouter.common.jndi.ServiceLocatorContextAware.*;
 
 import java.io.*;
 import java.util.*;
@@ -225,7 +225,7 @@ public class TopicDestination extends Destination
         this.timeToLive =  timeToLive;
         try
         {
-            serviceLocator = getInstance();
+            serviceLocatorContextAware = getInstance();
         } catch (ServiceLocatorException ex)
         {
             logger.warn(ex, ex);

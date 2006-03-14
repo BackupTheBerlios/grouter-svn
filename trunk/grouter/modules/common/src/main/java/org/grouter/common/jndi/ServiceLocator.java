@@ -14,14 +14,15 @@ import javax.jms.QueueConnectionFactory;
 import javax.jms.Topic;
 import javax.jms.TopicConnectionFactory;
 import javax.naming.InitialContext;
+import javax.naming.Context;
 import javax.rmi.PortableRemoteObject;
 import javax.sql.DataSource;
 
 /**
  * Class for accessing ejbs, datasources and queues/topics. Provides caching of
- * lookuped up references to resouces for faster access without JNDI lookups.
+ * lookuped up references to resouces for faster access without remote JNDI lookups.
  *
- * @author
+ * @author  Georges Polyzois
  * @version
  */
 public class ServiceLocator
@@ -29,8 +30,8 @@ public class ServiceLocator
     /** Map with cached lookups. */
     private Map cache;
     /** The context. */
-    private InitialContext initialContext;
-    /** Singelton instance. */
+    private Context initialContext;
+    /** Singelton instanceUnderTest. */
     private static ServiceLocator instance;
 
     /**
@@ -82,9 +83,11 @@ public class ServiceLocator
             if (cache.containsKey(jndiName))
             {
                 result = (EJBLocalHome) cache.get(jndiName);
-            } else
+            }
+            else
             {
-                result = (EJBLocalHome) initialContext.lookup(jndiName);
+                Object object = initialContext.lookup(jndiName);
+                result = (EJBLocalHome) object;
                 cache.put(jndiName, result);
             }
         } catch (Exception e)
@@ -290,8 +293,28 @@ public class ServiceLocator
      *
      * @return InitialContext
      */
-    public InitialContext getInitialContext()
+    /*
+    public Context getContext()
     {
         return initialContext;
+    }    */
+
+
+    /**
+     * Return size of the current cache.
+     * @return int
+     */
+    public int getCacheSize()
+    {
+        return cache.size();
+    }
+
+    /**
+     * Exists so that we can mock the context in unit tests.
+     * @param initialContext
+     */
+    public void setInitialContext(Context initialContext)
+    {
+        this.initialContext = initialContext;
     }
 }

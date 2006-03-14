@@ -4,7 +4,7 @@
 package org.grouter.common.jms;
 
 
-import static org.grouter.common.jndi.GenericServiceLocator.getInstance;
+import static org.grouter.common.jndi.ServiceLocatorContextAware.getInstance;
 
 import java.io.*;
 import java.util.*;

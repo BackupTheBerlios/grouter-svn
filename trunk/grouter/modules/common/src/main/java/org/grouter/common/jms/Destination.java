@@ -15,7 +15,7 @@ import javax.jms.Session;
 import javax.naming.*;
 
 import org.apache.log4j.*;
-import org.grouter.common.jndi.GenericServiceLocator;
+import org.grouter.common.jndi.ServiceLocatorContextAware;
 import org.grouter.common.exception.RemoteSiriException;
 
 
@@ -54,7 +54,7 @@ public abstract class Destination
     /** Context to use when looking up things. */
     protected Context context;
     /** Service locator for caching and looking up jndi resources. */
-    protected GenericServiceLocator serviceLocator;
+    protected ServiceLocatorContextAware serviceLocatorContextAware;
     /** Transactional. */
     protected boolean isTransactional;
     /** Ack mode. */
