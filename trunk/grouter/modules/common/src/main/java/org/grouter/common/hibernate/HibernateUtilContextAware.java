@@ -16,32 +16,44 @@ import javax.naming.*;
 public class HibernateUtilContextAware
 {
     private static Log log = LogFactory.getLog(HibernateUtilContextAware.class);
-    private static final String INTERCEPTOR_CLASS = "hibernate.util.interceptor_class";
-    private static Map configurationMap = new HashMap();
-    private static ConfigItem configItemDefault;
+    //private static final String INTERCEPTOR_CLASS = "hibernate.util.interceptor_class";
+    // Holds config for multiple config settings and the sessionfactory for that setting
+    private static Map hibernateConfigMap = new HashMap();
+    // This would be the default one - usaully derived from hibernate.cfg.xml - but may
+    // be overridden by another config setting
+    private static HibernateConfigItem hibernateConfigItemDefault;
 
+    public enum STATE {NOTINITIALISED,INITIALISED,SHUTDOWN};
+    private static STATE currentState = STATE.NOTINITIALISED;
+
+    /**
+     * Bootstrap hibernate. We will always load hibernate.cfg.xml and set that to the
+     * default configuration - any other sessionfactories/configurations need to override
+     * and set the default flag to true.
+     */
+    static
+    {
+        //always put in this as default - any other config must override default explicitly!
+        insertNewHibernateConfigItemIntoMap("default","hibernate.cfg.xml",true);
+        createSessionFactoriesFromConfigMap();
+    }
 
     /**
      * Set a new config item the config Map. If setToDefault is true then we remove any prior default
-     * sessionfactory form the config map - last default wins.
+     * sessionfactory from the config map - last default set will win.
      *
      * @param sessionFactoryName
      * @param hibernateCfgFile
      * @param setToDefault
      */
-    public static void insertNewConfigIntoMap(String sessionFactoryName, String hibernateCfgFile, boolean setToDefault)
+    public static void insertNewHibernateConfigItemIntoMap(String sessionFactoryName, String hibernateCfgFile, boolean setToDefault)
     {
-        if(setToDefault)
+        if(currentState == STATE.INITIALISED)
         {
-            removeDefault();
+            throw new IllegalStateException("You need to issue a shutdown before entering new configurations!!");
         }
-
-        ConfigItem configItem = new ConfigItem(sessionFactoryName, hibernateCfgFile, setToDefault);
-        configurationMap.put(configItem.getId(), configItem);
-        if(setToDefault)
-        {
-            configItemDefault = configItem;
-        }
+        HibernateConfigItem hibernateConfigItem = new HibernateConfigItem(sessionFactoryName, hibernateCfgFile, setToDefault);
+        hibernateConfigMap.put(hibernateConfigItem.getId(), hibernateConfigItem);
     }
 
     /**
@@ -49,50 +61,48 @@ public class HibernateUtilContextAware
      */
     private static void removeDefault()
     {
-        Iterator iter = configurationMap.keySet().iterator();
+        Iterator iter = hibernateConfigMap.keySet().iterator();
         while (iter.hasNext())
         {
             String key = (String)iter.next();
-            ConfigItem configItem = ((ConfigItem)configurationMap.get(key));
-            boolean alreadySetDefaultItem = configItem.isDeafult();
+            HibernateConfigItem hibernateConfigItem = ((HibernateConfigItem)hibernateConfigMap.get(key));
+            boolean alreadySetDefaultItem = hibernateConfigItem.isDeafult();
             if(alreadySetDefaultItem)
             {
-                configItem.setDeafult(false);
+                hibernateConfigItem.setDeafult(false);
             }
         }
         log.info("Removed any default session factory.");
     }
 
 
-    static
-    {
-        insertNewConfigIntoMap("default","hibernate.cfg.xml",true);
-
-        createSessionFactoriesFromConfigMap();
-    }
-
+    /**
+     * Create session factories and configurations and store in hibernateConfigMap. On
+     * completion we enter INITIALISED state.
+     */
     private static void createSessionFactoriesFromConfigMap()
     {
+        removeDefault();
         // read in all config and create session factories
-        Iterator iter = configurationMap.keySet().iterator();
+        Iterator iter = hibernateConfigMap.keySet().iterator();
         while (iter.hasNext())
         {
             SessionFactory sessionFactory = null;
             String key = (String)iter.next();
-            ConfigItem configItem = (ConfigItem)configurationMap.get(key);
-            String file = ((ConfigItem)configurationMap.get(key)).getConfigFile();
+            HibernateConfigItem hibernateConfigItem = (HibernateConfigItem)hibernateConfigMap.get(key);
+            String file = ((HibernateConfigItem)hibernateConfigMap.get(key)).getConfigFile();
             try
             {
-                log.info("Loading properties from " + file);
+                log.info("Loading properties from : " + file);
                 Configuration configuration = new Configuration();
                 configuration = configuration.configure(file);
-                String jndiName = configuration.getProperty(Environment.SESSION_FACTORY_NAME);
-                if (jndiName != null)
+                String sessionFactoryName = configuration.getProperty(Environment.SESSION_FACTORY_NAME);
+                if (sessionFactoryName != null)
                 {
-                    log.debug("Looking up SessionFactory in JNDI with name : " + jndiName);
+                    log.debug("Looking up SessionFactory in JNDI with name : " + sessionFactoryName);
                     try
                     {
-                        sessionFactory = (SessionFactory) new InitialContext().lookup(jndiName);
+                        sessionFactory = (SessionFactory) new InitialContext().lookup(sessionFactoryName);
                         // not doing below since config can be altered for sessionfactory in runtime for the jndi instance
                         // sessionFactoryMap.put(name,sf);
                     }
@@ -105,13 +115,19 @@ public class HibernateUtilContextAware
                 {
                     sessionFactory = configuration.buildSessionFactory();
                 }
-                if (sessionFactory == null)
+                if (sessionFactory == null || configuration == null)
                 {
                     throw new IllegalStateException("SessionFactory not available.");
                 }
-                configItem.setSessionFactory(sessionFactory);
-        // setInterceptor(configuration, null);
-        // configurationMap.put(key)
+                hibernateConfigItem.setConfiguration(configuration);
+                hibernateConfigItem.setSessionFactory(sessionFactory);
+                // We need to have a default sessionfactory / configuration
+                if(hibernateConfigItem.isDeafult())
+                {
+                    hibernateConfigItemDefault = hibernateConfigItem;
+                }
+                // setInterceptor(configuration, null);
+                // hibernateConfigMap.put(key)
             }
             catch (Throwable ex)
             {
@@ -119,6 +135,8 @@ public class HibernateUtilContextAware
                 throw new ExceptionInInitializerError(ex);
             }
         }
+        currentState = STATE.INITIALISED;
+        log.info("Entered state : " + currentState);
     }
 
     /**
@@ -128,8 +146,8 @@ public class HibernateUtilContextAware
      */
     public static Configuration getConfiguration(String sessionFactoryName)
     {
-        ConfigItem configItem = getConfigItemFromMap(sessionFactoryName);
-        return configItem.getConfiguration();
+        HibernateConfigItem hibernateConfigItem = getConfigItemFromMap(sessionFactoryName);
+        return hibernateConfigItem.getConfiguration();
     }
 
 
@@ -140,26 +158,26 @@ public class HibernateUtilContextAware
      */
     public static Configuration getDefaultConfiguration()
     {
-        return configItemDefault.getConfiguration();
+        return hibernateConfigItemDefault.getConfiguration();
     }
 
     /**
      * Pull out the configitem or throw runtime exception if not found.
      * @param sessionFactoryName
-     * @return ConfigItem
+     * @return HibernateConfigItem
      */
-    private static ConfigItem getConfigItemFromMap(String sessionFactoryName)
+    private static HibernateConfigItem getConfigItemFromMap(String sessionFactoryName)
     {
-        ConfigItem configItem = null;
-        if (configurationMap.containsKey(sessionFactoryName))
+        HibernateConfigItem hibernateConfigItem = null;
+        if (hibernateConfigMap.containsKey(sessionFactoryName))
         {
-            configItem = (ConfigItem)configurationMap.get(sessionFactoryName);
+            hibernateConfigItem = (HibernateConfigItem)hibernateConfigMap.get(sessionFactoryName);
         }
         else
         {
             throw new IllegalStateException("Configuration not available for : " + sessionFactoryName);
         }
-        return configItem;
+        return hibernateConfigItem;
     }
 
     /**
@@ -169,9 +187,8 @@ public class HibernateUtilContextAware
      */
     public static SessionFactory getSessionFactory(String sessionFactoryName)
     {
-        SessionFactory sf = null;
-        ConfigItem configItem = getConfigItemFromMap(sessionFactoryName);
-        sf = configItem.getSessionFactory();
+        HibernateConfigItem hibernateConfigItem = getConfigItemFromMap(sessionFactoryName);
+        SessionFactory sf = hibernateConfigItem.getSessionFactory();
         if (sf == null)
         {
             throw new IllegalStateException("No sessionfactory found for : " + sessionFactoryName);
@@ -186,34 +203,45 @@ public class HibernateUtilContextAware
      */
     public static SessionFactory getDefaultSessionFactory()
     {
-        SessionFactory sf = configItemDefault.getSessionFactory();
-        if (sf == null)
+        if(currentState == STATE.SHUTDOWN)
         {
-            throw new IllegalStateException("No sessionfactory found for : " + configItemDefault.getId());
+            throw new IllegalStateException("Current state : " + currentState + ". You need to call rebuildSessionFactory before calling this method!!");
         }
-        return sf;
+        return hibernateConfigItemDefault.getSessionFactory();
     }
 
-
+    /**
+     * Give an indication of how many configuraations we have set up.
+     * @return int
+     */
+    public static int getHibernateConfigMapSize()
+    {
+        return hibernateConfigMap.size();
+    }
 
     /**
      * Closes the current SessionFactory and releases all resources.
      * <p>
-     * The only other method that can be called on HibernateUtil after this one is rebuildSessionFactory(Configuration).
+     * The only other method that can be called on HibernateUtil after this one is
+     * rebuildSessionFactory(Configuration).
      */
 
     public static void shutdown()
     {
         log.debug("Shutting down Hibernate.");
-        Iterator iter = configurationMap.values().iterator();
-        while (iter.hasNext()) {
-            ConfigItem configItem = (ConfigItem) iter.next();
-            SessionFactory sf = configItem.getSessionFactory();
+        Iterator iter = hibernateConfigMap.values().iterator();
+        while (iter.hasNext())
+        {
+            HibernateConfigItem hibernateConfigItem = (HibernateConfigItem) iter.next();
+            log.debug("Closing sessionfactory : " + hibernateConfigItem.getId());
+            SessionFactory sf = hibernateConfigItem.getSessionFactory();
             sf.close();
             sf = null;
-            log.debug("Closed sessionfactory : " + configItem.getId());
+            log.debug("Closed sessionfactory : " + hibernateConfigItem.getId());
         }
-        configItemDefault = null;
+        hibernateConfigItemDefault = null;
+        currentState = STATE.SHUTDOWN;
+        log.info("Entered state : " + currentState);
     }
 
     /**
@@ -225,7 +253,10 @@ public class HibernateUtilContextAware
     public static void rebuildSessionFactory()
     {
         log.debug("Using current Configuration for rebuild.");
-// rebuildSessionFactory(configuration);
+        synchronized (hibernateConfigMap)
+        {
+            createSessionFactoriesFromConfigMap();
+		}
     }
 
 /**
@@ -300,9 +331,17 @@ public class HibernateUtilContextAware
     }
 */
 
+    /**
+     * Return current state.
+     * @return STATE
+     */
+    public static STATE getCurrentState()
+    {
+        return currentState;
+    }
 
 
-    public static class ConfigItem
+    public static class HibernateConfigItem
     {
         private String id;
         private String configFile;
@@ -315,11 +354,16 @@ public class HibernateUtilContextAware
             return isDeafult;
         }
 
-        public ConfigItem(String id, String configFile, boolean isDeafult)
+        public HibernateConfigItem(String id, String configFile, boolean isDeafult)
         {
             this.id = id;
             this.configFile = configFile;
             this.isDeafult = isDeafult;
+        }
+
+        public void setDeafult(boolean deafult)
+        {
+            isDeafult = deafult;
         }
 
         /**
@@ -329,20 +373,7 @@ public class HibernateUtilContextAware
         {
             return configFile;
         }
-
-        /**
-         * @param configFile The configFile to set.
-         */
-        public void setConfigFile(String configFile)
-        {
-            this.configFile = configFile;
-        }
-
-        public void setDeafult(boolean deafult)
-        {
-            isDeafult = deafult;
-        }
-
+        
         /**
          * @return Returns the configuration.
          */
@@ -383,12 +414,5 @@ public class HibernateUtilContextAware
             return id;
         }
 
-        /**
-         * @param id The id to set.
-         */
-        public void setId(String id)
-        {
-            this.id = id;
-        }
     }
 }
