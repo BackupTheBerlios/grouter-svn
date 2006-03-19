@@ -37,7 +37,7 @@
     | under the groupId structure discussed above. It is a unique
     | identifier which identifies this artifact under the specified
     | groupId and will produce something like e.g.
-    | grouter-1.0-SNAPSHOT.jar or on a release grouter-1.0.o.jar
+    | grouter-1.0-SNAPSHOT.jar or on a release grouter-1.0.0.jar
     -->
     <artifactId>platform</artifactId>
     <!--
@@ -85,9 +85,11 @@
     -->
     <modules>
         <module>../modules/common</module>
-        <!--module>../modules/domain</module-->
+        <module>../modules/domain</module>
         <!--module>../modules/router/grouter</module>
        <module>../modules/router/grouterconfig</module -->
+       <!--module>../modules/webservice</module-->
+       <module>../modules/router</module>
     </modules>
 
     <!--
@@ -122,6 +124,20 @@
             <name>Danish Maven2 repository</name>
             <url>http://mirrors.sunsite.dk/maven2</url>
         </repository>
+        <!--
+        | This will enable snaphost versions of plugins from Codehaus.
+        | - see also pluginRepositories element .
+        -->
+        <repository>
+	    <id>Maven Snapshots</id>
+	    <url>http://snapshots.maven.codehaus.org/maven2/</url>
+	    <snapshots>
+	      <enabled>true</enabled>
+	    </snapshots>
+	    <releases>
+	      <enabled>false</enabled>
+	    </releases>
+  	</repository>
     </repositories>
 
     <!--
@@ -137,6 +153,36 @@
             <name>Internal plugins or modified plugins</name>
             <url>http://internals.corporate.server/mavenrepository</url>
         </pluginRepository>
+	<!--
+        | This will enable snaphost versions of plugins from Codehaus
+        |  - see also repostiory element .
+        -->
+        <pluginRepository>
+	    <id>Maven Snapshots</id>
+	    <url>http://snapshots.maven.codehaus.org/maven2/</url>
+	    <snapshots>
+	      <enabled>true</enabled>
+	    </snapshots>
+	    <releases>
+	      <enabled>false</enabled>
+	    </releases>
+  	</pluginRepository>
+  	<!--
+  	|
+  	|
+  	-->
+  	<pluginRepository>
+	   <id>snapshots</id>
+	   <snapshots>
+	        <enabled>true</enabled>
+	        <updatePolicy>daily</updatePolicy>
+	   </snapshots>
+	   <name>Maven Central Plugins Development Repository</name>
+	   <url>http://snapshots.maven.codehaus.org/maven2</url>
+	   <releases>
+	   	<updatePolicy>daily</updatePolicy>
+	   </releases>
+    	</pluginRepository>
     </pluginRepositories>
 
     <!--
@@ -151,33 +197,7 @@
     | always be handled in the root pom.
     -->
     <dependencies>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.8</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>logkit</groupId>
-            <artifactId>logkit</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
+	<dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.7.0</version>
@@ -186,6 +206,11 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.1</version>
         </dependency>
          <dependency>
             <groupId>commons-logging</groupId>
@@ -197,6 +222,40 @@
             <artifactId>commons-discovery</artifactId>
             <version>0.2</version>
         </dependency>        
+         <dependency>
+	    <groupId>jmock</groupId>
+	    <artifactId>jmock</artifactId>
+	    <version>1.0.1</version>
+	    <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>logkit</groupId>
+            <artifactId>logkit</artifactId>
+            <version>2.0</version>
+        </dependency>
+         <dependency>
+	    <groupId>org.easymock</groupId>
+	    <artifactId>easymock</artifactId>
+	    <version>2.0</version>
+	    <scope>test</scope>
+        </dependency>
+        <!--dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency-->
+        
     </dependencies>
 
 
@@ -206,6 +265,7 @@
     | since it is inherited from the root/parent pom.
     -->
     <dependencyManagement>
+    	<dependencies>
             <!--
             | Dependencies to J2EE spec - using geronimo generated
             | artifacts to get transparent builds without installing
@@ -244,7 +304,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate</artifactId>
-                <version>3.1rc2</version>
+                <version>3.1.2</version>
                 <!--
                 | Excluding jars is a powerful feature. Here I know I
                 | will not use swarmcache, so I do not need downloading
@@ -279,14 +339,14 @@
                         <groupId>jboss</groupId>
                         <artifactId>jboss-cache</artifactId>
                     </exclusion>
-                    <exclusion>
+                    <!--exclusion>
                         <groupId>javax.security</groupId>
                         <artifactId>jacc</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>javax.transaction</groupId>
                         <artifactId>jta</artifactId>
-                    </exclusion>
+                    </exclusion-->
                 </exclusions>
             </dependency>
             <dependency>
@@ -305,6 +365,12 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+	    	<groupId>hsqldb</groupId>
+	    	<artifactId>hsqldb</artifactId>
+	    	<version>1.8.0.1</version>
+	    	<scope>test</scope>
+        </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -329,11 +395,11 @@
     | Also usd by the release plugin for communication with the scm -
     | tagging a release etc.
     -->
-    <scm>
+    <!--scm>
         <connection>https://geopol@svn.berlios.de/svnroot/repos/grouter/trunk</connection>
         <developerConnection>https://geopol@svn.berlios.de/svnroot/repos/grouter/trunk</developerConnection>
         <url>http://sasa/cgi-bin/viewcvs.cgi/</url>
-    </scm>
+    </scm-->
 
     <!--
     | In this element section we specify which reporting plugins 
@@ -375,28 +441,6 @@
             <!--
             | This report produces test coverage metrics - open source.
             -->            
-            <plugin>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>cobertura-maven-plugin</artifactId>
-		<version>2.0-SNAPSHOT</version>
-		<configuration>
-			<instrumentation>
-			<!-- exclude>**/generated/**/*.class</exclude --> 
-			</instrumentation>	
-			<!--check branchrate="80" linerate="30" haltonerror="false"
-	                	totalbranchrate="80" totallinerate="70">
-	                	<regex pattern="com.sonyericsson.common.locale.*" branchrate="90" linerate="90"/>
-	              	</check-->
-		</configuration>
-		<executions>
-			<execution>
-				<goals>
-					<goal>clean</goal>
-	                                <!--goal>check</goal-->
-				</goals>
-			</execution>
-		</executions>
-	     </plugin>
             
             <!--
             | Creates a report with line numbers in the java code.
@@ -524,16 +568,24 @@
                     <!--
                     | Dangerous since we will skip testing if true!
                     | Another way would be to use
-                    |  mvn -Dmaven.test.skip=true install
+                    |  mvn -Dmaven.test.skip=true clean install
                     -->
-                    <skip>true</skip>
+                    <!-- skip>true</skip -->
                     <includes>
                         <include implementation="java.lang.String">**/*.java</include>
                         <include>${basedir}/src/config</include>
                     </includes>
-                    <!-- Manually exclude these tests... excludes>
-                        <exclude implementation="java.lang.String">**/*Point*.java</exclude>
-                    </excludes -->
+                    <!-- 
+                     | Skipping Test*$* since surefire believes the inner
+                     | classes should be executed as test which failes the build.
+                    -->
+                    <excludes>
+                        <exclude>**/ManualTest*.java</exclude>
+		        
+		                  <exclude>**/HttpTest*.java</exclude>
+		                  <exclude>**/Test*$*</exclude>
+		                  <exclude>**/*Test$*</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <!--
@@ -558,13 +610,27 @@
             | a war file with a web.xml etc. This plugin helps us
             | with that.
             -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <warSourceDirectory>src/webapp</warSourceDirectory >
-                </configuration>
-            </plugin>
+	<plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>none</mainClass>
+                <packageName>${package}</packageName>
+                <addExtensions/>
+              </manifest>
+              <manifestEntries>
+                <label>development</label>
+                <developer>${user.name}</developer>
+                <build-date>${build.time}</build-date>
+                <java-version>${java.version}</java-version>
+                <server>server</server>
+                <context-name>${artifactId}</context-name>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
             <!--
             | The site plugin will produce a nice Maven looking
             | project site - with reports according to your
@@ -616,14 +682,74 @@
                 </configuration>
             </plugin>
             <!--
-		     | Use to list goals of other plugins.
-			| E.g to list the eclipse plugin goals
-             | mvn projecthelp:describe -Dplugin=org.apache.maven.plugins:maven-eclipse-plugin -Dfull=true
-			-->
+		| Use to list goals of other plugins.
+		| E.g to list the eclipse plugin goals
+             	| mvn projecthelp:describe -Dplugin=org.apache.maven.plugins:maven-eclipse-plugin -Dfull=true
+		-->
             <plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-projecthelp-plugin</artifactId>
 				</plugin>
+
+
+	<!--
+	| We are placing all dependencies in the root pom - the reason
+	| is that we need all resources for the ant-run plugin classloader
+	| to be present on first call. This is due to a Maven bug in versions
+	| up to 2.0.2
+	-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.grouter.platform.webservice</groupId>
+            <artifactId>ws-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+          </dependency>
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis-jaxrpc</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis-ant</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis-saaj</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis-wsdl4j</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.3</version>
+			<exclusions>
+			<exclusion>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>javax.activation</groupId>
+				<artifactId>activation</artifactId>
+			</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>ant</groupId>
+			<artifactId>ant-trax</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+        </dependencies>
+      </plugin>
+
         </plugins>
     </build>
 </project>
