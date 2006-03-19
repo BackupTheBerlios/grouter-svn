@@ -20,10 +20,10 @@
         <property name="hibernate.cache.use_second_level_cache">false</property>
         <property name="hibernate.cache.use_minimal_puts">false</property>
 
-        <property name="hibernate.session_factory_name">jndi_name</property>
-        <property name="hibernate.jndi.class">jndiclass</property>
-        <property name="hibernate.jndi.url">false</property>
-        <property name="hibernate.jndi.prefix">false</property>
+        <property name="hibernate.session_factory_name">jndi:hibernate/mbeans/jndi_name</property>
+        <property name="hibernate.jndi.class">org.apache.commons.naming.java.javaURLContextFactory</property>
+        <property name="hibernate.jndi.url">jndi:hibernate/mbeans</property>
+        <property name="hibernate.jndi">org.apache.naming</property>
 
     </session-factory>
 </hibernate-configuration>

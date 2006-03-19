@@ -14,6 +14,16 @@
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
+            <groupId>commons-naming</groupId>
+            <artifactId>commons-naming-factory</artifactId>
+            <version>20031201.015542</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-naming</groupId>
+            <artifactId>commons-naming-core</artifactId>
+            <version>20031116.223527</version>
+        </dependency>
+        <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <scope>test</scope>

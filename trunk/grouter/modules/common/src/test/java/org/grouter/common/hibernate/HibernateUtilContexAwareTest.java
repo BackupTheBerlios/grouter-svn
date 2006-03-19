@@ -3,7 +3,13 @@ package org.grouter.common.hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.Configuration;
+import org.grouter.common.jndi.BindingItem;
+import org.grouter.common.jndi.JNDIUtils;
+import org.apache.log4j.Logger;
 import junit.framework.TestCase;
+
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,6 +18,8 @@ import junit.framework.TestCase;
  */
 public class HibernateUtilContexAwareTest extends TestCase
 {
+    private static Logger logger = Logger.getLogger(HibernateUtilContexAwareTest.class);
+
     /**
      * Some simple tests to see it loads properly.
      */
@@ -26,6 +34,16 @@ public class HibernateUtilContexAwareTest extends TestCase
 
         //should always be a default config
         assertNotNull(HibernateUtilContextAware.getConfiguration("default"));
+
+        try
+        {
+            HibernateUtilContextAware.getConfiguration("null");
+        } catch (Exception e)
+        {
+            assertTrue(true);
+        }
+
+
     }
 
 
@@ -56,7 +74,7 @@ public class HibernateUtilContexAwareTest extends TestCase
         assertEquals(2,HibernateUtilContextAware.getHibernateConfigMapSize());
         // rebuild and verify our session factories are there
         HibernateUtilContextAware.rebuildSessionFactory();
-        assertNotNull(HibernateUtilContextAware.getDefaultConfiguration());
+        assertNotNull(HibernateUtilContextAware.getConfiguration());
         // new state entered
         assertEquals(HibernateUtilContextAware.STATE.INITIALISED, HibernateUtilContextAware.getCurrentState());
         //should be a default sessionfactory
@@ -69,52 +87,61 @@ public class HibernateUtilContexAwareTest extends TestCase
 
     public void testMulitpleSessionFactoriesWithJNDI()
     {
+        int sizeBeforeTest = HibernateUtilContextAware.getHibernateConfigMapSize();
+        BindingItem bindingItem = new BindingItem("jndi_name", null, new String[]{"jndi:hibernate","mbeans"});
+        List<BindingItem> bindingItems = new ArrayList<BindingItem>();
+        bindingItems.add(bindingItem);
+
+        JNDIUtils.createInMemoryJndiProvider(bindingItems);
+
         defaultSessionFactoryOk();
         //at this point we should only have 1 config setup - the previous attempt should have failed
-        assertEquals(1,HibernateUtilContextAware.getHibernateConfigMapSize() );
+        assertEquals(sizeBeforeTest,HibernateUtilContextAware.getHibernateConfigMapSize());
 
         // Now shutdown and rebuild
         HibernateUtilContextAware.shutdown();
         assertEquals(HibernateUtilContextAware.STATE.SHUTDOWN, HibernateUtilContextAware.getCurrentState());
         // this should work
         HibernateUtilContextAware.insertNewHibernateConfigItemIntoMap("jndi","jndi_hibernate.cfg.xml",false);
-        //at this point we should have 2 config setup
-        assertEquals(2,HibernateUtilContextAware.getHibernateConfigMapSize());
-        // rebuild and verify our session factories are there
-        HibernateUtilContextAware.rebuildSessionFactory();
-        assertNotNull(HibernateUtilContextAware.getDefaultConfiguration());
-        // new state entered
-        assertEquals(HibernateUtilContextAware.STATE.INITIALISED, HibernateUtilContextAware.getCurrentState());
-        //should be a default sessionfactory
-        assertNotNull(HibernateUtilContextAware.getSessionFactory("default"));
-        //assertNotNull(HibernateUtilContextAware.getSessionFactory("jndi"));
-
-        defaultConfigParamOk();
-        //nonDefaultconfigParamOk();
+        //at this point we should have +1 config setup
+        assertEquals(sizeBeforeTest+1,HibernateUtilContextAware.getHibernateConfigMapSize());
+        try
+        {
+            // rebuild ... this should fails since we have added a null implementation of a session factorry
+            // bound to jndi:hibernate/mbeans/jndi_name
+            HibernateUtilContextAware.rebuildSessionFactory();
+        } catch (Throwable e)
+        {
+            assertTrue(true);
+        }
     }
 
 
     public void testHibernateStateTransitions()
     {
-        defaultSessionFactoryOk();
-        // shutdown and move to SHUTDOWN state
-        HibernateUtilContextAware.shutdown();
-        assertEquals(HibernateUtilContextAware.STATE.SHUTDOWN, HibernateUtilContextAware.getCurrentState());
-        try
+        if (HibernateUtilContextAware.getCurrentState() == HibernateUtilContextAware.STATE.INITIALISED)
         {
-            HibernateUtilContextAware.getDefaultSessionFactory();
-        } catch (Exception e)
-        {
-            assertTrue(true);
+            defaultSessionFactoryOk();
+            // shutdown and move to SHUTDOWN state
+            HibernateUtilContextAware.shutdown();
+            assertEquals(HibernateUtilContextAware.STATE.SHUTDOWN, HibernateUtilContextAware.getCurrentState());
+            try
+            {
+                HibernateUtilContextAware.getSessionFactory();
+            } catch (Exception e)
+            {
+                assertTrue(true);
+            }
+            HibernateUtilContextAware.rebuildSessionFactory();
+            //should be a default sessionfactory
+            assertNotNull(HibernateUtilContextAware.getSessionFactory("default"));
+            assertEquals(HibernateUtilContextAware.STATE.INITIALISED, HibernateUtilContextAware.getCurrentState());
+
+            defaultConfigParamOk();
         }
-        HibernateUtilContextAware.rebuildSessionFactory();
-        //should be a default sessionfactory
-        assertNotNull(HibernateUtilContextAware.getSessionFactory("default"));
-        assertEquals(HibernateUtilContextAware.STATE.INITIALISED, HibernateUtilContextAware.getCurrentState());
 
-        defaultConfigParamOk();
+
     }
-
     private void nonDefaultconfigParamOk()
     {
         // see if the configuration loaded matches the one we think we provided
@@ -123,11 +150,10 @@ public class HibernateUtilContexAwareTest extends TestCase
         assertEquals(expected,"true");
     }
 
-
     private void defaultConfigParamOk()
     {
         // see if the configuration loaded matches the one we think we provided
-        Configuration defaultConfiguration = HibernateUtilContextAware.getDefaultConfiguration();
+        Configuration defaultConfiguration = HibernateUtilContextAware.getConfiguration();
         String expected = defaultConfiguration.getProperty(Environment.DIALECT);
         assertEquals("org.hibernate.dialect.HSQLDialect",expected);
     }
@@ -135,7 +161,7 @@ public class HibernateUtilContexAwareTest extends TestCase
     private void defaultSessionFactoryOk()
     {
         //a default sessionfactory should always be present
-        SessionFactory  sessionFactory = HibernateUtilContextAware.getDefaultSessionFactory();
+        SessionFactory  sessionFactory = HibernateUtilContextAware.getSessionFactory();
         assertNotNull(sessionFactory);
         //should always be a default sessionfactory
         assertNotNull(HibernateUtilContextAware.getSessionFactory("default"));

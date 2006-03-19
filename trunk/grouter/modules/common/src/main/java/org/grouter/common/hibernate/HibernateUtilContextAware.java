@@ -3,15 +3,26 @@ package org.grouter.common.hibernate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Hashtable;
 
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import org.apache.commons.logging.*;
+import org.apache.log4j.Logger;
+import org.grouter.common.jndi.JNDIUtils;
 
 import javax.naming.*;
 
 /**
  * Basic Hibernate helper class for Hibernate configuration and startup.
+ *
+ * There must be a hibernate.cfg.xml file present. Configuration coming from that
+ * file will be set to default.
+ *
+ * Other abc.cfg.xml files can also be loaded to provide support for multiple
+ * session factoreis - however they must be referenced by a key / name.
+ * In runtime fi 
+ * Before doing an insert you need to call shutdown()
  */
 public class HibernateUtilContextAware
 {
@@ -23,6 +34,8 @@ public class HibernateUtilContextAware
     // be overridden by another config setting
     private static HibernateConfigItem hibernateConfigItemDefault;
 
+    // States indicate in what state we are currenlty in - some operations are prohibited
+    // depending on state.
     public enum STATE {NOTINITIALISED,INITIALISED,SHUTDOWN};
     private static STATE currentState = STATE.NOTINITIALISED;
 
@@ -57,9 +70,29 @@ public class HibernateUtilContextAware
     }
 
     /**
+     * Set a new config item the config Map. If setToDefault is true then we remove any prior default
+     * sessionfactory from the config map - last default set will win.
+     *
+     * @param sessionFactoryName
+     * @param hibernateConfig
+     * @param setToDefault
+     */
+    public static void insertNewHibernateConfigItemIntoMap(String sessionFactoryName, Configuration hibernateConfig, boolean setToDefault)
+    {
+        if(currentState == STATE.INITIALISED)
+        {
+            throw new IllegalStateException("You need to issue a shutdown before entering new configurations!!");
+        }
+        HibernateConfigItem hibernateConfigItem = new HibernateConfigItem(sessionFactoryName, hibernateConfig, setToDefault);
+        hibernateConfigMap.put(hibernateConfigItem.getId(), hibernateConfigItem);
+    }
+
+
+
+    /**
      * Set default sessionfactory in config map to false.
      */
-    private static void removeDefault()
+    /*private static void removeDefault()
     {
         Iterator iter = hibernateConfigMap.keySet().iterator();
         while (iter.hasNext())
@@ -73,7 +106,7 @@ public class HibernateUtilContextAware
             }
         }
         log.info("Removed any default session factory.");
-    }
+    } */
 
 
     /**
@@ -82,7 +115,6 @@ public class HibernateUtilContextAware
      */
     private static void createSessionFactoriesFromConfigMap()
     {
-        removeDefault();
         // read in all config and create session factories
         Iterator iter = hibernateConfigMap.keySet().iterator();
         while (iter.hasNext())
@@ -102,22 +134,31 @@ public class HibernateUtilContextAware
                     log.debug("Looking up SessionFactory in JNDI with name : " + sessionFactoryName);
                     try
                     {
-                        sessionFactory = (SessionFactory) new InitialContext().lookup(sessionFactoryName);
-                        // not doing below since config can be altered for sessionfactory in runtime for the jndi instance
-                        // sessionFactoryMap.put(name,sf);
+                        Hashtable env = new Hashtable();
+                        env.put(Context.INITIAL_CONTEXT_FACTORY,configuration.getProperty(Environment.JNDI_CLASS));
+                        env.put(Context.URL_PKG_PREFIXES,configuration.getProperty(Environment.JNDI_PREFIX));
+                        env.put(Context.PROVIDER_URL,configuration.getProperty(Environment.JNDI_URL));
+                        Context context = new InitialContext(env);
+                        JNDIUtils.printJNDI(context,log);
+                        sessionFactory = (SessionFactory) context.lookup(sessionFactoryName);
+                        if (sessionFactory == null)
+                        {
+                            throw new IllegalStateException("SessionFactory from JNDI lookup returned a null implemenation  using file : " + file);
+                        }
                     }
                     catch (NamingException ex)
                     {
+                        log.error("Failed looking up sessinfactory : " + sessionFactoryName,ex);
                         throw new RuntimeException(ex);
                     }
                 }
                 else
                 {
                     sessionFactory = configuration.buildSessionFactory();
-                }
-                if (sessionFactory == null || configuration == null)
-                {
-                    throw new IllegalStateException("SessionFactory not available.");
+                    if (sessionFactory == null )
+                    {
+                        throw new IllegalStateException("SessionFactory could not be createed from the configuration using file : " + file);
+                    }
                 }
                 hibernateConfigItem.setConfiguration(configuration);
                 hibernateConfigItem.setSessionFactory(sessionFactory);
@@ -156,7 +197,7 @@ public class HibernateUtilContextAware
      *
      * @return Configuration
      */
-    public static Configuration getDefaultConfiguration()
+    public static Configuration getConfiguration()
     {
         return hibernateConfigItemDefault.getConfiguration();
     }
@@ -201,7 +242,7 @@ public class HibernateUtilContextAware
      *
      * @return SessionFactory
      */
-    public static SessionFactory getDefaultSessionFactory()
+    public static SessionFactory getSessionFactory()
     {
         if(currentState == STATE.SHUTDOWN)
         {
@@ -221,7 +262,7 @@ public class HibernateUtilContextAware
 
     /**
      * Closes the current SessionFactory and releases all resources.
-     * <p>
+     *
      * The only other method that can be called on HibernateUtil after this one is
      * rebuildSessionFactory(Configuration).
      */
@@ -256,7 +297,7 @@ public class HibernateUtilContextAware
         synchronized (hibernateConfigMap)
         {
             createSessionFactoriesFromConfigMap();
-		}
+        }
     }
 
 /**
@@ -333,7 +374,7 @@ public class HibernateUtilContextAware
 
     /**
      * Return current state.
-     * @return STATE
+     * @return the current state of HibernateUtil
      */
     public static STATE getCurrentState()
     {
@@ -361,6 +402,13 @@ public class HibernateUtilContextAware
             this.isDeafult = isDeafult;
         }
 
+        public HibernateConfigItem(String id, Configuration configuration, boolean isDeafult)
+        {
+            this.id = id;
+            this.isDeafult = isDeafult;
+            this.configuration = configuration;
+        }
+
         public void setDeafult(boolean deafult)
         {
             isDeafult = deafult;
@@ -373,7 +421,7 @@ public class HibernateUtilContextAware
         {
             return configFile;
         }
-        
+
         /**
          * @return Returns the configuration.
          */
