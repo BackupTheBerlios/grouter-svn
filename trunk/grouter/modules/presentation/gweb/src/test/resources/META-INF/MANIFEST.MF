@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: tobbe
+Build-Jdk: 1.5.0_05
+Extension-Name: war-fun
+Specification-Title: War is deployed on edge in a Akamai environment
+Implementation-Title: war-fun
+Implementation-Version: 1.0-SNAPSHOT
+Main-Class: none
+build-date: null
+context-name: war-fun
+developer: tobbe
+java-version: 1.5.0_05
+label: development
+server: server
+

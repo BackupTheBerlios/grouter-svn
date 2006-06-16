@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  <filter>
+    <filter-name>TimerFilter</filter-name>
+    <filter-class>com.sonyericsson.edge.fw.servlet.TimerInfoFilter</filter-class>
+  </filter>
+	
+  <filter>
+    <filter-name>DirectLinkFilter</filter-name>
+    <filter-class>com.sonyericsson.edge.fw.directlink.DirectLinkFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>TimerFilter</filter-name>
+    <servlet-name>Dispatcher</servlet-name>
+  </filter-mapping>    
+  
+  <filter-mapping>
+    <filter-name>DirectLinkFilter</filter-name>
+    <url-pattern>/download.do</url-pattern>
+  </filter-mapping>
+
+  <listener>
+      <listener-class>com.sonyericsson.edge.fw.spring.SpringFrameworkDispatcherContextListener</listener-class>
+  </listener>
+
+	<servlet>
+		<servlet-name>log4j</servlet-name>
+		<servlet-class>
+			com.sonyericsson.edge.fw.servlet.Log4jInitServlet
+		</servlet-class>
+		<init-param>
+			<param-name>jndiName</param-name>
+			<param-value>java:comp/env/propertyhost</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+  <servlet>
+    <servlet-name>BuildInfo</servlet-name>
+    <servlet-class>com.sonyericsson.common.servlet.BuildInfoServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>TimerInfo</servlet-name>
+    <servlet-class>com.sonyericsson.edge.fw.servlet.TimerInfoServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Dispatcher</servlet-name>
+    <servlet-class>com.sonyericsson.edge.fw.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+
+	<servlet>
+		<servlet-name>Blogger</servlet-name>
+		<servlet-class>com.sonyericsson.blogger.servlet.BloggerServlet</servlet-class>
+		<init-param>
+			<param-name>username</param-name>
+			<param-value>sonyericsson</param-value>
+		</init-param>
+		<init-param>
+			<param-name>password</param-name>
+			<param-value>one4g00gle</param-value>
+		</init-param>
+		<init-param>
+			<param-name>sharedSecret</param-name>
+			<param-value>fc1707420ee3c2395bd0</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>BloggerClient</servlet-name>
+		<servlet-class>com.sonyericsson.blogger.servlet.BloggerClientServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Blogger</servlet-name>
+		<url-pattern>/blogger/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>BloggerClient</servlet-name>
+		<url-pattern>/bloggerclient</url-pattern>
+	</servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>BuildInfo</servlet-name>
+    <url-pattern>/buildinfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>TimerInfo</servlet-name>
+    <url-pattern>/timerinfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Dispatcher</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+  
+  <env-entry>
+    <env-entry-name>propertyhost</env-entry-name>
+    <env-entry-value>localhost</env-entry-value>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+  
+</web-app>

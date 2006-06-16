@@ -1,0 +1,1152 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+	This files contain both internal and published bean declarations.
+	A published declarations and internal declarations have the following differences:
+
+	Published declartions
+	* The id is the fully qualified name of the feature interface.
+	* The bean will be available via the feature provider to the Dispatcher with the interface class as the key.
+
+	Internal declarations
+	* The id is named with the non qualified name of the interface (first letter decapitalized).
+
+	Post processors:
+	log-postproc: wraps created beans with an interceptor that logs all invocations on the bean.
+
+	service-registrator: examines created beans and look if they implement the serrvice interface.
+	If they do they are registered to be avaliable to applications as application services.
+-->
+
+<beans>
+	<bean id="directLinkManager" class="com.sonyericsson.edge.fw.directlink.DirectLinkManager">
+		<property name="statisticsManager">
+            <ref bean="statisticsManager"/>
+        </property>
+		<property name="requestManager">
+	        <ref bean="requestManager"/>
+	    </property>
+		<property name="linkManager">
+            <ref bean="linkManager"/>
+        </property>
+		<property name="unlocalizedResourceManager">
+            <ref bean="unlocalizedResourceManager"/>
+        </property>
+		<property name="originResUrl">
+			<ref bean="originResUrl"></ref>
+		</property>
+	</bean>
+
+    <!-- configure the log4j logger to send log data to the origin first thing... -->
+    <bean id="logconfig" class="com.sonyericsson.edge.fw.logging.LogConfigurator">
+        <constructor-arg index="0">
+            <value>${logserver-url}</value>
+        </constructor-arg>
+    </bean>
+    <!-- logger configured... -->
+
+    <bean id="com.sonyericsson.edge.fw.dispatcher.Dispatcher" class="com.sonyericsson.edge.fw.dispatcher.impl.DispatcherImpl">
+        <property name="siteStructureManager">
+            <ref bean="siteStructureManager"/>
+        </property>
+        <property name="actionExecuter">
+            <ref bean="actionExecuter"/>
+        </property>
+        <property name="responseRenderer">
+            <ref bean="responseRenderer"/>
+        </property>
+        <property name="requestManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="validationManager">
+            <ref bean="requestManager"/>
+        </property>
+		<property name="unlocalizedResourceManager">
+            <ref bean="unlocalizedResourceManager"/>
+        </property>
+    </bean>
+
+    <bean id="responseRenderer" class="com.sonyericsson.edge.fw.component.renderer.response.ResponseRendererImpl">
+        <property name="siteStructureManager">
+            <ref bean="siteStructureManager"/>
+        </property>
+        <property name="modelManager">
+            <ref bean="modelManager"/>
+        </property>
+        <property name="urlStrategy">
+            <ref bean="requestManager"/>
+        </property>
+         <property name="requestManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="renderer">
+            <ref bean="pageRenderer"/>
+        </property>
+        <property name="outputCacheHeader">
+            <value>X-Cache-Control</value>
+        </property>
+        <property name="outputNoStoreValue">
+            <value>no-store</value>
+        </property>
+        <property name="outputMaxAgeValue">
+            <value>max-age=1800, !no-store</value>
+        </property>
+    </bean>
+
+    <bean id="requestManager" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>com.sonyericsson.edge.fw.component.requestmanager.RequestManager</value>
+                <value>com.sonyericsson.edge.fw.component.requestmanager.LocaleManager</value>
+                <value>com.sonyericsson.edge.fw.component.requestmanager.CookieManager</value>
+                <value>com.sonyericsson.edge.fw.component.requestmanager.UrlStrategy</value>
+                <value>com.sonyericsson.edge.fw.component.requestmanager.ValidationManager</value>
+                <value>com.sonyericsson.edge.fw.component.requestmanager.impl.SessionProvider</value>
+                <value>com.sonyericsson.edge.fw.component.requestmanager.impl.RequestProvider</value>
+            </list>
+            </property>
+        <property name="target"><ref local="requestManagerTarget"/></property>
+        <property name="interceptorNames">
+            <list>
+                <value>memoryAdvisor</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="urlStrategyFactory" class="com.sonyericsson.edge.app.user.urlstrategy.RegistrationUrlStrategyFactoryImpl">
+		<property name="unlocalizedResourceManager">
+            <ref bean="unlocalizedResourceManager"/>
+        </property>
+    </bean>
+                 
+	<bean id="acceptLanguageMapper" class="com.sonyericsson.edge.fw.component.requestmanager.acceptlanguage.AcceptLanguageMapper">
+		<property name="resourceManager">
+            <ref bean="unlocalizedResourceManager"/>
+        </property>			
+	</bean>
+<!--	
+    <bean id="localeManagerFactory" class="com.sonyericsson.edge.fw.component.requestmanager.impl.HttpRequestLocaleManagerFactory">
+		<property name="acceptLanguageMapper">
+            <ref bean="acceptLanguageMapper"/>
+        </property>		
+    </bean>
+-->	
+    <bean id="localeManagerFactory" class="com.sonyericsson.edge.fw.component.requestmanager.impl.ExtendedLocaleManagerFactory">
+        <constructor-arg index="0">
+            <ref bean="acceptLanguageMapper"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="requestManagerTarget" class="com.sonyericsson.edge.fw.component.requestmanager.impl.RequestManagerImpl">
+        <property name="host">
+            <value>${edge-host}</value>
+        </property>
+        <property name="urlStrategyFactory">
+            <ref bean="urlStrategyFactory"/>
+        </property>
+		<property name="localeManagerFactory">
+            <ref bean="localeManagerFactory"/>
+        </property>
+    </bean>
+
+	<bean id="loggedInGuard" class="com.sonyericsson.edge.fw.component.guard.user.LoggedInGuard">
+    	<constructor-arg index="0">
+        	<ref bean="userManager"/>
+		</constructor-arg>
+	</bean>
+
+	<bean id="autoLogonGuard" class="com.sonyericsson.service.user.impl.guard.AutoLogonGuard">
+    	<constructor-arg index="0">
+        	<ref bean="userService"/>
+		</constructor-arg>
+    	<constructor-arg index="1">
+        	<ref bean="requestManager"/>
+		</constructor-arg>
+    	<constructor-arg index="2">
+    		<list>
+    			<value>logon</value>
+    			<value>portallogon</value>
+    		</list>
+		</constructor-arg>
+		
+	</bean>
+
+
+	<bean id="localeSelectedGuard" class="com.sonyericsson.edge.fw.component.guard.locale.LocaleSelectedGuard">
+    	<property name="localeManager">
+        	<ref bean="requestManager"/>
+		</property>
+	</bean>
+
+	<bean id="smsToSupportGuard" class="com.sonyericsson.edge.fw.component.guard.device.ApplicationPreferencesGuard">
+    	<constructor-arg index="0">
+        	<ref bean="deviceManager"/>
+		</constructor-arg>
+    	<constructor-arg index="1">
+        	<value>hasSmsToSupport</value>
+		</constructor-arg>
+		<property name="acceptedValues">
+           <set>
+           	<value>true</value>
+           </set>
+        </property>
+	</bean>
+
+	<bean id="httpUploadGuard" class="com.sonyericsson.edge.fw.component.guard.device.ApplicationPreferencesGuard">
+    	<constructor-arg index="0">
+        	<ref bean="deviceManager"/>
+		</constructor-arg>
+    	<constructor-arg index="1">
+        	<value>hasHttpUpload</value>
+		</constructor-arg>
+		<property name="acceptedValues">
+           <set>
+           	<bean class="java.lang.Boolean">
+		    	<constructor-arg index="0"><value>true</value></constructor-arg>
+           	</bean>
+           </set>
+        </property>
+	</bean>
+
+
+	<bean id="printServiceGuard" class="com.sonyericsson.service.print.impl.PrintServiceGuard">
+    	<constructor-arg index="0">
+        	<ref bean="printService"/>
+		</constructor-arg>
+	</bean>
+
+	<bean id="chinaGuard" class="com.sonyericsson.edge.fw.component.guard.locale.LocaleGuard">
+	    <property name="localeManager"><ref bean="requestManager"/></property>
+   	    <property name="acceptedLocales">
+   	        <set>
+   	            <bean class="java.util.Locale">
+					<constructor-arg index="0"><value>zh</value></constructor-arg>
+					<constructor-arg index="1"><value>CN</value></constructor-arg>
+				</bean>
+   	        </set>
+   	    </property>
+	</bean>
+
+    <bean id="siteStructureManager" class="com.sonyericsson.edge.fw.component.sitestructure.impl.SiteStructureManagerImpl">
+        <property name="urlStrategy">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="resourceManager">
+            <ref bean="resourceManagerSiteStructure"/>
+        </property>
+        <property name="deviceManager">
+            <ref bean="deviceManager"/>
+        </property>
+        <property name="originLocation">
+            <value>${origin-host}</value>
+        </property>
+        <property name="operatorManager">
+            <ref bean="operatorManager"/>
+        </property>
+        <property name="validationManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="guards">
+            <map>
+                <entry key="autoLogon">
+                    <ref bean="autoLogonGuard"/>
+                </entry>
+                <entry key="loggedIn">
+                    <ref bean="loggedInGuard"/>
+                </entry>
+		 		<entry key="notLoggedIn">
+		    		<bean class="com.sonyericsson.edge.fw.component.guard.logic.NotGuard">
+						<constructor-arg index="0">
+				    		<ref bean="loggedInGuard"/>
+						</constructor-arg>
+		    		</bean>
+                </entry>
+				<entry key="notChinaGuard">
+					<bean class="com.sonyericsson.edge.fw.component.guard.logic.NotGuard">
+						<constructor-arg index="0">
+				    		<ref bean="chinaGuard"/>
+						</constructor-arg>
+					</bean>
+				</entry>
+                <entry key="printServiceGuard">
+                    <ref bean="printServiceGuard"/>
+                </entry>
+                <entry key="smsToGuard">
+                	<ref bean="smsToSupportGuard"/>
+                </entry>
+                <entry key="httpUpload">
+                	<ref bean="httpUploadGuard"/>
+                </entry>
+				<entry key="localeSelected">
+                    <ref bean="localeSelectedGuard"/>
+				</entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="siteStructureService" class="com.sonyericsson.service.sitestructure.manager.SiteStructureManagerService">
+        <property name="siteStructureManager">
+            <ref bean="siteStructureManager"/>
+        </property>
+    </bean>
+
+    <bean id="pageRenderer" class="com.sonyericsson.edge.fw.component.renderer.composite.PageRenderer">
+	    <property name="linkManager">
+	        <ref bean="linkManager"/>
+	    </property>
+
+	    <property name="pageFactory">
+	        <ref bean="pageFactory"/>
+	    </property>
+
+	    <property name="operatorManager">
+	        <ref bean="operatorManager"/>
+	    </property>
+
+	    <property name="engine">
+	        <ref bean="rendererEngine"/>
+	    </property>
+
+	    <property name="validationManager">
+	        <ref bean="requestManager"/>
+	    </property>
+    </bean>
+
+    <bean id="pageFactory" class="com.sonyericsson.edge.fw.component.renderer.composite.PageLoader">
+        <constructor-arg index="0"><ref bean="resourceManager"/></constructor-arg>
+        <constructor-arg index="1"><ref bean="siteStructureManager"/></constructor-arg>
+        <constructor-arg index="2"><ref bean="modelManager"/></constructor-arg>
+    </bean>
+
+    <bean name="rendererEngine" class="com.sonyericsson.edge.fw.velocity.VelocityRendererEngine">
+        <constructor-arg index="0"><ref bean="velocityEngine"/></constructor-arg>
+    </bean>
+
+    <bean id="actionExecuter" class="com.sonyericsson.edge.fw.component.action.impl.ActionExecuterImpl">
+        <property name="applicationProvider">
+            <ref bean="applicationProvider"/>
+        </property>
+    </bean>
+
+    <bean id="userManager" class="com.sonyericsson.edge.fw.component.user.session.UserSessionManager"/>
+
+    <bean id="userService" class="com.sonyericsson.service.user.impl.UserServiceImpl">
+		  <property name="webServiceURL">
+			  <value>${ws-path}/services/UserManager</value>
+		  </property>
+      <property name="userManager">
+        <ref bean="userManager"/>
+      </property>
+      <property name="deviceService">
+  			<ref bean="deviceService" />
+	  </property>
+	  <property name="localeManager">
+      	<ref bean="requestManager"/>
+      </property>
+	  <property name="cookieManager">
+      	<ref bean="requestManager"/>
+      </property>
+	  <property name="requestManager">
+      	<ref bean="requestManager"/>
+      </property>
+	  <property name="userManager_Service">
+        <ref bean="userManager_Service"/>
+      </property>
+    </bean>
+
+    <bean id="videoProcessingService" class="com.sonyericsson.service.video.impl.VideoProcessingServiceImpl">
+	  <property name="webServiceURL">
+		  <value>${ws-path}/services/VideoProcessingManager</value>
+	  </property>
+	  <property name="webServiceBase">
+		  <value>${ws-path}</value>
+	  </property>
+	  <property name="videoProcessingManager_Service">
+	  	<ref bean="videoProcessingManager_Service" />
+	  </property>
+    </bean>
+	<bean id="videoProcessingManager_Service" class="com.sonyericsson.ws.video.VideoProcessingManager_ServiceLocator" />
+    <bean id="userManager_Service" class="com.sonyericsson.ws.user.UserManager_ServiceLocator"/>
+
+    <bean id="deviceManager" class="com.sonyericsson.edge.fw.component.device.impl.DeviceManagerImpl">
+        <property name="requestManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="resourceManager">
+            <ref bean="resourceManagerDevice"/>
+        </property>
+        <property name="urlStrategy">
+            <ref bean="requestManager"/>
+        </property>
+    </bean>
+
+    <bean id="deviceService" class="com.sonyericsson.service.device.manager.DeviceManagerService">
+        <property name="deviceManager">
+            <ref bean="deviceManager"/>
+        </property>
+    </bean>
+
+    <bean id="userParametersService" class="com.sonyericsson.service.userparameters.UserParametersServiceImpl">
+        <property name="urlStrategy">
+            <ref bean="requestManager"/>
+        </property>
+    </bean>
+
+    <bean id="productService" class="com.sonyericsson.service.product.impl.ProductServiceImpl">
+        <property name="deviceService">
+            <ref bean="deviceService"/>
+        </property>
+        <property name="resourceManager">
+            <ref bean="resourceManagerProduct"/>
+        </property>
+    </bean>
+
+    <bean id="applicationProvider" class="com.sonyericsson.edge.fw.component.application.impl.ApplicationProviderImpl">
+        <property name="configurator">
+            <ref bean="service-assigning-configurator"/>
+        </property>
+        <property name="requestManager">
+            <ref bean="requestManager"/>
+        </property>
+    </bean>
+
+
+    <bean id="sessionManager" class="com.sonyericsson.edge.fw.component.requestmanager.impl.SessionManagerImpl">
+        <property name="sessionProvider">
+            <ref bean="requestManager"/>
+        </property>
+    </bean>
+
+    <bean id="requestObjectManager" class="com.sonyericsson.edge.fw.component.requestmanager.impl.RequestObjectManagerImpl">
+        <property name="requestProvider">
+            <ref bean="requestManager"/>
+        </property>
+    </bean>
+
+
+    <bean id="proxyService" class="com.sonyericsson.service.proxy.http.LinkAliasHttpProxyService">
+        <property name="requestManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="linkService">
+            <ref bean="linkService"/>
+        </property>
+        <property name="localizerService">
+            <ref bean="localizerService"/>
+        </property>
+        <property name="targetHost">
+            <value>${proxy-target-host}</value>
+        </property>
+	   <property name="httpClient">
+            <ref bean="httpClient"/>
+		</property>
+
+        <property name="transferedHeaders">
+            <list>
+                <value>user-agent</value>
+                <value>Accept-Language</value>
+                <value>fromes</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="localizerService" class="com.sonyericsson.service.localizer.LocalizerServiceImpl">
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="resourceManager">
+            <ref bean="resourceManager"/>
+        </property>
+        <property name="productService">
+            <ref bean="productService"/>
+        </property>
+    </bean>
+
+    <bean id="resourceFactory" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceFactory">
+        <constructor-arg index="0">
+            <ref bean="originResUrl"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="originResUrl" class="java.net.URL">
+        <constructor-arg index="0">
+            <value>${origin-host}/${origin-dir}/res</value>
+        </constructor-arg>
+    </bean>
+
+    <!--bean id="resourceFactory" class="com.sonyericsson.edge.fw.component.resource.httpclient.HttpClientResourceFactory">
+        <constructor-arg index="0">
+            <value>${origin-host}/origin/res</value>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <ref bean="httpClient"/>
+        </constructor-arg>
+    </bean-->
+
+    <bean name="operatorManager" class="com.sonyericsson.edge.fw.component.operator.impl.OperatorManagerImpl"/>
+
+    <!-- ########################################################################################## -->
+    <!-- Common -->
+    <bean name="lruCache" class="com.sonyericsson.edge.fw.component.cache.lrusize.LruSizeHardCache">
+        <property name="maxPersistentSize">
+            <value>2100000</value>
+        </property>
+        <property name="preferedPersistentSize">
+            <value>2000000</value>
+        </property>
+    </bean>
+    <bean id="resourceManager" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <!--value>${origin-host}/origin</value-->
+            <ref bean="resourceFactory"/>
+        </constructor-arg>
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="cache">
+            <ref bean="lruCache"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+    <bean id="unlocalizedResourceManager" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <ref bean="resourceFactory"/>
+        </constructor-arg>
+        <property name="cache">
+            <ref bean="lruCache"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+
+    <!-- ########################################################################################## -->
+    <!-- Velocity -->
+    <bean name="lruCacheVelocity" class="com.sonyericsson.edge.fw.component.cache.lrusize.LruSizeHardCache">
+        <property name="maxPersistentSize">
+            <value>2100000</value>
+        </property>
+        <property name="preferedPersistentSize">
+            <value>2000000</value>
+        </property>
+    </bean>
+    <bean id="resourceManagerVelocity" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <ref bean="resourceFactory"/>
+        </constructor-arg>
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="cache">
+            <ref bean="lruCacheVelocity"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+
+    <!-- ########################################################################################## -->
+    <!-- Device -->
+    <bean name="lruCacheDevice" class="com.sonyericsson.edge.fw.component.cache.lrusize.LruSizeHardCache">
+        <property name="maxPersistentSize">
+            <value>80000</value>
+        </property>
+        <property name="preferedPersistentSize">
+            <value>75000</value>
+        </property>
+    </bean>
+    <bean id="resourceManagerDevice" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <ref bean="resourceFactory"/>
+        </constructor-arg>
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="cache">
+            <ref bean="lruCacheDevice"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+
+    <!-- ########################################################################################## -->
+    <!-- Product -->
+    <bean name="lruCacheProduct" class="com.sonyericsson.edge.fw.component.cache.lrusize.LruSizeHardCache">
+        <property name="maxPersistentSize">
+            <value>2200000</value>
+        </property>
+        <property name="preferedPersistentSize">
+            <value>2000000</value>
+        </property>
+    </bean>
+    <bean id="resourceManagerProduct" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <ref bean="resourceFactory"/>
+        </constructor-arg>
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="cache">
+            <ref bean="lruCacheProduct"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+
+    <!-- ########################################################################################## -->
+    <!-- Site Structure -->
+    <bean name="lruCacheSiteStructure" class="com.sonyericsson.edge.fw.component.cache.lrusize.LruSizeHardCache">
+        <property name="maxPersistentSize">
+            <value>2200000</value>
+        </property>
+        <property name="preferedPersistentSize">
+            <value>2000000</value>
+        </property>
+    </bean>
+    <bean id="resourceManagerSiteStructure" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <ref bean="resourceFactory"/>
+        </constructor-arg>
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="cache">
+            <ref bean="lruCacheSiteStructure"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+
+    <!-- ########################################################################################## -->
+    <!-- Content Model -->
+    <bean name="lruCacheContentModel" class="com.sonyericsson.edge.fw.component.cache.lrusize.LruSizeHardCache">
+        <property name="maxPersistentSize">
+            <value>8800000</value>
+        </property>
+        <property name="preferedPersistentSize">
+            <value>8000000</value>
+        </property>
+    </bean>
+    <bean id="resourceManagerContentModel" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <ref bean="resourceFactory"/>
+        </constructor-arg>
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="cache">
+            <ref bean="lruCacheContentModel"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+
+    <!-- ########################################################################################## -->
+
+
+    <bean id="resourceService" class="com.sonyericsson.service.resource.manager.ResourceManagerServiceFactory">
+    	<property name="resourceManager">
+   			<ref bean="resourceManager"/>
+    	</property>
+    </bean>
+
+    <bean id="flashService" class="com.sonyericsson.service.flash.resource.XmlDataFlashServiceFactory">
+        <property name="resourceManager">
+            <ref bean="resourceManager"/>
+        </property>
+        <property name="linkService">
+            <ref bean="linkService"/>
+        </property>
+    </bean>
+
+    <bean id="messagentService" class="com.sonyericsson.service.messagent.impl.MessagentServiceImpl">
+        <property name="userService">
+            <ref bean="userService"/>
+        </property>
+        <property name="resourceManager">
+        	<ref bean="resourceManager" />
+        </property>
+        <property name="messagentUrl">
+            <value>${messagent-url}</value>
+       </property>
+       <property name="verificationUrl">
+            <value>${verification-url}</value>
+       </property>
+	    <property name="httpClient">
+            <ref bean="httpClient"/>
+		</property>
+			<property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+	    <property name="messagentServiceHelper">
+        	<ref bean="messagentServiceHelper" />
+        </property>
+	</bean>
+
+
+    <bean id="modelManager" class="com.sonyericsson.edge.fw.component.model.impl.ApplicationProviderModelManager">
+        <property name="applicationProvider">
+            <ref bean="applicationProvider"/>
+        </property>
+    </bean>
+
+    <bean id="linkManager" class="com.sonyericsson.edge.fw.component.link.impl.LinkManagerImpl">
+        <property name="urlStrategy">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="siteStructureManager">
+            <ref bean="siteStructureManager"/>
+        </property>
+        <property name="deviceManager">
+            <ref bean="deviceManager"/>
+        </property>
+        <property name="requestManager">
+            <ref bean="requestManager"/>
+        </property>
+
+        <property name="ignoredParameters">
+            <set>
+                <value>lc</value>
+                <value>cc</value>
+
+                <value>username</value>
+                <value>password</value>
+
+            	<value>pageEntryValid</value>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="linkService" class="com.sonyericsson.service.link.manager.LinkManagerService">
+       <property name="linkManager">
+           <ref bean="linkManager"/>
+       </property>
+	   <property name="fallbackLink">
+           <value>http://www.sonyericsson.com</value>
+	   </property>
+    </bean>
+
+    <bean id="contentModelService" class="com.sonyericsson.service.contentmodel.impl.ContentModelServiceProxyImpl">
+        <property name="resourceManager">
+            <ref bean="resourceManagerContentModel"/>
+        </property>
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="deviceManager">
+            <ref bean="deviceManager"/>
+        </property>
+        <property name="linkService">
+            <ref bean="linkService"/>
+        </property>
+        <property name="notOmaDownloadExtentions">
+        	<list>
+        		<value>jad</value>
+        	</list>
+        </property>
+    </bean>
+
+
+    <bean id="themeService" class="com.sonyericsson.service.theme.ThemeServiceImpl" />
+
+    <bean id="graphicService" class="com.sonyericsson.service.graphic.impl.GraphicServiceFactory">
+        <property name="webServiceURL"><value>${ws-path}/services/GraphicService</value></property>
+        <property name="uploadServletURL"><value>${ws-path}/upload</value></property>
+        <property name="userService">
+		    <ref bean="userService"/>
+    	</property>
+        <property name="userService"> 
+		    <ref bean="userService"/> 
+    	</property> 
+        <property name="maxKbSize"> 
+		    <value>750</value>
+    	</property> 
+        <property name="maxPixelSize"> 
+		    <value>1280x960</value>
+    	</property> 
+        <property name="supportedImageTypes"> 
+		    <value>PJPEG, JPEG, GIF</value>
+    	</property> 
+        <property name="supportedVideoTypes"> 
+		    <value>mp4, 3gp, 3gpp</value>
+    	</property> 
+    </bean>
+
+    <bean id="purchaseService" class="com.sonyericsson.service.purchase.impl.PurchaseServiceImpl">
+    	<constructor-arg index="0">
+            <value>${mmi-url}</value> <!-- mmpBaseUrl this is cached in akamai -->
+        </constructor-arg>
+		<constructor-arg index="1">
+            <value>CCB</value> <!-- mmpCCBOperatorName -->
+        </constructor-arg>
+    	<constructor-arg index="2">
+            <value>WB-IPX</value> <!-- mmpWapBilling(IPX)OperatorName -->
+        </constructor-arg>
+    	<constructor-arg index="3">
+            <value>${mmw-url}</value> <!-- mmwBaseUrl this is uncached in akamai, plans are to move this to another machine-->
+        </constructor-arg>
+    	<property name="resourceManager">
+            <ref bean="resourceManager"/>
+        </property>
+    	<property name="linkService">
+            <ref bean="linkService"/>
+        </property>
+    	<property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+
+        <property name="ccbHost">
+            <value>${ccb-host}</value>
+        </property>
+        <property name="httpClient">
+            <ref bean="httpClient"/>
+         </property>
+
+    </bean>
+
+    <bean id="highscoreService" class="com.sonyericsson.service.highscore.impl.HighscoreServiceImpl">
+    	<property name="resourceManager">
+            <ref bean="resourceManager"/>
+        </property>
+        <property name="defaultDeviceName">
+        	<value>T610</value>
+        </property>
+        <property name="useValidationForJava">
+        	<value>1</value>
+        </property>
+        <property name="useValidationForMophun">
+        	<value>0</value>
+        </property>
+        <property name="ddpUrl">
+            <value>${ddp-url}</value>
+        </property>
+    </bean>
+
+    <bean id="diagnosticService" class="com.sonyericsson.service.diagnostic.impl.MemoryDiagnosticService">
+        <property name="memoryUsage">
+            <ref bean="memoryUsage"/>
+        </property>
+    </bean>
+
+    <bean id="statisticService" class="com.sonyericsson.service.statistic.impl.RequestInfoTracker">
+        <property name="statisticsManager">
+            <ref bean="statisticsManager"/>
+        </property>
+    </bean>
+
+    <bean id="statisticsManager" class="com.sonyericsson.edge.fw.statistics.StatisticsManagerImpl">
+        <property name="urlStrategy">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="requestManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="siteStructureManager">
+            <ref bean="siteStructureManager"/>
+        </property>
+        <property name="deviceManager">
+            <ref bean="deviceManager"/>
+        </property>
+        <property name="userManager">
+            <ref bean="userManager"/>
+        </property>
+        <property name="statisticUri">
+            <value>${esi-uri}</value>
+        </property>
+        <property name="statisticsDomain">
+            <value>${js_stats_domain}</value>
+        </property>
+        <property name="statisticsDcsId">
+            <value>${js_stats_dcsid}</value>
+        </property>
+    </bean>
+
+
+   <bean id="printService" class="com.sonyericsson.service.print.impl.PrintServiceImpl">
+        <property name="localeManager">
+            <ref bean="requestManager"/>
+        </property>
+        <property name="resourceManager">
+            <ref bean="resourceManager"/>
+        </property>
+        <property name="userService">
+            <ref bean="userService"/>
+        </property>
+        <property name="ddpUrl">
+            <value>${ddp-url}</value>
+        </property>
+		<property name="httpClient">
+		    <ref bean="httpClient"/>
+		</property>
+    </bean>
+
+
+    <!-- Configure Velocity -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="overrideLogging"><value>true</value></property>
+        <property name="velocityPropertiesMap">
+            <map>
+                <entry key="resource.manager.class">
+                    <value>com.sonyericsson.edge.fw.velocity.resource.ResourceManagerImpl</value>
+                </entry>
+                <entry key="semc.resourceManager">
+                    <ref bean="resourceManagerVelocity"/>
+                </entry>
+            </map>
+            <!--map>
+                <entry key="resource.loader"><value>proxy</value></entry>
+                <entry key="proxy.resource.loader.instance">
+                    <ref bean="templateLoader"/>
+                </entry>
+                <entry key="proxy.resource.loader.class">
+                    <value>com.sonyericsson.edge.fw.component.renderer.velocity.ProxyResourceLoader</value>
+                </entry>
+            </map-->
+        </property>
+    </bean>
+
+    <bean id="newRemoteUserFileService" class="com.sonyericsson.service.userfile.impl.UserFileServiceImpl">
+       <property name="userService"><ref bean="userService"/></property>
+       <property name="webServiceUrl"><value>${ws-path}/services</value></property>
+     </bean>
+
+    <bean id="remoteUserFileService" class="com.sonyericsson.service.userfile.ddp.RemoteFileServiceDDPFactory">
+    	<property name="resourceManager">
+    		<ref bean="resourceManager"/>
+    	</property>
+    	<property name="userService">
+    		<ref bean="userService"/>
+    	</property>
+    	<property name="contentModelService">
+    		<ref bean="contentModelService"/>
+    	</property>
+        <property name="ddpUrl">
+            <value>${ddp-url}</value>
+        </property>
+    	<property name="webServiceUrl">
+    		<value>${ws-path}/services</value>
+    	</property>
+    	<property name="securityHeader">
+    		<value>${securityHeader}</value>
+    	</property>
+    	<property name="securityValue">
+    		<value>${securityValue}</value>
+    	</property>
+    	<property name="httpClient">
+    	    <ref bean="httpClient"/>
+    	</property>
+    	<property name="newImplementation"><ref bean="newRemoteUserFileService"/></property>
+    </bean>
+
+    <bean id="service-assigning-configurator" class="com.sonyericsson.edge.fw.component.application.impl.ServiceAssigningConfigurator"/>
+    <!-- post processors -->
+
+    <bean id="propertyPlaceHolderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+		    <bean class="com.sonyericsson.edge.fw.spring.config.UrlResourceWithHostHeader">
+				<constructor-arg index="0">
+					<value>/env/edge.properties</value>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<bean class="org.springframework.jndi.JndiObjectFactoryBean">
+						<property name="jndiName">
+							<value>java:comp/env/propertyhost</value>
+						</property>
+					</bean>
+				</constructor-arg>
+		    </bean>
+		</property>
+    </bean>
+
+    <bean id="service-registrator" class="com.sonyericsson.edge.fw.spring.postprocessor.ServiceRegistrator">
+        <property name="registry">
+            <ref bean="service-assigning-configurator"/>
+        </property>
+        <property name="sessionObjectStorageProvider">
+            <ref bean="sessionManager"/>
+        </property>
+
+        <property name="requestObjectStorageProvider">
+            <ref bean="requestObjectManager"/>
+        </property>
+
+    </bean>
+
+    <bean id="diagnostic-registrator" class="com.sonyericsson.edge.fw.spring.postprocessor.DiagnosticRegistrator"/>
+
+    <bean id="memoryUsage" class="com.sonyericsson.service.diagnostic.memory.MemoryUsage">
+        <property name="numberOfSamples">
+            <value>600</value>
+        </property>
+        <property name="timePerSample">
+            <value>1000</value>
+        </property>
+    </bean>
+
+    <bean id="memoryAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice">
+            <ref local="memoryUsage"/>
+        </property>
+        <property name="patterns">
+            <list>
+                <value>.*beginRequest.*</value>
+            </list>
+        </property>
+    </bean>
+
+	<bean id="connectionManager" class="com.sonyericsson.edge.fw.component.resource.httpclient.HttpConnectionManagerImpl"/>
+	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
+		<constructor-arg index="0">
+            <ref bean="connectionManager"/>
+        </constructor-arg>
+	</bean>
+
+	<bean id="messagentServiceHelper" class="com.sonyericsson.service.messagent.impl.MessagentServiceHelperImpl" />
+    <!--bean id="log-postproc" class="com.sonyericsson.edge.fw.spring.postprocessor.ProxyWrapper">
+        <property name="factory">
+            <bean class="com.sonyericsson.edge.fw.spring.proxy.LoggingInvocationHandlerFactory"/>
+        </property>
+    </bean-->
+	
+	<bean id="trackerService" class="com.sonyericsson.service.r2rcommunication.tracker.TrackerServiceImpl">
+        <property name="deviceManagementTrackingURL">
+            <value>${device-management-tracking-url}</value>
+        </property>
+		<property name="deviceManagementTracking">
+			<ref bean="deviceManagementTracking"/>
+		</property>
+    </bean>
+	
+	<bean id="deviceManagementTracking" class="com.sonyericsson.service.r2rcommunication.tracker.DeviceManagementTrackingServiceImpl">
+		<property name="keystore">
+			<value>tracking-keystore</value>
+		</property>
+		<property name="authenticationKey">
+			<value>test2</value>
+		</property>
+		<property name="authenticationPassword">
+			<value>changeit</value>
+		</property>
+	</bean>
+	
+	<bean id="r2rCommunicationService" class="com.sonyericsson.service.r2rcommunication.R2rCommunicationServiceImpl">
+		<property name="keystore">
+			<value>r2rkeys</value>
+		</property>
+		<property name="authenticationKey">
+			<value>r2rtest</value>
+		</property>
+		<property name="authenticationPassword">
+			<value>r2rtest</value>
+		</property>
+    </bean>
+
+	<bean id="captchaService" class="com.sonyericsson.service.r2rcommunication.otasetup.captcha.TimeCaptchaServiceImpl">
+		<constructor-arg index="0"><value>chilli</value></constructor-arg>
+		<constructor-arg index="1"><value>60000</value></constructor-arg>
+		<constructor-arg index="2"><value>10</value></constructor-arg>
+		<property name="originResourceManager">
+			<ref bean="resourceManager" />
+		</property>
+    </bean>
+
+	<bean id="otaSetupService" class="com.sonyericsson.service.r2rcommunication.otasetup.impl.OtaSetupServiceImpl">
+		<property name="linkService">
+			<ref bean="linkService"/>
+		</property>
+		<property name="productService">
+			<ref bean="productService" />
+		</property>
+		<property name="localizerService">
+			<ref bean="localizerService" />
+		</property>
+		<property name="r2rCommunicationService">
+			<ref bean="r2rCommunicationService" />
+		</property>
+		<property name="localeManager">
+			<ref bean="requestManager" />
+		</property>
+		<property name="netstorageResourceManager">
+			<ref bean="netstorageResourceManager" />
+		</property>
+		<property name="cookieManager">
+			<ref bean="requestManager" />
+		</property>
+		<property name="originResourceManager">
+			<ref bean="resourceManager" />
+		</property>
+		<property name="r2rSmsGatewayUrl">
+			<value>${ota-smsgateway-host}/nabu/cip</value>
+		</property>
+    </bean>
+	
+    <bean id="netstorageResourceManager" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceManager">
+        <constructor-arg index="0">
+            <ref bean="netstorageResourceFactory"/>
+        </constructor-arg>
+        <property name="cache">
+            <ref bean="lruCache"/>
+        </property>
+		<property name="refreshRate">
+			<!-- 30 minutes (value in millisecs) -->
+            <value>1800000</value>
+        </property>
+    </bean>
+
+    <bean id="netstorageResourceFactory" class="com.sonyericsson.edge.fw.component.resource.url.UrlResourceFactory">
+        <constructor-arg index="0">
+            <ref bean="netstorageUrl"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="netstorageUrl" class="java.net.URL">
+        <constructor-arg index="0">
+            <value>${r2r-netstorage-url}/coss/settings</value>
+        </constructor-arg>
+    </bean>
+
+	
+	<bean id="mmdService" class="com.sonyericsson.service.mmd.MmdServiceImpl"> 
+        <property name="localizerService">
+            <ref bean="localizerService"/>
+        </property>
+		<property name="mmdClient">
+		    <ref bean="mmdClient"/>
+		</property>
+		<property name="defaultOrderCode">
+            <value>defaultIncentive</value>
+        </property>
+    </bean>
+	
+	<bean id="mmdClient" class="com.sonyericsson.service.mmd.client.MmdClientImpl">
+		<constructor-arg index="0">
+            <value>${mmw-url}</value>
+        </constructor-arg>
+        <property name="clientId">
+            <value>INBOX</value>
+        </property>
+        <property name="username">
+            <value>inbox</value>
+        </property>
+        <property name="password">
+            <value>inbox12321</value>
+        </property>
+        <property name="timeout">
+            <value>60000</value>
+        </property>
+	</bean>
+
+</beans>

@@ -1,0 +1,134 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.sonyericsson.platform2.fun.edge</groupId>
+    <artifactId>war-fun</artifactId>
+    <packaging>war</packaging>
+    <name>${groupId}::${artifactId}</name>
+    <description>War is deployed on edge in a Akamai environment</description>    
+    <parent>
+        <groupId>com.sonyericsson.platform2.fun</groupId>
+        <artifactId>edge</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <dependencies>
+        <!-- services -->
+        <dependency>
+            <groupId>com.sonyericsson.platform2.fun.edge</groupId>
+            <artifactId>fun-edge-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- applications -->
+        <dependency>
+            <groupId>com.sonyericsson.platform2.fun.edge</groupId>
+            <artifactId>fun-edge-application</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--
+        | Third party dependencies
+        |-->
+        <dependency>
+            <groupId>commons-discovery</groupId>
+            <artifactId>commons-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>saaj</groupId>
+            <artifactId>saaj</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>servlet</groupId>
+            <artifactId>servlet</artifactId>
+        </dependency>
+        <!--
+        | Switch axis jar to axis-akamai
+        |-->
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis-akamai</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>akamai-ej-apputil</groupId>
+            <artifactId>akamai-ej-apputil</artifactId>
+        </dependency>
+        <!--
+        | Provided: Should not be needed, check dependencies!
+        |-->
+        <dependency>
+            <groupId>xmlParserAPIs</groupId>
+            <artifactId>xmlParserAPIs</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!--
+        | Test: Needed for HttpUnitTests!
+        |-->
+        <dependency>
+            <groupId>httpunit</groupId>
+            <artifactId>httpunit</artifactId>
+            <version>1.6</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>nekohtml</groupId>
+                    <artifactId>nekohtml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>rhino</groupId>
+                    <artifactId>js</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <tasks>
+                                <mkdir dir="${project.build.directory}"/>
+                                <copy file="${basedir}/src/main/webapp/WEB-INF/framework.xml"
+                                      todir="${project.build.directory}/test-classes"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${basedir}/classes</outputDirectory>
+                    <projectnatures>
+                        <projectnature>org.eclipse.jem.workbench.JavaEMFNature</projectnature>
+                        <projectnature>org.eclipse.jdt.core.javanature</projectnature>
+                        <projectnature>org.eclipse.wst.common.modulecore.ModuleCoreNature</projectnature>
+                        <projectnature>com.sysdeo.eclipse.tomcat.tomcatnature</projectnature>
+                    </projectnatures>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
