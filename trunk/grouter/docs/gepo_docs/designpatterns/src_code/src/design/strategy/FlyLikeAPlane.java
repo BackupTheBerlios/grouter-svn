@@ -3,6 +3,6 @@
 package design.strategy;
 
 public class FlyLikeAPlane implements FlyBehavior {
-    public void fly() {
+    public void fly() { 
     }
 }
