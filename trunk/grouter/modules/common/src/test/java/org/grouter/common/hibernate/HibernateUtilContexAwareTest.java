@@ -22,9 +22,14 @@ public class HibernateUtilContexAwareTest extends TestCase
 
     /**
      * Some simple tests to see it loads properly.
+     *
+     * The bootStrap() must be called explicitly to init Hibernate form
+     * from the hibernate.cfg.xml file - which serves a special place in Hibernates bootstrap
+     * loading mechanism.
      */
     public void testHibernateBootstrap()
     {
+        HibernateUtilContextAware.bootStrap(true);
         defaultSessionFactoryOk();
 
         //at this point we should only have 1 config setup
@@ -42,22 +47,22 @@ public class HibernateUtilContexAwareTest extends TestCase
         {
             assertTrue(true);
         }
-
-
     }
 
 
     /**
-     * HibernateUtilContextAware should be
+     * HibernateUtilContextAware should be able to handle multiple sessionfactory configurations.
+     * New session factory configurations should only be added when in state SHUTDWON. After new items
+     * have been added you also need to do a rebuildSessionFactory().
      */
     public void testMulitpleSessionFactories()
     {
+        HibernateUtilContextAware.bootStrap(true);
         defaultSessionFactoryOk();
-
         // we should not put in config items while we are in state STATE.INITIALISED
         try
         {
-            HibernateUtilContextAware.insertNewHibernateConfigItemIntoMap("nondefault","nondefault_hibernate.cfg.xml",false);
+            HibernateUtilContextAware.addSessionFactoryToMap("nondefault","nondefault_hibernate.cfg.xml",false);
         } catch (Exception e)
         {
             assertTrue(true);
@@ -65,11 +70,11 @@ public class HibernateUtilContexAwareTest extends TestCase
         //at this point we should only have 1 config setup - the previous attempt should have failed
         assertEquals(1,HibernateUtilContextAware.getHibernateConfigMapSize() );
 
-        // Now shutdown and rebuild
-        HibernateUtilContextAware.shutdown();
+        // Now shutdown and rebuild - this will let us add new sessionfactories into the map
+        HibernateUtilContextAware.shutdown(false);
         assertEquals(HibernateUtilContextAware.STATE.SHUTDOWN, HibernateUtilContextAware.getCurrentState());
         // this should work
-        HibernateUtilContextAware.insertNewHibernateConfigItemIntoMap("nondefault","nondefault_hibernate.cfg.xml",false);
+        HibernateUtilContextAware.addSessionFactoryToMap("nondefault","nondefault_hibernate.cfg.xml",false);
         //at this point we should have 2 config setup
         assertEquals(2,HibernateUtilContextAware.getHibernateConfigMapSize());
         // rebuild and verify our session factories are there
@@ -85,8 +90,15 @@ public class HibernateUtilContexAwareTest extends TestCase
         nonDefaultconfigParamOk();
     }
 
+    /**
+     * Again multiple session factories are tested. This time we use a global inmemory jnid provider
+     * from which we try to do a look up for our session factory. We first need to create a namespace
+     * and bind a sessionfactory implementation to that.
+     */
     public void testMulitpleSessionFactoriesWithJNDI()
     {
+        HibernateUtilContextAware.bootStrap(true);
+
         int sizeBeforeTest = HibernateUtilContextAware.getHibernateConfigMapSize();
         BindingItem bindingItem = new BindingItem("jndi_name", null, new String[]{"jndi:hibernate","mbeans"});
         List<BindingItem> bindingItems = new ArrayList<BindingItem>();
@@ -99,10 +111,10 @@ public class HibernateUtilContexAwareTest extends TestCase
         assertEquals(sizeBeforeTest,HibernateUtilContextAware.getHibernateConfigMapSize());
 
         // Now shutdown and rebuild
-        HibernateUtilContextAware.shutdown();
+        HibernateUtilContextAware.shutdown(false);
         assertEquals(HibernateUtilContextAware.STATE.SHUTDOWN, HibernateUtilContextAware.getCurrentState());
         // this should work
-        HibernateUtilContextAware.insertNewHibernateConfigItemIntoMap("jndi","jndi_hibernate.cfg.xml",false);
+        HibernateUtilContextAware.addSessionFactoryToMap("jndi","jndi_hibernate.cfg.xml",false);
         //at this point we should have +1 config setup
         assertEquals(sizeBeforeTest+1,HibernateUtilContextAware.getHibernateConfigMapSize());
         try
@@ -117,31 +129,52 @@ public class HibernateUtilContexAwareTest extends TestCase
     }
 
 
+    /**
+     *
+     */
     public void testHibernateStateTransitions()
     {
-        if (HibernateUtilContextAware.getCurrentState() == HibernateUtilContextAware.STATE.INITIALISED)
+        // shutdown and move to SHUTDOWN state
+        HibernateUtilContextAware.shutdown(true);
+        assertEquals(HibernateUtilContextAware.STATE.SHUTDOWN, HibernateUtilContextAware.getCurrentState());
+        try
         {
-            defaultSessionFactoryOk();
-            // shutdown and move to SHUTDOWN state
-            HibernateUtilContextAware.shutdown();
-            assertEquals(HibernateUtilContextAware.STATE.SHUTDOWN, HibernateUtilContextAware.getCurrentState());
-            try
-            {
-                HibernateUtilContextAware.getSessionFactory();
-            } catch (Exception e)
-            {
-                assertTrue(true);
-            }
-            HibernateUtilContextAware.rebuildSessionFactory();
-            //should be a default sessionfactory
-            assertNotNull(HibernateUtilContextAware.getSessionFactory("default"));
-            assertEquals(HibernateUtilContextAware.STATE.INITIALISED, HibernateUtilContextAware.getCurrentState());
-
-            defaultConfigParamOk();
+            HibernateUtilContextAware.getSessionFactory();
+        } catch (Exception e)
+        {
+            assertTrue(true);
         }
-
-
+        HibernateUtilContextAware.rebuildSessionFactory();
+        //should be a default sessionfactory
+        assertEquals(HibernateUtilContextAware.STATE.INITIALISED, HibernateUtilContextAware.getCurrentState());
     }
+
+
+    /**
+     * Initialize HibernateUtil from a given Configuration in runtime. Verify that the sessionfactory
+     * map of HibernateUtilContextAware is increased by one.
+     */
+    public void testHibernateBootstrapFromConfiguration()
+    {
+        HibernateUtilContextAware.shutdown(true);
+        assertEquals("",0,HibernateUtilContextAware.getHibernateConfigMapSize());
+        Configuration config = new Configuration().
+                setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect").
+                setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver").
+                setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:test").
+                setProperty("hibernate.connection.username", "sa").
+                setProperty("hibernate.connection.password", "").
+                setProperty("hibernate.connection.pool_size", "1").
+                setProperty("hibernate.connection.autocommit", "true").
+                setProperty("hibernate.cache.provider_class", "org.hibernate.cache.HashtableCacheProvider").
+                setProperty("hibernate.show_sql", "true").
+                setProperty("hibernate.current_session_context_class", "thread").
+                setProperty("hibernate.jdbc.batch_size", "0");
+        HibernateUtilContextAware.addSessionFactoryToMap("testfromconfiguration",config,true);
+        HibernateUtilContextAware.rebuildSessionFactory();
+        assertEquals("",1,HibernateUtilContextAware.getHibernateConfigMapSize());
+    }
+
     private void nonDefaultconfigParamOk()
     {
         // see if the configuration loaded matches the one we think we provided

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+	See http://maven.apache.org/reference/plugins/xdoc/
+-->
+<document>
+    <properties>
+        <author email="georges.polyzois@cybercomgroup.com">Georges Polyzois</author>
+        <title>Index</title>
+    </properties>
+    <head>
+    <!--meta ... /-->
+    </head>
+    <body>
+        <!-- The body of the document contains a number of sections -->
+        <section name="Deployment">
+        	A Deployment diagram shows how and where the system will be deployed. Physical 
+        	machines and processors are reflected as nodes, and the internal construction 
+        	can be depicted by embedding nodes or artifacts. As artifacts are allocated to 
+        	nodes to model the system's deployment, the allocation is guided by the use of 
+        	deployment specifications.
+            <subsection name="UML Diagram">
+            <p><img src="./images/CIPUMLDeploymentDiagram.png"></img></p>
+
+            </subsection>
+        </section>
+        <!--section name="Goal">
+            <source>
+                code line 1
+                code line 2
+            </source>
+        </section-->
+        <!-- footer will be placed above the (c) -->
+        <footer>
+            <!--A href="http://developer.berlios.de/">
+                <img src="http://www.berlios.de/images/berliOS_small_logo.png" width="124" height="32" border="0"
+                     alt="BerliOS Logo"/>
+            </A-->
+        </footer>
+    </body>
+</document>
