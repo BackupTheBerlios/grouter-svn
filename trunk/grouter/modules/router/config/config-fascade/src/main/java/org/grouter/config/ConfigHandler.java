@@ -27,6 +27,8 @@ public class ConfigHandler
     private static Logger logger = Logger.getLogger(ConfigHandler.class);
     private XmlOptions xmlOptions;
     private ArrayList validationErrors = new ArrayList();
+
+    //root handle to config
     private GRouterConfigDocument gRouterConfigDocument;
 
     /**

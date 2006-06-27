@@ -16,15 +16,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="junit">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPO$/junit/junit/3.8.1/junit-3.8.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="jmock">
         <CLASSES>
           <root url="jar://$MAVEN_REPO$/jmock/jmock/1.0.1/jmock-1.0.1.jar!/" />
@@ -34,18 +25,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="xbean">
+      <library name="junit">
         <CLASSES>
-          <root url="jar://$MAVEN_REPO$/xmlbeans/xbean/2.0.0/xbean-2.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="log4j">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPO$/log4j/log4j/1.2.8/log4j-1.2.8.jar!/" />
+          <root url="jar://$MAVEN_REPO$/junit/junit/3.8.1/junit-3.8.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -55,6 +37,15 @@
       <library name="commons-logging">
         <CLASSES>
           <root url="jar://$MAVEN_REPO$/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log4j">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPO$/log4j/log4j/1.2.8/log4j-1.2.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -88,18 +79,18 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="commons-beanutils">
+      <library name="xmlbeans-jsr173-api">
         <CLASSES>
-          <root url="jar://$MAVEN_REPO$/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar!/" />
+          <root url="jar://$MAVEN_REPO$/xmlbeans/xmlbeans-jsr173-api/2.0-dev/xmlbeans-jsr173-api-2.0-dev.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="xmlbeans-jsr173-api">
+      <library name="commons-beanutils">
         <CLASSES>
-          <root url="jar://$MAVEN_REPO$/xmlbeans/xmlbeans-jsr173-api/2.0-dev/xmlbeans-jsr173-api-2.0-dev.jar!/" />
+          <root url="jar://$MAVEN_REPO$/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -118,6 +109,15 @@
       <library name="commons-collections">
         <CLASSES>
           <root url="jar://$MAVEN_REPO$/commons-collections/commons-collections/3.1/commons-collections-3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xbean">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPO$/xmlbeans/xbean/2.1.0/xbean-2.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

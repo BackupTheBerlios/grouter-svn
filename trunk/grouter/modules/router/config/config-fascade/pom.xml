@@ -28,10 +28,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Added this instead of xmlbeans-jsr173-api because of
+        cannot access javax.xml.stream.XMLStreamReader  -->
+        <dependency>
+            <groupId>servicemix</groupId>
+            <artifactId>jaxp</artifactId>
+            <version>1.4-20050623</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>xmlbeans</groupId>
             <artifactId>xbean</artifactId>
-            <version>2.0.0</version>
+            <version>2.1.0</version>
         </dependency>
     </dependencies>
 </project>
