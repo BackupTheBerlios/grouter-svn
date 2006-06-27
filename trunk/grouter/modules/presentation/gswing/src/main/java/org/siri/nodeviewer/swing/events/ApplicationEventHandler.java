@@ -6,7 +6,7 @@ import java.util.Vector;
 /**
  * Clients wanting to receive application events must register with this class.
  *
- * @version 1.0
+ * @author Georges Polyzois
  */
 
 public class ApplicationEventHandler
@@ -38,6 +38,10 @@ public class ApplicationEventHandler
         }
     }
 
+    /**
+     * 
+     * @param l
+     */
     public synchronized void removeApplicationStateEventListener(ApplicationStateEventListener l)
     {
         if (applicationStateEventListeners != null && applicationStateEventListeners.contains(l))
