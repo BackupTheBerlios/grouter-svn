@@ -1,29 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.sonyericsson.platform2.fun.edge</groupId>
-    <artifactId>war-fun</artifactId>
+    <groupId>org.grouter</groupId>
+    <artifactId>grouter</artifactId>
     <packaging>war</packaging>
     <name>${groupId}::${artifactId}</name>
     <description>War is deployed on edge in a Akamai environment</description>    
     <parent>
-        <groupId>com.sonyericsson.platform2.fun</groupId>
-        <artifactId>edge</artifactId>
+        <groupId>org.grouter</groupId>
+        <artifactId></artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <dependencies>
-        <!-- services -->
-        <dependency>
-            <groupId>com.sonyericsson.platform2.fun.edge</groupId>
-            <artifactId>fun-edge-service</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- applications -->
-        <dependency>
-            <groupId>com.sonyericsson.platform2.fun.edge</groupId>
-            <artifactId>fun-edge-application</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+       
         <!--
         | Third party dependencies
         |-->
