@@ -14,37 +14,55 @@ import java.net.URL;
  */
 public class Log4JInit
 {
+    private static final String LOG4J_CONFIGURATION = "log4j.configuration";
+
     static
-    {    
+    {
+        initLog4J();
+    }
+
+    public static void reInitLog4J()
+    {
+        initLog4J();
+    }
+
+
+    private static void initLog4J()
+    {
         try
         {
-            String log4jconf = System.getProperty("log4j.configuration");
-            if(log4jconf != null)
+            String log4jconf = System.getProperty(LOG4J_CONFIGURATION);
+            if (log4jconf != null && !log4jconf.equalsIgnoreCase(""))
             {
                 System.out.println("log4j.configuration was set to " + log4jconf);
                 DOMConfigurator.configure(log4jconf);
-            }
-            else
+            } else
             {
-                //Look for the xml file in the root classpath
+                System.out.println(LOG4J_CONFIGURATION + "was null or empty - trying to load log4j.xml");
                 URL url = Log4JInit.class.getResource("log4j.xml");
-                DOMConfigurator.configure(url);
+                if (url != null)
+                {
+                    DOMConfigurator.configure(url);
+                } else
+                {
+                    System.out.println("Log4j can not start properly!!! Have you added -Dlog4j.configuration=<path to your log4j.xml file>?");
+                }
             }
             //org.apache.log4j.MDC.put("host", getLocalHostName());
         }
-
         catch (FactoryConfigurationError ex)
         {
             System.out.println("Caught FactoryConfigurationError. Log4j can not start properly!!! Have you added -Dlog4j.configuration=<path to your log4j.xml file>?");
-            System.out.println("Log4j can not start properly!!! " + ex.getMessage());
+            ex.printStackTrace();
         }
         catch (Throwable thr)
         {
             System.out.println("Caught Throwable. Log4j can not start properly!!! Have you added -Dlog4j.configuration=<path to your log4j.xml file>?");
-            System.out.println("Log4j can not start properly!!! " + thr.getMessage());
+            thr.printStackTrace();
         }
     }
 
+    /*
     private static String getLocalHostName()
     {
         String hostName = null;
@@ -59,5 +77,5 @@ public class Log4JInit
         }
         return hostName;
     }
-
+    */
 }
