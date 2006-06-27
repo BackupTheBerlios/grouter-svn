@@ -3,17 +3,13 @@ package org.siri.nodeviewer.swing.events;
 import java.util.EventObject;
 
 /**
- * All events for application
+ * Events for application
  *
  * @author not attributable
  * @version 1.0
  */
-
-
-public class ApplicationStateEvent
-        extends EventObject
+public class ApplicationStateEvent extends EventObject
 {
-
     ApplicationEventType applicationEventType;
     private String metaInfo;
 

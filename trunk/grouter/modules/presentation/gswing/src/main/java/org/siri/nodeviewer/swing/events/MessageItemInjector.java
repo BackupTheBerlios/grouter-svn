@@ -2,7 +2,6 @@ package org.siri.nodeviewer.swing.events;
 
 import org.apache.log4j.Logger;
 import org.siri.nodeviewer.swing.panels.messageview.MessageItem;
-import org.siri.nodeviewer.swing.util.Log4JInit;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -18,7 +17,6 @@ public class MessageItemInjector implements Callable
      * Logger.
      */
     private static Logger logger = Logger.getLogger(MessageItemInjector.class);
-    private Log4JInit Log4JInit;
 
     public static void main(String[] args)
     {
