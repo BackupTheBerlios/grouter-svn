@@ -30,7 +30,6 @@ public class IconFactory
         {
             ex.printStackTrace();
             logger.error("Could not create icon for " + imageName, ex);
-
         }
         return im;
     }

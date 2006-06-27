@@ -16,6 +16,7 @@ import org.siri.nodeviewer.swing.panels.messageview.MessageTabbedPane;
 import org.siri.nodeviewer.swing.panels.serviceexplorer.ServiceNodeExplorerPanel;
 import org.siri.nodeviewer.swing.panels.statusbar.StatusBarPanel;
 import org.siri.nodeviewer.swing.panels.toolbar.ToolBar;
+import org.siri.nodeviewer.swing.util.IconFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -28,6 +29,10 @@ import java.io.File;
 import java.io.IOException;
 
 
+/**
+ * Starts the application up.
+ *
+ */
 public class Main extends DefaultDockableBarDockableHolder
 {
     private static Logger logger = Logger.getLogger(Main.class);
@@ -40,7 +45,7 @@ public class Main extends DefaultDockableBarDockableHolder
     public static final String FRAMEID_SERVICE_NODES = "Service Nodes";
     public static final String FRAMEID_MESSAGES = "Messages";
     public static final String FRAMEID_LOGS = "Logs";
-    private static final String FILE_NAME = "target/classes/dockablelayout.xml";
+    private static final String FILE_NAME = "dockablelayout.xml";
 
 
     /**
@@ -126,9 +131,10 @@ public class Main extends DefaultDockableBarDockableHolder
      */
     public void load(String fileName) throws SAXException, ParserConfigurationException, IOException
     {
+        ClassLoader classLoader = Main.class.getClassLoader();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(new File(fileName));
+        Document document = builder.parse(classLoader.getResourceAsStream(fileName));
         load(document);
     }
 
