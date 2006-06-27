@@ -90,7 +90,9 @@ public class MessageNodeExplorerPanel
                 {
                     return ((MessageNodeRow) item).getName();
                 }
-                return super.convertElementToString(item);
+                return null;
+                //todo removed this
+//                return super.convertElementToString(item);
             }
         };
         searchable.setMainIndex(1); // only search for name column

@@ -3,7 +3,6 @@ package org.siri.nodeviewer.swing.panels.messageview;
 import com.jidesoft.grid.HierarchicalTableModel;
 import org.apache.log4j.Logger;
 import org.siri.nodeviewer.swing.events.ApplicationEventHandler;
-import org.siri.nodeviewer.swing.events.ApplicationEventType;
 import org.siri.nodeviewer.swing.events.ApplicationStateEvent;
 import org.siri.nodeviewer.swing.events.ApplicationStateEventListener;
 
@@ -117,7 +116,7 @@ public class MessageTableModel extends AbstractTableModel implements Hierarchica
      */
     public void dataChanged(ApplicationStateEvent e)
     {
-        if (e.getApplicationEventType() == ApplicationEventType.UPDATEMESSAGEMODEL)
+        if (e.getApplicationEventType() == ApplicationStateEvent.ApplicationEventType.UPDATEMESSAGEMODEL)
         {
             MessageItem messageItem = (MessageItem) e.getSource();
             addNewItem(messageItem);

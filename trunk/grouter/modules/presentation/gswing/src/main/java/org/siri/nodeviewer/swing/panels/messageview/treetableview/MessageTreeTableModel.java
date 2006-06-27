@@ -5,8 +5,8 @@ import com.jidesoft.grid.StyleModel;
 import com.jidesoft.grid.TreeTableModel;
 import org.apache.log4j.Logger;
 import org.siri.nodeviewer.swing.events.ApplicationEventHandler;
-import org.siri.nodeviewer.swing.events.ApplicationEventType;
 import org.siri.nodeviewer.swing.events.ApplicationStateEvent;
+import static org.siri.nodeviewer.swing.events.ApplicationStateEvent.ApplicationEventType.UPDATEMESSAGEMODEL;
 import org.siri.nodeviewer.swing.events.ApplicationStateEventListener;
 import org.siri.nodeviewer.swing.panels.messageview.MessageItem;
 
@@ -75,7 +75,7 @@ public class MessageTreeTableModel extends TreeTableModel implements StyleModel,
      */
     public void dataChanged(ApplicationStateEvent e)
     {
-        if (e.getApplicationEventType() == ApplicationEventType.UPDATEMESSAGEMODEL)
+        if (e.getApplicationEventType() == UPDATEMESSAGEMODEL)//ApplicationEventType.UPDATEMESSAGEMODEL)
         {
             MessageItem messageItem = (MessageItem) e.getSource();
             addNewItem(messageItem);

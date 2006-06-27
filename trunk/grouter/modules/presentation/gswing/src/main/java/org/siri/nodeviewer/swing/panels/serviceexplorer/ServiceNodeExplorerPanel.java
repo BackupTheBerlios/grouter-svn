@@ -88,7 +88,8 @@ public class ServiceNodeExplorerPanel
                 {
                     return ((ServiceNodeRow) item).getName();
                 }
-                return super.convertElementToString(item);
+                return null;
+//                return super.convertElementToString(item);
             }
         };
         searchable.setMainIndex(1); // only search for name column

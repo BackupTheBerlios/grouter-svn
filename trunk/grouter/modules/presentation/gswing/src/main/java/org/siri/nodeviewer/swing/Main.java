@@ -9,7 +9,6 @@ import com.jidesoft.docking.DockableFrame;
 import com.jidesoft.docking.DockableFrameFactory;
 import com.jidesoft.icons.JideIconsFactory;
 import com.jidesoft.plaf.LookAndFeelFactory;
-import com.jidesoft.swing.JideButton;
 import org.apache.log4j.Logger;
 import org.siri.nodeviewer.swing.panels.logging.LogPanel;
 import org.siri.nodeviewer.swing.panels.menubar.MenuBar;
@@ -41,7 +40,7 @@ public class Main extends DefaultDockableBarDockableHolder
     public static final String FRAMEID_SERVICE_NODES = "Service Nodes";
     public static final String FRAMEID_MESSAGES = "Messages";
     public static final String FRAMEID_LOGS = "Logs";
-    private static final String FILE_NAME = "C:\\gepo\\mycvsprojects\\siri\\modules\\swingclient_dockable\\dockablelayout.xml";
+    private static final String FILE_NAME = "target/classes/dockablelayout.xml";
 
 
     /**

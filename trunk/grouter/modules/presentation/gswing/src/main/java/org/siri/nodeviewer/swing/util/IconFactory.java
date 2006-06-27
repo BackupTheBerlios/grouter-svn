@@ -9,10 +9,6 @@ import javax.swing.*;
  */
 public class IconFactory
 {
-
-    /**
-     * Logger.
-     */
     private static Logger logger = Logger.getLogger(IconFactory.class);
     public final static String ROOTPATH = "icons/";
     private static ClassLoader cl = IconFactory.class.getClassLoader();

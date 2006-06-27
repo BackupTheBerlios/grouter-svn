@@ -4,8 +4,7 @@ package org.siri.nodeviewer.swing.events;
 import java.util.Vector;
 
 /**
- * Instances of a a class implementeing the ApplicationStateEventListener
- * interface registers here for updates.
+ * Clients wanting to receive application events must register with this class.
  *
  * @version 1.0
  */

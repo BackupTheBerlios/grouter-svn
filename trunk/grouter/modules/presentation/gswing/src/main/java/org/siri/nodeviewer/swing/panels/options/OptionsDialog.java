@@ -28,7 +28,8 @@ public class OptionsDialog extends MultiplePageDialog
 
     protected void initComponents()
     {
-        super.initComponents();
+        // todo removed this
+//        super.initComponents();
         getContentPanel().setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
         getIndexPanel().setBackground(Color.white);
         getButtonPanel().setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
@@ -81,16 +82,7 @@ public class OptionsDialog extends MultiplePageDialog
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             }
         }
-        catch (ClassNotFoundException e)
-        {
-        }
-        catch (InstantiationException e)
-        {
-        }
-        catch (IllegalAccessException e)
-        {
-        }
-        catch (UnsupportedLookAndFeelException e)
+        catch (Exception e)
         {
         }
         LookAndFeelFactory.installJideExtension();
