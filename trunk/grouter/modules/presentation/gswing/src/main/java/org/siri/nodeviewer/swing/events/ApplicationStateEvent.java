@@ -10,6 +10,7 @@ import java.util.EventObject;
  */
 public class ApplicationStateEvent extends EventObject
 {
+    public static enum ApplicationEventType{UPDATEMESSAGEMODEL,UPDATELOGPANEL}
     ApplicationEventType applicationEventType;
     private String metaInfo;
 

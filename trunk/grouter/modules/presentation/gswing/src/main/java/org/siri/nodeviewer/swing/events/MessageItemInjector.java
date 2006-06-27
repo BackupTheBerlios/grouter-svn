@@ -39,7 +39,7 @@ public class MessageItemInjector implements Callable
             }
 
             MessageItem messageItem = new MessageItem(new String("nodeid" + i), "msgid" + i, "content " + i, "serviceid " + i, sent);
-            ApplicationStateEvent event = new ApplicationStateEvent(messageItem, "test updates from injector", ApplicationEventType.UPDATEMESSAGEMODEL);
+            ApplicationStateEvent event = new ApplicationStateEvent(messageItem, "test updates from injector", ApplicationStateEvent.ApplicationEventType.UPDATEMESSAGEMODEL);
             ApplicationEventHandler.getInstance().fireDataChanged(event);
             logger.debug("Just fired one message event");
             i++;
