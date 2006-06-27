@@ -14,8 +14,12 @@ import org.siri.nodeviewer.swing.panels.logging.LogPanel;
 import org.siri.nodeviewer.swing.panels.menubar.MenuBar;
 import org.siri.nodeviewer.swing.panels.messageview.MessageTabbedPane;
 import org.siri.nodeviewer.swing.panels.serviceexplorer.ServiceNodeExplorerPanel;
+import org.siri.nodeviewer.swing.panels.serviceexplorer.ServiceNodeItem;
+import org.siri.nodeviewer.swing.panels.serviceexplorer.ServiceNodeRow;
+import org.siri.nodeviewer.swing.panels.serviceexplorer.ServiceTreeTableModel;
 import org.siri.nodeviewer.swing.panels.statusbar.StatusBarPanel;
 import org.siri.nodeviewer.swing.panels.toolbar.ToolBar;
+import org.siri.nodeviewer.swing.util.Constants;
 import org.siri.nodeviewer.swing.util.IconFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -25,8 +29,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -41,11 +45,12 @@ public class Main extends DefaultDockableBarDockableHolder
     private static LogPanel logPanel = new LogPanel();
     private static MessageTabbedPane messageTabbedPane = new MessageTabbedPane();
     private final StatusBarPanel statusBarPanel = new StatusBarPanel();
-    private final static ServiceNodeExplorerPanel serviceNodeExplorerPanel = new ServiceNodeExplorerPanel();
+    private static ServiceNodeExplorerPanel serviceNodeExplorerPanel;
     public static final String FRAMEID_SERVICE_NODES = "Service Nodes";
     public static final String FRAMEID_MESSAGES = "Messages";
     public static final String FRAMEID_LOGS = "Logs";
     private static final String FILE_NAME = "dockablelayout.xml";
+
 
 
     /**
@@ -57,6 +62,9 @@ public class Main extends DefaultDockableBarDockableHolder
     public Main(String title) throws HeadlessException
     {
         super(title);
+
+        // todo refactor to use init config
+        serviceNodeExplorerPanel = new ServiceNodeExplorerPanel(getServiceTreeTableModel());
 
         try
         {
@@ -251,9 +259,54 @@ public class Main extends DefaultDockableBarDockableHolder
 
     public static DockableFrame createServiceNodeFrame(String key)
     {
+
         DockableFrame frame = new DockableFrame(key, JideIconsFactory.getImageIcon(JideIconsFactory.DockableFrame.FRAME6));
         frame.getContentPane().add(new JScrollPane(serviceNodeExplorerPanel.getPanel()));
         return frame;
     }
+
+    // Todo remove this
+    private ServiceTreeTableModel getServiceTreeTableModel()
+        {
+            ServiceNodeItem nodeItemNode1 = new ServiceNodeItem("Feeder1", "snode 1", "", "", IconFactory.getImageIcon(Constants.NETWORK));
+            ServiceNodeItem nodeItemNode1Child1 = new ServiceNodeItem("Feeder1", "snode 2", "service-kalle-child1", "runing", IconFactory.getImageIcon(Constants.FLAG));
+            ServiceNodeItem nodeItemNode1Child2 = new ServiceNodeItem("Feeder1", "snode 3", "service-kalle-child2", "runing", IconFactory.getImageIcon(Constants.FLAG));
+
+            ServiceNodeRow nodeRowChild1 = new ServiceNodeRow(nodeItemNode1Child1);
+            ServiceNodeRow nodeRowChild2 = new ServiceNodeRow(nodeItemNode1Child2);
+
+            ArrayList children = new ArrayList();
+            children.add(nodeRowChild1);
+            children.add(nodeRowChild2);
+
+            ServiceNodeRow root1 = new ServiceNodeRow(nodeItemNode1);
+            root1.setChildren(children);
+
+            ///////
+            ServiceNodeItem nodeItemNode2 = new ServiceNodeItem("Feeder2", "snode 1", "", "", IconFactory.getImageIcon(Constants.NETWORK));
+            ServiceNodeItem nodeItemNode2Child1 = new ServiceNodeItem("Feeder2", "snode 2", "service-maja-child1", "runing", IconFactory.getImageIcon(Constants.FLAG));
+            ServiceNodeItem nodeItemNode2Child2 = new ServiceNodeItem("Feeder2", "snode 3", "service-nisss-child2", "stopped", IconFactory.getImageIcon(Constants.FLAG));
+
+            ServiceNodeRow node2RowChild1 = new ServiceNodeRow(nodeItemNode2Child1);
+            ServiceNodeRow node2RowChild2 = new ServiceNodeRow(nodeItemNode2Child2);
+
+            ArrayList children2 = new ArrayList();
+            children2.add(node2RowChild1);
+            children2.add(node2RowChild2);
+
+            ServiceNodeRow root2 = new ServiceNodeRow(nodeItemNode2);
+            root2.setChildren(children2);
+
+
+            ArrayList<ServiceNodeRow> rows = new ArrayList<ServiceNodeRow>();
+            rows.add(root1);
+            rows.add(root2);
+
+            return new  ServiceTreeTableModel(rows);
+        }
+
+
+
+
 }
 

@@ -6,6 +6,9 @@ package org.siri.nodeviewer.swing.util;
  * @version $Revision:$
  * @since $Date:$
  */
-public interface Constans
+public interface Constants
 {
+    final static String NETWORK = "e_network.png";
+    final static String FLAG = "flag.png";
+
 }

@@ -1,6 +1,8 @@
 package org.siri.nodeviewer.swing.events;
 
 
+import org.apache.log4j.Logger;
+
 import java.util.Vector;
 
 /**
@@ -11,6 +13,7 @@ import java.util.Vector;
 
 public class ApplicationEventHandler
 {
+    private static Logger logger = Logger.getLogger(ApplicationEventHandler.class);
     private static ApplicationEventHandler myInstance;
     private transient Vector applicationStateEventListeners;
 
@@ -27,33 +30,41 @@ public class ApplicationEventHandler
         return myInstance;
     }
 
-    public synchronized void addApplicationStateEventListener(ApplicationStateEventListener l)
+    /**
+     * Add a listener for events fired from this ApplicationEventHandler.
+     *
+     * @param listener
+     */
+    public synchronized void addApplicationStateEventListener(ApplicationStateEventListener listener)
     {
+        logger.info("Added new listener : " + listener.getListenerName());
         Vector v = applicationStateEventListeners == null ? new Vector(2) :
                 (Vector) applicationStateEventListeners.clone();
-        if (!v.contains(l))
+        if (!v.contains(listener))
         {
-            v.addElement(l);
+            v.addElement(listener);
             applicationStateEventListeners = v;
         }
     }
 
     /**
-     * 
-     * @param l
+     * Remove a listener
+     * @param listener
      */
-    public synchronized void removeApplicationStateEventListener(ApplicationStateEventListener l)
+    public synchronized void removeApplicationStateEventListener(ApplicationStateEventListener listener)
     {
-        if (applicationStateEventListeners != null && applicationStateEventListeners.contains(l))
+        logger.info("Removed new listener :" + listener.getListenerName());
+        if (applicationStateEventListeners != null && applicationStateEventListeners.contains(listener))
         {
             Vector v = (Vector) applicationStateEventListeners.clone();
-            v.removeElement(l);
+            v.removeElement(listener);
             applicationStateEventListeners = v;
         }
     }
 
     public void fireDataChanged(ApplicationStateEvent e)
     {
+        logger.info("Firing new event :" + e.getMetaInfo());
         if (applicationStateEventListeners != null)
         {
             Vector listeners = applicationStateEventListeners;

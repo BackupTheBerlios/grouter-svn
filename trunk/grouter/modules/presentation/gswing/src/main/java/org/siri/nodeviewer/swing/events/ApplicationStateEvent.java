@@ -3,7 +3,7 @@ package org.siri.nodeviewer.swing.events;
 import java.util.EventObject;
 
 /**
- * Events for application
+ * Application events are decorateors for source events.
  *
  * @author not attributable
  * @version 1.0
@@ -11,7 +11,7 @@ import java.util.EventObject;
 public class ApplicationStateEvent extends EventObject
 {
     public static enum ApplicationEventType{UPDATEMESSAGEMODEL,UPDATELOGPANEL}
-    ApplicationEventType applicationEventType;
+    private ApplicationEventType applicationEventType;
     private String metaInfo;
 
     public ApplicationStateEvent(Object source, String metaInfo, ApplicationEventType applicationEventType)
@@ -21,12 +21,12 @@ public class ApplicationStateEvent extends EventObject
         this.applicationEventType = applicationEventType;
     }
 
-    public void setText(String toolbarValue)
-    {
-        this.metaInfo = toolbarValue;
-    }
-
-    public String getText()
+    /**
+     * Metainfo holds information used to display information for this ApplicationStateEvent - used
+     * by the {@link ApplicationEventHandler}.
+     * @return metainfo about this event
+     */
+    public String getMetaInfo()
     {
         return metaInfo;
     }

@@ -3,7 +3,7 @@ package org.siri.nodeviewer.swing.panels.logging;
 import org.apache.log4j.Logger;
 import org.siri.nodeviewer.swing.events.ApplicationEventHandler;
 import org.siri.nodeviewer.swing.events.ApplicationStateEvent;
-import static org.siri.nodeviewer.swing.events.ApplicationStateEvent.ApplicationEventType.UPDATEMESSAGEMODEL;
+import static org.siri.nodeviewer.swing.events.ApplicationStateEvent.ApplicationEventType.UPDATELOGPANEL;
 import org.siri.nodeviewer.swing.events.ApplicationStateEventListener;
 
 import javax.swing.*;
@@ -46,11 +46,16 @@ public class LogPanel implements ApplicationStateEventListener
 
     public void dataChanged(ApplicationStateEvent e)
     {
-        if (e.getApplicationEventType() == UPDATEMESSAGEMODEL)
+        if (e.getApplicationEventType() == UPDATELOGPANEL)
         {
             textArea.setText(textArea.getText() + (String) e.getSource());
 
         }
+    }
+
+    public String getListenerName()
+    {
+        return this.getClass().getName();
     }
 
 }

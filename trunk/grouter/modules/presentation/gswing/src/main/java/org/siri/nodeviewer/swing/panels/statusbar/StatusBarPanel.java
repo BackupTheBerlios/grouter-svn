@@ -1,10 +1,10 @@
 package org.siri.nodeviewer.swing.panels.statusbar;
 
 import com.jidesoft.icons.JideIconsFactory;
+import com.jidesoft.plaf.LookAndFeelFactory;
 import com.jidesoft.status.*;
 import com.jidesoft.swing.JideBoxLayout;
 import com.jidesoft.utils.SystemInfo;
-import com.jidesoft.plaf.LookAndFeelFactory;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -13,20 +13,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * Holds status information.
+ *
  * @author Georges Polyzois
  */
 public class StatusBarPanel
 {
-
-    StatusBar statusBar = new StatusBar();
-
-    Timer timer;
-    /**
-     * Logger.
-     */
     private static Logger logger = Logger.getLogger(StatusBarPanel.class);
+    private StatusBar statusBar = new StatusBar();
+    private Timer timer;
 
-       public Component getStatusPanel() {
+    public Component getStatusPanel() {
         // add status bar
         StatusBar statusBar = createStatusBar();
         JPanel dummyPanel = new JPanel();
@@ -40,7 +37,6 @@ public class StatusBarPanel
 
     public static void main(String[] args) {
         try {
-            // force to Metal L&F as in JDK1.5, GTK L&F is used as default L&F. We currently don't support GTK L&F.
             if (SystemInfo.isLinux() || SystemInfo.isUnix()) {
                 UIManager.setLookAndFeel(LookAndFeelFactory.METAL_LNF);
             }

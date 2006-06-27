@@ -21,4 +21,5 @@ public interface ApplicationStateEventListener
         extends EventListener
 {
     public void dataChanged(ApplicationStateEvent e);
+    public String getListenerName();
 }

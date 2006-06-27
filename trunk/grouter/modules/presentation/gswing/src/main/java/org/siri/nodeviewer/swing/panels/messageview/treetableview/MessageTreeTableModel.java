@@ -81,4 +81,9 @@ public class MessageTreeTableModel extends TreeTableModel implements StyleModel,
             addNewItem(messageItem);
         }
     }
+
+    public String getListenerName()
+    {
+        return this.getClass().getName();
+    }
 }

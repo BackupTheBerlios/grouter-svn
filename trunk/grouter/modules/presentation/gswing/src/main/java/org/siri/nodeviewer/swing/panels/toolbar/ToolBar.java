@@ -5,6 +5,7 @@ import com.jidesoft.swing.JideSwingUtilities;
 import org.apache.log4j.Logger;
 import org.siri.nodeviewer.swing.events.ApplicationEventHandler;
 import org.siri.nodeviewer.swing.events.ApplicationStateEvent;
+import static org.siri.nodeviewer.swing.events.ApplicationStateEvent.ApplicationEventType.UPDATELOGPANEL;
 import org.siri.nodeviewer.swing.events.MessageItemInjector;
 import org.siri.nodeviewer.swing.panels.options.OptionsDialog;
 import org.siri.nodeviewer.swing.util.IconFactory;
@@ -86,7 +87,7 @@ public class ToolBar extends JToolBar
 
     private void startIncetingTestData()
     {
-        ApplicationStateEvent event = new ApplicationStateEvent("Starting the test injector.", "", ApplicationStateEvent.ApplicationEventType.UPDATEMESSAGEMODEL);
+        ApplicationStateEvent event = new ApplicationStateEvent("Starting the test injector.", "", UPDATELOGPANEL);
         ApplicationEventHandler.getInstance().fireDataChanged(event);
 
 
