@@ -13,9 +13,6 @@ import javax.swing.*;
  */
 public class ServiceNodeItem
 {
-    /**
-     * Logger.
-     */
     private static Logger logger = Logger.getLogger(ServiceNodeItem.class);
     private String nodeId;
     private String id;

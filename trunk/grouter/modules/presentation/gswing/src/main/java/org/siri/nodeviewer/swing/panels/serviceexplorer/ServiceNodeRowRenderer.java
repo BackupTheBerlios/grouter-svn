@@ -30,13 +30,13 @@ public class ServiceNodeRowRenderer extends DefaultTableCellRenderer
      */
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
     {
-        if (value instanceof ServiceNodeRow)
+        if (value instanceof ServiceNode)
         {
-            ServiceNodeRow serviceNodeRow = (ServiceNodeRow) value;
-            JLabel label = (JLabel) super.getTableCellRendererComponent(table, serviceNodeRow.getName(), isSelected, hasFocus, row, column);
+            ServiceNode serviceNode = (ServiceNode) value;
+            JLabel label = (JLabel) super.getTableCellRendererComponent(table, serviceNode.getName(), isSelected, hasFocus, row, column);
             try
             {
-                label.setIcon(serviceNodeRow.getIcon());
+                label.setIcon(serviceNode.getIcon());
             }
             catch (Exception e)
             {

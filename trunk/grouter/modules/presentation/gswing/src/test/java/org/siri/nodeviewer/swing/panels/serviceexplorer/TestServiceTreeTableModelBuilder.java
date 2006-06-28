@@ -10,17 +10,19 @@
 package org.siri.nodeviewer.swing.panels.serviceexplorer;
 
 import junit.framework.TestCase;
-import org.siri.nodeviewer.swing.util.IconFactory;
-import org.siri.nodeviewer.swing.util.Constants;
 import org.apache.log4j.Logger;
+import org.siri.nodeviewer.swing.util.Constants;
+import org.siri.nodeviewer.swing.util.IconFactory;
 
 public class TestServiceTreeTableModelBuilder extends TestCase
 {
+
     private static Logger logger = Logger.getLogger(TestServiceTreeTableModelBuilder.class);
 
     public TestServiceTreeTableModelBuilder(String test)
     {
         super(test);
+
     }
 
     /**
@@ -39,14 +41,16 @@ public class TestServiceTreeTableModelBuilder extends TestCase
 
     public void testSomething() throws Exception
     {
-        ServiceNodeRow root = new ServiceNodeRow(new ServiceNodeItem("Grouter", "", "", "", IconFactory.getImageIcon(Constants.FLAG)));
-        ServiceNodeRow router1 = new ServiceNodeRow(new ServiceNodeItem("id_router1", "id1", "name", "running", IconFactory.getImageIcon(Constants.FLAG)));
-        ServiceNodeRow router2 = new ServiceNodeRow(new ServiceNodeItem("id_router2", "id2", "name", "running", IconFactory.getImageIcon(Constants.FLAG)));
+        ServiceNode root = new ServiceNode(new ServiceNodeItem("root", "root", "", "", IconFactory.getImageIcon(Constants.FLAG)));
+        ServiceNode router1 = new ServiceNode(new ServiceNodeItem("child_level1", "child_level1", "name", "running", IconFactory.getImageIcon(Constants.FLAG)));
+        ServiceNode router2 = new ServiceNode(new ServiceNodeItem("child_level2", "child_level2", "name", "running", IconFactory.getImageIcon(Constants.FLAG)));
 
         ServiceTreeTableModelBuilder builder = new ServiceTreeTableModelBuilder(root);
         builder.addChild(router1);
-        builder.addChild(router2);
+        builder.addSibling(router2);
         builder.toString();
+
+        logger.debug(builder.toString());
         //assertEquals(3, builder.getServiceTreeTableModel().getRowCount());
 
 

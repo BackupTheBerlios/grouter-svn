@@ -4,6 +4,7 @@ import com.jidesoft.grid.AbstractExpandableRow;
 import com.jidesoft.grid.Row;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,13 +14,17 @@ import java.util.List;
  * @author Georges Polyzois
  */
 
-public class ServiceNodeRow extends AbstractExpandableRow
+public class ServiceNode extends AbstractExpandableRow
 {
     private ServiceNodeItem serviceNodeItem;
-    private List children;
+    private List children = new ArrayList();
     static HashMap icons = new HashMap();
 
-    public ServiceNodeRow(final ServiceNodeItem serviceNodeItem)
+    public ServiceNode()
+    {
+    }
+
+    public ServiceNode(final ServiceNodeItem serviceNodeItem)
     {
         this.serviceNodeItem = serviceNodeItem;
     }
@@ -44,6 +49,7 @@ public class ServiceNodeRow extends AbstractExpandableRow
     {
         return null;
     }
+
 
     public void setChildren(List children)
     {
@@ -86,7 +92,13 @@ public class ServiceNodeRow extends AbstractExpandableRow
 
     public String getName()
     {
-        return getName(getServiceNodeItem());
+        return serviceNodeItem.getName();
+    }
+
+
+    public String getId()
+    {
+        return serviceNodeItem.getId();
     }
 
     public Icon getIcon()
@@ -106,22 +118,13 @@ public class ServiceNodeRow extends AbstractExpandableRow
 
     public String getTypeDescription()
     {
-        String desc = getTypeDescription(getServiceNodeItem());
-        return desc == null ? "" : desc;
+        return serviceNodeItem.getNodeId();
+        /*String desc = getTypeDescription(getServiceNodeItem());
+        return desc == null ? "" : desc;*/
     }
 
-    public static Icon getIcon(ServiceNodeItem serviceNodeItem)
+    public String toString()
     {
-        return serviceNodeItem.getIcon();
-    }
-
-    public static String getTypeDescription(ServiceNodeItem serviceNodeItem)
-    {
-        return serviceNodeItem.getName();
-    }
-
-    public static String getName(ServiceNodeItem serviceNodeItem)
-    {
-        return serviceNodeItem.getName();
+        return this.getName();
     }
 }

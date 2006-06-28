@@ -13,7 +13,7 @@ public class MessageNodeTreeCellRenderer extends DefaultTreeCellRenderer
 
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus)
     {
-        if (value instanceof org.siri.nodeviewer.swing.panels.serviceexplorer.ServiceNodeRow)
+        if (value instanceof org.siri.nodeviewer.swing.panels.serviceexplorer.ServiceNode)
         {
             MessageNodeRow fileRow = (MessageNodeRow) value;
             JLabel label = (JLabel) super.getTreeCellRendererComponent(tree, fileRow.getName(), sel, expanded, leaf, row, hasFocus);

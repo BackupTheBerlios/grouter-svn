@@ -16,19 +16,19 @@ public class ServiceNodeTreeCellRenderer extends DefaultTreeCellRenderer
 
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus)
     {
-        if (value instanceof ServiceNodeRow)
+        if (value instanceof ServiceNode)
         {
-            ServiceNodeRow fileRow = (ServiceNodeRow) value;
-            JLabel label = (JLabel) super.getTreeCellRendererComponent(tree, fileRow.getName(), sel, expanded, leaf, row, hasFocus);
+            ServiceNode file = (ServiceNode) value;
+            JLabel label = (JLabel) super.getTreeCellRendererComponent(tree, file.getName(), sel, expanded, leaf, row, hasFocus);
             try
             {
-                label.setIcon(fileRow.getIcon());
+                label.setIcon(file.getIcon());
             }
             catch (Exception e)
             {
                 logger.error(e, e);
 
-                //System.out.println(fileRow.getServiceNodeItem().getAbsolutePath());
+                //System.out.println(file.getServiceNodeItem().getAbsolutePath());
             }
             return label;
         }

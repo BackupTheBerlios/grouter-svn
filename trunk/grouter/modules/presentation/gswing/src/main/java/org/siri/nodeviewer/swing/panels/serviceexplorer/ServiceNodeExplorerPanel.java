@@ -22,10 +22,7 @@ public class ServiceNodeExplorerPanel
     private static Logger logger = Logger.getLogger(ServiceNodeExplorerPanel.class);
     public TreeTable treeTable;
     protected AbstractTableModel tableModel;
-    protected int _pattern;
     final static TableCellRenderer serviceNodeRowRenderer = new ServiceNodeRowRenderer();
-    final static TableCellRenderer FILE_SIZE_RENDERER = new ServiceNodeSizeRenderer();
-    //       final static TableCellRenderer FILE_DATE_RENDERER = new FileDateCellRenderer();
 
     public ServiceNodeExplorerPanel(AbstractTableModel serviceTreeTableModel)
     {
@@ -63,7 +60,7 @@ public class ServiceNodeExplorerPanel
                         TreeTableModel model = (TreeTableModel) treeTable.getModel();
                         int rowIndex = treeTable.rowAtPoint(e.getPoint());//Get clicked row
                         Row row = model.getRowAt(rowIndex);
-                        if (row instanceof ServiceNodeRow) //&& ((MetaDataTreeTableModel.MetaDataRow) row).getKey() != null)
+                        if (row instanceof ServiceNode) //&& ((MetaDataTreeTableModel.MetaDataRow) row).getKey() != null)
                         {
                             logger.debug("Row : " + row);
                         }
@@ -82,9 +79,9 @@ public class ServiceNodeExplorerPanel
         {
             protected String convertElementToString(Object item)
             {
-                if (item instanceof ServiceNodeRow)
+                if (item instanceof ServiceNode)
                 {
-                    return ((ServiceNodeRow) item).getName();
+                    return ((ServiceNode) item).getName();
                 }
                 return null;
 //                return super.convertElementToString(item);
