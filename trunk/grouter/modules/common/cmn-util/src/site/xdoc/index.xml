@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+	See http://maven.apache.org/reference/plugins/xdoc/
+-->
+<document>
+    <properties>
+        <author email="georges.polyzois@cybercomgroup.com">Georges Polyzois</author>
+        <title>CIP Maven Site</title>
+    </properties>
+    <head>
+    <!--meta ... /-->
+    </head>
+    <body>
+        <section name="Welcome">
+            <subsection name="Reports and diagrams">
+                <p>We have a number of different reports running within
+                the maven site build. Cobertura is a test coverage report (open source)
+                much like Clover. PMD is a best practise report tool - which can used
+                as a plugin in your IDE also.</p>
+            </subsection>
+            <subsection name="Dependencies">
+            <p>
+                <img src="./images/CIPUMLComponentDiagram.png"></img>
+                </p>
+            </subsection>
+        </section>
+        <!--section name="Goal">
+            <source>
+                code line 1
+                code line 2
+            </source>
+        </section-->
+        <!-- footer will be placed above the (c) -->
+        <footer>
+            <A href="http://www.sonyericsson.com/">
+                <img src="http://www.sonyericsson.com/images/spgc/CWS31AFW_9378high_27_0_4001.gif" width="100" height="30" border="0" alt="SonyEricsson"/>
+            </A>
+        </footer>
+    </body>
+</document>

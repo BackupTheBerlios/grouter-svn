@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grouter.platform.common</groupId>
+    <artifactId>cmn-configbeans</artifactId>
+    <packaging>jar</packaging>
+    <name>${artifactId}</name>
+    <parent>
+        <groupId>org.grouter.platform</groupId>
+        <artifactId>common</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>stax</groupId>
+            <artifactId>stax</artifactId>
+            <version>1.1.1-dev</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xmlbeans-jsr173-api</artifactId>
+                    <groupId>xmlbeans</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>xmlbeans</groupId>
+            <artifactId>xbean</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <!--dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-libs</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>relaxngDatatype</artifactId>
+            <version>1.5</version>
+        </dependency -->
+    </dependencies>
+
+    <build>
+        <!--
+         | See usage of this plugin: 
+         | http://mojo.codehaus.org/xmlbeans-maven-plugin/xmlbeans-mojo.html 
+         -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xmlbeans-maven-plugin</artifactId>
+                <version>2.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>xmlbeans</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+                <configuration>
+                    <schemaDirectory>src/xsd</schemaDirectory>
+                    <!--sourceRoot>${project.build.directory}/generated-source/axis</sourceRoot-->
+                </configuration>
+            </plugin>
+
+            <!--
+            | Castor plugin.
+            -->
+            <!-- plugin>
+                <groupId>maven</groupId>
+                <artifactId>maven-castor-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+                <configuration>
+                    <schema>src/xsd</schema>
+                </configuration>
+            </plugin-->
+        </plugins>
+    </build>
+</project>
