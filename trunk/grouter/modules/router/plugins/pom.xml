@@ -9,40 +9,29 @@
     <name>grouter xsltransformerplugin artifact</name>
     <url>http://maven.apache.org</url>
     <dependencies>
-    	<dependency>
-    		<groupId>org.springframework</groupId>
-		<artifactId>spring</artifactId>
-        </dependency>
         <dependency>
-	        <groupId>junit</groupId>
-	        <artifactId>junit</artifactId>
-	        <version>3.8.1</version>
-	            <scope>test</scope>
-	</dependency>
-	<dependency>
-	            <groupId>log4j</groupId>
-	            <artifactId>log4j</artifactId>
-	            <version>1.2.8</version>
-	 </dependency>
-	        <dependency>
-	            <groupId>commons-lang</groupId>
-	            <artifactId>commons-lang</artifactId>
-	            <version>2.1</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>commons-beanutils</groupId>
-	            <artifactId>commons-beanutils</artifactId>
-	            <version>1.7.0</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>commons-collections</groupId>
-	            <artifactId>commons-collections</artifactId>
-	            <version>3.1</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
         </dependency>
-        <dependency>
-		<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		        <version>1.0.4</version>
-	        </dependency>
+        <!--dependency>
+                  <groupId>commons-lang</groupId>
+                  <artifactId>commons-lang</artifactId>
+                  <version>2.1</version>
+              </dependency>
+              <dependency>
+                  <groupId>commons-beanutils</groupId>
+                  <artifactId>commons-beanutils</artifactId>
+                  <version>1.7.0</version>
+              </dependency>
+              <dependency>
+                  <groupId>commons-collections</groupId>
+                  <artifactId>commons-collections</artifactId>
+                  <version>3.1</version>
+          </dependency>
+          <dependency>
+          <groupId>commons-logging</groupId>
+              <artifactId>commons-logging</artifactId>
+                  <version>1.0.4</version>
+              </dependency-->
     </dependencies>
 </project>
