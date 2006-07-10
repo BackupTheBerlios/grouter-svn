@@ -1,17 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.grouter.platform</groupId>
+        <artifactId>common</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.platform.common</groupId>
     <artifactId>cmn-util</artifactId>
     <packaging>jar</packaging>
     <name>${artifactId}</name>
-    <parent>
-        <groupId>org.grouter.platform</groupId>
-        <artifactId>common</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-
     <dependencies>
+        <dependency>
+            <groupId>org.grouter.platform.common</groupId>
+            <artifactId>cmn-configbeans</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>commons-naming</groupId>
             <artifactId>commons-naming-factory</artifactId>
@@ -39,7 +43,21 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
         </dependency>
+        <!-- Added this instead of xmlbeans-jsr173-api because of
+        cannot access javax.xml.stream.XMLStreamReader  -->
         <dependency>
+            <groupId>servicemix</groupId>
+            <artifactId>jaxp</artifactId>
+            <version>1.4-20050623</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>xmlbeans</groupId>
+            <artifactId>xbean</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <!--dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.0.4</version>
@@ -57,7 +75,7 @@
                     <artifactId>avalon-framework</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
