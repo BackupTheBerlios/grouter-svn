@@ -52,7 +52,7 @@ public abstract class TestHibernate extends TestCase
 
                 addClass(Sender.class);
 
-        HibernateUtilContextAware.buildSessionFactory(config);
+        // TODO HibernateUtilContextAware.buildSessionFactory(config);
 
         sessionFactory = HibernateUtilContextAware.getSessionFactory();
     }

@@ -13,16 +13,16 @@ public class Message
 	 */
 	private Set<Receiver> receivers = new HashSet();
 	private Sender sender;
-	private Timestamp creationTime;
+	private Timestamp creationTimestamp;
     private Node node;
 
     public Message()
 	{
 	}
 
-	public Timestamp getCreationTime()
+	public Timestamp getCreationTimestamp()
 	{
-		return creationTime;
+		return creationTimestamp;
 	}
 
     public Node getNode()
@@ -35,9 +35,9 @@ public class Message
         this.node = node;
     }
 
-	public void setCreationTime(Timestamp creationTime)
+	public void setCreationTimestamp(Timestamp creationTimestamp)
 	{
-		this.creationTime = creationTime;
+		this.creationTimestamp = creationTimestamp;
 	}
 
     public Message(String message)

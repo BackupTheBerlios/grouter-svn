@@ -40,6 +40,17 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
         return (List<Message>) qr.setParameter("nodeId",nodeId).list();
     }
 
+    /**
+     * Makes transient message persisted.
+     *
+     * @param message
+     * @return the persisted message with an id
+     */
+    public Message createMessage(Message message)
+    {
+        return saveOrUpdate(message);
+    }
+
     public void setSession(Session s)
     {
         session = s;

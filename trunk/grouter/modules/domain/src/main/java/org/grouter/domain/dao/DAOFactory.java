@@ -40,7 +40,7 @@ public abstract class DAOFactory
             }
             case HIBERNATESPRING:
             {
-                return (HibernateSpringDAOFactory)GlobalBeanLocator.getBean("hibernateSpringDAOFactory");
+                return (HibernateSpringDAOFactory)GlobalBeanLocator.getBeanBeanFactory().getBean("hibernateSpringDAOFactory");
             }
         }
         return null;

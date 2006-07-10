@@ -6,7 +6,7 @@
         <id column="MESSAGEID" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
-        <property name="creationTime" not-null="false" type="timestamp" column="CREATEDTIMESTAMP"/>
+        <property name="creationTimestamp" not-null="false" type="timestamp" column="CREATEDTIMESTAMP"/>
         <property name="message" not-null="false" type="java.lang.String" column="MESSAGECONTENT"/>
 
         <set name="receivers" table="RECEIVER_MESSAGE" inverse="true" lazy="true" cascade="all">

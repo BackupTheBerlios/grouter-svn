@@ -1,7 +1,6 @@
 package org.grouter.domain.dao.hibernate;
 
 import org.hibernate.*;
-import org.grouter.domain.dao.SystemUserDAO;
 import org.grouter.domain.Message;
 import org.grouter.domain.systemuser.SystemUser;
 import org.grouter.common.hibernate.HibernateTemplate;

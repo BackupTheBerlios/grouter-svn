@@ -15,7 +15,7 @@ import java.io.Serializable;
  * <p/>
  * You have to inject the <tt>Class</tt> object of the persistent class and a current
  * Hibernate <tt>Session</tt> to construct a DAO.
- *
+ * <p/>
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
  *
  * @author Georges Polyzois
@@ -25,11 +25,13 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     private Class<T> entityClass;
     protected Session session;
 
-    protected GenericHibernateDAO(Class<T> persistentClass) {
+    protected GenericHibernateDAO(Class<T> persistentClass)
+    {
         this.entityClass = persistentClass;
     }
 
-    public GenericHibernateDAO(Class<T> persistentClass, Session session) {
+    public GenericHibernateDAO(Class<T> persistentClass, Session session)
+    {
         this.entityClass = persistentClass;
         this.session = session;
     }
@@ -56,8 +58,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
         if (lock)
         {
             entity = (T) getSession().load(getEntityClass(), id, LockMode.UPGRADE);
-        }
-        else
+        } else
         {
             entity = (T) getSession().load(getEntityClass(), id);
         }
@@ -71,10 +72,12 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
+    public List<T> findByExample(T exampleInstance, String[] excludeProperty)
+    {
         Criteria crit = getSession().createCriteria(getEntityClass());
-        Example example =  Example.create(exampleInstance);
-        for (String exclude : excludeProperty) {
+        Example example = Example.create(exampleInstance);
+        for (String exclude : excludeProperty)
+        {
             example.excludeProperty(exclude);
         }
         crit.add(example);

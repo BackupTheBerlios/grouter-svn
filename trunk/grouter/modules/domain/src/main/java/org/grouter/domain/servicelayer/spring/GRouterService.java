@@ -12,12 +12,11 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * GRouterService will expose services for clients - gswing and gweb.
- *
+ * <p/>
  * Methods and their transaction demarcation attributes are handled
  * in the Spring applicationContext.xml file.
  *
  * @author Georges Polyzois
- *
  */
 public class GRouterService
 {
@@ -29,9 +28,14 @@ public class GRouterService
     {
     }
 
+    /**
+     * 
+     * @param systemUser
+     * @return
+     */
     public SystemUser createSystemUser(SystemUser systemUser)
     {
-        log.debug("In createSystemUser..." );
+        log.debug("In createSystemUser...");
         systemUserDAO = DAOFactory.getFactory(HIBERNATESPRING).getSystemUserDAO();////DAOFactory.DEFAULT.getSystemUserDAO();
         return systemUserDAO.createSystemUser(systemUser);
     }
@@ -40,7 +44,14 @@ public class GRouterService
     {
         log.debug("In findSystemUser...");
         systemUserDAO = DAOFactory.getFactory(HIBERNATESPRING).getSystemUserDAO();////DAOFactory.DEFAULT.getSystemUserDAO();
-        return systemUserDAO.findById(systemUserId,false);
+        return systemUserDAO.findById(systemUserId, false);
+    }
+
+    public Message createMessage(Message mesage)
+    {
+        log.debug("In createMessage...");
+        messageDAO = DAOFactory.getFactory(HIBERNATESPRING).getMessageDAO();////DAOFactory.DEFAULT.getSystemUserDAO();
+        return messageDAO.createMessage(mesage);
     }
 
 
@@ -53,7 +64,6 @@ public class GRouterService
         //return message;
         return null;
     }
-
 
 
 }

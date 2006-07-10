@@ -29,7 +29,7 @@ public class TestMessageDAOHibernate extends TestData
         Receiver receiver = new Receiver("A test receiver");
         message.addToReceivers(receiver);
         message.setSender(sender);
-        message.setCreationTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        message.setCreationTimestamp(new java.sql.Timestamp(System.currentTimeMillis()));
         sender.addToMessages(message);
         messageDAO.saveOrUpdate(message);
         log.debug("Saved instance with id : " + message.getId());

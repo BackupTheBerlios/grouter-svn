@@ -5,17 +5,29 @@
 <beans>
     <!-- Hibernate datasouce to be injected. -->
     <bean id="dataSourceHsqldb" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
-        <!-- if external process use this property name="url"><value>jdbc:hsqldb:db/test</value></property-->
-        <property name="url"><value>jdbc:hsqldb:mem:domaintest</value></property>
+        <property name="driverClassName">
+            <value>org.hsqldb.jdbcDriver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:hsqldb:hsql://127.0.0.1:9001/grouter_alias</value>
+        </property>
+        <!-- in memory - good for unit testing -->
+        <!--property name="url"><value>jdbc:hsqldb:mem:domaintest</value></property-->
+
         <!-- Make sure <value> tags are on same line - if they're not, authentication will fail -->
-        <property name="username"><value>sa</value></property>
-        <property name="password"><value></value></property>
+        <property name="username">
+            <value>sa</value>
+        </property>
+        <property name="password">
+            <value></value>
+        </property>
     </bean>
 
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="dataSource"><ref local="dataSourceHsqldb"/></property>
+        <property name="dataSource">
+            <ref local="dataSourceHsqldb"/>
+        </property>
         <property name="mappingResources">
             <list>
                 <value>org/grouter/domain/systemuser/SystemUser.hbm.xml</value>
@@ -41,7 +53,9 @@
 
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory"><ref local="sessionFactory"/></property>
+        <property name="sessionFactory">
+            <ref local="sessionFactory"/>
+        </property>
     </bean>
 
     <!-- Need to inject this for the DAOFactory. -->
@@ -52,9 +66,12 @@
 
     <!-- Need to inject this for the DAOFactory -->
     <bean id="hibernateSpringDAOFactory" class="org.grouter.domain.dao.hibernate.HibernateSpringDAOFactory">
-        <property name="sessionFactory"><ref local="sessionFactory"/></property>
+        <property name="sessionFactory">
+            <ref local="sessionFactory"/>
+        </property>
     </bean>
 
+    <!-- This class will have methods used in transactions -->
     <bean id="grouterService" class="org.grouter.domain.servicelayer.spring.GRouterService">
     </bean>
 
@@ -63,11 +80,17 @@
      then include them in the service method below.-->
     <bean id="messageServiceManager"
           class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager"><ref local="transactionManager"/></property>
-        <property name="target"><ref local="grouterService"/></property>
+        <property name="transactionManager">
+            <ref local="transactionManager"/>
+        </property>
+        <property name="target">
+            <ref local="grouterService"/>
+        </property>
         <property name="transactionAttributes">
             <props>
                 <prop key="createSystemUser">PROPAGATION_REQUIRED</prop>
+                <prop key="createMessage">PROPAGATION_REQUIRED</prop>
+                <prop key="findSystemUser">PROPAGATION_REQUIRED</prop>
             </props>
         </property>
     </bean>
