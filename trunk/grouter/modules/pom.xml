@@ -36,28 +36,30 @@
     | This is the name of the artifact which will be produced and put
     | under the groupId structure discussed above. It is a unique
     | identifier which identifies this artifact under the specified
-    | groupId and will produce something like e.g.
-    | grouter-1.0-SNAPSHOT.jar or on a release grouter-1.0.0.jar
+    | groupId and will under the packaging phase produce something like:
+    | grouter-1.0-SNAPSHOT.jar or upon doing a release grouter-1.0.0.jar
     -->
     <artifactId>platform</artifactId>
     <!--
     | The packaging element tells you what type of artifact will be
     | produced. There are several type of artifacts supported, like
-    | war and ear type artifacts.
+    | war and ear type artifacts. The pom artifact is the only which
+    | can be inherited.
     -->
     <packaging>pom</packaging>
     <!--
-    | The version elelent is appended to the artifactId. During development
+    | The version element is appended to the artifactId. During development
     | you should/could use a SNAPSHOT dependency.
     | What are SNAPSHOT dependencies and how could they be used? Say you have
     | a CI server watching cvs and doing rebuilds of your project artifacts
     | and thereafter an install of the artifacts in the remote repostiory
     | (remote for the developers, local for the CI server). If the project team
-    | uses binary SNAPSHOT dependencies they will on a daily basis get new
-    | binaries from the remote repository to their local repository. This means
-    | they will be on the bleeding edge of development - a matter of choice.
+    | uses binary SNAPSHOT dependencies they will on a daily basis (configurable)
+    | get new binaries from the remote repository to their local repository. This means
+    | they will be on the bleeding edge of development - a matter of choice - and
+    | a good choice I would say.
     -->
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
 
     <!--
     | Description will go to generated documentation reports.
@@ -69,7 +71,7 @@
     | A name used for documentation and in the command console showing the
     | dependency order of a multi project build.
     -->
-    <name>${groupId} :: ${artifactId}</name>
+    <name>${artifactId}</name>
 
     <!--
     | Url used for documentation reports.
@@ -84,12 +86,10 @@
     | which makes the build process a lot more faster.
     -->
     <modules>
-        <module>../modules/common</module>
-        <!--module>../modules/domain</module-->
-        <!--module>../modules/router/grouter</module>
-       <module>../modules/router/grouterconfig</module -->
-        <!--module>../modules/webservice</module-->
-        <!--module>../modules/router</module-->
+        <module>common</module>
+        <!--module>domain</module-->
+        <!--module>presentation</module-->
+        <module>router</module>
     </modules>
 
     <!--
@@ -279,6 +279,40 @@
     -->
     <dependencyManagement>
         <dependencies>
+	    <!-- 
+	    | Components for the Swing gui - Jidesoft
+	    -->
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jidesoft-shortcut</artifactId>
+	         <version>1.9.1</version>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-designer</artifactId>
+	         <version>1.9.1</version>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jidesoft-component</artifactId>
+	         <version>1.9.1</version>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jidesoft-common</artifactId>
+	         <version>1.9.1</version>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jidesoft-grids</artifactId>
+	         <version>1.9.1</version>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jidesoft-action</artifactId>
+	         <version>1.9.1</version>
+	    </dependency>
+        
             <!--
             | Dependencies to J2EE spec - using geronimo generated
             | artifacts to get transparent builds without installing
