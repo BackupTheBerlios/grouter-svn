@@ -1,0 +1,4 @@
+
+
+Split file:
+split -b 1000m  mybigfile.img
