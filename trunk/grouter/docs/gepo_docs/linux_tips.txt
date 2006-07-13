@@ -2,3 +2,29 @@
 
 Split file:
 split -b 1000m  mybigfile.img
+
+
+cat x* > mybigfile.img
+
+
+To list the contents of a .tar file type:
+tar -tf filesname.tar
+
+How much harddrive I am using 
+df
+
+How much space a directory is using
+du -s <directory name>
+
+Memory used
+free
+
+How can I find certain words in files on my system?
+find DirectoryName -type f -printf "%p " | xargs egrep -i "String" | less
+
+
+How can I find a file on my system?
+find DirectoryName -name FileName -printf "Found file: %p \n"
+
+If changes made changes to e.g. /etc/profile and you do not want to reboot:
+source /etc/profile
