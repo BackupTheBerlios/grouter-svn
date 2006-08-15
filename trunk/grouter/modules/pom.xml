@@ -87,8 +87,8 @@
     -->
     <modules>
         <module>common</module>
-        <!--module>domain</module-->
-        <!--module>presentation</module-->
+        <module>domain</module>
+        <module>presentation</module>
         <module>router</module>
     </modules>
 
@@ -284,32 +284,46 @@
 	    -->
             <dependency>
 	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jidesoft-shortcut</artifactId>
+	         <artifactId>jide-shortcut</artifactId>
 	         <version>1.9.1</version>
 	    </dependency>
+	    
+		<dependency>
+	     	           <groupId>com.jidesoft</groupId>
+	     		   <artifactId>jide-dock</artifactId>
+	     		   <version>1.9.1</version>
+		</dependency>
+
+	    
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-dialogs</artifactId>
+	         <version>1.9.1</version>
+	    </dependency>
+
             <dependency>
 	         <groupId>com.jidesoft</groupId>
 	         <artifactId>jide-designer</artifactId>
 	         <version>1.9.1</version>
 	    </dependency>
             <dependency>
-	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jidesoft-component</artifactId>
+                 <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-components</artifactId>
 	         <version>1.9.1</version>
 	    </dependency>
             <dependency>
 	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jidesoft-common</artifactId>
+	         <artifactId>jide-common</artifactId>
 	         <version>1.9.1</version>
 	    </dependency>
             <dependency>
 	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jidesoft-grids</artifactId>
+	         <artifactId>jide-grids</artifactId>
 	         <version>1.9.1</version>
 	    </dependency>
             <dependency>
 	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jidesoft-action</artifactId>
+	         <artifactId>jide-action</artifactId>
 	         <version>1.9.1</version>
 	    </dependency>
         

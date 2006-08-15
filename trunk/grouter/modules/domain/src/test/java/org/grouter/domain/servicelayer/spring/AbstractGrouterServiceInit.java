@@ -50,12 +50,12 @@ public abstract class AbstractGrouterServiceInit extends TestCase
 
     private static void initMessage()
     {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Sender sender = new Sender("A test sender");
-        message = new Message("A test message");
+        message = new Message("A test message" );
         Receiver receiver = new Receiver("A test receiver");
         message.addToReceivers(receiver);
         message.setSender(sender);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         log.debug("##" + timestamp);
         message.setCreationTimestamp(timestamp);
         sender.addToMessages(message);

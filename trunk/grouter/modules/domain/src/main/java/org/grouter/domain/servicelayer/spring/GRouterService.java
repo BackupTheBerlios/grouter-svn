@@ -47,11 +47,11 @@ public class GRouterService
         return systemUserDAO.findById(systemUserId, false);
     }
 
-    public Message createMessage(Message mesage)
+    public Message createMessage(Message message)
     {
         log.debug("In createMessage...");
         messageDAO = DAOFactory.getFactory(HIBERNATESPRING).getMessageDAO();////DAOFactory.DEFAULT.getSystemUserDAO();
-        return messageDAO.createMessage(mesage);
+        return messageDAO.createMessage(message);
     }
 
 
