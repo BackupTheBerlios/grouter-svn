@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grouter.platform.presentation</groupId>
+    <artifactId>prs-gswing</artifactId>
+    <packaging>jar</packaging>
+    <name>${artifactId}</name>
+    <parent>
+        <groupId>org.grouter.platform</groupId>
+        <artifactId>presentation</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </parent>
+
+    <!--
+    | Dependencies specific to this project are entered here.
+    | Common dependencies should go into the parent to simplify
+    | the dependency section of this child project.
+    | If no version is mentioned in this child's dependency section
+    | the version is feteched from the parent's dependencyManagement
+     | element.
+     -->
+    <dependencies>
+        <dependency>
+            <groupId>org.grouter.platform.common</groupId>
+            <artifactId>cmn-util</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>geronimo-spec</groupId>
+            <artifactId>geronimo-spec-jta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+        </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-shortcut</artifactId>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-dialogs</artifactId>
+	    </dependency>
+
+             <dependency>
+ 	           <groupId>com.jidesoft</groupId>
+ 		   <artifactId>jide-dock</artifactId>
+ 	    </dependency>
+
+ 		<dependency>
+	           <groupId>com.jidesoft</groupId>
+		   <artifactId>jide-designer</artifactId>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-components</artifactId>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-common</artifactId>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-grids</artifactId>
+	    </dependency>
+            <dependency>
+	         <groupId>com.jidesoft</groupId>
+	         <artifactId>jide-action</artifactId>
+	    </dependency>
+	    
+	    
+	    <dependency>
+	    	 <groupId>jgoodies</groupId>
+		<artifactId>forms</artifactId>
+		<version>1.0.5</version>
+	    </dependency>
+	    
+	    
+	    
+        
+    </dependencies>
+
+    
+</project>
