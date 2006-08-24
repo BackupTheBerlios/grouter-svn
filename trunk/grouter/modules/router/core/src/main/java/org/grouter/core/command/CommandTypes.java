@@ -1,7 +1,7 @@
 package org.grouter.core.command;
 
 /**
- * Class description.
+ * Type of command available.
  */
 
 public enum CommandTypes {TOFILE,FROMFILE};

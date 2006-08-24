@@ -1,8 +1,12 @@
 package org.grouter.core.command;
 
-import org.grouter.core.config.ServiceNodeConfig;
-import org.grouter.core.config.FileWriterConfig;
+import static org.grouter.core.config.Node.Type.FILE_TO_FILE;
+import static org.grouter.core.config.Node.Type;
+import org.grouter.core.config.FileWriter;
+import org.grouter.core.config.Node;
 import org.apache.log4j.Logger;
+
+import java.io.IOException;
 
 
 /**
@@ -10,22 +14,21 @@ import org.apache.log4j.Logger;
  */
 public class CommandFactory
 {
-    /**
-     * Logger.
-     */
     private static Logger logger = Logger.getLogger(CommandFactory.class);
 
-    public static Command getCommand(ServiceNodeConfig theServiceNodeConfig)
+    public static Command getCommand(Node node)
     {
-        if (theServiceNodeConfig==null)
+        if (node==null)
         {
             throw new IllegalArgumentException("Config was null");
         }
-        switch(theServiceNodeConfig.getCommandType())
+
+        switch(node.getNodeType())
         {
-            case TOFILE :
+            case FILE_TO_FILE:
             {
-                FileWriterConfig fileWriterConfig = (FileWriterConfig)theServiceNodeConfig;
+                FileWriterCommand fileWriterCommand = new FileWriterCommand(node);
+                return fileWriterCommand;
                 /*FileWriter writer = null;
                 try
                 {
@@ -34,8 +37,9 @@ public class CommandFactory
                 {
                     logger.error("Failed creating filewriter for fileReaderConfig",e);
                 }
-                */
+
                 return new FileWriterCommand(fileWriterConfig);
+                */
             }
             default :
                 return null;

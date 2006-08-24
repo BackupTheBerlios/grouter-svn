@@ -19,7 +19,7 @@ public class CommandInvoker
      */
     public void handleCommand(Command command)
     {
-        logger.debug("Invoker gets command and calls execute");
+        logger.debug("Invoker received command");
         command.execute();
     }
 }

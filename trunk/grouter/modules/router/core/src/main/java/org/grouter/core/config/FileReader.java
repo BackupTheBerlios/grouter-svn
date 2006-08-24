@@ -7,12 +7,11 @@ import java.io.File;
 /**
  * Class description.
  */
-public class FileReaderConfig extends ServiceNodeConfig
-{
+public class FileReader extends AbstractNode {
     CommandTypes commandType = CommandTypes.FROMFILE;
     private File fromDir;
 
-    public FileReaderConfig(File fromDir)
+    public FileReader(File fromDir)
     {
         this.fromDir=fromDir;
     }

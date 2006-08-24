@@ -2,7 +2,6 @@ package org.grouter.config;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,13 +22,13 @@ import org.apache.log4j.Logger;
  */
 public class ConfigHandler
 {
-    ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+    //ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
     private static Logger logger = Logger.getLogger(ConfigHandler.class);
     private XmlOptions xmlOptions;
     private ArrayList validationErrors = new ArrayList();
 
     //root handle to config
-    private GRouterConfigDocument gRouterConfigDocument;
+    private GrouterConfigDocument grouterConfigDocument;
 
     /**
      * Constructor.
@@ -43,7 +42,7 @@ public class ConfigHandler
             throw new IllegalArgumentException("File path to config file can not be null!");
         }
         this.xmlOptions = xmlOptions;
-        this.gRouterConfigDocument =  (GRouterConfigDocument) parseXml(absoluteFilePath, xmlOptions);
+        this.grouterConfigDocument =  (GrouterConfigDocument) parseXml(absoluteFilePath, xmlOptions);
     }
 
     /**
@@ -58,7 +57,7 @@ public class ConfigHandler
             throw new IllegalArgumentException("InputStream can not be null!");
         }
         this.xmlOptions = xmlOptions;
-        this.gRouterConfigDocument =  (GRouterConfigDocument) parseXml(inputStream, xmlOptions);
+        this.grouterConfigDocument =  (GrouterConfigDocument) parseXml(inputStream, xmlOptions);
     }
 
     /**
@@ -162,9 +161,16 @@ public class ConfigHandler
      * Get the config.
      * @return An GRouterConfigDocument from parsed config.xsd
      */
-    public GRouterConfigDocument getgRouterConfigDocument()
+    public GrouterConfigDocument getGrouterConfigDocument()
     {
-        return gRouterConfigDocument;
+        return grouterConfigDocument;
     }
 
+
+    
+    public void printBootInfo()
+    {
+        logger.info(">> Name of grouter :" + getGrouterConfigDocument().getGrouterConfig().getName() );
+        logger.info(">> Number of nodes : " + getGrouterConfigDocument().getGrouterConfig().getNodeArray().length );
+    }
 }

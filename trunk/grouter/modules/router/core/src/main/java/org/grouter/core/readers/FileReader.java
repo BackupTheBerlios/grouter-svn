@@ -5,8 +5,7 @@ package org.grouter.core.readers;
 
 import org.apache.log4j.Logger;
 import org.grouter.core.command.Message;
-import org.grouter.core.config.ServiceNodeConfig;
-import org.grouter.core.config.FileReaderConfig;
+import org.grouter.core.config.Node;
 
 
 import java.io.File;
@@ -22,25 +21,28 @@ import java.util.Queue;
  */
 public class FileReader extends AbstractReader implements Callable<String>
 {
-    /** Logger. */
     private static Logger logger = Logger.getLogger(FileReader.class);
-    private FileReaderConfig fileReaderConfig;
-
+    private Node node;
     private Queue queue;
-
     private File readFromFile;
 
-    public FileReader(final FileReaderConfig fileReaderConfig, Queue queue, ServiceNodeConfig toDestinationConfig)
+    /**
+     *
+     * @param node
+     * @param queue
+     * @throws IllegalArgumentException if node == null || queue == null
+     */
+    public FileReader(final Node node, Queue queue)
     {
-        if(fileReaderConfig == null || queue == null || toDestinationConfig == null)
+        if(node == null || queue == null)
         {
             throw new IllegalArgumentException("Constructor called with null argument.");
         }
-        this.fileReaderConfig = fileReaderConfig;
+        this.node = node;
         this.queue = queue;
         //which type of commands should this servicenode worker handle
-        command = getCommand(toDestinationConfig);
-        readFromFile = fileReaderConfig.getFromDir();
+        command = getCommand(node);
+        readFromFile = new File(node.getInFolder().getInFolderPath());
     }
 
     /**
@@ -51,7 +53,7 @@ public class FileReader extends AbstractReader implements Callable<String>
      */
     public String call() throws Exception
     {
-        read(fileReaderConfig);
+        read(node);
         /*if(arrMessages==null)
         {
             logger.debug("null messages ................");
@@ -101,10 +103,12 @@ public class FileReader extends AbstractReader implements Callable<String>
         return arrMessages;
     }
 
+    /**
+     * Hand it over to the in memory queue.
+     */
     void sendToDestination()
     {
         logger.debug("Putting cmd on queue" + command.toStringUsingReflection());
         queue.offer(command);
-
     }
 }

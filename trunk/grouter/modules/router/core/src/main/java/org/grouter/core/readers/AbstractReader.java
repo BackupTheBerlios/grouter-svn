@@ -5,7 +5,7 @@ package org.grouter.core.readers;
 import org.grouter.core.command.Command;
 import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.Message;
-import org.grouter.core.config.ServiceNodeConfig;
+import org.grouter.core.config.Node;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -17,27 +17,25 @@ public abstract class AbstractReader //extends TimerTask
 {
     /** Logger. */
     private static Logger logger = Logger.getLogger(AbstractReader.class);
-   // protected ServiceNodeConfig serviceNodeConfig;
+   // protected AbstractNode serviceNodeConfig;
     Command command;
-
     /** Method overridden by subclasses. */
     abstract Message[] readFromSource();
-
     abstract void sendToDestination();
 
-    final protected void read(ServiceNodeConfig config)
+    final protected void read(Node node)
     {
         Message[] arrMessages = readFromSource();
         if(arrMessages!=null && arrMessages.length>0)
         {
-            if(config.isTransform())
+            /*if(node.isTransform())
             {
                 transform(arrMessages);
             }
-            if(config.isBackup())
+            if(node.isBackup())
             {
                 backup(arrMessages);
-            }
+            } */
             command.setMessage(arrMessages);
             sendToDestination();
         }
@@ -53,9 +51,9 @@ public abstract class AbstractReader //extends TimerTask
         logger.debug("doing backup...");
     }
 
-    protected Command getCommand(final ServiceNodeConfig theServiceNodeConfig)
+    protected Command getCommand(final Node node)
     {
-        return CommandFactory.getCommand(theServiceNodeConfig);
+        return CommandFactory.getCommand(node);
     }
 
     //SHOULD THIS BE HERE...

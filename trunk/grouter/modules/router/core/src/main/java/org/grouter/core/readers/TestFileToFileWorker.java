@@ -2,9 +2,9 @@ package org.grouter.core.readers;
 
 import org.apache.log4j.xml.DOMConfigurator;
 import org.apache.log4j.Logger;
-import org.grouter.core.config.ServiceNodeConfig;
-import org.grouter.core.config.FileReaderConfig;
-import org.grouter.core.config.FileWriterConfig;
+import org.grouter.core.config.AbstractNode;
+import org.grouter.core.config.FileReader;
+import org.grouter.core.config.FileWriter;
 
 import javax.xml.parsers.FactoryConfigurationError;
 import java.io.File;
@@ -36,19 +36,19 @@ public class TestFileToFileWorker
     public static void main(String[] args)
     {
         ExecutorService pool = Executors.newScheduledThreadPool(2);
-        ServiceNodeConfig serviceNodeConfig = new FileWriterConfig(new File("C:\\temp\\todir"));
+        AbstractNode abstractNode = new FileWriter(new File("C:\\temp\\todir"));
 
-        FileReaderConfig fileReaderConfig = new FileReaderConfig(new File("C:\\temp\\fromdir"));
+        FileReader fileReaderConfig = new FileReader(new File("C:\\temp\\fromdir"));
         fileReaderConfig.setBackup(true);
         Queue queue = new LinkedList();
 
         WorkerThread workerThread = new WorkerThread(queue);
 
-        while (true)
+        /*while (true)
         {
             try
             {
-                pool.submit(new FileReader(fileReaderConfig,queue,serviceNodeConfig));
+                pool.submit(new org.grouter.core.readers.FileReader(fileReaderConfig,queue, abstractNode));
                 TimeUnit.SECONDS.sleep(3);
                 pool.submit(workerThread);
             } catch (InterruptedException e)
@@ -56,6 +56,7 @@ public class TestFileToFileWorker
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         }
+        */
 
 
     }

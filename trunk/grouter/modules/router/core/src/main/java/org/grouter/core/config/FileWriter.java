@@ -7,11 +7,10 @@ import java.io.File;
 /**
  * Class description.
  */
-public class FileWriterConfig extends ServiceNodeConfig
-{
+public class FileWriter extends AbstractNode {
     File toDir;
 
-    public FileWriterConfig(File toDir)
+    public FileWriter(File toDir)
     {
         super.commandType = CommandTypes.TOFILE;
         this.toDir = toDir;
@@ -26,6 +25,4 @@ public class FileWriterConfig extends ServiceNodeConfig
     {
         this.toDir = toDir;
     }
-
-
 }
