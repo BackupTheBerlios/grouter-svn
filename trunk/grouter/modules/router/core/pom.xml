@@ -11,18 +11,20 @@
     <packaging>jar</packaging>
     <name>${artifactId}</name>
     <dependencies>
-	<dependency>
-            <groupId>org.grouter.platform.common</groupId>
-	    <artifactId>cmn-configbeans</artifactId>
-	    <version>${project.version}</version>
-        </dependency>
-
         <dependency>
-        <groupId>xmlbeans</groupId>
-        <artifactId>xmlbeans-jsr173-api</artifactId>
-        <version>2.0-dev</version>
+            <groupId>org.grouter.platform.common</groupId>
+            <artifactId>cmn-configbeans</artifactId>
+            <version>${project.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.grouter.platform.common</groupId>
+            <artifactId>cmn-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>xmlbeans</groupId>
+            <artifactId>xmlbeans-jsr173-api</artifactId>
+            <version>2.0-dev</version>
+        </dependency>
     </dependencies>
 </project>
