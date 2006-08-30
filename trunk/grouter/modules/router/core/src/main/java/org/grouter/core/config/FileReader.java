@@ -7,13 +7,14 @@ import java.io.File;
 /**
  * Class description.
  */
-public class FileReader extends AbstractNode {
+public class FileReader extends AbstractNode
+{
     CommandTypes commandType = CommandTypes.FROMFILE;
     private File fromDir;
 
     public FileReader(File fromDir)
     {
-        this.fromDir=fromDir;
+        this.fromDir = fromDir;
     }
 
     public File getFromDir()

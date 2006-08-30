@@ -7,7 +7,8 @@ import java.io.File;
 /**
  * Class description.
  */
-public class FileWriter extends AbstractNode {
+public class FileWriter extends AbstractNode
+{
     File toDir;
 
     public FileWriter(File toDir)

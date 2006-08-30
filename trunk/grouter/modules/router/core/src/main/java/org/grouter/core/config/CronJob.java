@@ -6,7 +6,7 @@ package org.grouter.core.config;
 public class CronJob
 {
     String intervall;
-    
+
     public String getIntervall()
     {
         return intervall;
@@ -16,7 +16,6 @@ public class CronJob
     {
         this.intervall = intervall;
     }
-
 
 
 }

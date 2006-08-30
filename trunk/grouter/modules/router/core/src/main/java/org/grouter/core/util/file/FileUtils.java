@@ -4,6 +4,7 @@
 package org.grouter.core.util.file;
 
 //import com.sun.xml.bind.StringInputStream;
+
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -15,7 +16,7 @@ import java.io.*;
  */
 public class FileUtils
 {
-    static  Logger logger = Logger.getLogger( FileUtils.class.getName());
+    static Logger logger = Logger.getLogger(FileUtils.class.getName());
 
     /**
      * Send in the file and get a string back.
@@ -38,7 +39,7 @@ public class FileUtils
         }
         finally
         {
-            if ( fileReader != null )
+            if (fileReader != null)
                 try
                 {
                     fileReader.close();
@@ -56,10 +57,10 @@ public class FileUtils
      * Send in the filereader and get a string back. String return has not trailing
      * whitespaces.
      *
-     * @param fileReader a file reader that will be decorated using a BufferedReader
+     * @param fileReader         a file reader that will be decorated using a BufferedReader
      * @param skipfirstblankline
      * @return String message contents of file
-     * TODO needs test
+     *         TODO needs test
      */
     public static String getMessageContent(FileReader fileReader, boolean skipfirstblankline)
     {
@@ -77,7 +78,7 @@ public class FileUtils
             {
                 buffer.append(line);
                 line = inputBuffer.readLine();
-                if (line!=null)
+                if (line != null)
                 {
                     buffer.append("\n");
                 }
@@ -121,7 +122,7 @@ public class FileUtils
         }
         finally
         {
-            if ( inputBuffer != null )
+            if (inputBuffer != null)
             {
                 inputBuffer.close();
             }
@@ -135,7 +136,7 @@ public class FileUtils
      *
      * @param directory
      * @return Long number of files excluding folders.
-     * TODO needs test
+     *         TODO needs test
      */
     public static long countNumberOfFileInFolder(String directory)
     {
@@ -162,10 +163,9 @@ public class FileUtils
      * Scan folder and looks for newest file not folder and returns the lastmodfied
      * java.util.Date.
      *
-     *
      * @param dir
      * @return java.util.Date date of last modification of file
-     * TODO needs test
+     *         TODO needs test
      */
     public static java.util.Date lastModifiedDateOfFile(String dir)
     {
@@ -206,52 +206,52 @@ public class FileUtils
      * @return
      * @throws java.io.IOException
      */
- /*   public static String readFile(String readFrom) throws IOException
-    {
-        File inFile = new File(readFrom);
-        FileReader reader = null;
-        StringBuffer buf = new StringBuffer();
-        if (inFile.exists())
-        {
-            if (inFile.isFile())
-            {
-                try
-                {
-                    reader = new FileReader(inFile);
-                    BufferedReader bufreader = new BufferedReader(reader);
-                    String line = bufreader.readLine();
+    /*   public static String readFile(String readFrom) throws IOException
+     {
+         File inFile = new File(readFrom);
+         FileReaderThread reader = null;
+         StringBuffer buf = new StringBuffer();
+         if (inFile.exists())
+         {
+             if (inFile.isFile())
+             {
+                 try
+                 {
+                     reader = new FileReaderThread(inFile);
+                     BufferedReader bufreader = new BufferedReader(reader);
+                     String line = bufreader.readLine();
 
-                    while (line != null)
-                    {
-                        buf.append(line + "\n");
-                        line = bufreader.readLine();
-                    }
-                }
-                finally
-                {
-                    if (reader != null)
-                    {
-                        try
-                        {
-                            reader.close();
-                        }
-                        catch (IOException e)
-                        {
-                            ;
-                        }
-                    }
-                }
+                     while (line != null)
+                     {
+                         buf.append(line + "\n");
+                         line = bufreader.readLine();
+                     }
+                 }
+                 finally
+                 {
+                     if (reader != null)
+                     {
+                         try
+                         {
+                             reader.close();
+                         }
+                         catch (IOException e)
+                         {
+                             ;
+                         }
+                     }
+                 }
 
-            }
-            else
-            {
-                throw new FileCopyException("FileRead: location is not a file: " + readFrom);
-            }
-        }
-        return buf.toString();
+             }
+             else
+             {
+                 throw new FileCopyException("FileRead: location is not a file: " + readFrom);
+             }
+         }
+         return buf.toString();
 
-    }
-   */
+     }
+    */
 
     /**
      * Create message contents in a file from message (String). If destination file
@@ -316,14 +316,11 @@ public class FileUtils
       */
 
 
-
-
     /**
      * Check if ok to write file to this location.
      *
      * @param destination_file
-     * @throws FileCopyException
-     * TODO needs test
+     * @throws FileCopyException TODO needs test
      */
     private static void isDestinationWritable(File destination_file)
             throws FileCopyException
@@ -336,13 +333,11 @@ public class FileUtils
                 {
                     throw new FileCopyException("FileCreate: destination file is unwriteable: " + destination_file.getName());
                 }
-            }
-            else
+            } else
             {
                 throw new FileCopyException("FileCreate: destination is not a file: " + destination_file.getName());
             }
-        }
-        else
+        } else
         {
             File parentdir = parent(destination_file);
             if (!parentdir.exists())
@@ -364,8 +359,7 @@ public class FileUtils
             if (f.isAbsolute())
             {
                 return new File(File.separator);
-            }
-            else
+            } else
             {
                 return new File(System.getProperty("user.dir"));
             }
@@ -375,6 +369,7 @@ public class FileUtils
 
     /**
      * Overloaded copy method.
+     *
      * @param sourceFile
      * @param destFile
      * @throws IOException
@@ -418,13 +413,11 @@ public class FileUtils
                     {
                         throw new FileCopyException("FileCopy: destination " + "file is unwriteable: " + dest_name);
                     }
-                }
-                else
+                } else
                 {
                     throw new FileCopyException("FileCopy: destination " + "is not a file: " + dest_name);
                 }
-            }
-            else
+            } else
             {
                 File parentdir = parent(destination_file);
                 if (!parentdir.exists())
@@ -472,7 +465,8 @@ public class FileUtils
                 }
                 catch (IOException e)
                 {
-                    e.printStackTrace(); ;
+                    e.printStackTrace();
+                    ;
                 }
             }
         }

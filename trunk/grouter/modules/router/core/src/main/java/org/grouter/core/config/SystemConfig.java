@@ -6,7 +6,7 @@ package org.grouter.core.config;
 public class SystemConfig
 {
     GlobalSettings globalSettings;
-    
+
     public GlobalSettings getGlobalSettings()
     {
         return globalSettings;

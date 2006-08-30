@@ -1,12 +1,7 @@
 package org.grouter.core.command;
 
-import static org.grouter.core.config.Node.Type.FILE_TO_FILE;
-import static org.grouter.core.config.Node.Type;
-import org.grouter.core.config.FileWriter;
-import org.grouter.core.config.Node;
 import org.apache.log4j.Logger;
-
-import java.io.IOException;
+import org.grouter.core.config.Node;
 
 
 /**
@@ -18,12 +13,12 @@ public class CommandFactory
 
     public static Command getCommand(Node node)
     {
-        if (node==null)
+        if (node == null)
         {
             throw new IllegalArgumentException("Config was null");
         }
 
-        switch(node.getNodeType())
+        switch (node.getNodeType())
         {
             case FILE_TO_FILE:
             {
@@ -41,7 +36,7 @@ public class CommandFactory
                 return new FileWriterCommand(fileWriterConfig);
                 */
             }
-            default :
+            default:
                 return null;
         }
     }

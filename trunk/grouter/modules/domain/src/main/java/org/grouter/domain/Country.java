@@ -6,6 +6,7 @@ import java.util.HashSet;
 /**
  * Class description.
  */
+@javax.persistence.Entity
 public class Country
 {
 	private String id;

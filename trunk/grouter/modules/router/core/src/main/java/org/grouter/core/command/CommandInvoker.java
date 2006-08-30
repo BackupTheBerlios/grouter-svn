@@ -8,13 +8,10 @@ import org.apache.log4j.Logger;
  */
 public class CommandInvoker
 {
-    /** Logger.*/
     private static Logger logger = Logger.getLogger(CommandInvoker.class);
-
 
     /**
      * Take a command an execute it.
-     *
      * @param command Command to be executed.
      */
     public void handleCommand(Command command)

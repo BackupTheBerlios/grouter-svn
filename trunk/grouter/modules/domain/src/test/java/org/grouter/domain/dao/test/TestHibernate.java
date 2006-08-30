@@ -48,7 +48,7 @@ public abstract class TestHibernate extends TestCase
                 addClass(Password.class).
                 addClass(Message.class).
                 addClass(Receiver.class).
-                //addClass(GRouter.class).
+                //addClass(GRouterBean.class).
 
                 addClass(Sender.class);
 

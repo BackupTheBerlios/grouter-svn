@@ -17,8 +17,8 @@ import org.apache.commons.logging.LogFactory;
 
 import java.sql.Timestamp;
 
-public class TestGRouterService extends AbstractGrouterServiceInit {
-    private static Log log = LogFactory.getLog(TestGRouterService.class);
+public class GRouterServiceTest extends AbstractGrouterServiceInit {
+    private static Log log = LogFactory.getLog(GRouterServiceTest.class);
     private final static String beanName = "messageServiceManager";
 
     /**

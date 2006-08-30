@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 /**
  * @author Georges Polyzois
  */
+@javax.persistence.Entity
 public class Node
 {
     private static Logger logger = Logger.getLogger(Node.class);
@@ -18,6 +19,7 @@ public class Node
 	 * No duplicate elements and the ordering is not relevant for us -> Set
 	 */
     private Set<Message> messages;
+    private Message message;
     private Timestamp modifiedOn;
     private SystemUser modifiedBySystemUser;
 

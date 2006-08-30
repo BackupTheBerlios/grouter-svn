@@ -3,8 +3,10 @@ package org.grouter.domain;
 import java.util.Set;
 import java.util.HashSet;
 import java.sql.Timestamp;
+import java.io.Serializable;
 
-public class Message
+@javax.persistence.Entity
+public class Message implements Serializable
 {
 	private String id;
 	private String message;

@@ -3,6 +3,7 @@ package org.grouter.domain;
 import java.util.Set;
 import java.util.HashSet;
 
+@javax.persistence.Entity
 public class Sender
 {
     /**

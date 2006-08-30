@@ -15,7 +15,9 @@ import org.iris.server.pollhandlers.PollEJBMessageHandler;
  */
 public class ReaderFactory
 {
-	/** Logger. */
+    /**
+     * Logger.
+     */
     static Logger logger = Logger.getLogger(ReaderFactory.class.getName());
 
     /**
@@ -29,23 +31,23 @@ public class ReaderFactory
      */
     //public static FileMessageHandler createNotStartedInstance(Service service) throws Exception
     //{
-        /*
-        *
-        if (service instanceof ServicePollEJB)
-        {
-            ServicePollEJB servicePollEjb = (ServicePollEJB) service;
-            FileMessageHandler messanger = new PollEJBMessageHandler(servicePollEjb);
-            messanger.setServiceStatus(FileMessageHandler.NOTSTARTED);
-            return messanger;
+    /*
+    *
+    if (service instanceof ServicePollEJB)
+    {
+        ServicePollEJB servicePollEjb = (ServicePollEJB) service;
+        FileMessageHandler messanger = new PollEJBMessageHandler(servicePollEjb);
+        messanger.setServiceStatus(FileMessageHandler.NOTSTARTED);
+        return messanger;
 
-        }
-        else if (service instanceof ServiceFileEmail)
-        {
-            ServiceFileEmail serviceF = (ServiceFileEmail) service;
-            FileMessageHandler messanger = new FileToEmailMessegeHandler(serviceF);
-            messanger.setServiceStatus(FileMessageHandler.NOTSTARTED);
-            return messanger;
-        }*/
+    }
+    else if (service instanceof ServiceFileEmail)
+    {
+        ServiceFileEmail serviceF = (ServiceFileEmail) service;
+        FileMessageHandler messanger = new FileToEmailMessegeHandler(serviceF);
+        messanger.setServiceStatus(FileMessageHandler.NOTSTARTED);
+        return messanger;
+    }*/
 /*        if (service instanceof ServiceFileFile)
         {
             ServiceFileFile serviceF = (ServiceFileFile) service;
@@ -62,12 +64,11 @@ public class ReaderFactory
             messanger.setServiceStatus(FileMessageHandler.NOTSTARTED);
             return messanger;
         } */
-        /*else
-        {
-            throw new Exception("This service is not handled - " + service.getId());
-        }
-    } */
-
+    /*else
+       {
+           throw new Exception("This service is not handled - " + service.getId());
+       }
+   } */
 
 
 }

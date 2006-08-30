@@ -1,6 +1,6 @@
 package org.grouter.core.util.file;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Exception raised whe copying file fails.

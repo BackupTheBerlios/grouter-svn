@@ -1,8 +1,9 @@
 package org.grouter.core.util.date;
 
 
-import java.text.*;
-import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class DateHelper
 {
@@ -22,7 +23,7 @@ public class DateHelper
         return fromDate2;
     }
 
-		
+
     public static java.sql.Date[] getFromToNextDayDates(String fromDatestr) throws ParseException, Exception
     {
         Calendar c1 = Calendar.getInstance();
@@ -44,6 +45,7 @@ public class DateHelper
 
     /**
      * Calculate two swl dates for
+     *
      * @param numberOfMonthsBack
      * @return java.sql.Date[] array with two elements [0] holds from and [1] holds to date
      * @throws ParseException
