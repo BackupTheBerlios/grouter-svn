@@ -39,7 +39,7 @@
 
         <!-- column is for this table -->
         <!--many-to-one
-                name="node"
+                name="nodeConfig"
                 not-null="false"
                 class="org.grouter.domain.Node"
                 column="NODEID"

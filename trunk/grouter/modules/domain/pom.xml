@@ -57,6 +57,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
         </dependency>
+        <dependency>
+	            <groupId>com.javasoft</groupId>
+		      <artifactId>javaee</artifactId>
+  <version>1.5</version>
+        </dependency>
     </dependencies>
 
     <build>

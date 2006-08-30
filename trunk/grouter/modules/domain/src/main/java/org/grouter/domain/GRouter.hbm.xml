@@ -10,7 +10,7 @@
         <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
         <property name="upTime" not-null="false" type="java.lang.Long" column="UPTIME"/>
 
-        <set name="nodes" cascade="all" lazy="true" inverse="true" table="NODE">
+        <set name="nodeConfigsonfigs" cascade="all" lazy="true" inverse="true" table="NODE">
             <key>
                 <column name="NODEID" not-null="true"/>
                 <!-- id column in other table -->
