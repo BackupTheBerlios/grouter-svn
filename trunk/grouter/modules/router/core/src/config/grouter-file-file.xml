@@ -32,8 +32,8 @@
 
     <Node type="file-file" id="filetest-filetest" createuniquename="true" useRelativeRootpath="false">
         <inFolderConfig>
-            <inFolderPath>in</inFolderPath>
-            <pollIntervallMilliSeconds>5000</pollIntervallMilliSeconds>
+            <inFolderPath>C:/temp/kalle/in</inFolderPath>
+            <pollIntervallMilliSeconds>2000</pollIntervallMilliSeconds>
             <skipFirstblankline>false</skipFirstblankline>
             <batchReadConfig isBatchOn="false">
                 <batchSize>10</batchSize>
@@ -41,7 +41,7 @@
             </batchReadConfig>
         </inFolderConfig>
         <outFolderConfig>
-            <outFolderPath>out</outFolderPath>
+            <outFolderPath>C:/temp/kalle/out</outFolderPath>
         </outFolderConfig>
         <backup backupHandlerOn="true" archiveroOn="true">
             <backupFolderPath>backup/</backupFolderPath>
@@ -87,4 +87,47 @@
             <loglevel>DEBUG</loglevel>
         </messagelogger-->
     </Node>
+
+
+    <!--Node type="file-file" id="filetest2" createuniquename="true" useRelativeRootpath="false">
+        <inFolderConfig>
+            <inFolderPath>C:/temp</inFolderPath>
+            <pollIntervallMilliSeconds>5000</pollIntervallMilliSeconds>
+            <skipFirstblankline>false</skipFirstblankline>
+            <batchReadConfig isBatchOn="false">
+                <batchSize>10</batchSize>
+                <batchThreshold>10</batchThreshold>
+            </batchReadConfig>
+        </inFolderConfig>
+        <outFolderConfig>
+            <outFolderPath>out</outFolderPath>
+        </outFolderConfig>
+        <backup backupHandlerOn="true" archiveroOn="true">
+            <backupFolderPath>backup/</backupFolderPath>
+            <archiveFolderPath>archived/</archiveFolderPath>
+        </backup>
+        <transform transformOn="false"/>
+        <error  errorHandlerOn="true">
+            <errorFolderPath>error/</errorFolderPath>
+            <errorInFolderPath>error_info</errorInFolderPath>
+            <sortOnResend>false</sortOnResend>
+            <CronJob>Every minute@0/20 * * * * ?</CronJob>
+            <errorNotification errorNotificationOn="true">
+                <notifyEveryIntervallInMilliSeconds>180000</notifyEveryIntervallInMilliSeconds>
+                <numberOfErrors>1</numberOfErrors>
+                <emailNotification>
+                    <emailOnFailure>/template/emailerrornotification.xml</emailOnFailure>
+                </emailNotification>
+                <sms>
+                    <smsOnFailure>/template/down.xml</smsOnFailure>
+                    <smsService>/in</smsService>
+                </sms>
+            </errorNotification>
+        </error>
+        <inactivity inactivityOn="false">
+            <maxInactivityPeriodInMilliSeconds>120000</maxInactivityPeriodInMilliSeconds>
+            <emailOnInactivity>/template/erroronincativity.xml</emailOnInactivity>
+        </inactivity>
+
+    </Node-->
 </GrouterConfig>
