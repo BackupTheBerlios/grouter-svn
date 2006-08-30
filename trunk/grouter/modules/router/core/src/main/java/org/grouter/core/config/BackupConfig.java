@@ -7,6 +7,6 @@ package org.grouter.core.config;
  * Time: 08:49:01
  * To change this template use File | Settings | File Templates.
  */
-public class Backup
+public class BackupConfig
 {
 }

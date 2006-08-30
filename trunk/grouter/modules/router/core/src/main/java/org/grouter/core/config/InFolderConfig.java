@@ -8,13 +8,13 @@ import java.io.File;
 /**
  * A node config holder.
  */
-public class InFolder
+public class InFolderConfig
 {
-    private static Logger logger = Logger.getLogger(InFolder.class);
+    private static Logger logger = Logger.getLogger(InFolderConfig.class);
     private File inFolderPath;
     private long pollIntervallMilliSeconds;
     private boolean skipFirstblankline;
-    private BatchRead batchRead;
+    private BatchReadConfig batchReadConfig;
     public static final int MIN_POLLINTERVALL = 2000;
 
     /**
@@ -22,10 +22,10 @@ public class InFolder
      * @param infolderpath
      * @param pollIntervallMilliSeconds
      * @param skipfirstblankline
-     * @param batchRead
+     * @param batchReadConfig
      * @throws IllegalArgumentException  if infolderpath == null || pollIntervallMilliSeconds < MIN_POLLINTERVALL
      */
-    public InFolder(File infolderpath, long pollIntervallMilliSeconds, boolean skipfirstblankline, BatchRead batchRead)
+    public InFolderConfig(File infolderpath, long pollIntervallMilliSeconds, boolean skipfirstblankline, BatchReadConfig batchReadConfig)
     {
         if (infolderpath == null || pollIntervallMilliSeconds < MIN_POLLINTERVALL)
         {
@@ -76,8 +76,8 @@ public class InFolder
      * Simple getter.
      * @return
      */
-    public BatchRead getBatchRead()
+    public BatchReadConfig getBatchRead()
     {
-        return batchRead;
+        return batchReadConfig;
     }
 }

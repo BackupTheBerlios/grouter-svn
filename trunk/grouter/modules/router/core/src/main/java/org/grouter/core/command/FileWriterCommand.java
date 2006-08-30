@@ -1,66 +1,76 @@
 package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
-import org.grouter.core.config.FileReader;
-import org.grouter.core.config.FileWriter;
-import org.grouter.core.config.Node;
+import org.grouter.common.guid.GuidGenerator;
+import org.grouter.core.config.NodeConfig;
 
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
 
 /**
- * A concrete command to be performed by a writer, held by the CommandInvoker. </br>
- * This class acts as a receiver in the Command pattern.
- *
+ * A concrete command to be performed by a consumer, held by the CommandInvoker. </br>
+ * This class acts as a consumer in the Command pattern.
  */
 public class FileWriterCommand extends Command
 {
     private static Logger logger = Logger.getLogger(FileWriterCommand.class);
-    FileReader fileReaderConfig;
-    /** Writer. */
-    java.io.FileWriter writer;
-    File toDir;
-    Node node;
+    private FileWriter writer;
+    private NodeConfig nodeConfig;
 
 
-    public FileWriterCommand(Node node)
+    /**
+     * Constructor.
+     * @param nodeConfig
+     * @throws  IllegalArgumentException if nodeConfig == null
+     */
+    public FileWriterCommand(NodeConfig nodeConfig)
     {
-        toDir = new File( node.getOutFolder().getOutFolderPath() );
+        if (nodeConfig == null)
+        {
+            throw new IllegalArgumentException("You must provide a NodeConfig !!");
+        }
+        this.nodeConfig = nodeConfig;
     }
 
     /**
-     * Overridden.
+     * Overridden from abstract Command class.
      */
     public void execute()
     {
-        logger.debug("Writing file to dir : " + toDir);
+        logger.debug(nodeConfig.getId() + " Writing file to dir : " + nodeConfig.getOutFolder().getOutFolderPath());
         for (int i = 0; i < message.length; i++)
         {
             logger.debug(message[i].getMessage());
             try
             {
-                String fileName = toDir.getPath() + "/fil.txt";
-                writer = new java.io.FileWriter(fileName);
+                String fileName = null;
+                if (nodeConfig.isCreateuniquename())
+                {
+                    fileName = GuidGenerator.getInstance().getGUID();
+                }
+                writer = new FileWriter(nodeConfig.getOutFolder().getOutFolderPath().getPath() + "/" + fileName);
                 writer.write(message[i].getMessage());
                 writer.flush();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                logger.error(e,e);
+                logger.error(e, e);
             }
             finally
             {
-                try
+                if (writer != null)
                 {
-                    writer.close();
-                } catch (IOException e)
-                {
-                    //ignore
+                    try
+                    {
+                        writer.close();
+                    } catch (IOException e)
+                    {
+                        //ignore
+                    }
                 }
             }
 
         }
-
 
         //writer.write();
         //writer.readSendFiles(null,null);

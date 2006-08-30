@@ -8,17 +8,17 @@ import java.io.File;
 /**
  * An outfolder is used to represent an OutFolderType (an xml binding type).
  */
-public class OutFolder
+public class OutFolderConfig
 {
     private File outFolderPath;
-    private static Logger logger = Logger.getLogger(OutFolder.class);
+    private static Logger logger = Logger.getLogger(OutFolderConfig.class);
 
     /**
      * @param outFolderPath
      * @throws IllegalArgumentException if outFolderPath == null
      * @throws IllegalArgumentException if outFolderPath == null
      */
-    public OutFolder(File outFolderPath)
+    public OutFolderConfig(File outFolderPath)
     {
         if (outFolderPath == null)
         {

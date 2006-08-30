@@ -3,7 +3,7 @@ package org.grouter.core.readers;
 import org.apache.log4j.Logger;
 import org.grouter.core.command.Command;
 import org.grouter.core.command.Message;
-import org.grouter.core.config.Node;
+import org.grouter.core.config.NodeConfig;
 
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
@@ -17,26 +17,26 @@ import java.util.concurrent.BlockingQueue;
 public class FileReaderThread extends AbstractReader implements Runnable//implements Callable<String>
 {
     private static Logger logger = Logger.getLogger(FileReaderThread.class);
-    private Node node;
+    private NodeConfig nodeConfig;
     private BlockingQueue<Command> queue;
 
     /**
      * Construcotr
      *
-     * @param node
+     * @param nodeConfig
      * @param blockingQueue
-     * @throws IllegalArgumentException if node == null || blockingQueue == null
+     * @throws IllegalArgumentException if nodeConfig == null || blockingQueue == null
      */
-    public FileReaderThread(final Node node, BlockingQueue<Command> blockingQueue)
+    public FileReaderThread(final NodeConfig nodeConfig, BlockingQueue<Command> blockingQueue)
     {
-        if (node == null || blockingQueue == null)
+        if (nodeConfig == null || blockingQueue == null)
         {
             throw new IllegalArgumentException("Constructor called with null argument.");
         }
-        this.node = node;
+        this.nodeConfig = nodeConfig;
         this.queue = blockingQueue;
         //which type of commands should this servicenode worker handle
-        command = getCommand(node);
+        command = getCommand(nodeConfig);
 
     }
 
@@ -48,8 +48,8 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
      */
     public String call() throws Exception
     {
-        logger.debug(node.getId() + " + FileReaderThread executing");
-        read(node);
+        logger.debug(nodeConfig.getId() + " + FileReaderThread executing");
+        read(nodeConfig);
         /*if(arrMessages==null)
         {
             logger.debug("null messages ................");
@@ -72,8 +72,8 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
      */
     protected Message[] readFromSource()
     {
-        logger.debug("Trying to read files from " + node.getInFolder().getInFolderPath());
-        File[] curFiles = node.getInFolder().getInFolderPath().listFiles();
+        logger.debug("Trying to read files from " + nodeConfig.getInFolder().getInFolderPath());
+        File[] curFiles = nodeConfig.getInFolder().getInFolderPath().listFiles();
         if (curFiles == null || curFiles.length == 0)
         {
             logger.debug("No files found.");

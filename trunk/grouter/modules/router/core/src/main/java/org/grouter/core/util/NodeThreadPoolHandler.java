@@ -3,7 +3,8 @@ package org.grouter.core.util;
 import org.apache.log4j.Logger;
 import org.grouter.core.command.Command;
 import org.grouter.core.command.CommandConsumerThread;
-import org.grouter.core.config.Node;
+import org.grouter.core.config.NodeConfig;
+import org.grouter.core.config.GrouterConfig;
 import org.grouter.core.readers.FileReaderThread;
 
 import java.util.concurrent.*;
@@ -27,41 +28,40 @@ public class NodeThreadPoolHandler
     private static final int INITIAL_DELAY = 1000;
     private static final int CAPACITY = 1000;
 
+    /**
+     * Consturctor
+     */
     public NodeThreadPoolHandler()
     {
     }
 
-    public void initNodeThreadScheduling(Node[] nodes)
+    /**
+     * Initialize threads.
+     *
+     * @param grouterConfig 
+     * @throws IllegalArgumentException if nodeConfigs == null
+     */
+    public void initNodeThreadScheduling(GrouterConfig grouterConfig)
     {
-        logger.info("Found " + nodes.length + " number of nodes. Init scheduler executor service!");
-        scheduler = Executors.newScheduledThreadPool(nodes.length);
-        for (Node node : nodes)
+        NodeConfig[] nodeConfigs = grouterConfig.getNodes();
+        if(grouterConfig == null || nodeConfigs == null)
+        {
+            throw new IllegalArgumentException("Nodes can not be null!!");
+        }
+        logger.info("Found " + nodeConfigs.length + " number of nodeConfigs. Init scheduler executor service!");
+        scheduler = Executors.newScheduledThreadPool(nodeConfigs.length);
+        for (NodeConfig nodeConfig : nodeConfigs)
         {
             blockingQueue = new ArrayBlockingQueue<Command>(CAPACITY);
-            if (node.getNodeType() == Node.Type.FILE_TO_FILE)
+            if (nodeConfig.getNodeType() == NodeConfig.Type.FILE_TO_FILE)
             {
-                FileReaderThread fileReaderThread = new FileReaderThread(node, blockingQueue);
-                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, node.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
+                FileReaderThread fileReaderThread = new FileReaderThread(nodeConfig, blockingQueue);
+                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, nodeConfig.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
             }
             CommandConsumerThread commandConsumerThread = new CommandConsumerThread(blockingQueue);
-            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, node.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
+            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, nodeConfig.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
         }
     }
-
-    /*public void initNodeThreadScheduling(ConfigHandler configHandler) {
-        nodeTypes = configHandler.getGrouterConfigDocument().getGrouterConfig().getNodeArray();
-        logger.info("Found " + nodeTypes.length + " number of nodes. Init scheduler executor service!");
-        scheduler = Executors.newScheduledThreadPool(nodeTypes.length);
-        blockingQueue = new ArrayBlockingQueue<Command>(CAPACITY, true);
-        for (NodeType nodeType : nodeTypes) {
-            Node node = NodeFactory.getNode(nodeType);
-            FileReaderThread fileReader = new FileReaderThread(node, blockingQueue);
-            CommandConsumerThread workerThread = new CommandConsumerThread(blockingQueue);
-
-            scheduler.scheduleAtFixedRate(fileReader, INITIAL_DELAY, node.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
-            scheduler.scheduleAtFixedRate(workerThread, INITIAL_DELAY, node.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
-        }
-    } */
 
     /**
      * Delegate to ScheduledExecutorService for a shutdown of node threads.
@@ -70,10 +70,4 @@ public class NodeThreadPoolHandler
     {
         scheduler.shutdown();
     }
-
-    public void restartNodeThread(String nodeId)
-    {
-
-    }
-
 }

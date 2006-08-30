@@ -4,14 +4,18 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Interface for commands.
- *
- * Commands are object put on queue from a reaer and handed over to a writer. It
- * contains type of command and the message the writer side needs. 
+ * <p/>
+ * Commands are object put on a blocking queue from a produces/publisher and handed over to a consumer/writer.
+ * A command contains type of command and the message the writer side needs.
  */
 public abstract class Command
 {
     protected Message[] message;
 
+    /**
+     * Commands must override this method to provide an implementation of an execute command
+     * in the context for that command.
+     */
     public abstract void execute();
 
     public Message[] getMessage()

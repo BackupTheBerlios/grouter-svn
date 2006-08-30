@@ -1,43 +1,46 @@
 package org.grouter.core.readers;
 
 
-
+import org.apache.log4j.Logger;
 import org.grouter.core.command.Command;
 import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.Message;
-import org.grouter.core.config.Node;
-import org.apache.log4j.Logger;
+import org.grouter.core.config.NodeConfig;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.BufferedReader;
 
 
 public abstract class AbstractReader //extends TimerTask
 {
-    /** Logger. */
     private static Logger logger = Logger.getLogger(AbstractReader.class);
-   // protected AbstractNode serviceNodeConfig;
     Command command;
-    /** Method overridden by subclasses. */
-    abstract Message[] readFromSource();
-    abstract void sendToDestination();
 
-    final protected void read(Node node)
+    /**
+     * Method overridden by subclasses.
+     */
+    abstract Message[] readFromSource();
+
+    
+    abstract void sendToConsumer();
+
+    final protected void read(NodeConfig nodeConfig)
     {
         Message[] arrMessages = readFromSource();
-        if(arrMessages!=null && arrMessages.length>0)
+        if (arrMessages != null && arrMessages.length > 0)
         {
-            /*if(node.isTransform())
+            //if(nodeConfig.get)
+            /*if(nodeConfig.isTransform())
             {
                 transform(arrMessages);
             }
-            if(node.isBackup())
+            if(nodeConfig.isBackup())
             {
                 backup(arrMessages);
             } */
             command.setMessage(arrMessages);
-            sendToDestination();
+            sendToConsumer();
         }
     }
 
@@ -51,9 +54,9 @@ public abstract class AbstractReader //extends TimerTask
         logger.debug("doing backup...");
     }
 
-    protected Command getCommand(final Node node)
+    protected Command getCommand(final NodeConfig nodeConfig)
     {
-        return CommandFactory.getCommand(node);
+        return CommandFactory.getCommand(nodeConfig);
     }
 
     //SHOULD THIS BE HERE...
@@ -61,10 +64,10 @@ public abstract class AbstractReader //extends TimerTask
     {
         java.io.FileReader filereader = null;
         String returnval = null;
-        BufferedReader inputBuffer =  null;
+        BufferedReader inputBuffer = null;
         try
         {
-            filereader =  new java.io.FileReader(file);
+            filereader = new java.io.FileReader(file);
             inputBuffer = new BufferedReader(filereader);
             StringBuffer buffer = new StringBuffer();
             String line = inputBuffer.readLine();
@@ -91,14 +94,14 @@ public abstract class AbstractReader //extends TimerTask
         {
             try
             {
-                if ( filereader != null )
+                if (filereader != null)
                     filereader.close();
             }
             catch (IOException e)
             {
                 try
                 {
-                    if ( inputBuffer != null )
+                    if (inputBuffer != null)
                         inputBuffer.close();
                 }
                 catch (IOException e1)

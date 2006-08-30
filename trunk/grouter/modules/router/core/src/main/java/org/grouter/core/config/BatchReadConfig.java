@@ -10,15 +10,22 @@ import org.apache.log4j.Logger;
  * Time: 16:46:05
  * To change this template use File | Settings | File Templates.
  */
-public class BatchRead {
-    private static Logger logger = Logger.getLogger(BatchRead.class);
+public class BatchReadConfig
+{
+    private static Logger logger = Logger.getLogger(BatchReadConfig.class);
     private boolean isBatchOn;
     private int batchSize;
     private int batchThreshold;
 
-    public BatchRead(boolean batchOn, int batchSize, int batchThreshold)
+    /**
+     * Constructor.
+     * @param batchOn
+     * @param batchSize
+     * @param batchThreshold
+     */
+    public BatchReadConfig(boolean batchOn, int batchSize, int batchThreshold)
     {
-        isBatchOn = batchOn;
+        this.isBatchOn = batchOn;
         this.batchSize = batchSize;
         this.batchThreshold = batchThreshold;
     }
@@ -26,7 +33,8 @@ public class BatchRead {
     /**
      * Flush out state of object to logger.
      */
-    public void logState() {
+    public void logState()
+    {
         logger.info(ToStringBuilder.reflectionToString(this));
     }
 }

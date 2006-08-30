@@ -1,7 +1,7 @@
 package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
-import org.grouter.core.config.Node;
+import org.grouter.core.config.NodeConfig;
 
 
 /**
@@ -11,18 +11,18 @@ public class CommandFactory
 {
     private static Logger logger = Logger.getLogger(CommandFactory.class);
 
-    public static Command getCommand(Node node)
+    public static Command getCommand(NodeConfig nodeConfig)
     {
-        if (node == null)
+        if (nodeConfig == null)
         {
             throw new IllegalArgumentException("Config was null");
         }
 
-        switch (node.getNodeType())
+        switch (nodeConfig.getNodeType())
         {
             case FILE_TO_FILE:
             {
-                FileWriterCommand fileWriterCommand = new FileWriterCommand(node);
+                FileWriterCommand fileWriterCommand = new FileWriterCommand(nodeConfig);
                 return fileWriterCommand;
                 /*FileWriter writer = null;
                 try
