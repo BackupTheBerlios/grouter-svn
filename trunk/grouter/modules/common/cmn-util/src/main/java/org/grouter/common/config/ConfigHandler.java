@@ -2,7 +2,6 @@ package org.grouter.common.config;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,9 +10,8 @@ import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlOptions;
 import org.apache.xmlbeans.XmlObject;
 import org.apache.xmlbeans.XmlException;
-import org.grouter.config.GRouterConfigDocument;
-
-import org.grouter.config.GRouterConfigDocument;
+import org.apache.commons.io.FileUtils;
+import org.grouter.config.GrouterConfigDocument;
 
 /**
  * Validating XML against schema using features of the XMLBeans API.
@@ -33,7 +31,7 @@ public class ConfigHandler
     private ArrayList validationErrors = new ArrayList();
 
     //root handle to config
-    private GRouterConfigDocument gRouterConfigDocument;
+    private GrouterConfigDocument gRouterConfigDocument;
 
     /**
      * Constructor.
@@ -46,8 +44,14 @@ public class ConfigHandler
         {
             throw new IllegalArgumentException("File path to config file can not be null!");
         }
+
+        File test = new File(absoluteFilePath);
+        if (!test.isFile())
+        {
+            throw new IllegalArgumentException("File path to config file points to folder!");    
+        }
         this.xmlOptions = xmlOptions;
-        this.gRouterConfigDocument =  (GRouterConfigDocument) parseXml(absoluteFilePath, xmlOptions);
+        this.gRouterConfigDocument =  (GrouterConfigDocument) parseXml(absoluteFilePath, xmlOptions);
     }
 
     /**
@@ -62,7 +66,7 @@ public class ConfigHandler
             throw new IllegalArgumentException("InputStream can not be null!");
         }
         this.xmlOptions = xmlOptions;
-        this.gRouterConfigDocument =  (GRouterConfigDocument) parseXml(inputStream, xmlOptions);
+        this.gRouterConfigDocument =  (GrouterConfigDocument) parseXml(inputStream, xmlOptions);
     }
 
     /**
@@ -132,7 +136,7 @@ public class ConfigHandler
      * Get the config.
      * @return An GRouterConfigDocument from parsed config.xsd
      */
-    public GRouterConfigDocument getgRouterConfigDocument()
+    public GrouterConfigDocument getGrouterConfigDocument()
     {
         return gRouterConfigDocument;
     }

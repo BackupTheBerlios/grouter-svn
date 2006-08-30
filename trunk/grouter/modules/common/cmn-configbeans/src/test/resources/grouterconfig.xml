@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GRouterConfig name="grouter"
+<GrouterConfig name="grouter"
               xmlns="http://grouter.org/config.xsd"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://grouter.org/config.xsd ../../xsd/config.xsd"
@@ -30,40 +30,40 @@
         </Email>
     </GlobalSettings>
     
-    <Node type="file-file" id="filetest-filetest" createuniquename="true" usesrelativerootpath="false">
-        <infolder>
-            <infolderpath>in</infolderpath>
-            <intervallInMilliSeconds>5000</intervallInMilliSeconds>
-            <skipfirstblankline>false</skipfirstblankline>
-            <infoldersendchunks sendinfolderchunkson="false">
-                <infolderchunksize>10</infolderchunksize>
-                <infolderchunkthreshold>10</infolderchunkthreshold>
-            </infoldersendchunks>
-        </infolder>
-        <outfolder>
-            <outfolderpath>out</outfolderpath>
-        </outfolder>
-        <backup backuphandleron="true" archiveron="true">
-            <backupfolderpath>backup/</backupfolderpath>
-            <archivefolderpath>archived/</archivefolderpath>
+    <Node type="file-file" id="filetest-filetest" createuniquename="true" useRelativeRootpath="false">
+        <inFolderConfig>
+            <inFolderPath>in</inFolderPath>
+            <pollIntervallMilliSeconds>5000</pollIntervallMilliSeconds>
+            <skipFirstblankline>false</skipFirstblankline>
+            <batchReadConfig isBatchOn="false">
+                <batchSize>10</batchSize>
+                <batchThreshold>10</batchThreshold>
+            </batchReadConfig>
+        </inFolderConfig>
+        <outFolderConfig>
+            <outFolderPath>out</outFolderPath>
+        </outFolderConfig>
+        <backup backupHandlerOn="true" archiveroOn="true">
+            <backupFolderPath>backup/</backupFolderPath>
+            <archiveFolderPath>archived/</archiveFolderPath>
         </backup>
-        <transform transformon="false"/>
-        <error  errorhandleron="true">
-            <errorfolderpath>error/</errorfolderpath>
-            <errorinfofolderpath>error_info</errorinfofolderpath>
-            <sortonresend>false</sortonresend>
+        <transform transformOn="false"/>
+        <error  errorHandlerOn="true">
+            <errorFolderPath>error/</errorFolderPath>
+            <errorInFolderPath>error_info</errorInFolderPath>
+            <sortOnResend>false</sortOnResend>
             <CronJob>Every minute@0/20 * * * * ?</CronJob>
-            <errornotification errornotificationon="true">
-                <notifyeveryintervallInMilliSeconds>180000</notifyeveryintervallInMilliSeconds>
-                <numberoferrors>1</numberoferrors>
-                <emailnotification>
-                    <emailonfailure>/template/emailerrornotification.xml</emailonfailure>
-                </emailnotification>
+            <errorNotification errorNotificationOn="true">
+                <notifyEveryIntervallInMilliSeconds>180000</notifyEveryIntervallInMilliSeconds>
+                <numberOfErrors>1</numberOfErrors>
+                <emailNotification>
+                    <emailOnFailure>/template/emailerrornotification.xml</emailOnFailure>
+                </emailNotification>
                 <sms>
-                    <smsonfailure>/template/down.xml</smsonfailure>
-                    <smsservice>/in</smsservice>
+                    <smsOnFailure>/template/down.xml</smsOnFailure>
+                    <smsService>/in</smsService>
                 </sms>
-            </errornotification>
+            </errorNotification>
         </error>
         <inactivity inactivityOn="false">
             <maxInactivityPeriodInMilliSeconds>120000</maxInactivityPeriodInMilliSeconds>
@@ -87,4 +87,4 @@
             <loglevel>DEBUG</loglevel>
         </messagelogger-->
     </Node>
-</GRouterConfig>
+</GrouterConfig>

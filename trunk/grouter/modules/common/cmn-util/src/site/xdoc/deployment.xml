@@ -14,9 +14,9 @@
         <!-- The body of the document contains a number of sections -->
         <section name="Deployment">
         	A Deployment diagram shows how and where the system will be deployed. Physical 
-        	machines and processors are reflected as nodes, and the internal construction 
-        	can be depicted by embedding nodes or artifacts. As artifacts are allocated to 
-        	nodes to model the system's deployment, the allocation is guided by the use of 
+        	machines and processors are reflected as nodeConfigs, and the internal construction
+        	can be depicted by embedding nodeConfigs or artifacts. As artifacts are allocated to
+        	nodeConfigs to model the system's deployment, the allocation is guided by the use of
         	deployment specifications.
             <subsection name="UML Diagram">
             <p><img src="./images/CIPUMLDeploymentDiagram.png"></img></p>

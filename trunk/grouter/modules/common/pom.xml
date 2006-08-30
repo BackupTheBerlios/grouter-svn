@@ -11,7 +11,10 @@
     <packaging>pom</packaging>
     <name>${artifactId}</name>
     <modules>
-        <module>cmn-configbeans</module>
+    	<!-- Removed : intellij adds a source dep to this module, but
+    	since this module only generates sources under /target we 
+    	need to have this binary instead -->
+        <!-- module>cmn-configbeans</module -->
         <module>cmn-util</module>
     </modules>
 </project>

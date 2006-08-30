@@ -31,7 +31,7 @@
        </GlobalSettings>
 
        <Node type="file-file" id="filetest-filetest" createuniquename="true" useRelativeRootpath="false">
-           <inFolder>
+           <inFolderConfig>
                <inFolderPath>in</inFolderPath>
                <intervallInMilliSeconds>5000</intervallInMilliSeconds>
                <skipFirstblankline>false</skipFirstblankline>
@@ -39,10 +39,10 @@
                    <inFolderChunkSize>10</inFolderChunkSize>
                    <inFolderChunkThreshold>10</inFolderChunkThreshold>
                </infolderSendChunks>
-           </inFolder>
-           <outFolder>
+           </inFolderConfig>
+           <outFolderConfig>
                <outFolderPath>out</outFolderPath>
-           </outFolder>
+           </outFolderConfig>
            <backup backupHandlerOn="true" archiveroOn="true">
                <backupFolderPath>backup/</backupFolderPath>
                <archiveFolderPath>archived/</archiveFolderPath>
