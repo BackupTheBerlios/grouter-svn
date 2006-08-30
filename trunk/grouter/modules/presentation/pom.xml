@@ -12,6 +12,7 @@
     </parent>
     <modules>
          <module>gswing</module>
+        <module>gswing</module>
             
         </modules>
 

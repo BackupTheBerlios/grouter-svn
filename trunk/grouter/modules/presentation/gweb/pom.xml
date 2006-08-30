@@ -1,22 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.grouter</groupId>
-    <artifactId>grouter</artifactId>
+    <groupId>org.grouter.platform.presentation</groupId>
+    <artifactId>prs-gweb</artifactId>
     <packaging>war</packaging>
-    <name>${groupId}::${artifactId}</name>
-    <description>War is deployed on edge in a Akamai environment</description>    
+    <name>${artifactId}</name>
     <parent>
-        <groupId>org.grouter</groupId>
-        <artifactId></artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>org.grouter.platform</groupId>
+        <artifactId>presentation</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
-    <dependencies>
-       
+    <dependencies>       
         <!--
         | Third party dependencies
         |-->
-        <dependency>
+        <!--dependency>
             <groupId>commons-discovery</groupId>
             <artifactId>commons-discovery</artifactId>
         </dependency>
@@ -36,9 +34,6 @@
             <groupId>servlet</groupId>
             <artifactId>servlet</artifactId>
         </dependency>
-        <!--
-        | Switch axis jar to axis-akamai
-        |-->
         <dependency>
             <groupId>axis</groupId>
             <artifactId>axis</artifactId>
@@ -52,9 +47,6 @@
             <groupId>akamai-ej-apputil</groupId>
             <artifactId>akamai-ej-apputil</artifactId>
         </dependency>
-        <!--
-        | Provided: Should not be needed, check dependencies!
-        |-->
         <dependency>
             <groupId>xmlParserAPIs</groupId>
             <artifactId>xmlParserAPIs</artifactId>
@@ -64,7 +56,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency-->
         <!--
         | Test: Needed for HttpUnitTests!
         |-->
@@ -87,7 +79,7 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -105,7 +97,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin-->
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <configuration>
