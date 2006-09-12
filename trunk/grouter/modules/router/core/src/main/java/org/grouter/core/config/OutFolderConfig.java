@@ -2,6 +2,7 @@ package org.grouter.core.config;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
+import org.grouter.core.util.file.FileUtils;
 
 import java.io.File;
 
@@ -20,9 +21,9 @@ public class OutFolderConfig
      */
     public OutFolderConfig(File outFolderPath)
     {
-        if (outFolderPath == null)
+        if (outFolderPath == null || !outFolderPath.isDirectory())
         {
-            throw new IllegalArgumentException("outFolderPath can not be null");
+            throw new IllegalArgumentException("OutFolderPath must be valid :" + outFolderPath);
         }
         this.outFolderPath = outFolderPath;
     }

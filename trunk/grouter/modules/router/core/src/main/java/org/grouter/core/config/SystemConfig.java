@@ -5,16 +5,16 @@ package org.grouter.core.config;
  */
 public class SystemConfig
 {
-    GlobalSettings globalSettings;
+    GlobalConfig globalConfig;
 
-    public GlobalSettings getGlobalSettings()
+    public GlobalConfig getGlobalSettings()
     {
-        return globalSettings;
+        return globalConfig;
     }
 
-    public void setGlobalSettings(GlobalSettings globalSettings)
+    public void setGlobalSettings(GlobalConfig globalConfig)
     {
-        this.globalSettings = globalSettings;
+        this.globalConfig = globalConfig;
     }
 
 

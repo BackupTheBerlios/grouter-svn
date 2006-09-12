@@ -317,6 +317,26 @@ public class FileUtils
 
 
     /**
+     * Verify if path given is a valid.
+     * @param configPath
+     * @return
+     */
+    public static boolean isValidPath(String configPath)
+    {
+        File file = new File(configPath);
+        if (configPath == null)
+        {
+            return false;
+        }
+
+        if (!file.isFile())
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Check if ok to write file to this location.
      *
      * @param destination_file

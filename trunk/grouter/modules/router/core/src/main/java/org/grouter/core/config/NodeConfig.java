@@ -24,7 +24,7 @@ public class NodeConfig
     ;
 
     /**
-     * Do not use this NodeConfig constructor direclty, instead use the NodeConigFactory. This constructor is meant
+     * Do not use this NodeConfig constructor direclty, instead use the NodeConfigFactory. This constructor is meant
      * to be used for file-to.file node types.
      *
      * @param nodeType         e.g. NodeType.FILE-TO-FILE

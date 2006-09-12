@@ -7,24 +7,24 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.router</groupId>
-    <artifactId>rtr-core</artifactId>
+    <artifactId>router-core</artifactId>
     <packaging>jar</packaging>
     <name>${artifactId}</name>
     <dependencies>
         <dependency>
             <groupId>org.grouter.platform.common</groupId>
-            <artifactId>cmn-configbeans</artifactId>
+            <artifactId>common-configbeans</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.grouter.platform.common</groupId>
-            <artifactId>cmn-util</artifactId>
+            <artifactId>common-util</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>xmlbeans</groupId>
             <artifactId>xmlbeans-jsr173-api</artifactId>
             <version>2.0-dev</version>
-        </dependency>
+        </dependency-->
     </dependencies>
 </project>

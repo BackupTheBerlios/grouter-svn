@@ -35,6 +35,26 @@ public class NodeThreadPoolHandler
     {
     }
 
+
+    /**
+     * Initialize threads.
+     *
+     * @param nodeConfigs 
+     * @throws IllegalArgumentException if nodeConfigs == null
+     */
+    public void initNodeThreadScheduling(NodeConfig[] nodeConfigs)
+    {
+        if(nodeConfigs == null || nodeConfigs == null)
+        {
+            throw new IllegalArgumentException("Nodes can not be null!!");
+        }
+        logger.info("Found " + nodeConfigs.length + " number of nodeConfigs. Init scheduler executor service!");
+
+        //fire off...
+        start(nodeConfigs);
+    }
+
+
     /**
      * Initialize threads.
      *
@@ -49,6 +69,17 @@ public class NodeThreadPoolHandler
             throw new IllegalArgumentException("Nodes can not be null!!");
         }
         logger.info("Found " + nodeConfigs.length + " number of nodeConfigs. Init scheduler executor service!");
+
+        //fire off...
+        start(nodeConfigs);
+    }
+
+
+
+
+
+    private void start(NodeConfig[] nodeConfigs)
+    {
         scheduler = Executors.newScheduledThreadPool(nodeConfigs.length);
         for (NodeConfig nodeConfig : nodeConfigs)
         {

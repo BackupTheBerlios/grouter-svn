@@ -1,17 +1,16 @@
 package org.grouter.core;
 
-import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
 import org.apache.log4j.PropertyConfigurator;
 import org.grouter.common.config.ConfigHandler;
 import org.grouter.config.NodeType;
-import org.grouter.core.config.NodeConfig;
-import org.grouter.core.config.NodeConigFactory;
-import org.grouter.core.config.GrouterConfig;
+import org.grouter.core.config.*;
 import org.grouter.core.util.NodeThreadPoolHandler;
+import org.grouter.core.util.file.FileUtils;
 
 import java.util.*;
+import java.io.File;
 
 /**
  * Main class for GRouter.
@@ -26,36 +25,36 @@ import java.util.*;
  */
 public class GRouter implements Runnable
 {
-    //Logger.
     private static Logger logger = Logger.getLogger(GRouter.class);
-    //private static Category logger;
-    private String emailonshutdown;
     private HashMap nodeThreads = new HashMap();
     private static String CONFIGFILE = "grouter.xml";
     private ConfigHandler configHandler;
     private GrouterConfig grouterConfig;
-    private static final String C_GEPO_NEWGROUTER_GROUTER_MODULES_ROUTER_CORE_SRC_CONFIG_GROUTER_FILE_FILE_XML = "C:\\gepo\\newgrouter\\grouter\\modules\\router\\core\\src\\config\\grouter-file-file.xml";
     private NodeThreadPoolHandler nodeThreadPoolHandler = new NodeThreadPoolHandler();
     private static final String GROUTER_CONFIG = "grouter.config";
 
-
     /**
+     * Constructor.
      *
      * @param nodeConfigs
      */
     public GRouter(NodeConfig[] nodeConfigs)
     {
-
+        if (nodeConfigs == null)
+        {
+            throw new IllegalArgumentException("Got null in inparameter for NodeConfig[]");
+        }
     }
 
     /**
      * Constructor tries to locate config file using System.getProperty("grouter.config")
+     *
      * @throws IllegalArgumentException if grouterConfig == null
      */
     public GRouter()
     {
         String grouterConfig = System.getProperty(GROUTER_CONFIG);
-        if(grouterConfig == null)
+        if (grouterConfig == null)
         {
             throw new IllegalArgumentException("Could not get property with key :" + GROUTER_CONFIG + ". Have you " +
                     "provided a -D parameter for Java vm?");
@@ -65,64 +64,70 @@ public class GRouter implements Runnable
 
     /**
      * Constructor with a config path parameter.
+     *
      * @param configPath
      * @throws IllegalArgumentException if configPath == null
      */
     public GRouter(String configPath)
     {
-        if(configPath == null)
+        if(!FileUtils.isValidPath(configPath))
         {
-            throw new IllegalArgumentException("Config path was null!!  Can not read any configuration settings.");
+            throw new IllegalArgumentException("Invalid path given to config file!!! Path was " + configPath);
         }
+
         try
         {
             logger.info("Using config path : " + configPath);
-      //      logger = Logger.getLogger(GRouter.class.getName());
             this.grouterConfig = getGrouterConfig(configPath);
             nodeThreadPoolHandler.initNodeThreadScheduling(this.grouterConfig);
-            //emailonshutdown = System.getProperty("grouter.emailonshutdown");
         }
         catch (Exception ex)
         {
             logger.error("Failed setup - exiting", ex);
             System.exit(0);
-        }
+        }               
     }
+
 
     /**
      * Load config file and store reference for further processing of config data.
+     *
      * @return GrouterConfig
      */
     private GrouterConfig getGrouterConfig(String configPath)
     {
         configHandler = new ConfigHandler(configPath, null);
-        if(configHandler == null)
+        if (configHandler == null)
         {
             throw new IllegalArgumentException("Config path was invalid - could not initiate config from that location! : " + configPath);
         }
-        NodeType[] nodeTypes = configHandler.getGrouterConfigDocument().getGrouterConfig().getNodeArray();
-        NodeConfig[] nodeConfigs = NodeConigFactory.getNodes(nodeTypes);
-        GrouterConfig grouterConfig = new GrouterConfig(nodeConfigs);
+        NodeType[] nodeTypes = configHandler.getGrouterConfigDocument().getGrouter().getNodeArray();
+        NodeConfig[] nodeConfigs = NodeConfigFactory.getNodes(nodeTypes, configHandler.getGrouterConfigDocument().getGrouter().getGlobal());
+        GlobalConfig globalConfig = GlobalConfigFactory.getGlobalConfig(configHandler.getGrouterConfigDocument().getGrouter().getGlobal());
+        GrouterConfig grouterConfig = new GrouterConfig(nodeConfigs, globalConfig);
         return grouterConfig;
         //configHandler.printBootInfo();
     }
 
-/*    private ArrayList getServices()
-    {
-        ArrayList arrListOfServices = null;
-        try
-        {
-            arrListOfServices = loadSettingsFromXmlConfigFile(arrListOfServices);
-        }
-        catch (Exception ex)
-        {
-            logger.error("Failed reading system properties from xml file", ex);
-        }
-        return arrListOfServices;
-    }
-*/
 
-    // todo fix
+    /**
+     * Starts GRouter... and adds shutdown hook.
+     *
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        String grouterHome= System.getProperty("user.dir");
+        logger.info("Working dir : " + grouterHome);
+        String configFile = "/router/core/src/config/grouter-file-file.xml";
+
+
+        GRouter grouter = new GRouter( grouterHome + configFile);
+
+        //Thread thr = new Thread(grouter);
+        //Runtime.getRuntime().addShutdownHook(thr);
+    }
+
     /*   private void startErrorHandlers(Service[] arrServices)
         {
             arrServices = null;
@@ -177,11 +182,6 @@ public class GRouter implements Runnable
             }
         }
     */
-
-    /**
-     * Binds to rmi registry for remote operations.
-     *
-     */
     /*    private void startRemoteServicesServer()
         {
             if (System.getSecurityManager() == null)
@@ -206,16 +206,9 @@ public class GRouter implements Runnable
         }
     */
     /**
-     * Starts GRouter... and adds shutdown hook.
+     * Binds to rmi registry for remote operations.
      *
-     * @param args
      */
-    public static void main(String[] args)
-    {
-        GRouter grouter = new GRouter();
-        Thread thr = new Thread(grouter);
-        Runtime.getRuntime().addShutdownHook(thr);
-    }
 
     /**
      * Reads config files for log4j and siri. 
@@ -283,7 +276,7 @@ public class GRouter implements Runnable
     }
 
     /**
-     * Sends an email on shutting down iris
+     * Sends an email on shutting down grouter
      */
     /*   private void sendEmail()
         {
@@ -317,10 +310,4 @@ public class GRouter implements Runnable
         onExit();
     }
 
-/*    private String getArchiverCronIntervall()
-    {
-        String complete = ServerSystemConfigHandler.getInstance().getGlobalSettings().getArchivehandler().getCronintervall();
-        return ServerSystemConfigHandler.extractCronintervall(complete);
-    }
-*/
 }

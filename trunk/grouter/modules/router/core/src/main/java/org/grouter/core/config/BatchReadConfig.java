@@ -19,6 +19,7 @@ public class BatchReadConfig
 
     /**
      * Constructor.
+     *
      * @param batchOn
      * @param batchSize
      * @param batchThreshold
@@ -35,6 +36,7 @@ public class BatchReadConfig
      */
     public void logState()
     {
+
         logger.info(ToStringBuilder.reflectionToString(this));
     }
 }

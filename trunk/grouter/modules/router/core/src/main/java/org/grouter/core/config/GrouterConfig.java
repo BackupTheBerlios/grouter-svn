@@ -9,23 +9,26 @@ package org.grouter.core.config;
  */
 public class GrouterConfig
 {
+    private GlobalConfig globalConfig;
     private NodeConfig[] nodeConfigs;
-
 
     /**
      * Constructor for grouter config.
      *
      * @param nodeConfigs
-     * @throws IllegalArgumentException if nodeConfigs == null
+     * @param globalConfig
+     * @throws IllegalArgumentException if nodeConfigs == null || globalConfig == null
      */
-    public GrouterConfig(NodeConfig[] nodeConfigs)
+    public GrouterConfig(NodeConfig[] nodeConfigs, GlobalConfig globalConfig)
     {
-        if(nodeConfigs == null)
+        if(nodeConfigs == null || globalConfig == null)
         {
-            throw new IllegalArgumentException("Nodes can not be null!");
+            throw new IllegalArgumentException("Nodes or globalsettings elements can not be null!");
         }
         this.nodeConfigs = nodeConfigs;
+        this.globalConfig = globalConfig;
     }
+
 
     /**
      * Getter.
@@ -36,5 +39,13 @@ public class GrouterConfig
         return nodeConfigs;
     }
 
-    
+    /**
+     * Getter.
+     * @return
+     */
+    public GlobalConfig getGlobalSettingsConfig()
+    {
+        return globalConfig;
+    }
+
 }

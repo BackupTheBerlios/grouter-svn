@@ -16,9 +16,9 @@ import java.io.File;
  * Time: 17:00:29
  * To change this template use File | Settings | File Templates.
  */
-public class GrouterTest extends TestCase
+public class GrouterBootTest extends TestCase
 {
-    private static Logger logger = Logger.getLogger(GrouterTest.class);
+    private static Logger logger = Logger.getLogger(GrouterBootTest.class);
     private NodeConfig[] nodeConfigs = new NodeConfig[1];
     private String tmpDir = System.getProperty("java.io.tmpdir") + "/grouter/nodethreadpoolhandlertest";
     File tmpdir;
@@ -32,17 +32,13 @@ public class GrouterTest extends TestCase
     {
         super.setUp();
         tmpdir = new File(tmpDir);
-        tmpdir.mkdir();
-
+        tmpdir.mkdirs();
         File infolder = new File(tmpDir + "/in");
-        infolder.mkdir();
-
+        infolder.mkdirs();
         FileUtils.writeStringToFile(new File(infolder.getPath() + "/testdata.txt"), "test data", "UTF-8");
-
         File outfolder = new File(tmpDir + "/out");
-        outfolder.mkdir();
-
-        logger.info("Created temporary folders : " + infolder + " and : " + outfolder);
+        outfolder.mkdirs();
+        logger.info(outfolder.exists() + " Created temporary folders : " + infolder + " and : " + outfolder);
 
         InFolderConfig inFolderConfig = new InFolderConfig(infolder, 2000, false, null);
         OutFolderConfig outFolderConfig = new OutFolderConfig(outfolder);
@@ -63,36 +59,44 @@ public class GrouterTest extends TestCase
 
 
     /**
-     * Negativ tests for invalid paths.
+     * No system property nor a path given - should fail this test.
      */
     public void testConfigBoot()
     {
+        logger.debug("Starting test...");
         try
         {
             new GRouter();
         }
         catch (Throwable e)
         {
+            logger.info("Got expected exception : " + e.getMessage());
             assertTrue(true);
         }
     }
 
+    /**
+     * Test with an invalid file path to config file.
+     */
     public void testSystemProp()
     {
-        System.setProperty("grouter.config", "/temp");
-                try
-                {
-                    new GRouter();
-                }
-                catch (Throwable e)
-                {
-                    assertTrue(true);
-                }
+        System.setProperty("grouter.config", "/hopefullynonexistingfolder");
+        try
+        {
+            new GRouter();
+        }
+        catch (Throwable e)
+        {
+            logger.info("Got expected exception : " + e.getMessage());
+            assertTrue(true);
+            System.setProperty("grouter.config", "");
+        }
 
     }
 
+
     /**
-     * Another negative test.
+     * Using the Grouter construct with a null nodes should fail.
      */
     public void testWithNull()
     {
@@ -103,9 +107,37 @@ public class GrouterTest extends TestCase
         }
         catch (Throwable e)
         {
+
+            logger.info("Got expected exception : " + e.getMessage());
             assertTrue(true);
         }
+    }
+
+
+    public void testWithSomeValidData()
+    {
+        try
+        {
+            new GRouter(nodeConfigs);
+        }
+        catch (Throwable e)
+        {
+
+            logger.info("Got expected exception : " + e.getMessage());
+            assertTrue(true);
+        }
+    }
+
+    public void testStartFrouterFileToFile()
+    {
+        String grouterHome= System.getProperty("user.dir");
+                logger.info("Working dir : " + grouterHome);
+                String configFile = "/router/core/src/config/grouter-file-file.xml";
+
+
+                GRouter grouter = new GRouter( grouterHome + configFile);
 
     }
+
 
 }

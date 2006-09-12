@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GrouterConfig name="grouter"
+<Grouter name="grouter"
                xmlns="http://grouter.org/config.xsd"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://grouter.org/config.xsd ../../../../common/cmn-configbeans/src/xsd/config.xsd"
                xsi:noNamespaceSchemaLocation="../../../../common/cmn-configbeans/src/xsd/config.xsd">
-    <GlobalSettings>
+    <Global>
+        <GrouterHome>/Users/geopol/tmp/grouter</GrouterHome>
         <ArchiveHandler>
             <!--xs:enumeration value="Every 10 seconds@0/10 * * * * ?"/>
     <xs:enumeration value="Every 10 minutes@* 0/10 * * * ?"/>
@@ -28,11 +29,11 @@
                 <imapserver id="2">mailserver2</imapserver>
             </imap>
         </Email>
-    </GlobalSettings>
+    </Global>
 
-    <Node type="file-file" id="filetest-filetest" createuniquename="true" useRelativeRootpath="false">
+    <Node type="file-file" id="filetest-filetest" createuniquename="true" useRelativeRootpath="true">
         <inFolderConfig>
-            <inFolderPath>C:/temp/kalle/in</inFolderPath>
+            <inFolderPath>/in</inFolderPath>
             <pollIntervallMilliSeconds>2000</pollIntervallMilliSeconds>
             <skipFirstblankline>false</skipFirstblankline>
             <batchReadConfig isBatchOn="false">
@@ -41,7 +42,7 @@
             </batchReadConfig>
         </inFolderConfig>
         <outFolderConfig>
-            <outFolderPath>C:/temp/kalle/out</outFolderPath>
+            <outFolderPath>/out</outFolderPath>
         </outFolderConfig>
         <backup backupHandlerOn="true" archiveroOn="true">
             <backupFolderPath>backup/</backupFolderPath>
@@ -130,4 +131,4 @@
         </inactivity>
 
     </Node-->
-</GrouterConfig>
+</Grouter>
