@@ -15,6 +15,6 @@
     	since this module only generates sources under /target we 
     	need to have this binary instead -->
         <!-- module>cmn-configbeans</module -->
-        <module>cmn-util</module>
+        <module>common-util</module>
     </modules>
 </project>
