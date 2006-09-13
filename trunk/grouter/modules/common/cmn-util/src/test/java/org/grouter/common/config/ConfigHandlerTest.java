@@ -37,10 +37,10 @@ public class ConfigHandlerTest extends TestCase
     {
         logger.debug("Loading resource");
         configHandler = new ConfigHandler(classLoader.getResourceAsStream(GROUTERCONFIG_XML), null);
-        String name = configHandler.getGrouterConfigDocument().getGrouterConfig().getName();
+        String name = configHandler.getGrouterConfigDocument().getGrouter().getName();
         assertEquals("grouter", name);
 
-        String cronjob = configHandler.getGrouterConfigDocument().getGrouterConfig().getGlobalSettings().getArchiveHandler().getCronJob();
+        String cronjob = configHandler.getGrouterConfigDocument().getGrouter().getGlobal().getArchiveHandler().getCronJob();
         assertEquals("Every 10 minutes@0 0 0-23 * * ?", cronjob);
     }
 
@@ -70,13 +70,13 @@ public class ConfigHandlerTest extends TestCase
     {
         logger.debug("Loading resource");
         configHandler = new ConfigHandler(classLoader.getResourceAsStream(GROUTERCONFIG_XML), null);
-        String name = configHandler.getGrouterConfigDocument().getGrouterConfig().getName();
+        String name = configHandler.getGrouterConfigDocument().getGrouter().getName();
         assertEquals("grouter", name);
 
         String newName = "Stored new name";
-        configHandler.getGrouterConfigDocument().getGrouterConfig().setName(newName);
+        configHandler.getGrouterConfigDocument().getGrouter().setName(newName);
 
         String fileName = System.getProperty("java.io.tempdir") + "grouter_test.xml";
-        configHandler.getGrouterConfigDocument().getGrouterConfig().save(new File(fileName));
+        configHandler.getGrouterConfigDocument().getGrouter().save(new File(fileName));
     }
 }

@@ -11,8 +11,6 @@ import org.jmock.MockObjectTestCase;
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.BaseQuery;
-import java.sql.QueryObjectGenerator;
 import java.io.PrintWriter;
 
 /**
@@ -182,13 +180,6 @@ public class ServiceLocatorTest extends MockObjectTestCase
             return null;
         }
 
-        public <T extends BaseQuery> T createQueryObject(Class<T> ifc) throws SQLException {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        public <T extends BaseQuery> T createQueryObject(Class<T> ifc, DataSource ds) throws SQLException {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
-        }
 
         public PrintWriter getLogWriter() throws SQLException
         {
@@ -206,11 +197,7 @@ public class ServiceLocatorTest extends MockObjectTestCase
         public int getLoginTimeout() throws SQLException
         {
             return 0;
-        }
-
-        public QueryObjectGenerator getQueryObjectGenerator() throws SQLException {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
-        }
+        }                             
 
         public <T> T unwrap(Class<T> iface) throws SQLException {
             return null;  //To change body of implemented methods use File | Settings | File Templates.

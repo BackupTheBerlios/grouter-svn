@@ -10,8 +10,7 @@ import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlOptions;
 import org.apache.xmlbeans.XmlObject;
 import org.apache.xmlbeans.XmlException;
-import org.apache.commons.io.FileUtils;
-import org.grouter.config.GrouterConfigDocument;
+import org.grouter.config.GrouterDocument;
 
 /**
  * Validating XML against schema using features of the XMLBeans API.
@@ -31,7 +30,7 @@ public class ConfigHandler
     private ArrayList validationErrors = new ArrayList();
 
     //root handle to config
-    private GrouterConfigDocument gRouterConfigDocument;
+    private GrouterDocument gRouterConfigDocument;
 
     /**
      * Constructor.
@@ -51,7 +50,7 @@ public class ConfigHandler
             throw new IllegalArgumentException("File path to config file points to folder!");    
         }
         this.xmlOptions = xmlOptions;
-        this.gRouterConfigDocument =  (GrouterConfigDocument) parseXml(absoluteFilePath, xmlOptions);
+        this.gRouterConfigDocument =  (GrouterDocument) parseXml(absoluteFilePath, xmlOptions);
     }
 
     /**
@@ -66,7 +65,7 @@ public class ConfigHandler
             throw new IllegalArgumentException("InputStream can not be null!");
         }
         this.xmlOptions = xmlOptions;
-        this.gRouterConfigDocument =  (GrouterConfigDocument) parseXml(inputStream, xmlOptions);
+        this.gRouterConfigDocument =  (GrouterDocument) parseXml(inputStream, xmlOptions);
     }
 
     /**
@@ -136,7 +135,7 @@ public class ConfigHandler
      * Get the config.
      * @return An GRouterConfigDocument from parsed config.xsd
      */
-    public GrouterConfigDocument getGrouterConfigDocument()
+    public GrouterDocument getGrouterConfigDocument()
     {
         return gRouterConfigDocument;
     }
