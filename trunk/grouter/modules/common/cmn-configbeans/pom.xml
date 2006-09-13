@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.platform.common</groupId>
-    <artifactId>cmn-configbeans</artifactId>
+    <artifactId>common-configbeans</artifactId>
     <packaging>jar</packaging>
     <name>${artifactId}</name>
     <dependencies>
