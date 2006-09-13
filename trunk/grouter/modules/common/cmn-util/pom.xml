@@ -7,13 +7,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.platform.common</groupId>
-    <artifactId>cmn-util</artifactId>
+    <artifactId>common-util</artifactId>
     <packaging>jar</packaging>
     <name>${artifactId}</name>
     <dependencies>
         <dependency>
             <groupId>org.grouter.platform.common</groupId>
-            <artifactId>cmn-configbeans</artifactId>
+            <artifactId>common-configbeans</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -45,12 +45,24 @@
         </dependency>
         <!-- Added this instead of xmlbeans-jsr173-api because of
         cannot access javax.xml.stream.XMLStreamReader  -->
-        <dependency>
+	<dependency>
+	<groupId>com.javasoft</groupId>
+		<artifactId>javaee</artifactId>	
+  		
+	</dependency>
+
+	<!--dependency>
+  <groupId>servicemix</groupId>
+  <artifactId>servicemix-core</artifactId>
+  <version>2.0.2</version>
+        </dependency-->
+
+        <!--dependency>
             <groupId>servicemix</groupId>
             <artifactId>jaxp</artifactId>
             <version>1.4-20050623</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>xmlbeans</groupId>
             <artifactId>xbean</artifactId>
