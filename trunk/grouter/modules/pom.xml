@@ -65,7 +65,8 @@
     | Description will go to generated documentation reports.
     -->
     <description>GRouter is aimed to provide routing mechanism for messages
-        with destinations including jms, ejb, file, email etc.</description>
+        with destinations including jms, ejb, file, email etc.
+    </description>
 
     <!--
     | A name used for documentation and in the command console showing the
@@ -123,6 +124,11 @@
             <id>maven2</id>
             <name>Danish Maven2 repository</name>
             <url>http://mirrors.sunsite.dk/maven2</url>
+        </repository>
+        <repository>
+            <id>maven2grouter</id>
+            <name>Grouter Maven2 repository</name>
+            <url>http://grouter.berlios.de/mavenrepos</url>
         </repository>
         <!--
         | This will enable snaphost versions of plugins from Codehaus.
@@ -284,60 +290,60 @@
     -->
     <dependencyManagement>
         <dependencies>
-	    <!-- 
-	    | Components for the Swing gui - Jidesoft
-	    -->
+            <!--
+           | Components for the Swing gui - Jidesoft
+           -->
             <dependency>
-	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jide-shortcut</artifactId>
-	         <version>1.9.1</version>
-	    </dependency>
-	    
-		<dependency>
-	     	           <groupId>com.jidesoft</groupId>
-	     		   <artifactId>jide-dock</artifactId>
-	     		   <version>1.9.1</version>
-		</dependency>
-
-	    
-            <dependency>
-	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jide-dialogs</artifactId>
-	         <version>1.9.1</version>
-	    </dependency>
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-shortcut</artifactId>
+                <version>1.9.1</version>
+            </dependency>
 
             <dependency>
-	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jide-designer</artifactId>
-	         <version>1.9.1</version>
-	    </dependency>
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-dock</artifactId>
+                <version>1.9.1</version>
+            </dependency>
+
+
             <dependency>
-                 <groupId>com.jidesoft</groupId>
-	         <artifactId>jide-components</artifactId>
-	         <version>1.9.1</version>
-	    </dependency>
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-dialogs</artifactId>
+                <version>1.9.1</version>
+            </dependency>
+
             <dependency>
-	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jide-common</artifactId>
-	         <version>1.9.1</version>
-	    </dependency>
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-designer</artifactId>
+                <version>1.9.1</version>
+            </dependency>
             <dependency>
-	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jide-grids</artifactId>
-	         <version>1.9.1</version>
-	    </dependency>
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-components</artifactId>
+                <version>1.9.1</version>
+            </dependency>
             <dependency>
-	         <groupId>com.jidesoft</groupId>
-	         <artifactId>jide-action</artifactId>
-	         <version>1.9.1</version>
-	    </dependency>
-        
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-common</artifactId>
+                <version>1.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-grids</artifactId>
+                <version>1.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jidesoft</groupId>
+                <artifactId>jide-action</artifactId>
+                <version>1.9.1</version>
+            </dependency>
+
             <!--
             | Dependencies to J2EE spec - using geronimo generated
             | artifacts to get transparent builds without installing
             | the J2EE kit or pointing to your J2EE app jars.
             -->
-            <dependency>
+            <!--dependency>
                 <groupId>geronimo-spec</groupId>
                 <artifactId>geronimo-spec-jms</artifactId>
                 <version>1.1-rc4</version>
@@ -366,7 +372,15 @@
                 <groupId>geronimo-spec</groupId>
                 <artifactId>geronimo-spec-jta</artifactId>
                 <version>1.0.1B-rc4</version>
+            </dependency -->
+
+            <!-- Uploaded this to my repos -->
+            <dependency>
+                <groupId>com.javasoft</groupId>
+                <artifactId>javaee</artifactId>
+                <version>1.5</version>
             </dependency>
+
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate</artifactId>
@@ -405,14 +419,14 @@
                         <groupId>jboss</groupId>
                         <artifactId>jboss-cache</artifactId>
                     </exclusion>
-                    <!--exclusion>
+                    <exclusion>
                         <groupId>javax.security</groupId>
                         <artifactId>jacc</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>javax.transaction</groupId>
                         <artifactId>jta</artifactId>
-                    </exclusion-->
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
