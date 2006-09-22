@@ -20,7 +20,8 @@ public class SystemJMSExceptionListenerHandler implements ExceptionListener
     /** Logger. */
     private static Logger logger = Logger.getLogger(SystemJMSExceptionListenerHandler.class);
 
-    /** Strategy to use for rebinding. We set it to eternal and wait for
+    /**
+     * Strategy to use for rebinding. We set it to eternal and wait for
      * JMS provider to restart.
      */
     private RebindBehavior rebindBehavior = new EternalRebind();

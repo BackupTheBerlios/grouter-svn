@@ -119,7 +119,7 @@ public abstract class Destination
      * JMS header properties accordingly.
      *
      * @param message Serializable your serializable object
-     * @param deliveryMode int jms documentation
+     * @param deliveryMode int see jms documentation
      * @param messagePriority int jms documentation 0-4 are gradations of normal priority
      * and 5-9 are indicates expeditious handling om messages in the jms provider (mom)
      * service. Beware though that there is no guarantee that moms will use this informtion.

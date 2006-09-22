@@ -310,6 +310,7 @@ public class QueueDestination extends Destination
         return listener;
     }
 
+
     /**
      * Connect to queue  and open a session.
      */
@@ -317,6 +318,16 @@ public class QueueDestination extends Destination
     {
         try
         {
+            /*
+             InitialContext iniCtx = JMSUtils.getJbossInitialContext();
+        Object tmp = iniCtx.lookup("ConnectionFactory");
+        QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
+        conn = qcf.createQueueConnection();
+        que = (Queue) iniCtx.lookup(QUEUE_TEST_QUEUE);
+        session = conn.createQueueSession(false,
+                QueueSession.AUTO_ACKNOWLEDGE);
+             */
+
             // Find ConnectionFactory
             queueConnectionFactory = getInstance().getQueueConnectionFactory(connectionFactory,context);
             // Get queue
@@ -358,7 +369,7 @@ public class QueueDestination extends Destination
         {
             logger.error(
                     "Got exception with JMS provider during bind to destination " +
-                    destinationName + ".");
+                    destinationName + ". Got error message : " + ex.getMessage());
             rebind(this);
         }
     }
