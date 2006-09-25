@@ -52,11 +52,11 @@ public class JBossQueueAsynchMessageConsumerUsingRebind extends JBossExample imp
      */
     public void onMessage(Message msg)
     {
-        TextMessage tm = (TextMessage) msg;
+       // TextMessage tm = (TextMessage) msg;
         try
         {
             System.out.println("onMessage, recv text="
-                    + tm.getText() + " jms msg id : "  + tm.getJMSMessageID());
+                    + msg);
         }
         catch (Throwable t)
         {

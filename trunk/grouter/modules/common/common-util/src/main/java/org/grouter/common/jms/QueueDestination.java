@@ -348,16 +348,6 @@ public class QueueDestination extends Destination
     {
         try
         {
-            /*
-             InitialContext iniCtx = JMSUtils.getJbossInitialContext();
-        Object tmp = iniCtx.lookup("ConnectionFactory");
-        QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
-        conn = qcf.createQueueConnection();
-        que = (Queue) iniCtx.lookup(QUEUE_TEST_QUEUE);
-        session = conn.createQueueSession(false,
-                QueueSession.AUTO_ACKNOWLEDGE);
-             */
-
             // Find ConnectionFactory
             queueConnectionFactory = getInstance().getQueueConnectionFactory(connectionFactory, context);
             // Get queue
