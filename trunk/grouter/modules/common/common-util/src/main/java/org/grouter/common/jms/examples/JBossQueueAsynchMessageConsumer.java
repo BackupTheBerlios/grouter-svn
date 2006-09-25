@@ -56,11 +56,11 @@ public class JBossQueueAsynchMessageConsumer extends JBossExample implements Mes
      */
     public void onMessage(Message msg)
     {
-        TextMessage tm = (TextMessage) msg;
+        //TextMessage tm = (TextMessage) msg;
         try
         {
             System.out.println("onMessage, recv text="
-                    + tm.getText());
+                    + msg);
         }
         catch (Throwable t)
         {

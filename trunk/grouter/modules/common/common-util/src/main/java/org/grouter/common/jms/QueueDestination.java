@@ -33,44 +33,59 @@ import org.grouter.common.exception.RemoteSiriException;
  * implementations.
  *
  * @author
- * @version
  */
 public class QueueDestination extends Destination
 {
-    /** The logger. */
+    //The logger.
     private static Logger logger = Logger.getLogger(QueueDestination.class);
-    /** The ConnectionFactory used to connect to the Queue. */
+    // The ConnectionFactory used to connect to the Queue.
     private QueueConnectionFactory queueConnectionFactory;
-    /** Connection to the Queue. */
+    // Connection to the Queue.
     private QueueConnection queueConnection;
-    /** The actual Queue or message channel. */
+    // The actual Queue or message channel.
     private Queue queue;
-    /** Sender to the Queue. */
+    //Sender to the Queue.
     protected QueueSender queueSender;
-    /** Session to the Queue. */
+    // Session to the Queue.
     protected QueueSession queueSession;
     /** Used for request / reply on the same session. */
     private TemporaryQueue temporaryQueue;
 
     /**
      * Constructor for use of a transactional (commit/rollback) way of handling
-     * acknowledge of messages (code needs to use session to handle this).
+     * acknowledge of messages (code needs to use session and explicitly do a commit
+     * to send a message).
+     * E.g.
+     * <pre>
+     * InitialContext iniCtx = JMSUtils.getJbossInitialContext();
+     * Destination queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",   null, iniCtx, 4000, null);
+     * queueDestination.bind();
+     * queueDestination.sendMessage(text);
+     * try
+     * {
+     * queueDestination.getQueueSession().commit();
+     * } catch (JMSException e)
+     * {...
+     * <p/>
+     * <(pre>
+     * <p/>
+     * <p/>
      * See other constructor if you are using acknowledge mode based messaging.
      *
-     * @param queueName the JNDI name of the destination queue.
-     * @param isSender wheter destination is used to send messages
+     * @param queueName              the JNDI name of the destination queue.
+     * @param isSender               wheter destination is used to send messages
      * @param queueConnectionFactory the JNDI name of the Queue connection factory to use,
-     * if null provided then the default factory will be used.
-     * @param rebindBehavior a RebindBeahvior specifies how we are supposed
-     * to rebind to this destination {@link RebindBehavior}. If null
-     * specified an EternalRebind will be used.
-     * @param context provide the context to use for binding to the destination
-     * (@see javax.naming.Context).
-     * @param timeToLive set to 0 if no time to live should be uses - TTL is specified
-     * in millisecons!!!
-     * @param listener a message listener implementing @see javax.jms.MessageListener  -
-     * i.e. a class that will be receiving callbacks from jms provider. If null specified
-     * then you will have to implement a receive behaviour in your consuming thread.
+     *                               if null provided then the default factory will be used.
+     * @param rebindBehavior         a RebindBeahvior specifies how we are supposed
+     *                               to rebind to this destination {@link RebindBehavior}. If null
+     *                               specified an EternalRebind will be used.
+     * @param context                provide the context to use for binding to the destination
+     *                               (@see javax.naming.Context).
+     * @param timeToLive             set to 0 if no time to live should be uses - TTL is specified
+     *                               in millisecons!!!
+     * @param listener               a message listener implementing @see javax.jms.MessageListener  -
+     *                               i.e. a class that will be receiving callbacks from jms provider. If null specified
+     *                               then you will have to implement a receive behaviour in your consuming thread.
      */
     public QueueDestination(String queueName,
                             boolean isSender,
@@ -80,7 +95,7 @@ public class QueueDestination extends Destination
                             long timeToLive,
                             MessageListener listener)
     {
-        if(isSender && listener!=null)
+        if (isSender && listener != null)
         {
             throw new IllegalArgumentException("If you intend to send messages on this destination" +
                     " then a messagelistener of null must be specified");
@@ -92,25 +107,34 @@ public class QueueDestination extends Destination
      * Constructor for use with an acknowledge mode specified. The JMS message provider
      * will take care of acknowledging messages based on mode set, can be overridden by
      * sendmessage implementations.
+     * <p/>
+     * E.g. for  sender implementation
+     * <pre>
+     * InitialContext iniCtx = JMSUtils.getJbossInitialContext();
+     * queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",   null, iniCtx, 4000, null, AcknowledgeMode.NONE);
+     * queueDestination.bind();
+     * queueDestination.sendMessage("A message");
+     * logger.info("Message sent");
+     * </pre>
      *
-     * @param queueName the JNDI name of the destination queue.
-     * @param isSender wheter destination is used to send messages or not.
+     * @param queueName              the JNDI name of the destination queue.
+     * @param isSender               wheter destination is used to send messages or not.
      * @param queueConnectionFactory the JNDI name of the Queue connection factory to use,
-     * if null provided then the default factory will be used specified in
-     * {@link Destination}
-     * @param theRebindBehavior a RebindBeahvior specifies how we are supposed
-     * to rebind to this destination @link RebindBehavior. If null
-     * specified an EternalRebind will be used.
-     * @param context provide the context to use for binding to the destination
-     * {@link javax.naming.Context}. If null provided then the default will be used -
-     * depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
-     * @param timeToLive set to 0 if no time to live should be used - TTL is specified
-     * in millisecons!!!
-     * @param listener a message listener implementing {@link javax.jms.MessageListener}   -
-     * i.e. a class that will be receiving callbacks from jms provider. If null specified
-     * then you will have to implement a receive behaviour in your consuming thread.
-     * @param ackmode this maps direclty to {@link javax.jms.Session} and the different types of
-     * acknowledge modes existing there.
+     *                               if null provided then the default factory will be used specified in
+     *                               {@link Destination}
+     * @param theRebindBehavior      a RebindBeahvior specifies how we are supposed
+     *                               to rebind to this destination @link RebindBehavior. If null
+     *                               specified an EternalRebind will be used.
+     * @param context                provide the context to use for binding to the destination
+     *                               {@link javax.naming.Context}. If null provided then the default will be used -
+     *                               depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
+     * @param timeToLive             set to 0 if no time to live should be used - TTL is specified
+     *                               in millisecons!!!
+     * @param listener               a message listener implementing {@link javax.jms.MessageListener}   -
+     *                               i.e. a class that will be receiving callbacks from jms provider. If null specified
+     *                               then you will have to implement a receive behaviour in your consuming thread.
+     * @param ackmode                this maps direclty to {@link javax.jms.Session} and the different types of
+     *                               acknowledge modes existing there.
      */
     public QueueDestination(String queueName,
                             boolean isSender,
@@ -121,39 +145,50 @@ public class QueueDestination extends Destination
                             MessageListener listener,
                             AcknowledgeMode ackmode)
     {
-        if(isSender && listener!=null)
+        if (isSender && listener != null)
         {
             throw new IllegalArgumentException("If you intend to send messages on this destination" +
                     " then a messagelistener of null must be specified.");
         }
-        init(queueName, false, ackmode, isSender, queueConnectionFactory, theRebindBehavior, listener, timeToLive, context,false);
+        init(queueName, false, ackmode, isSender, queueConnectionFactory, theRebindBehavior, listener, timeToLive, context, false);
     }
 
 
     /**
+     * Use this if you are implementing a use case with a synchronous request repsonse scenario where you
+     * use a temporary queue to receive a response.
+     * <p/>
      * Constructor for use with an acknowledge mode specified. The JMS message provider
      * will take care of acknowledging messages based on mode set, can be overridden by
      * sendmessage implementations.
+     * E.g. for  sender implementation with temporary queue
+     * <pre>
+     * InitialContext iniCtx = JMSUtils.getJbossInitialContext();
+     * queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",   null, iniCtx, 4000, null, AcknowledgeMode.NONE, true);
+     * queueDestination.bind();
+     * queueDestination.sendMessage("A message");
+     * logger.info("Message sent");
+     * </pre>
      *
-     * @param queueName the JNDI name of the destination queue.
-     * @param isSender wheter destination is used to send messages or not.
+     * @param queueName              the JNDI name of the destination queue.
+     * @param isSender               wheter destination is used to send messages or not.
      * @param queueConnectionFactory the JNDI name of the Queue connection factory to use,
-     * if null provided then the default factory will be used specified in
-     * {@link Destination}
-     * @param theRebindBehavior a RebindBeahvior specifies how we are supposed
-     * to rebind to this destination {@link RebindBehavior}. If null
-     * specified an EternalRebind will be used.
-     * @param context provide the context to use for binding to the destination
-     * {@link javax.naming.Context}. If null provided then the default will be used -
-     * depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
-     * @param timeToLive set to 0 if no time to live should be used - TTL is specified
-     * in millisecons!!!
-     * @param listener a message listener implementing {@link javax.jms.MessageListener}   -
-     * i.e. a class that will be receiving callbacks from jms provider. If null specified
-     * then you will have to implement a receive behaviour in your consuming thread.
-     * @param ackmode this maps direclty to {@link javax.jms.Session} and the different types of
-     * acknowledge modes existing there.
-     * @param useTemporaryQueue will create a temporary queue for this session
+     *                               if null provided then the default factory will be used specified in
+     *                               {@link Destination}
+     * @param theRebindBehavior      a RebindBeahvior specifies how we are supposed
+     *                               to rebind to this destination {@link RebindBehavior}. If null
+     *                               specified an EternalRebind will be used.
+     * @param context                provide the context to use for binding to the destination
+     *                               {@link javax.naming.Context}. If null provided then the default will be used -
+     *                               depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
+     * @param timeToLive             set to 0 if no time to live should be used - TTL is specified
+     *                               in millisecons!!!
+     * @param listener               a message listener implementing {@link javax.jms.MessageListener}   -
+     *                               i.e. a class that will be receiving callbacks from jms provider. If null specified
+     *                               then you will have to implement a receive behaviour in your consuming thread.
+     * @param ackmode                this maps direclty to {@link javax.jms.Session} and the different types of
+     *                               acknowledge modes existing there.
+     * @param useTemporaryQueue      will create a temporary queue for this session
      */
     public QueueDestination(String queueName,
                             boolean isSender,
@@ -169,27 +204,25 @@ public class QueueDestination extends Destination
         {
             throw new IllegalArgumentException(
                     "If you intend to send messages on this destination" +
-                    " then a messagelistener of null must be specified.");
+                            " then a messagelistener of null must be specified.");
         }
-        init(queueName, false, ackmode, isSender, queueConnectionFactory,
-             theRebindBehavior, listener, timeToLive, context,
-             useTemporaryQueue);
+        init(queueName, false, ackmode, isSender, queueConnectionFactory, theRebindBehavior, listener, timeToLive, context, useTemporaryQueue);
     }
 
 
     /**
      * Initializer used by constructors.
      *
-     * @param queueName String
-     * @param isTransactional boolean
-     * @param ackmode AcknowledgeMode
-     * @param isSender boolean
+     * @param queueName              String
+     * @param isTransactional        boolean
+     * @param ackmode                AcknowledgeMode
+     * @param isSender               boolean
      * @param queueConnectionFactory String
-     * @param theRebindBehavior RebindBehavior
-     * @param listener a listener
-     * @param timeToLive how long we should keep message.
-     * @param theContext if null create new, else use given one.
-     * @param  useTemporaryQueue to use a temporary queue for reply
+     * @param theRebindBehavior      RebindBehavior
+     * @param listener               a listener
+     * @param timeToLive             how long we should keep message.
+     * @param theContext             if null create new, else use given one.
+     * @param useTemporaryQueue      to use a temporary queue for reply
      */
     private void init(String queueName, boolean isTransactional,
                       AcknowledgeMode ackmode, boolean isSender,
@@ -201,7 +234,7 @@ public class QueueDestination extends Destination
                       boolean useTemporaryQueue)
     {
         int mappedacknowledgeMode = getAcknowledgeMode(ackmode);
-        if(theContext==null)
+        if (theContext == null)
         {
             try
             {
@@ -212,18 +245,17 @@ public class QueueDestination extends Destination
                 //can not do anything without a context
                 return;
             }
-        }
-        else
+        } else
         {
             context = theContext;
         }
         useTemporaryReplyDestination = useTemporaryQueue;
-        JNDIUtils.printJNDI(context,logger);
+        JNDIUtils.printJNDI(context, logger);
         destinationName = queueName;
         this.acknowledgeMode = mappedacknowledgeMode;
         this.isTransactional = isTransactional;
         this.isSender = isSender;
-        this.timeToLive =  timeToLive;
+        this.timeToLive = timeToLive;
 
         if (queueConnectionFactory != null)
         {
@@ -242,7 +274,6 @@ public class QueueDestination extends Destination
     }
 
 
-
     /**
      * Disconnect from queue. This method should be called from the ejbRemove method
      * if you are using a stateless session bean.
@@ -252,7 +283,7 @@ public class QueueDestination extends Destination
         if (queueConnection == null)
         {
             logger.error("Connection to destination queue was null - " +
-                         "can not close null connection, returning.");
+                    "can not close null connection, returning.");
             return;
         } else
         {
@@ -260,7 +291,7 @@ public class QueueDestination extends Destination
             {
                 queueConnection.setExceptionListener(null);
                 queueConnection.stop();
-                if(temporaryQueue!=null)
+                if (temporaryQueue != null)
                 {
                     temporaryQueue.delete();
                 }
@@ -286,7 +317,6 @@ public class QueueDestination extends Destination
     }
 
 
-
     /**
      * Retrieves the session for this destination. This method can be used if you
      * are handling trasacted sessions and need to explicitly get hold of the session
@@ -301,9 +331,9 @@ public class QueueDestination extends Destination
 
     /**
      * The registered message listener handling callback through implemented interface
-     * @see javax.jms.MessageListener .
      *
      * @return MessageListener
+     * @see javax.jms.MessageListener .
      */
     public MessageListener getListener()
     {
@@ -329,23 +359,23 @@ public class QueueDestination extends Destination
              */
 
             // Find ConnectionFactory
-            queueConnectionFactory = getInstance().getQueueConnectionFactory(connectionFactory,context);
+            queueConnectionFactory = getInstance().getQueueConnectionFactory(connectionFactory, context);
             // Get queue
-            queue = getInstance().getQueue(destinationName,context);
+            queue = getInstance().getQueue(destinationName, context);
             // Create conneciton to queue
             queueConnection = queueConnectionFactory.createQueueConnection();
             // Register an exceptionlistener
             queueConnection.setExceptionListener(exceptionListener);
-            queueSession = queueConnection.createQueueSession(isTransactional,acknowledgeMode);
+            queueSession = queueConnection.createQueueSession(isTransactional, acknowledgeMode);
 
             if (isSender)
             {
                 queueSender = queueSession.createSender(queue);
-                if(timeToLive>0)
+                if (timeToLive > 0)
                 {
-                  queueSender.setTimeToLive(timeToLive);
+                    queueSender.setTimeToLive(timeToLive);
                 }
-                if(useTemporaryReplyDestination)
+                if (useTemporaryReplyDestination)
                 {
                     temporaryQueue = queueSession.createTemporaryQueue();
                     logger.debug("TemporaryQueue created for this session " + temporaryQueue);
@@ -354,7 +384,7 @@ public class QueueDestination extends Destination
             {
                 messageConsumer = queueSession.createReceiver(queue);
             }
-            if (listener!=null)
+            if (listener != null)
             {
                 // Sets the receiver which onMessage method will be called.
                 messageConsumer.setMessageListener(listener);
@@ -369,11 +399,10 @@ public class QueueDestination extends Destination
         {
             logger.error(
                     "Got exception with JMS provider during bind to destination " +
-                    destinationName + ". Got error message : " + ex.getMessage());
+                            destinationName + ". Got error message : " + ex.getMessage());
             rebind(this);
         }
     }
-
 
 
     /**
@@ -392,12 +421,12 @@ public class QueueDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         }
     }
 
@@ -430,12 +459,12 @@ public class QueueDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         }
     }
 
@@ -455,25 +484,24 @@ public class QueueDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         }
     }
 
     /**
      * <b>See doocumentaion in {@link Destination#sendMessage(Serializable)}.</b><br>
      * <br>
-     *
      */
     public synchronized void sendMessage(Serializable message)
     {
         try
         {
-            ObjectMessage msg = createMessage(message,null);
+            ObjectMessage msg = createMessage(message, null);
             setJMSHeader(msg);
             queueSender.send(msg);
             logger.debug("Message sent to destination : " + destinationName);
@@ -481,19 +509,19 @@ public class QueueDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         }
     }
 
     /**
-    * <b>See documentaion in {@link Destination#sendMessage(Message,int,int,long)}.</b><br>
-    * <br>
-    */
+     * <b>See documentaion in {@link Destination#sendMessage(Message,int,int,long)}.</b><br>
+     * <br>
+     */
     public synchronized void sendMessage(Message message, int deliveryMode,
                                          int messagePriority, long timeToLive)
     {
@@ -501,42 +529,42 @@ public class QueueDestination extends Destination
         {
             setJMSHeader(message);
             queueSender.send(message, deliveryMode, messagePriority, timeToLive);
-            logger.debug("Message sent to destination : " + destinationName );
+            logger.debug("Message sent to destination : " + destinationName);
 
         } catch (JMSException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         }
     }
 
     /**
-    * <b>See documentaion in {@link Destination#sendMessage(Message,int,int,long)}.</b><br>
-    * <br>
-    */
+     * <b>See documentaion in {@link Destination#sendMessage(Message,int,int,long)}.</b><br>
+     * <br>
+     */
     public synchronized void sendMessage(Message message)
     {
         try
         {
             setJMSHeader(message);
             queueSender.send(message);
-            logger.debug("Message sent to destination : " + destinationName );
+            logger.debug("Message sent to destination : " + destinationName);
         } catch (JMSException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         }
     }
 
@@ -545,7 +573,7 @@ public class QueueDestination extends Destination
      * <br>
      */
     private ObjectMessage createMessage(Serializable message, HashMap<String,
-                                        String> headerProperties)
+            String> headerProperties)
     {
         ObjectMessage msg = null;
         try
@@ -562,7 +590,7 @@ public class QueueDestination extends Destination
             }
         } catch (JMSException e)
         {
-            logger.warn("Failed setting header for message.",e);
+            logger.warn("Failed setting header for message.", e);
         }
         return msg;
     }
@@ -588,7 +616,7 @@ public class QueueDestination extends Destination
      */
     public synchronized void setMessageListenerOnConsumer()
     {
-        if(messageConsumer==null)
+        if (messageConsumer == null)
         {
             try
             {
@@ -597,7 +625,7 @@ public class QueueDestination extends Destination
                 messageConsumer.setMessageListener(listener);
             } catch (JMSException ex)
             {
-                logger.error("Failed closing messageconsumer on removeReceiver call",ex);
+                logger.error("Failed closing messageconsumer on removeReceiver call", ex);
             }
         }
     }
@@ -615,18 +643,18 @@ public class QueueDestination extends Destination
 
     /**
      * Getter for temporary destination.
+     *
      * @return TemporaryQueue
      */
     public TemporaryQueue getTemporaryQueue()
     {
-        if(useTemporaryReplyDestination)
+        if (useTemporaryReplyDestination)
         {
             return temporaryQueue;
-        }
-        else
+        } else
         {
             throw new IllegalStateException("You have used this destination in a wrong way. Have you " +
-                                        "used correct constructor for temporary destinations?");
+                    "used correct constructor for temporary destinations?");
         }
     }
 
@@ -643,13 +671,13 @@ public class QueueDestination extends Destination
             {
                 throw new IllegalStateException(
                         "You have used this destination in a wrong way. Have you " +
-                        "used correct constructor for temporary destinations?");
+                                "used correct constructor for temporary destinations?");
             }
             receiver = queueSession.createReceiver(getTemporaryQueue());
             return receiver.receive(waitForMs);
         } catch (JMSException ex)
         {
-            logger.warn("Waiting for reply on temp queue failed",ex);
+            logger.warn("Waiting for reply on temp queue failed", ex);
             return null;
         }
         finally
@@ -679,7 +707,7 @@ public class QueueDestination extends Destination
             {
                 throw new IllegalStateException(
                         "The sender of this message has not entered a JMSReplyTo field - " +
-                        "impossible to send reply on temporary destination!!");
+                                "impossible to send reply on temporary destination!!");
             }
             temporaryDestinationName = request.getJMSReplyTo().toString();
             request.setJMSCorrelationID(temporaryDestinationName);

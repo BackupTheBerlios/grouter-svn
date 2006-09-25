@@ -2,6 +2,7 @@ package org.grouter.common.jms.examples;
 
 import org.apache.log4j.Logger;
 import org.grouter.common.jms.QueueDestination;
+import org.grouter.common.jms.AcknowledgeMode;
 
 import javax.jms.*;
 import javax.naming.NamingException;
@@ -40,17 +41,8 @@ public class JBossQueueMessageProducerUsingRebind extends JBossExample implement
     private void setupMessaging() throws JMSException, NamingException
     {
         InitialContext iniCtx = JMSUtils.getJbossInitialContext();
-
-         queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",
-                null, iniCtx, 4000, null);
+        queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",   null, iniCtx, 4000, null, AcknowledgeMode.NONE);
         queueDestination.bind();
-        /*Object tmp = iniCtx.lookup("ConnectionFactory");
-        QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
-        conn = qcf.createQueueConnection();
-        que = (Queue) iniCtx.lookup(QUEUE_TEST_QUEUE);
-        session = conn.createQueueSession(false,
-                QueueSession.AUTO_ACKNOWLEDGE);
-        conn.start();*/
     }
 
 
@@ -62,9 +54,9 @@ public class JBossQueueMessageProducerUsingRebind extends JBossExample implement
      * @throws javax.naming.NamingException
      */
     public void send(String text)
-            throws JMSException, NamingException
     {
-        queueDestination.sendMessage(text,1,4,4000, null);
+        logger.info("Sending message");
+        queueDestination.sendMessage(text);
         logger.info("Message sennt");
     }
 
@@ -93,8 +85,10 @@ public class JBossQueueMessageProducerUsingRebind extends JBossExample implement
     public static void main(String[] args)
     {
         JBossQueueMessageProducerUsingRebind producer = new JBossQueueMessageProducerUsingRebind();
+       // producer.send("kalle");
+
         Thread thr = new Thread(producer);
-        thr.start();
+       thr.start();
     }
 
 }

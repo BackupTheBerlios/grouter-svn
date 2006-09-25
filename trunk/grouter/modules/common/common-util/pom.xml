@@ -32,26 +32,32 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>geronimo-spec</groupId>
-            <artifactId>geronimo-spec-jms</artifactId>
+            <groupId>com.javasoft</groupId>
+            <artifactId>javaee</artifactId>
         </dependency>
-        <dependency>
-            <groupId>geronimo-spec</groupId>
-            <artifactId>geronimo-spec-ejb</artifactId>
-        </dependency>
+
+
+        <!--dependency>
+           <groupId>geronimo-spec</groupId>
+           <artifactId>geronimo-spec-jms</artifactId>
+       </dependency>
+       <dependency>
+           <groupId>geronimo-spec</groupId>
+           <artifactId>geronimo-spec-ejb</artifactId>
+       </dependency -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
         </dependency>
         <!-- Added this instead of xmlbeans-jsr173-api because of
         cannot access javax.xml.stream.XMLStreamReader  -->
-	<dependency>
-	<groupId>com.javasoft</groupId>
-		<artifactId>javaee</artifactId>	
-  		
-	</dependency>
+        <dependency>
+            <groupId>com.javasoft</groupId>
+            <artifactId>javaee</artifactId>
 
-	<!--dependency>
+        </dependency>
+
+        <!--dependency>
   <groupId>servicemix</groupId>
   <artifactId>servicemix-core</artifactId>
   <version>2.0.2</version>

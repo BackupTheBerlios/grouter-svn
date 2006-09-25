@@ -20,64 +20,67 @@ import org.grouter.common.exception.RemoteSiriException;
 
 
 /**
- * A Destination is defined in JMS to be either a Topic or Queue. Destinations subclassing
- * this abstract Destination class are able to unbind and rebind to a JMS provider using a
- * RebindBehaviour.
- *
+ * A Destination is defined in JMS to be either a Topic or Queue.
+ * <p/>
+ * E.g.
+ * <pre>
+ * InitialContext iniCtx = JMSUtils.getJbossInitialContext();
+ * Destination queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",   null, iniCtx, 4000, null, AcknowledgeMode.NONE);
+ * queueDestination.bind();
+ * queueDestination.sendMessage("A message");
+ * logger.info("Message sent");
+ * </pre>
+ * <p/>
+ * <p/>
  * Purpose of Destination is to hide some JMS plumbing code using this Fascade and adding a
  * rebindbehavious based on a strategy pattern.
  * You can set a rebind behavior dynamically or statically in constructors. Be sure to use the
  * correct one depending on your needs. Following descission tree might help:
  * Is messaging transactional?
- *               -> yes
- *               -> no -> acknowledge mode auto (messages are automatically acked
- *                        on a session and delivered only once)
- *                     -> duplicates ok (messages are automatically acked
- *                        on a session like in acknowledge mode auto and delivered
- *                        <b>at least</b> once)
- *                     -> client mode (messages are not automatically acknowledged
- *                        and need to be acknowledged in in code -> more complex code)
- *
- *
+ * -> yes   be sure to use commit when sending messaes using a Destination
+ * <p/>
+ * -> no -> acknowledge mode auto (messages are automatically acked
+ * on a session and delivered only once)
+ * -> duplicates ok (messages are automatically acked
+ * on a session like in acknowledge mode auto and delivered
+ * <b>at least</b> once)
+ * -> client mode (messages are not automatically acknowledged
+ * and need to be acknowledged in in code -> more complex code)
  *
  * @author Georges Polyzois
- * @version
  */
 public abstract class Destination
 {
-    /** Logger. */
+    //Logger.
     private static Logger logger = Logger.getLogger(Destination.class);
-    /** Is sender? */
+    //Is sender?
     protected boolean isSender;
-    /** Receiver for the Queue. */
+    //Receiver for the Queue.
     protected MessageConsumer messageConsumer;
-    /** Context to use when looking up things. */
+    // Context to use when looking up things.
     protected Context context;
-    /** Service locator for caching and looking up jndi resources. */
+    // Service locator for caching and looking up jndi resources.
     protected ServiceLocatorContextAware serviceLocatorContextAware;
-    /** Transactional. */
+    //Transactional.
     protected boolean isTransactional;
-    /** Ack mode. */
+    //Ack mode.
     protected int acknowledgeMode;
-    /** Name of Queue or Topic. */
+    // Name of Queue or Topic.
     protected String destinationName;
-    /** Exceptionlistener. */
+    //Exceptionlistener.
     protected ExceptionListener exceptionListener;
-    /** Connection factory JNDI name. */
+    //Connection factory JNDI name.
     protected String connectionFactory = "UIL2ConnectionFactory";
     public final static String ACTIVEMQCONNECTIONFACTORY = "ConnectionFactory";
     public final static String JBOSSCONNECTIONFACTORY = "UIL2ConnectionFactory";
-    /** Registered MessgeListener. */
+    // Registered MessgeListener.
     protected MessageListener listener;
-    /** Default time to live from constructor. Can be overridden in send method.*/
+    // Default time to live from constructor. Can be overridden in send method.
     protected long timeToLive = 0;
-    /** Default message priority if none is given */
+    // Default message priority if none is given
     protected int messagePriority = 0;
-    /** Used for response on requests for synchronous messaging in a session. */
+    // Used for response on requests for synchronous messaging in a session.
     protected boolean useTemporaryReplyDestination = false;
-
-
-
     /**
      * A strategy to use for rebinding. Setting default rebind behavior -
      * can be changed dynamically using setter or through constructor
@@ -101,7 +104,7 @@ public abstract class Destination
         {
             throw new IllegalStateException(
                     "There is no consumer created for this JMS session." +
-                    " Boolean isSender was true when constructing this instance");
+                            " Boolean isSender was true when constructing this instance");
         }
         return messageConsumer;
     }
@@ -118,12 +121,12 @@ public abstract class Destination
      * and message priority. It will also take a Hashmap<String,String> and decorate
      * JMS header properties accordingly.
      *
-     * @param message Serializable your serializable object
-     * @param deliveryMode int see jms documentation
-     * @param messagePriority int jms documentation 0-4 are gradations of normal priority
-     * and 5-9 are indicates expeditious handling om messages in the jms provider (mom)
-     * service. Beware though that there is no guarantee that moms will use this informtion.
-     * @param timeToLive long see jms documentation
+     * @param message          Serializable your serializable object
+     * @param deliveryMode     int see jms documentation
+     * @param messagePriority  int jms documentation 0-4 are gradations of normal priority
+     *                         and 5-9 are indicates expeditious handling om messages in the jms provider (mom)
+     *                         service. Beware though that there is no guarantee that moms will use this informtion.
+     * @param timeToLive       long see jms documentation
      * @param headerProperties HashMap a hashmap with string key value pairs used for the jms
      */
     public abstract void sendMessage(Serializable message, int deliveryMode,
@@ -144,11 +147,11 @@ public abstract class Destination
      * This send method will take a Hahmap<String,String> and decorate
      * JMS header properties accordingly.
      *
-     * @param message Serializable your serializable object.
+     * @param message          Serializable your serializable object.
      * @param headerProperties HashMap a hashmap with string key value pairs used for the jms header.
      */
     public abstract void sendMessage(Serializable message, HashMap<String,
-                                     String> headerProperties);
+            String> headerProperties);
 
 
     /**
@@ -162,12 +165,12 @@ public abstract class Destination
     /**
      * Message for sending an already created javax.jms.Message
      *
-     * @param message The JMS message to send
-     * @param deliveryMode int
+     * @param message         The JMS message to send
+     * @param deliveryMode    int
      * @param messagePriority int jms documentation 0-4 are gradations of normal priority
-     * and 5-9 are indicates expeditious handling om messages in the jms provider (mom)
-     * service. Beware though that there is no guarantee that moms will use this informtion.
-     * @param timeToLive long
+     *                        and 5-9 are indicates expeditious handling om messages in the jms provider (mom)
+     *                        service. Beware though that there is no guarantee that moms will use this informtion.
+     * @param timeToLive      long
      */
     public abstract void sendMessage(Message message, int deliveryMode,
                                      int messagePriority, long timeToLive);
@@ -198,6 +201,7 @@ public abstract class Destination
     /**
      * Send the reply on a temporary destination and set the correlation
      * id on the JMS header.
+     *
      * @param request Message
      */
     abstract public void sendReplyToTemporaryDestination(Message request);
@@ -212,9 +216,9 @@ public abstract class Destination
     abstract public Message waitAndGetReplyFromTemporaryDestination(long waitForMs);
 
 
-
     /**
      * Get destination name.
+     *
      * @return java.lang.String
      */
     public String getDestinationName()
@@ -224,6 +228,7 @@ public abstract class Destination
 
     /**
      * Sets rebind behaviour dynamically.
+     *
      * @param rebindBehavior RebindBehavior
      */
     public void setRebindBehavior(RebindBehavior rebindBehavior)
@@ -265,22 +270,23 @@ public abstract class Destination
 
     /**
      * Get Session acknowledge mode from AcknowledgeMode.
+     *
      * @return int represents Session acknowledge modes
      */
     final protected int getAcknowledgeMode(AcknowledgeMode ackmode)
     {
         switch (ackmode)
         {
-        case AUTO_ACKNOWLEDGE:
-            return Session.AUTO_ACKNOWLEDGE;
-        case DUPS_OK_ACKNOWLEDGE:
-            return Session.DUPS_OK_ACKNOWLEDGE;
-        case CLIENT_ACKNOWLEDGE:
-            return Session.CLIENT_ACKNOWLEDGE;
-        case NONE:
-            return -1; //indicates transactional mode is used
-        default:
-            return Session.AUTO_ACKNOWLEDGE;
+            case AUTO_ACKNOWLEDGE:
+                return Session.AUTO_ACKNOWLEDGE;
+            case DUPS_OK_ACKNOWLEDGE:
+                return Session.DUPS_OK_ACKNOWLEDGE;
+            case CLIENT_ACKNOWLEDGE:
+                return Session.CLIENT_ACKNOWLEDGE;
+            case NONE:
+                return -1; //indicates transactional mode is used
+            default:
+                return Session.AUTO_ACKNOWLEDGE;
         }
     }
 }
