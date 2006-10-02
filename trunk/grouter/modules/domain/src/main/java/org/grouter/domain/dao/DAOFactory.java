@@ -2,6 +2,8 @@ package org.grouter.domain.dao;
 
 import org.grouter.common.jndi.GlobalBeanLocator;
 import org.grouter.domain.dao.hibernate.HibernateSpringDAOFactory;
+import org.grouter.domain.dao.ejb3.Ejb3DAOFactory;
+import org.grouter.domain.dao.hibernate.HibernateDAOFactory;
 
 /**
  * See Caveat
@@ -23,24 +25,28 @@ import org.grouter.domain.dao.hibernate.HibernateSpringDAOFactory;
  */
 public abstract class DAOFactory
 {
-    // public static final DAOFactory EJB3_PERSISTENCE = new org.hibernate.ce.auction.dao.ejb3.Ejb3DAOFactory();
+    // public static final DAOFactory EJB3_PERSISTENCE = new org.hibernate.ce.auction.dao.ejb3.org.grouter.domain.dao.ejb3.Ejb3DAOFactory();
     public static DAOFactory HIBERNATE = new org.grouter.domain.dao.hibernate.HibernateDAOFactory();
     public static DAOFactory DEFAULT = HIBERNATE;
+    private static final String HIBERNATE_SPRING_DAOFACTORY = "hibernateSpringDAOFactory";
+
     public enum FactoryType {EJB3_PERSISTENCE,HIBERNATE,HIBERNATESPRING}
 
     public static DAOFactory getFactory(FactoryType factoryType)
     {
         switch(factoryType)
         {
-            //case EJB3_PERSISTENCE:
-            //return null;//new org.hibernate.ce.auction.dao.ejb3.Ejb3DAOFactory();
+            case EJB3_PERSISTENCE:
+            {
+                return new Ejb3DAOFactory();
+            }
             case HIBERNATE:
             {
-                return new org.grouter.domain.dao.hibernate.HibernateDAOFactory();
+                return new HibernateDAOFactory();
             }
             case HIBERNATESPRING:
             {
-                return (HibernateSpringDAOFactory)GlobalBeanLocator.getBeanBeanFactory().getBean("hibernateSpringDAOFactory");
+                return (HibernateSpringDAOFactory)GlobalBeanLocator.getBeanBeanFactory().getBean(HIBERNATE_SPRING_DAOFACTORY);
             }
         }
         return null;
