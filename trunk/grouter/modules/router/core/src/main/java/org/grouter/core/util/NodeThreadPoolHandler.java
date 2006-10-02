@@ -5,6 +5,7 @@ import org.grouter.core.command.Command;
 import org.grouter.core.command.CommandConsumerThread;
 import org.grouter.core.config.NodeConfig;
 import org.grouter.core.config.GrouterConfig;
+import org.grouter.core.config.GrouterDomainConfig;
 import org.grouter.core.readers.FileReaderThread;
 
 import java.util.concurrent.*;
@@ -27,6 +28,7 @@ public class NodeThreadPoolHandler
     private BlockingQueue<Command> blockingQueue;
     private static final int INITIAL_DELAY = 1000;
     private static final int CAPACITY = 1000;
+    private static final int JMSTHREAD_POLLQUEUE_INTERVALL = 5000;
 
     /**
      * Consturctor
@@ -39,12 +41,12 @@ public class NodeThreadPoolHandler
     /**
      * Initialize threads.
      *
-     * @param nodeConfigs 
+     * @param nodeConfigs
      * @throws IllegalArgumentException if nodeConfigs == null
      */
     public void initNodeThreadScheduling(NodeConfig[] nodeConfigs)
     {
-        if(nodeConfigs == null || nodeConfigs == null)
+        if (nodeConfigs == null || nodeConfigs == null)
         {
             throw new IllegalArgumentException("Nodes can not be null!!");
         }
@@ -58,13 +60,13 @@ public class NodeThreadPoolHandler
     /**
      * Initialize threads.
      *
-     * @param grouterConfig 
+     * @param grouterConfig
      * @throws IllegalArgumentException if nodeConfigs == null
      */
     public void initNodeThreadScheduling(GrouterConfig grouterConfig)
     {
         NodeConfig[] nodeConfigs = grouterConfig.getNodes();
-        if(grouterConfig == null || nodeConfigs == null)
+        if (grouterConfig == null || nodeConfigs == null)
         {
             throw new IllegalArgumentException("Nodes can not be null!!");
         }
@@ -72,10 +74,18 @@ public class NodeThreadPoolHandler
 
         //fire off...
         start(nodeConfigs);
+
+        // todo add this to config - if we should send message to listener
+        startJMSSEnderThread(grouterConfig);
     }
 
+    private void startJMSSEnderThread(GrouterConfig grouterConfig)
+    {
+        JMSDestinationSenderThread senderThread = new JMSDestinationSenderThread(grouterConfig);
+        scheduler.scheduleAtFixedRate(senderThread, INITIAL_DELAY, JMSTHREAD_POLLQUEUE_INTERVALL, TimeUnit.MILLISECONDS);
 
 
+    }
 
 
     private void start(NodeConfig[] nodeConfigs)
@@ -87,10 +97,12 @@ public class NodeThreadPoolHandler
             if (nodeConfig.getNodeType() == NodeConfig.Type.FILE_TO_FILE)
             {
                 FileReaderThread fileReaderThread = new FileReaderThread(nodeConfig, blockingQueue);
-                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, nodeConfig.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
+                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, nodeConfig.getInFolderConfig().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
             }
             CommandConsumerThread commandConsumerThread = new CommandConsumerThread(blockingQueue);
-            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, nodeConfig.getInFolder().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
+            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, nodeConfig.getInFolderConfig().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
+
+
         }
     }
 

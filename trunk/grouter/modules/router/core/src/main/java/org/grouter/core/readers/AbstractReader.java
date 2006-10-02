@@ -4,7 +4,7 @@ package org.grouter.core.readers;
 import org.apache.log4j.Logger;
 import org.grouter.core.command.Command;
 import org.grouter.core.command.CommandFactory;
-import org.grouter.core.command.Message;
+import org.grouter.core.command.CommandMessage;
 import org.grouter.core.config.NodeConfig;
 
 import java.io.BufferedReader;
@@ -16,42 +16,30 @@ public abstract class AbstractReader //extends TimerTask
 {
     private static Logger logger = Logger.getLogger(AbstractReader.class);
     Command command;
+    NodeConfig nodeConfig;
 
     /**
      * Method overridden by subclasses.
      */
-    abstract Message[] readFromSource();
+    abstract CommandMessage[] readFromSource();
 
-    
+
+    /**
+     * Method overridden by subclass.
+     */
     abstract void sendToConsumer();
 
-    final protected void read(NodeConfig nodeConfig)
+    /**
+     * Template method pattern.
+     */
+    final protected void read()
     {
-        Message[] arrMessages = readFromSource();
-        if (arrMessages != null && arrMessages.length > 0)
+        CommandMessage[] arrCommandMessages = readFromSource();
+        if (arrCommandMessages != null && arrCommandMessages.length > 0)
         {
-            //if(nodeConfig.get)
-            /*if(nodeConfig.isTransform())
-            {
-                transform(arrMessages);
-            }
-            if(nodeConfig.isBackup())
-            {
-                backup(arrMessages);
-            } */
-            command.setMessage(arrMessages);
+            command.setMessages(arrCommandMessages);
             sendToConsumer();
         }
-    }
-
-    private void transform(Message[] arrMessages)
-    {
-        logger.debug("transforming...");
-    }
-
-    protected void backup(Message[] arrMessages)
-    {
-        logger.debug("doing backup...");
     }
 
     protected Command getCommand(final NodeConfig nodeConfig)
@@ -59,9 +47,16 @@ public abstract class AbstractReader //extends TimerTask
         return CommandFactory.getCommand(nodeConfig);
     }
 
-    //SHOULD THIS BE HERE...
-    protected String getMessageAsString(File file)
+    /**
+     * Copy contents of a file to a string.
+     * @param file
+     * @return
+     */
+    protected String readFileToString(File file)
     {
+        // this method from common-io could do this but without
+        // the the options of skipping a line and other potential operations
+        // we might wanna do - FileUtils.readFileToString(file)
         java.io.FileReader filereader = null;
         String returnval = null;
         BufferedReader inputBuffer = null;
@@ -71,16 +66,16 @@ public abstract class AbstractReader //extends TimerTask
             inputBuffer = new BufferedReader(filereader);
             StringBuffer buffer = new StringBuffer();
             String line = inputBuffer.readLine();
-            /*      if (skipfirstblankline)
-                {
+            /*
+            if (skipfirstblankline)
+            {
                     line = inputBuffer.readLine();
-                }
+            }
             */
             while (line != null)
             {
                 buffer.append(line);
                 buffer.append("\n");
-
                 line = inputBuffer.readLine();
             }
             returnval = buffer.toString();

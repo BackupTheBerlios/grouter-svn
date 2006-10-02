@@ -10,23 +10,44 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public abstract class Command
 {
-    protected Message[] message;
+    protected CommandMessage[] commandMessages;
 
     /**
      * Commands must override this method to provide an implementation of an execute command
      * in the context for that command.
+     * We are tryign to enforce a template method pattern on top of this to ensure that we
+     * handle backingup, transforming etc.
      */
-    public abstract void execute();
-
-    public Message[] getMessage()
+    public void execute()
     {
-        return message;
+        storeLocally();
+        transform();
+        write();
+        sendToJMSDestination();
     }
 
-    public void setMessage(Message[] message)
-    {
-        this.message = message;
-    }
+    /**
+     * Do a transfomr of the message if applicable.
+     */
+    public abstract void transform();
+
+    /**
+     * Write the message to a destination - file etc.
+     */
+    public abstract void write();
+
+    /**
+     * If configured commandMessages are stored localy for a backup and archived at a given intervall.
+     */
+    public abstract void storeLocally();
+
+    /**
+     * Send message asynchronously to application server.
+     */
+    public abstract void sendToJMSDestination();
+
+
+
 
     /**
      * Use reflection to pull out all attributs and values.
@@ -36,4 +57,8 @@ public abstract class Command
         return ToStringBuilder.reflectionToString(this);
     }
 
+    public void setMessages(CommandMessage[] arrCommandMessages)
+    {
+        this.commandMessages = arrCommandMessages;
+    }
 }

@@ -24,7 +24,7 @@ public class CommandConsumerThread implements Runnable //Callable<Boolean>
     public Boolean call() throws Exception
     {
         logger.debug("Qeuue size" + queue.size());
-        //take is blocking - an initial condition where no messages are found in
+        //take is blocking - an initial condition where no commandMessages are found in
         //the infolder e.g. will make the reader thread to block also.
         Command cmd = queue.poll(TIMEOUT, TimeUnit.SECONDS);//queue.take();
         if (cmd instanceof FileWriterCommand)

@@ -11,6 +11,7 @@ public class CommandFactory
 {
     private static Logger logger = Logger.getLogger(CommandFactory.class);
 
+
     public static Command getCommand(NodeConfig nodeConfig)
     {
         if (nodeConfig == null)

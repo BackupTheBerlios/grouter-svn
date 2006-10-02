@@ -2,10 +2,6 @@ package org.grouter.core.config;
 
 import junit.framework.TestCase;
 
-import java.io.File;
-
-import org.apache.commons.io.FileUtils;
-
 /**
  * Created by IntelliJ IDEA.
  * User: geopol
@@ -42,5 +38,22 @@ public class ConfigTest extends TestCase
             assertTrue(true);
         }
     }
+
+
+
+    /**
+     * Test null values.
+     */
+    public void testBackup()
+    {
+        try
+        {
+            LocalStoreConfig localStoreConfig = new LocalStoreConfig(null);
+        } catch (Exception e)
+        {
+            assertTrue(true);
+        }
+    }
+
 
 }

@@ -44,9 +44,9 @@ public class NodeThreadPoolHandlerTest extends TestCase
 
         logger.info("Created temporary folders : " + infolder + " and : " + outfolder );
 
-        InFolderConfig inFolderConfig = new InFolderConfig(infolder, 2000, false, null);
+        InFolderConfig inFolderConfig = new InFolderConfig(infolder, 2000, false, null, null);
         OutFolderConfig outFolderConfig = new OutFolderConfig(outfolder);
-        NodeConfig nodeConfig = new NodeConfig(NodeConfig.Type.FILE_TO_FILE, "id_1", true, inFolderConfig, outFolderConfig);
+        NodeConfig nodeConfig = new NodeConfig(NodeConfig.Type.FILE_TO_FILE, "id_1", true, inFolderConfig, outFolderConfig,null);
         nodeConfigs[0] = nodeConfig;
     }
 

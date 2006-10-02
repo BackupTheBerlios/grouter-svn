@@ -17,4 +17,24 @@ public class NullCommand extends Command
     {
         logger.info("A null command");
     }
+
+    public void transform()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void write()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void storeLocally()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void sendToJMSDestination()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

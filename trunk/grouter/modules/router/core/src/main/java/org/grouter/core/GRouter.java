@@ -10,7 +10,6 @@ import org.grouter.core.util.NodeThreadPoolHandler;
 import org.grouter.core.util.file.FileUtils;
 
 import java.util.*;
-import java.io.File;
 
 /**
  * Main class for GRouter.
@@ -18,7 +17,7 @@ import java.io.File;
  * Reads in all config and starts up all services, archiving thread, and binds to
  * jndi in j2ee app server.
  * <p/>
- * Adds shutdown hook to vm so that we get to send an email when we close down gracefully
+ * Adds shutdown hook to vm so that we get to write an email when we close down gracefully
  * using ctrl+c (win) or kill -15 (*nix).
  *
  * @author Georges Polyzois
@@ -49,7 +48,7 @@ public class GRouter implements Runnable
     /**
      * Constructor tries to locate config file using System.getProperty("grouter.config")
      *
-     * @throws IllegalArgumentException if grouterConfig == null
+     * @throws IllegalArgumentException if grou“terConfig == null
      */
     public GRouter()
     {
@@ -101,10 +100,11 @@ public class GRouter implements Runnable
         {
             throw new IllegalArgumentException("Config path was invalid - could not initiate config from that location! : " + configPath);
         }
+        String grouterName = configHandler.getGrouterConfigDocument().getGrouter().getName();
         NodeType[] nodeTypes = configHandler.getGrouterConfigDocument().getGrouter().getNodeArray();
         NodeConfig[] nodeConfigs = NodeConfigFactory.getNodes(nodeTypes, configHandler.getGrouterConfigDocument().getGrouter().getGlobal());
         GlobalConfig globalConfig = GlobalConfigFactory.getGlobalConfig(configHandler.getGrouterConfigDocument().getGrouter().getGlobal());
-        GrouterConfig grouterConfig = new GrouterConfig(nodeConfigs, globalConfig);
+        this.grouterConfig = new GrouterConfig(grouterName ,nodeConfigs, globalConfig);
         return grouterConfig;
         //configHandler.printBootInfo();
     }
@@ -280,7 +280,7 @@ public class GRouter implements Runnable
      */
     /*   private void sendEmail()
         {
-            logger.info("Trying to send an email alert using file : " + emailonshutdown);
+            logger.info("Trying to write an email alert using file : " + emailonshutdown);
             String email = null;
             try
             {
@@ -297,7 +297,7 @@ public class GRouter implements Runnable
             }
             catch (Exception ex)
             {
-                logger.error("Could not send an email alert", ex);
+                logger.error("Could not write an email alert", ex);
             }
         }
     */

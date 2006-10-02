@@ -1,11 +1,15 @@
 package org.grouter.core.readers;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.io.filefilter.NotFileFilter;
+import org.apache.commons.io.filefilter.WildcardFilter;
 import org.grouter.core.command.Command;
-import org.grouter.core.command.Message;
+import org.grouter.core.command.CommandMessage;
 import org.grouter.core.config.NodeConfig;
+import org.grouter.common.guid.GuidGenerator;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.concurrent.BlockingQueue;
 
 
@@ -17,8 +21,11 @@ import java.util.concurrent.BlockingQueue;
 public class FileReaderThread extends AbstractReader implements Runnable//implements Callable<String>
 {
     private static Logger logger = Logger.getLogger(FileReaderThread.class);
-    private NodeConfig nodeConfig;
+    //private NodeConfig nodeConfig;
     private BlockingQueue<Command> queue;
+    private NotFileFilter notFileFilter;
+    private WildcardFilter wildcardFilter;
+    private FileFilter fileFilter;
 
     /**
      * Construcotr
@@ -37,43 +44,38 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
         this.queue = blockingQueue;
         //which type of commands should this servicenode worker handle
         command = getCommand(nodeConfig);
+        createFilter(nodeConfig);
 
     }
 
     /**
-     * Forced by interface Callable.
+     * A null filter means we do not have a filter and File.listfiles will take all files present in a dir.
      *
-     * @return String
-     * @throws Exception
+     * @param nodeConfig
      */
-    public String call() throws Exception
+    private void createFilter(NodeConfig nodeConfig)
     {
-        logger.debug(nodeConfig.getId() + " + FileReaderThread executing");
-        read(nodeConfig);
-        /*if(arrMessages==null)
+        String filter = nodeConfig.getInFolderConfig().getFilterConfig().getFilter();
+        if (filter != null && filter.equalsIgnoreCase(""))
         {
-            logger.debug("null messages ................");
-            return "";
+            return;
         }
-        else
-        {
-            command.setMessage(arrMessages);
-            logger.debug("Putting cmd on queue" + command.toStringUsingReflection());
-                    queue.offer(command);
 
-        }*/
-        return "";
+        this.wildcardFilter = new WildcardFilter(nodeConfig.getInFolderConfig().getFilterConfig().getFilter());
+        this.notFileFilter = new NotFileFilter(wildcardFilter);
+        this.fileFilter = notFileFilter;
     }
+
 
     /**
      * Forced by abstract method.
      *
-     * @return Message[]
+     * @return CommandMessage[]
      */
-    protected Message[] readFromSource()
+    protected CommandMessage[] readFromSource()
     {
-        logger.debug("Trying to read files from " + nodeConfig.getInFolder().getInFolderPath());
-        File[] curFiles = nodeConfig.getInFolder().getInFolderPath().listFiles();
+        logger.debug("Trying to read files from " + nodeConfig.getInFolderConfig().getInPath());
+        File[] curFiles = nodeConfig.getInFolderConfig().getInPath().listFiles(fileFilter);
         if (curFiles == null || curFiles.length == 0)
         {
             logger.debug("No files found.");
@@ -81,7 +83,7 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
         }
         logger.debug("Found number of files: " + curFiles.length);
 
-        Message[] arrMessages = new Message[curFiles.length];
+        CommandMessage[] arrCommandMessages = new CommandMessage[curFiles.length];
         for (int i = 0; i < curFiles.length; i++)//fileCollectionSize; i++)
         {
             if (curFiles[i].length() == 0)
@@ -93,8 +95,13 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
             }
             try
             {
-                arrMessages[i] = new Message(getMessageAsString(curFiles[i]));
-                logger.debug("Message : " + arrMessages[i].getMessage());
+                arrCommandMessages[i] = new CommandMessage(readFileToString(curFiles[i]));
+                if (nodeConfig.isCreateuniquename())
+                {
+                    arrCommandMessages[i].setId(GuidGenerator.getInstance().getGUID());
+                }
+
+                logger.debug("CommandMessage : " + arrCommandMessages[i].getMessage());
             }
             catch (Exception ex)
             {
@@ -102,7 +109,7 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
             }
             // curFiles[i].delete();
         }
-        return arrMessages;
+        return arrCommandMessages;
     }
 
     /**
@@ -121,10 +128,10 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
     {
         try
         {
-            call();
+            read();
         } catch (Exception e)
         {
-            logger.error(e,e);
+            logger.error(e, e);
         }
     }
 }

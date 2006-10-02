@@ -40,9 +40,9 @@ public class GrouterBootTest extends TestCase
         outfolder.mkdirs();
         logger.info(outfolder.exists() + " Created temporary folders : " + infolder + " and : " + outfolder);
 
-        InFolderConfig inFolderConfig = new InFolderConfig(infolder, 2000, false, null);
+        InFolderConfig inFolderConfig = new InFolderConfig(infolder, 2000, false, null, null);
         OutFolderConfig outFolderConfig = new OutFolderConfig(outfolder);
-        NodeConfig nodeConfig = new NodeConfig(NodeConfig.Type.FILE_TO_FILE, "id_1", true, inFolderConfig, outFolderConfig);
+        NodeConfig nodeConfig = new NodeConfig(NodeConfig.Type.FILE_TO_FILE, "id_1", true, inFolderConfig, outFolderConfig, null);
         nodeConfigs[0] = nodeConfig;
     }
 
@@ -130,12 +130,21 @@ public class GrouterBootTest extends TestCase
 
     public void testStartFrouterFileToFile()
     {
-        String grouterHome= System.getProperty("user.dir");
-                logger.info("Working dir : " + grouterHome);
-                String configFile = "/router/core/src/config/grouter-file-file.xml";
+        String grouterHome = System.getProperty("user.dir");
+        logger.info("Working dir : " + grouterHome);
+        String configFile = "/router/core/src/config/grouter-file-file.xml";
 
 
-                GRouter grouter = new GRouter( grouterHome + configFile);
+        GRouter grouter = new GRouter(grouterHome + configFile);
+
+
+        try
+        {
+            Thread.sleep(10000);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
     }
 

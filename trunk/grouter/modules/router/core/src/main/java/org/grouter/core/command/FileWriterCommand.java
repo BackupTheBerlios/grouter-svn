@@ -1,8 +1,8 @@
 package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
-import org.grouter.common.guid.GuidGenerator;
 import org.grouter.core.config.NodeConfig;
+import org.grouter.core.util.JMSDestinationSenderThread;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,12 +16,14 @@ public class FileWriterCommand extends Command
     private static Logger logger = Logger.getLogger(FileWriterCommand.class);
     private FileWriter writer;
     private NodeConfig nodeConfig;
+    private JMSDestinationSenderThread jmsDestinationSenderThread;
 
 
     /**
      * Constructor.
+     *
      * @param nodeConfig
-     * @throws  IllegalArgumentException if nodeConfig == null
+     * @throws IllegalArgumentException if nodeConfig == null
      */
     public FileWriterCommand(NodeConfig nodeConfig)
     {
@@ -32,24 +34,58 @@ public class FileWriterCommand extends Command
         this.nodeConfig = nodeConfig;
     }
 
+
     /**
-     * Overridden from abstract Command class.
+     * Implementing a transformation step.
      */
-    public void execute()
+    public void transform()
     {
-        logger.debug(nodeConfig.getId() + " Writing file to dir : " + nodeConfig.getOutFolder().getOutFolderPath());
-        for (int i = 0; i < message.length; i++)
+        logger.debug("Do a transform !!!!!!!");
+
+    }
+
+    public void write()
+    {
+        logger.debug(nodeConfig.getId() + " Writing file to dir : " + nodeConfig.getOutFolderConfig().getOutPath());
+        for (int i = 0; i < commandMessages.length; i++)
         {
-            logger.debug(message[i].getMessage());
+            logger.debug("Wrote a new file :" + commandMessages[i].getMessage());
             try
             {
-                String fileName = null;
-                if (nodeConfig.isCreateuniquename())
+                writer = new FileWriter(nodeConfig.getOutFolderConfig().getOutPath().getPath() + "/" + commandMessages[i].getId() );
+                writer.write(commandMessages[i].getMessage());
+                writer.flush();
+            }
+            catch (Exception e)
+            {
+                logger.error(e, e);
+            }
+            finally
+            {
+                if (writer != null)
                 {
-                    fileName = GuidGenerator.getInstance().getGUID();
+                    try
+                    {
+                        writer.close();
+                    } catch (IOException e)
+                    {
+                        //ignore
+                    }
                 }
-                writer = new FileWriter(nodeConfig.getOutFolder().getOutFolderPath().getPath() + "/" + fileName);
-                writer.write(message[i].getMessage());
+            }
+        }
+    }
+
+    public void storeLocally()
+    {
+        logger.debug(nodeConfig.getId() + " storing locally for backup to dir : " + nodeConfig.getLocalStoreConfig().getBackup());
+        for (int i = 0; i < commandMessages.length; i++)
+        {
+            logger.debug("Stored a new message in backup folder locally :" + commandMessages[i].getId());
+            try
+            {
+                writer = new FileWriter(nodeConfig.getLocalStoreConfig().getBackup() + "/" + commandMessages[i].getId());
+                writer.write(commandMessages[i].getMessage());
                 writer.flush();
             }
             catch (Exception e)
@@ -72,11 +108,12 @@ public class FileWriterCommand extends Command
 
         }
 
-        //writer.write();
-        //writer.readSendFiles(null,null);
-        //writer.backupFiles(null);
+    }
 
-        //writer.backup();
-        //etc
+
+    public void sendToJMSDestination()
+    {
+        logger.info( nodeConfig.getId() + " sending message to JMS consumer.");
+       JMSDestinationSenderThread.getQueue().offer(commandMessages);
     }
 }
