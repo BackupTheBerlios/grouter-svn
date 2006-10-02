@@ -6,19 +6,19 @@ import org.grouter.domain.dao.MessageDAO;
 import org.grouter.domain.dao.DAOFactory;
 import org.grouter.domain.systemuser.SystemUser;
 import org.grouter.domain.Message;
+import org.grouter.domain.servicelayer.GRouter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
 /**
- * GRouterService will expose services for clients - gswing and gweb.
+ * GRouterService will expose services for different clients namely - gswing and gweb.
  * <p/>
- * Methods and their transaction demarcation attributes are handled
- * in the Spring applicationContext.xml file.
+ * Methods and their transaction demarcation attributes are handled in the Spring applicationContext.xml file.
  *
  * @author Georges Polyzois
  */
-public class GRouterService
+public class GRouterService implements GRouter
 {
     private static Log log = LogFactory.getLog(GRouterService.class);
     private SystemUserDAO systemUserDAO;

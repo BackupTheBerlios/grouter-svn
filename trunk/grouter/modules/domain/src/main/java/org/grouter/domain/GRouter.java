@@ -2,27 +2,48 @@ package org.grouter.domain;
 
 import org.apache.log4j.Logger;
 
+import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.sql.Timestamp;
 
+
 /**
- * @author Georges Polyzois
+ * Domain class - root entity.
+ * @Author Georges Polyzois
  */
+@Entity
+@Table(name="GROUTER")
 public class GRouter
 {
     private static Logger logger = Logger.getLogger(GRouter.class);
+    @Id
     private String id;
+    @Column(name="NAME",nullable = false,length = 255)
     private String name;
+    @OneToMany
     private Set<Node> nodes = new HashSet();
+    @Column
     private Timestamp startedOn;
+    @Column
     private long upTime;
 
 
+    /**
+     * Constructor.
+     */
     public GRouter()
     {
     }
 
+    /**
+     * Full constructor.
+     * @param id
+     * @param name
+     * @param nodes
+     * @param startedOn
+     * @param upTime
+     */
     public GRouter(String id, String name, Set<Node> nodes, Timestamp startedOn, long upTime)
     {
         this.id = id;

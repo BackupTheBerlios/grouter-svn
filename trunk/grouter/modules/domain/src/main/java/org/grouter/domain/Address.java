@@ -1,16 +1,26 @@
 package org.grouter.domain;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+
 /**
- * Created by IntelliJ IDEA. User: geopol Date: 2005-nov-07 Time: 15:30:12 To change this template use File | Settings |
- * File Templates.
+ * Domain class.
+ * @Author Georges Polyzois
  */
-@javax.persistence.Entity
+@Entity
 public class Address
 {
-	private String id;
-	private String name;
-	private String address;
-	private Country country;
+    @Id
+    private String id;
+    @Column
+    private String name;
+    @Column
+    private String address;
+    @ManyToOne
+    private Country country;
 
 	public String getId()
 	{

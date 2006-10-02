@@ -1,20 +1,28 @@
 package org.grouter.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Id;
+import javax.persistence.Column;
 import java.util.Set;
 import java.util.HashSet;
+import java.io.Serializable;
 
-@javax.persistence.Entity
-public class Sender
+
+/**
+ * Domain class.
+ * @Author Georges Polyzois
+ */
+@Entity
+public class Sender implements Serializable
 {
-    /**
-     * @directed true
-     */
+    @ManyToOne
     private Address address;
+    @Id
     private String id;
+    @Column
     private String name;
-    /**
-     * No duplicate elements and the ordering is not relevant for us -> Set
-     */
+    // No duplicate elements and the ordering is not relevant for us -> Set
     private Set<Message> messages = new HashSet();
 
     public Sender()

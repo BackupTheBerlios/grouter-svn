@@ -1,5 +1,8 @@
 package org.grouter.domain.systemuser;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -7,28 +10,34 @@ import java.util.HashSet;
 import java.util.Calendar;
 
 
+
 /**
- * A user representation in the domain model.
+ * Domain class.
+ * @Author Georges Polyzois
  */
+@Entity
 public class SystemUser implements Serializable
 {
+    @Id
     private Long id ;
+    @Column
     private String name;
-    /**
-	 * No duplicate elements and the ordering is not relevant for us -> Set
-	 */
+    // No duplicate elements and the ordering is not relevant for us -> Set
     private Set<SystemGroup> groups = new HashSet();
-    
-    /**
-	 * No duplicate elements and the ordering is not relevant for us -> Set
-	 */
+    // No duplicate elements and the ordering is not relevant for us -> Set
     private Set<Password> passwords = new HashSet();
     private Password currentPassword ;
+    @Column
     private String fullName ;
+    @Column
     private String description ;
+    @Column
     private boolean active ;
+    @Column
     private int loginRetries ;
+    @Column
     private Calendar validFrom ;
+    @Column
     private Calendar validTo ;
 
     public SystemUser()

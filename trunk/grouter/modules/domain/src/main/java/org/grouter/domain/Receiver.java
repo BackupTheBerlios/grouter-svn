@@ -1,17 +1,20 @@
 package org.grouter.domain;
 
+import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
+import java.io.Serializable;
 
-@javax.persistence.Entity
-public class Receiver
+@Entity
+public class Receiver implements Serializable
 {
-    /**
-     * @directed true
-     */
+    @ManyToOne
     private Address address;
+    @Id
     private String id;
+    @Column
     private String name;
+    @OneToMany
     private Set<Message> messages = new HashSet();
 
     public Set<Message> getMessages()

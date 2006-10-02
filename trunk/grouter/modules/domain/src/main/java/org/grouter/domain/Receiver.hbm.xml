@@ -10,7 +10,7 @@
         <!-- cache usage="read-only" / -->
         <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
         <!--many-to-one
-            name="messages"
+            name="commandMessages"
             not-null="true"
             class="Message"
             column="MESSAGEID"

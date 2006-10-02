@@ -1,20 +1,30 @@
 package org.grouter.domain;
 
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Entity;
+import javax.persistence.Column;
 import java.util.Set;
 import java.util.HashSet;
 
 /**
- * Class description.
+ * Domain class.
+ * @Author Georges Polyzois
  */
-@javax.persistence.Entity
+@Entity
 public class Country
 {
-	private String id;
-	private String name;
-	private String timeZone;
-	private Set<Address> addresses = new HashSet();
+    @Id
+    private String id;
+    @Column
+    private String name;
+    @Column
+    private String timeZone;
+    @OneToMany
+    private Set<Address> addresses = new HashSet();
 
-	public Set<Address> getAddresses()
+    
+    public Set<Address> getAddresses()
 	{
 		return addresses;
 	}

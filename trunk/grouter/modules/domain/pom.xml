@@ -49,10 +49,10 @@
             <artifactId>hsqldb</artifactId>
             <scope>test</scope>
         </dependency>
-         <dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-            </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
         <!--dependency>
             <groupId>geronimo-spec</groupId>
             <artifactId>geronimo-spec-jta</artifactId>
@@ -64,38 +64,8 @@
         <dependency>
             <groupId>com.javasoft</groupId>
             <artifactId>javaee</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
-    <build>
-
-        <plugins>
-            <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-ejb-plugin</artifactId>
-        <configuration>
-           <ejbVersion>3.0</ejbVersion>
-        </configuration>
-      </plugin>
-
-        </plugins>
-        <resources>
-            <!-- Bring on all mapping files for Hibernate -->
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/main/java</directory>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/config</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <!-- Bring on log4j.xml to test classes output folder -->
-            <testResource>
-                <directory>${basedir}/src/config</directory>
-            </testResource>
-        </testResources>
-    </build>
 </project>

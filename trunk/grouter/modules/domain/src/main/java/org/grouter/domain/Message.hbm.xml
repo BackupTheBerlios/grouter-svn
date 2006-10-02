@@ -14,7 +14,7 @@
             <many-to-many class="org.grouter.domain.Receiver" column="RECEIVERID"/>
         </set>
 
-
+                                       
         <!--set name="receivers" cascade="all" lazy="true" inverse="true" table="RECEIVER">
             <key>
                 <column name="RECEIVERID" not-null="true"/>
