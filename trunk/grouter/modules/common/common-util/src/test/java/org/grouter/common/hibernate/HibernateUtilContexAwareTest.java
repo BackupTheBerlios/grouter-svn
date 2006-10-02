@@ -91,12 +91,13 @@ public class HibernateUtilContexAwareTest extends TestCase
     }
 
     /**
-     * Again multiple session factories are tested. This time we use a global inmemory jnid provider
+     * Again multiple session factories are tested. This time we use a global inmemory jndi provider
      * from which we try to do a look up for our session factory. We first need to create a namespace
      * and bind a sessionfactory implementation to that.
      */
     public void testMulitpleSessionFactoriesWithJNDI()
     {
+        HibernateUtilContextAware.shutdown(true);
         HibernateUtilContextAware.bootStrap(true);
 
         int sizeBeforeTest = HibernateUtilContextAware.getHibernateConfigMapSize();
@@ -174,6 +175,15 @@ public class HibernateUtilContexAwareTest extends TestCase
         HibernateUtilContextAware.rebuildSessionFactory();
         assertEquals("",1,HibernateUtilContextAware.getHibernateConfigMapSize());
     }
+
+
+
+  /* public void testJNDI()
+        {
+            HibernateUtilContextAware.bootStrap(true);
+
+        }
+    */
 
     private void nonDefaultconfigParamOk()
     {

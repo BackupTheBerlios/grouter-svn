@@ -36,7 +36,7 @@ public class HibernateUtilContextAware
     // States indicate in what state we are currenlty in - some operations are prohibited depending on state.
     public enum STATE {NOTINITIALISED,INITIALISED,SHUTDOWN};
     private static STATE currentState = STATE.NOTINITIALISED;
-    private static boolean isBootstraped = false;
+    //private static boolean isBootstraped = false;
 
     /**
      * This method will load hibernate.cfg.xml if found in path and set that conifguration to the default configuration -
@@ -49,15 +49,21 @@ public class HibernateUtilContextAware
      */
     public static void bootStrap(boolean useHibernateCfgXmlFileOnPath)
     {
-        if(isBootstraped)
+        
+        if(currentState == STATE.INITIALISED)
+        {
+            throw new IllegalStateException("You need to issue a shutdown before entering new configurations!!");
+        }
+      /*  if(isBootstraped)
         {
             log.info("Already bootstraped Hibernate - it is a one time only bootstrapping!");
             return;
-        }
-        else if (useHibernateCfgXmlFileOnPath )
+        }*/
+        if (useHibernateCfgXmlFileOnPath )
         {
             addSessionFactoryToMap("default","hibernate.cfg.xml",true);
-            isBootstraped = true;
+
+       //     isBootstraped = true;
             createSessionFactoriesFromConfigMap();
         }
 
@@ -324,7 +330,7 @@ public class HibernateUtilContextAware
     }
 
     /**
-     * These items are stored withing the HibernateUtil map of configurations with a sessionfactories.
+     * These items are stored withing the HibernateUtil map of configurations with sessionfactories.
      */
     public static class HibernateConfigItem
     {
