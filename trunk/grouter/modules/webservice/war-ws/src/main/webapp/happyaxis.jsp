@@ -67,7 +67,7 @@
     }
 
     /**
-     * probe for a class, print an error message is missing
+     * probe for a class, print an error commandMessage is missing
      * @param out stream to print stuff
      * @param category text like "warning" or "error"
      * @param classname class to look for
@@ -169,7 +169,7 @@
     }
 
     /**
-     * print warning message if a class is missing
+     * print warning commandMessage if a class is missing
      * @param out stream to print stuff
      * @param classname class to look for
      * @param jarFile where this class comes from

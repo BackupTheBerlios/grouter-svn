@@ -36,54 +36,11 @@
             <groupId>org.grouter.platform</groupId>
             <artifactId>domain</artifactId>
             <version>${project.version}</version>
+            <type>ejb</type>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>geronimo-spec</groupId>
-            <artifactId>geronimo-spec-jta</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.javasoft</groupId>
-            <artifactId>javaee</artifactId>
-            <version>1.5</version>
-        </dependency>
+        
+
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <configuration>
-                    <displayName>Domain</displayName>
-                    <description></description>
-                    <version>1.4</version>
-                    <modules>
-                        <javaModule>
-                            <groupId>org.grouter.platform</groupId>
-                            <artifactId>domain</artifactId>
-                            <includeInApplicationXml>true</includeInApplicationXml>
-                        </javaModule>
-                        <!--webModule>
-                            <groupId>org.grouter.platform.presentation</groupId>
-                            <artifactId>gweb</artifactId>
-                            <contextRoot>/daytrader</contextRoot>
-                        </webModule-->
-                    </modules>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

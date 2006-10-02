@@ -107,55 +107,55 @@
     }
 
     /**
-     * Get a message from i18n.properties with several arguments.
+     * Get a commandMessage from i18n.properties with several arguments.
      * @param key The resource key
-     * @return The formatted message
+     * @return The formatted commandMessage
      */
     String getMessage(String key) {
         return getMessage(key, null, null, null, null, null);
     }
 
     /**
-     * Get a message from i18n.properties with several arguments.
+     * Get a commandMessage from i18n.properties with several arguments.
      * @param key The resource key
      * @param arg0 The argument to place in variable {0}
-     * @return The formatted message
+     * @return The formatted commandMessage
      */
     String getMessage(String key, String arg0) {
         return getMessage(key, arg0, null, null, null, null);
     }
 
     /**
-     * Get a message from i18n.properties with several arguments.
+     * Get a commandMessage from i18n.properties with several arguments.
      * @param key The resource key
      * @param arg0 The argument to place in variable {0}
      * @param arg1 The argument to place in variable {1}
-     * @return The formatted message
+     * @return The formatted commandMessage
      */
     String getMessage(String key, String arg0, String arg1) {
         return getMessage(key, arg0, arg1, null, null, null);
     }
 
     /**
-     * Get a message from i18n.properties with several arguments.
+     * Get a commandMessage from i18n.properties with several arguments.
      * @param key The resource key
      * @param arg0 The argument to place in variable {0}
      * @param arg1 The argument to place in variable {1}
      * @param arg2 The argument to place in variable {2}
-     * @return The formatted message
+     * @return The formatted commandMessage
      */
     String getMessage(String key, String arg0, String arg1, String arg2) {
         return getMessage(key, arg0, arg1, arg2, null, null);
     }
 
     /**
-     * Get a message from i18n.properties with several arguments.
+     * Get a commandMessage from i18n.properties with several arguments.
      * @param key The resource key
      * @param arg0 The argument to place in variable {0}
      * @param arg1 The argument to place in variable {1}
      * @param arg2 The argument to place in variable {2}
      * @param arg3 The argument to place in variable {3}
-     * @return The formatted message
+     * @return The formatted commandMessage
      */
     String getMessage(String key, String arg0, String arg1,
                       String arg2, String arg3) {
@@ -163,14 +163,14 @@
     }
 
     /**
-     * Get a message from i18n.properties with several arguments.
+     * Get a commandMessage from i18n.properties with several arguments.
      * @param key The resource key
      * @param arg0 The argument to place in variable {0}
      * @param arg1 The argument to place in variable {1}
      * @param arg2 The argument to place in variable {2}
      * @param arg3 The argument to place in variable {3}
      * @param arg4 The argument to place in variable {4}
-     * @return The formatted message
+     * @return The formatted commandMessage
      */
     String getMessage(String key, String arg0, String arg1,
                       String arg2, String arg3, String arg4) {
@@ -191,11 +191,11 @@
     }
 
     /**
-     * Get a replaced string by the specified message.
-     * @param source  The original message
-     * @param pattern The key message for replacing
-     * @param replace The message to place in the key variable - 'pattern'
-     * @return The replaced message
+     * Get a replaced string by the specified commandMessage.
+     * @param source  The original commandMessage
+     * @param pattern The key commandMessage for replacing
+     * @param replace The commandMessage to place in the key variable - 'pattern'
+     * @return The replaced commandMessage
      */
     String replaceAll(String source, String pattern, String replace)
     {

@@ -3,8 +3,8 @@
 <!--
                           PATTERN FORMATS GLOSSARY
  %n - newline
- %m - your log message
- %p - message priority (FATAL, ERROR, WARN, INFO, DEBUG or custom)
+ %m - your log commandMessage
+ %p - commandMessage priority (FATAL, ERROR, WARN, INFO, DEBUG or custom)
  %r - millisecs since program started running
  %% - percent sign in output
 
