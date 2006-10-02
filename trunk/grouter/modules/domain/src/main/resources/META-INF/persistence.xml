@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+   version="1.0">
+    <persistence-unit name="grouterDomain" transaction-type="JTA">
+        <description>Data source for Grouter</description>
+        <jta-data-source>java:/DefaultDS</jta-data-source>
+        <!--jar-file>../MyApp.jar</jar-file>
+        <class>org.grouter.domain.Message</class>
+        <class>org.acme.Person</class>
+        <class>org.acme.Address</class-->
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:hsql://127.0.0.1:9001/grouter_alias"/>
+            <property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.connection.password" value=""/>
+
+            <!--property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+           <property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+           <property name="connection.url">jdbc:oracle:thin:@server:1521:db1</property>
+           <property name="connection.username">jeppe</property>
+           <property name="connection.password">apa</property-->
+
+
+            <!-- Use the C3P0 connection pool.
+            <property name="c3p0.min_size">3</property>
+            <property name="c3p0.max_size">5</property>
+            <property name="c3p0.timeout">1800</property>
+            -->
+
+            <!-- Use the Hibernate built-in pool for tests. -->
+            <!--property name="connection.pool_size">1</property-->
+
+            <!-- Use EHCache but not the query cache. -->
+            <!--property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+           <property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+           <property name="cache.use_query_cache">true</property>
+           <property name="cache.use_second_level_cache">true</property>
+           <property name="cache.use_minimal_puts">false</property-->
+
+
+            <!-- Print SQL to stdout. -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.use_sql_comments" value="true"/>
+
+            <!-- Transaction integration -->
+            <property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
+            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+
+            <!-- New for Hibernate 3.1!!!. Bind the getCurrentSession() method to the thread (don't use for EJBs) -->
+            <!--property name="current_session_context_class">thread</property -->
+
+            <!-- Domain mapping files. -->
+            <!--mapping resource="org/grouter/domain/Sender.hbm.xml"/>
+           <mapping resource="org/grouter/domain/Receiver.hbm.xml"/>
+           <mapping resource="org/grouter/domain/Message.hbm.xml"/>
+           <mapping resource="org/grouter/domain/Node.hbm.xml"/>
+           <mapping resource="org/grouter/domain/GRouter.hbm.xml"/-->
+
+
+        </properties>
+    </persistence-unit>
+</persistence>
