@@ -64,8 +64,7 @@
     <!--
     | Description will go to generated documentation reports.
     -->
-    <description>GRouter is aimed to provide routing mechanism for messages
-        with destinations including jms, ejb, file, email etc.
+    <description>GRouter provides routing for messages with destinations including jms, ejb, file, email etc.
     </description>
 
     <!--
@@ -119,11 +118,19 @@
     | then this section lets you point to an internal corporate repository -
     | a proxy. 
     -->
+
+
     <repositories>
         <repository>
             <id>maven2</id>
             <name>Danish Maven2 repository</name>
             <url>http://mirrors.sunsite.dk/maven2</url>
+        </repository>
+        <!-- for the builder plugin -->
+        <repository>
+            <id>tlc-snapshots</id>
+            <name>TLC Snapshot Development Repository</name>
+            <url>http://commons.ucalgary.ca/pub/m2-snapshots</url>
         </repository>
         <repository>
             <id>maven2grouter</id>
@@ -167,11 +174,11 @@
     | plugin has dependency on castor 0.9.7 and you are forced to use castor 0.9.9.1
     -->
     <pluginRepositories>
-        <pluginRepository>
+        <!--pluginRepository>
             <id>internalplugins</id>
             <name>Internal plugins or modified plugins</name>
             <url>http://internals.corporate.server/mavenrepository</url>
-        </pluginRepository>
+        </pluginRepository-->
         <!--
         | This will enable snaphost versions of plugins from Codehaus
         |  - see also repostiory element .
@@ -185,6 +192,13 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
+        </pluginRepository>
+
+        <!-- For the builder plugin -->
+        <pluginRepository>
+            <id>tlc-snapshots</id>
+            <name>TLC Snapshot Development Repository</name>
+            <url>http://commons.ucalgary.ca/pub/m2-snapshots</url>
         </pluginRepository>
         <!--
         |
@@ -445,6 +459,12 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- Database jdbc drivers -->
+            <!--dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>8.1-407.jdbc3</version>
+            </dependency-->
             <dependency>
                 <groupId>hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
@@ -640,6 +660,55 @@
     -->
     <build>
         <plugins>
+            <!-- Maven Source Plugin -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>maven-buildnumber-plugin</artifactId>
+                <version>0.9.2-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+        <configuration>
+            <skipCheck>true</skipCheck>
+        </configuration>
+            </plugin-->
+
+
+            <!-- This will bring down source jars when creating Eclipse projects -->
+            <plugin>
+                <artifactId>maven-idea-plugin</artifactId>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                </configuration>
+            </plugin>
+
+
+            <!-- This will bring down source jars when creating Eclipse projects -->
+            <plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                </configuration>
+            </plugin>
+
+
             <plugin>
                 <!--
                 | The maven.surefire-plugin is the plugin used for
@@ -688,6 +757,7 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
+
             <!--
             | For any J2EE web based applications we need to generate
             | a war file with a web.xml etc. This plugin helps us
@@ -757,10 +827,18 @@
                         <manifest>
                             <mainClass>none</mainClass>
                             <packageName>${package}</packageName>
+                            <addClasspath>true</addClasspath>
                         </manifest>
                         <manifestEntries>
-                            <mode>development</mode>
-                            <url>${project.url}</url>
+                            <label>development</label>
+                            <developer>${user.name}</developer>
+                            <build-date>${build.time}</build-date>
+                            <java-version>${java.version}</java-version>
+                            <server>server</server>
+                            <context-name>${artifactId}</context-name>
+
+                            <!--mode>development</mode>
+                            <url>${project.url}</url-->
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -833,6 +911,47 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+            <!-- Ejb plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <configuration>
+                    <ejbVersion>3.0</ejbVersion>
+                    <generateClient>true</generateClient>
+                    <archive>
+                        <manifest>
+                            <mainClass>none</mainClass>
+                            <packageName>${package}</packageName>
+                            <addExtensions/>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <label>development</label>
+                            <developer>${user.name}</developer>
+                            <build-date>${build.time}</build-date>
+                            <java-version>${java.version}</java-version>
+                            <server>server</server>
+                            <context-name>${artifactId}</context-name>
+                        </manifestEntries>
+                    </archive>
+
+                </configuration>
+            </plugin>
+
+
+            <!-- JBoss deployer plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jboss-maven-plugin</artifactId>
+                <configuration>
+                    <fileName>${project.build.directory}/${project.build.finalName}.${project.packaging}</fileName>
+                    <!--jbossHome>/opt/jboss403SP1</jbossHome-->
+                    <serverName>default</serverName>
+                </configuration>
+            </plugin>
+
+
         </plugins>
 
         <pluginManagement>
@@ -874,9 +993,14 @@
                                              <goal>clean</goal>
                                          </goals>
                                      </execution>
+
                                  </executions-->
                 </plugin>
+
+
             </plugins>
+
+
         </pluginManagement>
 
 
