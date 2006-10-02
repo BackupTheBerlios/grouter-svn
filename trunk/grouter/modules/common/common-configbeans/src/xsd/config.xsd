@@ -16,7 +16,7 @@
     </xs:element>
 
     <!-- First level 	-->
-    <!-- GlobalSettings -->
+    <!-- GlobalSettings -->          
     <xs:complexType name="globalType">
         <xs:sequence>
             <xs:element name="grouterHome" type="xs:string"/>
