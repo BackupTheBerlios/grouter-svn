@@ -18,7 +18,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+                                 
 /**
  * Thread send commandMessages from internal queues to a JMS destination for storing in db and
  * pulbication to other potential clients with a registered interest in these events.

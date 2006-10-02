@@ -5,7 +5,6 @@ import org.grouter.core.command.Command;
 import org.grouter.core.command.CommandConsumerThread;
 import org.grouter.core.config.NodeConfig;
 import org.grouter.core.config.GrouterConfig;
-import org.grouter.core.config.GrouterDomainConfig;
 import org.grouter.core.readers.FileReaderThread;
 
 import java.util.concurrent.*;
