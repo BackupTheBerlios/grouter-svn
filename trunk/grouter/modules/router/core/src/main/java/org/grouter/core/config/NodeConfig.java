@@ -13,15 +13,15 @@ public class NodeConfig
     private boolean createuniquename;
     private OutFolderConfig outFolderConfig;
     private InFolderConfig inFolderConfig;
-    private BackupConfig backupConfig;
+    private LocalStoreConfig localStoreConfig;
+
+
     private Type nodeType;
 
     public enum Type
     {
-        FILE_TO_FILE
-    }
-
-    ;
+        FILE_TO_FILE;
+    };
 
     /**
      * Do not use this NodeConfig constructor direclty, instead use the NodeConfigFactory. This constructor is meant
@@ -32,9 +32,11 @@ public class NodeConfig
      * @param createuniquename
      * @param inFolderConfig
      * @param outFolderConfig
+     * @param localStoreConfig
      * @thrwos IllegalArgumentException if nodeType == null || id = null || inFolderConfig == null || outFolderConfig == null
      */
-    public NodeConfig(NodeConfig.Type nodeType, String id, boolean createuniquename, InFolderConfig inFolderConfig, OutFolderConfig outFolderConfig)
+    public NodeConfig(NodeConfig.Type nodeType, String id, boolean createuniquename, InFolderConfig inFolderConfig,
+                      OutFolderConfig outFolderConfig, LocalStoreConfig localStoreConfig)
     {
         if (nodeType == null || id == null || inFolderConfig == null || outFolderConfig == null)
         {
@@ -45,32 +47,43 @@ public class NodeConfig
         this.createuniquename = createuniquename;
         this.inFolderConfig = inFolderConfig;
         this.outFolderConfig = outFolderConfig;
+        this.localStoreConfig = localStoreConfig;
     }
-
 
     public String getId()
     {
         return id;
     }
 
-
     public Type getNodeType()
     {
         return nodeType;
     }
+
 
     public boolean isCreateuniquename()
     {
         return createuniquename;
     }
 
-    public OutFolderConfig getOutFolder()
+
+    public OutFolderConfig getOutFolderConfig()
     {
         return outFolderConfig;
     }
 
-    public InFolderConfig getInFolder()
+    public InFolderConfig getInFolderConfig()
     {
         return inFolderConfig;
     }
+
+    /**
+     * Getter.
+     * @return
+     */
+    public LocalStoreConfig getLocalStoreConfig()
+    {
+        return localStoreConfig;
+    }
+
 }

@@ -2,7 +2,6 @@ package org.grouter.core.config;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
-import org.grouter.core.util.file.FileUtils;
 
 import java.io.File;
 
@@ -11,13 +10,13 @@ import java.io.File;
  */
 public class OutFolderConfig
 {
-    private File outFolderPath;
+    private File outPath;
     private static Logger logger = Logger.getLogger(OutFolderConfig.class);
 
     /**
      * @param outFolderPath
-     * @throws IllegalArgumentException if outFolderPath == null
-     * @throws IllegalArgumentException if outFolderPath == null
+     * @throws IllegalArgumentException if outPath == null
+     * @throws IllegalArgumentException if outPath == null
      */
     public OutFolderConfig(File outFolderPath)
     {
@@ -25,7 +24,7 @@ public class OutFolderConfig
         {
             throw new IllegalArgumentException("OutFolderPath must be valid :" + outFolderPath);
         }
-        this.outFolderPath = outFolderPath;
+        this.outPath = outFolderPath;
     }
 
     /**
@@ -33,9 +32,9 @@ public class OutFolderConfig
      *
      * @return
      */
-    public File getOutFolderPath()
+    public File getOutPath()
     {
-        return outFolderPath;
+        return outPath;
     }
 
     /**

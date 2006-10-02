@@ -1,35 +1,19 @@
 package org.grouter.core.config;
 
 /**
- * Class description.
+ * Created by IntelliJ IDEA.
+ * User: geopol
+ * Date: Sep 12, 2006
+ * Time: 3:24:29 PM
+ * To change this template use File | Settings | File Templates.
  */
 public class ArchiveHandlerConfig
 {
-    CronJobConfig cronJobConfig;
+    private CronJobConfig cronJobConfig;
 
 
-    /**
-     * Constructor.
-     * 
-     * @param cronJobConfig
-     * @throws IllegalArgumentException if cronJobConfig == null
-     */
     public ArchiveHandlerConfig(CronJobConfig cronJobConfig)
     {
-        if(cronJobConfig == null)
-        {
-            throw new IllegalArgumentException("An ArchiveHandler must have a valid cron job intervall. Was : " + cronJobConfig);
-        }
         this.cronJobConfig = cronJobConfig;
     }
-
-    /**
-     * Getter.
-     * @return
-     */
-    public CronJobConfig getCronJob()
-    {
-        return cronJobConfig;
-    }
-
 }

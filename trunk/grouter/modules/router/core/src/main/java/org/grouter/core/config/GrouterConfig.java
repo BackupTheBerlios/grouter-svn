@@ -9,26 +9,29 @@ package org.grouter.core.config;
  */
 public class GrouterConfig
 {
+    private String name;
     private GlobalConfig globalConfig;
     private NodeConfig[] nodeConfigs;
 
     /**
      * Constructor for grouter config.
      *
+     * @param name
      * @param nodeConfigs
      * @param globalConfig
+     *
      * @throws IllegalArgumentException if nodeConfigs == null || globalConfig == null
      */
-    public GrouterConfig(NodeConfig[] nodeConfigs, GlobalConfig globalConfig)
+    public GrouterConfig(String name, NodeConfig[] nodeConfigs, GlobalConfig globalConfig)
     {
-        if(nodeConfigs == null || globalConfig == null)
+        if(name == null || nodeConfigs == null || globalConfig == null)
         {
             throw new IllegalArgumentException("Nodes or globalsettings elements can not be null!");
         }
+        this.name = name;
         this.nodeConfigs = nodeConfigs;
         this.globalConfig = globalConfig;
     }
-
 
     /**
      * Getter.
@@ -39,6 +42,7 @@ public class GrouterConfig
         return nodeConfigs;
     }
 
+
     /**
      * Getter.
      * @return
@@ -46,6 +50,15 @@ public class GrouterConfig
     public GlobalConfig getGlobalSettingsConfig()
     {
         return globalConfig;
+    }
+
+    /**
+     * Getter.
+     * @return
+     */
+    public String getName()
+    {
+        return name;
     }
 
 }
