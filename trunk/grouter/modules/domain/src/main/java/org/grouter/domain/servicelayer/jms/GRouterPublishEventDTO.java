@@ -4,13 +4,7 @@ import org.grouter.domain.Message;
 
 import java.io.Serializable;
 
-/**
- * Created by IntelliJ IDEA.
- * User: geopol
- * Date: Sep 27, 2006
- * Time: 11:13:48 AM
- * To change this template use File | Settings | File Templates.
- */
+
 public class GRouterPublishEventDTO implements Serializable
 {
     String grouterId;

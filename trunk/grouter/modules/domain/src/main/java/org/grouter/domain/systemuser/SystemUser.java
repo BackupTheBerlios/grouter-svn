@@ -1,8 +1,6 @@
 package org.grouter.domain.systemuser;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -23,9 +21,12 @@ public class SystemUser implements Serializable
     @Column
     private String name;
     // No duplicate elements and the ordering is not relevant for us -> Set
+    @OneToMany
     private Set<SystemGroup> groups = new HashSet();
     // No duplicate elements and the ordering is not relevant for us -> Set
+    @OneToMany
     private Set<Password> passwords = new HashSet();
+    @OneToOne
     private Password currentPassword ;
     @Column
     private String fullName ;

@@ -1,9 +1,8 @@
 package org.grouter.domain;
 
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Entity;
-import javax.persistence.Column;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -11,16 +10,13 @@ import java.util.HashSet;
  * Domain class.
  * @Author Georges Polyzois
  */
-@Entity
+//@Entity
 public class Country
 {
-    @Id
+
     private String id;
-    @Column
     private String name;
-    @Column
     private String timeZone;
-    @OneToMany
     private Set<Address> addresses = new HashSet();
 
     
@@ -34,7 +30,10 @@ public class Country
 		this.addresses = addresses;
 	}
 
-	public String getId()
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    public String getId()
 	{
 		return id;
 	}

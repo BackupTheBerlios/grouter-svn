@@ -10,4 +10,6 @@ package org.grouter.domain.dao.ejb3;
 public interface PersistenceContextName
 {
     public final static String PERSISTENCE ="grouterDomain";
+
+    public final static String JNDI_ENTITYMANAGER = "java:/grouterDomain";
 }

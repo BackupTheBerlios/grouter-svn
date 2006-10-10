@@ -24,22 +24,24 @@ import javax.naming.InitialContext;
 })
 public class GRouterQueueMDB implements MessageListener
 {
-    //(name="ear/GRouterBean/local")
-
     //@JndiInject(jndiName = ExternalSystemsLocal.LOOKUP_NAME)
     //private ExternalSystemsHandler externalSystemsHandler;
 
     private static Logger logger = Logger.getLogger(GRouterQueueMDB.class);
 
+    
+
+    // This does not work in jboss...
     //@EJB
     //private GRouterLocal gRouterLocal;
 
+    @SuppressWarnings({"EjbErrorInspection"})
     @Resource
     private SessionContext sc;
-    private static final String DOMAIN_GROUTER_BEAN_LOCAL = "domain/GRouterBean/local";
+
 
     /**
-     * Method called when new message arrives on destination.
+     * Method called when new message arrives on destination. Callback from JMS container.
      *
      * @param receivedMessage
      */
@@ -64,21 +66,29 @@ public class GRouterQueueMDB implements MessageListener
         }
     }
 
+    /**
+     * Call session ejb for processing of event.
+     * 
+     * @param objectMessage
+     * @throws JMSException
+     */
     private void persist(ObjectMessage objectMessage)
             throws JMSException
     {
         GRouterPublishEventDTO eventDTO = (GRouterPublishEventDTO) objectMessage.getObject();
         logger.debug("Got GRouterPublishEventDTO message");
-        // logger.debug("Messages : " + printMessages(eventDTO.getMessages()));
-        logger.debug("Calling bean");
-
-
-        GRouterLocal gRouterLocal = (GRouterLocal)sc.lookup(DOMAIN_GROUTER_BEAN_LOCAL);
+        logger.debug("Messages : " + printMessages(eventDTO.getMessages()));
+        GRouterLocal gRouterLocal = (GRouterLocal)sc.lookup( GRouterLocal.DOMAIN_GROUTER_BEAN_LOCAL );
         gRouterLocal.persistMessageAndBroadcastEvent(eventDTO);
-        //      gRouterLocal.persistMessageAndBroadcastEvent(null);
     }
 
 
+    /**
+     * Util method.
+     * 
+     * @param messages
+     * @return
+     */
     private String printMessages(org.grouter.domain.Message[] messages)
     {
         StringBuffer stringBuffer = new StringBuffer();

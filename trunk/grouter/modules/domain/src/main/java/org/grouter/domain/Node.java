@@ -2,34 +2,34 @@ package org.grouter.domain;
 
 import org.apache.log4j.Logger;
 import org.grouter.domain.systemuser.SystemUser;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
+import java.util.HashSet;
 import java.sql.Timestamp;
+import java.io.Serializable;
 
 
 /**
  * Domain class.
+ *
  * @Author Georges Polyzois
  */
-@javax.persistence.Entity
-public class Node
+@Entity
+@Table(name = "NODE")
+public class Node implements Serializable
 {
+    @Transient
     private static Logger logger = Logger.getLogger(Node.class);
-    @Id
     private String id;
-    @Column
     private String name;
-    // No duplicate elements and the ordering is not relevant for us -> Set
-    private Set<Message> messages;
-    @ManyToOne
-    private Message message;
-    @Column
+    private Set<Message> messages = new HashSet<Message>();
     private Timestamp modifiedOn;
-    @ManyToOne
+    private Router router;
+
+
+    @Transient
     private SystemUser modifiedBySystemUser;
 
     public Node()
@@ -37,15 +37,27 @@ public class Node
     }
 
 
-    public Node(String id, String name, Set<Message> messages, Timestamp modifiedOn, SystemUser modifiedBySystemUser)
+    public Node(String name, Set<Message> messages, Timestamp modifiedOn, SystemUser modifiedBySystemUser)
     {
-        this.id = id;
         this.name = name;
         this.messages = messages;
         this.modifiedOn = modifiedOn;
         this.modifiedBySystemUser = modifiedBySystemUser;
     }
 
+
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
 
     public Timestamp getModifiedOn()
     {
@@ -62,12 +74,16 @@ public class Node
         return modifiedBySystemUser;
     }
 
+
     public void setModifiedBySystemUser(SystemUser modifiedBySystemUser)
     {
         this.modifiedBySystemUser = modifiedBySystemUser;
     }
 
-
+    @OneToMany
+    @JoinTable(name = "NODE_MESSAGE",
+            joinColumns = {@JoinColumn(name = "NODETTEST_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "MESSAGETEST_ID")})
     public Set<Message> getMessages()
     {
         return messages;
@@ -76,16 +92,6 @@ public class Node
     public void setMessages(Set<Message> messages)
     {
         this.messages = messages;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
     }
 
     public String getName()
@@ -97,4 +103,17 @@ public class Node
     {
         this.name = name;
     }
+
+
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    public Router getRouter()
+    {
+        return router;
+    }
+
+    public void setRouter(Router router)
+    {
+        this.router = router;
+    }
+
 }

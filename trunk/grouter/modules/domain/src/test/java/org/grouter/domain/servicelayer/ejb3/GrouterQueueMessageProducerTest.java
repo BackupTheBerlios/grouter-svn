@@ -1,8 +1,8 @@
 package org.grouter.domain.servicelayer.ejb3;
 
-import org.grouter.common.jms.examples.JMSUtils;
 import org.grouter.common.jms.QueueDestination;
 import org.grouter.common.jms.AcknowledgeMode;
+import org.grouter.common.jndi.JNDIUtils;
 import org.grouter.domain.Message;
 import org.grouter.domain.Sender;
 import org.grouter.domain.Receiver;
@@ -52,7 +52,7 @@ public class GrouterQueueMessageProducerTest implements Runnable
      */
     private void setupMessaging() throws JMSException, NamingException
     {
-        InitialContext iniCtx = JMSUtils.getJbossInitialContext();
+        InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
         queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory", null, iniCtx, 4000, null, AcknowledgeMode.NONE);
         queueDestination.bind();
     }

@@ -1,22 +1,35 @@
 package org.grouter.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "RECEIVER")
 public class Receiver implements Serializable
 {
-    @ManyToOne
-    private Address address;
-    @Id
     private String id;
-    @Column
+    private Address address;
     private String name;
-    @OneToMany
     private Set<Message> messages = new HashSet();
 
+    public Receiver()
+    {
+    }
+
+
+    /**
+     * "mappedBy" makes Hibernate ignore changes made to this class - Receivers -
+     * and that the other end of the association, the rec reivers collection in the Message
+     * class, is the representation that should be synchronized with the database if you link
+     * instances in Java code.
+     * 
+     * @return
+     */
+    @ManyToMany(mappedBy = "receivers")
     public Set<Message> getMessages()
     {
         return messages;
@@ -27,16 +40,18 @@ public class Receiver implements Serializable
         this.messages = messages;
     }
 
-    public Receiver()
-    {
-    }
-
     public Receiver(String name)
     {
         this.name = name;
     }
 
+    @Transient
+    public Address getAddress()
+    {
+        return address;
+    }
 
+    @Column
     public String getName()
     {
         return name;
@@ -47,16 +62,15 @@ public class Receiver implements Serializable
         this.name = name;
     }
 
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    //Hibernate specific...
     public String getId()
     {
         return id;
     }
 
-
-    private void setId(String id)
-    {
-        this.id = id;
-    }
 
     public void addToMessages(Message message)
     {
@@ -70,5 +84,15 @@ public class Receiver implements Serializable
         //message.removeFromReceivers(this);
     }
 
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
+    public void setAddress(Address address)
+    {
+        this.address = address;
+    }
 
 }

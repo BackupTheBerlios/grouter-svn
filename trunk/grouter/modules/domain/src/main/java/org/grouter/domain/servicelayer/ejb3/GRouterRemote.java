@@ -15,6 +15,9 @@ import javax.ejb.Remote;
 @Remote
 public interface GRouterRemote extends GRouter
 {
+    //Deployed in ear with name daomin -> prepend ear name to jndi name
+     public static final String DOMAIN_GROUTER_BEAN_REMOTE = "domain/GRouterBean/remote";
+
 
     /**
      * Persist into domain and broadcast to clients on a topic to inform of new event.

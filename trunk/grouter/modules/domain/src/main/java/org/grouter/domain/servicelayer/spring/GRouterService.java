@@ -54,6 +54,15 @@ public class GRouterService implements GRouter
         return messageDAO.createMessage(message);
     }
 
+    public Message findMessageById(String id)
+    {
+        if(id != null)
+        {
+            throw new IllegalArgumentException("Parameter can not be null");
+        }
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
     public Message findMessagesForNode(String nodeId)
     {

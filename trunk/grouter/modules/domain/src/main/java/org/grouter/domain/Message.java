@@ -1,10 +1,8 @@
 package org.grouter.domain;
 
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.annotation.Generated;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.sql.Timestamp;
@@ -13,37 +11,57 @@ import java.io.Serializable;
 
 /**
  * Domain class.
+ * <p/>
+ * The Collection type may contain duplicates while the Set type does not contain duplicates.
+ * <p/>
+ * A Message can have one and only one Sender. We have two tables:
+ * Tables:
+ * MESSAGE
+ * --------------------------------------------------------------
+ * ID  |   NAME  |   CREATIONTIME   | message |    SENDERID (FK)
+ * <p/>
+ * SENDER
+ * --------------------------------------------------------------
+ * ID |Êname
+ * <p/>
+ * <p/>
+ * A Sender has a Set of messages and a Message has one Sender ->
+ * The Sender has a OneToMany relationship with the Message and the Message
+ * has a ManyToOne relationship with the Sender.
+ * <p/>
+ * 0..*               1
+ * <-------------------
+ * Message                      Sender
+ * ------------------->
+ * 1                   1
  *
  * @Author Georges Polyzois
  */
+
 @Entity
+@Table(name = "MESSAGE")
 public class Message implements Serializable
 {
-    @Id
-    @Generated("AUTO")
     private String id;
-    @Column( nullable = false)
-    private String message;
-    // No duplicate elements and the ordering is not relevant for us -> Set
     private Set<Receiver> receivers = new HashSet();
-    @ManyToOne
     private Sender sender;
-    @Column
+    private String message;
     private Timestamp creationTimestamp;
-    @ManyToOne()
     private Node node;
 
     public Message()
-    {}
+    {
+    }
 
     /**
      * Constructor for a Message. Must add senders and receivers using addXX methods
      * for domain object to be complete.
+     *
      * @param amessage
      */
     public Message(String amessage)
     {
-        if (amessage == null )
+        if (amessage == null)
         {
             throw new IllegalArgumentException("Non null parameters not allowed for this domain object.");
         }
@@ -53,26 +71,32 @@ public class Message implements Serializable
 
     /**
      * Fully constructs a Message object.
+     *
      * @param message
      * @param receivers
      * @param sender
      */
-    public Message(String message, Set<Receiver> receivers, Sender sender)
+    public Message(String message, Set<Receiver> receivers, Sender sender, Node node)
     {
-        if (message == null || receivers == null || sender == null)
+        if (message == null || receivers == null || sender == null || node == null)
         {
             throw new IllegalArgumentException("Non null parameters not allowed for this domain object.");
         }
         this.message = message;
         this.receivers = receivers;
         this.sender = sender;
+        this.node = node;
     }
 
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
     {
         return id;
     }
 
+    @Column(nullable = false)
     public String getMessage()
     {
         return message;
@@ -84,11 +108,15 @@ public class Message implements Serializable
     }
 
     /**
-     * Prevent direct access to this Set.
+     * No duplicate elements and the ordering is not relevant for us -> Set
      *
      * @return Set<Receiver>
      */
-    protected Set<Receiver> getReceivers()
+    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinTable(name = "RECEIVER_MESSAGE",
+            joinColumns = {@JoinColumn(name = "MESSAGE_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "RECEIVER_ID")})
+    public Set<Receiver> getReceivers()
     {
         return receivers;
     }
@@ -98,11 +126,13 @@ public class Message implements Serializable
      *
      * @param receivers
      */
-    protected void setReceivers(Set<Receiver> receivers)
+    public void setReceivers(Set<Receiver> receivers)
     {
         this.receivers = receivers;
     }
 
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+ //   @JoinColumn(name = "SENDER_ID", nullable = true)
     public Sender getSender()
     {
         return sender;
@@ -113,20 +143,15 @@ public class Message implements Serializable
         this.sender = sender;
     }
 
-    private void setId(String id)
-    {
-        this.id = id;
-    }
-
     /**
-     * Enforce bi-directionality in Java - nothing special but needs to be done (in cotrast to ejb cmp).
+     * Enforce bi-directionality in Java - needs to be done manually (in cotrast to ejb cmp).
      *
      * @param receiver
      */
     public void addToReceivers(Receiver receiver)
     {
         this.getReceivers().add(receiver);
-        //receiver.addToMessages(this);
+        receiver.addToMessages(this);
     }
 
     /**
@@ -137,7 +162,7 @@ public class Message implements Serializable
     public void removeFromReceivers(Receiver receiver)
     {
         this.getReceivers().remove(receiver);
-        //receiver.removeFromMessages(this);
+        receiver.removeFromMessages(this);
     }
 
 
@@ -152,14 +177,15 @@ public class Message implements Serializable
     }
 
 
-
-
-
+    @Column
     public Timestamp getCreationTimestamp()
     {
         return creationTimestamp;
     }
 
+    //    @ManyToOne()
+    @ManyToOne( cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "NODE_ID", nullable = true)
     public Node getNode()
     {
         return node;
@@ -173,6 +199,12 @@ public class Message implements Serializable
     public void setCreationTimestamp(Timestamp creationTimestamp)
     {
         this.creationTimestamp = creationTimestamp;
+    }
+
+
+    public void setId(String id)
+    {
+        this.id = id;
     }
 
 }

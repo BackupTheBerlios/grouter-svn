@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
-   version="1.0">
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+             version="1.0">
     <persistence-unit name="grouterDomain" transaction-type="JTA">
         <description>Data source for Grouter</description>
         <jta-data-source>java:/DefaultDS</jta-data-source>
-        <!--jar-file>../MyApp.jar</jar-file>
-        <class>org.grouter.domain.Message</class>
-        <class>org.acme.Person</class>
-        <class>org.acme.Address</class-->
+        <!--jar-file>../MyApp.jar</jar-file-->
+        <!--  JBoss scans all so this is useless
+        class>org.grouter.domain.Message</class>
+        <class>org.grouter.domain.Sender</class>
+        <class>org.grouter.domain.Receiver</class>
+        <class>org.grouter.domain.Node</class>
+        <class>org.grouter.domain.Router</class -->
         <properties>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
             <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
             <property name="hibernate.connection.url" value="jdbc:hsqldb:hsql://127.0.0.1:9001/grouter_alias"/>
             <property name="hibernate.connection.username" value="sa"/>
             <property name="hibernate.connection.password" value=""/>
+
+
+            
+            <property name="jboss.entity.manager.jndi.name" value="java:/grouterDomain"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/grouterDomainFactory"/>
 
             <!--property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
            <property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
@@ -45,12 +53,14 @@
             <!-- Print SQL to stdout. -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-
             <property name="hibernate.use_sql_comments" value="true"/>
 
             <!-- Transaction integration -->
-            <property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
-            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+
+            <!--property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.CMTTransactionFactory"/-->
+
+            <!--property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/ -->
+            <!--property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/-->
 
             <!-- New for Hibernate 3.1!!!. Bind the getCurrentSession() method to the thread (don't use for EJBs) -->
             <!--property name="current_session_context_class">thread</property -->

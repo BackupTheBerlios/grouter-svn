@@ -23,29 +23,46 @@
         </property>
     </bean>
 
+
     <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+    <!-- Use this if not using annotations!! -->
+    <!--bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource">
+            <ref local="dataSourceHsqldb"/>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>org.grouter.domain.Message</value>
+                <value>org.grouter.domain.Sender</value>
+                <value>org.grouter.domain.Receiver</value>
+                <value>org.grouter.domain.Router</value>
+                <value>org.grouter.domain.Node</value>
+            </list>
+        </property>
+
+        <!--bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+             <property name="dataSource">
             <ref local="dataSourceHsqldb"/>
         </property>
         <property name="mappingResources">
             <list>
-                <value>org/grouter/domain/systemuser/SystemUser.hbm.xml</value>
-                <value>org/grouter/domain/systemuser/SystemGroup.hbm.xml</value>
-                <value>org/grouter/domain/systemuser/Password.hbm.xml</value>
                 <value>org/grouter/domain/Message.hbm.xml</value>
-                <value>org/grouter/domain/Receiver.hbm.xml</value>
                 <value>org/grouter/domain/Sender.hbm.xml</value>
-                <value>org/grouter/domain/Node.hbm.xml</value>
+                <value>org/grouter/domain/Receiver.hbm.xml</value>
+                <value>org/grouter/domain/Address.hbm.xml</value>
             </list>
-        </property>
+        </property-->
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-                <!--prop key="hibernate.hbm2ddl.auto">create-drop</prop-->
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
                 <prop key="hibernate.connection.autocommit">true</prop>
                 <prop key="hibernate.current_session_context_class">thread</prop>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
             </props>
         </property>

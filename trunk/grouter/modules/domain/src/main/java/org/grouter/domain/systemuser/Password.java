@@ -1,18 +1,20 @@
 package org.grouter.domain.systemuser;
 
+import javax.persistence.*;
 
 
 /**
  * The user account password.
  */
 
+@Entity
 public class Password
 {
-    /** The ID of this password. */
+    @Id
     private Long id ;
-    /** The password itself. */
+    @Column
     private String password ;
-    /** A reference to the SystemUser that has this password. */
+    @ManyToOne
     private SystemUser systemUser ;
 
     /**
@@ -29,9 +31,9 @@ public class Password
      */
     public Password (SystemUser systemUser, String password)
     {
-        setPassword(password) ;
-        setSystemUser(systemUser) ;
-    }
+        this.systemUser = systemUser;
+        this.password = password;
+        }
 
     /**
      * Getter.
@@ -42,23 +44,6 @@ public class Password
         return systemUser ;
     }
 
-    /**
-     * Setter.
-     * @param systemUser The SystemUser that has this password. Must be non-null.
-     */
-    public void setSystemUser (SystemUser systemUser)
-    {
-        this.systemUser = systemUser ;
-    }
-
-    /**
-     * Setter.
-     * @param id The ID of this password.
-     */
-    public void setId (Long id)
-    {
-        this.id = id ;
-    }
 
     /**
      * Getter.
@@ -69,14 +54,6 @@ public class Password
         return id ;
     }
 
-    /**
-     * Setter.
-     * @param password The users password. Must be non-null.
-     */
-    public void setPassword (String password)
-    {
-        this.password = password ;
-    }
 
     /**
      * Getter.

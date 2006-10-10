@@ -1,9 +1,8 @@
 package org.grouter.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Id;
-import javax.persistence.Column;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.io.Serializable;
@@ -11,18 +10,17 @@ import java.io.Serializable;
 
 /**
  * Domain class.
+ *
  * @Author Georges Polyzois
  */
 @Entity
+@Table(name = "SENDER")
 public class Sender implements Serializable
 {
-    @ManyToOne
-    private Address address;
-    @Id
     private String id;
-    @Column
+    private Address address;
     private String name;
-    // No duplicate elements and the ordering is not relevant for us -> Set
+
     private Set<Message> messages = new HashSet();
 
     public Sender()
@@ -35,6 +33,29 @@ public class Sender implements Serializable
         this.id = id;
     }
 
+    /**
+     * No duplicate elements and the ordering is not relevant for us so we use a Set<Message>
+     *
+     * To map this relationship without an extra join table use this:
+     * @OneToMany
+     * @JoinColumn(name="SENDER_ID")
+     * else if you want ot use a join table do as we have done below. An extra join table is good
+     * if any future requirements may need a many to many relationship, but of course lessens
+     * the performance for queries with a lot of joins.
+     *
+     * @return
+     */
+    /*
+     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+@JoinTable(name = "USER_CONTACT_XREF",
+joinColumns = { @JoinColumn(name = "user_fk", referencedColumnName = "user_id") },
+inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnName = "contact_info_id") })
+     */
+    
+    @OneToMany
+    @JoinTable(name = "SENDER_MESSAGE",
+            joinColumns = {@JoinColumn(name = "SENDER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "MESSAGE_ID")})
     public Set<Message> getMessages()
     {
         return messages;
@@ -50,6 +71,7 @@ public class Sender implements Serializable
         this.id = id;
     }
 
+    @Column
     public String getName()
     {
         return name;
@@ -65,9 +87,25 @@ public class Sender implements Serializable
         this.name = name;
     }
 
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
     {
         return id;
+    }
+
+
+    //@ManyToOne
+    @Transient
+    public Address getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(Address address)
+    {
+        this.address = address;
     }
 
     /**

@@ -16,4 +16,6 @@ import javax.ejb.Remote;
 public interface GRouter
 {
     Message createMessage(Message message);
+
+    Message findMessageById(String id);
 }

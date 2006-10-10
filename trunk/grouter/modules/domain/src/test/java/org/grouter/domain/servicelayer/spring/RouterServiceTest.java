@@ -7,7 +7,8 @@ package org.grouter.domain.servicelayer.spring;
  */
 
 import org.grouter.domain.servicelayer.spring.GRouterService;
-import org.grouter.domain.servicelayer.spring.AbstractGrouterServiceInit;
+import org.grouter.domain.servicelayer.AbstractRouterServiceInit;
+import org.grouter.domain.servicelayer.GRouter;
 import org.grouter.domain.systemuser.SystemUser;
 import org.grouter.domain.Message;
 import org.grouter.domain.Sender;
@@ -17,9 +18,16 @@ import org.apache.commons.logging.LogFactory;
 
 import java.sql.Timestamp;
 
-public class GRouterServiceTest extends AbstractGrouterServiceInit {
-    private static Log log = LogFactory.getLog(GRouterServiceTest.class);
+public class RouterServiceTest extends AbstractRouterServiceInit
+{
+    private static Log logger = LogFactory.getLog(RouterServiceTest.class);
     private final static String beanName = "messageServiceManager";
+
+
+    public RouterServiceTest()
+    {
+        super();
+    }
 
     /**
      * @return
@@ -29,7 +37,7 @@ public class GRouterServiceTest extends AbstractGrouterServiceInit {
         GRouterService gRouterService = (GRouterService) factory.getBean(beanName);
         systemUserPersisted = gRouterService.createSystemUser(systemUser);
         assertNotNull(systemUserPersisted);
-        log.debug("## Created systemUser with id : " + systemUserPersisted.getId());
+        logger.debug("## Created systemUser with id : " + systemUserPersisted.getId());
         return systemUserPersisted;
     }
 
@@ -49,9 +57,9 @@ public class GRouterServiceTest extends AbstractGrouterServiceInit {
      */
     public void testCreateMessage() throws Exception {
         Message messagePersisted = null;
-        GRouterService gRouterService = (GRouterService) factory.getBean(beanName);
+        GRouter gRouterService = (GRouter) factory.getBean(beanName);
         messagePersisted = gRouterService.createMessage(message);
-        log.debug("## Saved instance with id : " + messagePersisted.getId() + " timestamp " + messagePersisted.getCreationTimestamp());
+        logger.debug("## Saved instance with id : " + messagePersisted.getId() + " timestamp " + messagePersisted.getCreationTimestamp());
         assertNotNull(messagePersisted.getId());
     }
 
@@ -66,9 +74,9 @@ public class GRouterServiceTest extends AbstractGrouterServiceInit {
         Receiver receiver = new Receiver("A test receiver never to be persisted");
         localmessage.addToReceivers(receiver);
         localmessage.setSender(sender);
-        log.debug("##" + timestamp);
+        logger.debug("##" + timestamp);
         localmessage.setCreationTimestamp(timestamp);
-        GRouterService gRouterService = (GRouterService) factory.getBean(beanName);
+        GRouter gRouterService = (GRouter) factory.getBean(beanName);
         try {
             Message messagePersisted = gRouterService.createMessage(localmessage);
         }
@@ -86,7 +94,7 @@ public class GRouterServiceTest extends AbstractGrouterServiceInit {
         assertNotNull(systemUserPersisted);
 
         GRouterService gRouterService = (GRouterService) factory.getBean(beanName);
-        log.debug("## Doing find on userid :" + systemUserPersisted.getId());
+        logger.debug("## Doing find on userid :" + systemUserPersisted.getId());
         SystemUser systemUserFromSearch = gRouterService.findSystemUser(systemUserPersisted.getId());
         assertNull(systemUserFromSearch);
 

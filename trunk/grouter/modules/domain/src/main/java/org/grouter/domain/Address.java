@@ -1,65 +1,71 @@
 package org.grouter.domain;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
  * Domain class.
+ *
  * @Author Georges Polyzois
  */
 @Entity
-public class Address
+public class Address implements Serializable
 {
-    @Id
     private String id;
-    @Column
     private String name;
-    @Column
     private String address;
-    @ManyToOne
+    @Transient
     private Country country;
 
-	public String getId()
-	{
-		return id;
-	}
+    public Address()
+    {
+    }
 
-	public void setId(String id)
-	{
-		this.id = id;
-	}
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    public String getId()
+    {
+        return id;
+    }
 
-	public String getName()
-	{
-		return name;
-	}
+    public void setId(String id)
+    {
+        this.id = id;
+    }
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public String getAddress()
-	{
-		return address;
-	}
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
-	public void setAddress(String address)
-	{
-		this.address = address;
-	}
+    public String getAddress()
+    {
+        return address;
+    }
 
-	public Country getCountry()
-	{
-		return country;
-	}
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
 
-	public void setCountry(Country country)
-	{
-		this.country = country;
-	}
+    @Transient
+    public Country getCountry()
+    {
+        return country;
+    }
+
+    public void setCountry(Country country)
+    {
+        this.country = country;
+    }
 
 }

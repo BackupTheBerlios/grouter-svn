@@ -3,27 +3,25 @@ package org.grouter.domain.dao.ejb3;
 import org.grouter.domain.dao.DAOFactory;
 import org.grouter.domain.dao.MessageDAO;
 import org.grouter.domain.dao.SystemUserDAO;
-import org.grouter.domain.dao.hibernate.MessageDAOHibernate;
 import org.grouter.domain.dao.hibernate.SystemUserDAOHibernate;
-import org.grouter.common.hibernate.HibernateUtilContextAware;
-import org.hibernate.Session;
 
+
+/**
+ * All DAOs for ejb based access are declared in here.
+ *
+ * @author Georges Polyzois
+ */
 public class Ejb3DAOFactory extends DAOFactory
 {
-
-    protected Session getCurrentSession()
-    {
-        return HibernateUtilContextAware.getSessionFactory().getCurrentSession();
-    }
-
+  
     // Add your DAO interfaces below here
     public MessageDAO getMessageDAO()
     {
-        return new MessageDAOHibernate(getCurrentSession());
+        return new MessageDAOBean();
     }
 
     public SystemUserDAO getSystemUserDAO()
     {
-        return new SystemUserDAOHibernate(getCurrentSession());
+        return new SystemUserDAOHibernate();
     }
 }

@@ -1,58 +1,58 @@
 package org.grouter.domain;
 
 import org.apache.log4j.Logger;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.sql.Timestamp;
+import java.io.Serializable;
 
 
 /**
  * Domain class - root entity.
+ *
  * @Author Georges Polyzois
  */
 @Entity
-@Table(name="GROUTER")
-public class GRouter
+@Table(name = "ROUTER")
+public class Router implements Serializable
 {
-    private static Logger logger = Logger.getLogger(GRouter.class);
-    @Id
+    private static Logger logger = Logger.getLogger(Router.class);
     private String id;
-    @Column(name="NAME",nullable = false,length = 255)
     private String name;
-    @OneToMany
     private Set<Node> nodes = new HashSet();
-    @Column
     private Timestamp startedOn;
-    @Column
     private long upTime;
 
 
     /**
      * Constructor.
      */
-    public GRouter()
+    public Router()
     {
     }
 
-    /**
-     * Full constructor.
-     * @param id
-     * @param name
-     * @param nodes
-     * @param startedOn
-     * @param upTime
-     */
-    public GRouter(String id, String name, Set<Node> nodes, Timestamp startedOn, long upTime)
+
+
+    public Router(String name, Set<Node> nodes, Timestamp startedOn, long upTime)
     {
-        this.id = id;
         this.name = name;
         this.nodes = nodes;
         this.startedOn = startedOn;
         this.upTime = upTime;
     }
 
+
+
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    public String getId()
+    {
+        return id;
+    }
 
 
     public Timestamp getStartedOn()
@@ -77,6 +77,14 @@ public class GRouter
 
 
 
+
+    //
+ /*    @OneToMany
+    @JoinTable(name = "ROUTER_NODE",
+            joinColumns = {@JoinColumn(name = "ROUTER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "NODE_ID")})*/
+    @OneToMany
+    @JoinColumn(name = "ROUTER_ID", nullable = true)
     public Set<Node> getNodes()
     {
         return nodes;
@@ -87,10 +95,6 @@ public class GRouter
         this.nodes = nodes;
     }
 
-    public String getId()
-    {
-        return id;
-    }
 
     public void setId(String id)
     {
