@@ -27,7 +27,7 @@ public class JNDIUtils
     /**
      * Print out all JNDI variables for provided Context.
      *
-     * @param ctx Context
+     * @param ctx     Context
      * @param alogger if null it will usethis class logger
      */
     public static void printJNDI(Context ctx, Logger alogger)
@@ -42,7 +42,7 @@ public class JNDIUtils
             while (it.hasNext())
             {
                 String key = (String) it.next();
-                alogger.info("(key,value) = (" + key + "," +  (table.get(key)) + ")");
+                alogger.info("(key,value) = (" + key + "," + (table.get(key)) + ")");
             }
         } catch (NamingException ex)
         {
@@ -53,7 +53,7 @@ public class JNDIUtils
     /**
      * Print out all JNDI variables for provided Context.
      *
-     * @param ctx Context
+     * @param ctx     Context
      * @param alogger if null it will usethis class logger
      */
     public static void printJNDI(Context ctx, final Log alogger)
@@ -85,36 +85,71 @@ public class JNDIUtils
         }
         try
         {
-            System.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.commons.naming.java.javaURLContextFactory");
-            System.setProperty(Context.URL_PKG_PREFIXES,"org.apache.naming");
+            System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.commons.naming.java.javaURLContextFactory");
+            System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming");
 
             Iterator<BindingItem> bindingItemIterator = bindings.iterator();
-            while(bindingItemIterator.hasNext())
+            while (bindingItemIterator.hasNext())
             {
                 BindingItem item = bindingItemIterator.next();
                 InitialContext initialContext = new InitialContext();
                 logger.debug("Creating component context : " + item.getJndipath()[0]);
                 Context compContext = initialContext.createSubcontext(item.getJndipath()[0]);
                 logger.debug("Creating environment context : " + item.getJndipath()[1]);
-                Context envContext =  compContext.createSubcontext(item.getJndipath()[1]);
+                Context envContext = compContext.createSubcontext(item.getJndipath()[1]);
                 logger.debug("Bidning : " + item.getJndiName() + " to implementation : " + item.getImplemenation());
                 envContext.bind(item.getJndiName(), item.getImplemenation());
-                printJNDI(envContext,logger);
+                printJNDI(envContext, logger);
                 //logger.debug(envContext.listBindings(initialContext.getNameInNamespace()));
             }
 
-
             /*InitialContext initialContext = new InitialContext();
-            Context compContext = initialContext.createSubcontext("jndi:hibernate");
-            Context envContext =  compContext.createSubcontext("mbeans");
-            envContext.bind("jndi_name", "www.apache.org");
-              */
+          Context compContext = initialContext.createSubcontext("jndi:hibernate");
+          Context envContext =  compContext.createSubcontext("mbeans");
+          envContext.bind("jndi_name", "www.apache.org");
+            */
 
         } catch (NamingException e)
         {
-            logger.error(e,e);
+            logger.error(e, e);
         }
 
+    }
+
+
+    /**
+     * Get context for local jboss server.
+     *
+     * @return
+     * @throws NamingException
+     */
+    public static InitialContext getJbossInitialContext()
+            throws NamingException
+    {
+        return getJbossInitialContextForServer(null);
+    }
+
+    /**
+     * Get context for remote jboss server.
+     *
+     * @param jndiUrl
+     * @return
+     * @throws NamingException
+     */
+    public static InitialContext getJbossInitialContextForServer(String jndiUrl)
+            throws NamingException
+    {
+
+        if (jndiUrl == null)
+        {
+            jndiUrl = "jnp://localhost:1099";
+        }
+        Hashtable hashtable = new Hashtable();
+        hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+        hashtable.put(Context.PROVIDER_URL, jndiUrl);
+        hashtable.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
+        InitialContext iniCtx = new InitialContext(hashtable);
+        return iniCtx;
     }
 
 

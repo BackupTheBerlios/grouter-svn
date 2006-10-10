@@ -1,6 +1,7 @@
 package org.grouter.common.jms.examples;
 
 import org.apache.log4j.Logger;
+import org.grouter.common.jndi.JNDIUtils;
 
 import javax.jms.*;
 import javax.naming.NamingException;
@@ -37,7 +38,7 @@ public class JBossQueueMessageProducer  extends JBossExample implements Runnable
      */
     private void setupMessaging() throws JMSException, NamingException
     {
-        InitialContext iniCtx = JMSUtils.getJbossInitialContext();
+        InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
         Object tmp = iniCtx.lookup("ConnectionFactory");
         QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
         conn = qcf.createQueueConnection();
