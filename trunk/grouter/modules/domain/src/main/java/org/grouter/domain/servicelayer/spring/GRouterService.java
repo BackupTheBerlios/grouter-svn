@@ -1,11 +1,11 @@
 package org.grouter.domain.servicelayer.spring;
 
-import static org.grouter.domain.dao.DAOFactory.FactoryType.HIBERNATESPRING;
-import org.grouter.domain.dao.SystemUserDAO;
-import org.grouter.domain.dao.MessageDAO;
-import org.grouter.domain.dao.DAOFactory;
-import org.grouter.domain.systemuser.SystemUser;
-import org.grouter.domain.Message;
+import static org.grouter.domain.daolayer.DAOFactory.FactoryType.HIBERNATESPRING;
+import org.grouter.domain.daolayer.SystemUserDAO;
+import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.daolayer.DAOFactory;
+import org.grouter.domain.entities.systemuser.SystemUser;
+import org.grouter.domain.entities.Message;
 import org.grouter.domain.servicelayer.GRouter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -1,7 +1,6 @@
 package org.grouter.domain.servicelayer.ejb3;
 
 import org.grouter.domain.servicelayer.GRouter;
-import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
 
 import javax.ejb.Local;
 
@@ -19,7 +18,7 @@ public interface GRouterLocal  extends GRouter
     
     /**
      * Persist into domain and broadcast to clients on a topic to inform of new event.
-     * @param dto
+     * @param message
      */
-    void persistMessageAndBroadcastEvent(GRouterPublishEventDTO dto);
+    //void persistMessageAndBroadcastEvent(Message message);
 }

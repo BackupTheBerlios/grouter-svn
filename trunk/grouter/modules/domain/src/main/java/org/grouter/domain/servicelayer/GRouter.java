@@ -1,6 +1,6 @@
 package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.Message;
+import org.grouter.domain.entities.Message;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,11 +11,12 @@ import org.grouter.domain.Message;
  */
 
 import javax.ejb.Remote;
+import javax.ejb.Local;
 
-
+@Remote
+@Local
 public interface GRouter
 {
     Message createMessage(Message message);
-
     Message findMessageById(String id);
 }

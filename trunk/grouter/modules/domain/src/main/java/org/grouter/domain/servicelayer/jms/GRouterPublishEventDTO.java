@@ -1,6 +1,6 @@
 package org.grouter.domain.servicelayer.jms;
 
-import org.grouter.domain.Message;
+import org.grouter.domain.entities.Message;
 
 import java.io.Serializable;
 

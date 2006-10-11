@@ -1,10 +1,9 @@
 package org.grouter.domain.servicelayer.ejb3;
 
-import org.grouter.domain.Message;
-import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
-import org.grouter.domain.dao.DAOFactory;
-import org.grouter.domain.dao.MessageDAO;
-import org.grouter.domain.dao.ejb3.PersistenceContextName;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.daolayer.DAOFactory;
+import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.daolayer.ejb3.PersistenceContextName;
 import org.apache.log4j.Logger;
 
 import javax.ejb.Stateless;
@@ -36,6 +35,12 @@ public class GRouterBean implements GRouterLocal, GRouterRemote
     public Message createMessage(Message message)
     {
         logger.debug("In createMessage.");
+        if(message == null )
+         {
+             logger.info("Got null event from router");
+             throw new IllegalArgumentException("Can not handle a null inparameter");
+         }
+    
         messageDAO = DAOFactory.getFactory(DAOFactory.FactoryType.EJB3_PERSISTENCE).getMessageDAO();
         return messageDAO.createMessage(message);
     }
@@ -59,19 +64,4 @@ public class GRouterBean implements GRouterLocal, GRouterRemote
         }
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void persistMessageAndBroadcastEvent(GRouterPublishEventDTO dto)
-    {
-        logger.debug("## In persistMessageAndBroadcastEvent");
-         if(dto == null || dto.getMessages() == null)
-          {
-              logger.info("Got null event from router");
-              throw new IllegalArgumentException("Can not handle a null inparameter");
-          }
-
-        createMessage(dto.getMessages());
-
-
-
-    }
 }

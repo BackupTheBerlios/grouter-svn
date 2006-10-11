@@ -1,19 +1,19 @@
 package org.grouter.domain.servicelayer.ejb3;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
 
 import javax.ejb.MessageDriven;
 import javax.ejb.ActivationConfigProperty;
-import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.jms.MessageListener;
-import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.annotation.Resource;
-import javax.naming.InitialContext;
 
+/**
+ * A Message Driven Bean registering for callbacks on a in queue, receiving events.
+ */
 
 @SuppressWarnings({"EjbErrors"})
 @MessageDriven(activationConfig =
@@ -51,7 +51,7 @@ public class GRouterQueueMDB implements MessageListener
         {
             ObjectMessage objectMessage = (ObjectMessage) receivedMessage;
             logger.debug("Got message : " + objectMessage.getObject());
-            if (objectMessage.getObject() instanceof GRouterPublishEventDTO)
+            if (objectMessage.getObject() instanceof org.grouter.domain.entities.Message)
             {
                 persist(objectMessage);
 
@@ -75,11 +75,10 @@ public class GRouterQueueMDB implements MessageListener
     private void persist(ObjectMessage objectMessage)
             throws JMSException
     {
-        GRouterPublishEventDTO eventDTO = (GRouterPublishEventDTO) objectMessage.getObject();
+        org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
         logger.debug("Got GRouterPublishEventDTO message");
-        logger.debug("Messages : " + printMessages(eventDTO.getMessages()));
         GRouterLocal gRouterLocal = (GRouterLocal)sc.lookup( GRouterLocal.DOMAIN_GROUTER_BEAN_LOCAL );
-        gRouterLocal.persistMessageAndBroadcastEvent(eventDTO);
+        gRouterLocal.createMessage(message);
     }
 
 
@@ -89,10 +88,10 @@ public class GRouterQueueMDB implements MessageListener
      * @param messages
      * @return
      */
-    private String printMessages(org.grouter.domain.Message[] messages)
+    private String printMessages(org.grouter.domain.entities.Message[] messages)
     {
         StringBuffer stringBuffer = new StringBuffer();
-        for (org.grouter.domain.Message message : messages)
+        for (org.grouter.domain.entities.Message message : messages)
         {
             stringBuffer.append(message.reflectionToString()).append("\n");
         }
