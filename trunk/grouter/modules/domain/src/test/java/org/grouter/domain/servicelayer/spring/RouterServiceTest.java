@@ -9,10 +9,10 @@ package org.grouter.domain.servicelayer.spring;
 import org.grouter.domain.servicelayer.spring.GRouterService;
 import org.grouter.domain.servicelayer.AbstractRouterServiceInit;
 import org.grouter.domain.servicelayer.GRouter;
-import org.grouter.domain.systemuser.SystemUser;
-import org.grouter.domain.Message;
-import org.grouter.domain.Sender;
-import org.grouter.domain.Receiver;
+import org.grouter.domain.entities.systemuser.SystemUser;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Sender;
+import org.grouter.domain.entities.Receiver;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

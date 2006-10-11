@@ -4,8 +4,8 @@ import junit.framework.TestCase;
 import org.grouter.common.logging.Log4JInit;
 import org.grouter.common.jndi.GlobalBeanLocator;
 import org.grouter.common.jndi.JNDIUtils;
-import org.grouter.domain.systemuser.SystemUser;
-import org.grouter.domain.*;
+import org.grouter.domain.entities.systemuser.SystemUser;
+import org.grouter.domain.entities.Message;
 import org.grouter.domain.servicelayer.ejb3.GRouterRemote;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,9 +17,6 @@ import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.HashSet;
-import java.sql.Timestamp;
 
 /**
  * Initialize Spring and setup up some basic data for unit tests.
@@ -32,8 +29,6 @@ public abstract class AbstractRouterServiceInit extends TestCase
     protected static BeanFactory factory;
     protected static SystemUser systemUser;
     protected static Message message;
-    protected static Node node;
-    protected static Router router;
     protected static Calendar inThreeDays = GregorianCalendar.getInstance();
     protected static Calendar inFiveDays = GregorianCalendar.getInstance();
     protected static Calendar nextWeek = GregorianCalendar.getInstance();
@@ -88,30 +83,6 @@ public abstract class AbstractRouterServiceInit extends TestCase
 
     private static void initMessage()
     {
-
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Sender sender = new Sender("A test sender");
-        message = new Message("A test message");
-        Receiver receiver = new Receiver("A test receiver");
-        message.addToReceivers(receiver);
-        message.setSender(sender);
-        logger.debug("##" + timestamp);
-        message.setCreationTimestamp(timestamp);
-        sender.addToMessages(message);
-
-        Set<Message> messages = new HashSet<Message>();
-        messages.add(message);
-
-        node = new Node("nodename", messages, timestamp, null);
-        message.setNode(node);
-
-
-        Set<Node> nodes = new HashSet<Node>();
-        nodes.add(node);
-
-        router = new Router("mytestrouter", nodes, timestamp, 1000);
-        node.setRouter(router);
-
-
+        message = RouterMessageFactory.createRouter();
     }
 }

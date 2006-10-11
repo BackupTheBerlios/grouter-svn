@@ -1,8 +1,7 @@
 package org.grouter.domain.servicelayer.ejb3;
 
-import org.grouter.domain.Message;
+import org.grouter.domain.entities.Message;
 import org.grouter.domain.servicelayer.AbstractRouterServiceInit;
-import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -31,10 +30,8 @@ public class RouterServiceTest extends AbstractRouterServiceInit
 
 
         Message messagePersisted = null;
-
-        Message[] messages = new Message[1];
-        messages[0] = message;
-        remoteRouter.persistMessageAndBroadcastEvent(new GRouterPublishEventDTO("routerid","nodeid",messages));
+        //remoteRouter.persistMessageAndBroadcastEvent(message);
+        remoteRouter.createMessage(message);
 
         //messagePersisted = remoteRouter.createMessage(message);
         

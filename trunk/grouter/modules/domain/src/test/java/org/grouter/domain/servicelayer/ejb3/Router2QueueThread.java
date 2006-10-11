@@ -3,23 +3,19 @@ package org.grouter.domain.servicelayer.ejb3;
 import org.grouter.common.jms.QueueDestination;
 import org.grouter.common.jms.AcknowledgeMode;
 import org.grouter.common.jndi.JNDIUtils;
-import org.grouter.domain.Message;
-import org.grouter.domain.Sender;
-import org.grouter.domain.Receiver;
-import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
+import org.grouter.domain.servicelayer.RouterMessageFactory;
 import org.apache.log4j.Logger;
 
 import javax.jms.*;
 import javax.naming.NamingException;
 import javax.naming.InitialContext;
-import java.sql.Timestamp;
 
 /**
  * Produces messages on queue.
  */
-public class GrouterQueueMessageProducerTest implements Runnable
+public class Router2QueueThread implements Runnable
 {
-    private static Logger logger = Logger.getLogger(GrouterQueueMessageProducerTest.class);
+    private static Logger logger = Logger.getLogger(Router2QueueThread.class);
     private QueueDestination queueDestination;
     protected Queue que;
     protected static final String QUEUE_TEST_QUEUE = "queue/GrouterQueue";
@@ -29,7 +25,7 @@ public class GrouterQueueMessageProducerTest implements Runnable
     protected static final int SLEEP = 5000;
 
 
-    public GrouterQueueMessageProducerTest()
+    public Router2QueueThread()
     {
         try
         {
@@ -65,7 +61,7 @@ public class GrouterQueueMessageProducerTest implements Runnable
      * @throws javax.jms.JMSException
      * @throws javax.naming.NamingException
      */
-    public void send(GRouterPublishEventDTO eventDTO)
+    public void send(org.grouter.domain.entities.Message eventDTO)
     {
         logger.info("Sending message");
         queueDestination.sendMessage(eventDTO);
@@ -82,21 +78,9 @@ public class GrouterQueueMessageProducerTest implements Runnable
         {
             try
             {
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                Sender sender = new Sender("A test sender");
-                Receiver receiver = new Receiver("A test receiver");
+                org.grouter.domain.entities.Message router = RouterMessageFactory.createRouter(i++);
 
-
-                Message message = new Message("New test message : " + i);
-                message.addToReceivers(receiver);
-                message.setSender(sender);
-                message.setCreationTimestamp(timestamp);
-                sender.addToMessages(message);
-
-                Message[] messages = new Message[]{message};
-
-                GRouterPublishEventDTO eventDTO = new GRouterPublishEventDTO("testgrouterid", "testnode", messages);
-                send(eventDTO);
+                send(router);
                 Thread.sleep(SLEEP);
             } catch (Throwable e)
             {
@@ -115,7 +99,7 @@ public class GrouterQueueMessageProducerTest implements Runnable
 
     public static void main(String[] args)
     {
-        GrouterQueueMessageProducerTest producer = new GrouterQueueMessageProducerTest();
+        Router2QueueThread producer = new Router2QueueThread();
         Thread thr = new Thread(producer);
         thr.start();
     }
