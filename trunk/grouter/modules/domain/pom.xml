@@ -26,14 +26,15 @@
         <artifactId>platform</artifactId>
         <version>0.1.1-SNAPSHOT</version>
     </parent>
+
     <!--
-    | Dependencies specific to this project are entered here.
-    | Common dependencies should go into the parent to simplify
-    | the dependency section of this child project.
-    | If no version is mentioned in this child's dependency section
-    | the version is feteched from the parent's dependencyManagement
-     | element.
-     -->
+   | Dependencies specific to this project are entered here.
+   | Common dependencies should go into the parent to simplify
+   | the dependency section of this child project.
+   | If no version is mentioned in this child's dependency section
+   | the version is feteched from the parent's dependencyManagement
+    | element.
+    -->
     <dependencies>
         <dependency>
             <groupId>org.grouter.platform.common</groupId>
@@ -45,20 +46,23 @@
             <artifactId>spring</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-mock</artifactId>
+        </dependency>
+        <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
-        <!--dependency>
-            <groupId>geronimo-spec</groupId>
-            <artifactId>geronimo-spec-jta</artifactId>
-        </dependency-->
         <dependency>
-            <groupId>org.hibernate.entitymanager</groupId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <scope>provided</scope>
         </dependency>

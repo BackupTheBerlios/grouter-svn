@@ -1,16 +1,16 @@
 package org.grouter.domain.servicelayer;
 
 import junit.framework.TestCase;
-import org.grouter.common.logging.Log4JInit;
 import org.grouter.common.jndi.GlobalBeanLocator;
 import org.grouter.common.jndi.JNDIUtils;
 import org.grouter.domain.entities.systemuser.SystemUser;
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.servicelayer.ejb3.GRouterRemote;
+import org.grouter.domain.servicelayer.ejb3.GRouterRemoteService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -23,9 +23,9 @@ import java.util.GregorianCalendar;
  */
 public abstract class AbstractRouterServiceInit extends TestCase
 {
-    private Log4JInit log4j = new Log4JInit();
+    //private Log4JInit log4j = new Log4JInit();
     private static Log logger = LogFactory.getLog(AbstractRouterServiceInit.class);
-    private final static String BEANSCONFIGFILE = "spring/applicationContext.xml";
+    private final static String BEANSCONFIGFILE = "ac-service.xml";
     protected static BeanFactory factory;
     protected static SystemUser systemUser;
     protected static Message message;
@@ -34,8 +34,8 @@ public abstract class AbstractRouterServiceInit extends TestCase
     protected static Calendar nextWeek = GregorianCalendar.getInstance();
     protected static Context context;
     protected static boolean isSpringTest = true;
-    private final static String JNDINAME = "domain/GRouterBean/remote";
-    protected static GRouterRemote remoteRouter;
+    private final static String JNDINAME = "domain/GRouterBeanService/remote";
+    protected static GRouterRemoteService remoteRouter;
 
     public AbstractRouterServiceInit()
     {
@@ -48,8 +48,9 @@ public abstract class AbstractRouterServiceInit extends TestCase
         {
             logger.info("Using Spring for testing servce layer");
             // Spring init
-            factory = new ClassPathXmlApplicationContext(BEANSCONFIGFILE);
-            GlobalBeanLocator.setBeanFactory(factory);
+            ApplicationContext applicationContext = new ClassPathXmlApplicationContext(BEANSCONFIGFILE);
+                    factory = (BeanFactory) applicationContext;
+           GlobalBeanLocator.getInstance().setApplicationContext(applicationContext);
         }
         else
         {
@@ -60,7 +61,7 @@ public abstract class AbstractRouterServiceInit extends TestCase
 
                
                 Object obj = context.lookup(JNDINAME);
-                remoteRouter = (GRouterRemote) PortableRemoteObject.narrow( obj, GRouterRemote.class );
+                remoteRouter = (GRouterRemoteService) PortableRemoteObject.narrow( obj, GRouterRemoteService.class );
 
             } catch (NamingException e)
             {

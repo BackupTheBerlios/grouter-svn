@@ -89,6 +89,7 @@ public class Message implements Serializable
     }
 
     @Id
+    @Column(name = "MESSAGE_ID")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
@@ -96,7 +97,7 @@ public class Message implements Serializable
         return id;
     }
 
-    @Column(nullable = false)
+    @Column(name = "MESSAGE", nullable = false)
     public String getMessage()
     {
         return message;
@@ -112,10 +113,11 @@ public class Message implements Serializable
      *
      * @return Set<Receiver>
      */
+    @Column(name = "RECEIVERS")
     @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
     @JoinTable(name = "RECEIVER_MESSAGE",
-            joinColumns = {@JoinColumn(name = "MESSAGE_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "RECEIVER_ID")})
+            joinColumns = {@JoinColumn(name = "MESSAGE_FK")},
+            inverseJoinColumns = {@JoinColumn(name = "RECEIVER_FK")})
     public Set<Receiver> getReceivers()
     {
         return receivers;
@@ -131,8 +133,9 @@ public class Message implements Serializable
         this.receivers = receivers;
     }
 
+    //@Column(name = "SENDER_ID")
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
- //   @JoinColumn(name = "SENDER_ID", nullable = true)
+    @JoinColumn(name = "SENDER_FK", nullable = true)
     public Sender getSender()
     {
         return sender;
@@ -177,7 +180,7 @@ public class Message implements Serializable
     }
 
 
-    @Column
+    @Column(name = "CREATIONTIMESTAMP")
     public Timestamp getCreationTimestamp()
     {
         return creationTimestamp;
@@ -185,7 +188,7 @@ public class Message implements Serializable
 
     //    @ManyToOne()
     @ManyToOne( cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinColumn(name = "NODE_ID", nullable = true)
+    @JoinColumn(name = "NODE_FK", nullable = true)
     public Node getNode()
     {
         return node;

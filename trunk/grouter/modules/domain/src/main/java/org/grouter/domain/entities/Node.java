@@ -16,6 +16,7 @@ import java.io.Serializable;
  *
  * @Author Georges Polyzois
  */
+@SuppressWarnings({"PersistenceModelORMInspection"})
 @Entity
 @Table(name = "NODE")
 public class Node implements Serializable
@@ -27,8 +28,6 @@ public class Node implements Serializable
     private Set<Message> messages = new HashSet<Message>();
     private Timestamp modifiedOn;
     private Router router;
-
-
     @Transient
     private SystemUser modifiedBySystemUser;
 
@@ -47,6 +46,7 @@ public class Node implements Serializable
 
 
     @Id
+    @Column(name = "NODE_ID")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
@@ -59,6 +59,7 @@ public class Node implements Serializable
         this.id = id;
     }
 
+    @Column(name = "MODIFIEDON")
     public Timestamp getModifiedOn()
     {
         return modifiedOn;
@@ -69,6 +70,7 @@ public class Node implements Serializable
         this.modifiedOn = modifiedOn;
     }
 
+    @Column(name = "MODIFIEDBYSYSTEMUSER")
     public SystemUser getModifiedBySystemUser()
     {
         return modifiedBySystemUser;
@@ -81,9 +83,10 @@ public class Node implements Serializable
     }
 
     @OneToMany
-    @JoinTable(name = "NODE_MESSAGE",
-            joinColumns = {@JoinColumn(name = "NODETTEST_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "MESSAGETEST_ID")})
+    @JoinColumn(name = "NODE_FK", nullable = true)
+//    @JoinTable(name = "NODE_MESSAGE",
+//            joinColumns = {@JoinColumn(name = "NODE_FK")},
+//            inverseJoinColumns = {@JoinColumn(name = "MESSAGE_FK")})
     public Set<Message> getMessages()
     {
         return messages;
@@ -94,6 +97,7 @@ public class Node implements Serializable
         this.messages = messages;
     }
 
+    @Column(name = "NAME")
     public String getName()
     {
         return name;
@@ -104,8 +108,8 @@ public class Node implements Serializable
         this.name = name;
     }
 
-
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "ROUTER_FK", nullable = true)
     public Router getRouter()
     {
         return router;

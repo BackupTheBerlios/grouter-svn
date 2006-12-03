@@ -3,6 +3,7 @@ package org.grouter.domain.daolayer.hibernate;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.grouter.domain.daolayer.GenericDAO;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.util.*;
 import java.io.Serializable;
@@ -20,10 +21,21 @@ import java.io.Serializable;
  *
  * @author Georges Polyzois
  */
-public abstract class GenericHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID>
+public abstract class GenericHibernateDAO<T, ID extends Serializable>  implements GenericDAO<T, ID>
 {
     private Class<T> entityClass;
+    private SessionFactory sessionFactory;
     protected Session session;
+
+    public SessionFactory getSessionFactory()
+    {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
     protected GenericHibernateDAO(Class<T> persistentClass)
     {
@@ -42,7 +54,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     {
         if (session == null)
         {
-            throw new IllegalStateException("Session has not been set on DAO before usage");
+            session = sessionFactory.getCurrentSession();
+            //throw new IllegalStateException("Session has not been set on DAO before usage");
         }
         return session;
     }
@@ -85,7 +98,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     }
 
     @SuppressWarnings("unchecked")
-    public T saveOrUpdate(T entity)
+    public T save(T entity)
     {
         getSession().saveOrUpdate(entity);
         return entity;

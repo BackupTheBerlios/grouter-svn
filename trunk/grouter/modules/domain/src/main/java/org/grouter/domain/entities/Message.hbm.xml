@@ -6,8 +6,8 @@
         <id column="MESSAGE_ID" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
-        <property name="creationTimestamp" not-null="false" type="timestamp" column="CREATEDTIMESTAMP"/>
-        <property name="message" not-null="false" type="java.lang.String" column="MESSAGECONTENT"/>
+        <property name="creationTimestamp" not-null="false" type="timestamp" column="CREATIONTIMESTAMP"/>
+        <property name="message" not-null="false" type="java.lang.String" column="MESSAGE"/>
 
         <!--set name="receivers" table="RECEIVER_MESSAGE" inverse="true" lazy="true" cascade="all">
             <key column="MESSAGEID"/>
@@ -47,5 +47,15 @@
                 column="NODEID"
                 cascade="none">
         </many-to-one-->
+
+        <many-to-one
+                name="node"
+                not-null="false"
+                class="org.grouter.domain.entities.Node"
+                column="NODE_FK"
+                cascade="none">
+        </many-to-one>
+
+
     </class>
 </hibernate-mapping>

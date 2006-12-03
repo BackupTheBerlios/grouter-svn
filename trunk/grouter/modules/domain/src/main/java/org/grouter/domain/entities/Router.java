@@ -35,7 +35,6 @@ public class Router implements Serializable
     }
 
 
-
     public Router(String name, Set<Node> nodes, Timestamp startedOn, long upTime)
     {
         this.name = name;
@@ -47,6 +46,7 @@ public class Router implements Serializable
 
 
     @Id
+    @Column(name = "ROUTER_ID")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
@@ -55,6 +55,7 @@ public class Router implements Serializable
     }
 
 
+    @Column(name = "STARTEDON")
     public Timestamp getStartedOn()
     {
         return startedOn;
@@ -65,6 +66,7 @@ public class Router implements Serializable
         this.startedOn = startedOn;
     }
 
+    @Column(name = "UPTIME")
     public long getUpTime()
     {
         return upTime;
@@ -78,13 +80,13 @@ public class Router implements Serializable
 
 
 
-    //
- /*    @OneToMany
-    @JoinTable(name = "ROUTER_NODE",
-            joinColumns = {@JoinColumn(name = "ROUTER_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "NODE_ID")})*/
+
+//     @OneToMany
+//    @JoinTable(name = "ROUTER_NODE",
+//            joinColumns = {@JoinColumn(name = "ROUTER_FK")},
+//            inverseJoinColumns = {@JoinColumn(name = "NODE_FK")})
     @OneToMany
-    @JoinColumn(name = "ROUTER_ID", nullable = true)
+    @JoinColumn(name = "ROUTER_FK", nullable = true)
     public Set<Node> getNodes()
     {
         return nodes;
@@ -101,6 +103,7 @@ public class Router implements Serializable
         this.id = id;
     }
 
+    @Column(name = "NAME")
     public String getName()
     {
         return name;
@@ -110,5 +113,7 @@ public class Router implements Serializable
     {
         this.name = name;
     }
+
+
 
 }

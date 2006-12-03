@@ -4,6 +4,8 @@ import org.grouter.common.jndi.GlobalBeanLocator;
 import org.grouter.domain.daolayer.hibernate.HibernateSpringDAOFactory;
 import org.grouter.domain.daolayer.ejb3.Ejb3DAOFactory;
 import org.grouter.domain.daolayer.hibernate.HibernateDAOFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
 
 /**
  * See Caveat
@@ -29,7 +31,6 @@ public abstract class DAOFactory
     public static DAOFactory HIBERNATE = new org.grouter.domain.daolayer.hibernate.HibernateDAOFactory();
     public static DAOFactory DEFAULT = HIBERNATE;
     private static final String HIBERNATE_SPRING_DAOFACTORY = "hibernateSpringDAOFactory";
-
     public enum FactoryType {EJB3_PERSISTENCE,HIBERNATE,HIBERNATESPRING}
 
     public static DAOFactory getFactory(FactoryType factoryType)
@@ -46,7 +47,8 @@ public abstract class DAOFactory
             }
             case HIBERNATESPRING:
             {
-                return (HibernateSpringDAOFactory)GlobalBeanLocator.getBeanBeanFactory().getBean(HIBERNATE_SPRING_DAOFACTORY);
+                GlobalBeanLocator globalBeanLocator = GlobalBeanLocator.getInstance();
+                return (HibernateSpringDAOFactory)globalBeanLocator.getApplicationContext().getBean(HIBERNATE_SPRING_DAOFACTORY);
             }
         }
         return null;

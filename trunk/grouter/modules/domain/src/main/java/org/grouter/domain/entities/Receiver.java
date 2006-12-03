@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.io.Serializable;
 
+@SuppressWarnings({"PersistenceModelORMInspection"})
 @Entity
 @Table(name = "RECEIVER")
 public class Receiver implements Serializable
@@ -14,6 +15,7 @@ public class Receiver implements Serializable
     private String id;
     private Address address;
     private String name;
+
     private Set<Message> messages = new HashSet();
 
     public Receiver()
@@ -21,12 +23,17 @@ public class Receiver implements Serializable
     }
 
 
+    public Receiver(String name)
+    {
+        this.name = name;
+    }
+
     /**
      * "mappedBy" makes Hibernate ignore changes made to this class - Receivers -
      * and that the other end of the association, the rec reivers collection in the Message
      * class, is the representation that should be synchronized with the database if you link
      * instances in Java code.
-     * 
+     *
      * @return
      */
     @ManyToMany(mappedBy = "receivers")
@@ -40,18 +47,13 @@ public class Receiver implements Serializable
         this.messages = messages;
     }
 
-    public Receiver(String name)
-    {
-        this.name = name;
-    }
-
     @Transient
     public Address getAddress()
     {
         return address;
     }
 
-    @Column
+    @Column(name = "NAME" )
     public String getName()
     {
         return name;
@@ -63,6 +65,7 @@ public class Receiver implements Serializable
     }
 
     @Id
+    @Column(name = "RECEIVER_ID")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     //Hibernate specific...

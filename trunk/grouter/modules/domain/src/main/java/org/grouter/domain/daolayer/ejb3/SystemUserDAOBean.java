@@ -23,7 +23,7 @@ public class SystemUserDAOBean extends GenericEjb3DAO<SystemUser, Long> implemen
         super(persistentClass);
     }
 
-    public SystemUser saveOrUpdate(SystemUser entity)
+    public SystemUser save(SystemUser entity)
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

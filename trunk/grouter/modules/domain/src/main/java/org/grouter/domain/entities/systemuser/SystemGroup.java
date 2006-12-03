@@ -10,7 +10,7 @@ import java.io.Serializable;
  * A user representation in the domain model.
  */
 
-@Entity
+//@Entity
 public class SystemGroup implements Serializable
 {
     @Id

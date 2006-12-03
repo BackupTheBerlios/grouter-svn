@@ -8,11 +8,11 @@
         <jta-data-source>java:/DefaultDS</jta-data-source>
         <!--jar-file>../MyApp.jar</jar-file-->
         <!--  JBoss scans all so this is useless
-        class>org.grouter.domain.Message</class>
-        <class>org.grouter.domain.Sender</class>
-        <class>org.grouter.domain.Receiver</class>
-        <class>org.grouter.domain.Node</class>
-        <class>org.grouter.domain.Router</class -->
+        class>org.grouter.domain.entities.Message</class>
+        <class>org.grouter.domain.entities.Sender</class>
+        <class>org.grouter.domain.entities.Receiver</class>
+        <class>org.grouter.domain.entities.Node</class>
+        <class>org.grouter.domain.entities.Router</class -->
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>

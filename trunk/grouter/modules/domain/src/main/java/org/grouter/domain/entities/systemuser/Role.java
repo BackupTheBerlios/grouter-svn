@@ -37,17 +37,5 @@ public class Role
     {
         return roleName;
     }
-    /*
-public static Role getRoleFromString(String roleName)
-{
-for (int cnt = 0; cnt < allRoles.length; cnt++)
-{
-if (roleName.equals(allRoles[cnt].getRoleName()))
-{
-   return allRoles[cnt];
-}
-}
-
-
-}             */
+   
 }

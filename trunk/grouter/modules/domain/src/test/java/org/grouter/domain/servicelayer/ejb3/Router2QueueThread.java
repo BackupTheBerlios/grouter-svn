@@ -78,9 +78,9 @@ public class Router2QueueThread implements Runnable
         {
             try
             {
-                org.grouter.domain.entities.Message router = RouterMessageFactory.createRouter(i++);
+                org.grouter.domain.entities.Message message = RouterMessageFactory.createRouter(i++);
 
-                send(router);
+                send(message);
                 Thread.sleep(SLEEP);
             } catch (Throwable e)
             {

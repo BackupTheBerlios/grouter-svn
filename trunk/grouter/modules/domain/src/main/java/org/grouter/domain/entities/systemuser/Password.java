@@ -7,14 +7,13 @@ import javax.persistence.*;
  * The user account password.
  */
 
-@Entity
+//@Entity
 public class Password
 {
-    @Id
     private Long id ;
     @Column
     private String password ;
-    @ManyToOne
+    @Transient
     private SystemUser systemUser ;
 
     /**

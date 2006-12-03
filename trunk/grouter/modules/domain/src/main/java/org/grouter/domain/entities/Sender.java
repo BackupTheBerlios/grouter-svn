@@ -13,6 +13,7 @@ import java.io.Serializable;
  *
  * @Author Georges Polyzois
  */
+@SuppressWarnings({"PersistenceModelORMInspection"})
 @Entity
 @Table(name = "SENDER")
 public class Sender implements Serializable
@@ -54,8 +55,8 @@ inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnNam
     
     @OneToMany
     @JoinTable(name = "SENDER_MESSAGE",
-            joinColumns = {@JoinColumn(name = "SENDER_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "MESSAGE_ID")})
+            joinColumns = {@JoinColumn(name = "SENDER_FK")},
+            inverseJoinColumns = {@JoinColumn(name = "MESSAGE_FK")})
     public Set<Message> getMessages()
     {
         return messages;
@@ -71,7 +72,7 @@ inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnNam
         this.id = id;
     }
 
-    @Column
+    @Column(name = "NAME")
     public String getName()
     {
         return name;
@@ -88,6 +89,7 @@ inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnNam
     }
 
     @Id
+    @Column(name = "SENDER_ID")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()

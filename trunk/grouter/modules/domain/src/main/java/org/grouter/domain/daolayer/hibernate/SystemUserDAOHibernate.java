@@ -38,7 +38,7 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
 
     public SystemUser createSystemUser(SystemUser systemUser)
     {
-        return saveOrUpdate(systemUser);
+        return save(systemUser);
     }
 
     public void removeUser(Long id)

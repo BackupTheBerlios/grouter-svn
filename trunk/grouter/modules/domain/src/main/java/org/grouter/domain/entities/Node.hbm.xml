@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping SYSTEM
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-    <class name="org.grouter.domain.Node" table="NODE">
-        <id column="NODEID" name="id" type="java.lang.String">
+    <class name="org.grouter.domain.entities.Node" table="NODE">
+        <id column="NODE_ID" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
         <property name="modifiedOn" not-null="false" type="timestamp" column="MODIFIEDON"/>
@@ -13,16 +13,16 @@
             <key>
                 <column name="MESSAGEID" not-null="true"/>
             </key>
-            <one-to-many class="org.grouter.domain.Message"/>
+            <one-to-many class="org.grouter.domain.entities.Message"/>
         </set-->
 
         <!-- column is for this table -->
-        <many-to-one
+        <!-- many-to-one
                 name="modifiedBySystemUser"
                 not-null="false"
-                class="org.grouter.domain.systemuser.SystemUser"
+                class="org.grouter.domain.entities.systemuser.SystemUser"
                 column="MODIFIEDBYSYSTEMUSERID"
                 cascade="none">
-        </many-to-one>
+        </many-to-one -->
     </class>
 </hibernate-mapping>

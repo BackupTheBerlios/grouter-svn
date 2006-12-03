@@ -8,10 +8,8 @@ import java.util.List;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-/**
- * A Message is consideered to be a root entity in our domain model.
- *
- */
+
+
 public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements MessageDAO
 {
     private static Logger logger = Logger.getLogger(MessageDAOBean.class);
@@ -53,7 +51,7 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
         try
         {
 
-            returnval = saveOrUpdate(message);
+            returnval = save(message);
         }
         catch(Throwable thr)
         {
@@ -64,9 +62,9 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
         return returnval;
     }
 
-    public Message saveOrUpdate(Message entity)
+    public Message save(Message entity)
     {
-        logger.debug("## saveOrUpdate");
+        logger.debug("## save");
         return makePersistent(entity);
 
 

@@ -27,23 +27,9 @@ public class RouterServiceTest extends AbstractRouterServiceInit
      */
     public void testCreateMessage() throws Exception
     {
-
-
-        Message messagePersisted = null;
-        //remoteRouter.persistMessageAndBroadcastEvent(message);
-        remoteRouter.createMessage(message);
-
-        //messagePersisted = remoteRouter.createMessage(message);
-        
-     //   log.debug("## Saved instance with id : " + messagePersisted.getId() + " timestamp " + messagePersisted.getCreationTimestamp());
-     //   assertNotNull(messagePersisted.getId());
-
-
-
-        /*    Object obj = factory.getBean(beanName);
-        GRouterService gRouterService = (GRouterService) obj;
-        messagePersisted = gRouterService.createMessage(message);
-        */
+        Message messagePersisted = remoteRouter.createMessage(message);
+        log.debug("## Saved instance with id : " + messagePersisted.getId() + " timestamp " + messagePersisted.getCreationTimestamp());
+        assertNotNull(messagePersisted.getId());
     }
 
 

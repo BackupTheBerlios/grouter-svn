@@ -33,7 +33,7 @@ public class GRouterQueueMDB implements MessageListener
 
     // This does not work in jboss...
     //@EJB
-    //private GRouterLocal gRouterLocal;
+    //private GRouterLocalService gRouterLocal;
 
     @SuppressWarnings({"EjbErrorInspection"})
     @Resource
@@ -76,8 +76,8 @@ public class GRouterQueueMDB implements MessageListener
             throws JMSException
     {
         org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
-        logger.debug("Got GRouterPublishEventDTO message");
-        GRouterLocal gRouterLocal = (GRouterLocal)sc.lookup( GRouterLocal.DOMAIN_GROUTER_BEAN_LOCAL );
+        logger.debug("Got message");
+        GRouterLocalService gRouterLocal = (GRouterLocalService)sc.lookup( GRouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
         gRouterLocal.createMessage(message);
     }
 

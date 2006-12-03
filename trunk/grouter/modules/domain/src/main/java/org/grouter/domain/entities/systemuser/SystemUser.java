@@ -1,5 +1,7 @@
 package org.grouter.domain.entities.systemuser;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -13,32 +15,22 @@ import java.util.Calendar;
  * Domain class.
  * @Author Georges Polyzois
  */
-@Entity
-public class SystemUser implements Serializable
-{
-    @Id
+//@SuppressWarnings({"PersistenceModelORMInspection"})
+//@Entity
+public class SystemUser extends User implements Serializable
+{                                    
     private Long id ;
-    @Column
     private String name;
     // No duplicate elements and the ordering is not relevant for us -> Set
-    @OneToMany
     private Set<SystemGroup> groups = new HashSet();
     // No duplicate elements and the ordering is not relevant for us -> Set
-    @OneToMany
     private Set<Password> passwords = new HashSet();
-    @OneToOne
     private Password currentPassword ;
-    @Column
     private String fullName ;
-    @Column
     private String description ;
-    @Column
     private boolean active ;
-    @Column
     private int loginRetries ;
-    @Column
     private Calendar validFrom ;
-    @Column
     private Calendar validTo ;
 
     public SystemUser()
@@ -52,8 +44,6 @@ public class SystemUser implements Serializable
         setDescription (description) ;
         setActive (active) ;
         setLoginRetries(loginRetries) ;
-        passwords = new HashSet() ;
-        groups = new HashSet() ;
         setValidFrom(validFrom);
         setValidTo(validTo) ;
     }
@@ -62,6 +52,10 @@ public class SystemUser implements Serializable
     {
         this.id = id ;
     }
+    @Id
+    @Column(name = "SYSTEMUSER_ID")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public Long getId()
     {
         return id ;
@@ -77,12 +71,13 @@ public class SystemUser implements Serializable
     }
 
 
-    public void setPasswords (Set passwords)
+    public void setPasswords (Set<Password> passwords)
     {
         this.passwords = passwords ;
     }
 
-    public Set getPasswords()
+    @OneToOne
+    public Set<Password> getPasswords()
     {
         return passwords ;
     }
