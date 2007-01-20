@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Abstract DAO -->
+    <bean id="abstractDao" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+
+    <!-- Core specific Data Access Object (DAO) Beans -->
+    <bean id="messageDAO" parent="abstractDao"  class="org.grouter.domain.daolayer.hibernate.MessageDAOImpl"/>
+    <bean id="routerDAO" parent="abstractDao"  class="org.grouter.domain.daolayer.hibernate.RouterDAOImpl"/>
+
+</beans>
