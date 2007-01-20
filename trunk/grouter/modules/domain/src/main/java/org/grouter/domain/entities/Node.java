@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.io.Serializable;
 
@@ -26,7 +27,8 @@ public class Node implements Serializable
     private String id;
     private String name;
     private Set<Message> messages = new HashSet<Message>();
-    private Timestamp modifiedOn;
+    private Date modifiedOn;
+    private Date createdOn;
     private Router router;
     @Transient
     private SystemUser modifiedBySystemUser;
@@ -36,12 +38,13 @@ public class Node implements Serializable
     }
 
 
-    public Node(String name, Set<Message> messages, Timestamp modifiedOn, SystemUser modifiedBySystemUser)
+    public Node(String name, Set<Message> messages, Date modifiedOn, SystemUser modifiedBySystemUser, Date creetedOn)
     {
         this.name = name;
         this.messages = messages;
         this.modifiedOn = modifiedOn;
         this.modifiedBySystemUser = modifiedBySystemUser;
+        this.createdOn = creetedOn;
     }
 
 
@@ -60,12 +63,12 @@ public class Node implements Serializable
     }
 
     @Column(name = "MODIFIEDON")
-    public Timestamp getModifiedOn()
+    public Date getModifiedOn()
     {
         return modifiedOn;
     }
 
-    public void setModifiedOn(Timestamp modifiedOn)
+    public void setModifiedOn(Date modifiedOn)
     {
         this.modifiedOn = modifiedOn;
     }
@@ -118,6 +121,18 @@ public class Node implements Serializable
     public void setRouter(Router router)
     {
         this.router = router;
+    }
+
+
+    @Column(name = "CREATEDON")
+    public Date getCreatedOn()
+    {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn)
+    {
+        this.createdOn = createdOn;
     }
 
 }

@@ -9,6 +9,13 @@ import org.hibernate.Session;
  */
 public class RouterDAOImpl extends GenericHibernateDAO<Router, String> implements RouterDAO
 {
+
+
+    protected RouterDAOImpl()
+    {
+        super(Router.class);
+    }
+
     protected RouterDAOImpl(Class<Router> persistentClass)
     {
         super(persistentClass);

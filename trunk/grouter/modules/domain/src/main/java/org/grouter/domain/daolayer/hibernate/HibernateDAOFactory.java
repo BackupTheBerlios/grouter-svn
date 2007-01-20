@@ -3,6 +3,7 @@ package org.grouter.domain.daolayer.hibernate;
 import org.hibernate.Session;
 import org.grouter.domain.daolayer.DAOFactory;
 import org.grouter.domain.daolayer.SystemUserDAO;
+import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.common.hibernate.HibernateUtilContextAware;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,7 +38,7 @@ public class HibernateDAOFactory extends DAOFactory
     }
 
     // Add your DAO interfaces below here
-    public org.grouter.domain.daolayer.MessageDAO getMessageDAO()
+    public MessageDAO getMessageDAO()
     {
         return new MessageDAOImpl(getCurrentSession());
     }

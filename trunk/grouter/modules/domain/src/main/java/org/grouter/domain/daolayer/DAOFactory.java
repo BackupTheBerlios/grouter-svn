@@ -1,15 +1,15 @@
 package org.grouter.domain.daolayer;
 
-import org.grouter.common.jndi.GlobalBeanLocator;
 import org.grouter.domain.daolayer.hibernate.HibernateSpringDAOFactory;
 import org.grouter.domain.daolayer.ejb3.Ejb3DAOFactory;
 import org.grouter.domain.daolayer.hibernate.HibernateDAOFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.access.BeanFactoryLocator;
+import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
+import org.springframework.beans.factory.access.BeanFactoryReference;
 
 /**
  * See Caveat
- *
+ * <p/>
  * Defines all DAOs and the concrete factories to get the conrecte DAOs.
  * <p/>
  * Either use the <tt>DEFAULT</tt> to get the same concrete DAOFactory
@@ -20,7 +20,7 @@ import org.springframework.context.ApplicationContext;
  * If you add a new persistence mechanism, add an additional concrete factory
  * for it to the enumeration of factories.
  * <p/>
- *
+ * <p/>
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss
  *
  * @author Georges Polyzois
@@ -28,14 +28,24 @@ import org.springframework.context.ApplicationContext;
 public abstract class DAOFactory
 {
     // public static final DAOFactory EJB3_PERSISTENCE = new org.hibernate.ce.auction.dao.ejb3.org.grouter.domain.daolayer.ejb3.Ejb3DAOFactory();
-    public static DAOFactory HIBERNATE = new org.grouter.domain.daolayer.hibernate.HibernateDAOFactory();
+    public static DAOFactory HIBERNATE = new HibernateDAOFactory();
     public static DAOFactory DEFAULT = HIBERNATE;
+    /* Name of special Spring bean */
     private static final String HIBERNATE_SPRING_DAOFACTORY = "hibernateSpringDAOFactory";
-    public enum FactoryType {EJB3_PERSISTENCE,HIBERNATE,HIBERNATESPRING}
 
+    public enum FactoryType
+    {
+        EJB3_PERSISTENCE, HIBERNATE, HIBERNATESPRING
+    }
+
+    /**
+     * Creates three different types of factories depenging on type of technology used.
+     * @param factoryType
+     * @return
+     */
     public static DAOFactory getFactory(FactoryType factoryType)
     {
-        switch(factoryType)
+        switch (factoryType)
         {
             case EJB3_PERSISTENCE:
             {
@@ -47,8 +57,11 @@ public abstract class DAOFactory
             }
             case HIBERNATESPRING:
             {
-                GlobalBeanLocator globalBeanLocator = GlobalBeanLocator.getInstance();
-                return (HibernateSpringDAOFactory)globalBeanLocator.getApplicationContext().getBean(HIBERNATE_SPRING_DAOFACTORY);
+                BeanFactoryLocator bfl = SingletonBeanFactoryLocator.getInstance("context-wrapper.xml");
+                BeanFactoryReference bf = bfl.useBeanFactory("org.grouter");
+                return (HibernateSpringDAOFactory) bf.getFactory().getBean(HIBERNATE_SPRING_DAOFACTORY);
+                //GlobalBeanLocator globalBeanLocator = GlobalBeanLocator.getInstance();
+                //return (HibernateSpringDAOFactory)globalBeanLocator.getApplicationContext().getBean(HIBERNATE_SPRING_DAOFACTORY);
             }
         }
         return null;
@@ -57,6 +70,7 @@ public abstract class DAOFactory
 
     // Add your DAO interfaces here
     public abstract MessageDAO getMessageDAO();
+
     public abstract SystemUserDAO getSystemUserDAO();
 
 

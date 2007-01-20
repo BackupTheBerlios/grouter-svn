@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
     <class name="org.grouter.domain.entities.Address" table="ADDRESS">
-        <id column="ADDRESS_ID" name="id" type="java.lang.String">
+        <id column="ID" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
         <property name="address" not-null="false" type="java.lang.String" column="ADDRESS"/>

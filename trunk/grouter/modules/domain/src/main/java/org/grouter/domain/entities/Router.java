@@ -46,7 +46,7 @@ public class Router implements Serializable
 
 
     @Id
-    @Column(name = "ROUTER_ID")
+    @Column(name = "ID")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
