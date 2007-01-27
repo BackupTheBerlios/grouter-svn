@@ -33,12 +33,12 @@
   <parameter name="className" value="org.apache.axis.Version"/>
  </service>
  <service name="GRouterService" provider="java:RPC">
-  <operation name="getServices" qname="ns1:getServices" returnQName="getServicesReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://grouter.org/ws/grouterservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <fault class="org.grouter.ws.grouterservice.ServicesException" qname="ns1:fault" type="ns1:ServicesException"/>
-   <fault class="org.grouter.ws.grouterservice.DomainException" qname="ns1:fault" type="ns1:DomainException"/>
-  </operation>
-  <operation name="getServicesNoException" qname="ns2:getServicesNoException" returnQName="getServicesNoExceptionReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://grouter.org/ws/grouterservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <operation name="getServicesNoException" qname="ns1:getServicesNoException" returnQName="getServicesNoExceptionReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://grouter.org/ws/grouterservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <parameter name="in0" type="xsd:string"/>
+  </operation>
+  <operation name="getServices" qname="ns2:getServices" returnQName="getServicesReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://grouter.org/ws/grouterservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <fault class="org.grouter.ws.grouterservice.ServicesException" qname="ns2:fault" type="ns2:ServicesException"/>
+   <fault class="org.grouter.ws.grouterservice.DomainException" qname="ns2:fault" type="ns2:DomainException"/>
   </operation>
   <parameter name="wsdlServicePort" value="GRouterService"/>
   <parameter name="className" value="org.grouter.ws.grouterservice.GRouterServiceImpl"/>

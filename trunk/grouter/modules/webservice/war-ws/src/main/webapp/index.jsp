@@ -18,7 +18,9 @@
  */
 %>
 
+<!--
 <%@ include file="i18nLib.jsp" %>
+-->
 
 <%
     // initialize a private HttpServletRequest

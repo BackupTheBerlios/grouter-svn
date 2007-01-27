@@ -17,7 +17,7 @@ import java.net.URL;
  */
 public class ManualTestClient extends TestCase
 {
-    private String grouterserviceEndpoint = "http://localhost:8081/grouter/services/GRouterService";
+    private String grouterserviceEndpoint = "http://localhost:8080/grouter/services/GRouterService";
 
     public ManualTestClient(java.lang.String name)
     {

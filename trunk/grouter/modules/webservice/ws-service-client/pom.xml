@@ -2,17 +2,14 @@
     <parent>
         <groupId>org.grouter.platform</groupId>
         <artifactId>webservice</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
-    <inceptionYear>2005</inceptionYear>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.platform.webservice</groupId>
-    <artifactId>ws-service-client</artifactId>
+    <artifactId>webservice-client</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>${groupId} :: ${artifactId}</name>
-    <url>http://maven.apache.org</url>
-    <dependencies>
+    <name>${artifactId}</name>
+        <dependencies>
         <!-- added for the custom ant based wsdl generation for webservices to work -->
         <dependency>
             <groupId>axis</groupId>
@@ -63,8 +60,8 @@
                 <dependencies>
                     <dependency>
                         <groupId>org.grouter.platform.webservice</groupId>
-                        <artifactId>ws-service</artifactId>
-                        <version>1.0-SNAPSHOT</version>
+                        <artifactId>webservice-server</artifactId>
+                        <version>0.1.1-SNAPSHOT</version>
                     </dependency>
                     <dependency>
                         <groupId>axis</groupId>

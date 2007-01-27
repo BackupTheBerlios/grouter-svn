@@ -10,13 +10,11 @@ import org.apache.commons.logging.LogFactory;
  * Implementation of the GRouter service.
  *
  * @author Georges Polyzois
- * @version
  *
  */
 public class GRouterServiceImpl implements GRouterService
 {
     private static Log log = LogFactory.getLog(GRouterService.class);
-
 
     public String getServices() throws ServicesException, DomainException
     {
@@ -25,6 +23,7 @@ public class GRouterServiceImpl implements GRouterService
         
         if(random < 0.5)
         {
+            
             throw new ServicesException("Random was under 0.5 - bad luck", "ERRORCODE_1");
         }
         else

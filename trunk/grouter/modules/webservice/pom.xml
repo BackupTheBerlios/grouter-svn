@@ -3,11 +3,11 @@
     <groupId>org.grouter.platform</groupId>
     <artifactId>webservice</artifactId>
     <packaging>pom</packaging>
-    <name>${groupId} :: ${artifactId}</name>
+    <name>${artifactId}</name>
     <parent>
         <groupId>org.grouter</groupId>
         <artifactId>platform</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
     <modules>
         <module>ws-service</module>
