@@ -1,8 +1,8 @@
 package org.grouter.domain.daolayer.hibernate;
 
 import org.hibernate.*;
-import org.grouter.domain.entitylayer.Message;
-import org.grouter.domain.entitylayer.SystemUser;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.SystemUser;
 import org.grouter.common.hibernate.HibernateTemplate;
 import org.grouter.common.hibernate.HibernateTemplateHandler;
 import org.apache.log4j.Logger;

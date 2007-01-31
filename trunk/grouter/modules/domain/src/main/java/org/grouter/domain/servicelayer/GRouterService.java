@@ -1,7 +1,7 @@
 package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.entitylayer.Message;
-import org.grouter.domain.entitylayer.SystemUser;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.SystemUser;
 
 /**
  * Created by IntelliJ IDEA.

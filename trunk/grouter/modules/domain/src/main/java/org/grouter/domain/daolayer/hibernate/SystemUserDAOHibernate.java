@@ -2,8 +2,8 @@ package org.grouter.domain.daolayer.hibernate;
 
 import org.hibernate.*;
 import org.grouter.domain.daolayer.SystemUserDAO;
-import org.grouter.domain.entitylayer.Message;
-import org.grouter.domain.entitylayer.SystemUser;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.SystemUser;
 import org.apache.log4j.Logger;
 
 import java.util.*;

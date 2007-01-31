@@ -4,8 +4,8 @@ import static org.grouter.domain.daolayer.DAOFactory.FactoryType.HIBERNATESPRING
 import org.grouter.domain.daolayer.SystemUserDAO;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.DAOFactory;
-import org.grouter.domain.entitylayer.SystemUser;
-import org.grouter.domain.entitylayer.Message;
+import org.grouter.domain.entities.SystemUser;
+import org.grouter.domain.entities.Message;
 import org.grouter.domain.servicelayer.GRouterService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

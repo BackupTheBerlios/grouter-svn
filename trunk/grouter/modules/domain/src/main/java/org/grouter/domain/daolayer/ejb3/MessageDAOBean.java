@@ -1,6 +1,6 @@
 package org.grouter.domain.daolayer.ejb3;
 
-import org.grouter.domain.entitylayer.Message;
+import org.grouter.domain.entities.Message;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.apache.log4j.Logger;
 

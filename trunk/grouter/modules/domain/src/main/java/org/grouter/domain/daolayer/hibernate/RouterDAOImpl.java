@@ -1,6 +1,6 @@
 package org.grouter.domain.daolayer.hibernate;
 
-import org.grouter.domain.entitylayer.Router;
+import org.grouter.domain.entities.Router;
 import org.grouter.domain.daolayer.RouterDAO;
 import org.hibernate.Session;
 

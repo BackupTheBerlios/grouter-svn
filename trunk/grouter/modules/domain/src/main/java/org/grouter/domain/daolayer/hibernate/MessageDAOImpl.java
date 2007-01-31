@@ -1,7 +1,7 @@
 package org.grouter.domain.daolayer.hibernate;
 
 import org.hibernate.*;
-import org.grouter.domain.entitylayer.Message;
+import org.grouter.domain.entities.Message;
 import org.grouter.domain.daolayer.MessageDAO;
 
 import java.util.*;
