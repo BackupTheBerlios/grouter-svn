@@ -1,10 +1,11 @@
 package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.entities.*;
+import org.grouter.domain.entitylayer.*;
 
 import java.sql.Timestamp;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,7 +36,7 @@ public class RouterMessageFactory
         Set<Message> messages = new HashSet<Message>();
         messages.add(message);
 
-        Node node = new Node("file node", messages, timestamp, null);
+        Node node = new Node("file node", messages, new Date(), null,new Date());
         message.setNode(node);
 
         Set<Node> nodes = new HashSet<Node>();

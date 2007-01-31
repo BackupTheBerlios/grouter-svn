@@ -24,27 +24,9 @@
              url="${db.url}"
              userid="${db.user}"
              password="${db.pw}"
-             onerror="continue">
+             onerror="continue"
+             src="src/main/sql/drop_create_all_hsqldb.sql">
             <classpath refid="project.class.path"/>
-            create table ROUTER (ROUTER_ID varchar(255) not null, STARTEDON timestamp, UPTIME bigint, NAME varchar(255), primary key (ROUTER_ID));
-
-            create table NODE (NODE_ID varchar(255) not null, MODIFIEDON timestamp, MODIFIEDBYSYSTEMUSER varbinary(255),NAME varchar(255), ROUTER_FK varchar(255), primary key (NODE_ID));
-
-            create table MESSAGE (MESSAGE_ID varchar(255) not null, CREATIONTIMESTAMP timestamp, MESSAGE varchar(255) not null, SENDER_FK varchar(255), NODE_FK varchar(255), primary key (MESSAGE_ID));
-
-            create table RECEIVER (RECEIVER_ID varchar(255) not null, NAME varchar(255), primary key (RECEIVER_ID));
-            create table RECEIVER_MESSAGE (MESSAGE_FK varchar(255) not null, RECEIVER_FK varchar(255) not null, primary key (MESSAGE_FK, RECEIVER_FK));
-
-            create table SENDER (SENDER_ID varchar(255) not null, NAME varchar(255), primary key (SENDER_ID));
-            create table SENDER_MESSAGE (SENDER_FK varchar(255) not null, MESSAGE_FK varchar(255) not null, primary key (SENDER_FK, MESSAGE_FK), unique (MESSAGE_FK));
-
-            alter table NODE add constraint FK_ROUTER foreign key (ROUTER_FK) references ROUTER;
-            alter table MESSAGE add constraint FK_NODE foreign key (NODE_FK) references NODE;
-            alter table RECEIVER_MESSAGE add constraint FK_RM_MESSAGE foreign key (MESSAGE_FK) references MESSAGE;
-            alter table RECEIVER_MESSAGE add constraint FK_RM_RECEIVER foreign key (RECEIVER_FK) references RECEIVER;
-            alter table SENDER_MESSAGE add constraint FK_SM_MESSAGE foreign key (MESSAGE_FK) references MESSAGE;
-            alter table SENDER_MESSAGE add constraint FK_SM_SENDER foreign key (SENDER_FK) references SENDER;
-
         </sql>
     </target>
 
@@ -82,7 +64,7 @@
              password="${db.pw}"
              onerror="continue">
             <classpath refid="project.class.path"/>
-            insert into ROUTER (STARTEDON, UPTIME, NAME, ROUTER_ID) values ('2006-10-13 15:51:53', 100000000, 'MAINROUTER', 'ROUTER1')
+            insert into ROUTER (STARTEDON, UPTIME, NAME, ID) values ('2006-10-13 15:51:53', 100000000, 'MAINROUTER', 'ROUTER1')
 
             insert into NODE (MODIFIEDON, MODIFIEDBYSYSTEMUSER, ROUTER_FK, NAME, NODE_ID) values ('2006-10-13 15:51:53', null, 'ROUTER1', 'FILE-TO-FILE-NODE-1', 'NODE1')
             insert into NODE (MODIFIEDON, MODIFIEDBYSYSTEMUSER, ROUTER_FK, NAME, NODE_ID) values ('2006-10-01 15:51:53', null, 'ROUTER1', 'FILE-TO-FILE-NODE-2', 'NODE2')
