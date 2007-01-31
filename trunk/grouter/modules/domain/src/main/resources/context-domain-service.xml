@@ -20,6 +20,7 @@
       </props>
     </property>
   </bean>
+  
   <bean id="grouterServiceImpl" parent="abstractTransactionalManager">
     <property name="target">
       <bean class="org.grouter.domain.servicelayer.spring.GRouterServiceImpl">
