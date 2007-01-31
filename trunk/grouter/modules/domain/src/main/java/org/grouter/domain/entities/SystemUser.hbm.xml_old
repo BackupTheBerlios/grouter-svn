@@ -26,10 +26,10 @@
             <many-to-many
                     unique="true"
                     column="GROUPID"
-                    class="org.grouter.domain.entitylayer.SystemGroup"/>
+                    class="org.grouter.domain.entities.SystemGroup"/>
         </set>
         <one-to-one name="currentPassword"
-                    class="org.grouter.domain.entitylayer.Password"
+                    class="org.grouter.domain.entities.Password"
                     cascade="all"/>
     </class>
 </hibernate-mapping>

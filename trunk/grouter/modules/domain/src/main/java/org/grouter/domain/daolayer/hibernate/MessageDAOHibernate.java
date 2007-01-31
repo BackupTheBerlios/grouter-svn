@@ -48,7 +48,7 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
      */
     public Message createMessage(Message message)
     {
-        return saveOrUpdate(message);
+        return save(message);
     }
 
     public void setSession(Session s)

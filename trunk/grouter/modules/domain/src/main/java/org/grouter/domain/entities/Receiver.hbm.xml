@@ -20,7 +20,7 @@
         
         <set name="messages" table="RECEIVER_MESSAGE" >
             <key column="RECEIVER_ID"/>
-            <many-to-many class="org.grouter.domain.entitylayer.Message" column="MESSAGE_ID"/>
+            <many-to-many class="org.grouter.domain.entities.Message" column="MESSAGE_ID"/>
         </set>
 
     </class>

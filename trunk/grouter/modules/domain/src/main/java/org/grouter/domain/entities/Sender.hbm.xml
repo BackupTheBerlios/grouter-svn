@@ -27,7 +27,7 @@
             <key>
                 <column name="SENDER_FK" not-null="true"/>
             </key>
-            <one-to-many class="org.grouter.domain.entitylayer.Message"/>
+            <one-to-many class="org.grouter.domain.entities.Message"/>
         </set>
 
          <!-- The column attribute in the many-to-many element is for the FK residing in this
@@ -41,7 +41,7 @@
         <many-to-one
                 name="address"
                 not-null="false"
-                class="org.grouter.domain.entitylayer.Address"
+                class="org.grouter.domain.entities.Address"
                 column="ADDRESS_ID"
                 cascade="save-update,persist">
             
