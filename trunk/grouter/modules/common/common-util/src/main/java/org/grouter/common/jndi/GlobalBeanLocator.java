@@ -47,4 +47,16 @@ public class  GlobalBeanLocator
         logger.info("Setting application context");
         context = applicationContext;
     }
+
+
+    protected String[] getConfigLocations()
+    {
+        return new String[]{
+                "ac-dao.xml",
+                "ac-datasource.xml",
+                "ac-service.xml",
+                "ac-sessionfactory.xml"
+
+        };
+    }
 }

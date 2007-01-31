@@ -16,7 +16,7 @@ import javax.naming.*;
 
 import org.apache.log4j.*;
 import org.grouter.common.jndi.ServiceLocatorContextAware;
-import org.grouter.common.exception.RemoteSiriException;
+import org.grouter.common.exception.RemoteGrouterException;
 
 
 /**
@@ -179,24 +179,24 @@ public abstract class Destination
      * Disconnect from queue. This method should be called from the ejbRemove method
      * if you are using a stateless session bean.
      *
-     * @throws RemoteSiriException Unchecked exception.
+     * @throws RemoteGrouterException Unchecked exception.
      */
-    public abstract void unbind() throws RemoteSiriException;
+    public abstract void unbind() throws RemoteGrouterException;
 
     /**
      * Connect to destination and open session.
      *
-     * @throws RemoteSiriException Unchecked exception.
+     * @throws RemoteGrouterException Unchecked exception.
      */
-    public abstract void bind() throws RemoteSiriException;
+    public abstract void bind() throws RemoteGrouterException;
 
     /**
      * Handle over rebinding to behavior interface implementation (strategy pattern).
      *
      * @param dest Destination
-     * @throws RemoteSiriException Unchecked exception.
+     * @throws RemoteGrouterException Unchecked exception.
      */
-    abstract public void rebind(Destination dest) throws RemoteSiriException;
+    abstract public void rebind(Destination dest) throws RemoteGrouterException;
 
     /**
      * Send the reply on a temporary destination and set the correlation

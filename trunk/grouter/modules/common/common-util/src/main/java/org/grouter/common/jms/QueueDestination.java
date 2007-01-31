@@ -26,7 +26,7 @@ import org.apache.commons.lang.builder.*;
 import org.apache.log4j.*;
 import org.grouter.common.jndi.JNDIUtils;
 import org.grouter.common.jndi.ServiceLocatorException;
-import org.grouter.common.exception.RemoteSiriException;
+import org.grouter.common.exception.RemoteGrouterException;
 
 /**
  * See {@link Destination} and use abstract interface to concrete
@@ -424,7 +424,7 @@ public class QueueDestination extends Destination
      * <b>See doocumentaion in {@link Destination#sendMessage(Serializable,HashMap\<String, String>)}.</b><br>
      * <br>
      */
-    public void rebind(Destination dest) throws RemoteSiriException
+    public void rebind(Destination dest) throws RemoteGrouterException
     {
         rebindBehavior.rebind(this);
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema  targetNamespace="http://systemmessage.grouter.org/EmailMessage.xsd"
-            xmlns="http://systemmessage.grouter.org/EmailMessage.xsd"
-            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-            xmlns:mstns="http://systemmessage.grouter.org/EmailMessage.xsd"
-            elementFormDefault="qualified">
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://systemmessage.grouter.org"
+	xmlns="http://systemmessage.grouter.org"
+	elementFormDefault="qualified">
+	
 	<xs:element name="emailmessage">
 		<xs:complexType>
 			<xs:sequence>
