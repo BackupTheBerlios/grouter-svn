@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+<beans>
+
+  <bean id="org.grouter" class="org.springframework.context.support.ClassPathXmlApplicationContext">
+    <constructor-arg>
+      <list>
+        <value>ac-dao.xml</value>
+        <value>ac-datasource.xml</value>
+        <value>ac-service.xml</value>
+        <value>ac-sessionfactory.xml</value>
+      </list>
+    </constructor-arg>
+  </bean>
+
+</beans>
