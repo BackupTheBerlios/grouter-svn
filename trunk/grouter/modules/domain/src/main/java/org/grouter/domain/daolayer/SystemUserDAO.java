@@ -1,6 +1,6 @@
 package org.grouter.domain.daolayer;
 
-import org.grouter.domain.entities.systemuser.SystemUser;
+import org.grouter.domain.entitylayer.SystemUser;
 
 
 public interface SystemUserDAO extends GenericDAO<SystemUser, Long>
