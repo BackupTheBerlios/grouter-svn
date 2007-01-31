@@ -51,7 +51,7 @@ public class GRouterQueueMDB implements MessageListener
         {
             ObjectMessage objectMessage = (ObjectMessage) receivedMessage;
             logger.debug("Got message : " + objectMessage.getObject());
-            if (objectMessage.getObject() instanceof org.grouter.domain.entities.Message)
+            if (objectMessage.getObject() instanceof org.grouter.domain.entitylayer.Message)
             {
                 persist(objectMessage);
 
@@ -75,7 +75,7 @@ public class GRouterQueueMDB implements MessageListener
     private void persist(ObjectMessage objectMessage)
             throws JMSException
     {
-        org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
+        org.grouter.domain.entitylayer.Message message = (org.grouter.domain.entitylayer.Message) objectMessage.getObject();
         logger.debug("Got message");
         GRouterLocalService gRouterLocal = (GRouterLocalService)sc.lookup( GRouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
         gRouterLocal.createMessage(message);
@@ -88,10 +88,10 @@ public class GRouterQueueMDB implements MessageListener
      * @param messages
      * @return
      */
-    private String printMessages(org.grouter.domain.entities.Message[] messages)
+    private String printMessages(org.grouter.domain.entitylayer.Message[] messages)
     {
         StringBuffer stringBuffer = new StringBuffer();
-        for (org.grouter.domain.entities.Message message : messages)
+        for (org.grouter.domain.entitylayer.Message message : messages)
         {
             stringBuffer.append(message.reflectionToString()).append("\n");
         }
