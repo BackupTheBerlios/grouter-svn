@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping SYSTEM
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-    <class name="org.grouter.domain.entities.Sender" table="SENDER">
+    <class name="org.grouter.domain.entitylayer.Sender" table="SENDER">
         <id column="ID" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
@@ -27,7 +27,7 @@
             <key>
                 <column name="SENDER_FK" not-null="true"/>
             </key>
-            <one-to-many class="org.grouter.domain.entities.Message"/>
+            <one-to-many class="org.grouter.domain.entitylayer.Message"/>
         </set>
 
          <!-- The column attribute in the many-to-many element is for the FK residing in this
@@ -41,7 +41,7 @@
         <many-to-one
                 name="address"
                 not-null="false"
-                class="org.grouter.domain.entities.Address"
+                class="org.grouter.domain.entitylayer.Address"
                 column="ADDRESS_ID"
                 cascade="save-update,persist">
             

@@ -1,4 +1,4 @@
-package org.grouter.domain.entities;
+package org.grouter.domain.entitylayer;
 
 import org.hibernate.annotations.GenericGenerator;
 

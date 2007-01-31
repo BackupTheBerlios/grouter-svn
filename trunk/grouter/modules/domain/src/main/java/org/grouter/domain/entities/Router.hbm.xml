@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping SYSTEM
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-  <class name="org.grouter.domain.entities.Router" table="ROUTER">
+  <class name="org.grouter.domain.entitylayer.Router" table="ROUTER">
     <id column="ID" name="id" type="java.lang.String">
       <generator class="uuid"/>
     </id>
@@ -14,7 +14,7 @@
       <key>
         <column name="NODE_ID" not-null="true"/>
       </key>
-      <one-to-many class="org.grouter.domain.entities.Node"/>
+      <one-to-many class="org.grouter.domain.entitylayer.Node"/>
     </set>
 
 

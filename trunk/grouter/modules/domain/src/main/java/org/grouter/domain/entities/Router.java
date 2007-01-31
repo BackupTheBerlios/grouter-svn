@@ -1,4 +1,4 @@
-package org.grouter.domain.entities;
+package org.grouter.domain.entitylayer;
 
 import org.apache.log4j.Logger;
 import org.hibernate.annotations.GenericGenerator;

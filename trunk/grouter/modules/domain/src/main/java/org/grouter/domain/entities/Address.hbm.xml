@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping SYSTEM
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-    <class name="org.grouter.domain.entities.Address" table="ADDRESS">
+    <class name="org.grouter.domain.entitylayer.Address" table="ADDRESS">
         <id column="ID" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>

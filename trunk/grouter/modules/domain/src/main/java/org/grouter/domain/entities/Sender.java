@@ -1,4 +1,4 @@
-package org.grouter.domain.entities;
+package org.grouter.domain.entitylayer;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,7 +21,6 @@ public class Sender implements Serializable
     private String id;
     private Address address;
     private String name;
-
     private Set<Message> messages = new HashSet();
 
     public Sender()

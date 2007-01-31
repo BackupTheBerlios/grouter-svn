@@ -1,14 +1,13 @@
-package org.grouter.domain.entities;
+package org.grouter.domain.entitylayer;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.entities.systemuser.SystemUser;
+import org.grouter.domain.entitylayer.SystemUser;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
-import java.sql.Timestamp;
 import java.io.Serializable;
 
 

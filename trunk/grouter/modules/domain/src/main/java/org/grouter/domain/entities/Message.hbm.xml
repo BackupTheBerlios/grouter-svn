@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping SYSTEM
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-    <class name="org.grouter.domain.entities.Message" table="MESSAGE">
+    <class name="org.grouter.domain.entitylayer.Message" table="MESSAGE">
         <id column="ID" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
@@ -19,7 +19,7 @@
             <key>
                 <column name="RECEIVER_ID" not-null="true"/>
             </key>
-            <one-to-many class="org.grouter.domain.entities.Receiver"/>
+            <one-to-many class="org.grouter.domain.entitylayer.Receiver"/>
         </set>
 
 
@@ -34,7 +34,7 @@
         <many-to-one
                 name="sender"
                 not-null="true"
-                class="org.grouter.domain.entities.Sender"
+                class="org.grouter.domain.entitylayer.Sender"
                 column="SENDER_FK"
                 cascade="save-update,persist">
         </many-to-one>
@@ -51,11 +51,9 @@
         <many-to-one
                 name="node"
                 not-null="false"
-                class="org.grouter.domain.entities.Node"
+                class="org.grouter.domain.entitylayer.Node"
                 column="NODE_FK"
                 cascade="none">
         </many-to-one>
-
-
     </class>
 </hibernate-mapping>
