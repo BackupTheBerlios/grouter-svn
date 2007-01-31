@@ -1,7 +1,6 @@
-package org.grouter.domain.entitylayer;
+package org.grouter.domain.entities;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.entitylayer.SystemUser;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

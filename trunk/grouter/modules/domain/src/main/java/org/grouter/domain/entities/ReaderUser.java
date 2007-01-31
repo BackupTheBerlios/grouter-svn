@@ -1,4 +1,4 @@
-package org.grouter.domain.entitylayer;
+package org.grouter.domain.entities;
 
 /**
  * Created by IntelliJ IDEA.
