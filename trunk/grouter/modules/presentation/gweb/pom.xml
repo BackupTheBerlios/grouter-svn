@@ -2,15 +2,45 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.platform.presentation</groupId>
-    <artifactId>prs-gweb</artifactId>
+    <artifactId>presentation-gweb</artifactId>
+
     <packaging>war</packaging>
     <name>${artifactId}</name>
+
     <parent>
         <groupId>org.grouter.platform</groupId>
         <artifactId>presentation</artifactId>
         <version>0.1.1-SNAPSHOT</version>
     </parent>
-    <dependencies>       
+    <dependencies>
+        <dependency>
+            <groupId>org.grouter.platform</groupId>
+            <artifactId>domain</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ltd.getahead</groupId>
+            <artifactId>dwr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>velocity</groupId>
+            <artifactId>velocity</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.acegisecurity</groupId>
+            <artifactId>acegi-security</artifactId>
+        </dependency>
+
         <!--
         | Third party dependencies
         |-->
@@ -30,10 +60,7 @@
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
         </dependency>
-        <dependency>
-            <groupId>servlet</groupId>
-            <artifactId>servlet</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>axis</groupId>
             <artifactId>axis</artifactId>
@@ -44,19 +71,20 @@
             <artifactId>axis-akamai</artifactId>
         </dependency>
         <dependency>
-            <groupId>akamai-ej-apputil</groupId>
-            <artifactId>akamai-ej-apputil</artifactId>
-        </dependency>
-        <dependency>
             <groupId>xmlParserAPIs</groupId>
             <artifactId>xmlParserAPIs</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency-->
+      <dependency>
+        <groupId>com.javasoft</groupId>
+        <artifactId>javaee</artifactId>
+      </dependency>
+
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <scope>provided</scope>
-        </dependency-->
+        </dependency>
         <!--
         | Test: Needed for HttpUnitTests!
         |-->
@@ -78,7 +106,29 @@
         </dependency>
     </dependencies>
     <build>
+
+
+        <!--  Skip version number in ear name -> simplifies dpeloy process -->
+        <finalName>gweb</finalName>
+
         <plugins>
+
+            <!-- Run using mvn jetty6:run  -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty6-plugin</artifactId>
+                <version>6.0.0beta17</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <connectors>
+                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                            <port>8080</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                </configuration>
+            </plugin>
+
             <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>

@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.platform.presentation</groupId>
-    <artifactId>presentationrs-gswing</artifactId>
+    <artifactId>presentation-gswing</artifactId>
     <packaging>jar</packaging>
     <name>${artifactId}</name>
     <parent>
@@ -31,10 +31,11 @@
             <artifactId>domain</artifactId>
             <version>${version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.javasoft</groupId>
-            <artifactId>javaee</artifactId>
-        </dependency>
+      <dependency>
+        <groupId>com.javasoft</groupId>
+        <artifactId>javaee</artifactId>
+      </dependency>
+       
         <dependency>
             <groupId>com.jidesoft</groupId>
             <artifactId>jide-shortcut</artifactId>
