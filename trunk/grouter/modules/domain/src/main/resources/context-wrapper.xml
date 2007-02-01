@@ -8,10 +8,10 @@
   <bean id="org.grouter" class="org.springframework.context.support.ClassPathXmlApplicationContext">
     <constructor-arg>
       <list>
-        <value>ac-dao.xml</value>
-        <value>ac-datasource.xml</value>
-        <value>ac-service.xml</value>
-        <value>ac-sessionfactory.xml</value>
+        <value>context-domain-dao.xml</value>
+        <value>context-domain-datasource.xml</value>
+        <value>context-domain-service.xml</value>
+        <value>context-domain-sessionfactory.xml</value>
       </list>
     </constructor-arg>
   </bean>

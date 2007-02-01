@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" default-autowire="byType">
+
     <!-- use org.apache.commons.dbcp.BasicDataSource -->
    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" lazy-init="true" destroy-method="close">
       <property name="driverClassName" value="${grouter.db.driver}" />
@@ -9,8 +13,8 @@
       <property name="username" value="${grouter.db.username}" />
       <property name="password" value="${grouter.db.password}" />
       <!--property name="defaultTransactionIsolation" value="2" />
-      <property name="defaultAutoCommit" value="true" />
-      <property name="initialSize" value="100" / >
+      <property name="defaultAutoCommit" value="true" / -->
+      <!--property name="initialSize" value="100" />
       <property name="maxActive" value="100" />
       <property name="maxWait" value="15000" />
       <property name="poolPreparedStatements" value="true" / -->
