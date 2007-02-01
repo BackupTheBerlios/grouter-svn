@@ -18,7 +18,7 @@
         
         <set name="passwords" cascade="all" inverse="true" order-by="PASSWORDID">
             <key column="USERID" not-null="true" />
-            <one-to-many class="org.grouter.domain.entitylayer.Password"/>
+            <one-to-many class="org.grouter.domain.entities.Password"/>
         </set>
 
         <set name="groups" table="GROUPUSER" order-by="GROUPID" >

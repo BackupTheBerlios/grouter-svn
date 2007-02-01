@@ -1,4 +1,4 @@
-package org.grouter.domain.dao.test;
+package org.grouter.domain.daolayer.dao.test;
 
 /**
  * Unit test MessageDAO interface.
@@ -6,8 +6,8 @@ package org.grouter.domain.dao.test;
  * @author Georges Polyzois
  */
 
-import org.grouter.domain.dao.SystemUserDAO;
-import org.grouter.domain.systemuser.SystemUser;
+import org.grouter.domain.daolayer.SystemUserDAO;
+import org.grouter.domain.entities.SystemUser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,7 +39,7 @@ public class TestSystemDAOHibernate extends TestData
         assertNotNull("One user with id : " + super.systemUser1.getId()  ,systemUser);
         String expected = "Sir Donald";
         systemUser.setName("Sir Donald");
-        systemUserDAO.saveOrUpdate(systemUser);
+        systemUserDAO.save(systemUser);
         SystemUser systemUserAltered = systemUserDAO.findById(super.systemUser1.getId(), false);
         assertEquals(expected,systemUserAltered.getName());
     }

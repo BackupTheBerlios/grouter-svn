@@ -19,7 +19,7 @@
             <key>
                 <column name="RECEIVER_ID" not-null="true"/>
             </key>
-            <one-to-many class="org.grouter.domain.entitylayer.Receiver"/>
+            <one-to-many class="org.grouter.domain.entities.Receiver"/>
         </set>
 
 
@@ -34,7 +34,7 @@
         <many-to-one
                 name="sender"
                 not-null="true"
-                class="org.grouter.domain.entitylayer.Sender"
+                class="org.grouter.domain.entities.Sender"
                 column="SENDER_FK"
                 cascade="save-update,persist">
         </many-to-one>
@@ -51,7 +51,7 @@
         <many-to-one
                 name="node"
                 not-null="false"
-                class="org.grouter.domain.entitylayer.Node"
+                class="org.grouter.domain.entities.Node"
                 column="NODE_FK"
                 cascade="none">
         </many-to-one>
