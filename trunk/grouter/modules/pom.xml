@@ -89,7 +89,7 @@
     <module>common</module>
     <!-- module>webservice</module -->
     <module>domain</module>
-    <module>presentation</module>
+    <!-- module>presentation</module -->
     <!-- module>domainear</module-->
     <!--module>router</module -->
   </modules>
