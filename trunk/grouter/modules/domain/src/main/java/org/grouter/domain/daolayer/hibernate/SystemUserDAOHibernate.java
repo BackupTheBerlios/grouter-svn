@@ -1,17 +1,16 @@
 package org.grouter.domain.daolayer.hibernate;
 
-import org.hibernate.*;
+import org.apache.log4j.Logger;
 import org.grouter.domain.daolayer.SystemUserDAO;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.SystemUser;
-import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Hibernate-specific implementation of the <tt>SystemUserDAO</tt>
  * non-CRUD data access object.
- *
  */
 public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long> implements SystemUserDAO
 {

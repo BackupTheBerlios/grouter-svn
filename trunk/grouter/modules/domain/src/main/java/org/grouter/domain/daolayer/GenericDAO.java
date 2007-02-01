@@ -1,8 +1,8 @@
 package org.grouter.domain.daolayer;
 
 
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Business data access objects share this interface.
@@ -13,8 +13,8 @@ import java.io.Serializable;
  * (for example, there is no UDPATE statement function) that provides
  * automatic transactional dirty checking of business objects in persistent
  * state.
- *
-* See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
+ * <p/>
+ * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
  *
  * @author Georges Polyzois
  */

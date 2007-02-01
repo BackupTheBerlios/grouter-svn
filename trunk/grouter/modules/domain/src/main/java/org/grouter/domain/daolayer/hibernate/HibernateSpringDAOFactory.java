@@ -1,16 +1,15 @@
 package org.grouter.domain.daolayer.hibernate;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.grouter.domain.daolayer.DAOFactory;
-import org.grouter.domain.daolayer.SystemUserDAO;
-import org.grouter.domain.daolayer.MessageDAO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.grouter.domain.daolayer.DAOFactory;
+import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.daolayer.SystemUserDAO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  * Returns Hibernate-specific instances of DAOs. SPring injects a sessionfactory as per defined in SPring context files.
- * 
  *
  * @author Georges Polyzois
  */
@@ -18,7 +17,9 @@ public class HibernateSpringDAOFactory extends DAOFactory
 {
     private static Log logger = LogFactory.getLog(HibernateSpringDAOFactory.class);
 
-    /** Injected into this instance from Spring. */
+    /**
+     * Injected into this instance from Spring.
+     */
     SessionFactory sessionFactory;
 
     public HibernateSpringDAOFactory()
@@ -27,6 +28,7 @@ public class HibernateSpringDAOFactory extends DAOFactory
 
     /**
      * Injected.
+     *
      * @param sessionFactory
      */
     public void setSessionFactory(SessionFactory sessionFactory)

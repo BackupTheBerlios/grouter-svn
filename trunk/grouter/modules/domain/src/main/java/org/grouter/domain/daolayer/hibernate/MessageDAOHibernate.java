@@ -1,15 +1,15 @@
 package org.grouter.domain.daolayer.hibernate;
 
-import org.hibernate.*;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.entities.Message;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Hibernate-specific implementation of the <tt>MessageDAO</tt>
  * non-CRUD data access object.
- *
  */
 public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> implements MessageDAO
 {
@@ -32,12 +32,12 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
         return getSession().createCriteria(concreteClass).list();
     }
 
-    
+
     public List<Message> findMessagesForNode(String nodeId)
     {
         String hsql = "from Message obj where obj.nodeId = : nodeId";
         Query qr = getSession().createQuery(hsql);
-        return (List<Message>) qr.setParameter("nodeId",nodeId).list();
+        return (List<Message>) qr.setParameter("nodeId", nodeId).list();
     }
 
     /**

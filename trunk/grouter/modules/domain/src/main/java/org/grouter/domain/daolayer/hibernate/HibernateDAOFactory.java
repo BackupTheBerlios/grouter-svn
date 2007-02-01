@@ -1,12 +1,12 @@
 package org.grouter.domain.daolayer.hibernate;
 
-import org.hibernate.Session;
-import org.grouter.domain.daolayer.DAOFactory;
-import org.grouter.domain.daolayer.SystemUserDAO;
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.common.hibernate.HibernateUtilContextAware;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.grouter.common.hibernate.HibernateUtilContextAware;
+import org.grouter.domain.daolayer.DAOFactory;
+import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.daolayer.SystemUserDAO;
+import org.hibernate.Session;
 
 /**
  * Returns Hibernate-specific instances of DAOs.
@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
  * its own first-level class. We can't use anonymous inner classes for this trick
  * because they can't extend or implement an interface and they can't include
  * constructors.
- *
+ * <p/>
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
  *
  * @author Georges Polyzois
@@ -43,7 +43,8 @@ public class HibernateDAOFactory extends DAOFactory
         return new MessageDAOImpl(getCurrentSession());
     }
 
-    public SystemUserDAO getSystemUserDAO() {
+    public SystemUserDAO getSystemUserDAO()
+    {
         return new SystemUserDAOHibernate(getCurrentSession());
     }
 }

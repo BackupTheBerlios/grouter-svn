@@ -1,11 +1,11 @@
 package org.grouter.domain.daolayer;
 
-import org.grouter.domain.daolayer.hibernate.HibernateSpringDAOFactory;
 import org.grouter.domain.daolayer.ejb3.Ejb3DAOFactory;
 import org.grouter.domain.daolayer.hibernate.HibernateDAOFactory;
+import org.grouter.domain.daolayer.hibernate.HibernateSpringDAOFactory;
 import org.springframework.beans.factory.access.BeanFactoryLocator;
-import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 import org.springframework.beans.factory.access.BeanFactoryReference;
+import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 
 /**
  * See Caveat
@@ -40,6 +40,7 @@ public abstract class DAOFactory
 
     /**
      * Creates three different types of factories depenging on type of technology used.
+     *
      * @param factoryType
      * @return
      */

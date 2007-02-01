@@ -1,12 +1,15 @@
 package org.grouter.domain.daolayer.hibernate;
 
-import org.hibernate.*;
-import org.hibernate.criterion.*;
 import org.grouter.domain.daolayer.GenericDAO;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.Criteria;
+import org.hibernate.LockMode;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 
-import java.util.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Implements the generic CRUD data access operations using Hibernate APIs.
@@ -21,7 +24,7 @@ import java.io.Serializable;
  *
  * @author Georges Polyzois
  */
-public abstract class GenericHibernateDAO<T, ID extends Serializable>  implements GenericDAO<T, ID>
+public abstract class GenericHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID>
 {
     private Class<T> entityClass;
     private SessionFactory sessionFactory;

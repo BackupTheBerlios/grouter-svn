@@ -13,7 +13,7 @@ import org.grouter.domain.daolayer.hibernate.SystemUserDAOHibernate;
  */
 public class Ejb3DAOFactory extends DAOFactory
 {
-  
+
     // Add your DAO interfaces below here
     public MessageDAO getMessageDAO()
     {

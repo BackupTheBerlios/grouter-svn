@@ -1,19 +1,17 @@
 package org.grouter.domain.daolayer.ejb3;
 
+import org.apache.log4j.Logger;
 import org.grouter.domain.daolayer.GenericDAO;
 import org.hibernate.Criteria;
-import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.criterion.Example;
-import org.apache.log4j.Logger;
-
-import javax.persistence.PersistenceContext;
-import javax.persistence.EntityManager;
-import java.io.Serializable;
-import java.util.List;
-
+import org.hibernate.ejb.HibernateEntityManager;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Implements the generic CRUD data access operations using EJB3 APIs.
@@ -22,7 +20,7 @@ import javax.naming.NamingException;
  * Entity:DAO design. This is actually an implementation that uses some
  * extensions for EJB3 persistence from Hibernate - you can see how the
  * packages for the extensions are not imported, but named inline.
- *
+ * <p/>
  * See Christian Bauers generic DAO at Hibernate.org - the Caveat example applications.
  *
  * @author Georges Polyzois

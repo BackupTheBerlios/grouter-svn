@@ -1,13 +1,11 @@
 package org.grouter.domain.daolayer.ejb3;
 
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.daolayer.MessageDAO;
 import org.apache.log4j.Logger;
-
-import java.util.List;
-
+import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.entities.Message;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.List;
 
 
 public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements MessageDAO
@@ -26,6 +24,7 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
 
     /**
      * Todo implement
+     *
      * @param concreteClass
      * @return
      */
@@ -36,6 +35,7 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
 
     /**
      * Todo implement
+     *
      * @param nodeId
      * @return
      */
@@ -53,12 +53,12 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
 
             returnval = save(message);
         }
-        catch(Throwable thr)
+        catch (Throwable thr)
         {
-            logger.debug(thr,thr);
+            logger.debug(thr, thr);
         }
-        logger.debug("####### After save updte" );
-        
+        logger.debug("####### After save updte");
+
         return returnval;
     }
 
@@ -72,6 +72,7 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
 
     /**
      * Todo
+     *
      * @param entity
      */
     public void delete(Message entity)
