@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <!--
   - DAO context containing Hibernate and DAO bean configuration(s).
 -->
+       
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" default-autowire="byType">
 
 
-<beans>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+  <bean id="hibernateSpringDAOFactory" class="org.grouter.domain.daolayer.hibernate.HibernateSpringDAOFactory" />
+
+
+
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingLocations">
+            <list>
+                <value>org/grouter/domain/entities/Router.hbm.xml</value>
+                <value>org/grouter/domain/entities/Message.hbm.xml</value>
+                <value>org/grouter/domain/entities/Node.hbm.xml</value>
+                <value>org/grouter/domain/entities/Sender.hbm.xml</value>
+                <value>org/grouter/domain/entities/Receiver.hbm.xml</value>
+                <value>org/grouter/domain/entities/Address.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <!--prop key="hibernate.connection.autocommit">true</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop -->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <!-- prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop -->
+            </props>
+        </property>
+    </bean>
+
+
+
 
     <!--
     Grouter specific Hibernate Session Factory.
@@ -24,36 +66,8 @@
             </property>
     -->
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="mappingLocations">
-            <list>
-                <value>org/grouter/domain/entities/Router.hbm.xml</value>
-                <value>org/grouter/domain/entities/Message.hbm.xml</value>
-                <value>org/grouter/domain/entities/Node.hbm.xml</value>
-                <value>org/grouter/domain/entities/Sender.hbm.xml</value>
-                <value>org/grouter/domain/entities/Receiver.hbm.xml</value>
-                <value>org/grouter/domain/entities/Address.hbm.xml</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">${grouter.db.dialect}</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <!--prop key="hibernate.connection.autocommit">true</prop>
-                <prop key="hibernate.current_session_context_class">thread</prop -->
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.use_sql_comments">true</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
-            </props>
-        </property>
-    </bean>
+  
 </beans>
 
 
