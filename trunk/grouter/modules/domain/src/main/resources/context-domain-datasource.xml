@@ -6,6 +6,7 @@
   http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" default-autowire="byType">
 
+
     <!-- use org.apache.commons.dbcp.BasicDataSource -->
    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" lazy-init="true" destroy-method="close">
       <property name="driverClassName" value="${grouter.db.driver}" />
@@ -21,7 +22,7 @@
    </bean>
 
    <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-      <property name="location" value="classpath:/environment.properties" />
+      <property name="location" value="file:/etc/domain-environment.properties" />
    </bean>
 
 </beans>
