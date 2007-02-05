@@ -41,17 +41,6 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
         return (List<Message>) qr.setParameter("nodeid", nodeId).list();
     }
 
-    /**
-     * Makes transient message persisted.
-     *
-     * @param message
-     * @return the persisted message with an id
-     */
-    public Message createMessage(Message message)
-    {
-        return save(message);
-    }
-
     public void setSession(Session s)
     {
         //session = s;
