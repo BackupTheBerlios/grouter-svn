@@ -1,15 +1,13 @@
-package org.grouter.domain.dao.test;
+package org.grouter.domain.daolayer.dao.test;
 
 import org.hibernate.*;
 import org.hibernate.context.ThreadLocalSessionContext;
 import org.hibernate.cfg.Configuration;
 import org.apache.commons.logging.*;
-import org.grouter.domain.dao.DAOFactory;
+import org.grouter.domain.daolayer.DAOFactory;
 import org.grouter.common.logging.Log4JInit;
 import org.grouter.common.hibernate.HibernateUtilContextAware;
-import org.grouter.domain.systemuser.SystemUser;
-import org.grouter.domain.systemuser.SystemGroup;
-import org.grouter.domain.systemuser.Password;
+import org.grouter.domain.entities.*;
 import org.grouter.domain.*;
 import junit.framework.TestCase;
 

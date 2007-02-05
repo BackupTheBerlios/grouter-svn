@@ -1,4 +1,4 @@
-package org.grouter.domain.dao.test;
+package org.grouter.domain.daolayer.dao.test;
 
 /**
  * Unit test MessageDAO interface.
@@ -6,11 +6,10 @@ package org.grouter.domain.dao.test;
  * @author Georges Polyzois
  */
 
-import org.grouter.domain.dao.hibernate.MessageDAOHibernate;
-import org.grouter.domain.dao.MessageDAO;
-import org.grouter.domain.Sender;
-import org.grouter.domain.Message;
-import org.grouter.domain.Receiver;
+import org.grouter.domain.entities.*;
+import org.grouter.domain.daolayer.*;
+import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.daolayer.hibernate.MessageDAOHibernate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -31,7 +30,7 @@ public class TestMessageDAOHibernate extends TestData
         message.setSender(sender);
         message.setCreationTimestamp(new java.sql.Timestamp(System.currentTimeMillis()));
         sender.addToMessages(message);
-        messageDAO.saveOrUpdate(message);
+        messageDAO.save(message);
         log.debug("Saved instance with id : " + message.getId());
 
         Message result = messageDAO.findById(message.getId(),false);

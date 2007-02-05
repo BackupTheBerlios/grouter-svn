@@ -1,12 +1,12 @@
-package org.grouter.domain.dao.test;
+package org.grouter.domain.daolayer.dao.test;
 
-import org.grouter.domain.dao.MessageDAO;
-import org.grouter.domain.dao.SystemUserDAO;
-import org.grouter.domain.systemuser.SystemUser;
-import org.grouter.domain.systemuser.Password;
-import org.grouter.domain.Message;
-import org.grouter.domain.Sender;
-import org.grouter.domain.Receiver;
+import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.daolayer.SystemUserDAO;
+import org.grouter.domain.entities.SystemUser;
+import org.grouter.domain.entities.Password;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Sender;
+import org.grouter.domain.entities.Receiver;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -48,7 +48,7 @@ public abstract class TestData extends TestHibernate
         message.addToReceivers(receiver);
         message.setSender(sender);
         sender.addToMessages(message);
-        messageDAO.saveOrUpdate(message);
+        messageDAO.save(message);
 
         // Create and save a user
         SystemUserDAO systemUserDAO = DAOFACTORY.getSystemUserDAO();
@@ -58,7 +58,7 @@ public abstract class TestData extends TestHibernate
         systemUser1 = new SystemUser("Donald", "Donald Duck", "is funny", true, 3, today, nextWeek);
         systemUser1Password = new Password(systemUser1, "1password");
         systemUser1.addPassword(systemUser1Password);
-        systemUserDAO.saveOrUpdate(systemUser1);
+        systemUserDAO.save(systemUser1);
     }
 
     /**
