@@ -18,7 +18,7 @@ import java.io.Serializable;
  * Tables:
  * MESSAGE
  * --------------------------------------------------------------
- * ID  |   NAME  |   CREATIONTIME   | message |    SENDERID (FK)
+ * ID  |   NAME  |   CREATIONTIME   | content |    SENDERID (FK)
  * <p/>
  * SENDER
  * --------------------------------------------------------------
@@ -45,7 +45,7 @@ public class Message implements Serializable
     private String id;
     private Set<Receiver> receivers = new HashSet();
     private Sender sender;
-    private String message;
+    private String content;
     private Timestamp creationTimestamp;
     private Node node;
 
@@ -65,7 +65,7 @@ public class Message implements Serializable
         {
             throw new IllegalArgumentException("Non null parameters not allowed for this domain object.");
         }
-        this.message = amessage;
+        this.content = amessage;
     }
 
 
@@ -82,7 +82,7 @@ public class Message implements Serializable
         {
             throw new IllegalArgumentException("Non null parameters not allowed for this domain object.");
         }
-        this.message = message;
+        this.content = message;
         this.receivers = receivers;
         this.sender = sender;
         this.node = node;
@@ -98,14 +98,14 @@ public class Message implements Serializable
     }
 
     @Column(name = "MESSAGE", nullable = false)
-    public String getMessage()
+    public String getContent()
     {
-        return message;
+        return content;
     }
 
-    public void setMessage(String message)
+    public void setContent(String content)
     {
-        this.message = message;
+        this.content = content;
     }
 
     /**

@@ -116,15 +116,22 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         return crit.list();
     }
 
-    public T makePersistent(T entity)
+    public T save(T entity)
     {
         return getEntityManager().merge(entity);
     }
 
-    public void makeTransient(T entity)
+    public void delete(T entity)
     {
         getEntityManager().remove(entity);
     }
+
+
+    public void delete(ID id)
+    {
+        getEntityManager().remove( findById( id, true ) );
+    }
+
 
     @SuppressWarnings("unchecked")
     protected List<T> findByCriteria(org.hibernate.criterion.Criterion... criterion)

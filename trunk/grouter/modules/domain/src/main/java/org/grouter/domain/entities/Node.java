@@ -28,6 +28,7 @@ public class Node implements Serializable
     private Date modifiedOn;
     private Date createdOn;
     private Router router;
+    private NodeType nodeType;
     @Transient
     private SystemUser modifiedBySystemUser;
 
@@ -131,6 +132,18 @@ public class Node implements Serializable
     public void setCreatedOn(Date createdOn)
     {
         this.createdOn = createdOn;
+    }
+
+
+    public void setNodeType(NodeType nodeType)
+    {
+        this.nodeType = nodeType;
+    }
+
+    @Column(name = "NODETYPE")
+    public NodeType getNodeType()
+    {
+        return nodeType;
     }
 
 }

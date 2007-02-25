@@ -8,7 +8,6 @@
         </id>
         <!-- Options for caching : "transactional|read-write|nonstrict-read-write|read-only -->
         <!-- cache usage="read-only" / -->
-        <property name="name" not-null="false" type="java.lang.String" column="MESSAGE"/>
 
         <!--
             The key element is the name of the foreign key in the MESSAGE table (the
@@ -23,9 +22,9 @@
                  SENDER
                  ID     NAME
          -->
-        <set name="messages" cascade="all" lazy="true" inverse="true" table="MESSAGE">
+        <set name="messages" cascade="all" lazy="true" inverse="true" table="message">
             <key>
-                <column name="SENDER_FK" not-null="true"/>
+                <column name="sender_fk" not-null="true"/>
             </key>
             <one-to-many class="org.grouter.domain.entities.Message"/>
         </set>
@@ -42,7 +41,7 @@
                 name="address"
                 not-null="false"
                 class="org.grouter.domain.entities.Address"
-                column="ADDRESS_ID"
+                column="ADDRESS_FK"
                 cascade="save-update,persist">
             
         </many-to-one>

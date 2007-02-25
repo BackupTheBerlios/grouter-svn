@@ -112,6 +112,13 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
         getSession().delete(entity);
     }
 
+
+
+    public void delete(ID id)
+    {
+        getSession().delete( findById( id, true ) );
+    }
+
     /**
      * Use this inside subclasses as a convenience method.
      */

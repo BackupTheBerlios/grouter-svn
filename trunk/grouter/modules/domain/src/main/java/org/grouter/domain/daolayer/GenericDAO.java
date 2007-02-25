@@ -29,4 +29,7 @@ public interface GenericDAO<T, ID extends Serializable>
     T save(T entity);
 
     void delete(T entity);
+
+    void delete( String id );
+
 }

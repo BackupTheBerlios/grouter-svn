@@ -56,14 +56,14 @@ public abstract class DAOFactory
             {
                 return new HibernateDAOFactory();
             }
-            case HIBERNATESPRING:
+            /*case HIBERNATESPRING:
             {
                 BeanFactoryLocator bfl = SingletonBeanFactoryLocator.getInstance("context-wrapper.xml");
                 BeanFactoryReference bf = bfl.useBeanFactory("org.grouter");
                 return (HibernateSpringDAOFactory) bf.getFactory().getBean(HIBERNATE_SPRING_DAOFACTORY);
                 //GlobalBeanLocator globalBeanLocator = GlobalBeanLocator.getInstance();
                 //return (HibernateSpringDAOFactory)globalBeanLocator.getApplicationContext().getBean(HIBERNATE_SPRING_DAOFACTORY);
-            }
+            } */
         }
         return null;
     }
