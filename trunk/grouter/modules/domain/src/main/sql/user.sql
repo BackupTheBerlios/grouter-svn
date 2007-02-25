@@ -4,10 +4,11 @@ CREATE TABLE user (
   pwd varchar(255) default NULL,
   email varchar(255) default NULL,
   fullname varchar(50) default NULL,
-  address bigint(20) default NULL,
+  address_fk bigint(20) default NULL,
   createdby bigint(20) default NULL,
   PRIMARY KEY  (id),
-  FOREIGN KEY (createdby) REFERENCES  user (id)
+  FOREIGN KEY (createdby) REFERENCES  user (id),
+  FOREIGN KEY (address_fk) REFERENCES  address (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

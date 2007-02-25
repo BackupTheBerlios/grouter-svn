@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS receiver;
 DROP TABLE IF EXISTS receiver_message;
 DROP TABLE IF EXISTS sender;
-DROP TABLE IF EXISTS sender_message;
+-- DROP TABLE IF EXISTS sender_message;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS property;
@@ -39,8 +39,8 @@ select 'receiver_message.sql';
 \. receiver_message.sql
 select 'sender.sql';
 \. sender.sql
-select 'sender_message.sql';
-\. sender_message.sql
+--  select 'sender_message.sql';
+-- \. sender_message.sql
 
 COMMIT;
 

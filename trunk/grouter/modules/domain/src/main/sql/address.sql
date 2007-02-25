@@ -1,7 +1,7 @@
 CREATE TABLE address (
   id bigint(20) NOT NULL auto_increment,
-  phone1 varchar(255) default NULL,
-  phone2 varchar(255) default NULL,
+  phone varchar(255) default NULL,
+  mobilephone varchar(255) default NULL,
   street varchar(255) default NULL,
   zip varchar(255) default NULL,
   city varchar(255) default NULL,

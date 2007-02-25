@@ -1,8 +1,8 @@
 create table router
 (
-    ID varchar(255) not null,
-    STARTEDON timestamp,
-    UPTIME bigint,
-    NAME varchar(255),
-    primary key (ID)
+    id varchar(36) not null,
+    startedon timestamp,
+    uptime bigint,
+    name varchar(255),
+    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
