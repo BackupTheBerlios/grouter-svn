@@ -1,4 +1,7 @@
 <project basedir="." name="Util "  default="redeploy_war" >
+
+
+  <property name="mysql" value="/usr/local/mysql/bin/mysql"/>
   <property name="mavenlocalrepos" value="/home/ci/.m2/repository"/>
   <property name="applicationserverHome" value="/Applications/resin....."/>
   <property name="warInLocalRepost" value="/org/grouter/...../2.0-SNAPSHOT/gweb-1.0-SNAPSHOT.war"/>
@@ -6,19 +9,11 @@
 
 
   <!-- Deploy war modules to Resing on test server -->
-   <target name="dump_and_rebuild_db" description="Recreate the database">
+   <target name="dump_db" description="Recreate the database">
 
      <echo>Running database clean script and restore</echo>
-     <exec executable="/usr/bin/mysql" dir="${basedir}/domain/src/main/sql"
+     <exec executable="${mysql}" dir="${basedir}/domain/src/main/sql"
            input="${basedir}/domain/src/main/sql/main_drop_create.sql">
-       <arg value="-ugrouter"/>
-       <arg value="-pgrouter"/>
-       <arg value="grouter"/>
-     </exec>
-
-     <echo>Setting up data</echo>
-     <exec executable="/usr/bin/mysql" dir="${basedir}/domain/src/test/resources/sql"
-           input="${basedir}/domain/src/test/resources/sql/base-data.sql">
        <arg value="-ugrouter"/>
        <arg value="-pgrouter"/>
        <arg value="grouter"/>
@@ -26,7 +21,17 @@
 
   </target>
 
+  <target name="populate_with_test_data_db" description="Recreate the database">
 
+     <echo>Setting up data</echo>
+     <exec executable="${mysql}" dir="${basedir}/domain/src/test/resources/sql"
+           input="${basedir}/domain/src/test/resources/sql/base-data.sql">
+       <arg value="-ugrouter"/>
+       <arg value="-pgrouter"/>
+       <arg value="grouter"/>
+     </exec>
+
+  </target>
 
   <!-- Deploy war modules to Resing on test server -->
   <target name="redeploy_war" description="Redeploy deploly war file from local repostitory">
