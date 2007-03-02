@@ -28,7 +28,10 @@ public class Node implements Serializable
     private Date modifiedOn;
     private Date createdOn;
     private Router router;
-    private NodeType nodeType;
+    private EndPoint inBound;
+    private EndPoint outBound;
+
+    //private NodeType nodeType;
     @Transient
     private SystemUser modifiedBySystemUser;
 
@@ -36,6 +39,7 @@ public class Node implements Serializable
     {
     }
 
+    
 
     public Node(String name, Set<Message> messages, Date modifiedOn, SystemUser modifiedBySystemUser, Date creetedOn)
     {

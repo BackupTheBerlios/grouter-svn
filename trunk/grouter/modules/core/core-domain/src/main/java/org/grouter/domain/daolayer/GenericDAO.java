@@ -20,11 +20,26 @@ import java.util.List;
  */
 public interface GenericDAO<T, ID extends Serializable>
 {
-    T findById(ID id, boolean lock);
+    /**
+     * Find Entity by id.
+     *
+     * @param id the id of the entity
+     * @return an entity
+     */
+    T findById(ID id);
+
+    /**
+     * 
+     * @param clazz entity class
+     * @param id the id of the entity to search for
+     * @param joinProps properties on the entity class we should join in
+     * @return
+     */
+    T findById(Class clazz, T id, String... joinProps);
 
     List<T> findAll();
 
-    //List<T> findByExample(T exampleInstance, String... excludeProperty);
+    List<T> findByExample(T exampleInstance, String... excludeProperty);
 
     T save(T entity);
 

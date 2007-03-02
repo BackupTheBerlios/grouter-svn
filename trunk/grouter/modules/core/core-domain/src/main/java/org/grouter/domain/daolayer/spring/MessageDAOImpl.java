@@ -5,6 +5,12 @@ import org.grouter.domain.daolayer.spring.GenericHibernateDAO;
 import org.grouter.domain.entities.Message;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.MatchMode;
 
 import java.util.List;
 
@@ -36,17 +42,76 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
 
     public List<Message> findMessagesForNode(String nodeId)
     {
-        String hsql = "from Message obj where obj.node.id = :nodeid";
+       /* String hsql = "from Message obj where obj.node.id = :nodeid";
         Session session = getSession();
         Query qr = session.createQuery(hsql);
-        return (List<Message>) qr.setParameter("nodeid", nodeId).list();
+        return (List<Message>) qr.setParameter("nodeid", nodeId).list();*/
+
+
+        Criteria criteria = getSession().createCriteria(Message.class);
+        criteria.add(Expression.eq("node.id", nodeId));
+        return criteria.addOrder(Order.asc("id")).list();
+
     }
 
-    /*public void setSession(Session s)
+    /*
+    public List<Message> findByParams(Long messageId, String freetext, QueryColumn freeTextColumnName)
     {
-        //session = s;
-        session = getSessionFactory().getCurrentSession();
+        boolean freeTextColumnSet = (freeTextColumnName != null);
+        boolean freeTextSet = (freetext != null && !freetext.equalsIgnoreCase(""));
+
+        Criteria criteria = getSession().createCriteria(Message.class);
+
+
+        if (messageId != null)
+        {
+            criteria.add(Expression.eq("id", messageId)).setFetchMode("dealerType", FetchMode.JOIN);
+        }
+
+        if (!freeTextSet)
+        {
+            return criteria.addOrder(Order.asc("id")).list();
+        }
+
+        // no freeTextColumnName and freetext
+        if (!freeTextColumnSet && freeTextSet)
+        {
+            Long id = LongValidator.getInstance().validate(freetext);
+            if (id != null)
+            {
+                criteria.add(Restrictions.like("id", id)).setFetchMode("id", FetchMode.JOIN);
+                return criteria.addOrder(Order.asc("id")).list();
+            } else
+            {
+
+                criteria.createCriteria("address").add(Restrictions.like("companyName", freetext, MatchMode.START)).setFetchMode("companyName", FetchMode.JOIN);
+                return criteria.addOrder(Order.asc("id")).list();
+            }
+        }
+
+        // freeTextColumnName and freetext set
+        if (freeTextSet && freeTextColumnSet)
+        {
+            if (freeTextColumnName == QueryColumn.ZIP)
+            {
+                criteria.createCriteria("address").add(Restrictions.like("zip", freetext, MatchMode.START).ignoreCase()).setFetchMode("zip", FetchMode.JOIN) ;
+                return criteria.addOrder(Order.asc("id")).list();
+            }
+            if (freeTextColumnName == QueryColumn.CONTACTPERSON)
+            {
+                criteria.add(Restrictions.like("contactPerson", freetext, MatchMode.START).ignoreCase()).setFetchMode("contactPerson", FetchMode.JOIN);
+                return criteria.addOrder(Order.asc("id")).list();
+            }
+             if (freeTextColumnName == QueryColumn.PHONE)
+            {
+                criteria.createCriteria("address").add(Restrictions.like("phone1", freetext, MatchMode.START )).setFetchMode("phone1", FetchMode.JOIN);
+                return criteria.addOrder(Order.asc("id")).list();
+            }
+        }
+        // column but no text -> do nothing
+
+
+        return criteria.addOrder(Order.asc("id")).list();
     }
     */
-
 }

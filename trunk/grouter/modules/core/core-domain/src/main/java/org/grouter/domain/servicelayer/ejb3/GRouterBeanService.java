@@ -6,6 +6,7 @@ import org.grouter.domain.entities.Node;
 import org.grouter.domain.daolayer.DAOFactory;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.SystemUserDAO;
+import org.grouter.domain.daolayer.NodeDAO;
 import org.grouter.domain.daolayer.ejb3.PersistenceContextName;
 import org.apache.log4j.Logger;
 
@@ -27,6 +28,7 @@ public class GRouterBeanService implements GRouterLocalService, GRouterRemoteSer
     private EntityManager entityManager;
 
     private MessageDAO messageDAO;
+    private NodeDAO nodeDAO;
     private SystemUserDAO systemUserDAO;
 
 
@@ -64,12 +66,15 @@ public class GRouterBeanService implements GRouterLocalService, GRouterRemoteSer
 
     /**
      * {@inheritDoc}
-     * @param node
-     * @return
      */
-    public List<Message> findAllMessages(Node node)
+    public List<Message> findAllMessages(String id)
     {
-       return  messageDAO.findMessagesForNode( node.getId() );
+       return  messageDAO.findMessagesForNode( id );
+    }
+
+    public List<Node> findAllNodes(String routerId)
+    {
+        return nodeDAO.findAll();
     }
 
 

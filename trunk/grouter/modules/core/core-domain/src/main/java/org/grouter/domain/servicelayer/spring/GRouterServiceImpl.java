@@ -4,19 +4,25 @@ import static org.grouter.domain.daolayer.DAOFactory.FactoryType.HIBERNATESPRING
 import org.grouter.domain.daolayer.SystemUserDAO;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.DAOFactory;
+import org.grouter.domain.daolayer.NodeDAO;
 import org.grouter.domain.entities.SystemUser;
 import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Node;
 import org.grouter.domain.servicelayer.GRouterService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang.Validate;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.List;
 
 
 /**
- * GRouterServiceImpl will expose services for different clients - gswing and gweb.
+ * GRouterServiceImpl exposes services for different clients - gswing and gweb.
+ *
  * <p/>
- * Methods and their transaction demarcation attributes are handled in the Spring applicationContext.xml file
- * or if you are using the gswing client in spring-app.xml.
+ * Methods and their transaction demarcation attributes are handled in the Spring applicationContext xml file/s
+ * or if you are using Ejb3 in the annotations of the Ejb3 session beans.
  * <p/>
  * This implementation class is injected using Spring IoC container.
  *
@@ -25,7 +31,15 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class GRouterServiceImpl implements GRouterService
 {
     private static Log logger = LogFactory.getLog(GRouterServiceImpl.class);
-    private SystemUserDAO systemUserDAO;
+    private MessageDAO messageDAO;
+    private NodeDAO nodeDAO;
+
+    public void setNodeDAO(NodeDAO nodeDAO)
+    {
+        this.nodeDAO = nodeDAO;
+    }
+
+//    private SystemUserDAO systemUserDAO;
 
     public MessageDAO getMessageDAO()
     {
@@ -37,90 +51,54 @@ public class GRouterServiceImpl implements GRouterService
         this.messageDAO = messageDAO;
     }
 
-    private MessageDAO messageDAO;
-
     public GRouterServiceImpl()
     {
     }
 
-    private void initSystemDAO()
+  /*  private void initSystemDAO()
     {
-        logger.info("Initializing the SystemUserDAO");
         systemUserDAO = DAOFactory.getFactory(HIBERNATESPRING).getSystemUserDAO();
     }
+    */
 
-    private void initMessageDAO()
+ /*  private void initMessageDAO()
     {
         logger.info("Initializing the MessageDAOImpl");
         messageDAO = DAOFactory.getFactory(HIBERNATESPRING).getMessageDAO();
     }
-
+   */
     //TODO Can we use AOP to have a simple logging mechnism used by all sevice methods!?
 
-    /**
-     * @param systemUser
-     * @return
-     */
-    public SystemUser createSystemUser(SystemUser systemUser)
-    {
-
-        logger.debug("In createSystemUser. Inaparam:" + systemUser);
-        if (systemUser == null)
-        {
-            throw new IllegalArgumentException("Parameter can not be null");
-        }
-        initSystemDAO();
-        return systemUserDAO.createSystemUser(systemUser);
-    }
-
-    public SystemUser findSystemUser(Long systemUserId)
-    {
-        logger.debug("In findSystemUser. Inaparam:" + systemUserId);
-        if (systemUserId == null)
-        {
-            throw new IllegalArgumentException("Parameter can not be null");
-        }
-        initSystemDAO();
-        return systemUserDAO.findById(systemUserId, false);
-    }
 
     public Message createMessage(Message message)
     {
-        logger.debug("In findMessageById. Inparameter message:" + message);
-        if (message == null)
-        {
-            throw new IllegalArgumentException("Parameter can not be null");
-        }
-        initMessageDAO();
-        return messageDAO.createMessage(message);
+        Validate.notNull(message, "In parameter can not be null");
+       // initMessageDAO();
+        return messageDAO.save(message);
     }
 
     public Message findMessageById(String id)
     {
-        logger.debug("######################## In findMessageById. Inparameter id:" + id);
-        if (id == null)
-        {
-            throw new IllegalArgumentException("Parameter can not be null");
-        }
-        initMessageDAO();
+        Validate.notNull(id, "In parameter can not be null");
 
-        Message foundMessage = messageDAO.findById(id, false);
-        logger.debug("######################## found " + foundMessage.getMessage());
+       // initMessageDAO();
+
+        Message foundMessage = messageDAO.findById(id);
         return foundMessage;
     }
 
-
-    public Message findMessagesForNode(String nodeId)
+    public List<Message> findAllMessages(String nodeId)
     {
-        logger.debug("In findMessagesForNode. Inparameter nodeId:" + nodeId);
-        if (nodeId == null)
-        {
-            throw new IllegalArgumentException("Parameter can not be null");
-        }
-        initMessageDAO();
+        return messageDAO.findMessagesForNode( nodeId );
 
-        throw new NotImplementedException();
+
     }
+
+    public List<Node> findAllNodes(String routerId)
+    {
+        return nodeDAO.findAll();
+    }
+
 
 
 }

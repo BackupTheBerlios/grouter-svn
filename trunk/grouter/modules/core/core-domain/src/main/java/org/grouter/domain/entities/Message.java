@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.sql.Timestamp;
 import java.io.Serializable;
+import java.math.BigInteger;
 
 
 /**
@@ -46,7 +47,10 @@ public class Message implements Serializable
     private Set<Receiver> receivers = new HashSet();
     private Sender sender;
     private String content;
+    private BigInteger counter;
+
     private Timestamp creationTimestamp;
+
     private Node node;
 
     public Message()
@@ -68,7 +72,6 @@ public class Message implements Serializable
         this.content = amessage;
     }
 
-
     /**
      * Fully constructs a Message object.
      *
@@ -87,6 +90,7 @@ public class Message implements Serializable
         this.sender = sender;
         this.node = node;
     }
+
 
     @Id
     @Column(name = "MESSAGE_ID")
@@ -168,7 +172,6 @@ public class Message implements Serializable
         receiver.removeFromMessages(this);
     }
 
-
     /**
      * A convenience method for outputing all attributes in the instances' state.
      *
@@ -185,6 +188,7 @@ public class Message implements Serializable
     {
         return creationTimestamp;
     }
+
 
     //    @ManyToOne()
     @ManyToOne( cascade = {CascadeType.ALL, CascadeType.MERGE})
@@ -204,10 +208,19 @@ public class Message implements Serializable
         this.creationTimestamp = creationTimestamp;
     }
 
-
     public void setId(String id)
     {
         this.id = id;
+    }
+
+    public BigInteger getCounter()
+    {
+        return counter;
+    }
+
+    public void setCounter(BigInteger counter)
+    {
+        this.counter = counter;
     }
 
 }

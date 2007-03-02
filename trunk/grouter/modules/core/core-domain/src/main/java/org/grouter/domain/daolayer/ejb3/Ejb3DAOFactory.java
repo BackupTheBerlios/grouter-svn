@@ -3,7 +3,7 @@ package org.grouter.domain.daolayer.ejb3;
 import org.grouter.domain.daolayer.DAOFactory;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.SystemUserDAO;
-import org.grouter.domain.daolayer.hibernate.SystemUserDAOHibernate;
+import org.grouter.domain.daolayer.spring.SystemUserDAOHibernate;
 
 
 /**

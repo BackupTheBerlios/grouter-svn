@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface MessageDAO extends GenericDAO<Message, String>
 {
+    public enum QueryColumn { ZIP, CONTACTPERSON, PHONE }
+
     List<Message> findConcrete(Class concreteClass);
 
     List<Message> findMessagesForNode(String nodeId);

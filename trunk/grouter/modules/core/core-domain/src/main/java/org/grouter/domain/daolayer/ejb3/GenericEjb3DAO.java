@@ -3,7 +3,10 @@ package org.grouter.domain.daolayer.ejb3;
 import org.apache.log4j.Logger;
 import org.grouter.domain.daolayer.GenericDAO;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.ejb.HibernateEntityManager;
 
 import javax.naming.InitialContext;
@@ -94,6 +97,12 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         return entity;
     }
 
+
+    public T findById(ID id)
+    {
+        return (T) em.find(getPersistentClass(), id);
+    }
+
     @SuppressWarnings("unchecked")
     public List<T> findAll()
     {
@@ -129,7 +138,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
 
     public void delete(ID id)
     {
-        getEntityManager().remove( findById( id, true ) );
+        getEntityManager().remove(findById(id, true));
     }
 
 
@@ -145,6 +154,26 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         }
         return crit.list();
     }
+
+
+    @SuppressWarnings("unchecked")
+    public T findById(Class clazz, T id, String... joinProps)
+    {
+        org.hibernate.Session session = ((HibernateEntityManager) getEntityManager()).getSession();
+        org.hibernate.Criteria criteria = session.createCriteria(getPersistentClass());
+
+        criteria.add(Restrictions.idEq(id));
+
+        for (String prop : joinProps)
+        {
+            criteria.setFetchMode(prop, FetchMode.JOIN);
+        }
+
+        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+
+        return (T) criteria.uniqueResult();
+    }
+
 
 }
 
