@@ -38,7 +38,8 @@
                 not-null="true"
                 class="org.grouter.domain.entities.Sender"
                 column="sender_fk"
-                cascade="save-update,persist">
+                cascade="save-update,persist"
+                fetch="join">
         </many-to-one>
 
         <!-- column is for this table -->

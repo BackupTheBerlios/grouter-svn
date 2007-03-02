@@ -11,7 +11,7 @@
 
 
   <!--
-    Transaction advice is applied to all service methods.
+    Transaction advice applied to all service methods.
     Rollback on the cheked exception ValidationException, since we don't want to save invalid data,
     and we also want the controllers to have to try-catch that exception to show validation errors.
   -->

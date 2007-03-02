@@ -8,5 +8,3 @@ create table sender
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into sender (id, name) values (1,'test');
-

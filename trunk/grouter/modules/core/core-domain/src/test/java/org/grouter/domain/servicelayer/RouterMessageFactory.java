@@ -1,6 +1,6 @@
 package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.entitylayer.*;
+import org.grouter.domain.entities.*;
 
 import java.sql.Timestamp;
 import java.util.Set;

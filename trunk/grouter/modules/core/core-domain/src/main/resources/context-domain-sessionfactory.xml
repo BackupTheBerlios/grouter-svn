@@ -5,24 +5,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
        default-autowire="byName">
 
-
-
+  
   <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"/>
-
-
-  <bean id="hibernateSpringDAOFactory" class="org.grouter.domain.daolayer.hibernate.HibernateSpringDAOFactory"/>
-
 
   <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
     <property name="mappingLocations">
       <list>
-        <value>org/grouter/domain/entities/Router.hbm.xml</value>
-        <value>org/grouter/domain/entities/Message.hbm.xml</value>
-        <value>org/grouter/domain/entities/Node.hbm.xml</value>
-        <value>org/grouter/domain/entities/Sender.hbm.xml</value>
-        <value>org/grouter/domain/entities/Receiver.hbm.xml</value>
-        <value>org/grouter/domain/entities/Address.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Router.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Message.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Node.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Sender.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Receiver.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Address.hbm.xml</value>
       </list>
     </property>
     <property name="hibernateProperties">

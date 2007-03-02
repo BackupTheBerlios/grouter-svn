@@ -4,16 +4,16 @@
   default-autowire="byName">
 
   <!-- Abstract DAO -->
-    <bean id="abstractDao" abstract="true">
+    <!-- bean id="abstractDao" abstract="true">
         <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
+    </bean -->
 
 
     <!-- Core specific Data Access Object (DAO) Beans -->
-    <bean id="messageDAO" parent="abstractDao"  class="org.grouter.domain.daolayer.hibernate.MessageDAOImpl"/>
+    <bean id="messageDAO"   class="org.grouter.domain.daolayer.spring.MessageDAOImpl"/>
 
-    <bean id="nodeDAO" parent="abstractDao"  class="org.grouter.domain.daolayer.hibernate.NodeDAOImpl"/>
+    <bean id="nodeDAO" class="org.grouter.domain.daolayer.spring.NodeDAOImpl"/>
 
-    <bean id="routerDAO" parent="abstractDao"  class="org.grouter.domain.daolayer.hibernate.RouterDAOImpl"/>
+    <bean id="routerDAO"  class="org.grouter.domain.daolayer.spring.RouterDAOImpl"/>
 
 </beans>
