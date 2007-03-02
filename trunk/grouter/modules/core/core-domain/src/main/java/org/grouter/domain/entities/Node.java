@@ -139,15 +139,6 @@ public class Node implements Serializable
     }
 
 
-    public void setNodeType(NodeType nodeType)
-    {
-        this.nodeType = nodeType;
-    }
 
-    @Column(name = "NODETYPE")
-    public NodeType getNodeType()
-    {
-        return nodeType;
-    }
 
 }

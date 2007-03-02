@@ -12,7 +12,7 @@ import java.io.File;
  */
 public class NodeConfigFactory
 {
-    private static Logger logger = Logger.getLogger(NodeConfigFactory.class);
+ //   private static Logger logger = Logger.getLogger(NodeConfigFactory.class);
 
 
     /**
@@ -23,6 +23,7 @@ public class NodeConfigFactory
      * @return
      * @throws IllegalArgumentException if nodeType == null
      */
+    /*
     public static NodeConfig getNode(NodeType nodeType, GlobalType globalType)
     {
         if (nodeType == null || globalType == null || globalType.getGrouterHome() == null)
@@ -39,6 +40,8 @@ public class NodeConfigFactory
 
     }
 
+    */
+
     /**
      * Creates nodeconfig either with a realtive to grouter home or with an absolut path.
      *
@@ -46,6 +49,7 @@ public class NodeConfigFactory
      * @param isRelative if this node is relative to grouter home then we will use the relativePath
      * @return
      */
+    /*
     private static NodeConfig createNodeConfig(NodeType nodeType, boolean isRelative, String relativePath)
     {
         String nodePath = "";
@@ -77,6 +81,7 @@ public class NodeConfigFactory
                 inFolderConfig, outFolderConfig, localStoreConfig);
         return nodeConfig;
     }
+    */
 
     /**
      * Create a NodeConfig config object from a NodeType object(xml binding representation
@@ -86,6 +91,7 @@ public class NodeConfigFactory
      * @return NodeConfig[] - an array of Nodes
      * @throws IllegalArgumentException if nodeTypes == null
      */
+    /*
     public static NodeConfig[] getNodes(NodeType[] nodeTypes, GlobalType globalType)
     {
         if (nodeTypes == null || globalType == null)
@@ -101,4 +107,6 @@ public class NodeConfigFactory
         return nodeConfigs;
     }
 
+
+    */
 }

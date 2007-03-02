@@ -5,8 +5,8 @@ import org.grouter.core.command.CommandMessage;
 import org.grouter.core.config.GrouterDomainConfig;
 import org.grouter.core.config.GrouterConfig;
 import org.grouter.core.config.NodeConfig;
-import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
-import org.grouter.domain.Message;
+//import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
+import org.grouter.domain.entities.Message;
 import org.apache.log4j.Logger;
 
 import javax.naming.Context;
@@ -96,7 +96,7 @@ public class JMSDestinationSenderThread implements Runnable
         // This will enable client to use JMS selectors based on grouterid
         HashMap<String,String> map = new HashMap();
         map.put("grouterid", grouterConfig.getName());
-        queueDestination.sendMessage(createGRouterPublishEventDTO(commandMessages), map);
+//        queueDestination.sendMessage(createGRouterPublishEventDTO(commandMessages), map);
         logger.info("Batch of commandMessages sent!!!");
     }
 
@@ -106,7 +106,7 @@ public class JMSDestinationSenderThread implements Runnable
      * @param commandMessages
      * @return
      */
-    private GRouterPublishEventDTO createGRouterPublishEventDTO(CommandMessage[] commandMessages)
+/*    private GRouterPublishEventDTO createGRouterPublishEventDTO(CommandMessage[] commandMessages)
     {
         NodeConfig[] nodeConfig = grouterConfig.getNodes();
         Message[] messages = new Message[nodeConfig.length];
@@ -119,7 +119,7 @@ public class JMSDestinationSenderThread implements Runnable
         GRouterPublishEventDTO eventDTO = new GRouterPublishEventDTO(grouterConfig.getName(), nodeConfig[0].getId(), messages);
         return eventDTO;
     }
-
+*/
     /**
      * Use to get queues handle.
      *

@@ -22,6 +22,9 @@ free
 How can I find certain words in files on my system?
 find DirectoryName -type f -printf "%p " | xargs egrep -i "String" | less
 
+Find folders and remove them (hidden svn folder or cvs folder e.g.)
+find . -name '.svn' -exec rm \-rf {} \;
+
 
 How can I find a file on my system?
 find DirectoryName -name FileName -printf "Found file: %p \n"
