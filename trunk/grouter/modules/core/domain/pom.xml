@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ | Root element for a Maven 2 project is the project element. If you
+ | do not understand everyting stated here try reading up on xml schema
+ | files.
+ |
+ |     xmlns="http://maven.apache.org/POM/4.0.0"
+ | means that Defins a namespace for Maven 2
+ |
+ |      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ | means that elements and data types used in the schema (schema, element,
+ | complexType, string etc.) come from the "http://www.w3.org/2001/XMLSchema"
+ | namespace and should be prefixed with xs:
+ |
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.grouter.platform</groupId>
+  <artifactId>domain</artifactId>
+  <packaging>ejb</packaging>
+  <name>${artifactId}</name>
+  <parent>
+    <groupId>org.grouter</groupId>
+    <artifactId>platform</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+  </parent>
+
+  <!--
+ | Dependencies specific to this project are entered here.
+ | Common dependencies should go into the parent to simplify
+ | the dependency section of this child project.
+ | If no version is mentioned in this child's dependency section
+ | the version is feteched from the parent's dependencyManagement
+  | element.
+  -->
+  <dependencies>
+    <dependency>
+      <groupId>org.grouter.platform.common</groupId>
+      <artifactId>common-util</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-mock</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.javasoft</groupId>
+      <artifactId>javaee</artifactId>
+    </dependency>
+    
+  </dependencies>
+
+</project>
