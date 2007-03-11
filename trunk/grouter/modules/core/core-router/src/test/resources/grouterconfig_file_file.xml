@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Grouter name="grouter"
+         xmlns="http://grouter.org/config.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../main/xsd/config.xsd">
+
+  <Node id="filetest-filetest" createuniquename="true">
+    <name>A name</name>
+    <createdOn>2007-01-01</createdOn>
+    <modifiedOn>2007-01-01</modifiedOn>
+    <inBoundEndPoint endPointType="FILE_READER">
+      <uri>file://temp/in</uri>
+      <clazzname>a classname</clazzname>
+      <cron>* * * *</cron>
+    </inBoundEndPoint>
+    <outBoundEndPoint endPointType="FILE_WRITER">
+      <uri>file://temp/out</uri>
+      <clazzname>a classname</clazzname>
+      <cron>* * * *</cron>
+    </outBoundEndPoint>
+  </Node>
+
+</Grouter>
