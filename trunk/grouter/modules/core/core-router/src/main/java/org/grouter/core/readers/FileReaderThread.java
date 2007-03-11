@@ -3,14 +3,19 @@ package org.grouter.core.readers;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.WildcardFilter;
-import org.grouter.core.command.Command;
-import org.grouter.core.command.CommandMessage;
-import org.grouter.core.config.NodeConfig;
-import org.grouter.common.guid.GuidGenerator;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.Validate;
+import org.grouter.core.command.AbstractCommandWriter;
+import org.grouter.core.command.CommandHolder;
+import org.grouter.domain.entities.EndPoint;
+import org.grouter.domain.entities.Node;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
+import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -21,8 +26,8 @@ import java.util.concurrent.BlockingQueue;
 public class FileReaderThread extends AbstractReader implements Runnable//implements Callable<String>
 {
     private static Logger logger = Logger.getLogger(FileReaderThread.class);
-    //private NodeConfig nodeConfig;
-    private BlockingQueue<Command> queue;
+    //private NodeConfig node;
+    private BlockingQueue<AbstractCommandWriter> queue;
     private NotFileFilter notFileFilter;
     private WildcardFilter wildcardFilter;
     private FileFilter fileFilter;
@@ -30,92 +35,111 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
     /**
      * Construcotr
      *
-     * @param nodeConfig
+     * @param node
      * @param blockingQueue
-     * @throws IllegalArgumentException if nodeConfig == null || blockingQueue == null
+     * @throws IllegalArgumentException if node == null || blockingQueue == null
      */
-    public FileReaderThread(final NodeConfig nodeConfig, BlockingQueue<Command> blockingQueue)
+    public FileReaderThread(final Node node, BlockingQueue<AbstractCommandWriter> blockingQueue)
     {
-        if (nodeConfig == null || blockingQueue == null)
+        if (this.node == null || blockingQueue == null)
         {
             throw new IllegalArgumentException("Constructor called with null argument.");
         }
-        this.nodeConfig = nodeConfig;
+        this.node = this.node;
         this.queue = blockingQueue;
         //which type of commands should this servicenode worker handle
-        command = getCommand(nodeConfig);
-        createFilter(nodeConfig);
-
+        command = getCommand(node);
+ //       createFilter(node);
     }
+
+
+    public FileReaderThread(EndPoint inbound, BlockingQueue<AbstractCommandWriter> blockingQueue, EndPoint outBound)
+    {
+        Validate.notNull(inbound, "A null EndPoint can not be used");
+        Validate.notNull(blockingQueue, "A null blockingqueue can not be used");
+
+        this.endPoint = inbound;
+        this.queue = blockingQueue;
+        command = getCommand2(outBound);
+    }
+
 
     /**
      * A null filter means we do not have a filter and File.listfiles will take all files present in a dir.
      *
-     * @param nodeConfig
+     * @param node
      */
-    private void createFilter(NodeConfig nodeConfig)
+/*    private void createFilter(Node node)
     {
-        String filter = nodeConfig.getInFolderConfig().getFilterConfig().getFilter();
+        String filter = node.getInFolderConfig().getFilterConfig().getFilter();
         if (filter != null && filter.equalsIgnoreCase(""))
         {
             return;
         }
 
-        this.wildcardFilter = new WildcardFilter(nodeConfig.getInFolderConfig().getFilterConfig().getFilter());
+        this.wildcardFilter = new WildcardFilter(node.getInFolderConfig().getFilterConfig().getFilter());
         this.notFileFilter = new NotFileFilter(wildcardFilter);
         this.fileFilter = notFileFilter;
     }
-
+*/
 
     /**
      * Forced by abstract method.
      *
-     * @return CommandMessage[]
+     * @return List<CommandHolder>
      */
-    protected CommandMessage[] readFromSource()
+    protected List<CommandHolder> readFromSource()
     {
-        logger.debug("Trying to read files from " + nodeConfig.getInFolderConfig().getInPath());
-        File[] curFiles = nodeConfig.getInFolderConfig().getInPath().listFiles(fileFilter);
+        logger.debug("Trying to execute files from " + endPoint.getUri());
+        //File[] curFiles = node.getInFolderConfig().getInPath().listFiles(fileFilter);
+        File inFolder = new File(endPoint.getUri());
+        File[] curFiles = inFolder.listFiles(fileFilter);  // TODO refactor to use generic Filter
+
         if (curFiles == null || curFiles.length == 0)
         {
             logger.debug("No files found.");
             return null;
         }
+
         logger.debug("Found number of files: " + curFiles.length);
 
-        CommandMessage[] arrCommandMessages = new CommandMessage[curFiles.length];
-        for (int i = 0; i < curFiles.length; i++)//fileCollectionSize; i++)
+        List<CommandHolder> commandMessages = new ArrayList<CommandHolder>(curFiles.length);
+        for (File curFile : curFiles)
         {
-            if (curFiles[i].length() == 0)
+            if (curFile.isDirectory())
             {
-                logger.debug("A folder..");
-                //  curFiles[i].delete();
-                //  return null;
-                //return;
-            }
-            try
-            {
-                arrCommandMessages[i] = new CommandMessage(readFileToString(curFiles[i]));
-                if (nodeConfig.isCreateuniquename())
+                logger.debug("A folder... removing it.");
+                try
                 {
-                    arrCommandMessages[i].setId(GuidGenerator.getInstance().getGUID());
+                    FileUtils.forceDelete( curFile );
+                } catch (IOException e)
+                {
+                    logger.info("Could not delete foder", e);
                 }
-
-                logger.debug("CommandMessage : " + arrCommandMessages[i].getMessage());
-            }
-            catch (Exception ex)
+            } else
             {
-                logger.info(ex, ex);
+                try
+                {
+                    String message = FileUtils.readFileToString(new File(curFile.getPath()), "UTF-8");
+                    CommandHolder cmdHolder = new CommandHolder(message);
+                    commandMessages.add(cmdHolder);
+
+                    // remove file from infolder
+                    curFile.delete();
+                }
+                catch (Exception ex)
+                {
+                    logger.info(ex, ex);
+                }
             }
-            // curFiles[i].delete();
         }
-        return arrCommandMessages;
+        return commandMessages;
     }
 
     /**
      * Hand it over to the in memory queue.
      */
-    void sendToConsumer()
+    void pushToQueue()
     {
         logger.debug("Putting cmd on queue " + command.toStringUsingReflection());
         queue.offer(command);
@@ -128,7 +152,7 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
     {
         try
         {
-            read();
+            execute();
         } catch (Exception e)
         {
             logger.error(e, e);

@@ -1,6 +1,11 @@
 package org.grouter.core.command;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.log4j.Logger;
+import org.grouter.core.util.JMSDestinationSenderThread;
+import org.grouter.domain.entities.EndPoint;
+
+import java.util.List;
 
 /**
  * Interface for commands.
@@ -8,26 +13,28 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * Commands are object put on a blocking queue from a produces/publisher and handed over to a consumer/writer.
  * A command contains type of command and the message the writer side needs.
  */
-public abstract class Command
+public abstract class AbstractCommandWriter
 {
-    protected CommandMessage[] commandMessages;
+    private static Logger logger = Logger.getLogger(AbstractCommandWriter.class);
+    protected List<CommandHolder> commandMessages;
+    EndPoint outBound;
 
     /**
      * Commands must override this method to provide an implementation of an execute command
      * in the context for that command.
-     * We are tryign to enforce a template method pattern on top of this to ensure that we
+     * We are trying to enforce a template method pattern on top of this to ensure that we
      * handle backingup, transforming etc.
      */
     public void execute()
     {
-        storeLocally();
+        backup();
         transform();
         write();
-        sendToJMSDestination();
+        log();
     }
 
     /**
-     * Do a transfomr of the message if applicable.
+     * Do a transform of the message if applicable.
      */
     public abstract void transform();
 
@@ -37,16 +44,22 @@ public abstract class Command
     public abstract void write();
 
     /**
-     * If configured commandMessages are stored localy for a backup and archived at a given intervall.
+     * If configured commandMessages are backuped.
      */
-    public abstract void storeLocally();
+    public abstract void backup();
 
     /**
-     * Send message asynchronously to application server.
+     * Log that we have sent a message - typically this should be to a JMS destination.
      */
-    public abstract void sendToJMSDestination();
+    public abstract void log();
 
 
+    public void logToJMSDestination()
+    {
+        logger.info("Sending message to JMS consumer.");
+        // Todo refactor to use an special global endpoint for sending this message
+        //JMSDestinationSenderThread.getQueue().offer(commandMessages);
+    }
 
 
     /**
@@ -57,7 +70,7 @@ public abstract class Command
         return ToStringBuilder.reflectionToString(this);
     }
 
-    public void setMessages(CommandMessage[] arrCommandMessages)
+    public void setMessages(List<CommandHolder> arrCommandMessages)
     {
         this.commandMessages = arrCommandMessages;
     }

@@ -14,7 +14,7 @@ public class CommandInvoker
      * Take a command an execute it.
      * @param command Command to be executed.
      */
-    public void handleCommand(Command command)
+    public void handleCommand(AbstractCommandWriter command)
     {
         logger.debug("Invoker received command");
         command.execute();

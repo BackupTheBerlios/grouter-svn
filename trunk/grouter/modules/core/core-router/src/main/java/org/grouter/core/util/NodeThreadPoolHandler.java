@@ -1,11 +1,10 @@
 package org.grouter.core.util;
 
 import org.apache.log4j.Logger;
-import org.grouter.core.command.Command;
-import org.grouter.core.command.CommandConsumerThread;
-import org.grouter.core.config.NodeConfig;
-import org.grouter.core.config.GrouterConfig;
+import org.grouter.core.command.AbstractCommandWriter;
+import org.grouter.core.command.CommandWriterThread;
 import org.grouter.core.readers.FileReaderThread;
+import org.grouter.domain.entities.Node;
 
 import java.util.concurrent.*;
 
@@ -24,7 +23,7 @@ public class NodeThreadPoolHandler
     private static Logger logger = Logger.getLogger(NodeThreadPoolHandler.class);
     private ConcurrentMap map = new ConcurrentHashMap();
     private ScheduledExecutorService scheduler;
-    private BlockingQueue<Command> blockingQueue;
+    private BlockingQueue<AbstractCommandWriter> blockingQueue;
     private static final int INITIAL_DELAY = 1000;
     private static final int CAPACITY = 1000;
     private static final int JMSTHREAD_POLLQUEUE_INTERVALL = 5000;
@@ -43,7 +42,7 @@ public class NodeThreadPoolHandler
      * @param nodeConfigs
      * @throws IllegalArgumentException if nodeConfigs == null
      */
-    public void initNodeThreadScheduling(NodeConfig[] nodeConfigs)
+    public void initNodeThreadScheduling(Node[] nodeConfigs)
     {
         if (nodeConfigs == null || nodeConfigs == null)
         {
@@ -52,7 +51,7 @@ public class NodeThreadPoolHandler
         logger.info("Found " + nodeConfigs.length + " number of nodeConfigs. Init scheduler executor service!");
 
         //fire off...
-        start(nodeConfigs);
+//        start(nodeConfigs);
     }
 
 
@@ -62,6 +61,8 @@ public class NodeThreadPoolHandler
      * @param grouterConfig
      * @throws IllegalArgumentException if nodeConfigs == null
      */
+
+/*
     public void initNodeThreadScheduling(GrouterConfig grouterConfig)
     {
         NodeConfig[] nodeConfigs = grouterConfig.getNodes();
@@ -92,18 +93,21 @@ public class NodeThreadPoolHandler
         scheduler = Executors.newScheduledThreadPool(nodeConfigs.length);
         for (NodeConfig nodeConfig : nodeConfigs)
         {
-            blockingQueue = new ArrayBlockingQueue<Command>(CAPACITY);
+            blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(CAPACITY);
             if (nodeConfig.getNodeType() == NodeConfig.Type.FILE_TO_FILE)
             {
                 FileReaderThread fileReaderThread = new FileReaderThread(nodeConfig, blockingQueue);
                 scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, nodeConfig.getInFolderConfig().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
             }
-            CommandConsumerThread commandConsumerThread = new CommandConsumerThread(blockingQueue);
+            CommandWriterThread commandConsumerThread = new CommandWriterThread(blockingQueue);
             scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, nodeConfig.getInFolderConfig().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
 
 
         }
     }
+*/
+
+
 
     /**
      * Delegate to ScheduledExecutorService for a shutdown of node threads.

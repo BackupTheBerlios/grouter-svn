@@ -3,11 +3,13 @@ package org.grouter.core;
 import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.commons.lang.Validate;
 import org.grouter.common.config.ConfigHandler;
-import org.grouter.config.NodeType;
-import org.grouter.core.config.*;
 import org.grouter.core.util.NodeThreadPoolHandler;
 import org.grouter.core.util.file.FileUtils;
+import org.grouter.core.config.ConfigFactory;
+import org.grouter.domain.entities.Router;
+import org.grouter.config.Node;
 
 import java.util.*;
 
@@ -22,27 +24,24 @@ import java.util.*;
  *
  * @author Georges Polyzois
  */
-public class GRouter implements Runnable
+public class GRouterServer implements Runnable
 {
-    private static Logger logger = Logger.getLogger(GRouter.class);
+    private static Logger logger = Logger.getLogger(GRouterServer.class);
     private HashMap nodeThreads = new HashMap();
     private static String CONFIGFILE = "grouter.xml";
     private ConfigHandler configHandler;
-    private GrouterConfig grouterConfig;
+//    private GrouterConfig grouterConfig;
     private NodeThreadPoolHandler nodeThreadPoolHandler = new NodeThreadPoolHandler();
     private static final String GROUTER_CONFIG = "grouter.config";
 
     /**
      * Constructor.
      *
-     * @param nodeConfigs
+     * @param router
      */
-    public GRouter(NodeConfig[] nodeConfigs)
+    public GRouterServer( Router router)
     {
-        if (nodeConfigs == null)
-        {
-            throw new IllegalArgumentException("Got null in inparameter for NodeConfig[]");
-        }
+        Validate.notNull( router, "A null router can not be used to start." );
     }
 
     /**
@@ -50,15 +49,11 @@ public class GRouter implements Runnable
      *
      * @throws IllegalArgumentException if grou“terConfig == null
      */
-    public GRouter()
+    public GRouterServer()
     {
         String grouterConfig = System.getProperty(GROUTER_CONFIG);
-        if (grouterConfig == null)
-        {
-            throw new IllegalArgumentException("Could not get property with key :" + GROUTER_CONFIG + ". Have you " +
+        Validate.notNull( grouterConfig, "Could not get property with key :" + GROUTER_CONFIG + ". Have you " +
                     "provided a -D parameter for Java vm?");
-        }
-        new GRouter(grouterConfig);
     }
 
     /**
@@ -67,7 +62,7 @@ public class GRouter implements Runnable
      * @param configPath
      * @throws IllegalArgumentException if configPath == null
      */
-    public GRouter(String configPath)
+    public GRouterServer(String configPath)
     {
         if(!FileUtils.isValidPath(configPath))
         {
@@ -77,8 +72,8 @@ public class GRouter implements Runnable
         try
         {
             logger.info("Using config path : " + configPath);
-            this.grouterConfig = getGrouterConfig(configPath);
-            nodeThreadPoolHandler.initNodeThreadScheduling(this.grouterConfig);
+//            this.grouterConfig = getGrouterConfig(configPath);
+ //           nodeThreadPoolHandler.initNodeThreadScheduling(this.grouterConfig);
         }
         catch (Exception ex)
         {
@@ -93,13 +88,20 @@ public class GRouter implements Runnable
      *
      * @return GrouterConfig
      */
-    private GrouterConfig getGrouterConfig(String configPath)
+    private Router getGrouterConfig(String configPath)
     {
         configHandler = new ConfigHandler(configPath, null);
+
+        ConfigFactory.createRouter( configHandler.getGrouterConfigDocument().getGrouter() );
+
+
+        return null;
+        /*     configHandler = new ConfigHandler(configPath, null);
         if (configHandler == null)
         {
             throw new IllegalArgumentException("Config path was invalid - could not initiate config from that location! : " + configPath);
         }
+
         String grouterName = configHandler.getGrouterConfigDocument().getGrouter().getName();
         NodeType[] nodeTypes = configHandler.getGrouterConfigDocument().getGrouter().getNodeArray();
         NodeConfig[] nodeConfigs = NodeConfigFactory.getNodes(nodeTypes, configHandler.getGrouterConfigDocument().getGrouter().getGlobal());
@@ -107,6 +109,7 @@ public class GRouter implements Runnable
         this.grouterConfig = new GrouterConfig(grouterName ,nodeConfigs, globalConfig);
         return grouterConfig;
         //configHandler.printBootInfo();
+        */
     }
 
 
@@ -117,15 +120,24 @@ public class GRouter implements Runnable
      */
     public static void main(String[] args)
     {
-        String grouterHome= System.getProperty("user.dir");
+        String grouterHome = System.getProperty("user.dir");
         logger.info("Working dir : " + grouterHome);
         String configFile = "/router/core/src/config/grouter-file-file.xml";
 
 
-        GRouter grouter = new GRouter( grouterHome + configFile);
+        GRouterServer grouter = new GRouterServer( grouterHome + configFile);
 
-        //Thread thr = new Thread(grouter);
-        //Runtime.getRuntime().addShutdownHook(thr);
+        Thread thr = new Thread(grouter);
+        Runtime.getRuntime().addShutdownHook(thr);
+    }
+
+
+    public void startGrouter()
+    {
+        Thread thr = new Thread( this );
+        thr.start();
+
+
     }
 
     /*   private void startErrorHandlers(Service[] arrServices)
@@ -233,7 +245,7 @@ public class GRouter implements Runnable
         catch (MissingResourceException e)
         {
             System.out.println("Missing resource : log4j.properties");
-            System.out.println("Iris not started - see log file");
+            System.out.println("Grouter not started - see log file");
             System.exit(0);
         }
 

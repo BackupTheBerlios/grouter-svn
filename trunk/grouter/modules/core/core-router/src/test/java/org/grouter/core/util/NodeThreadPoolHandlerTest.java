@@ -1,11 +1,9 @@
 package org.grouter.core.util;
 
 import junit.framework.TestCase;
-import org.grouter.core.config.NodeConfig;
-import org.grouter.core.config.InFolderConfig;
-import org.grouter.core.config.OutFolderConfig;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
+import org.grouter.domain.entities.Node;
 
 import java.io.File;
 
@@ -19,7 +17,7 @@ import java.io.File;
 public class NodeThreadPoolHandlerTest extends TestCase
 {
     private static Logger logger = Logger.getLogger(NodeThreadPoolHandlerTest.class);
-    private NodeConfig[] nodeConfigs = new NodeConfig[1];
+    private Node[] nodeConfigs = new Node[1];
     private String tmpDir = System.getProperty("java.io.tmpdir") + "/grouter/nodethreadpoolhandlertest";
     File tmpdir;
 
@@ -31,6 +29,7 @@ public class NodeThreadPoolHandlerTest extends TestCase
     public void setUp() throws Exception
     {
         super.setUp();
+        /*
         tmpdir = new File(tmpDir);
         tmpdir.mkdir();
 
@@ -48,6 +47,7 @@ public class NodeThreadPoolHandlerTest extends TestCase
         OutFolderConfig outFolderConfig = new OutFolderConfig(outfolder);
         NodeConfig nodeConfig = new NodeConfig(NodeConfig.Type.FILE_TO_FILE, "id_1", true, inFolderConfig, outFolderConfig,null);
         nodeConfigs[0] = nodeConfig;
+        */
     }
 
     /**

@@ -3,7 +3,7 @@
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://grouter.org/config.xsd ../../../../common/common-configbeans/src/xsd/config.xsd"
-         xsi:noNamespaceSchemaLocation="../../../../common/common-configbeans/src/xsd/config.xsd">
+         xsi:noNamespaceSchemaLocation="../../../../common/common-configbeans/src/main/xsd/config.xsd">
     <Global>
         <grouterHome>/Users/geopol/tmp/grouter_test_install</grouterHome>
         <grouterDomain useGrouterDomain="true">

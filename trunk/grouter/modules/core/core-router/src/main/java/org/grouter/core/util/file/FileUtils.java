@@ -278,7 +278,7 @@ public class FileUtils
             buffer = new byte[1024];
             while (true)
             {
-                bytes_read = source.read(buffer);
+                bytes_read = source.execute(buffer);
                 if (bytes_read == -1)
                 {
                     break;

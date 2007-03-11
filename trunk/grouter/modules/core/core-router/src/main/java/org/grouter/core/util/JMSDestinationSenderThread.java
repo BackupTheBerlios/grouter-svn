@@ -1,12 +1,8 @@
 package org.grouter.core.util;
 
 import org.grouter.common.jms.*;
-import org.grouter.core.command.CommandMessage;
-import org.grouter.core.config.GrouterDomainConfig;
-import org.grouter.core.config.GrouterConfig;
-import org.grouter.core.config.NodeConfig;
+import org.grouter.core.command.CommandHolder;
 //import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
-import org.grouter.domain.entities.Message;
 import org.apache.log4j.Logger;
 
 import javax.naming.Context;
@@ -15,8 +11,6 @@ import javax.naming.NamingException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
                                  
 /**
@@ -32,8 +26,8 @@ public class JMSDestinationSenderThread implements Runnable
     private static Destination queueDestination;
     private static final int QUEUE_SIZE = 2000;
     private static final int TIME_TO_LIVE = 10000;
-    private static BlockingQueue<CommandMessage[]> queues = new ArrayBlockingQueue<CommandMessage[]>(QUEUE_SIZE);
-    private GrouterConfig grouterConfig;
+    private static BlockingQueue<CommandHolder[]> queues = new ArrayBlockingQueue<CommandHolder[]>(QUEUE_SIZE);
+//    private GrouterConfig grouterConfig;
 
     /**
      * Constructor.
@@ -41,6 +35,7 @@ public class JMSDestinationSenderThread implements Runnable
      * @param grouterConfig not null
      * @throws IllegalArgumentException if grouterConfig == null
      */
+    /*
     public JMSDestinationSenderThread(GrouterConfig grouterConfig)
     {
         if (grouterConfig == null || grouterConfig.getGlobalSettingsConfig().getGrouterDomainConfig() == null)
@@ -61,7 +56,7 @@ public class JMSDestinationSenderThread implements Runnable
         } finally
         {
         }
-    }
+    } */
 
     /**
      * Use grouter config create intialcontext for Destination.
@@ -70,6 +65,7 @@ public class JMSDestinationSenderThread implements Runnable
      * @return
      * @throws NamingException
      */
+    /*
     private Context getInitialContext(GrouterDomainConfig grouterDomainConfig)
             throws NamingException
     {
@@ -79,7 +75,7 @@ public class JMSDestinationSenderThread implements Runnable
         hashtable.put(Context.URL_PKG_PREFIXES, grouterDomainConfig.getJavaNamingUrlPkgs());
         return new InitialContext(hashtable);
     }
-
+                            */
 
     /**
      * Poll queueu and send to jms destination.
@@ -87,7 +83,7 @@ public class JMSDestinationSenderThread implements Runnable
     public void run()
     {
         logger.info("Sending a batch of commandMessages to jms destination queues");
-        CommandMessage[] commandMessages = queues.poll();
+        CommandHolder[] commandMessages = queues.poll();
         if (commandMessages == null)
         {
             logger.info("No message");
@@ -95,7 +91,7 @@ public class JMSDestinationSenderThread implements Runnable
         }
         // This will enable client to use JMS selectors based on grouterid
         HashMap<String,String> map = new HashMap();
-        map.put("grouterid", grouterConfig.getName());
+//        map.put("grouterid", grouterConfig.getName());
 //        queueDestination.sendMessage(createGRouterPublishEventDTO(commandMessages), map);
         logger.info("Batch of commandMessages sent!!!");
     }
@@ -125,7 +121,7 @@ public class JMSDestinationSenderThread implements Runnable
      *
      * @return
      */
-    public static BlockingQueue<CommandMessage[]> getQueue()
+    public static BlockingQueue<CommandHolder[]> getQueue()
     {
         return queues;
     }
