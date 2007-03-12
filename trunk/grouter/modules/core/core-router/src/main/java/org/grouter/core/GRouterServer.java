@@ -5,11 +5,10 @@ import org.apache.log4j.NDC;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.commons.lang.Validate;
 import org.grouter.common.config.ConfigHandler;
-import org.grouter.core.util.NodeThreadPoolHandler;
+import org.grouter.core.util.ThreadPoolService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
 import org.grouter.domain.entities.Router;
-import org.grouter.config.Node;
 
 import java.util.*;
 
@@ -31,8 +30,9 @@ public class GRouterServer implements Runnable
     private static String CONFIGFILE = "grouter.xml";
     private ConfigHandler configHandler;
 //    private GrouterConfig grouterConfig;
-    private NodeThreadPoolHandler nodeThreadPoolHandler = new NodeThreadPoolHandler();
+    private ThreadPoolService nodeThreadPoolHandler = new ThreadPoolService();
     private static final String GROUTER_CONFIG = "grouter.config";
+    private Router router;
 
     /**
      * Constructor.
@@ -72,8 +72,9 @@ public class GRouterServer implements Runnable
         try
         {
             logger.info("Using config path : " + configPath);
+            initRouter( configPath );
 //            this.grouterConfig = getGrouterConfig(configPath);
- //           nodeThreadPoolHandler.initNodeThreadScheduling(this.grouterConfig);
+            nodeThreadPoolHandler.initNodeThreadScheduling( this.router.getNodes()  );
         }
         catch (Exception ex)
         {
@@ -85,31 +86,11 @@ public class GRouterServer implements Runnable
 
     /**
      * Load config file and store reference for further processing of config data.
-     *
-     * @return GrouterConfig
      */
-    private Router getGrouterConfig(String configPath)
+    private void initRouter(String configPath)
     {
         configHandler = new ConfigHandler(configPath, null);
-
-        ConfigFactory.createRouter( configHandler.getGrouterConfigDocument().getGrouter() );
-
-
-        return null;
-        /*     configHandler = new ConfigHandler(configPath, null);
-        if (configHandler == null)
-        {
-            throw new IllegalArgumentException("Config path was invalid - could not initiate config from that location! : " + configPath);
-        }
-
-        String grouterName = configHandler.getGrouterConfigDocument().getGrouter().getName();
-        NodeType[] nodeTypes = configHandler.getGrouterConfigDocument().getGrouter().getNodeArray();
-        NodeConfig[] nodeConfigs = NodeConfigFactory.getNodes(nodeTypes, configHandler.getGrouterConfigDocument().getGrouter().getGlobal());
-        GlobalConfig globalConfig = GlobalConfigFactory.getGlobalConfig(configHandler.getGrouterConfigDocument().getGrouter().getGlobal());
-        this.grouterConfig = new GrouterConfig(grouterName ,nodeConfigs, globalConfig);
-        return grouterConfig;
-        //configHandler.printBootInfo();
-        */
+        router = ConfigFactory.createRouter( configHandler.getGrouterConfigDocument().getGrouter() );
     }
 
 
@@ -136,8 +117,6 @@ public class GRouterServer implements Runnable
     {
         Thread thr = new Thread( this );
         thr.start();
-
-
     }
 
     /*   private void startErrorHandlers(Service[] arrServices)

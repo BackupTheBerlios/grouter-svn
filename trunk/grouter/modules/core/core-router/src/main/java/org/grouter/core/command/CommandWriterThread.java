@@ -3,6 +3,9 @@ package org.grouter.core.command;
 import org.apache.log4j.Logger;
 import org.grouter.core.command.AbstractCommandWriter;
 import org.grouter.core.command.FileCommandWriter;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Georges Polyzois
  */
-public class CommandWriterThread implements Runnable //Callable<Boolean>
+public class CommandWriterThread implements Job, Runnable
 {
     private static Logger logger = Logger.getLogger(CommandWriterThread.class);
     private BlockingQueue<AbstractCommandWriter> queue;
@@ -47,5 +50,11 @@ public class CommandWriterThread implements Runnable //Callable<Boolean>
         {
             logger.error(e,e);
         }
+    }
+
+    public void execute(JobExecutionContext context) throws JobExecutionException
+    {
+        run();
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

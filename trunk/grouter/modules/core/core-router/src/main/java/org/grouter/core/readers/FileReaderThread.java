@@ -9,6 +9,10 @@ import org.grouter.core.command.AbstractCommandWriter;
 import org.grouter.core.command.CommandHolder;
 import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.Node;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.JobDataMap;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -23,7 +27,7 @@ import java.util.ArrayList;
  *
  * @author Georges Polyzois
  */
-public class FileReaderThread extends AbstractReader implements Runnable//implements Callable<String>
+public class FileReaderThread extends AbstractReader implements Runnable
 {
     private static Logger logger = Logger.getLogger(FileReaderThread.class);
     //private NodeConfig node;
@@ -41,11 +45,11 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
      */
     public FileReaderThread(final Node node, BlockingQueue<AbstractCommandWriter> blockingQueue)
     {
-        if (this.node == null || blockingQueue == null)
+        if ( node == null || blockingQueue == null)
         {
             throw new IllegalArgumentException("Constructor called with null argument.");
         }
-        this.node = this.node;
+        this.node = node;                 
         this.queue = blockingQueue;
         //which type of commands should this servicenode worker handle
         command = getCommand(node);
@@ -157,5 +161,11 @@ public class FileReaderThread extends AbstractReader implements Runnable//implem
         {
             logger.error(e, e);
         }
+    }
+
+
+    public void execute(JobExecutionContext context) throws JobExecutionException
+    {
+        JobDataMap jobDataMap = context.getMergedJobDataMap();
     }
 }

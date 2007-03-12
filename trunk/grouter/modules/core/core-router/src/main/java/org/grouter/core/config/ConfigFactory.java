@@ -60,7 +60,7 @@ public class ConfigFactory
             EndPoint inbound = getEndPoint( configNode.getInBoundEndPoint() );
             nodeEntity.setInBound( inbound );
             EndPoint outbound = getEndPoint( configNode.getOutBoundEndPoint() );
-            nodeEntity.setOutBound( inbound );
+            nodeEntity.setOutBound( outbound );
 
             result.add( nodeEntity );
         }

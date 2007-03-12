@@ -7,11 +7,12 @@ import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.CommandHolder;
 import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.Node;
+import org.quartz.Job;
 
 import java.util.List;
 
 
-public abstract class AbstractReader //extends TimerTask
+public abstract class AbstractReader implements Job
 {
     private static Logger logger = Logger.getLogger(AbstractReader.class);
     AbstractCommandWriter command;

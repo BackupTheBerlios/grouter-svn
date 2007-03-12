@@ -5,8 +5,10 @@ import org.grouter.core.command.AbstractCommandWriter;
 import org.grouter.core.command.CommandWriterThread;
 import org.grouter.core.readers.FileReaderThread;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.EndPointType;
 
 import java.util.concurrent.*;
+import java.util.Set;
 
 /**
  * What's the right size for a thread pool, assuming the goal is to keep the
@@ -17,21 +19,24 @@ import java.util.concurrent.*;
  * time (computation time) per task. Then WT/ST is the percentage of time a task
  * spends waiting. For an N processor system, we would want to have
  * approximately N*(1+WT/ST) threads in the pool.
+ *
+ * @author Georges Polyzois
  */
-public class NodeThreadPoolHandler
+public class ThreadPoolService
 {
-    private static Logger logger = Logger.getLogger(NodeThreadPoolHandler.class);
+    private static Logger logger = Logger.getLogger(ThreadPoolService.class);
     private ConcurrentMap map = new ConcurrentHashMap();
     private ScheduledExecutorService scheduler;
     private BlockingQueue<AbstractCommandWriter> blockingQueue;
-    private static final int INITIAL_DELAY = 1000;
+    private static final long INITIAL_DELAY = 1000;
     private static final int CAPACITY = 1000;
-    private static final int JMSTHREAD_POLLQUEUE_INTERVALL = 5000;
+    private static final int POLL = 5000;
+    private static final int JMSTHREAD_POLLQUEUE_INTERVALL = POLL;
 
     /**
      * Consturctor
      */
-    public NodeThreadPoolHandler()
+    public ThreadPoolService()
     {
     }
 
@@ -39,41 +44,41 @@ public class NodeThreadPoolHandler
     /**
      * Initialize threads.
      *
-     * @param nodeConfigs
-     * @throws IllegalArgumentException if nodeConfigs == null
+     * @param nodes
+     * @throws IllegalArgumentException if nodes == null
      */
-    public void initNodeThreadScheduling(Node[] nodeConfigs)
+    public void initNodeThreadScheduling(Set nodes)
     {
-        if (nodeConfigs == null || nodeConfigs == null)
+        if (nodes == null || nodes == null)
         {
             throw new IllegalArgumentException("Nodes can not be null!!");
         }
-        logger.info("Found " + nodeConfigs.length + " number of nodeConfigs. Init scheduler executor service!");
+        logger.info("Found " + nodes.size() + " number of nodes. Init scheduler executor service!");
 
         //fire off...
-//        start(nodeConfigs);
+
+        start(nodes);
     }
 
 
     /**
      * Initialize threads.
      *
-     * @param grouterConfig
-     * @throws IllegalArgumentException if nodeConfigs == null
+     * @throws IllegalArgumentException if nodes == null
      */
 
 /*
     public void initNodeThreadScheduling(GrouterConfig grouterConfig)
     {
-        NodeConfig[] nodeConfigs = grouterConfig.getNodes();
-        if (grouterConfig == null || nodeConfigs == null)
+        NodeConfig[] nodes = grouterConfig.getNodes();
+        if (grouterConfig == null || nodes == null)
         {
             throw new IllegalArgumentException("Nodes can not be null!!");
         }
-        logger.info("Found " + nodeConfigs.length + " number of nodeConfigs. Init scheduler executor service!");
+        logger.info("Found " + nodes.length + " number of nodes. Init scheduler executor service!");
 
         //fire off...
-        start(nodeConfigs);
+        start(nodes);
 
         // todo add this to config - if we should send message to listener
         startJMSSEnderThread(grouterConfig);
@@ -86,26 +91,25 @@ public class NodeThreadPoolHandler
 
 
     }
+                                         */
 
-
-    private void start(NodeConfig[] nodeConfigs)
+    private void start(Set<Node> nodes)
     {
-        scheduler = Executors.newScheduledThreadPool(nodeConfigs.length);
-        for (NodeConfig nodeConfig : nodeConfigs)
+        scheduler = Executors.newScheduledThreadPool( nodes.size() );
+
+        for (Node node : nodes)
         {
             blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(CAPACITY);
-            if (nodeConfig.getNodeType() == NodeConfig.Type.FILE_TO_FILE)
+            if( node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId() )
             {
-                FileReaderThread fileReaderThread = new FileReaderThread(nodeConfig, blockingQueue);
-                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, nodeConfig.getInFolderConfig().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
+                FileReaderThread fileReaderThread = new FileReaderThread(node, blockingQueue);
+                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
             }
+
             CommandWriterThread commandConsumerThread = new CommandWriterThread(blockingQueue);
-            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, nodeConfig.getInFolderConfig().getPollIntervallMilliSeconds(), TimeUnit.MILLISECONDS);
-
-
+            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
         }
     }
-*/
 
 
 
