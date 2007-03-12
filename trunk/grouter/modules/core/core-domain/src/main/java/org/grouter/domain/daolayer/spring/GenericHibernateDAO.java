@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public abstract class GenericHibernateDAO<T, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<T, ID>
+public abstract class GenericHibernateDAO<T, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<T,ID>
 {
     private Class<T> entityClass;
     private SessionFactory sessionFactory;
@@ -42,33 +42,72 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         this.session = session;
     }
 
-//    protected abstract void setSession(Session s);
-
-
     public Class<T> getEntityClass()
     {
         return entityClass;
     }
 
-   
-    public T findById(ID id)
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings( "unchecked" )
+    public T findById( Class clazz, ID id, String... joinProps )
     {
-        return (T) getSession().load(getEntityClass(), id);
+        Criteria criteria = getSession(  ).createCriteria( clazz );
+        criteria.add( Restrictions.idEq( id ) );
+        for ( String prop : joinProps )
+        {
+            criteria.setFetchMode( prop, FetchMode.JOIN );
+        }
+        criteria.setResultTransformer( CriteriaSpecification.DISTINCT_ROOT_ENTITY );
+        return ( T ) criteria.uniqueResult(  );
+    }
+    
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public T findById(ID id, String... joinProps)
+    {
+        return findById( getEntityClass(), id, joinProps );
+        //return (T) getSession().load(getEntityClass(), id, LockMode.FORCE);
     }
 
 
+
+    /**
+     * Find Entity by id.
+     *
+     * @param id the id of the entity
+     * @return an entity
+     */
+    public T findById(ID id)
+    {
+        return findById( getEntityClass(), id );
+    }
+
+
+
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     public List<T> findAll()
     {
         return findByCriteria();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
-    public List<T> findByExample(T exampleInstance, String[] excludeProperty)
+    public List<T> findByExample(T exampleInstance, String... joinProps)
     {
         Criteria crit = getSession().createCriteria(getEntityClass());
         Example example = Example.create(exampleInstance);
-        for (String exclude : excludeProperty)
+        for (String exclude : joinProps)
         {
             example.excludeProperty(exclude);
         }
@@ -76,6 +115,10 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         return crit.list();
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     public T save(T entity)
     {
@@ -110,7 +153,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
 
 
     /**
-     *
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     public T findById(Class clazz, T id, String... joinProps)
@@ -124,7 +167,5 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
         return (T) criteria.uniqueResult();
     }
-
-
 }
 

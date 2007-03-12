@@ -29,7 +29,17 @@ public interface GenericDAO<T, ID extends Serializable>
     T findById(ID id);
 
     /**
-     * 
+     * Find entity by id, join using properties of entity class (optionally).
+     *
+     * @param id the id of the entity to search for
+     * @param joinProps properties on the entity class we should join in
+     * @return
+     */
+    T findById(ID id, String... joinProps);
+
+    /**
+     * Find entity by id and clazz, join using properties of entity class (optionally).
+     *
      * @param clazz entity class
      * @param id the id of the entity to search for
      * @param joinProps properties on the entity class we should join in
@@ -37,8 +47,18 @@ public interface GenericDAO<T, ID extends Serializable>
      */
     T findById(Class clazz, T id, String... joinProps);
 
+    /**
+     * Get all entities.
+     * @return list of entitites.
+     */
     List<T> findAll();
 
+    /**
+     * Find entities, excluding properties.
+     * @param exampleInstance
+     * @param excludeProperty
+     * @return
+     */
     List<T> findByExample(T exampleInstance, String... excludeProperty);
 
     T save(T entity);

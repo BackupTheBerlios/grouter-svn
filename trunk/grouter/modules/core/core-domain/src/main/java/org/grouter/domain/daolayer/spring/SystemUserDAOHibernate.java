@@ -66,6 +66,7 @@ public class SystemUserDAOHibernate extends GenericHibernateDAO<SystemUser, Long
         session = s;
     }
 
+
     public void delete(String id)
     {
         //To change body of implemented methods use File | Settings | File Templates.

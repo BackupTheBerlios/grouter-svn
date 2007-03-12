@@ -16,17 +16,12 @@ import java.util.List;
  */
 public abstract class AbstractDAOTests extends AbstractJpaTests
 {
-    SessionFactory sessionFactory;
-    EntityManager entityManager;
 
-    public void setSessionFactory(SessionFactory sessionFactory)
-    {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     protected String[] getConfigLocations()
     {
+        
         return new String[]
                 {
                         "context-domain-dao.xml", "context-domain-datasource.xml",
@@ -40,11 +35,6 @@ public abstract class AbstractDAOTests extends AbstractJpaTests
         return "sql/test-domain-data.sql";
     }
 
-
-    protected void flushSession()
-    {
-        sessionFactory.getCurrentSession().flush();
-    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -65,10 +55,6 @@ public abstract class AbstractDAOTests extends AbstractJpaTests
     }
 
 
-    public void setEntityManager(EntityManager entityManager)
-    {
-        this.entityManager = entityManager;
-    }
 }
 
 

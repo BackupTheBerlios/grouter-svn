@@ -82,6 +82,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         return persistentClass;
     }
 
+
     @SuppressWarnings("unchecked")
     public T findById(ID id, boolean lock)
     {
@@ -98,11 +99,34 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
+    public T findById(ID id, String... joinProps)
+    {
+        org.hibernate.Session session = ((HibernateEntityManager) getEntityManager()).getSession();
+        org.hibernate.Criteria criteria = session.createCriteria(getPersistentClass());
+        criteria.add(Restrictions.idEq(id));
+        for (String prop : joinProps)
+        {
+            criteria.setFetchMode(prop, FetchMode.JOIN);
+        }
+        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        return (T) criteria.uniqueResult();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public T findById(ID id)
     {
         return (T) em.find(getPersistentClass(), id);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     public List<T> findAll()
     {
@@ -110,6 +134,10 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     }
 
 
+
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     public List<T> findByExample(T exampleInstance, String[] excludeProperty)
     {
@@ -125,11 +153,19 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         return crit.list();
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public T save(T entity)
     {
         return getEntityManager().merge(entity);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public void delete(T entity)
     {
         getEntityManager().remove(entity);
@@ -156,24 +192,22 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     }
 
 
+
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     public T findById(Class clazz, T id, String... joinProps)
     {
         org.hibernate.Session session = ((HibernateEntityManager) getEntityManager()).getSession();
         org.hibernate.Criteria criteria = session.createCriteria(getPersistentClass());
-
         criteria.add(Restrictions.idEq(id));
-
         for (String prop : joinProps)
         {
             criteria.setFetchMode(prop, FetchMode.JOIN);
         }
-
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-
         return (T) criteria.uniqueResult();
     }
-
-
 }
 
