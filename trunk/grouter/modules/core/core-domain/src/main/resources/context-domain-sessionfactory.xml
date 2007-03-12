@@ -6,7 +6,10 @@
        default-autowire="byName">
 
   
-  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"/>
+  
+  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
 
   <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
@@ -18,6 +21,9 @@
         <value>classpath:/org/grouter/domain/entities/Sender.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/Receiver.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/Address.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/EndPoint.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/EndPointType.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/FilterType.hbm.xml</value>
       </list>
     </property>
     <property name="hibernateProperties">
@@ -29,8 +35,11 @@
       <prop key="hibernate.current_session_context_class">thread</prop -->
         <prop key="hibernate.show_sql">true</prop>
         <prop key="hibernate.format_sql">true</prop>
-        <!-- prop key="hibernate.use_sql_comments">true</prop>
-      <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop -->
+        <prop key="hibernate.use_sql_comments">true</prop>
+
+        <prop key="hibernate.cache.use_query_cache">true</prop>
+          <prop key="hibernate.cache.use_second_level_cache">true</prop>
+      <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
       </props>
     </property>
   </bean>

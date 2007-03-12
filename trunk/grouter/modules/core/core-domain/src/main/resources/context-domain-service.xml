@@ -9,7 +9,51 @@
   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
        default-autowire="byName">
 
+  <!-- This declaratino together with the context-domain-aop.xml context should do
+       the AOP style does not work currently - a lot of dependencies to cglib, asm etc
+       are messing things up
 
   <bean id="grouterService" class="org.grouter.domain.servicelayer.spring.GRouterServiceImpl"/>
+  -->
+
+
+  <!-- The "old" way of doint it without the aop config style -->
+
+  <!--  Grouter Service Proxy -->
+  <bean id="grouterService" name="grouterService" class="org.springframework.aop.framework.ProxyFactoryBean">
+   <property name="proxyInterfaces">
+     <value>org.grouter.domain.servicelayer.GRouterService</value>
+   </property>
+   <property name="interceptorNames">
+     <list>
+       <idref local="transactionInterceptor" />
+       <idref local="grouterServiceTarget" />
+     </list>
+   </property>
+ </bean>
+
+
+  <!-- Grouter Service Target -->
+  <bean id="grouterServiceTarget" name="grouterServiceTarget" class="org.grouter.domain.servicelayer.spring.GRouterServiceImpl">
+    <property name="messageDAO" ref="messageDAO"/>
+    <property name="nodeDAO" ref="nodeDAO"/>
+  </bean>
+
+
+  <!-- Service Transaction Interceptor -->
+  <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+    <property name="transactionManager">
+      <bean class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+      </bean>
+    </property>
+    <property name="transactionAttributeSource">
+			<value>
+        org.grouter.domain.servicelayer.GRouterService.find*=PROPAGATION_REQUIRED
+        org.grouter.domain.servicelayer.GRouterService.saveMessage*=PROPAGATION_REQUIRED
+		</value>
+		</property>
+	</bean>
+
 
 </beans>

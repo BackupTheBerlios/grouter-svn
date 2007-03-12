@@ -17,7 +17,7 @@
   -->
 
   <aop:config>
-    <aop:pointcut id="serviceMethod" expression="execution (public * org.grouter.domain.servicelayer.spring.*.*(..))" />
+    <aop:pointcut id="serviceMethod" expression="execution(* org.grouter.domain.servicelayer.spring.*.*(..))" />
     <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" order="1" />
   </aop:config>
 
@@ -28,6 +28,9 @@
       <!-- tx:method name="*" rollback-for=".......CustomeException" / -->
     </tx:attributes>
   </tx:advice>
+
+
+  
 
 
 </beans>
