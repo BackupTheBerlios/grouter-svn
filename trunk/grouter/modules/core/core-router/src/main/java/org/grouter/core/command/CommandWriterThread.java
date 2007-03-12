@@ -1,11 +1,11 @@
 package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
-import org.grouter.core.command.AbstractCommandWriter;
-import org.grouter.core.command.FileCommandWriter;
+import org.grouter.domain.entities.Node;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.JobDataMap;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -19,23 +19,38 @@ import java.util.concurrent.TimeUnit;
 public class CommandWriterThread implements Job, Runnable
 {
     private static Logger logger = Logger.getLogger(CommandWriterThread.class);
-    private BlockingQueue<AbstractCommandWriter> queue;
+    private BlockingQueue<AbstractCommandWriter> blockingQueue;
     private static final int TIMEOUT = 2;
+    private Node node;
 
+
+    /**
+     * Neede by Quartz scheduler framework.
+     */
+    public CommandWriterThread()
+    {
+    }
+
+    /**
+     * Only used by ThreadPoolService
+     *
+     * @deprecated
+     * @param queue
+     */
     public CommandWriterThread(BlockingQueue<AbstractCommandWriter> queue)
     {
-        this.queue = queue;
+        this.blockingQueue = queue;
     }
 
     public Boolean call() throws Exception
     {
-        logger.debug("Qeuue size" + queue.size());
+        logger.debug("Queue size is : " + blockingQueue.size());
+
         //take is blocking - an initial condition where no commandMessages are found in
         //the infolder e.g. will make the reader thread to block also.
-        AbstractCommandWriter cmd = queue.poll(TIMEOUT, TimeUnit.SECONDS);//queue.take();
+        AbstractCommandWriter cmd = blockingQueue.poll(TIMEOUT, TimeUnit.SECONDS);//queue.take();
         if (cmd instanceof FileCommandWriter)
         {
-            logger.debug("Got filewrite command. Qeuue size " + queue.size());
             cmd.execute();
         }
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -54,7 +69,17 @@ public class CommandWriterThread implements Job, Runnable
 
     public void execute(JobExecutionContext context) throws JobExecutionException
     {
-        run();
-        //To change body of implemented methods use File | Settings | File Templates.
+        JobDataMap jobDataMap = context.getMergedJobDataMap();
+
+        //node = (Node) jobDataMap.get( "node" );
+        this.blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get( "queue" );
+
+        try
+        {
+            call();
+        } catch (Exception e)
+        {
+            logger.error(e,e);
+        }
     }
 }

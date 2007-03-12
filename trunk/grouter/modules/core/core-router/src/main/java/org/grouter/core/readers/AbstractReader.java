@@ -15,8 +15,13 @@ import java.util.List;
 public abstract class AbstractReader implements Job
 {
     private static Logger logger = Logger.getLogger(AbstractReader.class);
+
+    public void setNode(Node node)
+    {
+        this.node = node;
+    }
+
     AbstractCommandWriter command;
-    EndPoint endPoint;
     Node node;
 
     abstract List<CommandHolder> readFromSource();
@@ -36,15 +41,11 @@ public abstract class AbstractReader implements Job
         }
     }
 
-    protected AbstractCommandWriter getCommand(final Node nodeConfig)
+    protected AbstractCommandWriter getCommand(final Node node)
     {
-        return CommandFactory.getCommand(nodeConfig);
+        return CommandFactory.getCommand( node );
     }
 
 
 
-    protected AbstractCommandWriter getCommand2(final EndPoint outBoundEndPoint)
-    {
-        return CommandFactory.getCommand2(outBoundEndPoint);
-    }
 }

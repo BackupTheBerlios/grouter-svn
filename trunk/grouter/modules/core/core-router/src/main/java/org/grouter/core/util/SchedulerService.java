@@ -1,6 +1,7 @@
 package org.grouter.core.util;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.Validate;
 import org.grouter.core.command.AbstractCommandWriter;
 import org.grouter.core.command.CommandWriterThread;
 import org.grouter.core.readers.FileReaderThread;
@@ -42,6 +43,8 @@ public class SchedulerService
      */
     public SchedulerService( Set<Node> nodes)
     {
+        Validate.noNullElements( nodes , "Can not handle null nodes!!");
+
         this.nodes = nodes;
         try
         {
@@ -54,8 +57,11 @@ public class SchedulerService
     }
 
 
-
-    protected void startScheduler() throws Exception
+    /**
+     * Start the scheduler using all available nodes.
+     * @throws Exception
+     */
+    public void start() throws Exception
     {
         for (Node node : this.nodes)
         {
@@ -101,7 +107,7 @@ public class SchedulerService
 
 
     /**
-     * Delegate to ScheduledExecutorService for a shutdown of node threads.
+     * Shudtowns the scheduler.
      */
     public void shutdown() throws Exception
     {
@@ -109,6 +115,10 @@ public class SchedulerService
     }
 
 
+    /**
+     * Stop a node from running - both inbound and outbound endpoints of the Node are stopped.
+     * @param node the node which we want to stop 
+     */
     public void stop( Node node )
     {
         try

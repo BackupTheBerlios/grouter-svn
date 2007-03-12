@@ -41,6 +41,10 @@
       <artifactId>hibernate-annotations</artifactId>
       <scope>provided</scope>
     </dependency>
+     <dependency>
+        <groupId>quartz</groupId>
+        <artifactId>quartz</artifactId>
+    </dependency>
     <!--dependency>
         <groupId>xmlbeans</groupId>
         <artifactId>xmlbeans-jsr173-api</artifactId>

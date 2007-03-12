@@ -15,7 +15,6 @@ import java.io.File;
 public class FileCommandWriter extends AbstractCommandWriter
 {
     private static Logger logger = Logger.getLogger(FileCommandWriter.class);
-    private Node node;
 
     /**
      * Constructor.
@@ -32,13 +31,13 @@ public class FileCommandWriter extends AbstractCommandWriter
         this.node = node;
     }
 
-
+                       /*
     public FileCommandWriter(EndPoint outBound)
     {
         Validate.notNull( outBound , "You must provide a outBound EndPoint !!" );
         this.outBound = outBound;
     }
-
+                         */
 
     /**
      * Implementing a transformation step.
@@ -51,14 +50,14 @@ public class FileCommandWriter extends AbstractCommandWriter
 
     public void write()
     {
-       // logger.debug(node.getId() + " Writing file to dir : " + node.getOutFolderConfig().getOutPath());
+            logger.debug(node.getName() + " writing to uri : " + node.getOutBound().getUri() );
 
         for (CommandHolder commandMessage : commandMessages)
         {
             logger.debug("Wrote a new file :" + commandMessage.getMessage());
             try
             {
-                FileUtils.writeStringToFile( new File( outBound.getUri()  + commandMessage.getGuid() ) , commandMessage.getMessage(), commandMessage.getEncoding()  );
+                FileUtils.writeStringToFile( new File( node.getOutBound().getUri()  + "/"  + commandMessage.getGuid() + ".txt" ) , commandMessage.getMessage(), commandMessage.getEncoding()  );
             }
             catch (Exception e)
             {
@@ -69,21 +68,18 @@ public class FileCommandWriter extends AbstractCommandWriter
 
     public void backup()
     {
-        logger.debug(node.getId() + " storing locally for backup to dir : " + node.getOutBound() );
+        logger.debug(node.getName() + " backup to uri : " + node.getBackupUri() );
         for (CommandHolder commandMessage : commandMessages)
         {
-
-            logger.debug("Stored a new message in backup folder locally :" + commandMessages);
             try
             {
-                FileUtils.writeStringToFile( new File( outBound.getUri()  + commandMessage.getGuid() ) , commandMessage.getMessage(), commandMessage.getEncoding()  );
+                FileUtils.writeStringToFile( new File( node.getBackupUri() + "/" + commandMessage.getGuid() + ".txt" ) , commandMessage.getMessage(), commandMessage.getEncoding()  );
             }
             catch (Exception e)
             {
                 logger.error(e, e);
             }
         }
-
     }
 
 

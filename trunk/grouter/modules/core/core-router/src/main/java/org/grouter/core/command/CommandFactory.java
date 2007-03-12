@@ -44,13 +44,13 @@ public class CommandFactory
         return null;
     }
 
-    public static AbstractCommandWriter getCommand2(EndPoint outBoundEndPoint)
+    public static AbstractCommandWriter getCommand2(Node node)
     {
-        Validate.notNull( outBoundEndPoint, "Can not handle a null Endpoint");
+        Validate.notNull( node, "Can not handle a null Endpoint");
 
-        if( outBoundEndPoint.getEndPointType().getId() ==  EndPointType.FILE_WRITER.getId() )
+        if( node.getOutBound().getEndPointType().getId() ==  EndPointType.FILE_WRITER.getId() )
         {
-            FileCommandWriter fileWriterCommand = new FileCommandWriter( outBoundEndPoint );
+            FileCommandWriter fileWriterCommand = new FileCommandWriter( node );
             return fileWriterCommand;
         }
         return null;

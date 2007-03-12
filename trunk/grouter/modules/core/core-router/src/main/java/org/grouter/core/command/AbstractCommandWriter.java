@@ -4,6 +4,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
 import org.grouter.core.util.JMSDestinationSenderThread;
 import org.grouter.domain.entities.EndPoint;
+import org.grouter.domain.entities.Node;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public abstract class AbstractCommandWriter
 {
     private static Logger logger = Logger.getLogger(AbstractCommandWriter.class);
     protected List<CommandHolder> commandMessages;
-    EndPoint outBound;
+    Node node;
 
     /**
      * Commands must override this method to provide an implementation of an execute command

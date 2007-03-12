@@ -102,8 +102,8 @@ public class ThreadPoolService
             blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(CAPACITY);
             if( node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId() )
             {
-                FileReaderThread fileReaderThread = new FileReaderThread(node, blockingQueue);
-                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
+//                FileReaderThread fileReaderThread = new FileReaderThread(node, blockingQueue);
+//                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
             }
 
             CommandWriterThread commandConsumerThread = new CommandWriterThread(blockingQueue);

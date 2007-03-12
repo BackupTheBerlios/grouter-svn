@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.grouter.config.GrouterDocument;
 import org.grouter.common.config.ConfigHandler;
 import org.grouter.domain.entities.Router;
+import org.grouter.domain.entities.Node;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -37,7 +38,10 @@ public class ConfigFactoryTest extends TestCase
         assertNotNull( router );
 
         assertEquals( 1 , router.getNodes().size() );
-        
+
+        Node node = router.getNodes().iterator().next();
+        assertEquals( "file://temp/in" , node.getInBound().getUri() );
+        assertEquals( "file://temp/out" , node.getOutBound().getUri() );  
 
     }
 

@@ -36,36 +36,30 @@ public class FileReaderThread extends AbstractReader implements Runnable
     private WildcardFilter wildcardFilter;
     private FileFilter fileFilter;
 
+
     /**
-     * Construcotr
-     *
-     * @param node
-     * @param blockingQueue
-     * @throws IllegalArgumentException if node == null || blockingQueue == null
+     * Empty - needed by Quartz framework.
      */
-    public FileReaderThread(final Node node, BlockingQueue<AbstractCommandWriter> blockingQueue)
+    public FileReaderThread()
     {
+    }
+
+    private void init( final Node node, BlockingQueue<AbstractCommandWriter> blockingQueue )
+    {
+
         if ( node == null || blockingQueue == null)
         {
             throw new IllegalArgumentException("Constructor called with null argument.");
         }
-        this.node = node;                 
+        this.node = node;
         this.queue = blockingQueue;
         //which type of commands should this servicenode worker handle
         command = getCommand(node);
  //       createFilter(node);
+
     }
 
 
-    public FileReaderThread(EndPoint inbound, BlockingQueue<AbstractCommandWriter> blockingQueue, EndPoint outBound)
-    {
-        Validate.notNull(inbound, "A null EndPoint can not be used");
-        Validate.notNull(blockingQueue, "A null blockingqueue can not be used");
-
-        this.endPoint = inbound;
-        this.queue = blockingQueue;
-        command = getCommand2(outBound);
-    }
 
 
     /**
@@ -94,18 +88,18 @@ public class FileReaderThread extends AbstractReader implements Runnable
      */
     protected List<CommandHolder> readFromSource()
     {
-        logger.debug("Trying to execute files from " + endPoint.getUri());
+        logger.debug("Reading files from " + node.getInBound().getUri());
         //File[] curFiles = node.getInFolderConfig().getInPath().listFiles(fileFilter);
-        File inFolder = new File(endPoint.getUri());
+        File inFolder = new File(node.getInBound().getUri());
         File[] curFiles = inFolder.listFiles(fileFilter);  // TODO refactor to use generic Filter
 
         if (curFiles == null || curFiles.length == 0)
         {
-            logger.debug("No files found.");
+            logger.debug("No files found - empty : " + node.getInBound().getUri());
             return null;
         }
 
-        logger.debug("Found number of files: " + curFiles.length);
+        logger.debug("Found number of files and folders : " + curFiles.length);
 
         List<CommandHolder> commandMessages = new ArrayList<CommandHolder>(curFiles.length);
         for (File curFile : curFiles)
@@ -163,9 +157,25 @@ public class FileReaderThread extends AbstractReader implements Runnable
         }
     }
 
+    public void setJobExecutionContext( JobExecutionContext jobExecutionContext )
+    {
+        JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
+        node = (Node) jobDataMap.get("node");
+        BlockingQueue<AbstractCommandWriter> blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get("queue");
+        init(node, blockingQueue);
+    }
 
     public void execute(JobExecutionContext context) throws JobExecutionException
     {
-        JobDataMap jobDataMap = context.getMergedJobDataMap();
+        setJobExecutionContext( context );
+        execute();
     }
+
+
+
+    public void setQueue(BlockingQueue<AbstractCommandWriter> queue)
+    {
+        this.queue = queue;
+    }
+    
 }

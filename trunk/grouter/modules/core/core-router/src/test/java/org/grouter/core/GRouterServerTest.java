@@ -11,7 +11,7 @@ public class GRouterServerTest extends AbstractGrouterTests
         grouter.startGrouter();
     }
 
-    void doSetup()
+    public void doSetup()
     {
 
     }
