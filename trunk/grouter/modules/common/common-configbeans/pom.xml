@@ -75,7 +75,7 @@
         </executions>
         <inherited>true</inherited>
         <configuration>
-          <schemaDirectory>src/xsd</schemaDirectory>
+          <schemaDirectory>src/main/xsd</schemaDirectory>
           <!--sourceRoot>${project.build.directory}/generated-source/axis</sourceRoot-->
         </configuration>
       </plugin>
