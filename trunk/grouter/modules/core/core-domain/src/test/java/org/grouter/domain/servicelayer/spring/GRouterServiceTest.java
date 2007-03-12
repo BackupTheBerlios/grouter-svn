@@ -6,9 +6,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.sql.Timestamp;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Tests for the GRouter service interface.
@@ -33,9 +33,12 @@ public class GRouterServiceTest extends AbstractServiceTests
 
     public void testCreateMessage() throws Exception
     {
+        assertTrue(true);
+
+
         Message messagePersisted = null;
 //        GRouterService gRouterServiceService = (GRouterService) factory.getBean(beanName);
-//        messagePersisted = gRouterServiceService.createMessage(message);
+//        messagePersisted = gRouterServiceService.saveMessage(message);
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Sender sender = new Sender("A test sender " );
@@ -58,10 +61,12 @@ public class GRouterServiceTest extends AbstractServiceTests
         Router router = new Router("grouter", nodes, timestamp, 1000);
         node.setRouter(router);
 
-        messagePersisted = gRouterService.createMessage( message );
+        messagePersisted = gRouterService.saveMessage( message );
 
         logger.debug("## Saved instance with id : " + messagePersisted.getId() + " timestamp " + messagePersisted.getCreationTimestamp());
         assertNotNull(messagePersisted.getId());
+
+
     }
 
 
