@@ -1,0 +1,94 @@
+/#container {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	margin: 0 auto;
+	padding: 10px 25px;
+	font-size: 10pt;
+}
+
+#headingBar {
+	margin-bottom: 20px;
+	border-bottom: 1px solid #ccc;
+	padding: 5px;
+}
+
+#headingBar h1 {
+	padding: 0 20px 5px 30px;
+	display: inline;
+	font-size: 10pt;
+	color: blue;
+	border-right: 1px solid #ccc;
+}
+
+
+
+
+#logoBar {
+	background-image: url( "/images/grey_gradient.png" );
+	background-repeat: repeat-x;
+	height: 33px;
+}
+
+img#logo {
+	margin-left: 15px;
+	margin-top: 0px;
+}
+
+#logoBar a {
+	padding: 5px 10px;
+	float: right;
+	font-size: 10pt;
+}
+
+#logoBar img {
+	float: left;
+}
+
+
+div#menu {
+	margin: 4px auto;
+	margin-bottom: 1px;
+	text-align: center;
+	padding: 0;
+}
+
+
+
+div#innerBody {
+
+}
+
+
+/*
+ * Decorator footer
+ */
+#footer {
+	font-size: 11px;
+	border-top: #ccc 1px solid;
+	margin-top: 30px;
+	padding-top: 4px;
+	clear: both;
+}
+
+#footer :after {
+	content: ".";
+	clear: both;
+	font-size: 1px;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+* html #footer {
+	height: 9px;
+}
+
+#footer p {
+	float: left;
+	clear: left;
+	margin-bottom: 10px;
+}
+
+#footer .links {
+	float: right;
+	clear: right;
+}

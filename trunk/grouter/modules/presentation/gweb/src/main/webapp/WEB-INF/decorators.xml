@@ -1,0 +1,13 @@
+<decorators defaultdir="/decorators">
+    <decorator name="main" page="main.jsp">
+          <pattern>/*</pattern>
+    </decorator>
+
+    <!-- decorator name="message" page="decorator.jsp">
+          <pattern>/message/list.do</pattern>
+    </decorator>
+
+    <decorator name="main" page="main.dec">
+          <pattern>*.do</pattern>
+    </decorator -->
+</decorators>
