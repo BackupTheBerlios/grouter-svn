@@ -13,6 +13,10 @@ DROP TABLE IF EXISTS sender;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS property;
+DROP TABLE IF EXISTS endpoint;
+DROP TABLE IF EXISTS endpoint_type;
+-- DROP TABLE IF EXISTS endpoint_filereader;
+DROP TABLE IF EXISTS filter_type;
 
 set foreign_key_checks = 1;
 
@@ -38,6 +42,14 @@ select 'receiver_message.sql';
 \. receiver_message.sql
 select 'sender.sql';
 \. sender.sql
+select 'endpoint_type.sql';
+\. endpoint_type.sql
+select 'endpoint.sql';
+\. endpoint.sql
+select 'filter_type.sql';
+\. filter_type.sql
+
+
 
 COMMIT;
 

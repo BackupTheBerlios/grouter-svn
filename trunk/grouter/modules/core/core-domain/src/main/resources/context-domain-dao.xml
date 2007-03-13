@@ -3,17 +3,17 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   default-autowire="byName">
 
-  <!-- Abstract DAO -->
-    <!-- bean id="abstractDao" abstract="true">
+    <!-- Abstract DAO -->
+    <bean id="abstractDao" abstract="true">
         <property name="sessionFactory" ref="sessionFactory" />
-    </bean -->
+    </bean>
 
 
     <!-- Core specific Data Access Object (DAO) Beans -->
-    <bean id="messageDAO"   class="org.grouter.domain.daolayer.spring.MessageDAOImpl"/>
+    <bean id="messageDAO"  parent="abstractDao" class="org.grouter.domain.daolayer.spring.MessageDAOImpl"/>
 
-    <bean id="nodeDAO" class="org.grouter.domain.daolayer.spring.NodeDAOImpl"/>
+    <bean id="nodeDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.NodeDAOImpl"/>
 
-    <bean id="routerDAO"  class="org.grouter.domain.daolayer.spring.RouterDAOImpl"/>
+    <bean id="routerDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RouterDAOImpl"/>
 
 </beans>

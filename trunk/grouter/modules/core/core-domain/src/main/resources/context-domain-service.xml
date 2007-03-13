@@ -21,20 +21,21 @@
 
   <!--  Grouter Service Proxy -->
   <bean id="grouterService" name="grouterService" class="org.springframework.aop.framework.ProxyFactoryBean">
-   <property name="proxyInterfaces">
-     <value>org.grouter.domain.servicelayer.GRouterService</value>
-   </property>
-   <property name="interceptorNames">
-     <list>
-       <idref local="transactionInterceptor" />
-       <idref local="grouterServiceTarget" />
-     </list>
-   </property>
- </bean>
+    <property name="proxyInterfaces">
+      <value>org.grouter.domain.servicelayer.GRouterService</value>
+    </property>
+    <property name="interceptorNames">
+      <list>
+        <idref local="transactionInterceptor"/>
+        <idref local="grouterServiceTarget"/>
+      </list>
+    </property>
+  </bean>
 
 
   <!-- Grouter Service Target -->
-  <bean id="grouterServiceTarget" name="grouterServiceTarget" class="org.grouter.domain.servicelayer.spring.GRouterServiceImpl">
+  <bean id="grouterServiceTarget" name="grouterServiceTarget"
+        class="org.grouter.domain.servicelayer.spring.GRouterServiceImpl">
     <property name="messageDAO" ref="messageDAO"/>
     <property name="nodeDAO" ref="nodeDAO"/>
   </bean>
@@ -44,16 +45,49 @@
   <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
     <property name="transactionManager">
       <bean class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory"/>
       </bean>
     </property>
     <property name="transactionAttributeSource">
-			<value>
+      <value>
         org.grouter.domain.servicelayer.GRouterService.find*=PROPAGATION_REQUIRED
         org.grouter.domain.servicelayer.GRouterService.saveMessage*=PROPAGATION_REQUIRED
-		</value>
-		</property>
-	</bean>
+      </value>
+    </property>
+  </bean>
 
+
+  <!-- Asynch message handling with JMS -->
+  <bean id="requestQueue" class="org.activemq.message.ActiveMQQueue">
+    <constructor-arg value="requestQueue"/>
+  </bean>
+
+  <bean id="replyQueue" class="org.activemq.message.ActiveMQQueue">
+    <constructor-arg value="replyQueue"/>
+  </bean>
+
+  <bean id="connectionFactory" class="org.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="vm://localhost:61616"/>
+  </bean>
+
+  <!-- this is the Message Driven POJO (MDP) -->
+  <bean id="messageListenerService" class="org.grouter.domain.servicelayer.spring.GRouterQueueImpl"/>
+
+  <!-- With this adapter we need not have any knowledge at all about JMS MessageListener interface at all!!! -->
+  <bean id="messageListenerServiceAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <property name="delegate" ref="messageListenerService"/>
+        <property name="defaultListenerMethod" value="process"/>
+        <property name="defaultResponseDestination" ref="replyQueue"/>
+    </bean>
+
+  <!-- and this is the message listener container -->
+  <bean id="listenerContainer"
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="concurrentConsumers" value="5"/>
+    <property name="connectionFactory" ref="connectionFactory"/>
+    <property name="destination" ref="destination"/>
+    <property name="messageListener" ref="messageListenerServiceAdapter"/>
+    <property name="transactionManager" ref="transactionManager"/>
+  </bean>
 
 </beans>

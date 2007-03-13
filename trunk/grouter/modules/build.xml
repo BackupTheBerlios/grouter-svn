@@ -9,11 +9,11 @@
 
 
   <!-- Deploy war modules to Resing on test server -->
-   <target name="dump_db" description="Recreate the database">
+   <target name="recreate_db" description="Recreate the database">
 
      <echo>Running database clean script and restore</echo>
-     <exec executable="${mysql}" dir="${basedir}/domain/src/main/sql"
-           input="${basedir}/domain/src/main/sql/main_drop_create.sql">
+     <exec executable="${mysql}" dir="${basedir}/core/core-domain/src/main/sql"
+           input="${basedir}/core/core-domain/src/main/sql/main_drop_create.sql">
        <arg value="-ugrouter"/>
        <arg value="-pgrouter"/>
        <arg value="grouter"/>
@@ -24,8 +24,8 @@
   <target name="populate_with_test_data_db" description="Recreate the database">
 
      <echo>Setting up data</echo>
-     <exec executable="${mysql}" dir="${basedir}/domain/src/test/resources/sql"
-           input="${basedir}/domain/src/test/resources/sql/base-data.sql">
+     <exec executable="${mysql}" dir="${basedir}/core/core-domain/src/test/resources/sql"
+           input="${basedir}/core/core-domain/src/test/resources/sql/base-data.sql">
        <arg value="-ugrouter"/>
        <arg value="-pgrouter"/>
        <arg value="grouter"/>

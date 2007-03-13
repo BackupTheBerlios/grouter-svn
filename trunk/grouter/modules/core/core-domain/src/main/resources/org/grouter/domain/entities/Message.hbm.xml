@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
     <class name="org.grouter.domain.entities.Message" table="MESSAGE">
-        <id column="ID" name="id" type="java.lang.String">
+        <id column="id" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
         <property name="creationTimestamp" not-null="false" type="timestamp" column="creationtimestamp"/>
@@ -16,12 +16,15 @@
         </set-->
 
 
-        <set name="receivers" cascade="all" lazy="true" inverse="true" table="receiver_message" fetch="join">
+
+        <set name="receivers" cascade="all" lazy="false" inverse="true" table="receiver_message" fetch="join">
             <key>
                 <column name="message_fk" not-null="true"/>
             </key>
-            <many-to-many class="org.grouter.domain.entities.Receiver" column="receiver_fk" fetch="join" />
+            <many-to-many class="org.grouter.domain.entities.Receiver" column="receiver_fk" fetch="join"  lazy="false"/>
         </set>
+
+
 
 
 

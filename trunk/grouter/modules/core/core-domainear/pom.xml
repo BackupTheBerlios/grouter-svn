@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grouter.platform</groupId>
-    <artifactId>domainear</artifactId>
+    <artifactId>core-domainear</artifactId>
     <packaging>ear</packaging>
     <name>${artifactId}</name>
     <parent>
@@ -23,15 +23,15 @@
     <dependencies>
         <dependency>
             <groupId>org.grouter.platform.common</groupId>
-            <artifactId>cmn-util</artifactId>
+            <artifactId>common-util</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--dependency>
+        <dependency>
                     <groupId>org.grouter.platform.presentation</groupId>
-                    <artifactId>gweb</artifactId>
+                    <artifactId>presentation-gweb</artifactId>
                     <version>${project.version}</version>
                     <type>war</type>
-                </dependency-->
+        </dependency>
         <dependency>
             <groupId>org.grouter.platform</groupId>
             <artifactId>domain</artifactId>

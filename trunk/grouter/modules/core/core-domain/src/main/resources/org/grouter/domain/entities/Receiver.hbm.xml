@@ -18,10 +18,13 @@
         </many-to-one-->
 
         
-        <set name="messages" table="receiver_message" >
+        <set name="messages" table="receiver_message" fetch="join" lazy="false">
             <key column="receiver_fk"/>
-            <many-to-many class="org.grouter.domain.entities.Message" column="message_fk"/>
+            <many-to-many class="org.grouter.domain.entities.Message" column="message_fk" fetch="join" lazy="false"/>
         </set>
+
+
+
 
     </class>
 </hibernate-mapping>

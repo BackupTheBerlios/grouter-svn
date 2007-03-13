@@ -10,14 +10,14 @@
     <createdOn>2007-01-01</createdOn>
     <modifiedOn>2007-01-01</modifiedOn>
     <inBoundEndPoint endPointType="FILE_READER">
-      <uri>file://temp/in</uri>
+      <uri>file://temp/grouter/nodes/file_to_file/in</uri>
       <clazzname>a classname</clazzname>
-      <cron>* * * *</cron>
+      <cron>0/5 * * * *</cron>
     </inBoundEndPoint>
     <outBoundEndPoint endPointType="FILE_WRITER">
-      <uri>file://temp/out</uri>
+      <uri>file://temp/grouter/nodes/file_to_file/out</uri>
       <clazzname>a classname</clazzname>
-      <cron>* * * *</cron>
+      <cron>0/5 * * * *</cron>
     </outBoundEndPoint>
   </Node>
 

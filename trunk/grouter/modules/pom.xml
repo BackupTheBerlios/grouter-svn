@@ -89,7 +89,7 @@
     <module>common</module>
     <!-- module>webservice</module -->
     <module>core</module>
-    <!-- module>presentation</module -->
+    <module>presentation</module>
     <!-- module>domainear</module-->
     <!--module>router</module -->
   </modules>
@@ -102,14 +102,16 @@
   <developers>
     <developer>
       <id>gepo01</id>
-      <name>Georges Polyzois</name>
-      <email>gepo01 at yahoo dot not com</email>
-      <url/>
-      <organization/>
-      <organizationUrl/>
-      <roles/>
-      <timezone/>
-      <properties/>
+      <name>Georges Polyzios</name>
+      <email>georges polyzois ATTHIS gmail dotcom</email>
+      <organization>Cefao</organization>
+      <organizationUrl>http://grouter.berlios.de</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <properties>
+        <picUrl>http://grouter.berlios.de/logotype.gif</picUrl>
+      </properties>
     </developer>
   </developers>
 
@@ -192,7 +194,7 @@
     | This will enable snaphost versions of plugins from Codehaus
     |  - see also repostiory element .
     -->
-    <pluginRepository>
+    <!-- pluginRepository>
       <id>Maven Snapshots</id>
       <url>http://snapshots.maven.codehaus.org/maven2/</url>
       <snapshots>
@@ -201,19 +203,20 @@
       <releases>
         <enabled>false</enabled>
       </releases>
-    </pluginRepository>
+    </pluginRepository -->
 
     <!-- For the builder plugin -->
-    <pluginRepository>
+    <!-- pluginRepository>
       <id>tlc-snapshots</id>
       <name>TLC Snapshot Development Repository</name>
       <url>http://commons.ucalgary.ca/pub/m2-snapshots</url>
-    </pluginRepository>
+    </pluginRepository -->
+
     <!--
     |
     |
     -->
-    <pluginRepository>
+    <!-- pluginRepository>
       <id>snapshots</id>
       <snapshots>
         <enabled>true</enabled>
@@ -224,7 +227,7 @@
       <releases>
         <updatePolicy>daily</updatePolicy>
       </releases>
-    </pluginRepository>
+    </pluginRepository -->
   </pluginRepositories>
 
   <!--
@@ -251,14 +254,35 @@
       <version>3.1</version>
     </dependency>
     <dependency>
+      <groupId>commons-email</groupId>
+      <artifactId>commons-email</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>1.2</version>
+      <version>1.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.0.1</version>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.1</version>
+      <version>2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
@@ -269,6 +293,11 @@
       <groupId>commons-discovery</groupId>
       <artifactId>commons-discovery</artifactId>
       <version>0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-validator</groupId>
+      <artifactId>commons-validator</artifactId>
+      <version>1.3.1</version>
     </dependency>
     <dependency>
       <groupId>jmock</groupId>
@@ -295,7 +324,7 @@
     <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
-      <version>2.0</version>
+      <version>2.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -314,15 +343,19 @@
   </dependencies>
 
 
+  <!-- Global version of spring framework used -->
+  <properties>
+    <spring.version>2.0.2</spring.version>
+  </properties>
+
   <!--
   | Dependencies that should be inherited by some of the child poms
   | of this parent, but not all. Child poms need not enter version
-  | since it is inherited from the root/parent pom.
+  | since it is inherited from thia root/parent pom.
   -->
   <dependencyManagement>
     <dependencies>
-
-      <!-- Acegi -->
+      <!-- Spring security (Acegi) -->
       <dependency>
         <groupId>org.acegisecurity</groupId>
         <artifactId>acegi-security</artifactId>
@@ -336,15 +369,14 @@
       </dependency>
 
 
+      <!-- Ajax library -->
       <dependency>
         <groupId>uk.ltd.getahead</groupId>
         <artifactId>dwr</artifactId>
         <version>1.1</version>
       </dependency>
-      <!--
-      | Components for the Swing gui - Jidesoft
-      -->
 
+      <!--  Components for the Swing gui - Jidesoft -->
       <dependency>
         <groupId>com.jidesoft</groupId>
         <artifactId>jide-shortcut</artifactId>
@@ -440,26 +472,32 @@
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
-        <version>3.2.0.ga</version>
+        <version>3.2.1.ga</version>
       </dependency>
 
       <!-- Ejb3 style annotations instead of .hbm file -->
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-annotations</artifactId>
-        <version>3.2.0.ga</version>
+        <version>3.2.1.ga</version>
       </dependency>
 
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate</artifactId>
-        <version>3.2.0.ga</version>
+        <version>3.2.2.ga</version>
         <!--
         | Excluding jars is a powerful feature. Here I know I
         | will not use swarmcache, so I do not need downloading
         | that dependency.
         -->
         <exclusions>
+          <!-- Exclude regular cglib, we depend on cglib-nodep instead to
+               allow aspectj to use asm 2.2.3   -->
+          <exclusion>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+          </exclusion>
           <exclusion>
             <groupId>ant</groupId>
             <artifactId>ant</artifactId>
@@ -499,34 +537,90 @@
         </exclusions>
       </dependency>
 
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib-nodep</artifactId>
+        <version>2.1_3</version>
+      </dependency>
+
+      <!-- Needed by Spring for pointcuts -->
+      <dependency>
+        <groupId>aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>1.5.3</version>
+      </dependency>
+      <dependency>
+        <groupId>aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>1.5.3</version>
+      </dependency>
+
+      <dependency>
+        <groupId>asm</groupId>
+        <artifactId>asm</artifactId>
+        <version>2.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>asm</groupId>
+        <artifactId>asm-attrs</artifactId>
+        <version>2.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>asm</groupId>
+        <artifactId>asm-all</artifactId>
+        <version>2.2.3</version>
+      </dependency>
       <!-- Spring -->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring</artifactId>
-        <version>2.0.2</version>
+        <version>${spring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-hibernate3</artifactId>
-        <version>2.0.2</version>
+        <version>${spring.version}</version>
       </dependency>
-
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-webmvc</artifactId>
-        <version>2.0.2</version>
-      </dependency>
-
-
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-aspects</artifactId>
-        <version>2.0.2</version>
+        <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-dao</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-support</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-remoting</artifactId>
+        <version>${spring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-mock</artifactId>
-        <version>2.0.2</version>
+        <version>${spring.version}</version>
         <exclusions>
           <exclusion>
             <groupId>struts</groupId>
@@ -534,37 +628,6 @@
           </exclusion>
         </exclusions>
       </dependency>
-
-      <!-- dependency>
-         <groupId>org.springframework</groupId>
-         <artifactId>spring</artifactId>
-         <version>2.0</version>
-         <scope>compile</scope>
-         <exclusions>
-             <exclusion>
-                 <groupId>javax.activation</groupId>
-                 <artifactId>jta</artifactId>
-             </exclusion>
-             <exclusion>
-                 <groupId>javax.resource</groupId>
-                 <artifactId>connector</artifactId>
-             </exclusion>
-         </exclusions>
-     </dependency -->
-
-      <!-- dependency>
-         <groupId>org.springframework</groupId>
-         <artifactId>spring-mock</artifactId>
-         <version>1.2.8</version>
-         <scope>test</scope>
-     </dependency -->
-
-
-      <!-- dependency>
-         <groupId>org.springframework</groupId>
-         <artifactId>spring-webmvc</artifactId>
-         <version>1.2.6</version>
-     </dependency -->
 
 
       <dependency>
@@ -580,24 +643,58 @@
         <artifactId>postgresql</artifactId>
         <version>8.1-407.jdbc3</version>
       </dependency>
-
       <dependency>
         <groupId>hsqldb</groupId>
         <artifactId>hsqldb</artifactId>
         <version>1.8.0.1</version>
       </dependency>
-
       <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>5.0.3</version>
       </dependency>
 
+      <!-- Xml binding framework -->
       <dependency>
         <groupId>xmlbeans</groupId>
         <artifactId>xbean</artifactId>
         <version>2.1.0</version>
       </dependency>
+
+
+      <!-- Scheduler framework -->
+      <dependency>
+        <groupId>quartz</groupId>
+        <artifactId>quartz</artifactId>
+        <version>1.5.2</version>
+      </dependency>
+
+      <!-- JMS container -->
+      <dependency>
+        <groupId>activemq</groupId>
+        <artifactId>activemq-core</artifactId>
+        <version>3.2.4</version>
+        <exclusions>
+          <exclusion>
+            <groupId>activecluster</groupId>
+            <artifactId>activecluster</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>net.java.dev.javacc</groupId>
+            <artifactId>javacc</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>xmlbeans</groupId>
+            <artifactId>xmlbeans-jsr173-api</artifactId>
+          </exclusion>
+          <exclusion>
+              <groupId>cglib</groupId>
+              <artifactId>cglib-full</artifactId>
+          </exclusion>
+        </exclusions>
+
+      </dependency>
+
 
     </dependencies>
   </dependencyManagement>
@@ -620,6 +717,7 @@
 
   <!--
   | Used by the reporting section for the report - scm.
+  | Maven Continuum also uses this to check out a project trunk and build the project.
   |
   | Also usd by the release plugin for communication with the scm :
   | mvn release:prepare -DdryRun=true     //runs a test prepare phase without checking in
@@ -632,6 +730,7 @@
     <developerConnection>https://geopol@svn.berlios.de/svnroot/repos/grouter/trunk</developerConnection>
     <url>http://sasa/cgi-bin/viewcvs.cgi/</url>
   </scm>
+
 
   <!--
   | In this element section we specify which reporting plugins
@@ -1062,15 +1161,14 @@
 
 
       <!-- JBoss deployer plugin -->
-      <plugin>
+      <!--plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jboss-maven-plugin</artifactId>
         <configuration>
           <fileName>${project.build.directory}/${project.build.finalName}.${project.packaging}</fileName>
-          <!--jbossHome>/opt/jboss403SP1</jbossHome-->
           <serverName>default</serverName>
         </configuration>
-      </plugin>
+      </plugin-->
 
 
     </plugins>

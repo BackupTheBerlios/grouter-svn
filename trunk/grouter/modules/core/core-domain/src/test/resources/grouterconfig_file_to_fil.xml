@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Grouter name="grouter"
+         xmlns="http://grouter.org/config.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../main/xsd/config.xsd">
+
+  <Node id="filetest-filetest" createuniquename="true">
+    <name>A name</name>
+    <createdOn>2007-01-01</createdOn>
+    <modifiedOn>2007-01-01</modifiedOn>
+    <inBoundEndPoint endPointType="FILE_READER">
+      <uri>file://temp/grouter/in</uri>
+      <clazzname>a classname</clazzname>
+      <cron>0/5 * * * *</cron>
+    </inBoundEndPoint>
+    <outBoundEndPoint endPointType="FILE_WRITER">
+      <uri>file://temp/grouter/out</uri>
+      <clazzname>a classname</clazzname>
+      <cron>0/5 * * * *</cron>
+    </outBoundEndPoint>
+  </Node>
+
+
+  <!--inFolderConfig>
+     <inFolderPath>in</inFolderPath>
+     <pollIntervallMilliSeconds>5000</pollIntervallMilliSeconds>
+     <skipFirstblankline>false</skipFirstblankline>
+     <batchReadConfig isBatchOn="false">
+         <batchSize>10</batchSize>
+         <batchThreshold>10</batchThreshold>
+     </batchReadConfig>
+ </inFolderConfig>
+ <outFolderConfig>
+     <outFolderPath>out</outFolderPath>
+ </outFolderConfig>
+ <backup backupHandlerOn="true" archiveroOn="true">
+     <backupFolderPath>backup/</backupFolderPath>
+     <archiveFolderPath>archived/</archiveFolderPath>
+ </backup>
+ <transform transformOn="false"/>
+ <error  errorHandlerOn="true">
+     <errorFolderPath>error/</errorFolderPath>
+     <errorInFolderPath>error_info</errorInFolderPath>
+     <sortOnResend>false</sortOnResend>
+     <CronJob>Every minute@0/20 * * * * ?</CronJob>
+     <errorNotification errorNotificationOn="true">
+         <notifyEveryIntervallInMilliSeconds>180000</notifyEveryIntervallInMilliSeconds>
+         <numberOfErrors>1</numberOfErrors>
+         <emailNotification>
+             <emailOnFailure>/template/emailerrornotification.xml</emailOnFailure>
+         </emailNotification>
+         <sms>
+             <smsOnFailure>/template/down.xml</smsOnFailure>
+             <smsService>/in</smsService>
+         </sms>
+     </errorNotification>
+ </error>
+ <inactivity inactivityOn="false">
+     <maxInactivityPeriodInMilliSeconds>120000</maxInactivityPeriodInMilliSeconds>
+     <emailOnInactivity>/template/erroronincativity.xml</emailOnInactivity>
+ </inactivity -->
+  <!--applicationlogger>
+      <appender type="RollingFileAppender">
+          <maxfilesize>100KB</maxfilesize>
+          <maxbackupindex>10</maxbackupindex>
+      </appender>
+      <logpattern>%d{yyyy-MM-dd HH:mm:ss};%p;%t;%x;%m;%n</logpattern>
+      <logfolderpath>/log</logfolderpath>
+      <loglevel>DEBUG</loglevel>
+  </applicationlogger>
+  <messagelogger>
+      <appender type="DailyRollingFileAppender">
+          <rollingschedule>'.'yyyy-MM-dd-a</rollingschedule>
+      </appender>
+      <logpattern>%d{yyyy-MM-dd HH:mm:ss};%p;%t;%x;%m;%n</logpattern>
+      <logfolderpath>/log</logfolderpath>
+      <loglevel>DEBUG</loglevel>
+  </messagelogger-->
+
+</Grouter>

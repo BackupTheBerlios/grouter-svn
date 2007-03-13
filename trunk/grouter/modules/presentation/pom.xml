@@ -11,8 +11,8 @@
             <version>0.1.1-SNAPSHOT</version>
     </parent>
     <modules>
-         <module>gswing</module>
-        <module>gswing</module>
+         <!-- module>gswing</module -->
+        <module>gweb</module>
             
         </modules>
 
