@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.Validate;
 import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.servicelayer.GRouterService;
 
 import java.io.File;
 
@@ -15,6 +16,16 @@ import java.io.File;
 public class FileCommandWriter extends AbstractCommandWriter
 {
     private static Logger logger = Logger.getLogger(FileCommandWriter.class);
+
+    public void setGrouterService(GRouterService service)
+    {
+        this.service = service;
+    }
+
+
+    public FileCommandWriter()
+    {
+    }
 
     /**
      * Constructor.

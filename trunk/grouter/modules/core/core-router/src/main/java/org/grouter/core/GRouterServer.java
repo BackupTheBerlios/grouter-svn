@@ -9,6 +9,10 @@ import org.grouter.core.util.ThreadPoolService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
 import org.grouter.domain.entities.Router;
+import org.grouter.domain.servicelayer.GRouterService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.BeanFactory;
 
 import java.util.*;
 
@@ -25,7 +29,11 @@ import java.util.*;
  */
 public class GRouterServer implements Runnable
 {
+    
     private static Logger logger = Logger.getLogger(GRouterServer.class);
+    // spring context
+    ApplicationContext context;
+
     private HashMap nodeThreads = new HashMap();
     private static String CONFIGFILE = "grouter.xml";
     private ConfigHandler configHandler;
@@ -64,7 +72,7 @@ public class GRouterServer implements Runnable
      */
     public GRouterServer(String configPath)
     {
-        if(!FileUtils.isValidPath(configPath))
+        if( !FileUtils.isValidPath(configPath) )
         {
             throw new IllegalArgumentException("Invalid path given to config file!!! Path was " + configPath);
         }
@@ -89,8 +97,18 @@ public class GRouterServer implements Runnable
      */
     private void initRouter(String configPath)
     {
+        logger.info( "Initializing router" );
         configHandler = new ConfigHandler(configPath, null);
         router = ConfigFactory.createRouter( configHandler.getGrouterConfigDocument().getGrouter() );
+
+        context = new ClassPathXmlApplicationContext( getConfigLocations() );
+
+        BeanFactory factory = (BeanFactory) context;
+        GRouterService gRouterService = (GRouterService) factory.getBean( "grouterService" );
+        gRouterService.saveMessage( null );
+
+        
+        
     }
 
 
@@ -103,8 +121,7 @@ public class GRouterServer implements Runnable
     {
         String grouterHome = System.getProperty("user.dir");
         logger.info("Working dir : " + grouterHome);
-        String configFile = "/router/core/src/config/grouter-file-file.xml";
-
+        String configFile = "/core/core-router/src/test/resources/grouterconfig_file_file.xml";
 
         GRouterServer grouter = new GRouterServer( grouterHome + configFile);
 
@@ -119,60 +136,6 @@ public class GRouterServer implements Runnable
         thr.start();
     }
 
-    /*   private void startErrorHandlers(Service[] arrServices)
-        {
-            arrServices = null;
-            if (arrServices != null)
-            {
-                // For every service ..
-                for (int serviceNr = 0; serviceNr < arrServices.length; serviceNr++)
-                {
-                    // If service is in list and has attribute error folder (Pollers do not have this attribute)
-                    Service arrService = arrServices[serviceNr];
-                    if (arrService.getErrorfoldername() != null)
-                    {
-                        File readFromErrorFolder = new File(arrService.getErrorfoldername());
-                        File[] curFiles = readFromErrorFolder.listFiles();
-                        if (!arrService.isErrorhandlerOn())
-                        {
-                            logger.info("No resending enabled for service  : " + arrService.getId());
-                            NDC.pop();
-                            return;
-                        }
-                        else if (curFiles == null || curFiles.length == 0)
-                        {
-                            logger.info("Error resend is on for service but no files to resend for service at this moment : " + arrService.getId());
-                            NDC.pop();
-                            return;
-                        }
-                        else if (curFiles != null && curFiles.length == 1 && curFiles[0].isDirectory())
-                        {
-                            logger.info("Error resend is on for service but there are only folders in error folder for service (only subfolder exist) : " + arrService.getId());
-                            NDC.pop();
-                            return;
-                        }
-                        else
-                        {
-                            logger.info(curFiles.length + " number of files found for resending for service  : " + arrService.getId());
-
-                            // todo handle all types of services
-                            if (arrService.getType().equals(ServiceFactory.FILETOFILE))
-                            {
-                                //                     FileToFileErrorMessageHandler fileToFileErrorMessageHandler =  new FileToFileErrorMessageHandler( arrService, curFiles , arrService.gett );
-                            }
-                            else if (arrService.getType().equals(ServiceFactory.FILETOEJB))
-                            {
-
-                            }
-                            else if (arrService.getType().equals(ServiceFactory.FILETOEMAIL))
-                            {
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    */
     /*    private void startRemoteServicesServer()
         {
             if (System.getSecurityManager() == null)
@@ -300,5 +263,18 @@ public class GRouterServer implements Runnable
     {
         onExit();
     }
+
+
+
+    protected String[] getConfigLocations()
+    {
+        return new String[]
+                {
+                       // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
+                        "context-domain-datasource.xml", "context-domain-dao.xml",
+                        "context-domain-sessionfactory.xml", "context-domain-service.xml"
+                };
+    }
+
 
 }

@@ -38,7 +38,7 @@ public class GRouterBeanService implements GRouterLocalService, GRouterRemoteSer
 
     public SystemUser createSystemUser(SystemUser systemUser)
     {
-        logger.debug("In createMessage. Inparam:" + systemUser);
+        logger.debug("In saveMessage. Inparam:" + systemUser);
         if (systemUser == null)
         {
             throw new IllegalArgumentException("Can not handle a null inparameter");
@@ -47,9 +47,9 @@ public class GRouterBeanService implements GRouterLocalService, GRouterRemoteSer
         return systemUserDAO.save(systemUser);
     }
 
-    public Message createMessage(Message message)
+    public Message saveMessage(Message message)
     {
-        logger.debug("In createMessage. Inparam:" + message);
+        logger.debug("In saveMessage. Inparam:" + message);
         if (message == null)
         {
             throw new IllegalArgumentException("Can not handle a null inparameter");
@@ -82,7 +82,7 @@ public class GRouterBeanService implements GRouterLocalService, GRouterRemoteSer
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void createMessage(Message[] messages)
     {
-        logger.debug("In createMessage. Number of messages :" + messages.length);
+        logger.debug("In saveMessage. Number of messages :" + messages.length);
         if (messages == null)
         {
             throw new IllegalArgumentException("Null inparameter");

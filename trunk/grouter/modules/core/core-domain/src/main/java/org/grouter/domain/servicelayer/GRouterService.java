@@ -34,7 +34,7 @@ public interface GRouterService
      * @param message a message to persist
      * @return
      */
-    Message createMessage(Message message);
+    Message saveMessage(Message message);
 
     /**
      *

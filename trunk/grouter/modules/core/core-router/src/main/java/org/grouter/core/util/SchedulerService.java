@@ -3,8 +3,8 @@ package org.grouter.core.util;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang.Validate;
 import org.grouter.core.command.AbstractCommandWriter;
-import org.grouter.core.command.CommandWriterThread;
-import org.grouter.core.readers.FileReaderThread;
+import org.grouter.core.command.CommandWriterJob;
+import org.grouter.core.readers.FileReaderJob;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
 import org.quartz.*;
@@ -68,7 +68,7 @@ public class SchedulerService
             BlockingQueue<AbstractCommandWriter> blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(QUEUE_CAPACITY);
             if( node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId() )
             {
-                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), Scheduler.DEFAULT_GROUP, FileReaderThread.class);
+                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), Scheduler.DEFAULT_GROUP, FileReaderJob.class);
                 jobDetail.getJobDataMap().put(  "node", node );
                 jobDetail.getJobDataMap().put(  "queue", blockingQueue );
                 CronTrigger cronTrigger = new CronTrigger( getTriggerName( node, true ) , GROUTER, node.getInBound().getScheduleCron() );
@@ -76,7 +76,7 @@ public class SchedulerService
             }
             if( node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId() )
             {
-                JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), Scheduler.DEFAULT_GROUP, CommandWriterThread.class);
+                JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), Scheduler.DEFAULT_GROUP, CommandWriterJob.class);
                 jobDetail.getJobDataMap().put(  "node", node );
                 jobDetail.getJobDataMap().put(  "queue", blockingQueue );
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName( node, false ) , GROUTER, node.getOutBound().getScheduleCron() );

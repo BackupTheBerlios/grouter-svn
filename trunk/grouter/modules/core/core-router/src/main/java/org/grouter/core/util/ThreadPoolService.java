@@ -2,8 +2,7 @@ package org.grouter.core.util;
 
 import org.apache.log4j.Logger;
 import org.grouter.core.command.AbstractCommandWriter;
-import org.grouter.core.command.CommandWriterThread;
-import org.grouter.core.readers.FileReaderThread;
+import org.grouter.core.command.CommandWriterJob;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
 
@@ -106,8 +105,8 @@ public class ThreadPoolService
 //                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
             }
 
-            CommandWriterThread commandConsumerThread = new CommandWriterThread(blockingQueue);
-            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
+            CommandWriterJob commandConsumerThread = new CommandWriterJob(blockingQueue);
+//            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
         }
     }
 

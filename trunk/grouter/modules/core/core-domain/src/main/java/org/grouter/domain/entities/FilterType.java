@@ -8,6 +8,17 @@ package org.grouter.domain.entities;
 public class FilterType
 {
     Long id;
+    String name;
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
     public Long getId()
     {

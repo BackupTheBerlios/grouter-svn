@@ -78,7 +78,7 @@ public class GRouterQueueMDB implements MessageListener
         org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
         logger.debug("Got message");
         GRouterLocalService gRouterLocal = (GRouterLocalService)sc.lookup( GRouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
-        gRouterLocal.createMessage(message);
+        gRouterLocal.saveMessage(message);
     }
 
 

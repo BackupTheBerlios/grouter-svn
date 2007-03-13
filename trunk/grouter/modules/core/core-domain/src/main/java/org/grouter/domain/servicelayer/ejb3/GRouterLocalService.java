@@ -19,6 +19,5 @@ public interface GRouterLocalService extends GRouterService
     /**
      * Persist into domain and broadcast to clients on a topic to inform of new event.
      * @param message
-     */
-    //void persistMessageAndBroadcastEvent(Message message);
+     */          
 }

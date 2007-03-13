@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import org.grouter.core.util.JMSDestinationSenderThread;
 import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.servicelayer.GRouterService;
 
 import java.util.List;
 
@@ -19,6 +21,10 @@ public abstract class AbstractCommandWriter
     private static Logger logger = Logger.getLogger(AbstractCommandWriter.class);
     protected List<CommandHolder> commandMessages;
     Node node;
+
+    GRouterService service;
+
+
 
     /**
      * Commands must override this method to provide an implementation of an execute command
@@ -60,6 +66,18 @@ public abstract class AbstractCommandWriter
         logger.info("Sending message to JMS consumer.");
         // Todo refactor to use an special global endpoint for sending this message
         //JMSDestinationSenderThread.getQueue().offer(commandMessages);
+
+        for (CommandHolder commandMessage : commandMessages)
+        {
+            Message message = new Message();
+            message.setContent( commandMessage.getMessage() );
+            message.setId( commandMessage.getGuid() );
+
+            service.saveMessage( message );
+        }
+
+
+
     }
 
 

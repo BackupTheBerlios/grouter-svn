@@ -19,6 +19,12 @@ public abstract class AbstractServiceTests extends AbstractTransactionalDataSour
 
     SessionFactory sessionFactory;
 
+
+    protected AbstractServiceTests()
+    {
+        setAutowireMode(AUTOWIRE_BY_NAME);
+    }
+
     /**
      * Injected.
      * @param sessionFactory injected
@@ -36,9 +42,10 @@ public abstract class AbstractServiceTests extends AbstractTransactionalDataSour
     @Override
     protected String[] getConfigLocations()
     {
-        return new String[]
+        return new String[]     
                 {
-                        "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml", 
+                       // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
+                        "context-domain-datasource.xml", "context-domain-dao.xml", 
                         "context-domain-sessionfactory.xml", "context-domain-service.xml"
                 };
     }

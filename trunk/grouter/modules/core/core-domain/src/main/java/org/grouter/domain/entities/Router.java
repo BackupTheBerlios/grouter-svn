@@ -35,6 +35,11 @@ public class Router implements Serializable
     }
 
 
+    public Router(String id)
+    {
+        this.id = id;
+    }
+
     public Router(String name, Set<Node> nodes, Timestamp startedOn, long upTime)
     {
         this.name = name;
@@ -112,6 +117,22 @@ public class Router implements Serializable
     public void setName(String name)
     {
         this.name = name;
+    }
+
+
+    public String toString()
+    {
+        StringBuilder buf = new StringBuilder();
+        buf.append( "name : " + this.name + "\n");
+        for (Node node : nodes)
+        {
+            buf.append( "node : " + node.toString() + "\n");
+
+        }
+
+
+        return buf.toString();
+
     }
 
 

@@ -8,33 +8,12 @@ package org.grouter.domain.entities;
  */
 public class EndPoint
 {
-    String uri;
     Long id;
-    Filter filter;
-    Connector connector;
-    EndPointContext endPointContext;
+    String uri;
     String clazzName;
-
-
-    public String getClazzName()
-    {
-        return clazzName;
-    }
-
-    public void setClazzName(String clazzName)
-    {
-        this.clazzName = clazzName;
-    }
-
-    public EndPointContext getEndPointContext()
-    {
-        return endPointContext;
-    }
-
-    public void setEndPointContext(EndPointContext endPointContext)
-    {
-        this.endPointContext = endPointContext;
-    }
+    String scheduleCron;
+    EndPointType endPointType;
+    Filter filter;
 
     public Filter getFilter()
     {
@@ -46,15 +25,29 @@ public class EndPoint
         this.filter = filter;
     }
 
-    public Connector getConnector()
+
+
+    public String getScheduleCron()
     {
-        return connector;
+        return scheduleCron;
     }
 
-    public void setConnector(Connector connector)
+
+    public void setScheduleCron(String scheduleCron)
     {
-        this.connector = connector;
+        this.scheduleCron = scheduleCron;
     }
+
+    public String getClazzName()
+    {
+        return clazzName;
+    }
+
+    public void setClazzName(String clazzName)
+    {
+        this.clazzName = clazzName;
+    }
+
 
     public Long getId()
     {
@@ -74,5 +67,15 @@ public class EndPoint
     public void setUri(String uri)
     {
         this.uri = uri;
+    }
+
+    public EndPointType getEndPointType()
+    {
+        return endPointType;
+    }
+
+    public void setEndPointType(EndPointType endPointType)
+    {
+        this.endPointType = endPointType;
     }
 }

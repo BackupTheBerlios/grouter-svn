@@ -29,17 +29,6 @@ public class CommandFactory
 
                 FileCommandWriter fileWriterCommand = new FileCommandWriter(node);
                 return fileWriterCommand;
-                /*FileWriter writer = null;
-                try
-                {
-                    writer = new FileWriter( fileReaderConfig);
-                } catch (IOException e)
-                {
-                    logger.error("Failed creating filewriter for fileReaderConfig",e);
-                }
-
-                return new FileWriterCommand(fileWriterConfig);
-                */
         }
         return null;
     }

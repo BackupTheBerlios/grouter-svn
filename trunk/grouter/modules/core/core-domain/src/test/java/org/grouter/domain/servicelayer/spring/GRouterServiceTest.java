@@ -18,21 +18,25 @@ import java.util.Set;
 public class GRouterServiceTest extends AbstractServiceTests
 {
     private static Log logger = LogFactory.getLog(GRouterServiceTest.class);
+    GRouterService service;
 
-    GRouterService gRouterService;
-
-    public void setGRouterService(GRouterService gRouterService)
+    public void setGrouterService(GRouterService service)
     {
-        this.gRouterService = gRouterService;
+        this.service = service;
     }
+
 
     //private final static String beanName = "messageServiceManager";
 
 
-
+    public GRouterServiceTest()
+    {
+       setAutowireMode(AUTOWIRE_BY_NAME);
+    }
 
     public void testCreateMessage() throws Exception
     {
+        setAutowireMode(AUTOWIRE_BY_NAME);
         assertTrue(true);
 
 
@@ -61,7 +65,7 @@ public class GRouterServiceTest extends AbstractServiceTests
         Router router = new Router("grouter", nodes, timestamp, 1000);
         node.setRouter(router);
 
-        messagePersisted = gRouterService.saveMessage( message );
+        messagePersisted = service.saveMessage( message );
 
         logger.debug("## Saved instance with id : " + messagePersisted.getId() + " timestamp " + messagePersisted.getCreationTimestamp());
         assertNotNull(messagePersisted.getId());

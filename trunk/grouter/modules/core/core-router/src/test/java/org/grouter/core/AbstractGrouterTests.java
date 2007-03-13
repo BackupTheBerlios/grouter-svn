@@ -5,11 +5,16 @@ import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.*;
 import org.grouter.core.command.AbstractCommandWriter;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StringUtils;
+import org.hibernate.SessionFactory;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,30 +24,38 @@ import java.io.IOException;
  *
  * @author Georges Polyzois
  */
-public abstract class AbstractGrouterTests extends TestCase
+public abstract class AbstractGrouterTests extends AbstractTransactionalDataSourceSpringContextTests
 {
     private static Logger logger = Logger.getLogger(AbstractGrouterTests.class);
     public Router router = new Router("GROUTER_ID");
     public BlockingQueue<AbstractCommandWriter> blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(10);
-    private static final String BASE_FOLDER_FOR_TEST = System.getProperty("java.io.tmpdir") + "/grouter/";
+    public static final String BASE_FOLDER_FOR_TEST = System.getProperty("java.io.tmpdir") + "/grouter/";
     private boolean cleanup = true;
     public Node fileToFileNode;
+    SessionFactory sessionFactory;
 
+
+    protected AbstractGrouterTests()
+    {
+        setAutowireMode(AUTOWIRE_BY_NAME);
+    }
 
     /**
      * Overide if we want to preserver directory and messages after a test run.
      */
-    public void setComplete()
+    public void setDoNotCleanup()
     {
         cleanup = false;
     }
 
     /**
      * Cleaning up directoreis and files after a test run, unless setComplete() has not been called.
+     * Corresponds to JUnit tearDown.
+     *
      * @throws Exception
      */
     @Override
-    public void tearDown() throws Exception
+    public void onTearDownInTransaction() throws Exception
     {
         if( cleanup )
         {
@@ -52,15 +65,16 @@ public abstract class AbstractGrouterTests extends TestCase
         {
             logger.info( "Leaving file structure and not cleaning up files after test run!!!" );
         }
-
     }
 
 
     /**
-     * Do a setup for every test so we have a clean router for every run.
+     * Do a setup for every test so we have a clean router for every run. onSetup is final and
+     * Spring provides us with this method to hook us into.
      * @throws Exception
      */
-    public void setUp() throws Exception
+    @Override
+    public void onSetUpBeforeTransaction() throws Exception
     {
         super.setUp();
 
@@ -102,7 +116,7 @@ public abstract class AbstractGrouterTests extends TestCase
      * Create the router.
      * @throws IOException
      */
-    void createRouter() throws IOException
+    public void createRouter() throws IOException
     {
         fileToFileNode = new Node("NODE_ID", "fileToFileNode");
         fileToFileNode.setBackupUri( BASE_FOLDER_FOR_TEST + router.getId() + "/backup" );
@@ -132,7 +146,7 @@ public abstract class AbstractGrouterTests extends TestCase
      * Create messages in the inbound uris for file based inbound types.
      * @throws IOException
      */
-    void createData() throws IOException
+    public void createData() throws IOException
     {
         for (Node node : router.getNodes())
         {
@@ -142,6 +156,72 @@ public abstract class AbstractGrouterTests extends TestCase
             FileUtils.writeStringToFile(new File(node.getInBound().getUri() + "/testdata3.txt"), "test data", "UTF-8");
             FileUtils.writeStringToFile(new File(node.getInBound().getUri() + "/testdata4.txt"), "test data", "UTF-8");
             FileUtils.writeStringToFile(new File(node.getInBound().getUri() + "/testdata5.txt"), "test data", "UTF-8");
+        }
+    }
+
+
+
+
+
+    /**
+     * Injected.
+     * @param sessionFactory injected
+     */
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        this.sessionFactory = sessionFactory;
+    }
+
+
+    /**
+     * Specify all context files here.
+     * @return an array with context files
+     */
+    @Override
+    protected String[] getConfigLocations()
+    {
+        return new String[]
+                {
+                       // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
+                        "context-router.xml", "context-domain-datasource.xml", "context-domain-dao.xml",
+                        "context-domain-sessionfactory.xml", "context-domain-service.xml"
+                };
+    }
+
+
+    /**
+     * The data we want to use in our test cases.
+     * @return a path to test data script
+     */
+    protected String getTestDataLocation()
+    {
+        return "sql/test-router-data.sql";
+    }
+
+    /**
+     * Convinience method.
+     */
+    protected void flushSession()
+    {
+        sessionFactory.getCurrentSession().flush();
+    }
+
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void onSetUpInTransaction() throws Exception
+    {
+        super.onSetUpInTransaction();
+
+        List<String> lines = FileUtils.readLines(new ClassPathResource(getTestDataLocation()).getFile(),
+                "ISO-8859-1");
+
+        for (String line : lines)
+        {
+            if (StringUtils.hasText(line))
+            {
+                jdbcTemplate.execute(line);
+            }
         }
     }
 }

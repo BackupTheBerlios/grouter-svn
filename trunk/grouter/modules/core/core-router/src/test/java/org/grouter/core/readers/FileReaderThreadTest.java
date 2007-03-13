@@ -1,23 +1,10 @@
 package org.grouter.core.readers;
 
-import junit.framework.TestCase;
-
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.grouter.domain.entities.EndPoint;
-import org.grouter.domain.entities.EndPointFileReader;
-import org.grouter.domain.entities.Node;
-import org.grouter.core.command.AbstractCommandWriter;
 import org.grouter.core.AbstractGrouterTests;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.spi.TriggerFiredBundle;
 
 /**
  * Basic test for Reader.
@@ -27,7 +14,7 @@ import org.quartz.spi.TriggerFiredBundle;
 public class FileReaderThreadTest extends AbstractGrouterTests
 {
     private static Logger logger = Logger.getLogger(FileReaderThreadTest.class);
-    FileReaderThread fileReaderThread = new FileReaderThread();
+    FileReaderJob fileReaderThread = new FileReaderJob();
 
     public void testReadInboundCount() throws Exception
     {

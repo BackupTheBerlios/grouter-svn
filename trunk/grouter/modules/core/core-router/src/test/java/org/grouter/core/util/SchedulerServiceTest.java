@@ -2,10 +2,12 @@ package org.grouter.core.util;
 
 import org.grouter.domain.entities.Node;
 import org.grouter.core.AbstractGrouterTests;
+import org.apache.commons.io.FileUtils;
 
 
 import java.util.Set;
 import java.util.HashSet;
+import java.io.File;
 
 /**
  * @author Georges Polyzois
@@ -43,7 +45,7 @@ public class SchedulerServiceTest extends AbstractGrouterTests
         SchedulerService schedulerFactory = new  SchedulerService( router.getNodes() );
         schedulerFactory.start();
 
-        Thread.sleep( 10000 );
+        Thread.sleep( 60000 );
 
 
         

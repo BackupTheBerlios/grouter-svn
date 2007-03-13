@@ -7,6 +7,7 @@ import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.CommandHolder;
 import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.servicelayer.GRouterService;
 import org.quartz.Job;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public abstract class AbstractReader implements Job
 {
     private static Logger logger = Logger.getLogger(AbstractReader.class);
+
+
 
     public void setNode(Node node)
     {

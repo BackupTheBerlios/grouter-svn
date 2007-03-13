@@ -117,11 +117,11 @@ public class Message implements Serializable
      *
      * @return Set<Receiver>
      */
-    @Column(name = "RECEIVERS")
-    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinTable(name = "RECEIVER_MESSAGE",
-            joinColumns = {@JoinColumn(name = "MESSAGE_FK")},
-            inverseJoinColumns = {@JoinColumn(name = "RECEIVER_FK")})
+//    @Column(name = "RECEIVERS")
+//    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
+//    @JoinTable(name = "RECEIVER_MESSAGE",
+//            joinColumns = {@JoinColumn(name = "MESSAGE_FK")},
+//            inverseJoinColumns = {@JoinColumn(name = "RECEIVER_FK")})
     public Set<Receiver> getReceivers()
     {
         return receivers;

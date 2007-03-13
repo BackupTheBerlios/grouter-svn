@@ -1,18 +1,13 @@
 package org.grouter.domain.servicelayer.spring;
 
-import static org.grouter.domain.daolayer.DAOFactory.FactoryType.HIBERNATESPRING;
-import org.grouter.domain.daolayer.SystemUserDAO;
 import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.DAOFactory;
 import org.grouter.domain.daolayer.NodeDAO;
-import org.grouter.domain.entities.SystemUser;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.servicelayer.GRouterService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.Validate;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -70,7 +65,7 @@ public class GRouterServiceImpl implements GRouterService
     //TODO Can we use AOP to have a simple logging mechnism used by all sevice methods!?
 
 
-    public Message createMessage(Message message)
+    public Message saveMessage(Message message)
     {
         Validate.notNull(message, "In parameter can not be null");
        // initMessageDAO();

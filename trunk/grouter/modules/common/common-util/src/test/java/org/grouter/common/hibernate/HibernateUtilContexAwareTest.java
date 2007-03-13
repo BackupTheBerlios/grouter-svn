@@ -55,7 +55,7 @@ public class HibernateUtilContexAwareTest extends TestCase
      * New session factory configurations should only be added when in state SHUTDWON. After new items
      * have been added you also need to do a rebuildSessionFactory().
      */
-    public void testMulitpleSessionFactories()
+/*    public void testMulitpleSessionFactories()
     {
         HibernateUtilContextAware.bootStrap(true);
         defaultSessionFactoryOk();
@@ -89,7 +89,7 @@ public class HibernateUtilContexAwareTest extends TestCase
         defaultConfigParamOk();
         nonDefaultconfigParamOk();
     }
-
+*/
     /**
      * Again multiple session factories are tested. This time we use a global inmemory jndi provider
      * from which we try to do a look up for our session factory. We first need to create a namespace

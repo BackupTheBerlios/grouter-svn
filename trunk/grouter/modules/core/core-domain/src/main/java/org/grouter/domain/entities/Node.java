@@ -28,8 +28,10 @@ public class Node implements Serializable
     private Date modifiedOn;
     private Date createdOn;
     private Router router;
+    // to store messages persistently
     private EndPoint inBound;
     private EndPoint outBound;
+    private String backupUri;
 
     //private NodeType nodeType;
     @Transient
@@ -39,7 +41,12 @@ public class Node implements Serializable
     {
     }
 
-    
+
+    public Node(String id, String name)
+    {
+        this.id = id;
+        this.name = name;
+    }
 
     public Node(String name, Set<Message> messages, Date modifiedOn, SystemUser modifiedBySystemUser, Date creetedOn)
     {
@@ -139,6 +146,34 @@ public class Node implements Serializable
     }
 
 
+    public EndPoint getInBound()
+    {
+        return inBound;
+    }
+
+    public void setInBound(EndPoint inBound)
+    {
+        this.inBound = inBound;
+    }
+
+    public EndPoint getOutBound()
+    {
+        return outBound;
+    }
+
+    public void setOutBound(EndPoint outBound)
+    {
+        this.outBound = outBound;
+    }
 
 
+    public String getBackupUri()
+    {
+        return backupUri;
+    }
+
+    public void setBackupUri(String backupUri)
+    {
+        this.backupUri = backupUri;
+    }
 }
