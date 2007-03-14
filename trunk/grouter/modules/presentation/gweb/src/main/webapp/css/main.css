@@ -3,6 +3,13 @@ img {
 }
 
 
+div#form {
+	background: lavender;
+	padding: 5px;
+	padding-left: 25px;
+	margin-top: 0;
+}
+
 
 /**
 * Used to display operations like edit, delete etc.
@@ -41,7 +48,7 @@ ul.menu {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	margin-left: 25px;
+	margin-left: 5px;
 }
 
 ul.menu li {
@@ -74,7 +81,7 @@ ul.tabbed li.active {
  * Standard paged list with sortable columns.
  */
 table.pagedList th {
-    font: 16px Verdana, Arial, Helvetica, sans-serif,bold;
+    font: 14px Verdana, Arial, Helvetica, sans-serif,bold;
     background-image: url("/gweb/images/grey_gradient.png");
 	height: 30px;
 	padding: 4px;

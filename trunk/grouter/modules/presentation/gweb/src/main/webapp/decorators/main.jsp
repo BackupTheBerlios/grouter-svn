@@ -12,8 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
-    <title>Grouter -
-        <decorator:title/>
+    <title>Grouter - <decorator:title/>
     </title>
     <link href="../css/main.css" type="text/css" rel="stylesheet"/>
     <link href="../css/decorator.css" type="text/css" rel="stylesheet"/>
@@ -27,6 +26,18 @@
     <div id="logoBar">
         <img id="logo" src="../images/browser.png" width="48" height="48" alt="logo"/>
         <decorator:title/>
+
+
+        
+        <a id="vendorSettinngs" href="/gweb/grouter/select.do">Inställningar</a>
+
+        <a href="/gweb/customer/list.do">
+            <img src="/images/configure.png" width="24" height="24" border="0"/>
+        </a>
+        <a id="vendorSettinngs" href="/gweb/settings/edit.do">Inställningar</a>
+        <a id="logout" href="/j_acegi_logout">Logga ut</a>
+        <a id="personalSettings" href="">Inloggad : </a>
+        <a id="login" href="/gweb/auth/login.do">Logga in</a>
     </div>
 
     <div id="menu">

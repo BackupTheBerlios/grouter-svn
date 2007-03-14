@@ -25,7 +25,7 @@
   <bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter" />
 
   <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
-    <constructor-arg value="/auth/loggedOut.do"></constructor-arg>
+    <constructor-arg value="/security/loggedOut.do"></constructor-arg>
     <constructor-arg>
       <list>
         <!-- bean class="util.web.PreLogoutHandler" / -->
@@ -39,8 +39,8 @@
 
   <bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
     <property name="authenticationManager" ref="authenticationManager" />
-    <property name="authenticationFailureUrl" value="/auth/loginDenied.do" />
-    <property name="defaultTargetUrl" value="/dealer/listAds.do" />
+    <property name="authenticationFailureUrl" value="/security/loginDenied.do" />
+    <property name="defaultTargetUrl" value="/message/list.do" />
     <property name="alwaysUseDefaultTargetUrl" value="false" />
     <property name="filterProcessesUrl" value="/j_acegi_security_check" />
   </bean>
@@ -61,13 +61,13 @@
   <bean id="exceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
     <property name="authenticationEntryPoint">
       <bean class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
-        <property name="loginFormUrl" value="/auth/login.do" />
+        <property name="loginFormUrl" value="/security/login.do" />
         <property name="forceHttps" value="false" />
       </bean>
     </property>
     <property name="accessDeniedHandler">
       <bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl">
-        <property name="errorPage" value="/auth/loginDenied.do" />
+        <property name="errorPage" value="/security/loginDenied.do" />
       </bean>
     </property>
   </bean>
@@ -91,6 +91,9 @@
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
         /admin/**=ROLE_ADMIN
+        /message/**=ROLE_ADMIN
+        /node/**=ROLE_ADMIN
+        /grouter/**=ROLE_ADMIN
         /images/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
         /css/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
         /javascript/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
@@ -121,11 +124,12 @@
     </property>
   </bean>
 
-  <bean id="authenticationDao" class="org.grouter.security.ExtendedJdbcDaoImpl">
+  <!-- We want to load more than than just the userid into the session -->
+  <bean id="authenticationDao" class="org.grouter.presentation.controller.security.ExtendedJdbcDaoImpl">
     <property name="dataSource" ref="dataSource" />
     <property name="authoritiesByUsernameQuery">
       <value>
-        SELECT u.id, r.name, u.user_name from user u,role r,user_role ur WHERE u.id = ur.user_id AND r.id = ur.role_id
+        SELECT u.id, r.name, u.username from user u,role r,user_role ur WHERE u.id = ur.user_id AND r.id = ur.role_id
         AND u.id=?;
       </value>
     </property>

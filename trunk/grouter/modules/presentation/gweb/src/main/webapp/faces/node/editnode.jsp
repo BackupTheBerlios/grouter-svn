@@ -14,6 +14,8 @@
     <link href='<c:out value="${requestScope.CONTEXT_PATH}"/>/css/main.css' rel="stylesheet"/>
 </head>
 <body>
+<img src='<c:out value='${requestScope.CONTEXT_PATH}'/>/images/configure.png' width="24" height="24" border="no" alt=""/><a href="edit.do"></a>
+
                   kasdjhfladjs fladfadjlsfha dksjf
 <h:form id="form1" >
     <table>

@@ -16,7 +16,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-       classpath:/context-domain-dao.xml,
+       classpath:/context-domain-dao.xml,classpath:/context-gweb-security.xml,
       classpath:/context-domain-datasource.xml, classpath:/context-domain-service.xml,
       classpath:/context-domain-sessionfactory.xml, classpath:/context-gweb-servlet.xml
     </param-value>
@@ -29,11 +29,29 @@
   </context-param>
 
 
+  <!-- Setup the Acegi Filter Chain Proxy -->
+  <filter>
+    <filter-name>Acegi Filter Chain Proxy</filter-name>
+    <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+    <init-param>
+      <param-name>targetClass</param-name>
+      <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+    </init-param>
+  </filter>
+  
 
   <filter>
      <filter-name>sitemesh</filter-name>
      <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
    </filter>
+
+
+  <filter-mapping>
+    <filter-name>Acegi Filter Chain Proxy</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
 
   <filter-mapping>
     <filter-name>sitemesh</filter-name>
