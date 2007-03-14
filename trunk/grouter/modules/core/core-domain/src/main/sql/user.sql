@@ -12,4 +12,5 @@ CREATE TABLE user (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into user (id, username, pwd, email, fullname) values (10000, 'admin', 'zoramixt', '','Administrator');
+insert into user (id, username, pwd, email, fullname) values (10000, 'admin', 'nimda', '','Administrator');
+insert into user (id, username, pwd, email, fullname) values (10001, 'view', 'view', '','Viewer');

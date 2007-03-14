@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS receiver_message;
 DROP TABLE IF EXISTS sender;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS user_role;
 DROP TABLE IF EXISTS property;
 DROP TABLE IF EXISTS endpoint;
 DROP TABLE IF EXISTS endpoint_type;
@@ -28,6 +29,8 @@ select 'user.sql';
 \. user.sql
 select 'role.sql';
 \. role.sql
+select 'user_role.sql';
+\. user_role.sql
 select 'router.sql';
 \. router.sql
 select 'node_type.sql';

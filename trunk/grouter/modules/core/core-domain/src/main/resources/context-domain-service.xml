@@ -57,6 +57,13 @@
   </bean>
 
 
+
+
+
+
+
+
+
   <!-- Asynch message handling with JMS -->
   <bean id="requestQueue" class="org.activemq.message.ActiveMQQueue">
     <constructor-arg value="requestQueue"/>
@@ -70,8 +77,20 @@
     <property name="brokerURL" value="vm://localhost:61616"/>
   </bean>
 
+
+  <!-- a pooling based JMS provider -->
+  <!-- bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+    <property name="connectionFactory">
+      <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL">
+          <value>tcp://localhost:61616</value>
+        </property>
+      </bean>
+    </property>
+  </bean -->
+
   <!-- this is the Message Driven POJO (MDP) -->
-  <bean id="messageListenerService" class="org.grouter.domain.servicelayer.spring.GRouterQueueImpl"/>
+  <bean id="messageListenerService" class="org.grouter.domain.servicelayer.spring.GRouterQueueListenerImpl"/>
 
   <!-- With this adapter we need not have any knowledge at all about JMS MessageListener interface at all!!! -->
   <bean id="messageListenerServiceAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
@@ -85,9 +104,15 @@
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">
     <property name="concurrentConsumers" value="5"/>
     <property name="connectionFactory" ref="connectionFactory"/>
-    <property name="destination" ref="destination"/>
+    <property name="destination" ref="requestQueue"/>
     <property name="messageListener" ref="messageListenerServiceAdapter"/>
-    <property name="transactionManager" ref="transactionManager"/>
+    <!-- property name="transactionManager" ref="transactionManager"/ -->
   </bean>
+
+
+  <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestination" ref="requestQueue"/>
+    </bean>
 
 </beans>
