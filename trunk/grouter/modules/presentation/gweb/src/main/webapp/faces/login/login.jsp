@@ -17,14 +17,14 @@
         <table>
             <tr>
                 <td>Användare:</td>
-                <td><input type='text' id="j_username" name='j_username' value="ratt"></td>
+                <td><input type='text' id="j_username" name='j_username' /> </td>
             </tr>
             <tr>
                 <td>Lösenord:</td>
-                <td><input type='password' name='j_password' value="pwd"></td>
+                <td><input type='password' name='j_password' /></td>
             </tr>
             <tr>
-                <td align="right" colspan='2'><input name="submit" type="submit" value="Logga in"></td>
+                <td align="right" colspan='2'><input name="submit" type="submit" value="Logga in"/></td>
             </tr>
         </table>
     </form>

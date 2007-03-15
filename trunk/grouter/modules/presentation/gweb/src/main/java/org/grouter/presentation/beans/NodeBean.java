@@ -1,7 +1,7 @@
 package org.grouter.presentation.beans;
 
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 import org.apache.log4j.Logger;
 
 /**
@@ -11,7 +11,7 @@ public class NodeBean
 {
     private static Logger logger = Logger.getLogger(NodeBean.class);
     Node node;
-    GRouterService grouterService;
+    RouterService grouterService;
     String id;
     String name;
 
@@ -31,7 +31,7 @@ public class NodeBean
     }
 
 
-    public void setGrouterService(GRouterService grouterService)
+    public void setGrouterService(RouterService grouterService)
     {
         this.grouterService = grouterService;
     }

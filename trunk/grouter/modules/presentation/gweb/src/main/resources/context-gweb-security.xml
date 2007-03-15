@@ -25,7 +25,7 @@
   <bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter" />
 
   <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
-    <constructor-arg value="/security/loggedOut.do"></constructor-arg>
+    <constructor-arg value="/security/logedOut.do"></constructor-arg>
     <constructor-arg>
       <list>
         <!-- bean class="util.web.PreLogoutHandler" / -->
@@ -134,7 +134,7 @@
       </value>
     </property>
     <property name="usersByUsernameQuery">
-      <value>SELECT id,pwd,'true',user_name, full_name FROM user WHERE user_name=?</value>
+      <value>SELECT id,pwd,'true',username, fullname FROM user WHERE username=?</value>
     </property>
   </bean>
 

@@ -11,20 +11,20 @@
 
 <div id="content">
     Choose grouter and enter user name and pwd to login.
-    Login failed!!
+    Login denied.
 
     <form action="/gweb/j_acegi_security_check" method="POST">
         <table>
             <tr>
                 <td>Användare:</td>
-                <td><input type='text' id="j_username" name='j_username' value="ratt"></td>
+                <td><input type='text' id="j_username" name='j_username' /> </td>
             </tr>
             <tr>
                 <td>Lösenord:</td>
-                <td><input type='password' name='j_password' value="pwd"></td>
+                <td><input type='password' name='j_password' /></td>
             </tr>
             <tr>
-                <td colspan='2'><input name="submit" type="submit" value="Logga in"></td>
+                <td align="right" colspan='2'><input name="submit" type="submit" value="Logga in"/></td>
             </tr>
         </table>
     </form>

@@ -13,14 +13,12 @@
     </property>
   </bean>
 
-  <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController">
-    <!-- property name="GRouterService">
-      <ref bean="grouterService"/>
-    </property -->
-  </bean>
+  <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController" />
+  <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController" />
+  <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController" />
 
 
-  <bean name="/grouter/select.do" class="org.grouter.presentation.controller.GrouterSelectController"/>
+  <bean name="/grouter/select.do" class="org.grouter.presentation.controller.router.GrouterSelectController"/>
 
 
   <bean name="/security/*.do" class="org.grouter.presentation.controller.security.SecurityController">

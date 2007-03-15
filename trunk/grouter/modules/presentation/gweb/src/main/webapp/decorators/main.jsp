@@ -1,5 +1,4 @@
 <%@ page session="false" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
@@ -27,24 +26,31 @@
         <img id="logo" src="../images/browser.png" width="48" height="48" alt="logo"/>
         <decorator:title/>
 
+        <div id="userSettings" >
+        <table >
+            <tr>
+                <td>
+                    <a  href="/gweb/grouter/select.do">Settings</a>
+                </td>
+                <td>
+                    <a  href="/j_acegi_logout">Log out</a>
+                </td>
+                <td>
+                    <a  href="/gweb/auth/login.do">Log in</a>
 
-        
-        <a id="vendorSettinngs" href="/gweb/grouter/select.do">Inställningar</a>
+                </td>
+                <td>
+                    <a href="">User : </a>
+                </td>
 
-        <a href="/gweb/customer/list.do">
-            <img src="/images/configure.png" width="24" height="24" border="0"/>
-        </a>
-        <a id="vendorSettinngs" href="/gweb/settings/edit.do">Inställningar</a>
-        <a id="logout" href="/j_acegi_logout">Logga ut</a>
-        <a id="personalSettings" href="">Inloggad : </a>
-        <a id="login" href="/gweb/auth/login.do">Logga in</a>
+            </tr>
+        </table>
+            </div>
     </div>
 
     <div id="menu">
         <c:import url="../faces/menu/menu.jsp"/>
     </div>
-
-    <br/>
 
     <div id="innerBody">
         <decorator:body/>

@@ -40,6 +40,19 @@ div#paragraphHeader {
 
 
 
+div#userSettings {
+    font: 12px/13px Verdana, Arial, Helvetica, sans-serif;
+    color: blue;
+    padding: 5px;
+    border: 1px solid #afcff9;
+    align="right";
+    float:right;
+
+
+
+}
+
+
 /*
  * Tabbed menu using a <ul> list.
  */
@@ -86,12 +99,14 @@ table.pagedList th {
 	height: 30px;
 	padding: 4px;
 	border-left: 2px solid #d1e7fc;
+    text-align: left;
 
 }
 
 table.pagedList th a {
     text-decoration: none;
 	color: black;
+
 }
 
 table.pagedList td {

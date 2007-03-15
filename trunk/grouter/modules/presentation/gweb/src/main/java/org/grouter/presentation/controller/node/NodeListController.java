@@ -1,11 +1,12 @@
-package org.grouter.presentation.controller;
+package org.grouter.presentation.controller.node;
 
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Router;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,20 +19,18 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public class GrouterSelectController extends AbstractController
+public class NodeListController extends AbstractController
 {
-    private static Logger logger = Logger.getLogger(GrouterSelectController.class);
-    private static final String LIST_VIEW = "message/listmessages";
+    private static Logger logger = Logger.getLogger(NodeListController.class);
+    private static final String LIST_VIEW = "node/listnodes";
 
-    GRouterService gRouterService;
+    RouterService routerService;
 
 
-
-    public void setGRouterService(GRouterService gRouterService)
+    public void setRouterService(RouterService routerService)
     {
-        this.gRouterService = gRouterService;
+        this.routerService = routerService;
     }
-
 
     /**
      * {@inheritDoc}
@@ -41,20 +40,19 @@ public class GrouterSelectController extends AbstractController
             throws Exception
     {
         Map<String, Object> map = new HashMap<String, Object>();
+
         String routerId = ServletRequestUtils.getStringParameter(request, "routerid", null);
 
-        if (routerId != null)
+                                    
+        List<Router> routers = routerService.findAll();
+        map.put("routers", routers);
+
+        if ( routerId != null)
         {
-            List<Node> nodes = gRouterService.findAllNodes(routerId);
+            List<Node> nodes = routerService.findAllNodes( routerId );
             map.put("nodes", nodes);
-            map.put("nodesSize", nodes.size());
-            map.put("selectedGrouter", routerId );
-
-
-            request.getSession().setAttribute( "selectedGrouter" , routerId);
-
+            map.put("nodesSize", nodes.size() );
         }
-
 
         return new ModelAndView(LIST_VIEW, map);
     }

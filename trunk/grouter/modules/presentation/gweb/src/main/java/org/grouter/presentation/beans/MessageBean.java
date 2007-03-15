@@ -1,6 +1,6 @@
 package org.grouter.presentation.beans;
 
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.Message;
 import org.apache.log4j.Logger;
 
@@ -12,10 +12,10 @@ import java.util.List;
 public class MessageBean
 {
     private static Logger logger = Logger.getLogger(MessageBean.class);
-    GRouterService grouterService;
+    RouterService grouterService;
     Message message;
 
-    public void setGrouterService(GRouterService grouterService)
+    public void setGrouterService(RouterService grouterService)
     {
         this.grouterService = grouterService;
     }

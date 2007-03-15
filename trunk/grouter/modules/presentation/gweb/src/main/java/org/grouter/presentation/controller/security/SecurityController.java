@@ -26,6 +26,7 @@ public class SecurityController extends MultiActionController
     private String logedOut;
     private String loginDenied;
 
+
     public void setLogin( String login )
     {
         this.login = login;
