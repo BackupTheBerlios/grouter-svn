@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
     <class name="org.grouter.domain.entities.Message" table="MESSAGE">
-        <id column="id" name="id" type="java.lang.String">
+        <id column="id" name="id" type="java.lang.String" unsaved-value="null">
             <generator class="uuid"/>
         </id>
         <property name="creationTimestamp" not-null="false" type="timestamp" column="creationtimestamp"/>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.grouter.domain.entities.User" table="user">
+    <id name="id" unsaved-value="null">
+      <generator class="native" />
+    </id>
+
+    <property name="extUserId" column="ext_user_id" />
+    <property name="userName" column="user_name" />
+    <property name="pwd" />
+    <property name="firstName" column="first_name" />
+    <property name="lastName" column="last_name" />
+    <property name="email" />
+
+    <many-to-one name="address" column="address_id" cascade="all" class="org.grouter.domain.entities.Address"
+      not-null="false"   fetch="join" />
+
+    <many-to-one name="createdBy" column="created_by" class="org.grouter.domain.entities.User" not-null="false" />
+
+    <set name="roles" inverse="true" cascade="all-delete-orphan">
+      <key column="user_id" />
+      <one-to-many class="org.grouter.domain.entities.UserRole" />
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.grouter.domain.entities.EndPoint" table="endpoint">
+    <comment>Hibernate Mapping for EndPoint</comment>
+    <id name="id" unsaved-value="null">
+      <generator class="native" />
+    </id>
+    <property name="uri" column="uri" />
+    <property name="scheduleCron" column="cron" />
+    
+    <many-to-one
+            name="endPointType"
+            not-null="false"
+            class="org.grouter.domain.entities.EndPointType"
+            column="endpoint_type_fk"
+            cascade="all"
+            fetch="join">
+    </many-to-one>
+
+  </class>
+</hibernate-mapping>

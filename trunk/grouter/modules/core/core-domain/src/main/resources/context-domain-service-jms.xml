@@ -20,9 +20,11 @@
   </bean>
 
   <bean id="connectionFactory" class="org.activemq.ActiveMQConnectionFactory">
-    <property name="brokerURL" value="vm://localhost:61616"/>
+  <!-- bean id="connectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" -->
+    <property name="brokerURL" value="tcp://localhost:61616"/>
   </bean>
 
+  
 
   <!-- a pooling based JMS provider -->
   <!-- bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
@@ -51,7 +53,8 @@
     <property name="concurrentConsumers" value="5"/>
     <property name="connectionFactory" ref="connectionFactory"/>
     <property name="destination" ref="requestQueue"/>
-    <property name="messageListener" ref="messageListenerServiceAdapter"/>
+    <property name="messageListener" ref="messageListenerService"/>
+    <!--property name="messageListener" ref="messageListenerServiceAdapter"/ -->
     <!-- property name="transactionManager" ref="transactionManager"/ -->
   </bean>
 
