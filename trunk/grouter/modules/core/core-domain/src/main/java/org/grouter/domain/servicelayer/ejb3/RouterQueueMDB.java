@@ -22,12 +22,12 @@ import javax.annotation.Resource;
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/GrouterQueue"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto.acknowledge")
 })
-public class GRouterQueueMDB implements MessageListener
+public class RouterQueueMDB implements MessageListener
 {
     //@JndiInject(jndiName = ExternalSystemsLocal.LOOKUP_NAME)
     //private ExternalSystemsHandler externalSystemsHandler;
 
-    private static Logger logger = Logger.getLogger(GRouterQueueMDB.class);
+    private static Logger logger = Logger.getLogger(RouterQueueMDB.class);
 
     
 
@@ -77,7 +77,7 @@ public class GRouterQueueMDB implements MessageListener
     {
         org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
         logger.debug("Got message");
-        GRouterLocalService gRouterLocal = (GRouterLocalService)sc.lookup( GRouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
+        RouterLocalService gRouterLocal = (RouterLocalService)sc.lookup( RouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
         gRouterLocal.saveMessage(message);
     }
 

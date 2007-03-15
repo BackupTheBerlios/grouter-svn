@@ -1,8 +1,8 @@
 package org.grouter.domain.servicelayer;
 
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.SystemUser;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Router;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,8 +26,14 @@ import java.util.List;
  */
 @Remote
 @Local
-public interface GRouterService
+public interface RouterService
 {
+    /**
+     * Retrieve a list with all grouters available.
+     * @return
+     */
+    List<Router> findAll();
+
 
     /**
      * Stores a message - all relationships need to be inplace for persitence operation is to succeed.

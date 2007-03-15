@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.grouter.common.hibernate.HibernateTemplate;
 import org.grouter.common.hibernate.HibernateTemplateHandler;
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.SystemUser;
+import org.grouter.domain.entities.User;
 import org.hibernate.Session;
 
 import java.util.Calendar;
@@ -60,7 +60,7 @@ public class SystemUserDAOTemplateHibernate //extends GenericHibernateDAO<System
                                  Calendar validTo, boolean active, boolean temporaryPassword, int loginRetries, Calendar passwordLastChanged)
     {
         logger.debug("Trying to store new user");
-        final SystemUser systemUser = new SystemUser(userName, fullName, description, active, loginRetries, validFrom, validTo);
+        final User systemUser = new User();
         HibernateTemplate hibernateTemplate = new HibernateTemplate()
         {
             public Object handle(Session session) throws Exception
@@ -80,7 +80,7 @@ public class SystemUserDAOTemplateHibernate //extends GenericHibernateDAO<System
         }
     }
 
-    public Long createSystemUser(SystemUser systemUser)
+    public Long createSystemUser(User systemUser)
     {
         //To change body of implemented methods use File | Settings | File Templates.
         return null;

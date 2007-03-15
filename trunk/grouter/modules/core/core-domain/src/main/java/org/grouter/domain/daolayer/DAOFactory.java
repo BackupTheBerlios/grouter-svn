@@ -68,7 +68,7 @@ public abstract class DAOFactory
     // Add your DAO interfaces here
     public abstract MessageDAO getMessageDAO();
 
-    public abstract SystemUserDAO getSystemUserDAO();
+    public abstract UserDAO getSystemUserDAO();
 
 
 }

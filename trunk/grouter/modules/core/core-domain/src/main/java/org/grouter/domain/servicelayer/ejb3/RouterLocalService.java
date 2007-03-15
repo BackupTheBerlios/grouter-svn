@@ -1,6 +1,6 @@
 package org.grouter.domain.servicelayer.ejb3;
 
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 
 import javax.ejb.Local;
 
@@ -12,7 +12,7 @@ import javax.ejb.Local;
  * To change this template use File | Settings | File Templates.
  */
 @Local
-public interface GRouterLocalService extends GRouterService
+public interface RouterLocalService extends RouterService
 {
     public static final String DOMAIN_GROUTER_BEAN_LOCAL = "domain/GRouterBeanService/local";
     

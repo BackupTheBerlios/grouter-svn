@@ -1,6 +1,6 @@
 package org.grouter.domain.servicelayer.ejb3;
 
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 
 import javax.ejb.Remote;
 
@@ -12,7 +12,7 @@ import javax.ejb.Remote;
  * To change this template use File | Settings | File Templates.
  */
 @Remote
-public interface GRouterRemoteService extends GRouterService
+public interface RouterRemoteService extends RouterService
 {
     //Deployed in ear with name daomin -> prepend ear name to jndi name
      public static final String DOMAIN_GROUTER_BEAN_REMOTE = "domain/GRouterBeanService/remote";

@@ -1,12 +1,9 @@
 package org.grouter.domain.servicelayer.ejb3;
 
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.SystemUser;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.daolayer.DAOFactory;
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.SystemUserDAO;
-import org.grouter.domain.daolayer.NodeDAO;
+import org.grouter.domain.entities.Router;
+import org.grouter.domain.daolayer.*;
 import org.grouter.domain.daolayer.ejb3.PersistenceContextName;
 import org.apache.log4j.Logger;
 
@@ -21,30 +18,30 @@ import java.util.List;
 
 
 @Stateless
-public class GRouterBeanService implements GRouterLocalService, GRouterRemoteService
+public class RouterBeanService implements RouterLocalService, RouterRemoteService
 {
-    private static Logger logger = Logger.getLogger(GRouterBeanService.class);
+    private static Logger logger = Logger.getLogger(RouterBeanService.class);
     @PersistenceContext(unitName = PersistenceContextName.PERSISTENCE)
     private EntityManager entityManager;
 
     private MessageDAO messageDAO;
     private NodeDAO nodeDAO;
-    private SystemUserDAO systemUserDAO;
+    private UserDAO userDAO;
+    private RouterDAO routerDAO;
 
+
+    public void setRouterDAO(RouterDAO routerDAO)
+    {
+        this.routerDAO = routerDAO;
+    }
 
     @Resource
     private SessionContext sc;
 
 
-    public SystemUser createSystemUser(SystemUser systemUser)
+    public List<Router> findAll()
     {
-        logger.debug("In saveMessage. Inparam:" + systemUser);
-        if (systemUser == null)
-        {
-            throw new IllegalArgumentException("Can not handle a null inparameter");
-        }
-        systemUserDAO = DAOFactory.getFactory(DAOFactory.FactoryType.EJB3_PERSISTENCE).getSystemUserDAO();
-        return systemUserDAO.save(systemUser);
+        return routerDAO.findAll();  
     }
 
     public Message saveMessage(Message message)

@@ -43,6 +43,7 @@ import java.math.BigInteger;
 @Table(name = "MESSAGE")
 public class Message implements Serializable
 {
+    //private static final long serialVersionUID = -6097635701783502292L;
     private String id;
     private Set<Receiver> receivers = new HashSet();
     private Sender sender;

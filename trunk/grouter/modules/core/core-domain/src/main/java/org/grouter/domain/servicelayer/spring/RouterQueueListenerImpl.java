@@ -1,24 +1,27 @@
 package org.grouter.domain.servicelayer.spring;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.Message;
+
+import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 
 
 /**
  * @author Georges Polyzois
  */
-public class GRouterQueueImpl // no need since we are using an adapter implements MessageListener
+public class RouterQueueListenerImpl  implements MessageListener // no need since we are using an adapter implements MessageListener
 {
-    private static Logger logger = Logger.getLogger(GRouterQueueImpl.class);
-    GRouterService service;
+    private static Logger logger = Logger.getLogger(RouterQueueListenerImpl.class);
+    RouterService service;
 
-    public void setGrouterService(GRouterService service)
+    public void setGrouterService(RouterService service)
     {
         this.service = service;
     }
 
-    /*public void onMessage(Message receivedMessage)
+    public void onMessage(javax.jms.Message receivedMessage)
     {
         try
         {
@@ -26,7 +29,7 @@ public class GRouterQueueImpl // no need since we are using an adapter implement
             logger.debug("Got message : " + objectMessage.getObject());
             if (objectMessage.getObject() instanceof org.grouter.domain.entities.Message)
             {
-                persist(objectMessage);
+                process( (Message) objectMessage);
 
             } else
             {
@@ -38,15 +41,17 @@ public class GRouterQueueImpl // no need since we are using an adapter implement
             logger.error(e, e);
         }
     }
-      */
+
 
     /**
      * Call session ejb for processing of event.
      *
      */
-    private void process(Message message)
+    public void process(Message message)
     {
         //org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
+        logger.debug("##### Got a message and persisting it : " + message.getId() );
         service.saveMessage(message);
     }
+
 }

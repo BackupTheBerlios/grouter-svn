@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.daolayer.DAOFactory;
 import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.SystemUserDAO;
+import org.grouter.domain.daolayer.UserDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -48,8 +48,8 @@ public class HibernateSpringDAOFactory extends DAOFactory
         return new MessageDAOImpl(getCurrentSession());
     }
 
-    public SystemUserDAO getSystemUserDAO()
+    public UserDAO getSystemUserDAO()
     {
-        return new SystemUserDAOHibernate(getCurrentSession());
+        return new UserDAOImpl(getCurrentSession());
     }
 }

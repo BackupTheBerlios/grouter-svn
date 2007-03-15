@@ -35,7 +35,18 @@ public class Node implements Serializable
 
     //private NodeType nodeType;
     @Transient
-    private SystemUser modifiedBySystemUser;
+    private User modifiedByUser;
+
+    @Column(name = "MODIFIEDBYUSER")
+    public User getModifiedByUser()
+    {
+        return modifiedByUser;
+    }
+
+    public void setModifiedByUser(User modifiedByUser)
+    {
+        this.modifiedByUser = modifiedByUser;
+    }
 
     public Node()
     {
@@ -48,12 +59,12 @@ public class Node implements Serializable
         this.name = name;
     }
 
-    public Node(String name, Set<Message> messages, Date modifiedOn, SystemUser modifiedBySystemUser, Date creetedOn)
+    public Node(String name, Set<Message> messages, Date modifiedOn, User modifiedByUser, Date creetedOn)
     {
         this.name = name;
         this.messages = messages;
         this.modifiedOn = modifiedOn;
-        this.modifiedBySystemUser = modifiedBySystemUser;
+        this.modifiedByUser = modifiedByUser;
         this.createdOn = creetedOn;
     }
 
@@ -83,17 +94,7 @@ public class Node implements Serializable
         this.modifiedOn = modifiedOn;
     }
 
-    @Column(name = "MODIFIEDBYSYSTEMUSER")
-    public SystemUser getModifiedBySystemUser()
-    {
-        return modifiedBySystemUser;
-    }
 
-
-    public void setModifiedBySystemUser(SystemUser modifiedBySystemUser)
-    {
-        this.modifiedBySystemUser = modifiedBySystemUser;
-    }
 
     @OneToMany
     @JoinColumn(name = "NODE_FK", nullable = true)

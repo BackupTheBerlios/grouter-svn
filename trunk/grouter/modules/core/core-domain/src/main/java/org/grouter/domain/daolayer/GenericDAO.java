@@ -65,6 +65,6 @@ public interface GenericDAO<T, ID extends Serializable>
 
     void delete(T entity);
 
-    void delete( String id );
+//    void delete( String id );
 
 }

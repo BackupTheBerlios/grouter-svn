@@ -2,8 +2,8 @@ package org.grouter.domain.daolayer.ejb3;
 
 import org.grouter.domain.daolayer.DAOFactory;
 import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.SystemUserDAO;
-import org.grouter.domain.daolayer.spring.SystemUserDAOHibernate;
+import org.grouter.domain.daolayer.UserDAO;
+import org.grouter.domain.daolayer.spring.UserDAOImpl;
 
 
 /**
@@ -20,8 +20,8 @@ public class Ejb3DAOFactory extends DAOFactory
         return new MessageDAOBean();
     }
 
-    public SystemUserDAO getSystemUserDAO()
+    public UserDAO getSystemUserDAO()
     {
-        return new SystemUserDAOHibernate();
+        return new UserDAOImpl();
     }
 }

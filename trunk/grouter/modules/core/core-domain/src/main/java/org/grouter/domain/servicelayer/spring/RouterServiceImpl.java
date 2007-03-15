@@ -2,9 +2,11 @@ package org.grouter.domain.servicelayer.spring;
 
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.NodeDAO;
+import org.grouter.domain.daolayer.RouterDAO;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.entities.Router;
+import org.grouter.domain.servicelayer.RouterService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.Validate;
@@ -23,11 +25,17 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public class GRouterServiceImpl implements GRouterService
+public class RouterServiceImpl implements RouterService
 {
-    private static Log logger = LogFactory.getLog(GRouterServiceImpl.class);
+    private static Log logger = LogFactory.getLog(RouterServiceImpl.class);
     private MessageDAO messageDAO;
     private NodeDAO nodeDAO;
+    private RouterDAO routerDAO;
+
+    public void setRouterDAO(RouterDAO routerDAO)
+    {
+        this.routerDAO = routerDAO;
+    }
 
     public void setNodeDAO(NodeDAO nodeDAO)
     {
@@ -46,7 +54,7 @@ public class GRouterServiceImpl implements GRouterService
         this.messageDAO = messageDAO;
     }
 
-    public GRouterServiceImpl()
+    public RouterServiceImpl()
     {
     }
 
@@ -62,22 +70,21 @@ public class GRouterServiceImpl implements GRouterService
         messageDAO = DAOFactory.getFactory(HIBERNATESPRING).getMessageDAO();
     }
    */
-    //TODO Can we use AOP to have a simple logging mechnism used by all sevice methods!?
 
+    public List<Router> findAll()
+    {
+        return routerDAO.findAll();  
+    }
 
     public Message saveMessage(Message message)
     {
         Validate.notNull(message, "In parameter can not be null");
-       // initMessageDAO();
         return messageDAO.save(message);
     }
 
     public Message findMessageById(String id)
     {
         Validate.notNull(id, "In parameter can not be null");
-
-       // initMessageDAO();
-
         Message foundMessage = messageDAO.findById(id);
         return foundMessage;
     }
