@@ -21,7 +21,7 @@
 
   </target>
 
-  <target name="populate_with_test_data_db" description="Recreate the database">
+  <target name="load_base_test_data_db" description="Recreate the database">
 
      <echo>Setting up data</echo>
      <exec executable="${mysql}" dir="${basedir}/core/core-domain/src/test/resources/sql"

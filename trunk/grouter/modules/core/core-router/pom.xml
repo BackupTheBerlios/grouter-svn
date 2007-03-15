@@ -41,9 +41,9 @@
       <artifactId>hibernate-annotations</artifactId>
       <scope>provided</scope>
     </dependency>
-     <dependency>
-        <groupId>quartz</groupId>
-        <artifactId>quartz</artifactId>
+    <dependency>
+      <groupId>quartz</groupId>
+      <artifactId>quartz</artifactId>
     </dependency>
     <!--dependency>
         <groupId>xmlbeans</groupId>
@@ -89,6 +89,5 @@
         </configuration>
       </plugin>
     </plugins>
-
   </build>
 </project>

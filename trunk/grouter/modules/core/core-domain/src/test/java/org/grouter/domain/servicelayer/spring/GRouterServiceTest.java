@@ -1,6 +1,6 @@
 package org.grouter.domain.servicelayer.spring;
 
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,9 +18,9 @@ import java.util.Set;
 public class GRouterServiceTest extends AbstractServiceTests
 {
     private static Log logger = LogFactory.getLog(GRouterServiceTest.class);
-    GRouterService service;
+    RouterService service;
 
-    public void setGrouterService(GRouterService service)
+    public void setGrouterService(RouterService service)
     {
         this.service = service;
     }
@@ -36,7 +36,6 @@ public class GRouterServiceTest extends AbstractServiceTests
 
     public void testCreateMessage() throws Exception
     {
-        setAutowireMode(AUTOWIRE_BY_NAME);
         assertTrue(true);
 
 

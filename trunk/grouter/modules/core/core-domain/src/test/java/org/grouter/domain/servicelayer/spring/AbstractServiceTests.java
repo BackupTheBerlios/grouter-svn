@@ -16,8 +16,9 @@ import java.util.List;
  */
 public abstract class AbstractServiceTests extends AbstractTransactionalDataSourceSpringContextTests
 {
-
     SessionFactory sessionFactory;
+    String MESSAGE_ID = "msgid_1";
+    String NODE_ID = "nodeid_1";
 
 
     protected AbstractServiceTests()
@@ -27,6 +28,7 @@ public abstract class AbstractServiceTests extends AbstractTransactionalDataSour
 
     /**
      * Injected.
+     *
      * @param sessionFactory injected
      */
     public void setSessionFactory(SessionFactory sessionFactory)
@@ -37,15 +39,16 @@ public abstract class AbstractServiceTests extends AbstractTransactionalDataSour
 
     /**
      * Specify all context files here.
+     *
      * @return an array with context files
      */
     @Override
     protected String[] getConfigLocations()
     {
-        return new String[]     
+        return new String[]
                 {
-                       // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
-                        "context-domain-datasource.xml", "context-domain-dao.xml", 
+                        // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
+                        "context-domain-datasource.xml", "context-domain-dao.xml",
                         "context-domain-sessionfactory.xml", "context-domain-service.xml"
                 };
     }
@@ -53,6 +56,7 @@ public abstract class AbstractServiceTests extends AbstractTransactionalDataSour
 
     /**
      * The data we want to use in our test cases.
+     *
      * @return a path to test data script
      */
     protected String getTestDataLocation()

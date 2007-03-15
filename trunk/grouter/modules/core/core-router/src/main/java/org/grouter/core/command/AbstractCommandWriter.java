@@ -2,11 +2,9 @@ package org.grouter.core.command;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
-import org.grouter.core.util.JMSDestinationSenderThread;
-import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public abstract class AbstractCommandWriter
     protected List<CommandHolder> commandMessages;
     Node node;
 
-    GRouterService service;
+    RouterService service;
 
 
 

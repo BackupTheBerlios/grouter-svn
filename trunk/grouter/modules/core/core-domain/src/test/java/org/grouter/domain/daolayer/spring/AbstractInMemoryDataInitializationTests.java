@@ -1,9 +1,7 @@
 package org.grouter.domain.daolayer.spring;
 
 import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.SystemUserDAO;
-import org.grouter.domain.entities.SystemUser;
-import org.grouter.domain.entities.Password;
+import org.grouter.domain.daolayer.UserDAO;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Sender;
 import org.grouter.domain.entities.Receiver;
@@ -21,10 +19,6 @@ public abstract class AbstractInMemoryDataInitializationTests extends AbstractIn
 {
     private static Log log = LogFactory.getLog(AbstractInMemoryDataInitializationTests.class);
     public Message message;
-    SystemUser systemUser1;
-    Password systemUser1Password;
-    SystemUser systemUser2;
-    Password systemUser2Password;
     Calendar inThreeDays = GregorianCalendar.getInstance();
     Calendar inFiveDays = GregorianCalendar.getInstance();
     Calendar nextWeek = GregorianCalendar.getInstance();
@@ -50,14 +44,10 @@ public abstract class AbstractInMemoryDataInitializationTests extends AbstractIn
         messageDAO.save(message);
 
         // Create and save a user
-        SystemUserDAO systemUserDAO = DAOFACTORY.getSystemUserDAO();
+        UserDAO userDAO = DAOFACTORY.getSystemUserDAO();
         inThreeDays.roll(Calendar.DAY_OF_YEAR, 3);
         inFiveDays.roll(Calendar.DAY_OF_YEAR, 5);
         nextWeek.roll(Calendar.WEEK_OF_YEAR, true);
-        systemUser1 = new SystemUser("Donald", "Donald Duck", "is funny", true, 3, today, nextWeek);
-        systemUser1Password = new Password(systemUser1, "1password");
-        systemUser1.addPassword(systemUser1Password);
-        systemUserDAO.save(systemUser1);
     }
 
     /**

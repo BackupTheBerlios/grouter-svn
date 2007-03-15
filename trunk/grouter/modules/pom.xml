@@ -455,12 +455,37 @@
      </dependency -->
 
       <!-- Uploaded this to my repos -->
+      <!-- Uploaded this to my repos -->
       <dependency>
         <groupId>com.javasoft</groupId>
         <artifactId>javaee</artifactId>
         <version>1.5</version>
       </dependency>
-
+      <dependency>
+        <groupId>com.javasoft</groupId>
+        <artifactId>jsf-api</artifactId>
+        <version>1.2_03</version>
+      </dependency>
+      <dependency>
+        <groupId>com.javasoft</groupId>
+        <artifactId>jsf-impl</artifactId>
+        <version>1.2_03</version>
+      </dependency>
+      <dependency>
+        <groupId>com.javasoft</groupId>
+        <artifactId>jstl</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>com.javasoft</groupId>
+        <artifactId>el-api</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>com.javasoft</groupId>
+        <artifactId>el-ri</artifactId>
+        <version>1.2</version>
+      </dependency>
 
       <!-- dependency>
         <groupId>javaee</groupId>
@@ -630,11 +655,108 @@
       </dependency>
 
 
+
+      <!-- Template engines -->
       <dependency>
         <groupId>velocity</groupId>
         <artifactId>velocity</artifactId>
         <version>1.4</version>
       </dependency>
+      <dependency>
+        <groupId>freemarker</groupId>
+        <artifactId>freemarker</artifactId>
+        <version>2.3.8</version>
+      </dependency>
+
+
+      <!-- Decorator -->      
+      <dependency>
+        <artifactId>sitemesh</artifactId>
+        <groupId>opensymphony</groupId>
+        <version>2.2.1</version>
+      </dependency>
+
+
+
+
+      <!-- Myfaces - compoenents for JSF and Tomahawk for extended -->
+      <dependency>
+        <groupId>myfaces</groupId>
+        <artifactId>myfaces-api</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>myfaces</groupId>
+        <artifactId>myfaces-impl</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>myfaces</groupId>
+        <artifactId>tomahawk</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+
+
+      <!-- TAgs for datables etc -->
+      <dependency>
+        <groupId>displaytag</groupId>
+        <artifactId>displaytag</artifactId>
+        <version>1.1</version>
+        <exclusions>
+          <exclusion>
+            <groupId>ant</groupId>
+            <artifactId>ant</artifactId>
+          </exclusion>
+
+
+          <exclusion>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-compiler-jdt</artifactId>
+          </exclusion>
+
+          <exclusion>
+            <groupId>ognl</groupId>
+            <artifactId>ognl</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>opensymphony</groupId>
+            <artifactId>xwork</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-runtime</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>itext</groupId>
+            <artifactId>itext</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>struts</groupId>
+            <artifactId>struts</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-compiler</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>opensymphony</groupId>
+            <artifactId>oscore</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>opensymphony</groupId>
+            <artifactId>webwork</artifactId>
+          </exclusion>
+
+
+        </exclusions>
+
+
+      </dependency>
+
 
 
       <!-- Database jdbc drivers -->

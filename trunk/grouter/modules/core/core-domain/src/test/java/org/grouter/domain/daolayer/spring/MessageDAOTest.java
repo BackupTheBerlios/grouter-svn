@@ -76,7 +76,7 @@ public class MessageDAOTest extends AbstractDAOTests
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM message WHERE id = '" + MESSAGE_ID + "'"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE id = '" + NODE_ID + "'"));
 
-        messageDAO.delete(MESSAGE_ID);
+        messageDAO.delete( new Message( MESSAGE_ID ) );
         flushSession();
 
         assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM message WHERE id = '" + MESSAGE_ID + "'"));

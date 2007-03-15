@@ -9,7 +9,7 @@ import org.grouter.core.util.ThreadPoolService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
 import org.grouter.domain.entities.Router;
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.beans.factory.BeanFactory;
@@ -104,7 +104,7 @@ public class GRouterServer implements Runnable
         context = new ClassPathXmlApplicationContext( getConfigLocations() );
 
         BeanFactory factory = (BeanFactory) context;
-        GRouterService gRouterService = (GRouterService) factory.getBean( "grouterService" );
+        RouterService gRouterService = (RouterService) factory.getBean( "grouterService" );
         gRouterService.saveMessage( null );
 
         

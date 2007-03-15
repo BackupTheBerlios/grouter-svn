@@ -49,35 +49,30 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-mock</artifactId>
     </dependency>
-     <dependency>
-        <groupId>aspectj</groupId>
-        <artifactId>aspectjweaver</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>aspectj</groupId>
-        <artifactId>aspectjrt</artifactId>
-      </dependency>
-     <dependency>
-        <groupId>asm</groupId>
-        <artifactId>asm</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>asm</groupId>
-        <artifactId>asm-attrs</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>asm</groupId>
-        <artifactId>asm-all</artifactId>
-      </dependency>
-
-
     <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib-nodep</artifactId>
-      </dependency>
-
-
-
+      <groupId>aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm-attrs</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm-all</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib-nodep</artifactId>
+    </dependency>
     <dependency>
       <groupId>hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
@@ -110,13 +105,11 @@
       <artifactId>javaee</artifactId>
     </dependency>
 
-                                 <!--
     <dependency>
-            <groupId>activemq</groupId>
-            <artifactId>activemq-core</artifactId>
-          </dependency>
-                              -->
-    
+      <groupId>activemq</groupId>
+      <artifactId>activemq-core</artifactId>
+    </dependency>
+
   </dependencies>
 
 </project>

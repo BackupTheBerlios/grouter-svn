@@ -2,10 +2,8 @@ package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.Validate;
-import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.servicelayer.GRouterService;
+import org.grouter.domain.servicelayer.RouterService;
 
 import java.io.File;
 
@@ -17,7 +15,7 @@ public class FileCommandWriter extends AbstractCommandWriter
 {
     private static Logger logger = Logger.getLogger(FileCommandWriter.class);
 
-    public void setGrouterService(GRouterService service)
+    public void setGrouterService(RouterService service)
     {
         this.service = service;
     }
