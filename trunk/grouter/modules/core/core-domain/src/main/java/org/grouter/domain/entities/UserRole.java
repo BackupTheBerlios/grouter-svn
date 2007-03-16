@@ -5,6 +5,7 @@ package org.grouter.domain.entities;
  */
 public class UserRole
 {
+    private Long id;
     private User user;
     private Role role;
 
@@ -42,5 +43,16 @@ public class UserRole
     public void setRole( Role role )
     {
         this.role = role;
+    }
+
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 }

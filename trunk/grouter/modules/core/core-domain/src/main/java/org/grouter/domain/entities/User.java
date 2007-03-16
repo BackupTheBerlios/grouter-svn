@@ -12,15 +12,46 @@ import java.util.Set;
  */
 public class User
 {
-    private String extUserId;
-    private String userName;
+    private Long id;
     private String email;
+    private String userName;
     private String firstName;
     private String lastName;
     private String password;
     private User createdBy;
     private Address address;
     private Set<UserRole> roles = new HashSet<UserRole>();
+
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public Address getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(Address address)
+    {
+        this.address = address;
+    }
 
     public String getUserName()
     {
@@ -33,11 +64,6 @@ public class User
         this.userName = userName;
     }
 
-
-    public String getEmail()
-    {
-        return email;
-    }
 
 
     public boolean isSuperReviewer()
@@ -83,18 +109,6 @@ public class User
 
 
 
-    public String getExtUserId()
-    {
-        return extUserId;
-    }
-
-
-    public void setExtUserId(String extUserId)
-    {
-        this.extUserId = extUserId;
-    }
-
-
     public String getFirstName()
     {
         return firstName;
@@ -113,5 +127,16 @@ public class User
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 }
