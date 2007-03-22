@@ -76,7 +76,6 @@ public abstract class AbstractGrouterTests extends AbstractTransactionalDataSour
     @Override
     public void onSetUpBeforeTransaction() throws Exception
     {
-        super.setUp();
 
         createRouter();
 
@@ -124,14 +123,14 @@ public abstract class AbstractGrouterTests extends AbstractTransactionalDataSour
         inbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/in");
         inbound.setEndPointType( EndPointType.FILE_READER );
         inbound.setScheduleCron( "0/5 * * * * ?" );
-        inbound.setId( 1L );
+        inbound.setId( "1" );
 
         EndPoint outbound = new EndPointFileWriter(  );
         outbound.setEndPointType(EndPointType.FILE_WRITER);
         outbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/out");
         outbound.setEndPointType( EndPointType.FILE_WRITER );
         outbound.setScheduleCron( "0/5 * * * * ?" );
-        outbound.setId( 2L );
+        outbound.setId( "2" );
 
         fileToFileNode.setInBound( inbound );
         fileToFileNode.setOutBound( outbound );

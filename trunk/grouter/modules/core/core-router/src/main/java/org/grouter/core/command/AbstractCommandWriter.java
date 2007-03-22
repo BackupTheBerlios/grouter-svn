@@ -19,10 +19,7 @@ public abstract class AbstractCommandWriter
     private static Logger logger = Logger.getLogger(AbstractCommandWriter.class);
     protected List<CommandHolder> commandMessages;
     Node node;
-
-    RouterService service;
-
-
+    
 
     /**
      * Commands must override this method to provide an implementation of an execute command
@@ -58,25 +55,6 @@ public abstract class AbstractCommandWriter
      */
     public abstract void log();
 
-
-    public void logToJMSDestination()
-    {
-        logger.info("Sending message to JMS consumer.");
-        // Todo refactor to use an special global endpoint for sending this message
-        //JMSDestinationSenderThread.getQueue().offer(commandMessages);
-
-        for (CommandHolder commandMessage : commandMessages)
-        {
-            Message message = new Message();
-            message.setContent( commandMessage.getMessage() );
-            message.setId( commandMessage.getGuid() );
-
-            service.saveMessage( message );
-        }
-
-
-
-    }
 
 
     /**

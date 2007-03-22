@@ -27,8 +27,4 @@ public class RouterDAOImpl extends GenericHibernateDAO<Router, String> implement
         super(persistentClass, session);
     }
 
-    protected void setSession(Session s)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
 }

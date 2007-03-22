@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE dwr PUBLIC  "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN" "http://www.getahead.ltd.uk/dwr/dwr10.dtd">
 
+
+<!--
+The DWR config file defines what classes DWR can create and remote for use by Javascript.
+List of classes and methods : http://localhost:8080/[YOUR-WEBAPP]/dwr/'
+
+-->
+
 <dwr>
   <allow>
+    <create creator="spring" javascript="routerService">
+      <param name="beanName" value="routerService"/>
+    </create>
 
-  
   </allow>
 </dwr>

@@ -15,6 +15,10 @@
     </title>
     <link href="../css/main.css" type="text/css" rel="stylesheet"/>
     <link href="../css/decorator.css" type="text/css" rel="stylesheet"/>
+
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/engine.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/util.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/routerService.js"></script>
     <style type="text/css">
     </style>
     <decorator:head/>

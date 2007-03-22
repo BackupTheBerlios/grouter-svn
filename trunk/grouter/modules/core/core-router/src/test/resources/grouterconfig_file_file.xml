@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Grouter name="grouter"
+<Grouter name="grouter2" id="grouter_id_2"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://grouter.org/config.xsd ../../main/xsd/config.xsd"
-         xsi:noNamespaceSchemaLocation="../../main/xsd/config.xsd">
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../common/common-configbeans/src/main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../../../../common/common-configbeans/src/main/xsd/config.xsd">
 
-  <Node id="filetest-filetest" createuniquename="true">
+  <Node id="filetest-filetest" createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
     <name>A name</name>
     <createdOn>2007-01-01</createdOn>
     <modifiedOn>2007-01-01</modifiedOn>
-    <inBoundEndPoint endPointType="FILE_READER">
-      <uri>file://temp/grouter/nodes/file_to_file/in</uri>
+    <inBoundEndPoint id="filereader_1" endPointType="FILE_READER">
+      <uri>/temp/grouter/filetest-filetest/in</uri>
       <clazzname>a classname</clazzname>
-      <cron>0/5 * * * *</cron>
+      <cron>0/5 * * * * ?</cron>
     </inBoundEndPoint>
-    <outBoundEndPoint endPointType="FILE_WRITER">
-      <uri>file://temp/grouter/nodes/file_to_file/out</uri>
+    <outBoundEndPoint id="filewriter_1" endPointType="FILE_WRITER">
+      <uri>/temp/grouter/filetest-filetest/out</uri>
       <clazzname>a classname</clazzname>
-      <cron>0/5 * * * *</cron>
+      <cron>0/5 * * * * ?</cron>
+    </outBoundEndPoint>
+  </Node>
+
+
+  <Node id="id2" createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
+    <name>A test node</name>
+    <createdOn>2007-01-01</createdOn>
+    <modifiedOn>2007-01-01</modifiedOn>
+    <inBoundEndPoint id="filereader_2" endPointType="FILE_READER">
+      <uri>/temp/grouter/id2/in</uri>
+      <clazzname>a classname</clazzname>
+      <cron>0/5 * * * * ?</cron>
+    </inBoundEndPoint>
+    <outBoundEndPoint id="filewriter_2" endPointType="FILE_WRITER">
+      <uri>/temp/grouter/id2/out</uri>
+      <clazzname>a classname</clazzname>
+      <cron>0/5 * * * * ?</cron>
     </outBoundEndPoint>
   </Node>
 

@@ -79,6 +79,7 @@
         <thead>
             <tr>
                 <th><a href="?sortBy=id">Id</a></th>
+                <th><a href="?sortBy=firstName">Created</a></th>
                 <th><a href="?sortBy=firstName">Content</a></th>
             </tr>
         </thead>
@@ -87,6 +88,9 @@
             <tr>
                 <td>
                     <c:out value="${object.id}"/>
+                </td>
+                <td>
+                    <c:out value="${object.creationTimestamp}"/>
                 </td>
                 <td>
                     <c:out value="${object.content}"/>

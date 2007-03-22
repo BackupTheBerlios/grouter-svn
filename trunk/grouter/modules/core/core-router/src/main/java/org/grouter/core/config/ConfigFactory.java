@@ -2,10 +2,7 @@ package org.grouter.core.config;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.lang.Validate;
-import org.grouter.domain.entities.Router;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.EndPoint;
-import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.*;
 import org.grouter.config.GrouterDocument;
 
 import java.util.Set;
@@ -19,7 +16,7 @@ import java.util.HashSet;
  */
 public class ConfigFactory
 {
-    private static Logger logger = Logger.getLogger( ConfigFactory.class );
+    private static Logger logger = Logger.getLogger(ConfigFactory.class);
 
     /**
      * Create a NodeConfig config object from a NodeType object(xml binding representation
@@ -29,22 +26,23 @@ public class ConfigFactory
      * @return
      * @throws IllegalArgumentException if globalType == null
      */
-    public static Router createRouter( GrouterDocument.Grouter grouterconfig)
+    public static Router createRouter(GrouterDocument.Grouter grouterconfig)
     {
-        Validate.notNull( grouterconfig , "Global config section is null, or you are lacking a valid grouter home element in your config file!");
-
+        Validate.notNull(grouterconfig, "Global config section is null, or you are lacking a valid grouter home element in your config file!");
 
         Router router = new Router();
-        router.setName( grouterconfig.getName() );
-   //     router.setId( grouterconfig.get );
+        router.setName(grouterconfig.getName());
+        router.setId( grouterconfig.getId() );
+        //router.setStartedOn( grouterconfig.getId() );
 
-        router.setNodes( getNodes( grouterconfig ) );
+        router.setNodes(getNodes(grouterconfig,router));
 
-       return router;
+     //   logger.info("Router config : " + router);
+        return router;
     }
 
 
-    private static Set<Node> getNodes( GrouterDocument.Grouter grouterconfig )
+    private static Set<Node> getNodes(GrouterDocument.Grouter grouterconfig, Router router)
     {
         Set<Node> result = new HashSet<Node>();
 
@@ -53,29 +51,35 @@ public class ConfigFactory
         for (org.grouter.config.Node configNode : nodes)
         {
             Node nodeEntity = new Node();
-            nodeEntity.setName( configNode.getName() );
-            nodeEntity.setId( configNode.getId().getStringValue() );
+            nodeEntity.setName(configNode.getName());
+            nodeEntity.setId(configNode.getId().getStringValue());
+            nodeEntity.setReceiverStatic( configNode.getReceiverStatic() );
+            nodeEntity.setSenderStatic( configNode.getSenderStatic() );
+
+            EndPoint inbound = getEndPoint(configNode.getInBoundEndPoint());
+            nodeEntity.setInBound(inbound);
+
+            EndPoint outbound = getEndPoint(configNode.getOutBoundEndPoint());
+            nodeEntity.setOutBound(outbound);
 
 
-            EndPoint inbound = getEndPoint( configNode.getInBoundEndPoint() );
-            nodeEntity.setInBound( inbound );
-            EndPoint outbound = getEndPoint( configNode.getOutBoundEndPoint() );
-            nodeEntity.setOutBound( outbound );
+            nodeEntity.setRouter( router );
 
-            result.add( nodeEntity );
+            result.add(nodeEntity);
         }
-
         return result;
     }
 
-    private static EndPoint getEndPoint(org.grouter.config.EndPoint inBoundEndPoint)
+    private static EndPoint getEndPoint(org.grouter.config.EndPoint endPoint)
     {
         EndPoint inbound = new EndPoint();
-        inbound.setClazzName( inBoundEndPoint.getClazzname() );
-        inbound.setUri( inBoundEndPoint.getUri() );
+        inbound.setClazzName(endPoint.getClazzname());
+        inbound.setUri(endPoint.getUri());
+        inbound.setId(endPoint.getId());
+        inbound.setScheduleCron(endPoint.getCron());
 
-        EndPointType type = EndPointType.valueOf( new Long(inBoundEndPoint.getEndPointType().intValue()) );
-        inbound.setEndPointType( type );
+        EndPointType type = EndPointType.valueOf(new Long(endPoint.getEndPointType().intValue()));
+        inbound.setEndPointType(type);
 
         return inbound;
     }

@@ -10,6 +10,8 @@ import org.grouter.domain.entities.Node;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobDataMap;
+import org.quartz.SchedulerContext;
+import org.springframework.context.ApplicationContext;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -86,7 +88,7 @@ public class FileReaderJob extends AbstractReader
      */
     protected List<CommandHolder> readFromSource()
     {
-        logger.debug("Reading files from " + node.getInBound().getUri());
+        logger.info("Reading files from " + node.getInBound().getUri());
         //File[] curFiles = node.getInFolderConfig().getInPath().listFiles(fileFilter);
         File inFolder = new File(node.getInBound().getUri());
         File[] curFiles = inFolder.listFiles(fileFilter);  // TODO refactor to use generic Filter
@@ -163,9 +165,9 @@ public class FileReaderJob extends AbstractReader
         init(node, blockingQueue);
     }
 
-    public void execute(JobExecutionContext context) throws JobExecutionException
+    public void execute(JobExecutionContext jobExecutionContext) 
     {
-        setJobExecutionContext( context );
+        setJobExecutionContext( jobExecutionContext );
         execute();
     }
 

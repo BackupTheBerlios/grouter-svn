@@ -9,10 +9,10 @@ import org.quartz.JobDataMap;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
+import static java.util.concurrent.TimeUnit.*;
 
 /**
  * Workerthreads are responsible for taking commands and executing them.
- *
  *
  * @author Georges Polyzois
  */
@@ -20,13 +20,7 @@ public class CommandWriterJob implements Job
 {
     private static Logger logger = Logger.getLogger(CommandWriterJob.class);
     private BlockingQueue<AbstractCommandWriter> blockingQueue;
-    private static final int TIMEOUT = 2;
-    private Node node;
-
-
-
-    
-
+    private final int TIMEOUT = 2;
 
     /**
      * Neede by Quartz scheduler framework.
@@ -38,43 +32,40 @@ public class CommandWriterJob implements Job
     /**
      * Only used by ThreadPoolService
      *
-     * @deprecated
      * @param queue
+     * @deprecated
      */
     public CommandWriterJob(BlockingQueue<AbstractCommandWriter> queue)
     {
         this.blockingQueue = queue;
     }
 
-    public Boolean call() throws Exception
-    {
-        logger.debug("Queue size is : " + blockingQueue.size());
-
-        //take is blocking - an initial condition where no commandMessages are found in
-        //the infolder e.g. will make the reader thread to block also.
-        AbstractCommandWriter cmd = blockingQueue.poll(TIMEOUT, TimeUnit.SECONDS);//queue.take();
-        if (cmd instanceof FileCommandWriter)
-        {
-            cmd.execute();
-        }
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-   
 
     public void execute(JobExecutionContext context) throws JobExecutionException
     {
         JobDataMap jobDataMap = context.getMergedJobDataMap();
 
         //node = (Node) jobDataMap.get( "node" );
-        this.blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get( "queue" );
+        this.blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get("queue");
 
+
+        logger.debug("Queue size is : " + blockingQueue.size());
+
+        //take is blocking - an initial condition where no commandMessages are found in
+        //the infolder e.g. will make the reader thread to block also.
+        //queue.take();
+        AbstractCommandWriter cmd = null;
         try
         {
-            call();
-        } catch (Exception e)
+            cmd = blockingQueue.poll(TIMEOUT, SECONDS);
+            if (cmd instanceof FileCommandWriter)
+            {
+                cmd.execute();
+            }
+        } catch (InterruptedException e)
         {
-            logger.error(e,e);
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+
     }
 }

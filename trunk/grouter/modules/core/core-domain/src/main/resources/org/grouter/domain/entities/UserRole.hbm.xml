@@ -14,13 +14,13 @@
     <many-to-one
             name="user"
             column="user_id"
-            class="com.eniro.classifieds.data.model.User"
+            class="org.grouter.domain.entities.User"
             not-null="true"/>
 
     <many-to-one
             name="role"
             column="role_id"
-            class="com.eniro.classifieds.data.model.Role"
+            class="org.grouter.domain.entities.Role"
             not-null="true"/>
 
   </class>

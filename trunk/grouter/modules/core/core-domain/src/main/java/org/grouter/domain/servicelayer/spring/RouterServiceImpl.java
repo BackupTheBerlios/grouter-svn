@@ -15,13 +15,15 @@ import java.util.List;
 
 
 /**
- * GRouterServiceImpl exposes services for different clients - gswing and gweb.
+ * The implementation of the interface {@link org.grouter.domain.servicelayer.RouterService} uses underlying
+ * generic DAOs providing transaction demarcation for the service layer.
  *
- * <p/>
+ * Client such as - gswing and gweb - uses this service layer.
+ *
  * Methods and their transaction demarcation attributes are handled in the Spring applicationContext xml file/s
  * or if you are using Ejb3 in the annotations of the Ejb3 session beans.
- * <p/>
- * This implementation class is injected using Spring IoC container.
+ *
+ * DAOs are injected using Spring.
  *
  * @author Georges Polyzois
  */
@@ -42,8 +44,6 @@ public class RouterServiceImpl implements RouterService
         this.nodeDAO = nodeDAO;
     }
 
-//    private SystemUserDAO systemUserDAO;
-
     public MessageDAO getMessageDAO()
     {
         return messageDAO;
@@ -58,28 +58,16 @@ public class RouterServiceImpl implements RouterService
     {
     }
 
-  /*  private void initSystemDAO()
-    {
-        systemUserDAO = DAOFactory.getFactory(HIBERNATESPRING).getSystemUserDAO();
-    }
-    */
-
- /*  private void initMessageDAO()
-    {
-        logger.info("Initializing the MessageDAOImpl");
-        messageDAO = DAOFactory.getFactory(HIBERNATESPRING).getMessageDAO();
-    }
-   */
 
     public List<Router> findAll()
     {
         return routerDAO.findAll();  
     }
 
-    public Message saveMessage(Message message)
+    public void saveMessage(Message message)
     {
         Validate.notNull(message, "In parameter can not be null");
-        return messageDAO.save(message);
+        messageDAO.save(message);
     }
 
     public Message findMessageById(String id)
@@ -92,8 +80,6 @@ public class RouterServiceImpl implements RouterService
     public List<Message> findAllMessages(String nodeId)
     {
         return messageDAO.findMessagesForNode( nodeId );
-
-
     }
 
     public List<Node> findAllNodes(String routerId)
@@ -101,6 +87,9 @@ public class RouterServiceImpl implements RouterService
         return nodeDAO.findAll();
     }
 
-
-
+    public void saveRouter(Router router)
+    {
+        Validate.notNull(router, "In parameter can not be null");
+        routerDAO.save(router);
+    }
 }

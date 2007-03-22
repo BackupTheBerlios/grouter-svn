@@ -18,9 +18,7 @@ import java.util.List;
 
 
 /**
- * Main interface for operations with the grouter internal domain.
- *
- * There are a spring based implementation and
+ * Main interface for operations with the grouter service layer.
  *
  * @author Georges Polyzois
  */
@@ -28,8 +26,11 @@ import java.util.List;
 @Local
 public interface RouterService
 {
+    final static String BEANNAME = "routerService";
+
     /**
      * Retrieve a list with all grouters available.
+     *
      * @return
      */
     List<Router> findAll();
@@ -37,30 +38,41 @@ public interface RouterService
 
     /**
      * Stores a message - all relationships need to be inplace for persitence operation is to succeed.
+     *
      * @param message a message to persist
      * @return
      */
-    Message saveMessage(Message message);
+    void saveMessage(Message message);
 
     /**
-     *
-     * @param id
+     * Finder.
+     * @param id of a Message enitty
      * @return
      */
     Message findMessageById(String id);
 
     /**
      * Find messages for this node.
+     *
      * @param id a node for which we want all messages
      * @return a list of {@link Message}s
      */
-    List<Message> findAllMessages( String id);
+    List<Message> findAllMessages(String id);
 
     /**
-     *
      * @param routerId
      * @return
      */
-    List<Node> findAllNodes( String routerId );
+    List<Node> findAllNodes(String routerId);
+
+
+    /**
+     * Stores a router - all relationships need to be inplace for persitence operation is to succeed.
+     * Typically used when a router instance starts up and reads in a configuration file.
+     *
+     * @param router a router to persist
+     * @return
+     */
+    void saveRouter(Router router);
 
 }

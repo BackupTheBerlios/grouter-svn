@@ -6,8 +6,8 @@
 <hibernate-mapping>
   <class name="org.grouter.domain.entities.EndPoint" table="endpoint">
     <comment>Hibernate Mapping for EndPoint</comment>
-    <id name="id" unsaved-value="null">
-      <generator class="native" />
+    <id name="id" >
+      <generator class="assigned" />
     </id>
     <property name="uri" column="uri" />
     <property name="scheduleCron" column="cron" />

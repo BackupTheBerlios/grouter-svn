@@ -6,8 +6,10 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.commons.lang.Validate;
 import org.grouter.common.config.ConfigHandler;
 import org.grouter.core.util.ThreadPoolService;
+import org.grouter.core.util.SchedulerService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
+import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.context.ApplicationContext;
@@ -29,27 +31,33 @@ import java.util.*;
  */
 public class GRouterServer implements Runnable
 {
-    
+
     private static Logger logger = Logger.getLogger(GRouterServer.class);
     // spring context
     ApplicationContext context;
-
-    private HashMap nodeThreads = new HashMap();
     private static String CONFIGFILE = "grouter.xml";
     private ConfigHandler configHandler;
-//    private GrouterConfig grouterConfig;
+    //    private GrouterConfig grouterConfig;
     private ThreadPoolService nodeThreadPoolHandler = new ThreadPoolService();
     private static final String GROUTER_CONFIG = "grouter.config";
     private Router router;
+    SchedulerService schedulerService;
 
     /**
      * Constructor.
      *
      * @param router
      */
-    public GRouterServer( Router router)
+    public GRouterServer(Router router)
     {
-        Validate.notNull( router, "A null router can not be used to start." );
+        Validate.notNull(router, "A null router can not be used to start.");
+        try
+        {
+            initRouter(router);
+        } catch (Exception e)
+        {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     /**
@@ -60,8 +68,8 @@ public class GRouterServer implements Runnable
     public GRouterServer()
     {
         String grouterConfig = System.getProperty(GROUTER_CONFIG);
-        Validate.notNull( grouterConfig, "Could not get property with key :" + GROUTER_CONFIG + ". Have you " +
-                    "provided a -D parameter for Java vm?");
+        Validate.notNull(grouterConfig, "Could not get property with key :" + GROUTER_CONFIG + ". Have you " +
+                "provided a -D parameter for Java vm?");
     }
 
     /**
@@ -72,7 +80,7 @@ public class GRouterServer implements Runnable
      */
     public GRouterServer(String configPath)
     {
-        if( !FileUtils.isValidPath(configPath) )
+        if (!FileUtils.isValidPath(configPath))
         {
             throw new IllegalArgumentException("Invalid path given to config file!!! Path was " + configPath);
         }
@@ -80,35 +88,38 @@ public class GRouterServer implements Runnable
         try
         {
             logger.info("Using config path : " + configPath);
-            initRouter( configPath );
-//            this.grouterConfig = getGrouterConfig(configPath);
-            nodeThreadPoolHandler.initNodeThreadScheduling( this.router.getNodes()  );
+            configHandler = new ConfigHandler(configPath, null);
+            router = ConfigFactory.createRouter(configHandler.getGrouterConfigDocument().getGrouter());
+
+            initRouter(router);
+            //nodeThreadPoolHandler.initNodeThreadScheduling( this.router.getNodes()  );
         }
         catch (Exception ex)
         {
             logger.error("Failed setup - exiting", ex);
             System.exit(0);
-        }               
+        }
     }
 
 
     /**
      * Load config file and store reference for further processing of config data.
      */
-    private void initRouter(String configPath)
+    private void initRouter(Router router) throws Exception
     {
-        logger.info( "Initializing router" );
-        configHandler = new ConfigHandler(configPath, null);
-        router = ConfigFactory.createRouter( configHandler.getGrouterConfigDocument().getGrouter() );
+        logger.info("Initializing router");
 
-        context = new ClassPathXmlApplicationContext( getConfigLocations() );
+        context = new ClassPathXmlApplicationContext(getConfigLocations());
+        schedulerService = new SchedulerService(router.getNodes());
+        schedulerService.startAllNodes();
 
         BeanFactory factory = (BeanFactory) context;
-        RouterService gRouterService = (RouterService) factory.getBean( "grouterService" );
-        gRouterService.saveMessage( null );
+        RouterService routerService = (RouterService) factory.getBean("routerService");
 
-        
-        
+        routerService.saveRouter( router );
+
+
+
     }
 
 
@@ -123,46 +134,20 @@ public class GRouterServer implements Runnable
         logger.info("Working dir : " + grouterHome);
         String configFile = "/core/core-router/src/test/resources/grouterconfig_file_file.xml";
 
-        GRouterServer grouter = new GRouterServer( grouterHome + configFile);
+        GRouterServer grouter = new GRouterServer(grouterHome + configFile);
+        grouter.startGrouter();
 
-        Thread thr = new Thread(grouter);
-        Runtime.getRuntime().addShutdownHook(thr);
+
     }
 
 
     public void startGrouter()
     {
-        Thread thr = new Thread( this );
+        Thread thr = new Thread(this);
+        logger.info("Adding shutdown hook");
+        //       Runtime.getRuntime().addShutdownHook( thr );
         thr.start();
     }
-
-    /*    private void startRemoteServicesServer()
-        {
-            if (System.getSecurityManager() == null)
-            {
-                System.setSecurityManager(new RMISecurityManager());
-            }
-
-            try
-            {
-                logger.info("Starting core-server service for remote operations. Binding " + System.getProperty("iris.rmi.service.name"));
-                irisOperations = new IrisOperationsImpl(nodeThreads);
-                Naming.rebind(System.getProperty("iris.rmi.service.name"), irisOperations);
-                logger.info("Started core-server service for remote operations is now bound to RMI registry");
-                System.out.println("->Binding to RMI registry succesfull");
-            }
-            catch (Exception e)
-            {
-                System.out.println("Could not bind to RMI registry for remote ops.");
-                logger.error("Could not bind to RMI registry for remote ops.", e);
-
-            }
-        }
-    */
-    /**
-     * Binds to rmi registry for remote operations.
-     *
-     */
 
     /**
      * Reads config files for log4j and siri. 
@@ -191,32 +176,6 @@ public class GRouterServer implements Runnable
             System.exit(0);
         }
 
-/*        try
-        {
-            resourceBundle = ResourceBundle.getBundle("grouter");
-            Enumeration proplist = resourceBundle.getKeys();
-            while (proplist.hasMoreElements())
-            {
-                String tKey = (String) proplist.nextElement();
-                System.setProperty(tKey, resourceBundle.getString(tKey));
-            }
-            System.out.println("->Iris properties loaded (iris.properties)");
-        }
-        catch (MissingResourceException e)
-        {
-            System.out.println("Missing resource : no property file iris.properties");
-            e.printStackTrace();
-            System.out.println("Iris not started - see log file");
-            System.exit(0);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Fatal exception");
-            e.printStackTrace();
-            System.out.println("Iris not started - see log file");
-            System.exit(0);
-        }
-        */
     }
 
     /**
@@ -261,18 +220,33 @@ public class GRouterServer implements Runnable
      */
     public void run()
     {
-        onExit();
-    }
 
+        logger.info("In run");
+
+        while (true)
+        {
+
+            try
+            {
+                Thread.sleep(2000);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+        //onExit();
+    }
 
 
     protected String[] getConfigLocations()
     {
         return new String[]
                 {
-                       // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
+                        // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
                         "context-domain-datasource.xml", "context-domain-dao.xml",
-                        "context-domain-sessionfactory.xml", "context-domain-service.xml"
+                        "context-domain-sessionfactory.xml", "context-domain-service.xml",
+                        "context-router.xml"
                 };
     }
 

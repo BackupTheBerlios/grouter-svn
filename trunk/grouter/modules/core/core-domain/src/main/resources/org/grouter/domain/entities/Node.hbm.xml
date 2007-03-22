@@ -3,12 +3,14 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
   <class name="org.grouter.domain.entities.Node" table="node">
-    <id column="ID" name="id" type="java.lang.String">
-      <generator class="uuid"/>
+    <id column="id" name="id" type="java.lang.String">
+      <generator class="assigned"/>
     </id>
     <property name="modifiedOn" not-null="false" type="timestamp" column="modifiedon"/>
     <property name="createdOn" not-null="false" type="timestamp" column="createdon"/>
     <property name="name" not-null="false" type="java.lang.String" column="name"/>
+    <property name="senderStatic" not-null="false"  column="senderstatic"/>
+    <property name="receiverStatic" not-null="false"  column="receiverstatic"/>
 
     <many-to-one
             name="router"
@@ -16,6 +18,7 @@
             class="org.grouter.domain.entities.Router"
             column="router_fk"
             cascade="none"
+            update="false"
             fetch="join">
     </many-to-one>
 

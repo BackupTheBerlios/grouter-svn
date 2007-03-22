@@ -6,6 +6,7 @@ import org.grouter.domain.entities.Router;
 import org.grouter.domain.daolayer.*;
 import org.grouter.domain.daolayer.ejb3.PersistenceContextName;
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.Validate;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -29,49 +30,45 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
     private UserDAO userDAO;
     private RouterDAO routerDAO;
 
+    @Resource
+    private SessionContext sc;
 
     public void setRouterDAO(RouterDAO routerDAO)
     {
         this.routerDAO = routerDAO;
     }
 
-    @Resource
-    private SessionContext sc;
-
 
     public List<Router> findAll()
     {
-        return routerDAO.findAll();  
+        return routerDAO.findAll();
     }
 
-    public Message saveMessage(Message message)
+    public void saveMessage(Message message)
     {
-        logger.debug("In saveMessage. Inparam:" + message);
-        if (message == null)
-        {
-            throw new IllegalArgumentException("Can not handle a null inparameter");
-        }
-
+        Validate.notNull(message, "Can not handle a null message");
         messageDAO = DAOFactory.getFactory(DAOFactory.FactoryType.EJB3_PERSISTENCE).getMessageDAO();
-        return messageDAO.save(message);
+        messageDAO.save(message);
     }
 
     public Message findMessageById(String id)
     {
-        return messageDAO.findById( id );
+        return messageDAO.findById(id);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public List<Message> findAllMessages(String id)
     {
-       return  messageDAO.findMessagesForNode( id );
+        return messageDAO.findMessagesForNode(id);
     }
 
     public List<Node> findAllNodes(String routerId)
     {
         return nodeDAO.findAll();
+    }
+
+    public void saveRouter(Router router)
+    {
+        routerDAO.save(router);
     }
 
 

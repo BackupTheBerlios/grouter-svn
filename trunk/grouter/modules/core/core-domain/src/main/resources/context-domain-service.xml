@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<!-- beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
   http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+       default-autowire="byName"  -->
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+         http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd"
        default-autowire="byName">
+
+  <bean id="sampleBean" class="sample.SampleBean">
+    <dwr:remote javascript="SampleBean"/>
+  </bean>
+
 
   <!-- This declaratino together with the context-domain-aop.xml context should do
        the AOP style does not work currently - a lot of dependencies to cglib, asm etc
@@ -17,10 +32,16 @@
   -->
 
 
+  <bean id="jDBCLogStrategy" class="org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy"/>
+
+  <bean id="serviceFactory" class="org.grouter.domain.servicelayer.ServiceFactory"/>
+
+
   <!-- The "old" way of doint it without the aop config style -->
 
   <!--  Grouter Service Proxy -->
   <bean id="routerService" name="routerService" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <dwr:remote javascript="routerAjaxService"/>
     <property name="proxyInterfaces">
       <value>org.grouter.domain.servicelayer.RouterService</value>
     </property>
@@ -50,18 +71,10 @@
     </property>
     <property name="transactionAttributeSource">
       <value>
-        org.grouter.domain.servicelayer.RouterService.find*=PROPAGATION_REQUIRED
-        org.grouter.domain.servicelayer.RouterService.saveMessage*=PROPAGATION_REQUIRED
+        org.grouter.domain.servicelayer.RouterService.*=PROPAGATION_REQUIRED
         org.grouter.domain.servicelayer.spring.RouterQueueListenerImpl.process*=PROPAGATION_REQUIRED
       </value>
     </property>
   </bean>
-
-
-
-
-
-
-
 
 </beans>

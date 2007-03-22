@@ -3,16 +3,16 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
   <class name="org.grouter.domain.entities.Router" table="ROUTER">
-    <id column="ID" name="id" type="java.lang.String">
-      <generator class="uuid"/>
+    <id column="id" name="id" type="java.lang.String" >
+      <generator class="assigned"/>
     </id>
     <property name="startedOn" not-null="false" type="timestamp" column="STARTEDON"/>
     <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
     <property name="upTime" not-null="false" type="java.lang.Long" column="UPTIME"/>
 
-    <set name="nodes" cascade="all" lazy="true" inverse="true" table="NODE">
+    <set name="nodes" cascade="all" lazy="false"  fetch="join" inverse="true" table="NODE" >
       <key>
-        <column name="NODE_ID" not-null="true"/>
+        <column name="router_fk" not-null="true"/>
       </key>
       <one-to-many class="org.grouter.domain.entities.Node"/>
     </set>

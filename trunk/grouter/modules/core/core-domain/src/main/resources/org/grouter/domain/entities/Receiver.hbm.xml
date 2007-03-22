@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
     <class name="org.grouter.domain.entities.Receiver" table="receiver">
-        <id column="ID" name="id" type="java.lang.String">
+        <id column="ID" name="id" type="java.lang.String"  >
             <generator class="uuid"/>
         </id>
         <!-- "transactional|read-write|nonstrict-read-write|read-only -->

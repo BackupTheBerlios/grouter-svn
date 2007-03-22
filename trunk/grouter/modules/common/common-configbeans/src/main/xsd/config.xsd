@@ -13,6 +13,7 @@
         <xs:element name="Node" type="node" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="id" type="xs:string" use="required"/>
     </xs:complexType>
   </xs:element>
 
@@ -33,9 +34,8 @@
       <xs:element name="name" type="xs:string" minOccurs="0"/>
       <xs:element name="createdOn" type="xs:string" minOccurs="0"/>
       <xs:element name="modifiedOn" type="xs:string" minOccurs="0"/>
-
-      <xs:element name="inBoundEndPoint" type="endPoint" minOccurs="0"/>
-      <xs:element name="outBoundEndPoint" type="endPoint" minOccurs="0"/>
+      <xs:element name="inBoundEndPoint" type="endPoint" minOccurs="1"/>
+      <xs:element name="outBoundEndPoint" type="endPoint" minOccurs="1"/>
       <!-- xs:element name="inFolder" type="inFolderType" minOccurs="0"/>
   <xs:element name="outFolder" type="outFolderType" minOccurs="0"/>
   <xs:element name="email" type="emailType" minOccurs="0"/>
@@ -48,10 +48,12 @@
     <xs:attribute name="id" use="required"/>
     <xs:attribute name="createuniquename" type="xs:boolean"/>
     <xs:attribute name="endPointType" type="xs:boolean"/>
+    <xs:attribute name="senderStatic" type="xs:string"/>
+    <xs:attribute name="receiverStatic" type="xs:string"/>
+
   </xs:complexType>
 
   <!-- Third level -->
-  <!-- FeederNode::pollType -->
   <xs:complexType name="endPoint">
     <xs:sequence>
       <xs:element name="uri" type="xs:string" minOccurs="0"/>
@@ -59,6 +61,7 @@
       <xs:element name="cron" type="xs:string" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute name="endPointType" type="endPointType"/>
+    <xs:attribute name="id" type="xs:string"/>
   </xs:complexType>
 
   <xs:simpleType name="endPointType">
@@ -67,6 +70,8 @@
       <xs:enumeration value="FILE_READER"/>
     </xs:restriction>
   </xs:simpleType>
+
+
 
 
   <xs:complexType name="pollType">

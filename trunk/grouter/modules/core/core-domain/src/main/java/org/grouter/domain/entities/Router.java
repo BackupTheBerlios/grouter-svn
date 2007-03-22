@@ -122,19 +122,14 @@ public class Router implements Serializable
 
     public String toString()
     {
-        StringBuilder buf = new StringBuilder();
-        buf.append( "name : " + this.name + "\n");
-        for (Node node : nodes)
-        {
-            buf.append( "node : " + node.toString() + "\n");
-
-        }
-
-
-        return buf.toString();
-
+        return "Router{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", nodes=" + nodes +
+                ", startedOn=" + startedOn +
+                ", upTime=" + upTime +
+                '}';
     }
-
 
 
 }

@@ -1,6 +1,6 @@
 create table endpoint
 (
-    id bigint(20) not null auto_increment,
+    id varchar(36) not null,
     uri varchar(1000),
     clazzname varchar(1000),
     cron varchar(1000),

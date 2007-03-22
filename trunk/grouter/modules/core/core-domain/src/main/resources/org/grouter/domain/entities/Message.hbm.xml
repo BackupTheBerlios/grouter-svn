@@ -19,7 +19,7 @@
 
         <set name="receivers" cascade="all" lazy="false" inverse="true" table="receiver_message" fetch="join">
             <key>
-                <column name="message_fk" not-null="true"/>
+                <column name="message_fk" not-null="false "/>
             </key>
             <many-to-many class="org.grouter.domain.entities.Receiver" column="receiver_fk" fetch="join"  lazy="false"/>
         </set>
@@ -38,7 +38,7 @@
         -->
         <many-to-one
                 name="sender"
-                not-null="true"
+                not-null="false"
                 class="org.grouter.domain.entities.Sender"
                 column="sender_fk"
                 cascade="save-update,persist"
@@ -59,7 +59,8 @@
                 not-null="false"
                 class="org.grouter.domain.entities.Node"
                 column="node_fk"
-                cascade="none">
+                cascade="none"
+                update="false">
         </many-to-one>
     </class>
 </hibernate-mapping>

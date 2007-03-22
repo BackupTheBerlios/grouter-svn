@@ -3,27 +3,29 @@ package org.grouter.core.command;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Sender;
+import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
+import org.grouter.domain.servicelayer.ServiceFactory;
 
 import java.io.File;
 
 /**
  * A concrete command to be performed by a consumer, held by the CommandInvoker. </br>
  * This class acts as a consumer in the Command pattern.
+ *
+ * @author Georges Polyzois
  */
 public class FileCommandWriter extends AbstractCommandWriter
 {
     private static Logger logger = Logger.getLogger(FileCommandWriter.class);
-
-    public void setGrouterService(RouterService service)
-    {
-        this.service = service;
-    }
+    ServiceFactory serviceFactory;
 
 
     public FileCommandWriter()
     {
     }
+
 
     /**
      * Constructor.
@@ -40,13 +42,6 @@ public class FileCommandWriter extends AbstractCommandWriter
         this.node = node;
     }
 
-                       /*
-    public FileCommandWriter(EndPoint outBound)
-    {
-        Validate.notNull( outBound , "You must provide a outBound EndPoint !!" );
-        this.outBound = outBound;
-    }
-                         */
 
     /**
      * Implementing a transformation step.
@@ -59,14 +54,14 @@ public class FileCommandWriter extends AbstractCommandWriter
 
     public void write()
     {
-            logger.debug(node.getName() + " writing to uri : " + node.getOutBound().getUri() );
+        logger.debug(node.getName() + " writing to uri : " + node.getOutBound().getUri());
 
         for (CommandHolder commandMessage : commandMessages)
         {
             logger.debug("Wrote a new file :" + commandMessage.getMessage());
             try
             {
-                FileUtils.writeStringToFile( new File( node.getOutBound().getUri()  + "/"  + commandMessage.getGuid() + ".txt" ) , commandMessage.getMessage(), commandMessage.getEncoding()  );
+                FileUtils.writeStringToFile(new File(node.getOutBound().getUri() + "/" + commandMessage.getGuid() + ".txt"), commandMessage.getMessage(), commandMessage.getEncoding());
             }
             catch (Exception e)
             {
@@ -77,12 +72,12 @@ public class FileCommandWriter extends AbstractCommandWriter
 
     public void backup()
     {
-        logger.debug(node.getName() + " backup to uri : " + node.getBackupUri() );
+        logger.debug(node.getName() + " backup to uri : " + node.getBackupUri());
         for (CommandHolder commandMessage : commandMessages)
         {
             try
             {
-                FileUtils.writeStringToFile( new File( node.getBackupUri() + "/" + commandMessage.getGuid() + ".txt" ) , commandMessage.getMessage(), commandMessage.getEncoding()  );
+                FileUtils.writeStringToFile(new File(node.getBackupUri() + "/" + commandMessage.getGuid() + ".txt"), commandMessage.getMessage(), commandMessage.getEncoding());
             }
             catch (Exception e)
             {
@@ -91,9 +86,37 @@ public class FileCommandWriter extends AbstractCommandWriter
         }
     }
 
-
     public void log()
     {
-        logToJMSDestination();
+
+        logger.info("Sending message to JMS consumer.");
+        // Todo refactor to use an special global endpoint for sending this message
+        //JMSDestinationSenderThread.getQueue().offer(commandMessages);
+
+        for (CommandHolder commandMessage : commandMessages)
+        {
+            Message message = new Message();
+            message.setContent(commandMessage.getMessage());
+//  produces stale exceptions            message.setId(commandMessage.getGuid());
+
+            message.setNode( node );
+            
+            JDBCLogStrategy jdbcLogStrategy = (JDBCLogStrategy) serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+            jdbcLogStrategy.log(message);
+
+            //logStrategy.log( message );
+        }
+
+    }
+
+
+    /**
+     * Injected.
+     *
+     * @param serviceFactory
+     */
+    public void setServiceFactory(ServiceFactory serviceFactory)
+    {
+        this.serviceFactory = serviceFactory;
     }
 }

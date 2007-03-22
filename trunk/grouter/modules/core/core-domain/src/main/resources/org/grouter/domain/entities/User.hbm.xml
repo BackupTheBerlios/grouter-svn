@@ -9,11 +9,10 @@
       <generator class="native" />
     </id>
 
-    <property name="extUserId" column="ext_user_id" />
-    <property name="userName" column="user_name" />
-    <property name="pwd" />
-    <property name="firstName" column="first_name" />
-    <property name="lastName" column="last_name" />
+    <property name="userName" column="username" />
+    <property name="password" />
+    <property name="firstName" column="firstname" />
+    <property name="lastName" column="lastname" />
     <property name="email" />
 
     <many-to-one name="address" column="address_id" cascade="all" class="org.grouter.domain.entities.Address"

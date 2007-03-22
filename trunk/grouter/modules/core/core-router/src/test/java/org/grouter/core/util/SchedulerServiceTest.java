@@ -2,12 +2,10 @@ package org.grouter.core.util;
 
 import org.grouter.domain.entities.Node;
 import org.grouter.core.AbstractGrouterTests;
-import org.apache.commons.io.FileUtils;
 
 
 import java.util.Set;
 import java.util.HashSet;
-import java.io.File;
 
 /**
  * @author Georges Polyzois
@@ -38,17 +36,21 @@ public class SchedulerServiceTest extends AbstractGrouterTests
     }
 
 
-    public void testStartUp() throws Exception
+    public void testStartUp()
     {
-        setComplete();
+        SchedulerService schedulerService = new  SchedulerService( router.getNodes() );
+        try
+        {
+            schedulerService.startAllNodes();
+            schedulerService.rescheduleNode( fileToFileNode  );
+            schedulerService.rescheduleNode( fileToFileNode  );
 
-        SchedulerService schedulerFactory = new  SchedulerService( router.getNodes() );
-        schedulerFactory.start();
-
-        Thread.sleep( 60000 );
-
+            Thread.sleep(20000);
+        } catch (Exception e)
+        {
+            fail();
+        }
 
         
-
     }
 }

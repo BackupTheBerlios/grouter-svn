@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
- 
+
   <display-name>Web Application for gweb</display-name>
 
   <context-param>
@@ -16,7 +16,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-       classpath:/context-domain-dao.xml,classpath:/context-gweb-security.xml,
+      classpath:/context-domain-dao.xml,classpath:/context-gweb-security.xml,
       classpath:/context-domain-datasource.xml, classpath:/context-domain-service.xml,
       classpath:/context-domain-sessionfactory.xml, classpath:/context-gweb-servlet.xml
     </param-value>
@@ -38,20 +38,16 @@
       <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
     </init-param>
   </filter>
-  
 
   <filter>
-     <filter-name>sitemesh</filter-name>
-     <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
-   </filter>
-
+    <filter-name>sitemesh</filter-name>
+    <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
+  </filter>
 
   <filter-mapping>
     <filter-name>Acegi Filter Chain Proxy</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
-
 
   <filter-mapping>
     <filter-name>sitemesh</filter-name>
@@ -69,10 +65,6 @@
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>
 
-
-  
-  
-
   <servlet>
     <servlet-name>gweb</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -83,10 +75,29 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <!-- servlet>
+    <display-name>DWR Servlet</display-name>
+    <servlet-name>dwr-invoker</servlet-name>
+    <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dwr-invoker</servlet-name>
+    <url-pattern>/dwr/*</url-pattern>
+  </servlet-mapping -->
 
   <servlet-mapping>
     <servlet-name>gweb</servlet-name>
     <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>gweb</servlet-name>
+    <url-pattern>/dwr/*</url-pattern>
   </servlet-mapping>
 
   <!-- servlet-mapping>

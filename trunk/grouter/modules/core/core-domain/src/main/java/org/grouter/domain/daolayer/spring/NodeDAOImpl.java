@@ -22,9 +22,5 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements No
     }
 
 
-    public void setSession(Session s)
-    {
-        session = getSessionFactory().getCurrentSession();
-    }
 
 }

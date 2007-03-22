@@ -24,6 +24,11 @@ public class Node implements Serializable
     private static Logger logger = Logger.getLogger(Node.class);
     private String id;
     private String name;
+
+    // A nodes sender - if one is provided by the message itself that sender is used to override this
+    private String senderStatic;
+    // A nodes receiver - if one is provided by the message itself that receiver is used to override this
+    private String receiverStatic;
     private Set<Message> messages = new HashSet<Message>();
     private Date modifiedOn;
     private Date createdOn;
@@ -176,5 +181,45 @@ public class Node implements Serializable
     public void setBackupUri(String backupUri)
     {
         this.backupUri = backupUri;
+    }
+
+
+    public String getSenderStatic()
+    {
+        return senderStatic;
+    }
+
+    public void setSenderStatic(String senderStatic)
+    {
+        this.senderStatic = senderStatic;
+    }
+
+    public String getReceiverStatic()
+    {
+        return receiverStatic;
+    }
+
+    public void setReceiverStatic(String receiverStatic)
+    {
+        this.receiverStatic = receiverStatic;
+    }
+
+
+    public String toString()
+    {
+        return "Node{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", senderStatic='" + senderStatic + '\'' +
+                ", receiverStatic='" + receiverStatic + '\'' +
+                ", messages=" + messages +
+                ", modifiedOn=" + modifiedOn +
+                ", createdOn=" + createdOn +
+                ", router=" + router.getId() +
+                ", inBound=" + inBound +
+                ", outBound=" + outBound +
+                ", backupUri='" + backupUri + '\'' +
+                ", modifiedByUser=" + modifiedByUser +
+                '}';
     }
 }

@@ -38,11 +38,6 @@ public class GRouterServiceTest extends AbstractServiceTests
     {
         assertTrue(true);
 
-
-        Message messagePersisted = null;
-//        GRouterService gRouterServiceService = (GRouterService) factory.getBean(beanName);
-//        messagePersisted = gRouterServiceService.saveMessage(message);
-
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Sender sender = new Sender("A test sender " );
         Message message = new Message("A test message" );
@@ -64,10 +59,10 @@ public class GRouterServiceTest extends AbstractServiceTests
         Router router = new Router("grouter", nodes, timestamp, 1000);
         node.setRouter(router);
 
-        messagePersisted = service.saveMessage( message );
+        service.saveMessage( message );
 
-        logger.debug("## Saved instance with id : " + messagePersisted.getId() + " timestamp " + messagePersisted.getCreationTimestamp());
-        assertNotNull(messagePersisted.getId());
+        logger.debug("## Saved instance with id : " + message.getId() + " timestamp " + message.getCreationTimestamp());
+        assertNotNull(message.getId());
 
 
     }

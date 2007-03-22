@@ -8,7 +8,7 @@ package org.grouter.domain.entities;
  */
 public class EndPoint
 {
-    Long id;
+    String id;
     String uri;
     String clazzName;
     String scheduleCron;
@@ -49,16 +49,6 @@ public class EndPoint
     }
 
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
     public String getUri()
     {
         return uri;
@@ -77,5 +67,29 @@ public class EndPoint
     public void setEndPointType(EndPointType endPointType)
     {
         this.endPointType = endPointType;
+    }
+
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
+
+    public String toString()
+    {
+        return "EndPoint{" +
+                "id='" + id + '\'' +
+                ", uri='" + uri + '\'' +
+                ", clazzName='" + clazzName + '\'' +
+                ", scheduleCron='" + scheduleCron + '\'' +
+                ", endPointType=" + endPointType +
+                ", filter=" + filter +
+                '}';
     }
 }

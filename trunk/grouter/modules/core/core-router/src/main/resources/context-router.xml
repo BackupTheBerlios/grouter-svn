@@ -12,4 +12,15 @@
   <bean id="fileCommandWriter" class="org.grouter.core.command.FileCommandWriter"/>
 
 
+
+
 </beans>
+
+
+
+  <!-- bean name="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    name used to publish applicationContext to Quartz Job instances, so they can call business services
+    <property name="applicationContextSchedulerContextKey">
+      <value>applicationContext</value>
+    </property>
+  </bean -->

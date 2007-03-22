@@ -16,8 +16,6 @@
   <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController" />
   <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController" />
   <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController" />
-
-
   <bean name="/grouter/select.do" class="org.grouter.presentation.controller.router.GrouterSelectController"/>
 
 
@@ -34,26 +32,16 @@
     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
   </bean>
 
-
-  <!-- Config for Freemarker -->
-  <!--bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-   <property name="cache"><value>true</value></property>
-   <property name="requestContextAttribute"><value>rc</value></property>
-   <property name="prefix"><value></value></property>
-   <property name="suffix"><value>.ftl</value></property>
-   <property name="exposeSpringMacroHelpers"><value>true</value></property>
- </bean>
-
- <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-   <property name="templateLoaderPath">
-     <value>/WEB-INF/freemarker</value>
-   </property>
-   <property name="freemarkerSettings">
-     <props>
-       <prop key="number_format">#</prop>
-     </props>
-   </property>
- </bean -->
+   <!-- DWR -->
+  <bean name="/**/*" class="org.springframework.web.servlet.mvc.ServletWrappingController">
+    <property name="servletClass" value="uk.ltd.getahead.dwr.DWRServlet"/>
+    <property name="initParameters">
+      <props>
+        <prop key="debug">true</prop>
+      </props>
+    </property>
+  </bean>
+  
 
 
 </beans>

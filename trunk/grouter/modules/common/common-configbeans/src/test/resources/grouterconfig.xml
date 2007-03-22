@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Grouter name="grouter"
+<Grouter name="grouter_1" id="grouter_1"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://grouter.org/config.xsd ../../main/xsd/config.xsd"
          xsi:noNamespaceSchemaLocation="../../main/xsd/config.xsd">
 
-  <Node id="filetest-filetest" createuniquename="true">
+  <Node id="filetest-filetest" createuniquename="true" senderStatic="BACARGO" receiverStatic="C2K">
     <name>A name</name>
     <createdOn>2007-01-01</createdOn>
     <modifiedOn>2007-01-01</modifiedOn>
-    <inBoundEndPoint endPointType="FILE_READER">
+    <inBoundEndPoint id="filereader_1" endPointType="FILE_READER">
       <uri>file://temp/in</uri>
       <clazzname>a classname</clazzname>
       <cron>* * * *</cron>
     </inBoundEndPoint>
-    <outBoundEndPoint endPointType="FILE_WRITER">
+    <outBoundEndPoint id="filereader_2" endPointType="FILE_WRITER">
       <uri>file://temp/out</uri>
       <clazzname>a classname</clazzname>
       <cron>* * * *</cron>

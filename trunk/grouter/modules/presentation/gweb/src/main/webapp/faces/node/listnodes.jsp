@@ -11,6 +11,15 @@
         Nodes      
     </title>
 
+
+    <script type="text/javascript">
+        function handleGetData(str)
+        {
+            alert(str);
+        }
+    </script>
+
+
 </head>
 <body>
 
@@ -28,6 +37,8 @@
                             </c:forEach>
                         </select>
                     </form>
+                     <input type="checkbox" id="bigselect" onclick="handleGetData();"/>
+
                 </td>
                                                            
             </tr>
@@ -68,6 +79,9 @@
                 <tr>
                     <td>
                         <c:out value="${object.id}"/>
+                    </td>
+                    <td>
+                        <c:out value="${object.name}"/>
                     </td>
                     <td>
                         <c:out value="${object.inBound.uri}"/>
