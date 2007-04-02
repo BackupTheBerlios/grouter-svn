@@ -2,15 +2,15 @@
 <!DOCTYPE hibernate-mapping SYSTEM
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-  <class name="org.grouter.domain.entities.Router" table="ROUTER">
+  <class name="org.grouter.domain.entities.Router" table="router">
     <id column="id" name="id" type="java.lang.String" >
       <generator class="assigned"/>
     </id>
-    <property name="startedOn" not-null="false" type="timestamp" column="STARTEDON"/>
-    <property name="name" not-null="false" type="java.lang.String" column="NAME"/>
-    <property name="upTime" not-null="false" type="java.lang.Long" column="UPTIME"/>
+    <property name="startedOn" not-null="false" type="timestamp" column="startedon"/>
+    <property name="name" not-null="false" type="java.lang.String" column="name"/>
+    <property name="upTime" not-null="false" type="java.lang.Long" column="uptime"/>
 
-    <set name="nodes" cascade="all" lazy="false"  fetch="join" inverse="true" table="NODE" >
+    <set name="nodes" cascade="all" lazy="false"  fetch="join" inverse="true" table="node" >
       <key>
         <column name="router_fk" not-null="true"/>
       </key>

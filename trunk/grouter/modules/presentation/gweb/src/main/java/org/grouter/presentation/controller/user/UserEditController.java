@@ -74,12 +74,12 @@ public class UserEditController extends SimpleFormController
         try
         {
             userService.saveUser( user );
-            message = "Sparat";
+            message = "Saved";
         }
         catch ( Exception e )
         {
             logger.error( e, e );
-            message = "Kunde inte spara";
+            message = "Could not save";
         }
 
         Map<String, Object> model = new HashMap<String, Object>(  );
@@ -90,17 +90,6 @@ public class UserEditController extends SimpleFormController
     }
 
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void initBinder( HttpServletRequest request, ServletRequestDataBinder binder )
-            throws Exception
-    {
-        binder.registerCustomEditor( Date.class, "article.published",
-            new CustomDateEditor( new SimpleDateFormat( "yyyy-MM-dd" ), true ) );
-    }
 
 
 
@@ -113,6 +102,7 @@ public class UserEditController extends SimpleFormController
     {
         UserCommand cmd;
         Long id = getId( request, ID);
+        logger.debug("Got for id : " + id);
 
         if ( id != null )
         {

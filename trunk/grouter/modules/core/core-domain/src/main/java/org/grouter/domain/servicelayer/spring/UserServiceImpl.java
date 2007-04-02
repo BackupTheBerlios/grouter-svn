@@ -9,12 +9,18 @@ import org.grouter.domain.daolayer.UserDAO;
 import java.util.List;
 
 /**
+ * Handles operations on Users and user roles.
+ *
  * @author Georges Polyzois
  */
 public class UserServiceImpl implements UserService
 {
     UserDAO userDAO;
 
+    /**
+     * Injected.
+     * @param userDAO injected DAO
+     */
     public void setUserDAO(UserDAO userDAO)
     {
         this.userDAO = userDAO;

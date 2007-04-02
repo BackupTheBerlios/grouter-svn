@@ -11,6 +11,7 @@ import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
 import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
 import org.grouter.domain.entities.Router;
+import org.grouter.domain.entities.Node;
 import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -42,6 +43,7 @@ public class GRouterServer implements Runnable
     private static final String GROUTER_CONFIG = "grouter.config";
     private Router router;
     SchedulerService schedulerService;
+    private static final String ROUTER_SERVICE = "routerService";
 
     /**
      * Constructor.
@@ -56,7 +58,7 @@ public class GRouterServer implements Runnable
             initRouter(router);
         } catch (Exception e)
         {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            logger.error(e,e);
         }
     }
 
@@ -111,14 +113,11 @@ public class GRouterServer implements Runnable
 
         context = new ClassPathXmlApplicationContext(getConfigLocations());
         schedulerService = new SchedulerService(router.getNodes());
-        schedulerService.startAllNodes();
 
         BeanFactory factory = (BeanFactory) context;
-        RouterService routerService = (RouterService) factory.getBean("routerService");
+        RouterService routerService = (RouterService) factory.getBean( ROUTER_SERVICE );
 
         routerService.saveRouter( router );
-
-
 
     }
 
@@ -128,7 +127,7 @@ public class GRouterServer implements Runnable
      *
      * @param args
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         String grouterHome = System.getProperty("user.dir");
         logger.info("Working dir : " + grouterHome);
@@ -141,8 +140,11 @@ public class GRouterServer implements Runnable
     }
 
 
-    public void startGrouter()
+    public void startGrouter() throws Exception
     {
+        schedulerService.startAllNodes();
+
+
         Thread thr = new Thread(this);
         logger.info("Adding shutdown hook");
         //       Runtime.getRuntime().addShutdownHook( thr );
@@ -236,6 +238,15 @@ public class GRouterServer implements Runnable
         }
 
         //onExit();
+    }
+
+    // todo
+    private void forceMakeDirectories( )
+    {
+        for (Node node : router.getNodes())
+        {
+            //if ( node.getInBound().getUri().startsWith("file://")   )
+        }
     }
 
 

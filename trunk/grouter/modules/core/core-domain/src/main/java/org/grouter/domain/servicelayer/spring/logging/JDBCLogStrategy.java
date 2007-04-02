@@ -18,7 +18,7 @@ public class JDBCLogStrategy  implements LogStrategy
 
     public void log( Message message )
     {
-        routerService.saveMessage( message );
+//        routerService.saveMessage( message );
 
     }
 }

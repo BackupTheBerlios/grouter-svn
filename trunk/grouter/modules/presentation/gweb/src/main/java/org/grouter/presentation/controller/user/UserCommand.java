@@ -7,7 +7,7 @@ import org.grouter.domain.entities.User;
  */
 public class UserCommand
 {
-    User user;
+    User user = new User();
 
     public UserCommand(User user)
     {

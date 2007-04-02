@@ -1,7 +1,6 @@
 package org.grouter.core.config;
 
 import junit.framework.TestCase;
-import org.grouter.config.GrouterDocument;
 import org.grouter.common.config.ConfigHandler;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.entities.Node;
@@ -29,7 +28,7 @@ public class ConfigFactoryTest extends TestCase
 
     public void testFile()  throws Exception
     {
-        String configFile = "grouterconfig_file_file.xml";
+        String configFile = "../../../../../resources/routerconfig/grouterconfig_file_file.xml";
         ClassPathResource classPathResource = new ClassPathResource( configFile );
         ConfigHandler configHandler = new ConfigHandler( classPathResource.getInputStream() , null);
 

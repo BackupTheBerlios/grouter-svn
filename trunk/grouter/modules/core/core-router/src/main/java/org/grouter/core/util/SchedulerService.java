@@ -51,7 +51,7 @@ public class SchedulerService
         } catch (SchedulerException e)
         {
             logger.error("Could not create scheduler frm SchedulerFactory", e);
-            throw new RuntimeException("Could not create scheduler frm SchedulerFactory", e);
+            throw new RuntimeException("Could not create scheduler from SchedulerFactory", e);
         }
     }
 

@@ -1,6 +1,5 @@
 package org.grouter.core;
 
-import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.*;
@@ -29,7 +28,7 @@ public abstract class AbstractGrouterTests extends AbstractTransactionalDataSour
     private static Logger logger = Logger.getLogger(AbstractGrouterTests.class);
     public Router router = new Router("GROUTER_ID");
     public BlockingQueue<AbstractCommandWriter> blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(10);
-    public static final String BASE_FOLDER_FOR_TEST = System.getProperty("java.io.tmpdir") + "/grouter/";
+    public static final String BASE_FOLDER_FOR_TEST = "file://" + System.getProperty("java.io.tmpdir") + "/grouter/";
     private boolean cleanup = true;
     public Node fileToFileNode;
     SessionFactory sessionFactory;
@@ -119,13 +118,13 @@ public abstract class AbstractGrouterTests extends AbstractTransactionalDataSour
     {
         fileToFileNode = new Node("NODE_ID", "fileToFileNode");
         fileToFileNode.setBackupUri( BASE_FOLDER_FOR_TEST + router.getId() + "/backup" );
-        EndPoint inbound = new EndPointFileReader();
+        EndPoint inbound = new EndPoint();
         inbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/in");
         inbound.setEndPointType( EndPointType.FILE_READER );
         inbound.setScheduleCron( "0/5 * * * * ?" );
         inbound.setId( "1" );
 
-        EndPoint outbound = new EndPointFileWriter(  );
+        EndPoint outbound = new EndPoint(  );
         outbound.setEndPointType(EndPointType.FILE_WRITER);
         outbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/out");
         outbound.setEndPointType( EndPointType.FILE_WRITER );
@@ -183,7 +182,7 @@ public abstract class AbstractGrouterTests extends AbstractTransactionalDataSour
                 {
                        // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
                         "context-router.xml", "context-domain-datasource.xml", "context-domain-dao.xml",
-                        "context-domain-sessionfactory.xml", "context-domain-service.xml"
+                        "context-domain-sessionfactory.xml", "context-domain-service.xml"//,"context-domain-service-rmi.xml"
                 };
     }
 

@@ -38,7 +38,10 @@ public class Node implements Serializable
     private EndPoint outBound;
     private String backupUri;
 
-    //private NodeType nodeType;
+    @Transient
+    transient private Long numberOfMessagesHandled;
+
+
     @Transient
     private User modifiedByUser;
 
@@ -205,6 +208,16 @@ public class Node implements Serializable
     }
 
 
+    public Long getNumberOfMessagesHandled()
+    {
+        return numberOfMessagesHandled;
+    }
+
+    public void setNumberOfMessagesHandled(Long numberOfMessagesHandled)
+    {
+        this.numberOfMessagesHandled = numberOfMessagesHandled;
+    }
+
     public String toString()
     {
         return "Node{" +
@@ -215,7 +228,7 @@ public class Node implements Serializable
                 ", messages=" + messages +
                 ", modifiedOn=" + modifiedOn +
                 ", createdOn=" + createdOn +
-                ", router=" + router.getId() +
+                //", router=" + router.getId() +
                 ", inBound=" + inBound +
                 ", outBound=" + outBound +
                 ", backupUri='" + backupUri + '\'' +

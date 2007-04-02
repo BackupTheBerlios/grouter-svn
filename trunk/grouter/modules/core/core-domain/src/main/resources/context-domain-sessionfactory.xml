@@ -20,6 +20,7 @@
         <value>classpath:/org/grouter/domain/entities/Receiver.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/Address.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/EndPoint.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/EndPointContext.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/EndPointType.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/FilterType.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/User.hbm.xml</value>

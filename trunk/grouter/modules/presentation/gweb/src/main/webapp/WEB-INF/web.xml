@@ -16,9 +16,9 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-      classpath:/context-domain-dao.xml,classpath:/context-gweb-security.xml,
-      classpath:/context-domain-datasource.xml, classpath:/context-domain-service.xml,
-      classpath:/context-domain-sessionfactory.xml, classpath:/context-gweb-servlet.xml
+      classpath:/context-domain-dao.xml  classpath:/context-gweb-security.xml
+      classpath:/context-domain-datasource.xml classpath:/context-domain-service.xml
+      classpath:/context-domain-sessionfactory.xml
     </param-value>
   </context-param>
 
@@ -110,7 +110,7 @@
     <session-timeout>30</session-timeout>
   </session-config>
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>../html/index.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

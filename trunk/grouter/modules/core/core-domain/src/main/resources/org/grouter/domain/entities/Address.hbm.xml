@@ -6,7 +6,14 @@
         <id column="id" name="id" type="java.lang.String">
             <generator class="uuid"/>
         </id>
-        <property name="address" not-null="false" type="java.lang.String" column="address"/>
-        <property name="name" not-null="false" type="java.lang.String" column="name"/>
+        <property name="phone"  type="java.lang.String" column="phone"/>
+        <property name="mobilephone"  type="java.lang.String" column="mobilephone"/>
+        <property name="street" type="java.lang.String" column="street"/>
+        <property name="zip" type="java.lang.String" column="zip"/>
+        <property name="city" type="java.lang.String" column="city"/>
+        <property name="fax" type="java.lang.String" column="fax"/>
+        <property name="homepageUrl" type="java.lang.String" column="homepageurl"/>
+        <property name="companyname"  type="java.lang.String" column="companyname"/>
+        <property name="email" type="java.lang.String" column="email"/>
     </class>
 </hibernate-mapping>

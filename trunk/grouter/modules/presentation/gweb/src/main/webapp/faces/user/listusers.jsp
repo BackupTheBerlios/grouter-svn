@@ -1,76 +1,34 @@
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jstl/fmt" %>
-        <!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
-
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
-<html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <title>
-        Messages
+        User :: List
     </title>
-                                     
+    <link href="../../css/page_main.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript">
+        function init()
+        {
+            DWRUtil.useLoadingMessage();
+        }
+    </script>
 </head>
-<body>
-
-<div id="menuAction" >
-    <div id="form">
-            <table border="0">
-                <tr>
-                    <td>
-                        <form action="" enctype="multipart/form-data" name="mainForm" method="get">
-                        Grouter:
-                        <select id="routerid" name="routerid" onchange="this.form.submit()">
-                            <option value="">--- router ---</option>
-                            <c:forEach items="${routers}" var="object">
-                                <option <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if>  value="${object.id}">${object.name}</option>
-                            </c:forEach>
-                        </select>
-                        Node:
-                        <select id="nodeid" name="nodeid" onchange="this.form.submit()">
-                            <option value="">--- node ---</option>
-                            <c:forEach items="${nodes}" var="object">
 
 
-                                <option  <c:if test="${selectedNodeId eq object.id}">selected="selected"</c:if>
-                                    value="${object.id}">${object.name}</option>
-                            </c:forEach>
-                        </select>
-
-                        <input id="searchText" value="" name="searchText" type="text">
-
-                        <select id="column" name="column">
-                            <option value="">--- column ---</option>
-                            <option value="ID">Id</option>
-                            <option value="CONTENT">Content</option>
-                            <option value="SENDER">Sender</option>
-                            <option value="RECEIVER">Receiver</option>
-                        </select>
-                        <input type="submit" value="Search" name="searchCustomer" size="10"/>
-                    </form>
-                    </td>
-
-                </tr>
-            </table>
-    </div>
-</div>
-<!-- display:table name="" defaultsort="1" id="element" class="pagedList" -->
-<!-- display:column property="id" sortable="true" sortName="id" title="Id"/ -->
-<!-- display:column property="content" sortable="true" sortName="content" title="Content"/ -->
-<!--/display:table -->
-
-<div id="paragraph" >
-    Search messages.
-</div>
+<body onload="init();">
 
 
-<form id="mainForm" action="">
+<form action="">
     <table border="0" width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <th></th>
-            <th align="right">Number of messages :
-                <c:out value="${nodesSize}"/>
+            <th align="right"> Number of users :
+                <c:out value="${usersSize}"/>
             </th>
         </tr>
     </table>
@@ -78,23 +36,48 @@
 
         <thead>
             <tr>
-                <th><a href="?sortBy=id">Id</a></th>
-                <th><a href="?sortBy=firstName">Content</a></th>
+                <th>Id</th>
+                <th>Username</th>
+                <th>First</th>
+                <th>Last</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Company</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        <c:forEach items="${messages}" var="object">
-            <tr>
-                <td>
-                    <c:out value="${object.id}"/>
-                </td>
-                <td>
-                    <c:out value="${object.content}"/>
-                </td>
-            </tr>
-        </c:forEach>
+            <c:forEach items="${users}" var="object">
+                <tr>
+                    <td>
+                        <c:out value="${object.id}"/>
+                    </td>
+                    <td>
+                        <c:out value="${object.userName}"/>
+                    </td>
+                    <td>
+                        <c:out value="${object.firstName}"/>
+                    </td>
+                    <td>
+                        <c:out value="${object.lastName}"/>
+                    </td>
+                    <td>
+                        <c:out value="${object.address.phone}"/>
+                    </td>
+                    <td>
+                        <c:out value="${object.address.email}"/>
+                    </td>
+                    <td>
+                        <c:out value="${object.address.companyname}"/>
+                    </td>
+                    <td>
+                        <a href='edit.do?id=<c:out value="${object.id}"/>'> Edit </a>
+                    </td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
+
 
 </form>
 </body>

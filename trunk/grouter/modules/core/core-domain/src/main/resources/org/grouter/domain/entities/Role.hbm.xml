@@ -10,5 +10,6 @@
       <generator class="native" />
     </id>
     <property name="name" />
+    <property name="displayName" column="displayname" />
   </class>
 </hibernate-mapping>

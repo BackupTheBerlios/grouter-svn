@@ -15,10 +15,17 @@ import java.io.Serializable;
 public class Address implements Serializable
 {
     private String id;
-    private String name;
-    private String address;
     @Transient
     private Country country;
+    private String phone;
+    private String mobilephone;
+    private String street;
+    private String zip;
+    private String city;
+    private String fax;
+    private String homepageUrl;
+    private String companyname;
+    private String email;
 
     public Address()
     {
@@ -37,26 +44,6 @@ public class Address implements Serializable
         this.id = id;
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public String getAddress()
-    {
-        return address;
-    }
-
-    public void setAddress(String address)
-    {
-        this.address = address;
-    }
-
     @Transient
     public Country getCountry()
     {
@@ -68,4 +55,94 @@ public class Address implements Serializable
         this.country = country;
     }
 
+
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    public void setPhone(String phone)
+    {
+        this.phone = phone;
+    }
+
+    public String getMobilephone()
+    {
+        return mobilephone;
+    }
+
+    public void setMobilephone(String mobilephone)
+    {
+        this.mobilephone = mobilephone;
+    }
+
+    public String getStreet()
+    {
+        return street;
+    }
+
+    public void setStreet(String street)
+    {
+        this.street = street;
+    }
+
+    public String getZip()
+    {
+        return zip;
+    }
+
+    public void setZip(String zip)
+    {
+        this.zip = zip;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+
+    public String getFax()
+    {
+        return fax;
+    }
+
+    public void setFax(String fax)
+    {
+        this.fax = fax;
+    }
+
+    public String getHomepageUrl()
+    {
+        return homepageUrl;
+    }
+
+    public void setHomepageUrl(String homepageUrl)
+    {
+        this.homepageUrl = homepageUrl;
+    }
+
+    public String getCompanyname()
+    {
+        return companyname;
+    }
+
+    public void setCompanyname(String companyname)
+    {
+        this.companyname = companyname;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
 }

@@ -3,13 +3,13 @@ package org.grouter.domain.daolayer.spring;
 import org.grouter.domain.daolayer.NodeDAO;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPoint;
-import org.grouter.domain.entities.EndPointFileReader;
 import org.grouter.domain.entities.EndPointType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * DAO tests for mappings, cascade saves etc.
@@ -42,6 +42,7 @@ public class NodeDAOTest extends AbstractDAOTests
     public void testStore()
     {
         Node node = new Node();
+        node.setId( "andid" );
         node.setName("A node");
 
         nodeDAO.save(node);
@@ -56,13 +57,16 @@ public class NodeDAOTest extends AbstractDAOTests
     {
         Node node = new Node();
         node.setName("A node");
+        node.setId( "anid" );
 
-        EndPoint inboundEndpoint = new EndPointFileReader();
+        EndPoint inboundEndpoint = new EndPoint();
+        inboundEndpoint.setId("id1");
         inboundEndpoint.setScheduleCron("* * * * * ");
         inboundEndpoint.setUri("file://temp/in");
         inboundEndpoint.setEndPointType(EndPointType.FILE_READER);
 
-        EndPoint outBoundPoint = new EndPointFileReader();
+        EndPoint outBoundPoint = new EndPoint();
+        outBoundPoint.setId("id");
         outBoundPoint.setScheduleCron("* * * * * ");
         outBoundPoint.setUri("file://temp/out");
         outBoundPoint.setEndPointType(EndPointType.FILE_WRITER);
@@ -81,6 +85,8 @@ public class NodeDAOTest extends AbstractDAOTests
         map = jdbcTemplate.queryForMap("SELECT * FROM endpoint WHERE id = ?", new Object[]{inboundEndpoint.getId()});
         assertEquals("file://temp/in", map.get("uri"));
         assertEquals(2L, map.get("endpoint_type_fk"));
+
+        
     }
 
     @Override
@@ -119,5 +125,42 @@ public class NodeDAOTest extends AbstractDAOTests
         {
             fail("collection should not be lazy - using fetch join in mapping");
         }
+
+
+        try
+        {
+            node.getOutBound().getEndPointContext().toString();
+        }
+        catch (LazyInitializationException lie)
+        {
+            fail("collection should not be lazy - using fetch join in mapping");
+        }
     }
+
+
+    public void testGetNumberOfMessages()
+    {
+        assertEquals( new Long(6), nodeDAO.getNumberOfMessages( NODE_ID ) );
+    }
+
+
+    public void testGetNumberOfMessages2()
+    {
+        List<Node> nodes   = nodeDAO.findNodesWithNumberOfMessages(ROUTER_ID);
+
+        assertNotNull( nodes );
+
+        assertEquals( 2, nodes.size() );
+
+        for (Node node : nodes)
+        {
+            if(node.getId().equalsIgnoreCase(NODE_ID))
+            {
+                assertEquals( new Long(6) , node.getNumberOfMessagesHandled() );
+            }
+        }
+        
+
+    }
+
 }

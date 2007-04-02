@@ -12,12 +12,15 @@ public class EndPointType
     String name;
     public static EndPointType FILE_WRITER =  new EndPointType( 1L, "fileWriter" );
     public static EndPointType FILE_READER =  new EndPointType( 2L, "fileReader" );
+    public static EndPointType FTP_READER =  new EndPointType( 3L, "fftpReader" );
+
     static Map<Long, EndPointType> values = new HashMap<Long,EndPointType>();
 
     static
     {
         values.put( FILE_WRITER.getId(), FILE_WRITER );
         values.put( FILE_READER.getId(), FILE_READER );
+        values.put( FTP_READER.getId(), FTP_READER );
     }
 
     public static EndPointType valueOf( Long id )

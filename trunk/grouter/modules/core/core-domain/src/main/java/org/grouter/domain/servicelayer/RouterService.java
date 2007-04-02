@@ -29,11 +29,14 @@ public interface RouterService
     final static String BEANNAME = "routerService";
 
     /**
-     * Retrieve a list with all grouters available.
+     * Retrieve a list with all grouters available - loads all collections if specified in mapping.
      *
-     * @return
+     * @return a "fully" loaded router as per mapping definition
      */
     List<Router> findAll();
+
+
+    List<Router> findAllDistinct();
 
 
     /**
@@ -54,10 +57,10 @@ public interface RouterService
     /**
      * Find messages for this node.
      *
-     * @param id a node for which we want all messages
+     * @param nodeId a node for which we want all messages
      * @return a list of {@link Message}s
      */
-    List<Message> findAllMessages(String id);
+    List<Message> findAllMessages(String nodeId);
 
     /**
      * @param routerId
@@ -74,5 +77,29 @@ public interface RouterService
      * @return
      */
     void saveRouter(Router router);
+
+
+    /**
+     * Stores a node - all relationships need to be inplace for persitence operation is to succeed.
+     * Altering a node does not persiste between restarts of a Router, since the master config file
+     * is read on every restart of the router.
+     *
+     * TODO should we overwrite a config file for a router (backing up the previous one)?!?
+     *
+     * @param node
+     */
+    void saveNode(Node node);
+
+
+    /**
+     * Retrieve number of messages for every node on this router instance - using select count(*).
+     * 
+     * @param routerId id of the node we want to query
+     * @return list {@link Node}s with number of messages set
+     */
+    List<Node> findNodesWithNumberOfMessages( String routerId );
+
+
+    Node findById( String nodeId);
 
 }

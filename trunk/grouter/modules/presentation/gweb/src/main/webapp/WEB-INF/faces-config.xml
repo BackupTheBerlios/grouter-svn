@@ -35,7 +35,7 @@
     <from-view-id>/pages/node/editnode.jsp</from-view-id>
     <navigation-case>
       <from-outcome>show-node-form</from-outcome>
-      <to-view-id>/index.jsp</to-view-id>
+      <to-view-id>/index.html</to-view-id>
     </navigation-case>
   </navigation-rule>
 

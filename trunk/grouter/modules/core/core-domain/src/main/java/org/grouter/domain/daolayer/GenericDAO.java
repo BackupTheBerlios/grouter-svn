@@ -54,10 +54,17 @@ public interface GenericDAO<T, ID extends Serializable>
     List<T> findAll();
 
     /**
-     * Find entities, excluding properties.
+     * Find entities, excluding properties. Provide an instance of the queried class with some properties initialized,
+     * and the query returns all persistent instances with matching property values.
+     *
+     * E.g.
+     * Router example = new Router();
+     * return routerDAO.findByExample( example, "nodes" , "upTime");
+     * 
+     *
      * @param exampleInstance
      * @param excludeProperty
-     * @return
+     * @return  list with entities matching the example provided
      */
     List<T> findByExample(T exampleInstance, String... excludeProperty);
 

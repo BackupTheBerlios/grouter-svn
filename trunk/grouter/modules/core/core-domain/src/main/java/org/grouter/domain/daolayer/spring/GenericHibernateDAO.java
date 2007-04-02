@@ -96,7 +96,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     @SuppressWarnings("unchecked")
     public List<T> findAll()
     {
-        return findByCriteria();
+        return getSession(  ).createCriteria( getEntityClass() ).list();
     }
 
     /**

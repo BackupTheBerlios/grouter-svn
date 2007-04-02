@@ -1,8 +1,18 @@
 package org.grouter.domain.entities;
 
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * An EndPoint represents the interface for inbound and outbound messaging. A Node can have one
  * inbound Endpoint and one outbound EndPoint.
+ * Tied to an EndPoint is a collection of EndPointContext items, keyname/value pairs with both optional
+ * keyname/value pairs and keyname/value pairs to override existing default keyname/value pairs in a worker thread -
+ * a reader or writer.
+ *
+ * Quartz is used to schedule reader and writer jobs (threads) tied to each EndPoint.
+ *
+ * An EndPoint can also have a filter - filtering out messages which should not be used.
  *
  * @author Georges Polyzois
  */
@@ -14,6 +24,7 @@ public class EndPoint
     String scheduleCron;
     EndPointType endPointType;
     Filter filter;
+    Map<String,String> endPointContext =  new HashMap<String,String>();
 
     public Filter getFilter()
     {
@@ -80,6 +91,16 @@ public class EndPoint
         this.id = id;
     }
 
+
+    public Map<String, String> getEndPointContext()
+    {
+        return endPointContext;
+    }
+
+    public void setEndPointContext(Map<String, String> endPointContext)
+    {
+        this.endPointContext = endPointContext;
+    }
 
     public String toString()
     {

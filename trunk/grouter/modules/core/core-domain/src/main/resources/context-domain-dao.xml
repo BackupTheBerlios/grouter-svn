@@ -16,4 +16,6 @@
 
     <bean id="routerDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RouterDAOImpl"/>
 
+    <bean id="userDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.UserDAOImpl"/>
+
 </beans>

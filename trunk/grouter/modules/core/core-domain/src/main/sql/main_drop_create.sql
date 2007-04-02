@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS user_role;
 DROP TABLE IF EXISTS property;
 DROP TABLE IF EXISTS endpoint;
 DROP TABLE IF EXISTS endpoint_type;
+DROP TABLE IF EXISTS endpoint_context;
 -- DROP TABLE IF EXISTS endpoint_filereader;
 DROP TABLE IF EXISTS filter_type;
 
@@ -49,6 +50,8 @@ select 'endpoint_type.sql';
 \. endpoint_type.sql
 select 'endpoint.sql';
 \. endpoint.sql
+select 'endpoint_context.sql';
+\. endpoint_context.sql
 select 'filter_type.sql';
 \. filter_type.sql
 

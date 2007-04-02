@@ -13,9 +13,13 @@
     </property>
   </bean>
 
-  <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController" />
-  <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController" />
-  <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController" />
+
+
+  <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController"/>
+  <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController"/>
+  <bean name="/node/edit.do" class="org.grouter.presentation.controller.node.NodeEditController"/>
+  <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
+  <bean name="/user/list.do" class="org.grouter.presentation.controller.user.UserListController"/>
   <bean name="/grouter/select.do" class="org.grouter.presentation.controller.router.GrouterSelectController"/>
 
 
@@ -27,21 +31,46 @@
 
   <!-- Config for JSP/JSTL -->
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="/faces/"/>
+    <property name="prefix" value="/pages/"/>
     <property name="suffix" value=".jsp"/>
     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
   </bean>
 
-   <!-- DWR -->
+  <!-- DWR -->
   <bean name="/**/*" class="org.springframework.web.servlet.mvc.ServletWrappingController">
-    <property name="servletClass" value="uk.ltd.getahead.dwr.DWRServlet"/>
+    <!-- property name="servletClass" value="uk.ltd.getahead.dwr.DWRServlet"/ -->
+    <property name="servletClass" value="org.directwebremoting.servlet.DwrServlet"/>
+    <property name="initParameters">
+      <props>
+        <prop key="debug">true</prop>
+        <prop key="pollAndCometEnabled">true</prop>
+      </props>
+    </property>
+  </bean>
+
+   <!-- Reverse Ajax -->
+  <!-- bean name="nodeCallbackThread" class="org.grouter.presentation.controller.node.NodeCallbackThread" / -->
+
+
+
+  <!--bean id="dwrController" class="org.springframework.web.servlet.mvc.ServletWrappingController">
+    <property name="servletClass">
+      <value>uk.ltd.getahead.dwr.DWRServlet</value>
+    </property>
     <property name="initParameters">
       <props>
         <prop key="debug">true</prop>
       </props>
     </property>
   </bean>
-  
+
+  <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <property name="mappings">
+      <props>
+        <prop key="/**/*">dwrController</prop>
+      </props>
+    </property>
+  </bean -->
 
 
 </beans>

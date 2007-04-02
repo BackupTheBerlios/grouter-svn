@@ -32,44 +32,75 @@ public class RouterServiceImpl implements RouterService
     private static Log logger = LogFactory.getLog(RouterServiceImpl.class);
     private MessageDAO messageDAO;
     private NodeDAO nodeDAO;
+
     private RouterDAO routerDAO;
 
+    /**
+     * Constructor.
+     */
+    public RouterServiceImpl()
+    {
+
+    }
+
+    /**
+     * Injected.
+     * @param routerDAO injecteed DAO
+     */
     public void setRouterDAO(RouterDAO routerDAO)
     {
         this.routerDAO = routerDAO;
     }
 
+    /**
+     * Injected.
+     * @param nodeDAO injected DAO
+     */
     public void setNodeDAO(NodeDAO nodeDAO)
     {
         this.nodeDAO = nodeDAO;
     }
 
-    public MessageDAO getMessageDAO()
-    {
-        return messageDAO;
-    }
 
+    /**
+     * Injected.
+     * @param messageDAO injected DAO
+     */
     public void setMessageDAO(MessageDAO messageDAO)
     {
         this.messageDAO = messageDAO;
     }
 
-    public RouterServiceImpl()
-    {
-    }
 
-
+    /**
+     * {@inheritDoc}
+     */
     public List<Router> findAll()
     {
-        return routerDAO.findAll();  
+        return routerDAO.findAll();
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<Router> findAllDistinct()
+    {
+        return routerDAO.findAllDistinct();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void saveMessage(Message message)
     {
         Validate.notNull(message, "In parameter can not be null");
         messageDAO.save(message);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Message findMessageById(String id)
     {
         Validate.notNull(id, "In parameter can not be null");
@@ -77,19 +108,59 @@ public class RouterServiceImpl implements RouterService
         return foundMessage;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public List<Message> findAllMessages(String nodeId)
     {
         return messageDAO.findMessagesForNode( nodeId );
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public List<Node> findAllNodes(String routerId)
     {
-        return nodeDAO.findAll();
+        return nodeDAO.findAllNodes( routerId );
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public void saveRouter(Router router)
     {
         Validate.notNull(router, "In parameter can not be null");
         routerDAO.save(router);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void saveNode(Node node)
+    {
+        Validate.notNull(node, "In parameter can not be null");
+        nodeDAO.save(node);
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    public List<Node> findNodesWithNumberOfMessages(String routerId)
+    {
+        return nodeDAO.findNodesWithNumberOfMessages( routerId );  
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public Node findById(String nodeId)
+    {
+        return nodeDAO.findById( nodeId );
+    }
+
+
 }

@@ -3,6 +3,7 @@ package org.grouter.presentation.controller.security;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.acegisecurity.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Controller used for redirecting an authenticated user or nu authenticated user to a resource.
+ * Controller used for redirecting an authenticated user or non authenticated user to a resource.
  * Normally if a user tries to access a certain url he/she will be presetnted with a logn form
  * as specified by the login attribute of this class. Upon a succesfull authentication the user
  * will be forwarded to the resource url.
@@ -58,6 +59,8 @@ public class SecurityController extends MultiActionController
     public ModelAndView loginDenied( HttpServletRequest request, HttpServletResponse response )
             throws Exception
     {
+        SecurityContextHolder.clearContext();
+
         return new ModelAndView( this.loginDenied );
     }
 }

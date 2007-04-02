@@ -3,6 +3,7 @@ package org.grouter.domain.entities;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.io.Serializable;
 
 
 /**
@@ -10,10 +11,9 @@ import java.util.Set;
  *
  * @author Georges Polyzois
  */
-public class User
+public class User implements Serializable, Comparable
 {
     private Long id;
-    private String email;
     private String userName;
     private String firstName;
     private String lastName;
@@ -130,13 +130,23 @@ public class User
     }
 
 
-    public String getEmail()
+    /**
+     * Sorting inmemory using Collections.sort will do sort by name.
+     *
+     * @param anotherObject is a non-null Role.
+     * @throws NullPointerException if anotherObject is null.
+     * @throws ClassCastException   if anotherObject is not an Role object.
+     */
+    public int compareTo( Object anotherObject) throws ClassCastException
     {
-        return email;
+        //optimizing
+        if ( this == anotherObject)
+        {
+            return 0;
+        }
+
+        User compareTo = ( User ) anotherObject;
+        return getUserName(  ).compareTo( compareTo.getUserName() );
     }
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
 }

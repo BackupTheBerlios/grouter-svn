@@ -45,7 +45,7 @@ public class MessageListController extends AbstractController
         String nodeId = ServletRequestUtils.getStringParameter(request, "nodeid", null);
         String routerId = ServletRequestUtils.getStringParameter(request, "routerid", null);
 
-        List<Router> routers = routerService.findAll();
+        List<Router> routers = routerService.findAllDistinct();
         map.put("routers", routers);
 
 

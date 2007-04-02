@@ -10,6 +10,11 @@
   http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+
+  <!-- Reverse Ajax -->
+   <bean name="nodeCallbackThread" class="org.grouter.presentation.controller.node.NodeCallbackThread" />
+  
+
   <!-- Defines chain of filters -->
   <bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
     <property name="filterInvocationDefinitionSource">
@@ -30,7 +35,7 @@
       <list>
         <!-- bean class="util.web.PreLogoutHandler" / -->
         <bean class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler">
-          <property name="invalidateHttpSession" value="false" />
+          <property name="invalidateHttpSession" value="true" />
         </bean>
       </list>
     </constructor-arg>
@@ -91,6 +96,7 @@
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
         /admin/**=ROLE_ADMIN
+        /user/**=ROLE_ADMIN
         /message/**=ROLE_ADMIN
         /node/**=ROLE_ADMIN
         /grouter/**=ROLE_ADMIN
@@ -134,7 +140,7 @@
       </value>
     </property>
     <property name="usersByUsernameQuery">
-      <value>SELECT id,pwd,'true',username, fullname FROM user WHERE username=?</value>
+      <value>SELECT id,pwd,'true',username, firstname FROM user WHERE username=?</value>
     </property>
   </bean>
 

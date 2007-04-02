@@ -21,5 +21,12 @@
             fetch="join">
     </many-to-one>
 
+    <map name="endPointContext" inverse="true" table="endpoint_context"  lazy="false" fetch="join" >
+        <key column="endpoint_fk"/>
+        <map-key column="keyname" type="string"/>
+        <element  column="value" type="string" not-null="true"/>
+    </map>
+
+
   </class>
 </hibernate-mapping>

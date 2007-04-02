@@ -7,6 +7,7 @@ import org.grouter.domain.daolayer.*;
 import org.grouter.domain.daolayer.ejb3.PersistenceContextName;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.NotImplementedException;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -44,6 +45,17 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         return routerDAO.findAll();
     }
 
+    public List<Router> findAllDistinct()
+    {
+        throw new NotImplementedException("implemente this");
+
+    }
+
+    public List<Router> findByProjection()
+    {
+        throw new NotImplementedException("implemente this");
+    }
+
     public void saveMessage(Message message)
     {
         Validate.notNull(message, "Can not handle a null message");
@@ -69,6 +81,32 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
     public void saveRouter(Router router)
     {
         routerDAO.save(router);
+    }
+
+    public void saveNode(Node node)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public List<Node> findNodesWithNumberOfMessages(String routerId)
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public List<Node> getNodeWithNumberOfMessages(String routerId)
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public Long getNumberOfMessages(String nodeId)
+    {
+        throw new NotImplementedException("implemente this");
+    }
+
+    //todo
+    public Node findById(String nodeId)
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

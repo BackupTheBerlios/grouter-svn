@@ -3,7 +3,7 @@
     <title>
         Login
     </title>
-    <link href="/css/main.css" rel="stylesheet"/>
+    <link href="/css/page_main.css" rel="stylesheet"/>
 </head>
 <body>
 
