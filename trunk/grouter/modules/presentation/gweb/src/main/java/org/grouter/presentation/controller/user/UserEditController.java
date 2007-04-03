@@ -36,7 +36,8 @@ public class UserEditController extends SimpleFormController
     private static Logger logger = Logger.getLogger( UserEditController.class );
     private final static String ID = "id";
     private static final String FORMVIEW = "user/editUser";
-    private static final String SUCCESSVIEW = "user/list.do";
+    private static final String SUCCESSVIEW = "redirect:list.do";
+    private static final String USER = "usercommand";
 
     public void setUserService(UserService userService)
     {
@@ -55,6 +56,7 @@ public class UserEditController extends SimpleFormController
         setCommandClass( UserCommand.class );
         setFormView( FORMVIEW );
         setSuccessView( SUCCESSVIEW );
+        setCommandName( USER );
     }
 
 
@@ -85,8 +87,8 @@ public class UserEditController extends SimpleFormController
         Map<String, Object> model = new HashMap<String, Object>(  );
         model.put( "message", message );
 
-        return showForm( req, res, bex, model );
-        //return new ModelAndView( LIST_VIEW + "?listingDate=" + listingDate, model );
+        //return showForm( req, res, bex, model );
+        return new ModelAndView( SUCCESSVIEW, model );
     }
 
 
@@ -102,7 +104,7 @@ public class UserEditController extends SimpleFormController
     {
         UserCommand cmd;
         Long id = getId( request, ID);
-        logger.debug("Got for id : " + id);
+        logger.debug("Get for id : " + id);
 
         if ( id != null )
         {
