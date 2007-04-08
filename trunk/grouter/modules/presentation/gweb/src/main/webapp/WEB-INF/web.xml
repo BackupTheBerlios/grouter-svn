@@ -10,19 +10,22 @@
   </context-param>
 
   <!--
-    Tell spring which context files we want to use, if none are specified then use the 
-    applicationContext.xml
+    Tell spring which context files we want to use, if none are specified then the
+    applicationContext.xml is used (if any).
    -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-      classpath:/context-domain-dao.xml  classpath:/context-gweb-security.xml
+      classpath:/context-domain-dao.xml classpath:/context-gweb-security.xml
       classpath:/context-domain-datasource.xml classpath:/context-domain-service.xml
       classpath:/context-domain-sessionfactory.xml
     </param-value>
   </context-param>
 
 
+  <!--
+    Init log4j from this location.
+    -->
   <context-param>
     <param-name>log4jConfigLocation</param-name>
     <param-value>/WEB-INF/classes/log4j.properties</param-value>
@@ -112,5 +115,14 @@
   <welcome-file-list>
     <welcome-file>../html/index.html</welcome-file>
   </welcome-file-list>
+
+
+
+  <!-- jsp-config>
+		<taglib>
+			<taglib-uri>http://www.springframework.org/tags/form</taglib-uri>
+			<taglib-location>spring-form.tld</taglib-location>
+		</taglib>
+	</jsp-config -->
 
 </web-app>

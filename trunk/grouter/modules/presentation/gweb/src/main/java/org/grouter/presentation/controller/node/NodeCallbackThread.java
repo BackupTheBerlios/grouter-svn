@@ -6,6 +6,7 @@ import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.ScriptSession;
 import org.directwebremoting.proxy.dwr.Util;
+import org.directwebremoting.proxy.scriptaculous.Effect;
 import org.directwebremoting.util.Logger;
 import org.grouter.domain.servicelayer.ServiceFactory;
 import org.grouter.domain.entities.Node;
@@ -20,15 +21,15 @@ import org.grouter.domain.entities.Node;
  *
  * @author Georges Polyzois
  */
-public class NodeCallbackThread implements Runnable
+public final class NodeCallbackThread implements Runnable
 {
-    static Map nodes = new Hashtable();
+    static Map<String, Node> nodes = new Hashtable<String, Node>();
     private static transient boolean active = false;
     private static final Logger logger = Logger.getLogger(NodeCallbackThread.class);
-    WebContext wctx;
-    private static final int CALLBACK_INTERVALL = 10000;
-    String routerId;
-    static Map clients = new Hashtable();
+    private WebContext wctx;
+    public static final int CALLBACK_INTERVALL = 3000;
+    private String routerId;
+    static Map<String, ScriptSession> clients = new Hashtable<String, ScriptSession>();
 
     public NodeCallbackThread()
     {
@@ -36,76 +37,99 @@ public class NodeCallbackThread implements Runnable
     }
 
 
+    /**
+     * Deregisters a ScriptSession from client map if user does so actively. If not done actively
+     * a ScriptSession times out in 5min()
+     */
     public synchronized void deRegister()
     {
+        // stop the thread running...
+        logger.debug("deregister called - invalidating session");
 
+        // remove from registered listeners and then invalidate the ScriptSession
+        clients.remove(wctx.getScriptSession().getId());
+        wctx.getScriptSession().invalidate();
+
+        if (clients.size() == 0)
+        {
+            // might as well stop thread since we have no registered listeners
+            this.active = false;
+        }
 
     }
 
     /**
-     * Set on or off for this view.
+     * Register a client in the map.
      */
     public synchronized void register(String routerId)
     {
         logger.info("Toggle callback for routerid :" + routerId);
+        // todo : handle multiple router ids - store in map and do find for every rouer id on thread execution
         this.routerId = routerId;
+        clients.put(wctx.getScriptSession().getId(), wctx.getScriptSession());
         if (this.active == false)
         {
             this.active = true;
             new Thread(this).start();
         }
-        // get my session id
-
-        // store my session id in map
-
-        // set register for callbacks true
-
-        // start thread
-
     }
 
 
     /**
-     * Loop while active and sleep for CALLBACK_INTERVALL.
+     * Loop while active and sleep for NodeCallbackThread.CALLBACK_INTERVALL
      */
     public void run()
     {
         try
         {
             logger.debug("Starting server-side thread");
-
             while (active)
             {
-                List<Node> nodes = ServiceFactory.getRouterService().findNodesWithNumberOfMessages(routerId);
-                logger.debug("Number of nodes for this routerId :" + routerId + " is:" + nodes.size());
-
-                // For all the browsers on the current page:
-                String currentPage = wctx.getCurrentPage();
-                Collection sessions = wctx.getScriptSessionsByPage(currentPage);
-                for (Object session : sessions)
+                List<Node> nodesFromQuery = null;
+                if (clients.size() > 0)
                 {
-                    ScriptSession sessionS = (ScriptSession) session;
-                    sessionS.getId();
+                    nodesFromQuery = ServiceFactory.getRouterService().findNodesWithNumberOfMessages(routerId);
+                    logger.debug("Number of nodesFromQuery for this routerId :" + routerId + " is:" + nodesFromQuery.size());
 
-                    logger.debug("Scriptsessionid : " + sessionS.getId());
+                    for (Node node : nodesFromQuery)
+                    {
+                        // if node exists in map
+                        if (this.nodes.get(node.getId()) != null)
+                        {
+                            logger.debug("Node already in map");
+                            // check if something has been updated on the node - using hashcode
 
-                }
-
-
-                Util utilAll = new Util(sessions);
-
-                for (Node node : nodes)
+                            logger.debug(this.nodes.get(node.getId()).getNumberOfMessagesHandled().toString());
+                            logger.debug(node.getNumberOfMessagesHandled().toString());
+                            boolean hasNumberOfMessagesChanged = !this.nodes.get(node.getId()).getNumberOfMessagesHandled().equals(node.getNumberOfMessagesHandled());
+                            if (hasNumberOfMessagesChanged)
+                            {
+                                logger.debug("Fire update event..");
+                                // if something has changed fire update event
+                                this.nodes.put(node.getId(), node);
+                                fireNodeUpdatedEvent(node);
+                            } else
+                            {
+                                // nothing changed - ignore and log
+                                logger.info("Nothing changed on node :" + node.getId());
+                            }
+                        } else
+                        {
+                            // else if node does not exist store the node in the map
+                            logger.debug("Storing node in map");
+                            this.nodes.put(node.getId(), node);
+                            fireNodeUpdatedEvent(node);
+                        }
+                    }
+                } else
                 {
-                    logger.info("node_msg_id" + node.getId() + " #" + node.getNumberOfMessagesHandled().toString());
-                    utilAll.setValue(node.getId(), node.getNumberOfMessagesHandled().toString());
+                    logger.info("Thread running but no registered clients");
                 }
-
                 Thread.sleep(CALLBACK_INTERVALL);
             }
-
-            Util pages = new Util(wctx.getScriptSession());
-            pages.setValue("callback_field", "");
-            logger.debug("Stopping server-side thread");
+            logger.debug("Stopping server-side thread. Clearing nodes and clients.");
+            clients.clear();
+            nodes.clear();
         }
         catch (InterruptedException ex)
         {
@@ -113,8 +137,37 @@ public class NodeCallbackThread implements Runnable
         }
     }
 
+    private void fireNodeUpdatedEvent(Node node)
+    {
+        // For all the browsers on the current page:
+        //String currentPage = wctx.getCurrentPage();
+        //logger.debug("currentPage:" + currentPage);
 
-    
+        Iterator iterator = clients.keySet().iterator();
+        while (iterator.hasNext())
+        {
+            String key = (String) iterator.next();
+            logger.debug("key :" + key);
 
+            ScriptSession asession = clients.get(key);
+            Util utilAll = new Util(asession);
+            logger.info("Setting value on :" + node.getId() + " to #" + node.getNumberOfMessagesHandled().toString());
+            utilAll.setValue(node.getId(), node.getNumberOfMessagesHandled().toString());
+
+            Effect effect = new Effect(asession);     //, duration: 15
+            effect.highlight(node.getId(), "{ duration: 2, queue: {position: 'end', scope: '" + node.getId() + "', limit:1}}"); //"{startcolor:'e6e6fa', queue: {position: 'end', scope: 'price', limit:1}}");
+            // highlight a row
+            // effect.highlight("row_" + node.getId(), "{ duration: 1, queue: {position: 'end', scope: 'row_" + node.getId() + "', limit:1}}"); //"{startcolor:'e6e6fa', queue: {position: 'end', scope: 'price', limit:1}}");
+        }
+    }
+
+    private void printSessionInfo(Collection sessions)
+    {
+        for (Object session : sessions)
+        {
+            ScriptSession sessionS = (ScriptSession) session;
+            logger.debug("Scriptsessionid : " + sessionS.getId());
+        }
+    }
 }
 

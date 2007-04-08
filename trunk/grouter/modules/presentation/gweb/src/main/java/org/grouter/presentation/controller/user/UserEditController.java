@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.grouter.domain.servicelayer.UserService;
 import org.grouter.domain.entities.User;
+import org.grouter.domain.entities.Role;
 
 import java.text.SimpleDateFormat;
 
@@ -35,7 +36,7 @@ public class UserEditController extends SimpleFormController
 {
     private static Logger logger = Logger.getLogger( UserEditController.class );
     private final static String ID = "id";
-    private static final String FORMVIEW = "user/editUser";
+    private static final String FORMVIEW = "user/edituser";
     private static final String SUCCESSVIEW = "redirect:list.do";
     private static final String USER = "usercommand";
 
@@ -57,6 +58,7 @@ public class UserEditController extends SimpleFormController
         setFormView( FORMVIEW );
         setSuccessView( SUCCESSVIEW );
         setCommandName( USER );
+        //setValidator();
     }
 
 
@@ -161,8 +163,11 @@ public class UserEditController extends SimpleFormController
     {
         Map<String, Object> model = new HashMap<String, Object>(  );
 
+        List<Role> allRoles = Role.values();
+
         List<User> users = userService.findAll();
         model.put( "users", users );
+        model.put( "roles", allRoles );
 
         return model;
     }

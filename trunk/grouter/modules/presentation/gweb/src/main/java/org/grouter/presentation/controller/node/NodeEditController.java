@@ -34,7 +34,7 @@ public class NodeEditController extends SimpleFormController
     private static final String FORMVIEW = "node/editNode";
     private static final String SUCCESSVIEW = "node/list.do";
     private RouterService routerService;
-
+    private static final String NODECOMMAND = "nodecommand";
 
 
     public void setRouterService(RouterService routerService)
@@ -51,6 +51,7 @@ public class NodeEditController extends SimpleFormController
         setCommandClass( NodeCommand.class );
         setFormView(FORMVIEW);
         setSuccessView(SUCCESSVIEW);
+        setCommandName(NODECOMMAND);
     }
 
 
