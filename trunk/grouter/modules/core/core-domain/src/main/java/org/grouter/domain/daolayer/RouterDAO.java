@@ -9,14 +9,8 @@ import java.util.List;
  */
 public interface RouterDAO extends GenericDAO<Router, String>
 {
-
-
     List<Router> findAllDistinct();
 
-
     //List<Router> findByProjection();
-
-
-
 
 }

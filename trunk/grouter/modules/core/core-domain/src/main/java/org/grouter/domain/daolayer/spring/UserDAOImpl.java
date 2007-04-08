@@ -2,13 +2,15 @@ package org.grouter.domain.daolayer.spring;
 
 import org.apache.log4j.Logger;
 import org.grouter.domain.daolayer.UserDAO;
-import org.grouter.domain.daolayer.spring.GenericHibernateDAO;
 import org.grouter.domain.entities.User;
 import org.hibernate.Session;
 
+import java.util.List;
+
 /**
- * Hibernate-specific implementation of the <tt>SystemUserDAO</tt>
- * non-CRUD data access object.
+ * Hibernate-specific implementation of the {@link UserDAO} interface.
+ *
+ * @author Georges Polyzois
  */
 public class UserDAOImpl extends GenericHibernateDAO<User, Long> implements UserDAO
 {
@@ -33,4 +35,10 @@ public class UserDAOImpl extends GenericHibernateDAO<User, Long> implements User
         session = s;
     }
 
+
+    public void markAsDeleted(Long id)
+    {
+        User user = findById( id );
+        user.setDeleted( true );
+    }
 }

@@ -10,7 +10,8 @@
     <property name="name" not-null="false" type="java.lang.String" column="name"/>
     <property name="upTime" not-null="false" type="java.lang.Long" column="uptime"/>
 
-    <set name="nodes" cascade="all" lazy="false"  fetch="join" inverse="true" table="node" >
+    <!-- Lazy relationship to the Node collection -->
+    <set name="nodes" cascade="save-update,delete-orphan" inverse="true" table="node" >
       <key>
         <column name="router_fk" not-null="true"/>
       </key>

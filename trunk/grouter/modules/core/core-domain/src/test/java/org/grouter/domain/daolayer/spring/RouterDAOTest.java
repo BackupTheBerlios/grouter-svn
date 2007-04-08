@@ -1,6 +1,5 @@
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.RouterDAO;
 import org.grouter.domain.entities.*;
 import org.apache.commons.logging.Log;
@@ -52,51 +51,55 @@ public class RouterDAOTest extends AbstractDAOTests
         assertEquals("a name", motorDealerMap.get("name"));
     }
 
-    public void testLazy()
+    public void testLazyCollections()
     {
         Router router =  routerDAO.findById(ROUTER_ID);
-
-//        message.getReceivers();
         assertNotNull( router );
-
         endTransaction();
-
-
         try
         {
             router.getNodes().toString();
-            assertEquals( 1, router.getNodes().size() );
-
         }
         catch (LazyInitializationException lie)
         {
-            fail("collection should not be lazy - using fetch join in mapping");
+            //expected
         }
 
     }
 
-
-    /** Should not be able to delete a router...
-    public void testDelete() throws Exception
+    public void testFindById()
     {
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM message WHERE id = '" + MESSAGE_ID + "'"));
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE id = '" + NODE_ID + "'"));
+        Router router = routerDAO.findById( ROUTER_ID );
+        assertNotNull( router );
+        assertEquals( "ROUTER_TEST", router.getName() );
+    }
 
-        messageDAO.delete( new Message( MESSAGE_ID ) );
+    public void testFindAndJoin()
+    {
+        Router router = routerDAO.findById(ROUTER_ID, "nodes" );
+        assertNotNull(router);
+        endTransaction();
+        try
+        {
+            router.getNodes().toString();
+            assertEquals( 2, router.getNodes().size() );
+        }
+        catch (LazyInitializationException lie)
+        {
+            fail("collection should have been loaded");
+        }
+    }
+
+
+    public void testDelete()
+    {
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
+        assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        routerDAO.delete( ROUTER_ID );
         flushSession();
-
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM message WHERE id = '" + MESSAGE_ID + "'"));
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE id = '" + NODE_ID + "'"));
-
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM endpoint"));
     }
 
-
-    public void testFinder()
-    {
-        Message entity = messageDAO.findById(MESSAGE_ID);
-        assertNotNull(entity);
-        assertEquals("A message 1", entity.getContent());
-    }
-
-     */
 }

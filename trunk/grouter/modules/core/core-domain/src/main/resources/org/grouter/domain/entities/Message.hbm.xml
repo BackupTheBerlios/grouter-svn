@@ -14,9 +14,6 @@
             <key column="MESSAGEID"/>
             <many-to-many class="org.grouter.domain.entities.Receiver" column="RECEIVERID"/>
         </set-->
-
-
-
         <set name="receivers" cascade="all" lazy="false" inverse="true" table="receiver_message" fetch="join">
             <key>
                 <column name="message_fk" not-null="false "/>
@@ -59,7 +56,7 @@
                 not-null="false"
                 class="org.grouter.domain.entities.Node"
                 column="node_fk"
-                cascade="none"
+                cascade="save-update"
                 update="false">
         </many-to-one>
     </class>

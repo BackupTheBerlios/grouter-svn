@@ -13,13 +13,14 @@
     <property name="password" column="pwd"/>
     <property name="firstName" column="firstname" />
     <property name="lastName" column="lastname" />
+    <property name="deleted" />
 
     <many-to-one name="address" column="address_fk" cascade="all" class="org.grouter.domain.entities.Address"
       not-null="false"   fetch="join"  lazy="false" />
 
     <many-to-one name="createdBy" column="createdby" class="org.grouter.domain.entities.User" not-null="false" />
 
-    <set name="roles" inverse="true" cascade="all-delete-orphan" >
+    <set name="roles" inverse="true" cascade="delete-orphan" lazy="false" >
       <key column="user_id" />
       <one-to-many class="org.grouter.domain.entities.UserRole" />
     </set>

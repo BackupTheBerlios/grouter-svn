@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Test the DAO using an external DB which is populated with data before the actual test is run
- * and then restored to a state as per before the tests were ran. All plumibng for rolling back the
+ * {@link #getTestDataLocation()} and then restored to a state as per before the tests were ran. All plumibng for rolling back the
  * state is taken care of by Springs  {@link org.springframework.test.AbstractTransactionalDataSourceSpringContextTests}
  * we we are subclassing from in AbstractDAOTests. AbstractDAOTests referes to the sql to be run before
  * any test are created and run.
@@ -27,6 +27,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     String MESSAGE_ID = "msgid_1";
     String NODE_ID = "nid_1";
     String ROUTER_ID = "rid_1";
+    Long USER_ID = new Long(10002);
 
     SessionFactory sessionFactory;
 
@@ -57,6 +58,10 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     }
 
 
+    /**
+     * Location of test data realtive to the resources location.
+     * @return relative path to test data location
+     */
     protected String getTestDataLocation()
     {
         return "sql/test-domain-data.sql";
@@ -68,7 +73,6 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     }
 
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onSetUpInTransaction() throws Exception
     {
@@ -87,5 +91,28 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     }
 
 
-    abstract void testLazy();
+    /**
+     * Subclasses need to override this and implement a test whereby the relationships are tested. Is a relationship
+     * to be loaded lazy or not?
+     */
+    abstract void testLazyCollections();
+
+    /**
+     * Subclasses need to override this and implement a test whereby they load an entity and verify that
+     * some of the loaded attributes ot hhe entity are valid.
+     */
+    abstract void testFindById();
+
+    /**
+     * Subclasses need to override this and implement a test whereby they delete an entity and verify that the
+     * entity was deleted (or in some cases marked as deleted) and that any cascade options are valid.
+     */
+    abstract void testDelete();
+
+    /**
+     * Subclasses need to override this and implement a test whereby they save an entity and verify that
+     * the entity was actually saved.
+     */
+    abstract void testSave();
+
 }

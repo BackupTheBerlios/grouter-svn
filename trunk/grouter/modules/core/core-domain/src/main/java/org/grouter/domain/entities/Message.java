@@ -49,9 +49,7 @@ public class Message implements Serializable
     private Sender sender;
     private String content;
     private BigInteger counter;
-
     private Timestamp creationTimestamp;
-
     private Node node;
 
     public Message()

@@ -17,7 +17,7 @@
             not-null="false"
             class="org.grouter.domain.entities.Router"
             column="router_fk"
-            cascade="none"
+            cascade="save-update"
             update="false"
             fetch="join">
     </many-to-one>
@@ -27,7 +27,7 @@
             not-null="false"
             class="org.grouter.domain.entities.EndPoint"
             column="inbound_endpoint_fk"
-            cascade="all"
+            cascade="save-update,delete"
             fetch="join">
     </many-to-one>
 
@@ -36,9 +36,17 @@
             not-null="false"
             class="org.grouter.domain.entities.EndPoint"
             column="outbound_endpoint_fk"
-            cascade="all"
+            cascade="save-update,delete"
             fetch="join">
     </many-to-one>
+
+    <!-- Lazy relationship to the Node collection -->
+    <set name="messages" cascade="delete" inverse="true" table="message" >
+      <key>
+        <column name="node_fk" not-null="true"/>
+      </key>
+      <one-to-many class="org.grouter.domain.entities.Message"/>
+    </set>
 
   </class>
 </hibernate-mapping>

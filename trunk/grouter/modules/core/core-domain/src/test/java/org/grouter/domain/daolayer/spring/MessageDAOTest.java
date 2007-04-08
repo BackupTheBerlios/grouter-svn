@@ -42,36 +42,29 @@ public class MessageDAOTest extends AbstractDAOTests
 
         String id = message.getId();
 
-        Map motorDealerMap = jdbcTemplate.queryForMap("SELECT * FROM message WHERE id = ?",
+        Map map = jdbcTemplate.queryForMap("SELECT * FROM message WHERE id = ?",
                 new Object[]{id});
-        assertEquals("A test message", motorDealerMap.get("content"));
+        assertEquals("A test message", map.get("content"));
 
     }
 
-    public void testLazy()
+    public void testLazyCollections()
     {                                                                        
         Message message =  messageDAO.findById(MESSAGE_ID);
-
-//        message.getReceivers();
         assertNotNull(message );
-
         endTransaction();
-
-
         try
         {
             message.getReceivers().toString();
             assertEquals( 1, message.getReceivers().size() );
-
         }
         catch (LazyInitializationException lie)
         {
             fail("collection should not be lazy - using fetch join in mapping");
         }
-
     }
 
-    public void testDelete() throws Exception
+    public void testDelete() 
     {
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM message WHERE id = '" + MESSAGE_ID + "'"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE id = '" + NODE_ID + "'"));
@@ -81,11 +74,10 @@ public class MessageDAOTest extends AbstractDAOTests
 
         assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM message WHERE id = '" + MESSAGE_ID + "'"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE id = '" + NODE_ID + "'"));
-
     }
 
 
-    public void testFinder()
+    public void testFindById()
     {
         Message entity = messageDAO.findById(MESSAGE_ID);
         assertNotNull(entity);

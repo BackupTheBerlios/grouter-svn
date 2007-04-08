@@ -27,11 +27,23 @@ public class NodeDAOTest extends AbstractDAOTests
         this.nodeDAO = nodeDAO;
     }
 
-    public void testFinder()
+    public void testFindById()
     {
         Node resultNotFound = nodeDAO.findById(NODE_ID);
         assertNotNull(resultNotFound.toString());
         assertEquals(NODE_ID, resultNotFound.getId());
+    }
+
+    public void testDelete()
+    {
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
+        assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        nodeDAO.delete(NODE_ID);
+        flushSession();
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        // one node left with two enpoints
+        assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM endpoint"));
     }
 
 
@@ -39,25 +51,25 @@ public class NodeDAOTest extends AbstractDAOTests
      * Build a Node with Enpoints, save and flush. Verify that cascade mappings are correct
      * by pure sql after a flushed session.
      */
-    public void testStore()
+    public void testSave()
     {
         Node node = new Node();
-        node.setId( "andid" );
+        node.setId("andid");
         node.setName("A node");
 
         nodeDAO.save(node);
         flushSession();
 
         String id = node.getId();
-        Map motorDealerMap = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
-        assertEquals("A node", motorDealerMap.get("name"));
+        Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
+        assertEquals("A node", map.get("name"));
     }
 
     public void testStoreWithEndpoints()
     {
         Node node = new Node();
         node.setName("A node");
-        node.setId( "anid" );
+        node.setId("anid");
 
         EndPoint inboundEndpoint = new EndPoint();
         inboundEndpoint.setId("id1");
@@ -86,11 +98,11 @@ public class NodeDAOTest extends AbstractDAOTests
         assertEquals("file://temp/in", map.get("uri"));
         assertEquals(2L, map.get("endpoint_type_fk"));
 
-        
+
     }
 
     @Override
-    public void testLazy()
+    public void testLazyCollections()
     {
         Node node = nodeDAO.findById(NODE_ID);
 
@@ -140,26 +152,26 @@ public class NodeDAOTest extends AbstractDAOTests
 
     public void testGetNumberOfMessages()
     {
-        assertEquals( new Long(6), nodeDAO.getNumberOfMessages( NODE_ID ) );
+        assertEquals(new Long(6), nodeDAO.getNumberOfMessages(NODE_ID));
     }
 
 
     public void testGetNumberOfMessages2()
     {
-        List<Node> nodes   = nodeDAO.findNodesWithNumberOfMessages(ROUTER_ID);
+        List<Node> nodes = nodeDAO.findNodesWithNumberOfMessages(ROUTER_ID);
 
-        assertNotNull( nodes );
+        assertNotNull(nodes);
 
-        assertEquals( 2, nodes.size() );
+        assertEquals(2, nodes.size());
 
         for (Node node : nodes)
         {
-            if(node.getId().equalsIgnoreCase(NODE_ID))
+            if (node.getId().equalsIgnoreCase(NODE_ID))
             {
-                assertEquals( new Long(6) , node.getNumberOfMessagesHandled() );
+                assertEquals(new Long(6), node.getNumberOfMessagesHandled());
             }
         }
-        
+
 
     }
 

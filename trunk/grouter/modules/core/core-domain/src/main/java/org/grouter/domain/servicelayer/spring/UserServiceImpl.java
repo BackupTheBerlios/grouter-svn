@@ -1,8 +1,6 @@
 package org.grouter.domain.servicelayer.spring;
 
 import org.grouter.domain.servicelayer.UserService;
-import org.grouter.domain.entities.Router;
-import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.daolayer.UserDAO;
 
@@ -39,5 +37,10 @@ public class UserServiceImpl implements UserService
     public User findById(Long id)
     {
         return userDAO.findById( id );
+    }
+
+    public void deleteUser(Long id)
+    {
+        userDAO.markAsDeleted( id );
     }
 }

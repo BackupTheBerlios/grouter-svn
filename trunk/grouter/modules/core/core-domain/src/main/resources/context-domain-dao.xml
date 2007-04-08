@@ -18,4 +18,6 @@
 
     <bean id="userDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.UserDAOImpl"/>
 
+    <bean id="roleDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RoleDAOImpl"/>
+
 </beans>

@@ -1,7 +1,9 @@
 package org.grouter.domain.entities;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.LazyInitializationException;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -220,19 +222,19 @@ public class Node implements Serializable
 
     public String toString()
     {
-        return "Node{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", senderStatic='" + senderStatic + '\'' +
-                ", receiverStatic='" + receiverStatic + '\'' +
-                ", messages=" + messages +
-                ", modifiedOn=" + modifiedOn +
-                ", createdOn=" + createdOn +
-                //", router=" + router.getId() +
-                ", inBound=" + inBound +
-                ", outBound=" + outBound +
-                ", backupUri='" + backupUri + '\'' +
-                ", modifiedByUser=" + modifiedByUser +
-                '}';
+        String toString = null;
+        try
+        {
+            toString = ToStringBuilder.reflectionToString( this );
+        } catch (LazyInitializationException e)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append( "id=" + id + ",");
+            stringBuilder.append( "name=" + id + ",");
+            stringBuilder.append( "senderStatic=" + senderStatic + ",");
+            stringBuilder.append( "receiverStatic=" + receiverStatic );
+            toString = stringBuilder.toString();
+        }
+        return toString;
     }
 }

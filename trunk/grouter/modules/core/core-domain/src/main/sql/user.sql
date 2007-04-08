@@ -6,6 +6,7 @@ CREATE TABLE user (
   pwd varchar(255) default NULL,
   address_fk bigint(20) default NULL,
   createdby bigint(20) default NULL,
+  deleted boolean default false,  
   PRIMARY KEY  (id),
   FOREIGN KEY (createdby) REFERENCES  user (id),
   FOREIGN KEY (address_fk) REFERENCES  address (id)

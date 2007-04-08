@@ -41,4 +41,10 @@ public interface UserService
      * @return a User
      */
     User findById(Long id);
+
+    /**
+     * Marks a user as deleted. A user will never physically be deleted.
+     * @param id id of the user to be marked as deleted
+     */
+    void deleteUser( Long id );
 }

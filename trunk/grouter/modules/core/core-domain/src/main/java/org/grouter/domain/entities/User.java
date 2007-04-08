@@ -21,6 +21,7 @@ public class User implements Serializable, Comparable
     private User createdBy;
     private Address address;
     private Set<UserRole> roles = new HashSet<UserRole>();
+    private Boolean deleted;
 
 
     public Long getId()
@@ -129,6 +130,15 @@ public class User implements Serializable, Comparable
         this.lastName = lastName;
     }
 
+    public Boolean getDeleted()
+    {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted)
+    {
+        this.deleted = deleted;
+    }
 
     /**
      * Sorting inmemory using Collections.sort will do sort by name.

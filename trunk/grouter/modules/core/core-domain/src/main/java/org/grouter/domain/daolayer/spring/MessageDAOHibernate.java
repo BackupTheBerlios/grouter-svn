@@ -11,6 +11,8 @@ import java.util.List;
 /**
  * Hibernate-specific implementation of the <tt>MessageDAO</tt>
  * non-CRUD data access object.
+ *
+ * @deprecated
  */
 public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> implements MessageDAO
 {
