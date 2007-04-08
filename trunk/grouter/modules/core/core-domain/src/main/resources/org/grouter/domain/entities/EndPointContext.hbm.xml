@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.grouter.domain.entities.EndPointContext" table="endpoint_context" >
+    <id name="id">
+      <generator class="native"/>
+    </id>
+    <property name="keyname"/>
+    <property name="value"/>
+
+    <many-to-one
+            name="endPoint"
+            not-null="true"
+            class="org.grouter.domain.entities.EndPoint"
+            column="endpoint_fk"
+            cascade="all"
+            fetch="join">
+    </many-to-one>
+
+  </class>
+</hibernate-mapping>
