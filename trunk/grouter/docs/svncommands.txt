@@ -34,3 +34,7 @@ $ scp local.html leon@shell.berlios.de:/home/groups/phial/htdocs
 or
 
 $ scp local.tar.gz leon@shell.berlios.de:/home/groups/ftp/pub/phial
+
+
+Create a new branch form an existing branch:
+>svn copy https://urltoserver/svn/grouter/branches/dev-1.5 https://urtoserver/svn/grouter/branches/dev-1.5.1  -m "Creating new branch for grouter" 

@@ -53,6 +53,7 @@
 <node CREATED="1160116969131" ID="Freemind_Link_983964036" MODIFIED="1160116974686" TEXT="using a join table">
 <node CREATED="1160143616296" ID="Freemind_Link_1254812366" MODIFIED="1160143692518" TEXT="&lt;html&gt;&lt;img src=&quot;messagesender_onetomany_withjointable.png&quot;&gt;" VSHIFT="-35"/>
 <node CREATED="1160141648017" ID="Freemind_Link_467334230" MODIFIED="1160143783026" TEXT="In the Message class:&#xa;    // Declaring this on the attribute creates tables (create-drop for ddl generation)&#xa;    // which are incorrect -&gt; it is eclared here on the getter instead.&#xa;    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})&#xa;    @JoinColumn(name = &quot;SENDER_ID&quot;, nullable = true)       &#xa;    public Sender getSender()&#xa;    {&#xa;        return sender;&#xa;    }&#xa;&#xa;In the Sender class:&#xa;    @OneToMany&#xa;    @JoinTable( name=&quot;SENDER_MESSAGE&quot;,&#xa;                    joinColumns = {@JoinColumn(name = &quot;SENDER_ID&quot;)},&#xa;                    inverseJoinColumns ={@JoinColumn( name = &quot;MESSAGE_ID&quot;)})&#xa;    private Set&lt;Message&gt; messages = new HashSet();&#xa;" VSHIFT="-8"/>
+<node CREATED="1173198927823" ID="Freemind_Link_1245472415" MODIFIED="1173198974879" TEXT="An optional entity association, be it one-to-one or one-to-many, is best repre-  sented in an SQL database with a join table. By doing this you remove null elements in the table holding a nullable&#xa;fk reference ."/>
 </node>
 <node CREATED="1160116977155" ID="Freemind_Link_693553183" MODIFIED="1160126237886" TEXT="not using a join table" VSHIFT="104">
 <node CREATED="1160116689307" ID="Freemind_Link_1067581159" MODIFIED="1160116903865" TEXT="&lt;html&gt;&lt;img src=&quot;Message_Sender_tables.png&quot;&gt;"/>
@@ -61,7 +62,7 @@
 </node>
 </node>
 <node CREATED="1161067580275" ID="_" MODIFIED="1161067587577" TEXT="inheritance">
-<node CREATED="1161067601790" ID="Freemind_Link_635739137" MODIFIED="1161069810107" TEXT="Table per class hierarchy / JPA - SINGLE_TABLE">
+<node CREATED="1161067601790" ID="Freemind_Link_635739137" MODIFIED="1174918878255" TEXT="Table per class hierarchy / JPA - SINGLE_TABLE" VSHIFT="64">
 <node CREATED="1161067661672" ID="Freemind_Link_1718532644" MODIFIED="1161069692969" TEXT="Easiest to use. &#xa;Best performing way to represent polymorphism&#x2014;both polymorphic and non-polymorphic quer- &#xa;ies perform very well&#x2014;and is even quite easy to implement by hand."/>
 <node CREATED="1161067716314" ID="Freemind_Link_1330550864" MODIFIED="1161067717933" TEXT="All the classes in the hierarchy are stored in a single table"/>
 <node CREATED="1161068412895" ID="Freemind_Link_860938927" MODIFIED="1161068537445" TEXT="The only obvious limitation is that your subclasses can&#x2018;t have columns declared as NOT NULL. Subclasses can&apos;t have non-null attributes because inserting the superclass, which doesn&#x2018;t even have the non-null attribute, will cause a null column violation when it&#x2018;s inserted into the database. &#xa;">
@@ -87,6 +88,11 @@
 </node>
 </node>
 <node CREATED="1161067620766" ID="Freemind_Link_1464489192" MODIFIED="1161067624674" TEXT="Table per concrete class"/>
+</node>
+<node CREATED="1174923647561" ID="Freemind_Link_776314405" MODIFIED="1174923653704" TEXT="inverse = true">
+<node CREATED="1174923654121" ID="Freemind_Link_16788130" MODIFIED="1174923655517" TEXT="Simply put; if you set inverse=true on a one&#x2013;to&#x2013;many then child.getParent will be called, if inverse=false then parent.getChildren will be called."/>
+<node CREATED="1174923690243" ID="Freemind_Link_553972432" MODIFIED="1174923691662" TEXT="if the one&#x2013;to&#x2013;many is not inverse (default) then everytime you create a child, hibernate will execute 2 statements, one to create the child, one to update the child with the foreign key of the parent."/>
+<node CREATED="1174923773148" ID="Freemind_Link_738466185" MODIFIED="1174923785088" TEXT=" &#x2013; always provide parent.addChild which updates both ends of the relationship  &#xa;&#x2013; always set inverse to true on bidirectional one&#x2013;to&#x2013;many  &#xa;&#x2013; make sure you understand the difference between cascades and inverse "/>
 </node>
 </node>
 <node CREATED="1158560587915" ID="Freemind_Link_1524523943" MODIFIED="1158560593554" POSITION="left" TEXT="persistence context">
