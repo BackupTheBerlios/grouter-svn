@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>
+        Test
+    </title>
+
+
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/routerService.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/NodeUpdateThread.js"></script>
+
+    <script type="text/javascript">
+        function handleGetData(str)
+        {
+            DWRUtil.setValue("id_reply", data);
+        }
+
+        function handleGetData2()
+        {
+            routerService.findAllNodes(callbackLoadinfo);
+        }
+
+        function callbackLoadinfo(data)
+        {
+            for(i = 0 ; i < data.length ; i++)
+            {
+                DWRUtil.setValue("node_" + data[i].id, data[i].numberOfMessagesHandled + 2);
+            }
+            //DWRUtil.setValue("reply", data[0].numberOfMessagesHandled);
+        }
+
+        function init()
+        {
+            DWRUtil.useLoadingMessage();
+            handleGetData2();
+        }
+
+        callOnLoad(init);
+    </script>
+
+
+</head>
+
+<body onload="dwr.engine.setActiveReverseAjax(true);" background="" >
+
+                    <input type="button" value="Read" onclick="handleGetData2()"/>
+                     <span id="reply" style="background:#eeffdd; padding-left:4px; padding-right:4px;"></span>
+
+                    <input type="button" value="Start / Stop real time updates" onclick="NodeUpdateThread.toggle();"/>
+                    <ul id="callback_field" style="list-style-type:none;">
+
+</body>
+</html>

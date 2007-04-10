@@ -1,29 +1,45 @@
-img {
+
+div#contentHeader
+{
+    font: 12px,bold, Verdana, Arial, Helvetica, sans-serif;
+    margin: 5px;
+    padding: 5px;
+}
+
+div#content
+{
+    font: 11px Verdana, Arial, Helvetica, sans-serif;
+    margin: 5px;
+    padding: 5px;
+}
+
+
+img
+{
 	border: none;
 }
 
 
-div#form {
-	background: lavender;
-	padding: 5px;
-	padding-left: 25px;
-	margin-top: 0;
+div#form
+{
+    font: 9px Verdana, Arial, Helvetica, sans-serif;
 }
 
 
 /**
 * Used to display operations like edit, delete etc.
 */
-div#menuAction {
+div#menuAction
+{
 	background: lavender;
 	padding: 5px;
 	padding-left: 25px;
 	margin-top: 0;
+    font: 9px Verdana, Arial, Helvetica, sans-serif;
 }
 
-
-
-div#paragraph {
+div#paragraph
+{
     font: 12px/14px Verdana, Arial, Helvetica, sans-serif;
     margin: 5px;
     padding: 5px;
@@ -40,18 +56,6 @@ div#paragraphHeader {
 
 
 
-div#userSettings {
-    font: 12px/13px Verdana, Arial, Helvetica, sans-serif;
-    color: blue;
-    padding: 5px;
-    border: 1px solid #afcff9;
-    align="right";
-    float:right;
-
-
-
-}
-
 
 /*
  * Tabbed menu using a <ul> list.
@@ -64,17 +68,20 @@ ul.menu {
 	margin-left: 5px;
 }
 
-ul.menu li {
+ul.menu li
+{
 	display: inline;
 	margin-right: 10px;
 }
 
-ul.tabbed a {
+ul.tabbed a
+{
 	text-decoration: none;
 	color: black;
 }
 
-ul.tabbed li {
+ul.tabbed li
+{
 	display: inline;
 	background: #f4f4f2;
 	padding: 4px 10px;
@@ -85,40 +92,43 @@ ul.tabbed li {
 	-moz-border-radius-topright: 10px;
 }
 
-ul.tabbed li.active {
+ul.tabbed li.active
+{
 	background: #fff;
 	border-top: 2px solid #ebaa46;
 }
 
-/*
- * Standard paged list with sortable columns.
- */
-table.pagedList th {
-    font: 14px Verdana, Arial, Helvetica, sans-serif,bold;
-    background-image: url("/gweb/images/grey_gradient.png");
-	height: 30px;
-	padding: 4px;
-	border-left: 2px solid #d1e7fc;
+/**
+*
+*/
+table.pagedList th
+{
+    font: 11px Verdana, Arial, Helvetica, sans-serif,bold;
+    background-image: url("/gweb/images/columnheader_gradient.gif");
+	height: 18px;
+	padding: 2px;
+	border-left: 2px solid lightgray;
     text-align: left;
-
 }
 
-table.pagedList th a {
+table.pagedList th a
+{
     text-decoration: none;
 	color: black;
-
 }
 
-table.pagedList td {
-    font: 13px Verdana, Arial, Helvetica, sans-serif,bold;
+table.pagedList td
+{
+    font: 11px Verdana, Arial, Helvetica, sans-serif,bold;
     padding: 5px 10px;
 	border-bottom: 1px solid #ccc;
 	white-space: nowrap;
 }
 
-
-table.pagedList tr:hover {
+table.pagedList tr:hover
+{
 	background: #eee;
+    text-align: left;
 }
 
 
