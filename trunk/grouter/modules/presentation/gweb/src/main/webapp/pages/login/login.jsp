@@ -12,7 +12,7 @@
 <div id="content">
     Choose grouter and enter user name and pwd to login.
 
-
+                         
     <form action="/gweb/j_acegi_security_check" method="POST">
         <table>
             <tr>
