@@ -63,6 +63,7 @@ public class RoleDAOTest extends AbstractDAOTests
     @Override
     public void testLazyCollections()
     {
+        // no relations
 
     }
 
@@ -85,5 +86,7 @@ public class RoleDAOTest extends AbstractDAOTests
     {
         int numberOfRoles = roleDAO.findAll().size();
         assertEquals( numberOfRoles, Role.values().size() );
+
+
     }
 }

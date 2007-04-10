@@ -108,4 +108,11 @@ public class UserDAOTest extends AbstractDAOTests
         assertEquals(true, map.get("deleted"));
     }
 
+
+    public void testLoadRoles()
+    {
+        User user = userDAO.findById( USER_ID );
+
+    }
+
 }
