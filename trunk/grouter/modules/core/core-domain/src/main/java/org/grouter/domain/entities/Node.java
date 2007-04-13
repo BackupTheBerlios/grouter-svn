@@ -35,10 +35,16 @@ public class Node implements Serializable
     private Date modifiedOn;
     private Date createdOn;
     private Router router;
+
     // to store messages persistently
     private EndPoint inBound;
     private EndPoint outBound;
+
     private String backupUri;
+
+    // a message read from a inbound endPoint is stored in this folder with a unique GUID - the command reader
+    // thread will pull messages from this folder and process them  
+    private String internalQueueUri;
 
     @Transient
     transient private Long numberOfMessagesHandled;
@@ -218,6 +224,17 @@ public class Node implements Serializable
     public void setNumberOfMessagesHandled(Long numberOfMessagesHandled)
     {
         this.numberOfMessagesHandled = numberOfMessagesHandled;
+    }
+
+
+    public String getInternalQueueUri()
+    {
+        return internalQueueUri;
+    }
+
+    public void setInternalQueueUri(String internalQueueUri)
+    {
+        this.internalQueueUri = internalQueueUri;
     }
 
     public String toString()

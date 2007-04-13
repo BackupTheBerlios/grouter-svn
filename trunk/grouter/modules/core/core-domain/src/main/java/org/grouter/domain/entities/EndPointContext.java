@@ -14,7 +14,19 @@ public class EndPointContext
     EndPoint endPoint;
 
 
-    public EndPointContext()
+    public EndPointContext(EndPoint endPoint)
+    {
+        this.endPoint = endPoint;
+    }
+
+    public EndPointContext(String keyname, String value, EndPoint endPoint)
+    {
+        this.keyname = keyname;
+        this.value = value;
+        this.endPoint = endPoint;
+    }
+
+    EndPointContext()
     {
     }
 
@@ -56,7 +68,12 @@ public class EndPointContext
         return id;
     }
 
-    public void setId(Long id)
+
+    /**
+     * Assigned id - no need to expose this setter.
+     * @param id
+     */
+    private void setId(Long id)
     {
         this.id = id;
     }

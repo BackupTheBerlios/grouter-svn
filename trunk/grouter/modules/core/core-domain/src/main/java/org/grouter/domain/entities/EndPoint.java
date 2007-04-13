@@ -24,7 +24,7 @@ public class EndPoint
     String scheduleCron;
     EndPointType endPointType;
     Filter filter;
-    Map<String,String> endPointContext =  new HashMap<String,String>();
+    Map endPointContext =  new HashMap();
 
     public Filter getFilter()
     {
@@ -36,13 +36,10 @@ public class EndPoint
         this.filter = filter;
     }
 
-
-
     public String getScheduleCron()
     {
         return scheduleCron;
     }
-
 
     public void setScheduleCron(String scheduleCron)
     {
@@ -92,12 +89,12 @@ public class EndPoint
     }
 
 
-    public Map<String, String> getEndPointContext()
+    public Map getEndPointContext()
     {
         return endPointContext;
     }
 
-    public void setEndPointContext(Map<String, String> endPointContext)
+    public void setEndPointContext(Map endPointContext)
     {
         this.endPointContext = endPointContext;
     }
