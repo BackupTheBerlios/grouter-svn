@@ -1,7 +1,7 @@
 package org.grouter.core.util;
 
 import org.grouter.domain.entities.Node;
-import org.grouter.core.AbstractGrouterTests;
+import org.grouter.core.readers.AbstractFileReaderTests;
 
 
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.HashSet;
 /**
  * @author Georges Polyzois
  */
-public class SchedulerServiceTest extends AbstractGrouterTests
+public class SchedulerServiceTest extends AbstractFileReaderTests
 {
     public void testSchedulerService()
     {

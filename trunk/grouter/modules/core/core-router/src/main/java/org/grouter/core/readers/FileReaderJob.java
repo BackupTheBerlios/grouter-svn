@@ -34,7 +34,9 @@ public class FileReaderJob extends AbstractReader
     private NotFileFilter notFileFilter;
     private WildcardFilter wildcardFilter;
     private FileFilter fileFilter;
-
+    private FileReaderHelper fileReaderHelper;
+    private static final String NODE = "node";
+    private static final String QUEUE = "queue";
 
 
     /**
@@ -46,7 +48,6 @@ public class FileReaderJob extends AbstractReader
 
     private void init( final Node node, BlockingQueue<AbstractCommandWriter> blockingQueue )
     {
-
         if ( node == null || blockingQueue == null)
         {
             throw new IllegalArgumentException("Constructor called with null argument.");
@@ -56,16 +57,13 @@ public class FileReaderJob extends AbstractReader
         //which type of commands should this servicenode worker handle
         command = getCommand(node);
  //       createFilter(node);
-
     }
-
-
 
 
     /**
      * A null filter means we do not have a filter and File.listfiles will take all files present in a dir.
      *
-     * @param node
+     * @param
      */
 /*    private void createFilter(Node node)
     {
@@ -81,58 +79,18 @@ public class FileReaderJob extends AbstractReader
     }
 */
 
-    /**
-     * Forced by abstract method.
-     *
-     * @return List<CommandHolder>
-     */
+
+    @Override
     protected List<CommandHolder> readFromSource()
     {
         logger.info("Reading files from " + node.getInBound().getUri());
         //File[] curFiles = node.getInFolderConfig().getInPath().listFiles(fileFilter);
-        File inFolder = new File(node.getInBound().getUri());
-        File[] curFiles = inFolder.listFiles(fileFilter);  // TODO refactor to use generic Filter
 
-        if (curFiles == null || curFiles.length == 0)
-        {
-            logger.debug("No files found - empty : " + node.getInBound().getUri());
-            return null;
-        }
-
-        logger.debug("Found number of files and folders : " + curFiles.length);
-
-        List<CommandHolder> commandMessages = new ArrayList<CommandHolder>(curFiles.length);
-        for (File curFile : curFiles)
-        {
-            if (curFile.isDirectory())
-            {
-                logger.debug("A folder... removing it.");
-                try
-                {
-                    FileUtils.forceDelete( curFile );
-                } catch (IOException e)
-                {
-                    logger.info("Could not delete foder", e);
-                }
-            } else
-            {
-                try
-                {
-                    String message = FileUtils.readFileToString(new File(curFile.getPath()), "UTF-8");
-                    CommandHolder cmdHolder = new CommandHolder(message);
-                    commandMessages.add(cmdHolder);
-
-                    // remove file from infolder
-                    curFile.delete();
-                }
-                catch (Exception ex)
-                {
-                    logger.info(ex, ex);
-                }
-            }
-        }
-        return commandMessages;
+        return FileReaderHelper.getCommands( node );
     }
+
+
+
 
     /**
      * Hand it over to the in memory queue.
@@ -141,6 +99,11 @@ public class FileReaderJob extends AbstractReader
     {
         logger.debug("Putting cmd on queue " + command.toStringUsingReflection());
         queue.offer(command);
+    }
+
+    void validate(Node node)
+    {
+        // TODO validate 
     }
 
     /**
@@ -160,8 +123,8 @@ public class FileReaderJob extends AbstractReader
     public void setJobExecutionContext( JobExecutionContext jobExecutionContext )
     {
         JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
-        node = (Node) jobDataMap.get("node");
-        BlockingQueue<AbstractCommandWriter> blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get("queue");
+        node = (Node) jobDataMap.get(NODE);
+        BlockingQueue<AbstractCommandWriter> blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get(QUEUE);
         init(node, blockingQueue);
     }
 

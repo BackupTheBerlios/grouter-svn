@@ -11,25 +11,16 @@ import java.io.File;
 public class CommandHolder implements Serializable
 {
     private String message;
+    private String fileUriToMessage;
     private String guid;
-
     private String encoding = "UTF-8";
 
-    public CommandHolder(String message)
+    public CommandHolder(String message, String internalUri)
     {
         this.message = message;
-        this.guid = GuidGenerator.getInstance().getGUID();
-
+        this.fileUriToMessage = internalUri + File.separator + GuidGenerator.getInstance().getGUID();
     }
 
-
-    public CommandHolder(String message, String encoding)
-    {
-        this.encoding = encoding;
-        this.message = message;
-        this.guid = GuidGenerator.getInstance().getGUID();
-
-    }
 
     public String getGuid()
     {
@@ -60,5 +51,16 @@ public class CommandHolder implements Serializable
     public void setEncoding(String encoding)
     {
         this.encoding = encoding;
+    }
+
+
+    public String getFileUriToMessage()
+    {
+        return fileUriToMessage;
+    }
+
+    public void setFileUriToMessage(String fileUriToMessage)
+    {
+        this.fileUriToMessage = fileUriToMessage;
     }
 }
