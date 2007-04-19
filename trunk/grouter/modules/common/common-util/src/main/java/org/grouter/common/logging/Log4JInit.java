@@ -1,16 +1,9 @@
 package org.grouter.common.logging;
 
 import org.apache.log4j.xml.DOMConfigurator;
-import org.w3c.dom.Document;
 
 import javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.net.URL;
-import java.io.InputStream;
-import java.io.BufferedInputStream;
 
 /**
  * Initializer for log4j.
