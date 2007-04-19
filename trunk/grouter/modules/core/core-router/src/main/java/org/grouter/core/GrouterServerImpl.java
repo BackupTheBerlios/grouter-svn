@@ -2,14 +2,12 @@ package org.grouter.core;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
-import org.apache.log4j.PropertyConfigurator;
 import org.apache.commons.lang.Validate;
 import org.grouter.common.config.ConfigHandler;
 import org.grouter.core.util.ThreadPoolService;
 import org.grouter.core.util.SchedulerService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
-import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.servicelayer.RouterService;
@@ -17,7 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.beans.factory.BeanFactory;
 
-import java.util.*;
+import java.rmi.RemoteException;
 
 /**
  * Main class for GRouter.
@@ -30,19 +28,25 @@ import java.util.*;
  *
  * @author Georges Polyzois
  */
-public class GRouterServer implements Runnable
+public class GrouterServerImpl implements Runnable, GrouterServer
 {
 
-    private static Logger logger = Logger.getLogger(GRouterServer.class);
+    private static Logger logger = Logger.getLogger(GrouterServerImpl.class);
     // spring context
     ApplicationContext context;
     private static String CONFIGFILE = "grouter.xml";
     private ConfigHandler configHandler;
     //    private GrouterConfig grouterConfig;
-    private ThreadPoolService nodeThreadPoolHandler = new ThreadPoolService();
+    //private ThreadPoolService nodeThreadPoolHandler = new ThreadPoolService();
     private static final String GROUTER_CONFIG = "grouter.config";
     private Router router;
-    SchedulerService schedulerService;
+
+    // scheduler service handles start / stop etc of nodes
+    private SchedulerService schedulerService;
+
+    // operation against database are handled through this service
+    RouterService routerService;
+
     private static final String ROUTER_SERVICE = "routerService";
 
     /**
@@ -50,7 +54,7 @@ public class GRouterServer implements Runnable
      *
      * @param router
      */
-    public GRouterServer(Router router)
+    public GrouterServerImpl(Router router)
     {
         Validate.notNull(router, "A null router can not be used to start.");
         try
@@ -67,11 +71,13 @@ public class GRouterServer implements Runnable
      *
      * @throws IllegalArgumentException if grou“terConfig == null
      */
-    public GRouterServer()
+    public GrouterServerImpl()
     {
         String grouterConfig = System.getProperty(GROUTER_CONFIG);
         Validate.notNull(grouterConfig, "Could not get property with key :" + GROUTER_CONFIG + ". Have you " +
                 "provided a -D parameter for Java vm?");
+
+        new GrouterServerImpl(grouterConfig);
     }
 
     /**
@@ -80,7 +86,7 @@ public class GRouterServer implements Runnable
      * @param configPath
      * @throws IllegalArgumentException if configPath == null
      */
-    public GRouterServer(String configPath)
+    public GrouterServerImpl(String configPath)
     {
         if (!FileUtils.isValidPath(configPath))
         {
@@ -115,7 +121,7 @@ public class GRouterServer implements Runnable
         schedulerService = new SchedulerService(router.getNodes());
 
         BeanFactory factory = (BeanFactory) context;
-        RouterService routerService = (RouterService) factory.getBean( ROUTER_SERVICE );
+        routerService = (RouterService) factory.getBean( ROUTER_SERVICE );
 
         routerService.saveRouter( router );
 
@@ -125,8 +131,7 @@ public class GRouterServer implements Runnable
     /**
      * Starts GRouter... and adds shutdown hook.
      *
-     * @param args
-     */
+     
     public static void main(String[] args) throws Exception
     {
         String grouterHome = System.getProperty("user.dir");
@@ -134,17 +139,19 @@ public class GRouterServer implements Runnable
         String configFile = "/core/core-router/src/test/resources/grouterconfig_file_file.xml";
 
         GRouterServer grouter = new GRouterServer(grouterHome + configFile);
-        grouter.startGrouter();
+        grouter.start();
 
 
-    }
+    }   */
 
 
-    public void startGrouter() throws Exception
+    /**
+     * Start up all nodes and add shutdown hook in JVM.
+     * @throws Exception
+     */
+    public void start() throws Exception
     {
         schedulerService.startAllNodes();
-
-
         Thread thr = new Thread(this);
         logger.info("Adding shutdown hook");
         //       Runtime.getRuntime().addShutdownHook( thr );
@@ -152,8 +159,10 @@ public class GRouterServer implements Runnable
     }
 
     /**
-     * Reads config files for log4j and siri. 
+     * Reads config files for log4j and grouter. 
      */
+
+    /*
     static
     {
         ResourceBundle resourceBundle = null;
@@ -177,8 +186,10 @@ public class GRouterServer implements Runnable
             System.out.println("Grouter not started - see log file");
             System.exit(0);
         }
-
     }
+
+    */
+
 
     /**
      * Called by vm when when we get a controlled exit.
@@ -222,21 +233,17 @@ public class GRouterServer implements Runnable
      */
     public void run()
     {
-
         logger.info("In run");
-
         while (true)
         {
-
             try
             {
                 Thread.sleep(2000);
-            } catch (InterruptedException e)
+            } catch (Exception e)
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+               logger.warn("Thread got an exception : " + e.getMessage() ); 
             }
         }
-
         //onExit();
     }
 
@@ -250,6 +257,10 @@ public class GRouterServer implements Runnable
     }
 
 
+    /**
+     * Context files which will be loaded be the grouter on startup.
+     * @return
+     */
     protected String[] getConfigLocations()
     {
         return new String[]
@@ -257,9 +268,29 @@ public class GRouterServer implements Runnable
                         // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
                         "context-domain-datasource.xml", "context-domain-dao.xml",
                         "context-domain-sessionfactory.xml", "context-domain-service.xml",
-                        "context-router.xml"
+                        "context-router.xml","context-router-rmi.xml"
                 };
     }
 
 
+    /**
+     * Delegates to scheduler service for stopping a node after looking up a node in db.
+     * @param nodeId id of node to stop
+     * @throws RemoteException if we encounter som exception trying to stop a node
+     */
+    public void stopNode(String nodeId) throws RemoteException
+    {
+        Node node = routerService.findById( nodeId );
+
+        logger.info("Stopping node :" + node.getId() );
+
+        try
+        {
+            schedulerService.stop( node );
+        } catch (Exception e)
+        {
+            throw new RemoteException( "Could not stop the node :" + nodeId + " Got exception :" + e.getMessage() );
+        }
+
+    }
 }

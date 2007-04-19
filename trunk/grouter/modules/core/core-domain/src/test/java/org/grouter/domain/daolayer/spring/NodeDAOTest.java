@@ -29,9 +29,13 @@ public class NodeDAOTest extends AbstractDAOTests
 
     public void testFindById()
     {
-        Node resultNotFound = nodeDAO.findById(NODE_ID);
-        assertNotNull(resultNotFound.toString());
-        assertEquals(NODE_ID, resultNotFound.getId());
+        Node node = nodeDAO.findById(NODE_ID_FTP);
+        assertNotNull(node.toString());
+        assertEquals(NODE_ID_FTP, node.getId());
+
+        Map map = node.getInBound().getEndPointContext();
+        assertEquals( "localhost", map.get( "ftpHost" ) );
+        assertEquals( "12345", map.get( "ftpPort" ) );
     }
 
     public void testDelete()

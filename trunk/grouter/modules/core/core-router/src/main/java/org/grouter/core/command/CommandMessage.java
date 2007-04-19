@@ -8,14 +8,14 @@ import java.io.File;
 /**
  * Class description.
  */
-public class CommandHolder implements Serializable
+public class CommandMessage implements Serializable
 {
     private String message;
     private String fileUriToMessage;
     private String guid;
     private String encoding = "UTF-8";
 
-    public CommandHolder(String message, String internalUri)
+    public CommandMessage(String message, String internalUri)
     {
         this.message = message;
         this.fileUriToMessage = internalUri + File.separator + GuidGenerator.getInstance().getGUID();

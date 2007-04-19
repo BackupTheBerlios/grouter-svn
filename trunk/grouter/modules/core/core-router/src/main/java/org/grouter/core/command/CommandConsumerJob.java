@@ -1,31 +1,31 @@
 package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.entities.Node;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobDataMap;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
 import static java.util.concurrent.TimeUnit.*;
 
 /**
- * Workerthreads are responsible for taking commands and executing them.
+ * A CommandConsumerJob is responsible for consuming commands (popping from queue) and executing them
+ * (calling execute on concrete command).
+ *
  *
  * @author Georges Polyzois
  */
-public class CommandWriterJob implements Job
+public class CommandConsumerJob implements Job
 {
-    private static Logger logger = Logger.getLogger(CommandWriterJob.class);
-    private BlockingQueue<AbstractCommandWriter> blockingQueue;
+    private static Logger logger = Logger.getLogger(CommandConsumerJob.class);
+    private BlockingQueue<AbstractCommand> blockingQueue;
     private final int TIMEOUT = 2;
 
     /**
      * Neede by Quartz scheduler framework.
      */
-    public CommandWriterJob()
+    public CommandConsumerJob()
     {
     }
 
@@ -35,7 +35,7 @@ public class CommandWriterJob implements Job
      * @param queue
      * @deprecated
      */
-    public CommandWriterJob(BlockingQueue<AbstractCommandWriter> queue)
+    public CommandConsumerJob(BlockingQueue<AbstractCommand> queue)
     {
         this.blockingQueue = queue;
     }
@@ -46,7 +46,7 @@ public class CommandWriterJob implements Job
         JobDataMap jobDataMap = context.getMergedJobDataMap();
 
         //node = (Node) jobDataMap.get( "node" );
-        this.blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get("queue");
+        this.blockingQueue = (BlockingQueue<AbstractCommand>) jobDataMap.get("queue");
 
 
         logger.debug("Queue size is : " + blockingQueue.size());
@@ -54,11 +54,11 @@ public class CommandWriterJob implements Job
         //take is blocking - an initial condition where no commandMessages are found in
         //the infolder e.g. will make the reader thread to block also.
         //queue.take();
-        AbstractCommandWriter cmd = null;
+        AbstractCommand cmd = null;
         try
         {
             cmd = blockingQueue.poll(TIMEOUT, SECONDS);
-            if (cmd instanceof FileCommandWriter)
+            if (cmd instanceof FileWriteCommand)
             {
                 cmd.execute();
             }

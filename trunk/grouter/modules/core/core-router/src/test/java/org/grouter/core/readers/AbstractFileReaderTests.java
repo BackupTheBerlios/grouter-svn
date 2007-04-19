@@ -3,7 +3,7 @@ package org.grouter.core.readers;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.*;
-import org.grouter.core.command.AbstractCommandWriter;
+import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.AbstractRouterTests;
 
 import java.util.concurrent.BlockingQueue;
@@ -22,7 +22,7 @@ import java.io.IOException;
 public abstract class AbstractFileReaderTests extends AbstractRouterTests
 {
     private static Logger logger = Logger.getLogger(AbstractRouterTests.class);
-    public BlockingQueue<AbstractCommandWriter> blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(10);
+    public BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(10);
     public Node fileToFileNode;
 
 

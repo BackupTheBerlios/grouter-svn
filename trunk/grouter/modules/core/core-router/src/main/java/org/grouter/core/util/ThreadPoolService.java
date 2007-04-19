@@ -1,8 +1,8 @@
 package org.grouter.core.util;
 
 import org.apache.log4j.Logger;
-import org.grouter.core.command.AbstractCommandWriter;
-import org.grouter.core.command.CommandWriterJob;
+import org.grouter.core.command.AbstractCommand;
+import org.grouter.core.command.CommandConsumerJob;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
 
@@ -26,7 +26,7 @@ public class ThreadPoolService
     private static Logger logger = Logger.getLogger(ThreadPoolService.class);
     private ConcurrentMap map = new ConcurrentHashMap();
     private ScheduledExecutorService scheduler;
-    private BlockingQueue<AbstractCommandWriter> blockingQueue;
+    private BlockingQueue<AbstractCommand> blockingQueue;
     private static final long INITIAL_DELAY = 1000;
     private static final int CAPACITY = 1000;
     private static final int POLL = 5000;
@@ -98,14 +98,14 @@ public class ThreadPoolService
 
         for (Node node : nodes)
         {
-            blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(CAPACITY);
+            blockingQueue = new ArrayBlockingQueue<AbstractCommand>(CAPACITY);
             if( node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId() )
             {
 //                FileReaderThread fileReaderThread = new FileReaderThread(node, blockingQueue);
 //                scheduler.scheduleAtFixedRate(fileReaderThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
             }
 
-            CommandWriterJob commandConsumerThread = new CommandWriterJob(blockingQueue);
+            CommandConsumerJob commandConsumerThread = new CommandConsumerJob(blockingQueue);
 //            scheduler.scheduleAtFixedRate(commandConsumerThread, INITIAL_DELAY, POLL, TimeUnit.MILLISECONDS);
         }
     }

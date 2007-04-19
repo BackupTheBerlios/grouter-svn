@@ -9,7 +9,7 @@
   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
        default-autowire="byName">
 
-  <bean id="fileCommandWriter" class="org.grouter.core.command.FileCommandWriter"/>
+  <bean id="fileCommandWriter" class="org.grouter.core.command.FileWriteCommand"/>
 
 
 

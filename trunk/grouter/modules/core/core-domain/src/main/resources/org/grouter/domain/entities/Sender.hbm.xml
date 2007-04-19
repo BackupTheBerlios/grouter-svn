@@ -45,5 +45,7 @@
                 cascade="save-update,persist">
             
         </many-to-one>
+      
+
     </class>
 </hibernate-mapping>

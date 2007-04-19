@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 
 
-public class NullCommand extends AbstractCommandWriter
+public class NullCommand extends AbstractCommand
 {
     //Logger.
     private static Logger logger = Logger.getLogger(NullCommand.class);

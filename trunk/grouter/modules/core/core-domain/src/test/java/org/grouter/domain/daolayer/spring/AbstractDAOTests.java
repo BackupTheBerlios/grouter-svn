@@ -26,6 +26,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     // inserted test data and ids of some of the data
     String MESSAGE_ID = "msgid_1";
     String NODE_ID = "nid_1";
+    String NODE_ID_FTP = "nid_2";
     String ROUTER_ID = "rid_1";
     Long USER_ID = new Long(10002);
 

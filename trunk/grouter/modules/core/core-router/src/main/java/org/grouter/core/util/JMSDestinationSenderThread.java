@@ -1,16 +1,13 @@
 package org.grouter.core.util;
 
 import org.grouter.common.jms.*;
-import org.grouter.core.command.CommandHolder;
+import org.grouter.core.command.CommandMessage;
 //import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
 import org.apache.log4j.Logger;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.Hashtable;
 import java.util.HashMap;
                                  
 /**
@@ -26,7 +23,7 @@ public class JMSDestinationSenderThread implements Runnable
     private static Destination queueDestination;
     private static final int QUEUE_SIZE = 2000;
     private static final int TIME_TO_LIVE = 10000;
-    private static BlockingQueue<CommandHolder[]> queues = new ArrayBlockingQueue<CommandHolder[]>(QUEUE_SIZE);
+    private static BlockingQueue<CommandMessage[]> queues = new ArrayBlockingQueue<CommandMessage[]>(QUEUE_SIZE);
 //    private GrouterConfig grouterConfig;
 
     /**
@@ -83,7 +80,7 @@ public class JMSDestinationSenderThread implements Runnable
     public void run()
     {
         logger.info("Sending a batch of commandMessages to jms destination queues");
-        CommandHolder[] commandMessages = queues.poll();
+        CommandMessage[] commandMessages = queues.poll();
         if (commandMessages == null)
         {
             logger.info("No message");
@@ -121,7 +118,7 @@ public class JMSDestinationSenderThread implements Runnable
      *
      * @return
      */
-    public static BlockingQueue<CommandHolder[]> getQueue()
+    public static BlockingQueue<CommandMessage[]> getQueue()
     {
         return queues;
     }

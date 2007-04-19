@@ -7,7 +7,7 @@ import org.grouter.domain.entities.Node;
 
 
 /**
- * Class description.
+ * A factory for creating commands based on a Node's {@link org.grouter.domain.entities.EndPointType}.
  *
  * @author Georges Polyzois
  */
@@ -15,33 +15,24 @@ public class CommandFactory
 {
     private static Logger logger = Logger.getLogger(CommandFactory.class);
 
-    /*
-    public static AbstractCommandWriter getCommand(Node node)
+    /**
+     * Given a node create a command for this node.
+     * @param node
+     * @return
+     */
+    public static AbstractCommand getCommand(Node node)
     {
-        if (node == null)
-        {
-            throw new IllegalArgumentException("Config was null");
-        }
+        // Guard this factory 
+        Validate.notNull(node, "Can not handle a null Node");
+        Validate.notNull(node.getInBound(), "Can not handle a null EndPoint");
+        Validate.notNull(node.getInBound().getEndPointType(), "Can not handle a null EndPointType");
 
         if (node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId())
         {
-
-            FileCommandWriter fileWriterCommand = new FileCommandWriter(node);
-            return fileWriterCommand;
+            FileWriteCommand fileWriteCommand = new FileWriteCommand(node);
+            return fileWriteCommand;
         }
         return null;
     }
-    */
-
-    public static AbstractCommandWriter getCommand2(Node node)
-    {
-        Validate.notNull(node, "Can not handle a null Endpoint");
-
-        if (node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId())
-        {
-            FileCommandWriter fileWriterCommand = new FileCommandWriter(node);
-            return fileWriterCommand;
-        }
-        return null;
-    }
+    
 }

@@ -3,22 +3,15 @@ package org.grouter.core.readers;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.WildcardFilter;
-import org.apache.commons.io.FileUtils;
-import org.grouter.core.command.AbstractCommandWriter;
-import org.grouter.core.command.CommandHolder;
+import org.grouter.core.command.AbstractCommand;
+import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.quartz.JobDataMap;
-import org.quartz.SchedulerContext;
-import org.springframework.context.ApplicationContext;
 
-import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.List;
-import java.util.ArrayList;
 
 
 /**
@@ -30,7 +23,7 @@ public class FileReaderJob extends AbstractReader
 {
     private static Logger logger = Logger.getLogger(FileReaderJob.class);
     //private NodeConfig node;
-    private BlockingQueue<AbstractCommandWriter> queue;
+    private BlockingQueue<AbstractCommand> queue;
     private NotFileFilter notFileFilter;
     private WildcardFilter wildcardFilter;
     private FileFilter fileFilter;
@@ -46,7 +39,7 @@ public class FileReaderJob extends AbstractReader
     {
     }
 
-    private void init( final Node node, BlockingQueue<AbstractCommandWriter> blockingQueue )
+    private void init( final Node node, BlockingQueue<AbstractCommand> blockingQueue )
     {
         if ( node == null || blockingQueue == null)
         {
@@ -81,7 +74,7 @@ public class FileReaderJob extends AbstractReader
 
 
     @Override
-    protected List<CommandHolder> readFromSource()
+    protected List<CommandMessage> readFromSource()
     {
         logger.info("Reading files from " + node.getInBound().getUri());
         //File[] curFiles = node.getInFolderConfig().getInPath().listFiles(fileFilter);
@@ -124,7 +117,7 @@ public class FileReaderJob extends AbstractReader
     {
         JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
         node = (Node) jobDataMap.get(NODE);
-        BlockingQueue<AbstractCommandWriter> blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get(QUEUE);
+        BlockingQueue<AbstractCommand> blockingQueue = (BlockingQueue<AbstractCommand>) jobDataMap.get(QUEUE);
         init(node, blockingQueue);
     }
 
@@ -136,7 +129,7 @@ public class FileReaderJob extends AbstractReader
 
 
 
-    public void setQueue(BlockingQueue<AbstractCommandWriter> queue)
+    public void setQueue(BlockingQueue<AbstractCommand> queue)
     {
         this.queue = queue;
     }

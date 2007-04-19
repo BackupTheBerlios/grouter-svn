@@ -1,8 +1,7 @@
 package org.grouter.core.readers;
 
-import org.grouter.core.command.CommandHolder;
+import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
-import org.grouter.common.guid.GuidGenerator;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -21,7 +20,7 @@ public class FileReaderHelper
 
     private static Logger logger = Logger.getLogger(FileReaderHelper.class);
 
-    public static List<CommandHolder> getCommands( Node node )
+    public static List<CommandMessage> getCommands( Node node )
     {
         File inFolder = new File(node.getInBound().getUri());
         File[] curFiles = inFolder.listFiles();  // TODO refactor to use generic Filter
@@ -32,7 +31,7 @@ public class FileReaderHelper
             return null;
         }
         logger.debug("Found number of files and folders : " + curFiles.length);
-        List<CommandHolder> commandMessages = new ArrayList<CommandHolder>(curFiles.length);
+        List<CommandMessage> commandMessages = new ArrayList<CommandMessage>(curFiles.length);
         for (File curFile : curFiles)
         {
             if (curFile.isDirectory())
@@ -52,10 +51,10 @@ public class FileReaderHelper
                 try
                 {
                     String message = getMessage(curFile);
-                    CommandHolder cmdHolder = new CommandHolder(message, node.getInternalQueueUri() );
-                    File internalqFile = new File( cmdHolder.getFileUriToMessage() );
+                    CommandMessage cmdMessage = new CommandMessage(message, node.getInternalQueueUri() );
+                    File internalqFile = new File( cmdMessage.getFileUriToMessage() );
                     FileUtils.copyFile( curFile,  internalqFile );
-                    commandMessages.add(cmdHolder);
+                    commandMessages.add(cmdMessage);
                     // remove file from infolder
                     curFile.delete();
                 }

@@ -2,8 +2,8 @@ package org.grouter.core.util;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.lang.Validate;
-import org.grouter.core.command.AbstractCommandWriter;
-import org.grouter.core.command.CommandWriterJob;
+import org.grouter.core.command.AbstractCommand;
+import org.grouter.core.command.CommandConsumerJob;
 import org.grouter.core.readers.FileReaderJob;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
@@ -66,7 +66,7 @@ public class SchedulerService
         for (Node node : this.nodes)
         {
             logger.info("Scheduling node : " + node.getName() );
-            BlockingQueue<AbstractCommandWriter> blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(QUEUE_CAPACITY);
+            BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(QUEUE_CAPACITY);
             if (node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId())
             {
                 JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), Scheduler.DEFAULT_GROUP, FileReaderJob.class);
@@ -77,7 +77,7 @@ public class SchedulerService
             }
             if (node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId())
             {
-                JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), Scheduler.DEFAULT_GROUP, CommandWriterJob.class);
+                JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), Scheduler.DEFAULT_GROUP, CommandConsumerJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, false), getTriggerGroup(node), node.getOutBound().getScheduleCron());

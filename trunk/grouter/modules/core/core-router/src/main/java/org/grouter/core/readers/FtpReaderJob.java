@@ -3,8 +3,8 @@ package org.grouter.core.readers;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.WildcardFilter;
-import org.grouter.core.command.AbstractCommandWriter;
-import org.grouter.core.command.CommandHolder;
+import org.grouter.core.command.AbstractCommand;
+import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointContext;
 import org.quartz.JobExecutionContext;
@@ -33,7 +33,7 @@ public class FtpReaderJob extends AbstractReader
 {
     private static Logger logger = Logger.getLogger(FtpReaderJob.class);
     //private NodeConfig node;
-    private BlockingQueue<AbstractCommandWriter> queue;
+    private BlockingQueue<AbstractCommand> queue;
     private NotFileFilter notFileFilter;
     private WildcardFilter wildcardFilter;
     public final static String FTP_AUTH_USER = "ftpAuthUser";
@@ -52,7 +52,7 @@ public class FtpReaderJob extends AbstractReader
     {
     }
 
-    private void init(final Node node, BlockingQueue<AbstractCommandWriter> blockingQueue)
+    private void init(final Node node, BlockingQueue<AbstractCommand> blockingQueue)
     {
         if (node == null || blockingQueue == null)
         {
@@ -72,14 +72,14 @@ public class FtpReaderJob extends AbstractReader
      * @return a list of CommnadHolder instances or a null if validation fails
      */
     @Override
-    protected List<CommandHolder> readFromSource()
+    protected List<CommandMessage> readFromSource()
     {
         logger.info("Reading files from :" + node.getInBound().getUri());
 
         // a list of full paths on ftp server we will download from
         EndPointContext endPointContext= (EndPointContext) node.getInBound().getEndPointContext().get(FILE_LIST);
         List<String> remoteFtpUriToFile = getPathIncludingFile(endPointContext.getValue());
-        List<CommandHolder> commandMessages = null;
+        List<CommandMessage> commandMessages = null;
         FTPClient client = null;
         try
         {
@@ -244,7 +244,7 @@ public class FtpReaderJob extends AbstractReader
     {
         JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
         node = (Node) jobDataMap.get("node");
-        BlockingQueue<AbstractCommandWriter> blockingQueue = (BlockingQueue<AbstractCommandWriter>) jobDataMap.get("queue");
+        BlockingQueue<AbstractCommand> blockingQueue = (BlockingQueue<AbstractCommand>) jobDataMap.get("queue");
         init(node, blockingQueue);
     }
 
@@ -255,7 +255,7 @@ public class FtpReaderJob extends AbstractReader
     }
 
 
-    public void setQueue(BlockingQueue<AbstractCommandWriter> queue)
+    public void setQueue(BlockingQueue<AbstractCommand> queue)
     {
         this.queue = queue;
     }

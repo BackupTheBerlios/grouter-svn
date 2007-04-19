@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
-import org.grouter.core.command.CommandHolder;
+import org.grouter.core.command.CommandMessage;
 
 /**
  * Basic test for Reader.
@@ -29,7 +29,7 @@ public class FtpReaderJobTest extends AbstractFtpReaderTests
         setFileList( file.getName()  );
 
 
-        List<CommandHolder> items = ftpReader.readFromSource();
+        List<CommandMessage> items = ftpReader.readFromSource();
         assertEquals( 1, items.size() );
         assertEquals( "ftp test data", items.get(0).getMessage() );
 
@@ -52,7 +52,7 @@ public class FtpReaderJobTest extends AbstractFtpReaderTests
 
         setFileList( file1.getName() + ","  + file2.getName() );
 
-        List<CommandHolder> items = ftpReader.readFromSource();
+        List<CommandMessage> items = ftpReader.readFromSource();
         assertEquals( 2, items.size() );
 
         // and all fiels should have been processed
@@ -75,7 +75,7 @@ public class FtpReaderJobTest extends AbstractFtpReaderTests
 
         setFileList( file1.getName() + ","  + "nonexistingfile.txt" );
 
-        List<CommandHolder> items = ftpReader.readFromSource();
+        List<CommandMessage> items = ftpReader.readFromSource();
         assertEquals( 1, items.size() );
 
         // and all files should have been processed

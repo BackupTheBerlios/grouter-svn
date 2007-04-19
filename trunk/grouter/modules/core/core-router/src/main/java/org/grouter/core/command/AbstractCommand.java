@@ -3,8 +3,6 @@ package org.grouter.core.command;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.servicelayer.RouterService;
 
 import java.util.List;
 
@@ -14,10 +12,10 @@ import java.util.List;
  * Commands are object put on a blocking queue from a produces/publisher and handed over to a consumer/writer.
  * A command contains type of command and the message the writer side needs.
  */
-public abstract class AbstractCommandWriter
+public abstract class AbstractCommand
 {
-    private static Logger logger = Logger.getLogger(AbstractCommandWriter.class);
-    protected List<CommandHolder> commandMessages;
+    private static Logger logger = Logger.getLogger(AbstractCommand.class);
+    protected List<CommandMessage> commandMessages;
     Node node;
     
 
@@ -65,7 +63,7 @@ public abstract class AbstractCommandWriter
         return ToStringBuilder.reflectionToString(this);
     }
 
-    public void setMessages(List<CommandHolder> arrCommandMessages)
+    public void setMessages(List<CommandMessage> arrCommandMessages)
     {
         this.commandMessages = arrCommandMessages;
     }

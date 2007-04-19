@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Sender;
 import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
 import org.grouter.domain.servicelayer.ServiceFactory;
 
@@ -16,13 +15,13 @@ import java.io.File;
  *
  * @author Georges Polyzois
  */
-public class FileCommandWriter extends AbstractCommandWriter
+public class FileWriteCommand extends AbstractCommand
 {
-    private static Logger logger = Logger.getLogger(FileCommandWriter.class);
+    private static Logger logger = Logger.getLogger(FileWriteCommand.class);
     ServiceFactory serviceFactory;
 
 
-    public FileCommandWriter()
+    public FileWriteCommand()
     {
     }
 
@@ -33,7 +32,7 @@ public class FileCommandWriter extends AbstractCommandWriter
      * @param node
      * @throws IllegalArgumentException if node == null
      */
-    public FileCommandWriter(Node node)
+    public FileWriteCommand(Node node)
     {
         if (node == null)
         {
@@ -56,7 +55,7 @@ public class FileCommandWriter extends AbstractCommandWriter
     {
         logger.debug(node.getName() + " writing to uri : " + node.getOutBound().getUri());
 
-        for (CommandHolder commandMessage : commandMessages)
+        for (CommandMessage commandMessage : commandMessages)
         {
             logger.debug("Wrote a new file :" + commandMessage.getMessage());
             try
@@ -73,7 +72,7 @@ public class FileCommandWriter extends AbstractCommandWriter
     public void backup()
     {
         logger.debug(node.getName() + " backup to uri : " + node.getBackupUri());
-        for (CommandHolder commandMessage : commandMessages)
+        for (CommandMessage commandMessage : commandMessages)
         {
             try
             {
@@ -93,7 +92,7 @@ public class FileCommandWriter extends AbstractCommandWriter
         // Todo refactor to use an special global endpoint for sending this message
         //JMSDestinationSenderThread.getQueue().offer(commandMessages);
 
-        for (CommandHolder commandMessage : commandMessages)
+        for (CommandMessage commandMessage : commandMessages)
         {
             Message message = new Message();
             message.setContent(commandMessage.getMessage());

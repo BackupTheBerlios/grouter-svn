@@ -3,7 +3,7 @@ package org.grouter.core;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.*;
-import org.grouter.core.command.AbstractCommandWriter;
+import org.grouter.core.command.AbstractCommand;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StringUtils;
@@ -11,8 +11,6 @@ import org.hibernate.SessionFactory;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.List;
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +26,7 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
     private static Logger logger = Logger.getLogger(AbstractRouterTests.class);
     private static final String GROUTER_ID = "grouter_1";
     public Router router = new Router(GROUTER_ID);
-    public BlockingQueue<AbstractCommandWriter> blockingQueue = new ArrayBlockingQueue<AbstractCommandWriter>(10);
+    public BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(10);
     public static final String BASE_FOLDER_FOR_TEST =   System.getProperty("java.io.tmpdir") + File.separator + GROUTER_ID;
     private boolean cleanup = true;
     //    public Node fileToFileNode;

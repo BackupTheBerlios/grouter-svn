@@ -8,10 +8,12 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
+import junit.framework.TestCase;
+
 /**
  * @author Georges Polyzois
  */
-public class GRouterClientManual
+public class GRouterClientManual extends TestCase
 {
     private static Logger logger = Logger.getLogger(GRouterClientManual.class);
     RouterService routerService;
@@ -25,28 +27,40 @@ public class GRouterClientManual
 
     public void testCallGrouterUsingRMI()
     {
-        routerService = (RouterService) ctx.getBean("routerServiceClient");
-
-        List<Router> routers = routerService.findAll();
-
-        logger.debug("Number  of routers" + routers.size());
-
+        ApplicationContext ctx = new FileSystemXmlApplicationContext(getConfigLocations());
+        GRouterServerAdapter gRouterServerAdapter = (GRouterServerAdapter) ctx.getBean("routerServiceClient");
+        List<Router> routers = gRouterServerAdapter.findAllRouters();
+        logger.info("Number of routers:" + routers.size());
     }
 
-    public static void main(String[] args)
+    public void testStopNodeUsingRMI()
     {
-        GRouterClientManual client = new GRouterClientManual();
-        client.testCallGrouterUsingRMI();
+        ApplicationContext ctx = new FileSystemXmlApplicationContext(getConfigLocations());
+        GRouterServerAdapter gRouterServerAdapter = (GRouterServerAdapter) ctx.getBean("routerServiceClient");
+        List<Router> routers = gRouterServerAdapter.findAllRouters();
+        logger.info("Number of routers:" + routers.size());
     }
 
 
-    protected String[] getConfigLocations()
+    /*public static void main(String[] args)
+  {
+      GRouterServerAdapter adapter = new GRouterServerAdapter();
+      ApplicationContext ctx = new FileSystemXmlApplicationContext(getConfigLocations());
+      GRouterServerAdapter gRouterServerAdapter = (GRouterServerAdapter) ctx.getBean("routerServiceClient");
+
+      List<Router>  routers = gRouterServerAdapter.findAllRouters();
+
+      logger.info( "Number of routers:" + routers.size() );
+
+  }
+    */
+    protected static String[] getConfigLocations()
     {
         return new String[]
                 {
-                   //     "classpath:/context-router.xml", "classpath:/context-domain-datasource.xml", "classpath:/context-domain-dao.xml",
-                     //   "classpath:/context-domain-sessionfactory.xml", "classpath:/context-domain-service.xml",
-                        "classpath:/context-domain-service-rmi-client.xml"
+                        //     "classpath:/context-router.xml", "classpath:/context-domain-datasource.xml", "classpath:/context-domain-dao.xml",
+                        //   "classpath:/context-domain-sessionfactory.xml", "classpath:/context-domain-service.xml",
+                        "classpath:/context-router-rmi-client.xml"
                 };
     }
 
