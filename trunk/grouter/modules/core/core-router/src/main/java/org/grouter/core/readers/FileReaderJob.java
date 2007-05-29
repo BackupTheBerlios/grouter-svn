@@ -8,6 +8,7 @@ import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobDataMap;
+import org.quartz.UnableToInterruptJobException;
 
 import java.io.FileFilter;
 import java.util.concurrent.BlockingQueue;
@@ -76,9 +77,7 @@ public class FileReaderJob extends AbstractReader
     @Override
     protected List<CommandMessage> readFromSource()
     {
-        logger.info("Reading files from " + node.getInBound().getUri());
-        //File[] curFiles = node.getInFolderConfig().getInPath().listFiles(fileFilter);
-
+        logger.info( node.getId() + " is reading files from " + node.getInBound().getUri());
         return FileReaderHelper.getCommands( node );
     }
 
@@ -133,5 +132,9 @@ public class FileReaderJob extends AbstractReader
     {
         this.queue = queue;
     }
-    
+
+    public void interrupt() throws UnableToInterruptJobException
+    {
+        logger.info(node.getId() + " got request to stop");
+    }
 }

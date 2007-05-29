@@ -1,7 +1,9 @@
 package org.grouter.domain.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
@@ -10,10 +12,11 @@ import java.util.LinkedHashMap;
  */
 @SuppressWarnings({"PersistenceModelORMInspection"})
 @Entity
-@Table(name = "NODE_TYPE")
-public class NodeType
+@Table(name = "node_type")
+public class NodeType extends BaseEntity
 {
     private Long id;
+
     private Long position;
     private String name;
     private String displayName;
@@ -27,6 +30,11 @@ public class NodeType
     {
         valueOfMap.put(NodeType.FILE_TO_FILE.getId(), NodeType.FILE_TO_FILE);
         valueOfMap.put(NodeType.FILE_TO_EMAIL.getId(), NodeType.FILE_TO_EMAIL);
+    }
+
+    public NodeType()
+    {
+
     }
 
 

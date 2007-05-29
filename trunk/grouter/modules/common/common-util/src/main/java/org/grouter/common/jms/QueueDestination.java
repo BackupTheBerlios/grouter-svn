@@ -344,6 +344,7 @@ public class QueueDestination extends Destination
     /**
      * Connect to queue  and open a session.
      */
+    @Override
     public void bind()
     {
         try
@@ -399,6 +400,7 @@ public class QueueDestination extends Destination
      * <b>See documentaion in {@link Destination#sendMessage(String)}.</b><br>
      * <br>
      */
+    @Override
     public synchronized void sendMessage(String message)
     {
         try
@@ -434,6 +436,7 @@ public class QueueDestination extends Destination
      * <b>See documentaion in {@link Destination#sendMessage(Serializable,int,int,long,HashMap)}.</b><br>
      * <br>
      */
+    @Override
     public synchronized void sendMessage(Serializable message, int deliveryMode,
                                          int messagePriority, long timeToLive,
                                          HashMap<String, String> headerProperties)

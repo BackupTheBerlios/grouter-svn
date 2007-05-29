@@ -6,6 +6,7 @@ import org.apache.commons.lang.Validate;
 import org.grouter.common.config.ConfigHandler;
 import org.grouter.core.util.ThreadPoolService;
 import org.grouter.core.util.SchedulerService;
+import org.grouter.core.util.RmiServiceExporterFactoryBean;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
 import org.grouter.domain.entities.Router;
@@ -14,8 +15,11 @@ import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.remoting.rmi.RmiServiceExporter;
 
 import java.rmi.RemoteException;
+import java.net.InetAddress;
 
 /**
  * Main class for GRouter.
@@ -32,20 +36,20 @@ public class GrouterServerImpl implements Runnable, GrouterServer
 {
 
     private static Logger logger = Logger.getLogger(GrouterServerImpl.class);
+
     // spring context
     ApplicationContext context;
-    private static String CONFIGFILE = "grouter.xml";
+
+    // handler for configuration file
     private ConfigHandler configHandler;
-    //    private GrouterConfig grouterConfig;
-    //private ThreadPoolService nodeThreadPoolHandler = new ThreadPoolService();
-    private static final String GROUTER_CONFIG = "grouter.config";
+
     private Router router;
 
     // scheduler service handles start / stop etc of nodes
-    private SchedulerService schedulerService;
+    private static SchedulerService schedulerService;
 
     // operation against database are handled through this service
-    RouterService routerService;
+    static RouterService routerService;
 
     private static final String ROUTER_SERVICE = "routerService";
 
@@ -66,18 +70,9 @@ public class GrouterServerImpl implements Runnable, GrouterServer
         }
     }
 
-    /**
-     * Constructor tries to locate config file using System.getProperty("grouter.config")
-     *
-     * @throws IllegalArgumentException if grou“terConfig == null
-     */
     public GrouterServerImpl()
     {
-        String grouterConfig = System.getProperty(GROUTER_CONFIG);
-        Validate.notNull(grouterConfig, "Could not get property with key :" + GROUTER_CONFIG + ". Have you " +
-                "provided a -D parameter for Java vm?");
-
-        new GrouterServerImpl(grouterConfig);
+        
     }
 
     /**
@@ -100,7 +95,6 @@ public class GrouterServerImpl implements Runnable, GrouterServer
             router = ConfigFactory.createRouter(configHandler.getGrouterConfigDocument().getGrouter());
 
             initRouter(router);
-            //nodeThreadPoolHandler.initNodeThreadScheduling( this.router.getNodes()  );
         }
         catch (Exception ex)
         {
@@ -119,14 +113,29 @@ public class GrouterServerImpl implements Runnable, GrouterServer
 
         context = new ClassPathXmlApplicationContext(getConfigLocations());
         schedulerService = new SchedulerService(router.getNodes());
+        routerService = (RouterService) context.getBean( ROUTER_SERVICE );
+        //RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean("serviceExporter");
+        RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean("rmiServiceExporterFactoryBean");
+        rmiServiceExporter.setRegistryPort( router.getRmiRegistryPort() );
+        rmiServiceExporter.setServicePort( router.getRmiServicePort() );
+        rmiServiceExporter.prepare();
 
-        BeanFactory factory = (BeanFactory) context;
-        routerService = (RouterService) factory.getBean( ROUTER_SERVICE );
+        String host = InetAddress.getLocalHost().getCanonicalHostName();
+        //rmiServiceExporter.
 
         routerService.saveRouter( router );
-
+        logStatus(router);
     }
 
+    private void logStatus(Router router)
+    {
+        logger.info( "Startup statistics" );
+        logger.info( "Number of nodes in conf file :" + router.getNodes().size() );
+        for (Node node : router.getNodes())
+        {
+            logger.info( "{id=" + node.getId() + ",name=" + node.getName() + "}" );
+        }
+    }
 
     /**
      * Starts GRouter... and adds shutdown hook.

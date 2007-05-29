@@ -1,10 +1,19 @@
 package org.grouter.domain.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
+
 /**
  * Types would be : file, jms.
  *
  * @author Georges Polyzois
  */
+
+
+@Entity
+@Table(name = "filter_type")
 public class FilterType
 {
     Long id;
@@ -20,6 +29,11 @@ public class FilterType
         this.name = name;
     }
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    @NotNull
     public Long getId()
     {
         return id;

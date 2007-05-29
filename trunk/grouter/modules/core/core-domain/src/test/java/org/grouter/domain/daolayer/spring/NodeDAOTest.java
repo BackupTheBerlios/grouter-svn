@@ -48,6 +48,16 @@ public class NodeDAOTest extends AbstractDAOTests
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
         // one node left with two enpoints
         assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM endpoint"));
+
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        nodeDAO.delete(NODE_ID_FTP);
+        flushSession();
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        // no node left and no enpoints
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM endpoint"));
+
     }
 
 

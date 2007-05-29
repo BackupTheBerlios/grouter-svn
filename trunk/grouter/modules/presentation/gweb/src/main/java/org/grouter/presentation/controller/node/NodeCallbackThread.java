@@ -147,7 +147,6 @@ public final class NodeCallbackThread implements Runnable
         while (iterator.hasNext())
         {
             String key = (String) iterator.next();
-            logger.debug("key :" + key);
 
             ScriptSession asession = clients.get(key);
             Util utilAll = new Util(asession);

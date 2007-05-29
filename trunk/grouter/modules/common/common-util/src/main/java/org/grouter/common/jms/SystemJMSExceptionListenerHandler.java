@@ -12,8 +12,7 @@ import org.apache.log4j.Logger;
  * ExceptionListener called from JMS provider when something goes wrong
  * like 'ping timeout'.
  *
- * @author
- * @version
+ * @author Georges Polyzois
  */
 public class SystemJMSExceptionListenerHandler implements ExceptionListener
 {
@@ -25,6 +24,7 @@ public class SystemJMSExceptionListenerHandler implements ExceptionListener
      * JMS provider to restart.
      */
     private RebindBehavior rebindBehavior = new EternalRebind();
+    
     /** Destination on which a rebind will issued on if needed. */
     private Destination destination;
 

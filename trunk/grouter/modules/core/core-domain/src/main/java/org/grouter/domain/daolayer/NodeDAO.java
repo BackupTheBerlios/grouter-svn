@@ -6,7 +6,7 @@ import org.grouter.domain.entities.Node;
 import java.util.List;
 
 /**
- * Business DAO operations related to the <tt>Message</tt> entity.
+ * Business DAO operations related to the <tt>Node</tt> entity.
  * <p/>
  *
  * @author Georges Polyzois

@@ -31,8 +31,7 @@ import org.grouter.common.jndi.ServiceLocatorException;
  * See {@link Destination} and use abstract interface to concrete
  * implementations.
  *
- * @author
- * @version
+ * @author Georges Polyzois
  */
 public class TopicDestination extends Destination
 {

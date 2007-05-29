@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Grouter name="grouter_1" id="grouter_1"
+<Grouter name="grouter_1" id="grouter_1" rmiRegistryPort="1099" rmiServicePort="2000" 
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://grouter.org/config.xsd ../../main/xsd/config.xsd"

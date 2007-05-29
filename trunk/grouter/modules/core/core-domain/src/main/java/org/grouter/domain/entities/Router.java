@@ -2,6 +2,7 @@ package org.grouter.domain.entities;
 
 import org.apache.log4j.Logger;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,54 +14,80 @@ import java.io.Serializable;
 /**
  * Domain class - root entity.
  *
- * @Author Georges Polyzois
+ * @author Georges Polyzois
  */
 @Entity
-@Table(name = "ROUTER")
-public class Router implements Serializable
+@Table(name = "router")
+public class Router extends BaseEntity
 {
     private static Logger logger = Logger.getLogger(Router.class);
+
+
+    @Id
+    @NotNull
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "assigned")
     private String id;
+
+    @NotNull
+    @Column(name = "name")
     private String name;
+
+    @OneToMany
+    //@JoinColumn(name = "router_fk", nullable = true)
     private Set<Node> nodes = new HashSet();
+
+    @Column(name = "startedon")
     private Timestamp startedOn;
+
+    @Column(name = "uptime")
     private long upTime;
 
+    @Column(name = "rmiregistryport")
+    private Integer rmiRegistryPort;
 
-    /**
-     * Constructor.
-     */
+    @Column(name = "rmiserviceport")
+    private Integer rmiServicePort;
+
+    public Integer getRmiServicePort()
+    {
+        return rmiServicePort;
+    }
+
+    public void setRmiServicePort(Integer rmiServicePort)
+    {
+        this.rmiServicePort = rmiServicePort;
+    }
+
+    public Integer getRmiRegistryPort()
+    {
+        return rmiRegistryPort;
+    }
+
+    public void setRmiRegistryPort(Integer rmiRegistryPort)
+    {
+        this.rmiRegistryPort = rmiRegistryPort;
+    }
+
     public Router()
     {
     }
 
 
-    public Router(String id)
+    public Router(String id, String name)
     {
         this.id = id;
-    }
-
-    public Router(String name, Set<Node> nodes, Timestamp startedOn, long upTime)
-    {
         this.name = name;
-        this.nodes = nodes;
-        this.startedOn = startedOn;
-        this.upTime = upTime;
     }
 
 
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
     {
         return id;
     }
 
 
-    @Column(name = "STARTEDON")
     public Timestamp getStartedOn()
     {
         return startedOn;
@@ -71,7 +98,6 @@ public class Router implements Serializable
         this.startedOn = startedOn;
     }
 
-    @Column(name = "UPTIME")
     public long getUpTime()
     {
         return upTime;
@@ -83,15 +109,6 @@ public class Router implements Serializable
     }
 
 
-
-
-
-//     @OneToMany
-//    @JoinTable(name = "ROUTER_NODE",
-//            joinColumns = {@JoinColumn(name = "ROUTER_FK")},
-//            inverseJoinColumns = {@JoinColumn(name = "NODE_FK")})
-    @OneToMany
-    @JoinColumn(name = "ROUTER_FK", nullable = true)
     public Set<Node> getNodes()
     {
         return nodes;
@@ -108,15 +125,14 @@ public class Router implements Serializable
         this.id = id;
     }
 
-    @Column(name = "NAME")
-    public String getName()
-    {
-        return name;
-    }
-
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
 
@@ -127,6 +143,8 @@ public class Router implements Serializable
                 ", name='" + name + '\'' +
                 ", nodes=" + nodes +
                 ", startedOn=" + startedOn +
+                ", rmiRegistryPort=" + rmiRegistryPort +
+                ", rmiServicePort=" + rmiServicePort +
                 ", upTime=" + upTime +
                 '}';
     }

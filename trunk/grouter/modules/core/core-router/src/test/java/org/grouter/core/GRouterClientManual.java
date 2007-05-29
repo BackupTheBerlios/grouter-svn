@@ -25,21 +25,15 @@ public class GRouterClientManual extends TestCase
         ctx = new FileSystemXmlApplicationContext(getConfigLocations());
     }
 
-    public void testCallGrouterUsingRMI()
+    public void testCallGrouterUsingRMI() throws Exception
     {
         ApplicationContext ctx = new FileSystemXmlApplicationContext(getConfigLocations());
-        GRouterServerAdapter gRouterServerAdapter = (GRouterServerAdapter) ctx.getBean("routerServiceClient");
-        List<Router> routers = gRouterServerAdapter.findAllRouters();
-        logger.info("Number of routers:" + routers.size());
+        //GrouterServerAdapter grouterServerAdapter = (GrouterServerAdapter) ctx.getBean("routerServiceClient");
+        GrouterServerAdapter grouterServerAdapter = (GrouterServerAdapter) ctx.getBean("grouterServerClient");
+        grouterServerAdapter.stopNode("n2");
+        //logger.info("Number of routers:" + routers.size());
     }
 
-    public void testStopNodeUsingRMI()
-    {
-        ApplicationContext ctx = new FileSystemXmlApplicationContext(getConfigLocations());
-        GRouterServerAdapter gRouterServerAdapter = (GRouterServerAdapter) ctx.getBean("routerServiceClient");
-        List<Router> routers = gRouterServerAdapter.findAllRouters();
-        logger.info("Number of routers:" + routers.size());
-    }
 
 
     /*public static void main(String[] args)

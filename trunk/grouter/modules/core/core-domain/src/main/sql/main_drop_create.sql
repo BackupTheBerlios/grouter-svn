@@ -22,6 +22,8 @@ DROP TABLE IF EXISTS filter_type;
 
 set foreign_key_checks = 1;
 
+
+
 select 'address.sql';
 \. address.sql
 select 'property.sql';
@@ -32,6 +34,12 @@ select 'role.sql';
 \. role.sql
 select 'user_role.sql';
 \. user_role.sql
+select 'endpoint_type.sql';
+\. endpoint_type.sql
+select 'endpoint.sql';
+\. endpoint.sql
+select 'endpoint_context.sql';
+\. endpoint_context.sql
 select 'router.sql';
 \. router.sql
 select 'node_type.sql';
@@ -46,14 +54,9 @@ select 'receiver_message.sql';
 \. receiver_message.sql
 select 'sender.sql';
 \. sender.sql
-select 'endpoint_type.sql';
-\. endpoint_type.sql
-select 'endpoint.sql';
-\. endpoint.sql
-select 'endpoint_context.sql';
-\. endpoint_context.sql
 select 'filter_type.sql';
 \. filter_type.sql
+
 
 
 

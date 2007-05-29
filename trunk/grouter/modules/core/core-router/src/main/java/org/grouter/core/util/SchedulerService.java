@@ -2,6 +2,7 @@ package org.grouter.core.util;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandConsumerJob;
 import org.grouter.core.readers.FileReaderJob;
@@ -12,6 +13,7 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.concurrent.*;
 import java.util.Set;
+import java.util.List;
 
 /**
  * What's the right size for a thread pool, assuming the goal is to keep the
@@ -42,7 +44,7 @@ public class SchedulerService
      */
     public SchedulerService(Set<Node> nodes)
     {
-        Validate.noNullElements(nodes, "Can not handle null nodes!!");
+        Validate.noNullElements( nodes, "Can not handle null nodes!!");
 
         this.nodes = nodes;
         try
@@ -69,7 +71,7 @@ public class SchedulerService
             BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(QUEUE_CAPACITY);
             if (node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId())
             {
-                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), Scheduler.DEFAULT_GROUP, FileReaderJob.class);
+                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), FileReaderJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
@@ -77,7 +79,7 @@ public class SchedulerService
             }
             if (node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId())
             {
-                JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), Scheduler.DEFAULT_GROUP, CommandConsumerJob.class);
+                JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), getTriggerGroup(node), CommandConsumerJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, false), getTriggerGroup(node), node.getOutBound().getScheduleCron());
@@ -89,23 +91,26 @@ public class SchedulerService
         scheduler.start();
     }
 
-    String getTriggerGroup(Node node)
+    private String getTriggerGroup(Node node)
     {
-        return GROUTER + node.getId();
-
+        String group = GROUTER + "_" + node.getId();
+        logger.debug("Trigger group :" + group);
+        return group;
     }
 
 
-    String getTriggerName(Node node, boolean inbound)
+    private String getTriggerName(Node node, boolean inbound)
     {
+        String triggerName;
         if (inbound)
         {
-            return node.getId() + node.getInBound().getId().toString();
+            triggerName = node.getId() + "_" + node.getInBound().getId();
         } else
         {
-            return node.getId() + node.getOutBound().getId().toString();
+            triggerName = node.getId() + "_" + node.getOutBound().getId();
         }
-
+        logger.debug("Trigger name:" + triggerName);
+        return triggerName;
     }
 
 
@@ -119,14 +124,19 @@ public class SchedulerService
 
 
     /**
-     * Stop a node from running - both inbound and outbound endpoints of the Node are stopped.
+     * Stop a node from running - both inbound and outbound endpoints of the Node are stopped.  In Quartz this
+     * means that we remove the job from the scheduler.
      *
      * @param node the node which we want to stop
      */
     public void stop(Node node) throws Exception
     {
-        scheduler.interrupt(getTriggerName(node, true), getTriggerGroup(node));
-        scheduler.interrupt(getTriggerName(node, false), getTriggerGroup(node));
+        //scheduler.interrupt(getTriggerName(node, true), getTriggerGroup(node));  -> callback to job implmeenting Interruptable.. interface for gracefully stoping
+        //scheduler.interrupt(getTriggerName(node, false), getTriggerGroup(node));
+        scheduler.unscheduleJob(getTriggerName(node, true), getTriggerGroup(node));
+        scheduler.unscheduleJob(getTriggerName(node, false), getTriggerGroup(node));
+
+        logStatus();
     }
 
 
@@ -140,7 +150,35 @@ public class SchedulerService
         CronTrigger cronTriggerOut = (CronTrigger) scheduler.getTrigger(getTriggerName(node, false), getTriggerGroup(node));
         cronTriggerOut.setCronExpression(node.getOutBound().getScheduleCron());
         scheduler.rescheduleJob(getTriggerName(node, false), getTriggerGroup(node), cronTriggerOut);
+    }
 
+
+    /**
+     * Util for printing out some statistics.
+     */
+    private void logStatus()
+    {
+        try
+        {
+            logger.info("Scheduler meta info :" + scheduler.getMetaData() );
+            List<JobExecutionContext> list = scheduler.getCurrentlyExecutingJobs();
+            logger.info("Currently number of running jobs:" + list.size());
+            for (JobExecutionContext jobExecutionContext : list)
+            {
+                logger.info( "Job running :" + jobExecutionContext.getJobDetail().getFullName() );
+            }
+
+            String[] groups = scheduler.getJobGroupNames();
+            logger.info("Registered groups and jobs for each group");
+            for (String group : groups)
+            {
+                String[] jobnames = scheduler.getJobNames( group );
+                logger.info("Jobnames for group :" + group + " -> " + ToStringBuilder.reflectionToString( jobnames ) );
+            }
+        } catch (SchedulerException e)
+        {
+            //ignore
+        }
     }
 
 }

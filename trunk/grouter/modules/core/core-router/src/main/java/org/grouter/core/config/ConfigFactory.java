@@ -33,6 +33,8 @@ public class ConfigFactory
         Router router = new Router();
         router.setName(grouterconfig.getName());
         router.setId( grouterconfig.getId() );
+        router.setRmiRegistryPort( grouterconfig.getRmiRegistryPort() );
+        router.setRmiServicePort( grouterconfig.getRmiServicePort() );
         //router.setStartedOn( grouterconfig.getId() );
 
         router.setNodes(getNodes(grouterconfig,router));

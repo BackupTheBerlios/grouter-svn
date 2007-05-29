@@ -1,7 +1,10 @@
 package org.grouter.domain.entities;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
 
+import javax.persistence.*;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,7 +12,9 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 
-public class Role implements Serializable, Comparable
+@Entity
+@Table(name = "router")
+public class Role extends BaseEntity implements Comparable
 {
     private Long id;
     private String name;
@@ -30,7 +35,7 @@ public class Role implements Serializable, Comparable
     }
 
 
-    Role()
+    public Role()
     {
     }
 
@@ -38,6 +43,22 @@ public class Role implements Serializable, Comparable
     {
         this.id = id;
         this.name = name;
+    }
+
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    @NotNull
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 
 
@@ -64,17 +85,6 @@ public class Role implements Serializable, Comparable
     }
 
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-
     public String getDisplayName()
     {
         return displayName;
@@ -88,9 +98,8 @@ public class Role implements Serializable, Comparable
 
     public String toString()
     {
-        return ToStringBuilder.reflectionToString( this );
+        return ToStringBuilder.reflectionToString(this);
     }
-
 
 
     /**
@@ -100,16 +109,16 @@ public class Role implements Serializable, Comparable
      * @throws NullPointerException if anotherRole is null.
      * @throws ClassCastException   if anotherRole is not an Role object.
      */
-    public int compareTo( Object anotherRole ) throws ClassCastException
+    public int compareTo(Object anotherRole) throws ClassCastException
     {
         //optimizing
-        if ( this == anotherRole )
+        if (this == anotherRole)
         {
             return 0;
         }
 
-        Role compareToRole = ( Role ) anotherRole;
-        return getId(  ).compareTo( compareToRole.getId() );
+        Role compareToRole = (Role) anotherRole;
+        return getId().compareTo(compareToRole.getId());
     }
 
 }

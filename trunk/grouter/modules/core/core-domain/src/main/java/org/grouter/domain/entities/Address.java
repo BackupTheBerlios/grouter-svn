@@ -1,6 +1,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.Email;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -136,6 +137,7 @@ public class Address implements Serializable
         this.companyname = companyname;
     }
 
+    @Email
     public String getEmail()
     {
         return email;

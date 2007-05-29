@@ -25,13 +25,12 @@ public class GRouterServiceTest extends AbstractServiceTests
         this.service = service;
     }
 
-
     //private final static String beanName = "messageServiceManager";
 
 
     public GRouterServiceTest()
     {
-       setAutowireMode(AUTOWIRE_BY_NAME);
+        setAutowireMode(AUTOWIRE_BY_NAME);
     }
 
     public void testCreateMessage() throws Exception
@@ -39,9 +38,9 @@ public class GRouterServiceTest extends AbstractServiceTests
         assertTrue(true);
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Sender sender = new Sender("A test sender " );
-        Message message = new Message("A test message" );
-        Receiver receiver = new Receiver("A test receiver" );
+        Sender sender = new Sender("A test sender ");
+        Message message = new Message("A test message");
+        Receiver receiver = new Receiver("A test receiver");
         message.addToReceivers(receiver);
         message.setSender(sender);
         message.setCreationTimestamp(timestamp);
@@ -50,16 +49,21 @@ public class GRouterServiceTest extends AbstractServiceTests
         Set<Message> messages = new HashSet<Message>();
         messages.add(message);
 
-        Node node = new Node("file node", messages, new Date(), null, new Date());
+        Node node = new Node("file node", "name");
+        node.setMessages( messages );
         message.setNode(node);
 
         Set<Node> nodes = new HashSet<Node>();
         nodes.add(node);
 
-        Router router = new Router("grouter", nodes, timestamp, 1000);
+        Router router = new Router("grouter", "aroutername");
+        router.setNodes(nodes);
+        router.setStartedOn(timestamp);
+        router.setUpTime(1000);
+
         node.setRouter(router);
 
-        service.saveMessage( message );
+        service.saveMessage(message);
 
         logger.debug("## Saved instance with id : " + message.getId() + " timestamp " + message.getCreationTimestamp());
         assertNotNull(message.getId());

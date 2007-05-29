@@ -1,6 +1,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,10 +12,11 @@ import java.math.BigInteger;
 
 
 /**
- * Domain class.
+ * Domain entity.
  * <p/>
  * The Collection type may contain duplicates while the Set type does not contain duplicates.
  * <p/>
+ *
  * A Message can have one and only one Sender. We have two tables:
  * Tables:
  * MESSAGE
@@ -40,16 +42,41 @@ import java.math.BigInteger;
  */
 
 @Entity
-@Table(name = "MESSAGE")
-public class Message implements Serializable
+@Table(name = "message")
+public class Message extends BaseEntity 
 {
     //private static final long serialVersionUID = -6097635701783502292L;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
+
+    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE} )
+    @JoinTable( name = "receiver_message",
+                joinColumns = {@JoinColumn(name = "message_fk")},
+                inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
     private Set<Receiver> receivers = new HashSet();
-    private Sender sender;
+
+    //@ManyToOne(cascade = {CascadeType.PERSIST} , fetch = FetchType.EAGER )
+    //@JoinColumn(name = "sender_fk", nullable = false)
+    transient private Sender sender;
+
+
+    @Column(name = "content", nullable = false)
+    @NotNull
     private String content;
+
+    @Column(name = "counter")
     private BigInteger counter;
+
+
+    @Column(name = "creationtimestamp")
     private Timestamp creationTimestamp;
+
+    @ManyToOne( cascade = {CascadeType.ALL, CascadeType.MERGE} )
+    @JoinColumn(name = "node_fk", nullable = false)
     private Node node;
 
     public Message()
@@ -91,16 +118,12 @@ public class Message implements Serializable
     }
 
 
-    @Id
-    @Column(name = "MESSAGE_ID")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+
     public String getId()
     {
         return id;
     }
 
-    @Column(name = "MESSAGE", nullable = false)
     public String getContent()
     {
         return content;
@@ -116,11 +139,6 @@ public class Message implements Serializable
      *
      * @return Set<Receiver>
      */
-//    @Column(name = "RECEIVERS")
-//    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
-//    @JoinTable(name = "RECEIVER_MESSAGE",
-//            joinColumns = {@JoinColumn(name = "MESSAGE_FK")},
-//            inverseJoinColumns = {@JoinColumn(name = "RECEIVER_FK")})
     public Set<Receiver> getReceivers()
     {
         return receivers;
@@ -136,9 +154,7 @@ public class Message implements Serializable
         this.receivers = receivers;
     }
 
-    //@Column(name = "SENDER_ID")
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinColumn(name = "SENDER_FK", nullable = true)
+
     public Sender getSender()
     {
         return sender;
@@ -171,18 +187,9 @@ public class Message implements Serializable
         receiver.removeFromMessages(this);
     }
 
-    /**
-     * A convenience method for outputing all attributes in the instances' state.
-     *
-     * @return
-     */
-    public String reflectionToString()
-    {
-        return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this);
-    }
 
 
-    @Column(name = "CREATIONTIMESTAMP")
+
     public Timestamp getCreationTimestamp()
     {
         return creationTimestamp;
@@ -190,8 +197,6 @@ public class Message implements Serializable
 
 
     //    @ManyToOne()
-    @ManyToOne( cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinColumn(name = "NODE_FK", nullable = true)
     public Node getNode()
     {
         return node;

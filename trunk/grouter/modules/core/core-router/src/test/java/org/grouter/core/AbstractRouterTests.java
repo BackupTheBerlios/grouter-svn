@@ -25,7 +25,7 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
 {
     private static Logger logger = Logger.getLogger(AbstractRouterTests.class);
     private static final String GROUTER_ID = "grouter_1";
-    public Router router = new Router(GROUTER_ID);
+    public Router router = new Router(GROUTER_ID,"aname");
     public BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(10);
     public static final String BASE_FOLDER_FOR_TEST =   System.getProperty("java.io.tmpdir") + File.separator + GROUTER_ID;
     private boolean cleanup = true;

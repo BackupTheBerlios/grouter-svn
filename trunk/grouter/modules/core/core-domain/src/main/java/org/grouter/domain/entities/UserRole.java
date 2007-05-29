@@ -1,11 +1,17 @@
 package org.grouter.domain.entities;
 
-import java.io.Serializable;
+import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
 
 /**
+ * Domain entity.
+ *
  * @author Georges Polyzois
  */
-public class UserRole implements Serializable, Comparable
+@Entity
+@Table(name = "user_role")
+public class UserRole extends BaseEntity implements Comparable
 {
     private Long id;
     private User user;
@@ -19,6 +25,21 @@ public class UserRole implements Serializable, Comparable
     {
         this.user = user;
         this.role = role;
+    }
+
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue( strategy=GenerationType.AUTO )
+    @NotNull
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 
     public User getUser()
@@ -45,17 +66,6 @@ public class UserRole implements Serializable, Comparable
     }
 
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-
     /**
      * Sorting inmemory using Collections.sort will do sort by name.
      *
@@ -65,7 +75,6 @@ public class UserRole implements Serializable, Comparable
      */
     public int compareTo(Object anotherObject) throws ClassCastException
     {
-        //optimizing
         if (this == anotherObject)
         {
             return 0;

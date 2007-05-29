@@ -8,4 +8,5 @@ create table endpoint_type
 insert into endpoint_type (id, name) values (1,'fileReader');
 insert into endpoint_type (id, name) values (2,'fileWriter');
 insert into endpoint_type (id, name) values (3,'ftpReader');
+insert into endpoint_type (id, name) values (4,'ftpWriter');
 

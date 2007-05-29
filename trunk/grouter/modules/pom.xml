@@ -126,7 +126,6 @@
 
   <repositories>
 
-
     <!-- repository>
        <id>maven2</id>
        <name>Danish Maven2 repository</name>
@@ -143,11 +142,13 @@
        <name>TLC Snapshot Development Repository</name>
        <url>http://commons.ucalgary.ca/pub/m2-snapshots</url>
    </repository -->
-    <!-- repository>
+
+    <!-- To make life easier I have put the jar files here (Sun(?) should reallyt try to publish this on a public Maven repos)  -->
+    <repository>
        <id>maven2grouter</id>
        <name>Grouter Maven2 repository</name>
        <url>http://grouter.berlios.de/mavenrepos</url>
-   </repository -->
+   </repository>
     <!--
     | This will enable snaphost versions of plugins from Codehaus.
     | - see also pluginRepositories element .
@@ -237,7 +238,7 @@
     <maven.compile.target>1.5</maven.compile.target>
     <commons-logging-version>1.1</commons-logging-version>
     <junit-version>3.8.1</junit-version>
-    <spring-version>2.0.2</spring-version>
+    <spring-version>2.0.5</spring-version>
   </properties>
 
 
@@ -377,7 +378,7 @@
       <dependency>
         <groupId>uk.ltd.getahead</groupId>
         <artifactId>dwr</artifactId>
-        <version>2.0</version>
+        <version>2.0.1</version>
       </dependency>
 
       <!--  Components for the Swing gui - Jidesoft -->
@@ -500,21 +501,34 @@
 
       <dependency>
         <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>3.0.0.ga</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
-        <version>3.2.1.ga</version>
+        <version>3.3.1.ga</version>
       </dependency>
 
       <!-- Ejb3 style annotations instead of .hbm file -->
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-annotations</artifactId>
-        <version>3.2.1.ga</version>
+        <version>3.3.0.ga</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-commons-annotations</artifactId>
+        <version>3.3.0.ga</version>
       </dependency>
 
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate</artifactId>
-        <version>3.2.2.ga</version>
+        <version>3.2.4.ga</version>
         <!--
         | Excluding jars is a powerful feature. Here I know I
         | will not use swarmcache, so I do not need downloading
@@ -800,6 +814,16 @@
         <groupId>xmlbeans</groupId>
         <artifactId>xbean</artifactId>
         <version>2.1.0</version>
+            <exclusions>
+              <exclusion>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+              </exclusion>
+            </exclusions>
       </dependency>
 
 
@@ -833,7 +857,6 @@
             <artifactId>cglib-full</artifactId>
           </exclusion>
         </exclusions>
-
       </dependency>
 
 

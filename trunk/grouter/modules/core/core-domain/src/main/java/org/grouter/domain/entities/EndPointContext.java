@@ -1,12 +1,19 @@
 package org.grouter.domain.entities;
 
+import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
+
 /**
  * Context store - used to override EndPoint default settings. Holds key value pairs used by
  * {@link EndPoint}:s.
  *
  * @author Georges Polyzois
  */
-public class EndPointContext
+
+@Entity
+@Table(name = "endpoint_context")
+public class EndPointContext  extends BaseEntity
 {
     Long id;
     String keyname;
@@ -30,6 +37,24 @@ public class EndPointContext
     {
     }
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    public Long getId()
+    {
+        return id;
+    }
+
+    /**
+     * Assigned id - no need to expose this setter.
+     *
+     * @param id
+     */
+    private void setId(Long id)
+    {
+        this.id = id;
+    }
 
     public String getKeyname()
     {
@@ -52,6 +77,8 @@ public class EndPointContext
     }
 
 
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "endpoint_fk", nullable = false)
     public EndPoint getEndPoint()
     {
         return endPoint;
@@ -63,18 +90,4 @@ public class EndPointContext
     }
 
 
-    public Long getId()
-    {
-        return id;
-    }
-
-
-    /**
-     * Assigned id - no need to expose this setter.
-     * @param id
-     */
-    private void setId(Long id)
-    {
-        this.id = id;
-    }
 }

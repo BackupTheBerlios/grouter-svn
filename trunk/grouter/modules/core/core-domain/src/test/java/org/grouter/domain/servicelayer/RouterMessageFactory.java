@@ -36,13 +36,19 @@ public class RouterMessageFactory
         Set<Message> messages = new HashSet<Message>();
         messages.add(message);
 
-        Node node = new Node("file node", messages, new Date(), null,new Date());
+        Node node = new Node("file node","name");
+        //messages, new Date(), null,new Date());
+        node.setMessages( messages );
         message.setNode(node);
 
         Set<Node> nodes = new HashSet<Node>();
         nodes.add(node);
 
-        Router router = new Router("grouter", nodes, timestamp, 1000);
+        Router router = new Router("grouter", "aname"  );
+        router.setNodes(nodes );
+        router.setStartedOn( timestamp );
+        router.setUpTime( 1000 );
+        
         node.setRouter(router);
 
         return message;

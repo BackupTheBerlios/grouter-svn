@@ -7,11 +7,12 @@ import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
 import org.quartz.Job;
+import org.quartz.InterruptableJob;
 
 import java.util.List;
 
 
-public abstract class AbstractReader implements Job
+public abstract class AbstractReader implements Job, InterruptableJob
 {
     private static Logger logger = Logger.getLogger(AbstractReader.class);
     AbstractCommand command;

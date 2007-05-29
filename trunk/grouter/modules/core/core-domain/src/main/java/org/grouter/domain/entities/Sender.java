@@ -15,12 +15,23 @@ import java.io.Serializable;
  */
 @SuppressWarnings({"PersistenceModelORMInspection"})
 @Entity
-@Table(name = "SENDER")
-public class Sender implements Serializable
+@Table(name = "sender")
+public class Sender extends BaseEntity
 {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
+
+
+    @ManyToOne(targetEntity = Address.class )
     private Address address;
+
+    @Column(name = "name")
     private String name;
+
+    @OneToMany
     private Set<Message> messages = new HashSet();
 
     public Sender()
@@ -35,15 +46,14 @@ public class Sender implements Serializable
 
     /**
      * No duplicate elements and the ordering is not relevant for us so we use a Set<Message>
-     *
+     * <p/>
      * To map this relationship without an extra join table use this:
-     * @OneToMany
-     * @JoinColumn(name="SENDER_ID")
-     * else if you want ot use a join table do as we have done below. An extra join table is good
-     * if any future requirements may need a many to many relationship, but of course lessens
-     * the performance for queries with a lot of joins.
      *
      * @return
+     * @OneToMany
+     * @JoinColumn(name="SENDER_ID") else if you want ot use a join table do as we have done below. An extra join table is good
+     * if any future requirements may need a many to many relationship, but of course lessens
+     * the performance for queries with a lot of joins.
      */
     /*
      @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -51,11 +61,6 @@ public class Sender implements Serializable
 joinColumns = { @JoinColumn(name = "user_fk", referencedColumnName = "user_id") },
 inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnName = "contact_info_id") })
      */
-    
-    @OneToMany
-    @JoinTable(name = "SENDER_MESSAGE",
-            joinColumns = {@JoinColumn(name = "SENDER_FK")},
-            inverseJoinColumns = {@JoinColumn(name = "MESSAGE_FK")})
     public Set<Message> getMessages()
     {
         return messages;
@@ -71,7 +76,6 @@ inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnNam
         this.id = id;
     }
 
-    @Column(name = "NAME")
     public String getName()
     {
         return name;
@@ -87,18 +91,11 @@ inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnNam
         this.name = name;
     }
 
-    @Id
-    @Column(name = "SENDER_ID")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
     {
         return id;
     }
 
-
-    //@ManyToOne
-    @Transient
     public Address getAddress()
     {
         return address;

@@ -28,6 +28,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     String NODE_ID = "nid_1";
     String NODE_ID_FTP = "nid_2";
     String ROUTER_ID = "rid_1";
+    String ENDPOINT_ID = "1";
     Long USER_ID = new Long(10002);
 
     SessionFactory sessionFactory;

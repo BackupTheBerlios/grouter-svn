@@ -1,21 +1,20 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.io.Serializable;
 
-@SuppressWarnings({"PersistenceModelORMInspection"})
 @Entity
-@Table(name = "RECEIVER")
+@Table(name = "receiver")
 public class Receiver implements Serializable
 {
     private String id;
     private Address address;
     private String name;
-
     private Set<Message> messages = new HashSet();
 
     public Receiver()
@@ -29,14 +28,18 @@ public class Receiver implements Serializable
     }
 
     /**
-     * "mappedBy" makes Hibernate ignore changes made to this class - Receivers -
-     * and that the other end of the association, the rec reivers collection in the Message
-     * class, is the representation that should be synchronized with the database if you link
-     * instances in Java code.
-     *
+     * The "mappedBy" makes Hibernate ignore changes made to this class - Receiver -
+     * and that the other end of the association is the master. Corresponda to inverse=true
+     * in Hibernate and has to name the inverse property of the target entity.
+     * 
      * @return
      */
-    @ManyToMany(mappedBy = "receivers")
+    @ManyToMany( mappedBy = "receivers" )
+    @JoinTable(
+        name = "receiver_message",
+        joinColumns = {@JoinColumn(name = "receiver_fk")},
+        inverseJoinColumns = {@JoinColumn(name = "message_fk")}
+    )
     public Set<Message> getMessages()
     {
         return messages;
@@ -53,7 +56,7 @@ public class Receiver implements Serializable
         return address;
     }
 
-    @Column(name = "NAME" )
+    @Column(name = "name" )
     public String getName()
     {
         return name;
@@ -65,10 +68,10 @@ public class Receiver implements Serializable
     }
 
     @Id
-    @Column(name = "RECEIVER_ID")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    //Hibernate specific...
+    @NotNull
     public String getId()
     {
         return id;

@@ -1,9 +1,9 @@
 insert into router (startedon, uptime, name, id) values ('2006-10-13 15:51:53', 100000000, 'ROUTER_TEST', 'rid_1');
 
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( 1, 'file://temp/in', 'clazzname.FileReader','* * * * * ', 1);
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( 2, 'file://temp/out', 'clazzname.FilWriter','* * * * * ', 2);
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( 3, 'file://temp/in', 'clazzname.FtpReader','* * * * * ', 3);
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( 4, 'ftp://temp/out', 'clazzname.FileWriter','* * * * * ', 2);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '1', 'file://temp/in', 'clazzname.FileReader','* * * * * ', 1);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '2', 'file://temp/out', 'clazzname.FilWriter','* * * * * ', 2);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '3', 'ftp://127.0.0.1/in', 'clazzname.FtpReader','* * * * * ', 3);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '4', 'ftp://127.0.0.1/out', 'clazzname.FtpWriter','* * * * * ', 2);
 
 insert into endpoint_context (id, keyname, value, endpoint_fk) values (1000, 'ftpHost', 'localhost', 3);
 insert into endpoint_context (id, keyname, value, endpoint_fk) values (1001, 'ftpPort', '12345', 3);

@@ -9,6 +9,7 @@ import org.hibernate.LazyInitializationException;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * DAO tests for mappings, cascade saves etc.
@@ -38,12 +39,14 @@ public class RouterDAOTest extends AbstractDAOTests
         Set<Node> nodes = new HashSet<Node>();
         nodes.add( node );
 
-        router.setNodes( nodes);
+//        router.setNodes( nodes);
 
         routerDAO.save(router);
         log.debug("Saved instance with id : " + router.getId());
 
         flushSession();
+
+
 
         String id = router.getId();
         Map motorDealerMap = jdbcTemplate.queryForMap("SELECT * FROM router WHERE id = ?",
@@ -74,6 +77,12 @@ public class RouterDAOTest extends AbstractDAOTests
         assertEquals( "ROUTER_TEST", router.getName() );
     }
 
+    public void testFindById2()
+    {
+        List<Router> routers = routerDAO.findAllDistinct();
+        assertNotNull( routers );
+    }
+
     public void testFindAndJoin()
     {
         Router router = routerDAO.findById(ROUTER_ID, "nodes" );
@@ -93,6 +102,7 @@ public class RouterDAOTest extends AbstractDAOTests
 
     public void testDelete()
     {
+        // A delete should cascde into node and into a nodes enpoints... a very dangerous operation.
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
         assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
         routerDAO.delete( ROUTER_ID );

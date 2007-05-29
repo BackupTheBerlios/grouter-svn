@@ -9,6 +9,7 @@ import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointContext;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobDataMap;
+import org.quartz.UnableToInterruptJobException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.net.ftp.FTPClient;
@@ -260,4 +261,8 @@ public class FtpReaderJob extends AbstractReader
         this.queue = queue;
     }
 
+    public void interrupt() throws UnableToInterruptJobException
+    {
+        logger.info(node.getId() + " got request to stop");
+    }
 }
