@@ -4,20 +4,20 @@
        default-autowire="byName">
 
   <!-- Client configuration -->
-  <bean id="routerServiceProxy" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  <bean id="grouterServerProxy" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
     <property name="serviceUrl">
-      <value>rmi://localhost:4005/RouterService</value>
+      <value>rmi://localhost:4005/GrouterService</value>
     </property>
     <property name="serviceInterface">
-      <value>org.grouter.domain.servicelayer.RouterService</value>
+      <value>org.grouter.core.GrouterServer</value>
     </property>
   </bean>
 
 
 
-  <bean id="routerServiceClient" class="org.grouter.core.GRouterServerAdapter">
-    <property name="routerServiceProxy">
-      <ref local="routerServiceProxy"/>
+  <bean id="grouterServerClient" class="org.grouter.core.GrouterServerAdapter">
+    <property name="grouterServerProxy">
+      <ref local="grouterServerProxy"/>
     </property>
   </bean>
 

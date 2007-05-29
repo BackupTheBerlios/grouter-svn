@@ -59,6 +59,12 @@
         <mapping resource="org/grouter/domain/entities/Message.hbm.xml"/>
         <mapping resource="org/grouter/domain/entities/Node.hbm.xml"/>
         <mapping resource="org/grouter/domain/entities/Router.hbm.xml"/>
+        <mapping resource="org/grouter/domain/entities/User.hbm.xml"/>
+        <mapping resource="org/grouter/domain/entities/UserRole.hbm.xml"/>
+        <mapping resource="org/grouter/domain/entities/Role.hbm.xml"/>
+        <mapping resource="org/grouter/domain/entities/EndPoint.hbm.xml"/>
+        <mapping resource="org/grouter/domain/entities/EndPointContext.hbm.xml"/>
+        <mapping resource="org/grouter/domain/entities/EndPointType.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

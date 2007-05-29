@@ -6,7 +6,7 @@
        default-autowire="byName">
 
   <bean id="dataSourceConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="location" value="file:/etc/domain-environment.properties"/>
+    <property name="location" value="file:/etc/grouter-environment.properties"/>
   </bean>
 
   <!-- use org.apache.commons.dbcp.BasicDataSource -->

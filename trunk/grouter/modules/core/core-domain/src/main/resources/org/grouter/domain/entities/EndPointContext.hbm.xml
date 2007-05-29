@@ -8,8 +8,8 @@
     <id name="id">
       <generator class="native"/>
     </id>
-    <property name="keyname"/>
-    <property name="value"/>
+    <property name="keyname" not-null="true"/>
+    <property name="value" not-null="true" />
 
     <many-to-one
             name="endPoint"

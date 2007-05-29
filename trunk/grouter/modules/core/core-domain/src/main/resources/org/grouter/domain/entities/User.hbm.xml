@@ -19,8 +19,8 @@
       not-null="false"   fetch="join"  lazy="false" />
 
     <many-to-one name="createdBy" column="createdby" class="org.grouter.domain.entities.User" not-null="false" />
-
-    <set name="roles" inverse="true" cascade="delete-orphan" lazy="false" >
+    
+    <set name="roles" inverse="true" cascade="delete-orphan" lazy="false" fetch="join" table="user_role" >
       <key column="user_id" />
       <one-to-many class="org.grouter.domain.entities.UserRole" />
     </set>

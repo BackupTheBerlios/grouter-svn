@@ -5,10 +5,9 @@
  | do not understand everyting stated here try reading up on xml schema
  | files.
  |
- |     xmlns="http://maven.apache.org/POM/4.0.0"
- | means that Defins a namespace for Maven 2
+ | xmlns="http://maven.apache.org/POM/4.0.0"  - means that Defins a namespace for Maven 2
  |
- |      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ | xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  | means that elements and data types used in the schema (schema, element,
  | complexType, string etc.) come from the "http://www.w3.org/2001/XMLSchema"
  | namespace and should be prefixed with xs:
@@ -87,6 +86,10 @@
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+    <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -98,18 +101,18 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-annotations</artifactId>
-      <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-commons-annotations</artifactId>
+      </dependency>
     <dependency>
       <groupId>com.javasoft</groupId>
       <artifactId>javaee</artifactId>
     </dependency>
-
     <dependency>
       <groupId>activemq</groupId>
       <artifactId>activemq-core</artifactId>
     </dependency>
-
   </dependencies>
-
 </project>

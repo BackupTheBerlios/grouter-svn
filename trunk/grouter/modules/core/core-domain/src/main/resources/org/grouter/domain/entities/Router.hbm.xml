@@ -7,11 +7,13 @@
       <generator class="assigned"/>
     </id>
     <property name="startedOn" not-null="false" type="timestamp" column="startedon"/>
-    <property name="name" not-null="false" type="java.lang.String" column="name"/>
+    <property name="name" not-null="true" type="java.lang.String" column="name"/>
     <property name="upTime" not-null="false" type="java.lang.Long" column="uptime"/>
+    <property name="rmiRegistryPort" not-null="false" column="rmiregistryport"/>
+    <property name="rmiServicePort" not-null="false"  column="rmiserviceport"/>
 
     <!-- Lazy relationship to the Node collection -->
-    <set name="nodes" cascade="save-update,delete-orphan" inverse="true" table="node" >
+    <set name="nodes" cascade="save-update,delete-orphan" inverse="true" table="node"  >
       <key>
         <column name="router_fk" not-null="true"/>
       </key>

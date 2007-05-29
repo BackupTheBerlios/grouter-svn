@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Grouter name="grouter2" id="grouter_id_2"
+<Grouter name="grouter2" id="grouter_id_2" rmiRegistryPort="1099" rmiServicePort="2000"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../common/common-configbeans/src/main/xsd/config.xsd"
-         xsi:noNamespaceSchemaLocation="../../../../../common/common-configbeans/src/main/xsd/config.xsd">
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
 
-  <Node id="1"  createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
+  <Node id="n1"  createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
     <name>File to file</name>
     <createdOn>2007-01-01</createdOn>
     <modifiedOn>2007-01-01</modifiedOn>
@@ -22,7 +22,7 @@
   </Node>
 
 
-  <Node id="2" createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
+  <Node id="n2" createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
     <name>Another file to file node</name>
     <createdOn>2007-01-01</createdOn>
     <modifiedOn>2007-01-01</modifiedOn>

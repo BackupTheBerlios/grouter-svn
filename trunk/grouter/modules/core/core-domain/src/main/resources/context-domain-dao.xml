@@ -20,4 +20,6 @@
 
     <bean id="roleDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RoleDAOImpl"/>
 
+    <bean id="endPointDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.EndPointDAOImpl"/>
+
 </beans>
