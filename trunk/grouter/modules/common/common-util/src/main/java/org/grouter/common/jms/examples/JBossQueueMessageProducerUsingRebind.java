@@ -69,10 +69,8 @@ public class JBossQueueMessageProducerUsingRebind extends JBossExample implement
         int i = 0;
         while(true)
         {
-
             try
             {
-
                 send("Message nr "+ i++);
                 Thread.sleep(SLEEP);
             } catch (Exception e)
@@ -86,10 +84,9 @@ public class JBossQueueMessageProducerUsingRebind extends JBossExample implement
     public static void main(String[] args)
     {
         JBossQueueMessageProducerUsingRebind producer = new JBossQueueMessageProducerUsingRebind();
-       // producer.send("kalle");
 
         Thread thr = new Thread(producer);
-       thr.start();
+        thr.start();
     }
 
 }
