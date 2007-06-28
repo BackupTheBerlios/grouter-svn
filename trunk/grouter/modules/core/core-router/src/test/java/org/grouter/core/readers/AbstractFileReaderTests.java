@@ -14,8 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Base class for running grouter tests. Creates a router, directories and populates
- * the inbound folder with some sample messages.
+ *
  *
  * @author Georges Polyzois
  */
@@ -58,8 +57,11 @@ public abstract class AbstractFileReaderTests extends AbstractRouterTests
             FileUtils.forceMkdir(new File( node.getBackupUri() ));
             logger.debug("Created dir : " + node.getBackupUri() );
 
-            FileUtils.forceMkdir(new File( node.getInternalQueueUri() ));
-            logger.debug("Created dir : " + node.getInternalQueueUri() );
+            FileUtils.forceMkdir(new File( node.getRouter().getHomePath() + "/nodes/" + node.getId() + "/internal/in" ));
+            logger.debug("Created dir : " + node.getRouter().getHomePath() + "/nodes/" + node.getId() + "/internal/in" );
+
+            FileUtils.forceMkdir(new File( node.getRouter().getHomePath() + "/nodes/" + node.getId() + "/internal/out" ));
+            logger.debug("Created dir : " + node.getRouter().getHomePath() + "/nodes/" + node.getId() + "/internal/out" );
         }
     }
 
@@ -79,25 +81,28 @@ public abstract class AbstractFileReaderTests extends AbstractRouterTests
      */
     public void createNode()
     {
-        fileToFileNode = new Node("node_id_ftpToFileNode", "ftpToFileNode");
-        fileToFileNode.setBackupUri( BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getName() + "/backup" );
-        fileToFileNode.setInternalQueueUri( BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getName() + "/internalq" );
+        fileToFileNode = new Node("id_ftpToFileNode", "ftpToFileNode");
+        fileToFileNode.setBackupUri( router.getHomePath() + "/nodes/" + fileToFileNode.getId() + "/internal/backup" );
+//        fileToFileNode.setInternalQueueUri( BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getName() + "/internalq" );
 
         EndPoint inbound = new EndPoint();
-        inbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getName() + "/in");
+        inbound.setUri(router.getHomePath() + "/nodes/" + fileToFileNode.getId() + "/in");
         inbound.setEndPointType( EndPointType.FILE_READER );
         inbound.setScheduleCron( "0/5 * * * * ?" );
         inbound.setId( "1" );
 
         EndPoint outbound = new EndPoint(  );
         outbound.setEndPointType(EndPointType.FILE_WRITER);
-        outbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getName() + "/out");
+        outbound.setUri(router.getHomePath() + "/nodes/"+ fileToFileNode.getId() + "/out");
         outbound.setEndPointType( EndPointType.FILE_WRITER );
         outbound.setScheduleCron( "0/5 * * * * ?" );
         outbound.setId( "2" );
 
         fileToFileNode.setInBound( inbound );
         fileToFileNode.setOutBound( outbound );
+
+        fileToFileNode.setRouter( router );
+
     }
 
     /**

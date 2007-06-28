@@ -1,7 +1,5 @@
 package org.grouter.core.command;
 
-import org.grouter.common.guid.GuidGenerator;
-
 import java.io.Serializable;
 import java.io.File;
 
@@ -11,16 +9,17 @@ import java.io.File;
 public class CommandMessage implements Serializable
 {
     private String message;
-    private String fileUriToMessage;
+    private File internalInFile;
+    private File internalOutFile;
     private String guid;
     private String encoding = "UTF-8";
 
-    public CommandMessage(String message, String internalUri)
+    public CommandMessage(String message, File internalInFile)
     {
         this.message = message;
-        this.fileUriToMessage = internalUri + File.separator + GuidGenerator.getInstance().getGUID();
+        this.internalInFile = internalInFile;
+        //internalOutFile = new File( internalInFile + GuidGenerator.getInstance().getGUID() );
     }
-
 
     public String getGuid()
     {
@@ -54,13 +53,24 @@ public class CommandMessage implements Serializable
     }
 
 
-    public String getFileUriToMessage()
+
+    public File getInternalInFile()
     {
-        return fileUriToMessage;
+        return internalInFile;
     }
 
-    public void setFileUriToMessage(String fileUriToMessage)
+    public void setInternalInFile(File internalInFile)
     {
-        this.fileUriToMessage = fileUriToMessage;
+        this.internalInFile = internalInFile;
+    }
+
+    public File getInternalOutFile()
+    {
+        return internalOutFile;
+    }
+
+    public void setInternalOutFile(File internalOutFile)
+    {
+        this.internalOutFile = internalOutFile;
     }
 }

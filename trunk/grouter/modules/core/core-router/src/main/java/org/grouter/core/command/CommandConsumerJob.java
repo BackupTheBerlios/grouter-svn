@@ -13,7 +13,6 @@ import static java.util.concurrent.TimeUnit.*;
  * A CommandConsumerJob is responsible for consuming commands (popping from queue) and executing them
  * (calling execute on concrete command).
  *
- *
  * @author Georges Polyzois
  */
 public class CommandConsumerJob implements Job
@@ -33,7 +32,6 @@ public class CommandConsumerJob implements Job
      * Only used by ThreadPoolService
      *
      * @param queue
-     * @deprecated
      */
     public CommandConsumerJob(BlockingQueue<AbstractCommand> queue)
     {
@@ -43,11 +41,14 @@ public class CommandConsumerJob implements Job
 
     public void execute(JobExecutionContext context) throws JobExecutionException
     {
-        JobDataMap jobDataMap = context.getMergedJobDataMap();
+        if (this.blockingQueue == null)
+        {
+            JobDataMap jobDataMap = context.getMergedJobDataMap();
 
-        //node = (Node) jobDataMap.get( "node" );
-        this.blockingQueue = (BlockingQueue<AbstractCommand>) jobDataMap.get("queue");
+            //node = (Node) jobDataMap.get( "node" );
+            this.blockingQueue = (BlockingQueue<AbstractCommand>) jobDataMap.get("queue");
 
+        }
 
         logger.debug("Queue size is : " + blockingQueue.size());
 
@@ -64,7 +65,7 @@ public class CommandConsumerJob implements Job
             }
         } catch (InterruptedException e)
         {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            logger.error(e, e);
         }
 
     }

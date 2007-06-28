@@ -25,9 +25,9 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
 {
     private static Logger logger = Logger.getLogger(AbstractRouterTests.class);
     private static final String GROUTER_ID = "grouter_1";
-    public Router router = new Router(GROUTER_ID,"aname");
+    public Router router = new Router(GROUTER_ID, "aname", System.getProperty("java.io.tmpdir") + "/" + GROUTER_ID);
     public BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(10);
-    public static final String BASE_FOLDER_FOR_TEST =   System.getProperty("java.io.tmpdir") + File.separator + GROUTER_ID;
+    public static final String BASE_FOLDER_FOR_TEST = System.getProperty("java.io.tmpdir") + File.separator + GROUTER_ID;
     private boolean cleanup = true;
     //    public Node fileToFileNode;
     SessionFactory sessionFactory;
@@ -55,16 +55,14 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
     @Override
     public void onTearDownInTransaction() throws Exception
     {
-        if( cleanup )
+        if (cleanup)
         {
-            FileUtils.deleteDirectory( new File(BASE_FOLDER_FOR_TEST) );
-        }
-        else
+            FileUtils.deleteDirectory(new File(BASE_FOLDER_FOR_TEST));
+        } else
         {
-            logger.info( "Leaving file structure " + BASE_FOLDER_FOR_TEST + " and not cleaning up files after test run!!!" );
+            logger.info("Leaving file structure " + BASE_FOLDER_FOR_TEST + " and not cleaning up files after test run!!!");
         }
     }
-
 
     /**
      * Do a setup for every test so we have a clean router for every run. onSetup is final and
@@ -110,15 +108,14 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
         }
     } */
 
-
-
 //    public abstract void doSetup();
 
     /**
      * Create the router.
+     *
      * @throws IOException
      */
-    public abstract void createRouter() ;
+    public abstract void createRouter();
 /*    public void createRouter() throws IOException
     {
         createFileToFileNode();
@@ -176,7 +173,6 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
     }
     */
 
-
     /**
      * Create messages in the inbound uris for file based inbound types.
      * @throws IOException
@@ -196,10 +192,9 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
         */
 
 
-
-
     /**
      * Injected.
+     *
      * @param sessionFactory injected
      */
     public void setSessionFactory(SessionFactory sessionFactory)
@@ -210,6 +205,7 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
 
     /**
      * Specify all context files here.
+     *
      * @return an array with context files
      */
     @Override
@@ -217,7 +213,7 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
     {
         return new String[]
                 {
-                       // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
+                        // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
                         "context-router.xml", "context-domain-datasource.xml", "context-domain-dao.xml",
                         "context-domain-sessionfactory.xml", "context-domain-service.xml"//,"context-domain-service-rmi.xml"
                 };
@@ -226,6 +222,7 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
 
     /**
      * The data we want to use in our test cases.
+     *
      * @return a path to test data script
      */
     protected String getTestDataLocation()

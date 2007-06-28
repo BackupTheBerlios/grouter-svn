@@ -11,6 +11,7 @@
     <property name="upTime" not-null="false" type="java.lang.Long" column="uptime"/>
     <property name="rmiRegistryPort" not-null="false" column="rmiregistryport"/>
     <property name="rmiServicePort" not-null="false"  column="rmiserviceport"/>
+    <property name="homePath" not-null="true" type="java.lang.String" column="homepath"/>
 
     <!-- Lazy relationship to the Node collection -->
     <set name="nodes" cascade="save-update,delete-orphan" inverse="true" table="node"  >

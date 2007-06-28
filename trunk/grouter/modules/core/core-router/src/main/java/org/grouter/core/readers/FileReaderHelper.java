@@ -20,6 +20,7 @@ public class FileReaderHelper
 
     private static Logger logger = Logger.getLogger(FileReaderHelper.class);
 
+
     public static List<CommandMessage> getCommands( Node node )
     {
         File inFolder = new File(node.getInBound().getUri());
@@ -50,13 +51,16 @@ public class FileReaderHelper
             {
                 try
                 {
-                    String message = getMessage(curFile);
-                    CommandMessage cmdMessage = new CommandMessage(message, node.getInternalQueueUri() );
-                    File internalqFile = new File( cmdMessage.getFileUriToMessage() );
-                    FileUtils.copyFile( curFile,  internalqFile );
-                    commandMessages.add(cmdMessage);
-                    // remove file from infolder
+                    // move file from inbound location to node's internal in folder
+                    File internalInFile = new File( node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in" + File.separator  + curFile.getName() );
+                    FileUtils.copyFile( curFile, internalInFile );
                     curFile.delete();
+
+
+                    // Get part of the message to store for querying purposes
+                    String message = getMessage(internalInFile);
+                    CommandMessage cmdMessage = new CommandMessage( message, internalInFile );
+                    commandMessages.add(cmdMessage);
                 }
                 catch (Exception ex)
                 {

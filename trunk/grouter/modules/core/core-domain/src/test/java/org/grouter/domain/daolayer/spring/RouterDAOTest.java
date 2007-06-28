@@ -39,14 +39,10 @@ public class RouterDAOTest extends AbstractDAOTests
         Set<Node> nodes = new HashSet<Node>();
         nodes.add( node );
 
-//        router.setNodes( nodes);
-
         routerDAO.save(router);
         log.debug("Saved instance with id : " + router.getId());
 
         flushSession();
-
-
 
         String id = router.getId();
         Map motorDealerMap = jdbcTemplate.queryForMap("SELECT * FROM router WHERE id = ?",

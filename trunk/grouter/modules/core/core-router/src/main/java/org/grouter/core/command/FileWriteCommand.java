@@ -5,7 +5,9 @@ import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
+import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 import org.grouter.domain.servicelayer.ServiceFactory;
+import org.grouter.common.guid.GuidGenerator;
 
 import java.io.File;
 
@@ -54,13 +56,15 @@ public class FileWriteCommand extends AbstractCommand
     public void write()
     {
         logger.debug(node.getName() + " writing to uri : " + node.getOutBound().getUri());
-
         for (CommandMessage commandMessage : commandMessages)
         {
             logger.debug("Wrote a new file :" + commandMessage.getMessage());
             try
             {
-                FileUtils.writeStringToFile(new File(node.getOutBound().getUri() + "/" + commandMessage.getGuid() + ".txt"), commandMessage.getMessage(), commandMessage.getEncoding());
+                FileUtils.copyFile( commandMessage.getInternalInFile(), new File(node.getOutBound().getUri() + File.separator  + commandMessage.getInternalInFile().getName() ) );
+                File internalOutFile = new File( node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_"  + GuidGenerator.getInstance().getGUID() );
+                FileUtils.copyFile( commandMessage.getInternalInFile(), internalOutFile  );
+                commandMessage.getInternalInFile().delete();
             }
             catch (Exception e)
             {
@@ -100,10 +104,9 @@ public class FileWriteCommand extends AbstractCommand
 
             message.setNode( node );
             
-            JDBCLogStrategy jdbcLogStrategy = (JDBCLogStrategy) serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+            LogStrategy jdbcLogStrategy = (JDBCLogStrategy) serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
             jdbcLogStrategy.log(message);
 
-            //logStrategy.log( message );
         }
 
     }

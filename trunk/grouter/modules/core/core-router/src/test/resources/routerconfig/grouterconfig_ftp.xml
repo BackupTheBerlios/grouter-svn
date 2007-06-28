@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Grouter name="Test router for ftp" id="grouter_id_2" rmiRegistryPort="1099" rmiServicePort="2000"
+         home="file://temp/grouter"
+         xmlns="http://grouter.org/config.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
+
+  <Node id="n1"  createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
+    <name>Ftp to file</name>
+    <createdOn>2007-01-01</createdOn>
+    <modifiedOn>2007-01-01</modifiedOn>
+    <inBoundEndPoint id="filereader_1" endPointType="FTP_READER">
+      <uri>ftp://temp/grouter/nodes/filetest/in</uri>
+      <clazzname>a classname</clazzname>
+      <cron>0/5 * * * * ?</cron>
+    </inBoundEndPoint>
+    <outBoundEndPoint id="filewriter_1" endPointType="FTP_WRITER">
+      <uri>ftp://temp/grouter/nodes/filvetest/out</uri>
+      <clazzname>a classname</clazzname>
+      <cron>0/5 * * * * ?</cron>
+    </outBoundEndPoint>
+  </Node>
+
+
+
+</Grouter>

@@ -27,7 +27,7 @@ public abstract class AbstractCommand
      */
     public void execute()
     {
-        backup();
+//        backup();
         transform();
         write();
         log();

@@ -5,14 +5,19 @@ import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.WildcardFilter;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
+import org.grouter.core.util.file.FileUtils;
+import org.grouter.core.exception.ValidationException;
 import org.grouter.domain.entities.Node;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobDataMap;
 import org.quartz.UnableToInterruptJobException;
 
 import java.io.FileFilter;
+import java.io.File;
 import java.util.concurrent.BlockingQueue;
 import java.util.List;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 /**
@@ -32,6 +37,7 @@ public class FileReaderJob extends AbstractReader
     private static final String NODE = "node";
     private static final String QUEUE = "queue";
 
+    private static boolean isValidated;
 
     /**
      * Empty - needed by Quartz framework.
@@ -50,7 +56,10 @@ public class FileReaderJob extends AbstractReader
         this.queue = blockingQueue;
         //which type of commands should this servicenode worker handle
         command = getCommand(node);
- //       createFilter(node);
+
+        //validate path etc
+        validate( node );
+ //       createFilter(node );
     }
 
 
@@ -93,9 +102,20 @@ public class FileReaderJob extends AbstractReader
         queue.offer(command);
     }
 
+    /**
+     * Verify in and out directories.
+     * @param node
+     */
     void validate(Node node)
     {
-        // TODO validate 
+            File file = new File( node.getInBound().getUri() );
+            if( !file.isDirectory() )
+            {
+                throw new ValidationException("Path does not exist for :" + node.getInBound().getUri()  );
+            }
+
+        isValidated = true;
+
     }
 
     /**

@@ -50,6 +50,17 @@ public class Router extends BaseEntity
     @Column(name = "rmiserviceport")
     private Integer rmiServicePort;
 
+    @Column(name = "homepath")
+    private String homePath;
+
+    public Router(String id, String name, String homePath)
+    {
+        this.id = id;
+        this.name = name;
+        this.homePath = homePath;
+    }
+
+
     public Integer getRmiServicePort()
     {
         return rmiServicePort;
@@ -135,6 +146,16 @@ public class Router extends BaseEntity
         return name;
     }
 
+
+    public String getHomePath()
+    {
+        return homePath;
+    }
+
+    public void setHomePath(String homePath)
+    {
+        this.homePath = homePath;
+    }
 
     public String toString()
     {

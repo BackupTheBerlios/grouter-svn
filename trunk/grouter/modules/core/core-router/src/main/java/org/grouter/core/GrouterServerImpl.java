@@ -4,9 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
 import org.apache.commons.lang.Validate;
 import org.grouter.common.config.ConfigHandler;
-import org.grouter.core.util.ThreadPoolService;
 import org.grouter.core.util.SchedulerService;
-import org.grouter.core.util.RmiServiceExporterFactoryBean;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
 import org.grouter.domain.entities.Router;
@@ -14,8 +12,6 @@ import org.grouter.domain.entities.Node;
 import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.remoting.rmi.RmiServiceExporter;
 
 import java.rmi.RemoteException;
@@ -83,7 +79,7 @@ public class GrouterServerImpl implements Runnable, GrouterServer
      */
     public GrouterServerImpl(String configPath)
     {
-        if (!FileUtils.isValidPath(configPath))
+        if (!FileUtils.isValidFile(configPath))
         {
             throw new IllegalArgumentException("Invalid path given to config file!!! Path was " + configPath);
         }

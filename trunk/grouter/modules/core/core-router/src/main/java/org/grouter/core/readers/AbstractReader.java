@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.CommandMessage;
+import org.grouter.core.exception.ValidationException;
 import org.grouter.domain.entities.Node;
 import org.quartz.Job;
 import org.quartz.InterruptableJob;
@@ -40,14 +41,7 @@ public abstract class AbstractReader implements Job, InterruptableJob
      */
     final protected void execute()
     {
-        try
-        {
-            validate(node);
-        } catch (Exception e)
-        {
-            logger.error("Validation failed", e );
-            return;
-        }
+
         List<CommandMessage> arrCommandMessages = readFromSource();
         if (arrCommandMessages != null && arrCommandMessages.size() > 0)
         {
@@ -64,7 +58,6 @@ public abstract class AbstractReader implements Job, InterruptableJob
     /**
      * All subclasses need to be able to validate them selves.
      */
-    abstract void validate(Node node);
-
+    abstract void validate(Node node) throws ValidationException;
 
 }

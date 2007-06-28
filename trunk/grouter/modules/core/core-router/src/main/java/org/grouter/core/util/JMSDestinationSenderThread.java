@@ -20,7 +20,7 @@ public class JMSDestinationSenderThread implements Runnable
 {
     private static Logger logger = Logger.getLogger(JMSDestinationSenderThread.class);
     private static RebindBehavior rebindBehavior = new EternalRebind();
-    private static Destination queueDestination;
+    private static AbstractDestination queueDestination;
     private static final int QUEUE_SIZE = 2000;
     private static final int TIME_TO_LIVE = 10000;
     private static BlockingQueue<CommandMessage[]> queues = new ArrayBlockingQueue<CommandMessage[]>(QUEUE_SIZE);

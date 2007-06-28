@@ -317,23 +317,45 @@ public class FileUtils
 
 
     /**
-     * Verify if path given is a valid.
-     * @param configPath
-     * @return
+     * Verify if path to a given file is a valid.
+     *
+     * @param path the path 
+     * @return true if valid and false if invalid path
      */
-    public static boolean isValidPath(String configPath)
+    public static boolean isValidFile(String path)
     {
-        File file = new File(configPath);
-        if (configPath == null)
+        if (path == null)
         {
             return false;
         }
 
-        if (!file.isFile())
+        File file = new File(path);
+        if ( file.isFile() )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Verify if path to a given file is a valid.
+     *
+     * @param path the path to the dir
+     * @return true if valid and false if invalid path
+     */
+    public static boolean isValidDir(String path)
+    {
+        if (path == null)
         {
             return false;
         }
-        return true;
+
+        File file = new File(path);
+        if ( file.isDirectory() )
+        {
+            return true;
+        }
+        return false;
     }
 
     /**

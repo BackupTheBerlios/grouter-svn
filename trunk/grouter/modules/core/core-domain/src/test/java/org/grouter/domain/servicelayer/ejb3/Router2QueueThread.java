@@ -1,7 +1,7 @@
 package org.grouter.domain.servicelayer.ejb3;
 
-import org.grouter.common.jms.QueueDestination;
 import org.grouter.common.jms.AcknowledgeMode;
+import org.grouter.common.jms.QueueSenderDestination;
 import org.grouter.common.jndi.JNDIUtils;
 import org.grouter.domain.servicelayer.RouterMessageFactory;
 import org.apache.log4j.Logger;
@@ -16,7 +16,7 @@ import javax.naming.InitialContext;
 public class Router2QueueThread implements Runnable
 {
     private static Logger logger = Logger.getLogger(Router2QueueThread.class);
-    private QueueDestination queueDestination;
+    private QueueSenderDestination queueDestination;
     protected Queue que;
     protected static final String QUEUE_TEST_QUEUE = "queue/GrouterQueue";
     protected QueueConnection conn;
@@ -49,7 +49,7 @@ public class Router2QueueThread implements Runnable
     private void setupMessaging() throws JMSException, NamingException
     {
         InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
-        queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory", null, iniCtx, 4000, null, AcknowledgeMode.NONE);
+        queueDestination = new QueueSenderDestination(QUEUE_TEST_QUEUE, "ConnectionFactory", null, iniCtx, 4000, AcknowledgeMode.NONE);
         queueDestination.bind();
     }
 
