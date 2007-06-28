@@ -12,7 +12,7 @@ import javax.jms.QueueReceiver;
  * Time: 4:35:21 PM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class JBossExample
+public abstract class AbstractJBossExample
 {
     protected Queue que;
     protected static final String QUEUE_TEST_QUEUE = "queue/GrouterQueue";

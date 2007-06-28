@@ -11,7 +11,7 @@ import javax.naming.InitialContext;
 /**
  * Register and listen for messages asynch from Queueu.
  */
-public class JBossQueueAsynchMessageConsumer extends JBossExample implements MessageListener, Runnable
+public class JBossQueueAsynchMessageConsumer extends AbstractJBossExample implements MessageListener, Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueAsynchMessageConsumer.class);
 
@@ -21,12 +21,9 @@ public class JBossQueueAsynchMessageConsumer extends JBossExample implements Mes
         try
         {
             setupMessaging();
-        } catch (JMSException e)
+        } catch (Exception e)
         {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (NamingException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();  
         }
     }
 

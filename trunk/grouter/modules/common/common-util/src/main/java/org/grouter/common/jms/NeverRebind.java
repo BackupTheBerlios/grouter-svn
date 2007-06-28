@@ -26,7 +26,7 @@ public class NeverRebind extends RebindBehavior
     /**
      * The algorithm implementation for rebinding goes here.
      */
-    public void rebind(Destination dest)
+    public void rebind(AbstractDestination dest)
     {
         logger.info("Rebinding using behavior implementation : " + this.getClass().getName());
         // We unbind and do nothing more

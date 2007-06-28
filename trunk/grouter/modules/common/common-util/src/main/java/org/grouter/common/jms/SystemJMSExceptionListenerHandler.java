@@ -26,14 +26,14 @@ public class SystemJMSExceptionListenerHandler implements ExceptionListener
     private RebindBehavior rebindBehavior = new EternalRebind();
     
     /** Destination on which a rebind will issued on if needed. */
-    private Destination destination;
+    private AbstractDestination destination;
 
     /**
      * Constructor taking a {@link SystemJMSExceptionListenerHandler}.
      *
      * @param dest Destination  to perform rebind on.
      */
-    public SystemJMSExceptionListenerHandler(Destination dest)
+    public SystemJMSExceptionListenerHandler(AbstractDestination dest)
     {
         this.destination = dest;
     }

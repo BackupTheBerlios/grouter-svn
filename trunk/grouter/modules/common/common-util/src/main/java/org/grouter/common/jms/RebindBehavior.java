@@ -15,5 +15,5 @@ public abstract class RebindBehavior
      * Algorithm for rebinding to JMS provides is implemented by
      * classes implementeint this interface.
      */
-    abstract void rebind(Destination dest);
+    abstract void rebind(AbstractDestination dest);
 }

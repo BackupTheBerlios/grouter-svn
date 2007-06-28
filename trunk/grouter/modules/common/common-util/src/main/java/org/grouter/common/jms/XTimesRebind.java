@@ -31,7 +31,7 @@ public class XTimesRebind extends RebindBehavior
     /**
      * The algorithm implementation for rebinding goes here.
      */
-    public void rebind(Destination dest)
+    public void rebind(AbstractDestination dest)
     {
         logger.info("Rebinding using behavior implementation : " + this.getClass().getName());
         for (int i = 0; i < numberOfTimes; i++)

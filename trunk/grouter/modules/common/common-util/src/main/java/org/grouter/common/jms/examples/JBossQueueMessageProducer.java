@@ -10,7 +10,7 @@ import javax.naming.InitialContext;
 /**
  * Produces messages on queue.
  */
-public class JBossQueueMessageProducer  extends JBossExample implements Runnable
+public class JBossQueueMessageProducer  extends AbstractJBossExample implements Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueMessageProducer.class);
 
@@ -74,10 +74,8 @@ public class JBossQueueMessageProducer  extends JBossExample implements Runnable
         int i = 0;
         while(true)
         {
-
             try
             {
-
                 send("Message nr "+ i++);
                 Thread.sleep(SLEEP);
             } catch (Exception e)

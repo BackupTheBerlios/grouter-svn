@@ -21,7 +21,7 @@ public class FailoverRebind extends RebindBehavior
     /** Logger. */
     private static Logger logger = Logger.getLogger(XTimesRebind.class);
 
-    void rebind(Destination dest)
+    void rebind(AbstractDestination dest)
     {
         throw new UnsupportedOperationException("Not implemented yet");
     }

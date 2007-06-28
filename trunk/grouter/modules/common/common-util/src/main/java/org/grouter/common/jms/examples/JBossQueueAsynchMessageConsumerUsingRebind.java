@@ -1,7 +1,8 @@
 package org.grouter.common.jms.examples;
 
 import org.apache.log4j.Logger;
-import org.grouter.common.jms.QueueDestination;
+import org.grouter.common.jms.QueueSenderDestination;
+import org.grouter.common.jms.QueueListenerDestination;
 import org.grouter.common.jndi.JNDIUtils;
 
 import javax.jms.*;
@@ -11,10 +12,10 @@ import javax.naming.InitialContext;
 /**
  * Register and listen for messages asynch from Queueu.
  */
-public class JBossQueueAsynchMessageConsumerUsingRebind extends JBossExample implements MessageListener, Runnable
+public class JBossQueueAsynchMessageConsumerUsingRebind extends AbstractJBossExample implements MessageListener, Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueAsynchMessageConsumerUsingRebind.class);
-    private QueueDestination queueDestination;
+    private QueueListenerDestination queueDestination;
 
 
     public JBossQueueAsynchMessageConsumerUsingRebind()
@@ -41,8 +42,8 @@ public class JBossQueueAsynchMessageConsumerUsingRebind extends JBossExample imp
     {
         InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
         Object tmp = iniCtx.lookup("ConnectionFactory");
-        queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, false, null,
-                null, iniCtx, 4000, this);
+        queueDestination = new QueueListenerDestination(QUEUE_TEST_QUEUE, null,
+                null, iniCtx, this);
         queueDestination.bind();
     }
 

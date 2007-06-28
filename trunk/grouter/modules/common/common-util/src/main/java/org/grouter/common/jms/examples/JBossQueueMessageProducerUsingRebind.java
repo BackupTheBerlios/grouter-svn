@@ -1,8 +1,8 @@
 package org.grouter.common.jms.examples;
 
 import org.apache.log4j.Logger;
-import org.grouter.common.jms.QueueDestination;
 import org.grouter.common.jms.AcknowledgeMode;
+import org.grouter.common.jms.QueueSenderDestination;
 import org.grouter.common.jndi.JNDIUtils;
 
 import javax.jms.*;
@@ -12,10 +12,10 @@ import javax.naming.InitialContext;
 /**
  * Produces messages on queue.
  */
-public class JBossQueueMessageProducerUsingRebind extends JBossExample implements Runnable
+public class JBossQueueMessageProducerUsingRebind extends AbstractJBossExample implements Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueMessageProducerUsingRebind.class);
-    private QueueDestination queueDestination;
+    private QueueSenderDestination queueDestination;
 
 
     public JBossQueueMessageProducerUsingRebind()
@@ -42,7 +42,7 @@ public class JBossQueueMessageProducerUsingRebind extends JBossExample implement
     private void setupMessaging() throws JMSException, NamingException
     {
         InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
-        queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",   null, iniCtx, 4000, null, AcknowledgeMode.NONE);
+        queueDestination = new QueueSenderDestination(QUEUE_TEST_QUEUE, "ConnectionFactory",   null, iniCtx, 4000, AcknowledgeMode.NONE);
         queueDestination.bind();
     }
 

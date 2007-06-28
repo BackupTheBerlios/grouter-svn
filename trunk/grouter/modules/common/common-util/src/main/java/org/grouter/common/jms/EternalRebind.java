@@ -32,7 +32,7 @@ public class EternalRebind extends RebindBehavior
     /**
      * The algorithm implementation for rebinding goes here.
      */
-    public synchronized void rebind(Destination dest)
+    public synchronized void rebind(AbstractDestination dest)
     {
         logger.info("Rebinding using behavior implementation : " + this.getClass().getName());
         boolean isBoundToDestination = false;

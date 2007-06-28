@@ -8,18 +8,9 @@ import static org.grouter.common.jndi.ServiceLocatorContextAware.*;
 
 import java.io.*;
 import java.util.*;
+import java.lang.IllegalStateException;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-import javax.jms.TemporaryTopic;
-import javax.jms.Topic;
-import javax.jms.TopicConnection;
-import javax.jms.TopicConnectionFactory;
-import javax.jms.TopicPublisher;
-import javax.jms.TopicSession;
-import javax.jms.TopicSubscriber;
+import javax.jms.*;
 import javax.naming.*;
 
 import org.apache.commons.lang.builder.*;
@@ -28,26 +19,26 @@ import org.grouter.common.jndi.JNDIUtils;
 import org.grouter.common.jndi.ServiceLocatorException;
 
 /**
- * See {@link Destination} and use abstract interface to concrete
+ * See {@link org.grouter.common.jms.AbstractDestination} and use abstract interface to concrete
  * implementations.
  *
  * @author Georges Polyzois
  */
-public class TopicDestination extends Destination
+public class TopicSenderDestination extends AbstractSenderDestination
 {
-    /** The logger. */
-    private static Logger logger = Logger.getLogger(TopicDestination.class);
-    /** The ConnectionFactory used to connect to the Topic */
+    // The logger.
+    private static Logger logger = Logger.getLogger(TopicSenderDestination.class);
+    // The ConnectionFactory used to connect to the Topic
     private TopicConnectionFactory topicConnectionFactory;
-    /** Connection to the Topic. */
+    // Connection to the Topic.
     private TopicConnection topicConnection;
-    /** The actual Topic. */
+    // The actual Topic.
     private Topic topic;
-    /** Sender to the Topic. */
+     // Sender to the Topic.
     protected TopicPublisher topicPublisher;
-    /** Session to the Topic. */
+    // Session to the Topic.
     private TopicSession topicSession;
-    /** Used for request / reply on the same session. */
+    // Used for request / reply on the same session.
     private TemporaryTopic temporaryTopic;
 
 
@@ -57,143 +48,103 @@ public class TopicDestination extends Destination
      * See other constructor if you are using acknowledge mode based messaging
      * where AcknowledgeMode is needed.
      *
-     * @param topicName the JNDI name of the destination queue.
-     * @param isSender wheter destination is used to send messages
+     * @param topicName              the JNDI name of the destination queue.
      * @param topicConnectionFactory the JNDI name of the Queue connection factory to use,
-     * if null provided then the default factory will be used specified in {@link Destination}
-     * @param rebindBehavior a RebindBeahvior specifies how we are supposed
-     * to rebind to this destination {@link RebindBehavior}. If null
-     * specified an EternalRebind will be used.
-     * @param context provide the context to use for binding to the destination
-     * (@see javax.naming.Context).
-     * @param timeToLive set to 0 if no time to live should be uses - TTL is specified
-     * in millisecons!!!
-     * @param listener a message listener implementing {@link javax.jms.MessageListener} -
-     * i.e. a class that will be receiving callbacks from jms provider. If null specified
-     * then you will have to implement a receive behaviour in your consuming thread.
+     *                               if null provided then the default factory will be used specified in {@link org.grouter.common.jms.AbstractDestination}
+     * @param rebindBehavior         a RebindBeahvior specifies how we are supposed
+     *                               to rebind to this destination {@link org.grouter.common.jms.RebindBehavior}. If null
+     *                               specified an EternalRebind will be used.
+     * @param context                provide the context to use for binding to the destination
+     *                               (@see javax.naming.Context).
+     * @param timeToLive             set to 0 if no time to live should be uses - TTL is specified
+     *                               in millisecons!!!
      */
-    public TopicDestination(String topicName,
-                            boolean isSender,
-                            String topicConnectionFactory,
-                            RebindBehavior rebindBehavior,
-                            Context context,
-                            long timeToLive,
-                            MessageListener listener)
+    public TopicSenderDestination(String topicName,
+                                  String topicConnectionFactory,
+                                  RebindBehavior rebindBehavior,
+                                  Context context,
+                                  long timeToLive)
     {
-        if(isSender && listener!=null)
-    {
-            throw new IllegalArgumentException(
-                    "If you intend to send messages on this destination" +
-                                               " then a messagelistener of null must be specified");
-    }
-        init(topicName, isSender, topicConnectionFactory, rebindBehavior,context, timeToLive, listener, AcknowledgeMode.NONE, true,false);
+        init(topicName, topicConnectionFactory, rebindBehavior, context, timeToLive, AcknowledgeMode.NONE, true, false);
     }
 
     /**
      * Constructor for use with an acknowledge mode option specified. JMS message provider
      * will take care of acknowledging messages based on mode.
      *
-     * @param topicName the JNDI name of the destination queue.
-     * @param isSender wheter destination is used to send messages
+     * @param topicName              the JNDI name of the destination queue.
      * @param topicConnectionFactory the JNDI name of the Queue connection factory to use,
-     * if null provided then the default factory will be used specified in {@link Destination}
-     * @param rebindBehavior a RebindBeahvior specifies how we are supposed
-     * to rebind to this destination {@link RebindBehavior}. If null
-     * specified an EternalRebind will be used.
-     * @param context provide the context to use for binding to the destination
-     * {@link javax.naming.Context}. If null provided then the default will be used -
-     * depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
-     * @param timeToLive set to 0 if no time to live should be used - TTL is specified
-     * in millisecons!!!
-     * @param listener a message listener implementing {@link javax.jms.MessageListener}   -
-     * i.e. a class that will be receiving callbacks from jms provider. If null specified
-     * then you will have to implement a receive behaviour in your consuming thread.
-     * @param ackmode this maps direclty to {@link javax.jms.Session} and the different types of
-     * acknowledge modes existing there.
+     *                               if null provided then the default factory will be used specified in {@link org.grouter.common.jms.AbstractDestination}
+     * @param rebindBehavior         a RebindBeahvior specifies how we are supposed
+     *                               to rebind to this destination {@link org.grouter.common.jms.RebindBehavior}. If null
+     *                               specified an EternalRebind will be used.
+     * @param context                provide the context to use for binding to the destination
+     *                               {@link javax.naming.Context}. If null provided then the default will be used -
+     *                               depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
+     * @param timeToLive             set to 0 if no time to live should be used - TTL is specified
+     *                               in millisecons!!!
+     * @param ackmode                this maps direclty to {@link javax.jms.Session} and the different types of
+     *                               acknowledge modes existing there.
      */
-    public TopicDestination(String topicName,
-                            boolean isSender,
-                            String topicConnectionFactory,
-                            RebindBehavior rebindBehavior,
-                            Context context,
-                            long timeToLive,
-                            MessageListener listener,
-                            AcknowledgeMode ackmode)
+    public TopicSenderDestination(String topicName,
+                                  String topicConnectionFactory,
+                                  RebindBehavior rebindBehavior,
+                                  Context context,
+                                  long timeToLive,
+                                  AcknowledgeMode ackmode)
     {
-        if(isSender && listener!=null)
-        {
-            throw new IllegalArgumentException(
-                    "If you intend to send messages on this destination" +
-                                               " then a messagelistener of null must be specified");
-        }
-        init(topicName, isSender, topicConnectionFactory, rebindBehavior,context, timeToLive, listener, ackmode, false,false);
+
+        init(topicName, topicConnectionFactory, rebindBehavior, context, timeToLive, ackmode, false, false);
     }
 
     /**
-        * Constructor for use with an acknowledge mode option specified. JMS message provider
-        * will take care of acknowledging messages based on mode.
-        *
-        * @param topicName the JNDI name of the destination queue.
-        * @param isSender wheter destination is used to send messages
-        * @param topicConnectionFactory the JNDI name of the Queue connection factory to use,
-        * if null provided then the default factory will be used specified in {@link Destination}
-        * @param rebindBehavior a RebindBeahvior specifies how we are supposed
-        * to rebind to this destination {@link RebindBehavior}. If null
-        * specified an EternalRebind will be used.
-        * @param context provide the context to use for binding to the destination
-        * {@link javax.naming.Context}. If null provided then the default will be used -
-        * depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
-        * @param timeToLive set to 0 if no time to live should be used - TTL is specified
-        * in millisecons!!!
-        * @param listener a message listener implementing {@link javax.jms.MessageListener}   -
-        * i.e. a class that will be receiving callbacks from jms provider. If null specified
-        * then you will have to implement a receive behaviour in your consuming thread.
-        * @param ackmode this maps direclty to {@link javax.jms.Session} and the different types of
-        * acknowledge modes existing there.
-        * @param useTemporaryQueue will create a temporary topic for this session
-        */
-       public TopicDestination(String topicName,
-                               boolean isSender,
-                               String topicConnectionFactory,
-                               RebindBehavior rebindBehavior,
-                               Context context,
-                               long timeToLive,
-                               MessageListener listener,
-                               AcknowledgeMode ackmode,
-                               boolean useTemporaryQueue)
-       {
-           if(isSender && listener!=null)
-           {
-               throw new IllegalArgumentException(
-                       "If you intend to send messages on this destination" +
-                    " then a messagelistener of null must be specified.");
-           }
-           init(topicName, isSender, topicConnectionFactory, rebindBehavior,context, timeToLive, listener, ackmode, false,useTemporaryQueue);
+     * Constructor for use with an acknowledge mode option specified. JMS message provider
+     * will take care of acknowledging messages based on mode.
+     *
+     * @param topicName              the JNDI name of the destination queue.
+     * @param topicConnectionFactory the JNDI name of the Queue connection factory to use,
+     *                               if null provided then the default factory will be used specified in {@link org.grouter.common.jms.AbstractDestination}
+     * @param rebindBehavior         a RebindBeahvior specifies how we are supposed
+     *                               to rebind to this destination {@link org.grouter.common.jms.RebindBehavior}. If null
+     *                               specified an EternalRebind will be used.
+     * @param context                provide the context to use for binding to the destination
+     *                               {@link javax.naming.Context}. If null provided then the default will be used -
+     *                               depends on your environemnt (jndi.properties, -Djava..., or InitialContext(new Hashtable())).
+     * @param timeToLive             set to 0 if no time to live should be used - TTL is specified
+     *                               in millisecons!!!
+     * @param ackmode                this maps direclty to {@link javax.jms.Session} and the different types of
+     *                               acknowledge modes existing there.
+     * @param useTemporaryQueue      will create a temporary topic for this session
+     */
+    public TopicSenderDestination(String topicName,
+                                  String topicConnectionFactory,
+                                  RebindBehavior rebindBehavior,
+                                  Context context,
+                                  long timeToLive,
+                                  AcknowledgeMode ackmode,
+                                  boolean useTemporaryQueue)
+    {
+        init(topicName, topicConnectionFactory, rebindBehavior, context, timeToLive, ackmode, false, useTemporaryQueue);
     }
 
 
     /**
      * Initializer used by constructors.
      *
-     * @param topicName String
-     * @param isSender boolean
+     * @param topicName              String
      * @param topicConnectionFactory String
-     * @param theRebindBehavior RebindBehavior
-     * @param thecontext Context
-     * @param timeToLive long
-     * @param listener MessageListener
-     * @param ackmode AcknowledgeMode
-     * @param isTransactional boolean
-     * @param useTemporaryTopic boolean
-     *
+     * @param theRebindBehavior      RebindBehavior
+     * @param thecontext             Context
+     * @param timeToLive             long
+     * @param ackmode                AcknowledgeMode
+     * @param isTransactional        boolean
+     * @param useTemporaryTopic      boolean
      */
     private void init(String topicName,
-                      boolean isSender,
                       String topicConnectionFactory,
                       RebindBehavior theRebindBehavior,
                       Context thecontext,
                       long timeToLive,
-                      MessageListener listener,
                       AcknowledgeMode ackmode,
                       boolean isTransactional,
                       boolean useTemporaryTopic)
@@ -208,20 +159,18 @@ public class TopicDestination extends Destination
             {
                 logger.error("Failed creating default InitialContext.", ex);
                 //can not do anything without a context
-               return;
-           }
-       }
-        else
+                return;
+            }
+        } else
         {
             context = thecontext;
         }
         useTemporaryReplyDestination = useTemporaryTopic;
-        JNDIUtils.printJNDI(context,logger);
+        JNDIUtils.printJNDI(context, logger);
         destinationName = topicName;
         this.acknowledgeMode = mappedacknowledgeMode;
         this.isTransactional = isTransactional;
-        this.isSender = isSender;
-        this.timeToLive =  timeToLive;
+        this.timeToLive = timeToLive;
         try
         {
             serviceLocatorContextAware = getInstance();
@@ -240,10 +189,7 @@ public class TopicDestination extends Destination
         }
         // Register an exceptionlistener
         exceptionListener = new SystemJMSExceptionListenerHandler(this);
-        // Set the user defined listener
-        this.listener = listener;
     }
-
 
 
     /**
@@ -255,7 +201,7 @@ public class TopicDestination extends Destination
         if (topicConnection == null)
         {
             logger.error("Connection to destination topic was null - " +
-                         "can not close null connection, returning.");
+                    "can not close null connection, returning.");
             return;
         } else
         {
@@ -263,7 +209,7 @@ public class TopicDestination extends Destination
             {
                 topicConnection.setExceptionListener(null);
                 topicConnection.stop();
-                if(temporaryTopic!=null)
+                if (temporaryTopic != null)
                 {
                     temporaryTopic.delete();
                 }
@@ -289,7 +235,6 @@ public class TopicDestination extends Destination
     }
 
 
-
     /**
      * Retrieves the session for this destination. This method can be used if you
      * are handling trasacted sessions and need to explicitly get hold of the session
@@ -303,17 +248,6 @@ public class TopicDestination extends Destination
     }
 
     /**
-     * The registered message listener handling callback through implemented interface
-     * @see javax.jms.MessageListener .
-     *
-     * @return MessageListener
-     */
-    public MessageListener getListener()
-    {
-        return listener;
-    }
-
-    /**
      * Connect to topic  and open a session.
      */
     public void bind()
@@ -321,34 +255,23 @@ public class TopicDestination extends Destination
         try
         {
             // Find ConnectionFactory
-            topicConnectionFactory = getInstance().getTopicConnectionFactory(connectionFactory,context);
+            topicConnectionFactory = getInstance().getTopicConnectionFactory(connectionFactory, context);
             // Get queue
-            topic = getInstance().getTopic(destinationName,context);
+            topic = getInstance().getTopic(destinationName, context);
             // Create conneciton to queue
             topicConnection = topicConnectionFactory.createTopicConnection();
             // Register an exceptionlistener
             topicConnection.setExceptionListener(exceptionListener);
-            topicSession = topicConnection.createTopicSession(isTransactional,acknowledgeMode);
-            if (isSender)
+            topicSession = topicConnection.createTopicSession(isTransactional, acknowledgeMode);
+            topicPublisher = topicSession.createPublisher(topic);
+            if (timeToLive > 0)
             {
-                topicPublisher = topicSession.createPublisher(topic);
-                if(timeToLive>0)
-                {
-                  topicPublisher.setTimeToLive(timeToLive);
-                }
-                if(useTemporaryReplyDestination)
-                {
-                    temporaryTopic = topicSession.createTemporaryTopic();
-                    logger.debug("TemporaryTopic created for this session " + temporaryTopic);
-                }
-            } else
-            {
-                messageConsumer = topicSession.createConsumer(topic);
+                topicPublisher.setTimeToLive(timeToLive);
             }
-            if (listener!=null)
+            if (useTemporaryReplyDestination)
             {
-                // Sets the receiver which onMessage method will be called.
-                messageConsumer.setMessageListener(listener);
+                temporaryTopic = topicSession.createTemporaryTopic();
+                logger.debug("TemporaryTopic created for this session " + temporaryTopic);
             }
             topicConnection.start();
             logger.info("Bound to destination " + destinationName);
@@ -360,15 +283,14 @@ public class TopicDestination extends Destination
         {
             logger.error(
                     "Got exception with JMS provider during bind to destination " +
-                    destinationName + ".", ex);
+                            destinationName + ".", ex);
             rebind(this);
         }
     }
 
 
-
     /**
-     * <b>See documentaion in {@link Destination#sendMessage(String)}.</b><br>
+     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(String)}.</b><br>
      * <br>
      */
     public void sendMessage(String message)
@@ -383,27 +305,27 @@ public class TopicDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         }
     }
 
-   /**
-     * <b>See documentaion in {@link Destination#sendMessage(Serializable)}.</b><br>
+    /**
+     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable)}.</b><br>
      * <br>
      */
-    public void rebind(Destination dest)
+    public void rebind(AbstractDestination dest)
     {
         rebindBehavior.rebind(this);
     }
 
 
     /**
-     * <b>See documentation in {@link Destination#sendMessage(Serializable,HashMap)}.</b><br>
+     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable,java.util.HashMap)}.</b><br>
      * <br>
      */
     public synchronized void sendMessage(Serializable message, HashMap<String, String> headerProperties)
@@ -418,42 +340,47 @@ public class TopicDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage());
+                            + ". Error message : " + ex.getMessage());
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         }
     }
 
     /**
-    * <b>See documentation in {@link Destination#sendMessage(Message,int,int,long)}.</b><br>
-    * <br>
-    */
+     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(javax.jms.Message,int,int,long)}.</b><br>
+     * <br>
+     */
     public synchronized void sendMessage(Message message, int deliveryMode,
-                            int messagePriority, long timeToLive)
+                                         int messagePriority, long timeToLive)
     {
         try
         {
             setJMSHeader(message);
-            topicPublisher.send(message, deliveryMode, messagePriority,timeToLive);
-            logger.debug("Message sent to destination : " + destinationName );
+            topicPublisher.send(message, deliveryMode, messagePriority, timeToLive);
+            logger.debug("Message sent to destination : " + destinationName);
         } catch (JMSException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         }
     }
 
+    public Session getSession()
+    {
+        return topicSession;
+    }
+
     /**
-     * <b>See documentaion in {@link Destination#sendMessage(Message,int,int,long)}.</b><br>
+     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(javax.jms.Message,int,int,long)}.</b><br>
      * <br>
      */
     public synchronized void sendMessage(Message message)
@@ -467,17 +394,17 @@ public class TopicDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         }
     }
 
     /**
-     * <b>See documentation in {@link Destination#sendMessage(Serializable,int,int,long,HashMap)}.</b><br>
+     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable,int,int,long,java.util.HashMap)}.</b><br>
      * <br>
      */
     public void sendMessage(Serializable message, int deliveryMode,
@@ -489,22 +416,22 @@ public class TopicDestination extends Destination
             ObjectMessage msg = createMessage(message, headerProperties);
             setJMSHeader(msg);
             topicPublisher.send(msg, deliveryMode, messagePriority, timeToLive);
-            logger.debug("Message sent to destination : " + destinationName );
+            logger.debug("Message sent to destination : " + destinationName);
         } catch (JMSException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         }
     }
 
     /**
-     * <b>See documentaion in {@link Destination#sendMessage(Serializable)}.</b><br>
+     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable)}.</b><br>
      * <br>
      */
     public void sendMessage(Serializable message)
@@ -518,21 +445,21 @@ public class TopicDestination extends Destination
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         } catch (IllegalStateException ex)
         {
             logger.error(
                     "Failed sending message to JMS provider using destination " + destinationName
-                    + ". Error message : " + ex.getMessage(), ex);
+                            + ". Error message : " + ex.getMessage(), ex);
         }
     }
 
     /**
-     * <b>See documentation in {@link Destination#sendMessage(Serializable,HashMap)}.</b><br>
+     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable,java.util.HashMap)}.</b><br>
      * <br>
      */
     private ObjectMessage createMessage(Serializable message, HashMap<String,
-                                        String> headerProperties)
+            String> headerProperties)
     {
         ObjectMessage msg = null;
         try
@@ -558,7 +485,7 @@ public class TopicDestination extends Destination
      * Set header for JMS message. Only JMSReplyTo, JMSCorrelationID and JMSType can be set using setters.
      *
      * @param msg Message
-     * @throws JMSException
+     * @throws javax.jms.JMSException
      */
     private void setJMSHeader(Message msg) throws JMSException
     {
@@ -569,31 +496,11 @@ public class TopicDestination extends Destination
         }
     }
 
-    /**
-     * <b>See documentaion in {@link Destination#setMessageListenerOnConsumer()}.</b><br>
-     * <br>
-     */
-    public synchronized void setMessageListenerOnConsumer()
-    {
-        if (messageConsumer == null)
-        {
-            try
-            {
-                logger.debug( "Creating new consumer and adding Messagelistener.");
-                messageConsumer = topicSession.createConsumer(topic);
-                messageConsumer.setMessageListener(listener);
-            } catch (JMSException ex)
-            {
-                logger.error("Failed closing messageconsumer on removeReceiver call", ex);
-            }
-        }
-    }
 
     /**
-     * <b>See documentation in {@link Destination#sendReplyToTemporaryDestination(Message)}.</b><br>
-     * <br>
+     * <br>     for listener...
      */
-    public void sendReplyToTemporaryDestination(Message request)
+/*    public void sendReplyToTemporaryDestination(Message request)
     {
         TemporaryTopic replyTopic = null;
         TopicPublisher tempsender = null;
@@ -604,16 +511,16 @@ public class TopicDestination extends Destination
             {
                 throw new IllegalStateException(
                         "The sender of this message has not entered a JMSReplyTo field - " +
-                        "impossible to send reply on temporary destination!!");
+                                "impossible to send reply on temporary destination!!");
             }
             temporaryDestinationName = request.getJMSReplyTo().toString();
             request.setJMSCorrelationID(request.getJMSMessageID());
             logger.debug("JMSCorrelationID was set!!!" +
-                         request.getJMSCorrelationID());
+                    request.getJMSCorrelationID());
             replyTopic = (TemporaryTopic) request.getJMSReplyTo();
             tempsender = topicSession.createPublisher(replyTopic);
             logger.debug("Created a tempsender and sending reply to " +
-                         replyTopic);
+                    replyTopic);
             tempsender.send(request);
         }
         catch (JMSException ex)
@@ -639,24 +546,23 @@ public class TopicDestination extends Destination
             }
         }
     }
-
+*/
 
     public TemporaryTopic getTemporaryDestination()
     {
-        if(useTemporaryReplyDestination)
+        if (useTemporaryReplyDestination)
         {
             return temporaryTopic;
-        }
-        else
+        } else
         {
             throw new IllegalStateException("You have used this destination in a wrong way. Have you " +
-                                        "used correct constructor for temporary destinations?");
+                    "used correct constructor for temporary destinations?");
         }
     }
 
 
     /**
-     * <b>See documentation in {@link Destination#waitAndGetReplyFromTemporaryDestination(long)}.</b><br>
+     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#waitAndGetReplyFromTemporaryDestination(long)}.</b><br>
      * <br>
      */
     public Message waitAndGetReplyFromTemporaryDestination(long waitForMs)
@@ -668,13 +574,13 @@ public class TopicDestination extends Destination
             {
                 throw new IllegalStateException(
                         "You have used this destination in a wrong way. Have you " +
-                        "used correct constructor for temporary destinations?");
+                                "used correct constructor for temporary destinations?");
             }
             receiver = topicSession.createSubscriber(getTemporaryDestination());
             return receiver.receive(waitForMs);
         } catch (JMSException ex)
         {
-            logger.warn("Waiting for reply on temp topic failed",ex);
+            logger.warn("Waiting for reply on temp topic failed", ex);
             return null;
         }
         finally
