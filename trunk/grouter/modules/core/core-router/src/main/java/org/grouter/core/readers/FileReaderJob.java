@@ -25,7 +25,7 @@ import java.net.URISyntaxException;
  *
  * @author Georges Polyzois
  */
-public class FileReaderJob extends AbstractReader 
+public class FileReaderJob extends AbstractReader
 {
     private static Logger logger = Logger.getLogger(FileReaderJob.class);
     //private NodeConfig node;
@@ -46,9 +46,9 @@ public class FileReaderJob extends AbstractReader
     {
     }
 
-    private void init( final Node node, BlockingQueue<AbstractCommand> blockingQueue )
+    private void init(final Node node, BlockingQueue<AbstractCommand> blockingQueue)
     {
-        if ( node == null || blockingQueue == null)
+        if (node == null || blockingQueue == null)
         {
             throw new IllegalArgumentException("Constructor called with null argument.");
         }
@@ -58,8 +58,8 @@ public class FileReaderJob extends AbstractReader
         command = getCommand(node);
 
         //validate path etc
-        validate( node );
- //       createFilter(node );
+        validate(node);
+        //       createFilter(node );
     }
 
 
@@ -81,16 +81,12 @@ public class FileReaderJob extends AbstractReader
         this.fileFilter = notFileFilter;
     }
 */
-
-
     @Override
     protected List<CommandMessage> readFromSource()
     {
-        logger.info( node.getId() + " is reading files from " + node.getInBound().getUri());
-        return FileReaderHelper.getCommands( node );
+        logger.info(node.getId() + " is reading files from " + node.getInBound().getUri());
+        return FileReaderHelper.getCommands(node);
     }
-
-
 
 
     /**
@@ -104,18 +100,18 @@ public class FileReaderJob extends AbstractReader
 
     /**
      * Verify in and out directories.
+     *
      * @param node
      */
     void validate(Node node)
     {
-            File file = new File( node.getInBound().getUri() );
-            if( !file.isDirectory() )
-            {
-                throw new ValidationException("Path does not exist for :" + node.getInBound().getUri()  );
-            }
+        File file = new File(node.getInBound().getUri());
+        if (!file.isDirectory())
+        {
+            throw new ValidationException("Path does not exist for :" + node.getInBound().getUri());
+        }
 
         isValidated = true;
-
     }
 
     /**
@@ -132,7 +128,7 @@ public class FileReaderJob extends AbstractReader
         }
     }
 
-    public void setJobExecutionContext( JobExecutionContext jobExecutionContext )
+    public void setJobExecutionContext(JobExecutionContext jobExecutionContext)
     {
         JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
         node = (Node) jobDataMap.get(NODE);
@@ -140,12 +136,11 @@ public class FileReaderJob extends AbstractReader
         init(node, blockingQueue);
     }
 
-    public void execute(JobExecutionContext jobExecutionContext) 
+    public void execute(JobExecutionContext jobExecutionContext)
     {
-        setJobExecutionContext( jobExecutionContext );
+        setJobExecutionContext(jobExecutionContext);
         execute();
     }
-
 
 
     public void setQueue(BlockingQueue<AbstractCommand> queue)

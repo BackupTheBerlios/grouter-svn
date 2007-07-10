@@ -11,9 +11,6 @@
 
   <bean id="fileCommandWriter" class="org.grouter.core.command.FileWriteCommand"/>
 
-
-
-
 </beans>
 
 

@@ -27,7 +27,8 @@ public class SchedulerServiceTest extends AbstractFileReaderTests
         {
             Set<Node>  nodes = new HashSet<Node>();
             nodes.add( null ) ;
-            SchedulerService schedulerFactory = new  SchedulerService( nodes );
+            SchedulerService schedulerFactory = new  SchedulerService( null );
+            schedulerFactory.setNodes(nodes);
             fail();
         } catch (Exception e)
         {

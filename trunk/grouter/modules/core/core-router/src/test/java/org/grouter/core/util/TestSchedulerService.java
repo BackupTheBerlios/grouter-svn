@@ -36,7 +36,8 @@ public class TestSchedulerService extends TestCase
         Set<Node> setNodes = new HashSet<Node>();
         setNodes.add( node );
         
-        schedulerService = new SchedulerService( setNodes );
+        schedulerService = new SchedulerService( setNodes  );
+        schedulerService.setNodes(setNodes);
 
         try
         {

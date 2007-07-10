@@ -108,8 +108,8 @@ public class GrouterServerImpl implements Runnable, GrouterServer
         logger.info("Initializing router");
 
         context = new ClassPathXmlApplicationContext(getConfigLocations());
-        schedulerService = new SchedulerService(router.getNodes());
         routerService = (RouterService) context.getBean( ROUTER_SERVICE );
+        schedulerService = new SchedulerService(router.getNodes() );
         //RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean("serviceExporter");
         RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean("rmiServiceExporterFactoryBean");
         rmiServiceExporter.setRegistryPort( router.getRmiRegistryPort() );

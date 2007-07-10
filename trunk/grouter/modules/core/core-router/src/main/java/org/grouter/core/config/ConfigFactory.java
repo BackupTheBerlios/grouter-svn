@@ -4,10 +4,13 @@ import org.apache.log4j.Logger;
 import org.apache.commons.lang.Validate;
 import org.grouter.domain.entities.*;
 import org.grouter.config.GrouterDocument;
+import org.grouter.config.Context;
 import org.grouter.core.util.file.FileUtils;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Use this factory (or assemblee) to create Node entities from corresponding xml binding type of object.
@@ -91,8 +94,8 @@ public class ConfigFactory
 
     private static EndPoint getEndPoint(org.grouter.config.EndPoint endPoint) throws IllegalArgumentException
     {
-        EndPoint inbound = new EndPoint();
-        inbound.setClazzName(endPoint.getClazzname());
+        EndPoint point = new EndPoint();
+        point.setClazzName(endPoint.getClazzname());
 
         String uri = null;
         if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FILE_READER) ||
@@ -108,22 +111,37 @@ public class ConfigFactory
         if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_READER) ||
                 endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_WRITER))
         {
-            uri = endPoint.getUri();
-            if (!uri.startsWith("ftp://"))
+            String urlpath = new String( endPoint.getUri() );
+            uri = endPoint.getUri().replace("ftp://", "");
+            uri = endPoint.getUri().replaceAll( "/" , "");
+            if (uri.startsWith("ftp://"))
             {
                 throw new IllegalArgumentException("Invalid uri path to a ftp type of endpoint. Path was :" + uri);
             }
         }
 
 
-        inbound.setUri(uri);
-        inbound.setId(endPoint.getId());
-        inbound.setScheduleCron(endPoint.getCron());
+        Context[] context = endPoint.getContextparamArray();
+        Map endPointContextMap = new HashMap();
+        if( context != null && context.length > 0 )
+        {
+            for (Context context1 : context)
+            {
+                EndPointContext endPointContext = new EndPointContext( context1.getName(), context1.getValue(), point );
+                endPointContextMap.put( context1.getName(), context1.getValue()  );
+            }
+        }
+
+
+        point.setUri(uri);
+        point.setId(endPoint.getId());
+        point.setScheduleCron(endPoint.getCron());
+        point.setEndPointContext( endPointContextMap );
 
         EndPointType type = EndPointType.valueOf(new Long(endPoint.getEndPointType().intValue()));
-        inbound.setEndPointType(type);
+        point.setEndPointType(type);
 
-        return inbound;
+        return point;
     }
 
 

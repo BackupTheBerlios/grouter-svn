@@ -6,14 +6,18 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandConsumerJob;
 import org.grouter.core.readers.FileReaderJob;
+import org.grouter.core.readers.FtpReaderJob;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.servicelayer.RouterService;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.concurrent.*;
 import java.util.Set;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * What's the right size for a thread pool, assuming the goal is to keep the
@@ -38,13 +42,13 @@ public class SchedulerService
     private Set<Node> nodes;
     private static final String GROUTER = "grouter";
 
-
+    
     /**
      * Consturctor
      */
     public SchedulerService(Set<Node> nodes)
     {
-        Validate.noNullElements( nodes, "Can not handle null nodes!!");
+        Validate.noNullElements(nodes, "Can not handle null nodes!!");
 
         this.nodes = nodes;
         try
@@ -55,8 +59,8 @@ public class SchedulerService
             logger.error("Could not create scheduler frm SchedulerFactory", e);
             throw new RuntimeException("Could not create scheduler from SchedulerFactory", e);
         }
-    }
 
+    }
 
     /**
      * Start the scheduler using all available nodes.
@@ -67,7 +71,7 @@ public class SchedulerService
     {
         for (Node node : this.nodes)
         {
-            logger.info("Scheduling node : " + node.getName() );
+            logger.info("Scheduling node : " + node.getName());
             BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(QUEUE_CAPACITY);
             if (node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId())
             {
@@ -77,7 +81,7 @@ public class SchedulerService
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
-            if (node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId())
+            if ( node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId())
             {
                 JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), getTriggerGroup(node), CommandConsumerJob.class);
                 jobDetail.getJobDataMap().put("node", node);
@@ -85,6 +89,18 @@ public class SchedulerService
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, false), getTriggerGroup(node), node.getOutBound().getScheduleCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
+
+            if( node.getInBound().getEndPointType().getId() == EndPointType.FTP_READER.getId())
+            {
+
+                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), FtpReaderJob.class);
+                jobDetail.getJobDataMap().put("node", node);
+                jobDetail.getJobDataMap().put("queue", blockingQueue);
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                scheduler.scheduleJob(jobDetail, cronTrigger);
+
+            }
+
         }
 
         // Start the Scheduler running
@@ -160,20 +176,20 @@ public class SchedulerService
     {
         try
         {
-            logger.info("Scheduler meta info :" + scheduler.getMetaData() );
+            logger.info("Scheduler meta info :" + scheduler.getMetaData());
             List<JobExecutionContext> list = scheduler.getCurrentlyExecutingJobs();
             logger.info("Currently number of running jobs:" + list.size());
             for (JobExecutionContext jobExecutionContext : list)
             {
-                logger.info( "Job running :" + jobExecutionContext.getJobDetail().getFullName() );
+                logger.info("Job running :" + jobExecutionContext.getJobDetail().getFullName());
             }
 
             String[] groups = scheduler.getJobGroupNames();
             logger.info("Registered groups and jobs for each group");
             for (String group : groups)
             {
-                String[] jobnames = scheduler.getJobNames( group );
-                logger.info("Jobnames for group :" + group + " -> " + ToStringBuilder.reflectionToString( jobnames ) );
+                String[] jobnames = scheduler.getJobNames(group);
+                logger.info("Jobnames for group :" + group + " -> " + ToStringBuilder.reflectionToString(jobnames));
             }
         } catch (SchedulerException e)
         {
@@ -181,4 +197,9 @@ public class SchedulerService
         }
     }
 
+
+    public void setNodes(Set<Node> nodes)
+    {
+        this.nodes = nodes;
+    }
 }

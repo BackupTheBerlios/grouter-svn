@@ -29,8 +29,8 @@ public class GRouterClientManual extends TestCase
     {
         ApplicationContext ctx = new FileSystemXmlApplicationContext(getConfigLocations());
         //GrouterServerAdapter grouterServerAdapter = (GrouterServerAdapter) ctx.getBean("routerServiceClient");
-        GrouterServerAdapter grouterServerAdapter = (GrouterServerAdapter) ctx.getBean("grouterServerClient");
-        grouterServerAdapter.stopNode("n2");
+      //  GrouterServerAdaspter grouterServerAdapter = (GrouterServerAdapter) ctx.getBean("grouterServerClient");
+      //  grouterServerAdapter.stopNode("n2");
         //logger.info("Number of routers:" + routers.size());
     }
 

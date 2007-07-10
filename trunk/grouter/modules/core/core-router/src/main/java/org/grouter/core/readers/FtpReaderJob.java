@@ -20,13 +20,21 @@ import java.util.concurrent.BlockingQueue;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Map;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
 
 /**
- * Connects to ftp server and dwonloads files locally to the inbound Endpoint of the Node. Then we create commandmessages
- * and put them on queue for further processing.
+ * This Reader connects to ftp server and downloads files locally to the inbound Endpoint of the Node.
+ * The Reader is a scheduled Quartz job and configured to run at a certain intervall. Upon execution
+ * (by Quartz) the Reader initializes, validates context parameters and sets up a connection to the
+ * inbound Endpoint.
+ *
+ * The Reader acts as a command producer and puts commands on internal queue to be consumed by a Writer
+ * later on (Writers are also scheduled). This decouples produceers and consumers and is a classical
+ * CommandPattern [GoF].
+ *
  *
  * @author Georges Polyzois
  */
@@ -41,7 +49,6 @@ public class FtpReaderJob extends AbstractReader
     public final static String FTP_AUTH_PASSWORD = "ftpAuthPassword";
     public final static String FTP_HOST = "ftpHost";
     public final static String FTP_PORT = "ftpPort";
-
     public final static String FILE_LIST = "fileList";
     private static final int FTP_DEFAULT_PORT = 21;
 
@@ -64,12 +71,12 @@ public class FtpReaderJob extends AbstractReader
         //which type of commands should this servicenode worker handle
         command = getCommand(node);
         //       createFilter(node);
+        validate(node);
 
     }
 
 
     /**
-     *
      * @return a list of CommnadHolder instances or a null if validation fails
      */
     @Override
@@ -78,8 +85,9 @@ public class FtpReaderJob extends AbstractReader
         logger.info("Reading files from :" + node.getInBound().getUri());
 
         // a list of full paths on ftp server we will download from
-        EndPointContext endPointContext= (EndPointContext) node.getInBound().getEndPointContext().get(FILE_LIST);
-        List<String> remoteFtpUriToFile = getPathIncludingFile(endPointContext.getValue());
+        Map endPointContext = (Map) node.getInBound().getEndPointContext();
+
+        List<String> remoteFtpUriToFile = getPathIncludingFile((String) endPointContext.get( FILE_LIST ));
         List<CommandMessage> commandMessages = null;
         FTPClient client = null;
         try
@@ -109,11 +117,11 @@ public class FtpReaderJob extends AbstractReader
                 }
             }
             // all files downloaded to in folder - time to create and move them internally
-            commandMessages = FileReaderHelper.getCommands( node );
+            commandMessages = FileReaderHelper.getCommands(node);
         }
         catch (Exception e)
         {
-            logger.warn("Connection problem with FTP server." , e);
+            logger.warn("Connection problem with FTP server.", e);
         }
         finally
         {
@@ -136,11 +144,22 @@ public class FtpReaderJob extends AbstractReader
     @Override
     protected void validate(Node node)
     {
-        EndPointContext endPointContext = (EndPointContext) node.getInBound().getEndPointContext().get(FILE_LIST);
-        Validate.notNull( endPointContext.getValue(), "Can not use an empty file list to fetch data from." );
+        Map endPointContext =  node.getInBound().getEndPointContext();
+        if (endPointContext == null )
+        {
+            throw new RuntimeException("Context needs to be set for this type of EndPoint.");
+        }
 
-        endPointContext = (EndPointContext) node.getInBound().getEndPointContext().get(FTP_HOST);
-        Validate.notNull( endPointContext.getValue(), "Can not use an empty file list to fetch data from." );
+        if ( endPointContext.get( FTP_HOST ) == null || endPointContext.get( FTP_HOST ).equals( "" ) )
+        {
+            throw new RuntimeException("Can not use an empty ftp host to fetch data from.");
+        }
+
+
+        if ( endPointContext.get( FILE_LIST ) == null || endPointContext.get( FILE_LIST ).equals( "" ) )
+        {
+            throw new RuntimeException("Can not use an empty file list to fetch data from.");
+        }
 
         //endPointContext = (EndPointContext) node.getInBound().getEndPointContext().get(FTP_PORT);
         //Validate.notNull( endPointContext.getValue(), "Can not use an empty file list to fetch data from." );
@@ -155,13 +174,15 @@ public class FtpReaderJob extends AbstractReader
         String strPort;
         try
         {
-            host = ((EndPointContext) node.getInBound().getEndPointContext().get(FTP_HOST)).getValue(); //node.getInBound().getEndPointContext().get(FTP_HOST);
-            strPort =  ((EndPointContext) node.getInBound().getEndPointContext().get(FTP_PORT)).getValue();// node.getInBound().getEndPointContext().get(FTP_PORT);
+
+            Map map = node.getInBound().getEndPointContext();
+            host = (String) map.get(FTP_HOST);
+            strPort = (String) map.get(FTP_PORT);
             client = new FTPClient();
             int port = FTP_DEFAULT_PORT;
             if (StringUtils.isNotEmpty(strPort))
             {
-                port = Integer.parseInt( strPort );
+                port = Integer.parseInt(strPort);
                 client.connect(host, port);
                 int reply = client.getReplyCode();
                 logger.debug("reply :" + reply);
@@ -170,22 +191,33 @@ public class FtpReaderJob extends AbstractReader
                     logger.info("Connected to ftp server :" + client.getRemoteAddress().getHostAddress());
                 }
             }
+            else
+            {
+                client.connect(host, port);
+                int reply = client.getReplyCode();
+                logger.debug("reply :" + reply);
+                if (FTPReply.isPositiveCompletion(reply))
+                {
+                    logger.info("Connected to ftp server :" + client.getRemoteAddress().getHostAddress());
+                }
 
-            String user = (String) node.getInBound().getEndPointContext().get(FTP_AUTH_USER);
-            String pwd = (String) node.getInBound().getEndPointContext().get(FTP_AUTH_PASSWORD);
+            }
+
+            String user = (String) map.get(FTP_AUTH_USER);
+            String pwd = (String) map.get(FTP_AUTH_PASSWORD);
             if (StringUtils.isNotEmpty(user) && StringUtils.isNotEmpty(pwd))
             {
                 client.login(user, pwd);
-                int reply = client.getReplyCode();
-                if (FTPReply.isPositiveCompletion(reply))
+                int replyCode = client.getReplyCode();
+                if (FTPReply.isPositiveCompletion(replyCode))
                 {
                     logger.info("Logged into ftp server :" + host);
                 }
             } else
             {
                 client.login("anonymous", "mymail@mail.com");
-                int reply = client.getReplyCode();
-                if (FTPReply.isPositiveCompletion(reply))
+                int replyCode = client.getReplyCode();
+                if (FTPReply.isPositiveCompletion(replyCode))
                 {
                     logger.info("Logged into ftp server :" + host);
                 }
@@ -193,7 +225,7 @@ public class FtpReaderJob extends AbstractReader
         } catch (NumberFormatException e)
         {
             logger.error("Could not establish connection with ftp endpoint using host:" + host);
-        } catch (IOException e)
+        } catch (Exception e)
         {
             logger.error(e, e);
         }

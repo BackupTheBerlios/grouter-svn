@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Use this class to manually test different configurations with the grouter and asserting against database.
- * <p/>
+ *
  * The main method can be used to startup a Grouter with all services running - this can be combined
  * with manual client test against this running instance ( {@link GRouterClientManual} ).
  *
