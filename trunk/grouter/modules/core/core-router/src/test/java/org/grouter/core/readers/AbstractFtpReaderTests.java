@@ -99,10 +99,8 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
         inbound.setEndPointType(EndPointType.FILE_READER);
         inbound.setScheduleCron("0/5 * * * * ?");
         inbound.setId("1");
-        EndPointContext endPointContext2 = new EndPointContext(FtpReaderJob.FTP_HOST, "localhost", inbound);
         EndPointContext endPointContext3 = new EndPointContext(FtpReaderJob.FTP_PORT, "12345", inbound);
         Map map = new HashMap();
-        map.put(endPointContext2.getKeyname(), endPointContext2);
         map.put(endPointContext3.getKeyname(), endPointContext3);
         inbound.setEndPointContext(map);
 

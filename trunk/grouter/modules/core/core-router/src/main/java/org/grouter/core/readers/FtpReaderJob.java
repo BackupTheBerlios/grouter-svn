@@ -3,15 +3,14 @@ package org.grouter.core.readers;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.WildcardFilter;
+import org.apache.commons.io.FileUtils;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.EndPointContext;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobDataMap;
 import org.quartz.UnableToInterruptJobException;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPFile;
@@ -30,11 +29,10 @@ import java.io.FileOutputStream;
  * The Reader is a scheduled Quartz job and configured to run at a certain intervall. Upon execution
  * (by Quartz) the Reader initializes, validates context parameters and sets up a connection to the
  * inbound Endpoint.
- *
+ * <p/>
  * The Reader acts as a command producer and puts commands on internal queue to be consumed by a Writer
  * later on (Writers are also scheduled). This decouples produceers and consumers and is a classical
  * CommandPattern [GoF].
- *
  *
  * @author Georges Polyzois
  */
@@ -47,7 +45,6 @@ public class FtpReaderJob extends AbstractReader
     private WildcardFilter wildcardFilter;
     public final static String FTP_AUTH_USER = "ftpAuthUser";
     public final static String FTP_AUTH_PASSWORD = "ftpAuthPassword";
-    public final static String FTP_HOST = "ftpHost";
     public final static String FTP_PORT = "ftpPort";
     public final static String FILE_LIST = "fileList";
     private static final int FTP_DEFAULT_PORT = 21;
@@ -87,37 +84,42 @@ public class FtpReaderJob extends AbstractReader
         // a list of full paths on ftp server we will download from
         Map endPointContext = (Map) node.getInBound().getEndPointContext();
 
-        List<String> remoteFtpUriToFile = getPathIncludingFile((String) endPointContext.get( FILE_LIST ));
-        List<CommandMessage> commandMessages = null;
+        List<String> remoteFtpUriToFile = getPathIncludingFile((String) endPointContext.get(FILE_LIST));
+        List<CommandMessage> commandMessages = new ArrayList();
         FTPClient client = null;
         try
         {
             client = initConnection();
-            for (String path : remoteFtpUriToFile)
+            for (String fullPathToFile : remoteFtpUriToFile)
             {
                 // should only return one file - since we are using a complete file uri and not a uri to a folder
-                FTPFile[] ftpFilesAtPath = client.listFiles(path);
+                FTPFile[] ftpFilesAtPath = client.listFiles(fullPathToFile);
                 if (ftpFilesAtPath.length > 0)
                 {
-                    //String localFileName = path;
-                    File localFile = new File(node.getInBound().getUri() + File.separator + StringUtils.replace(path, "/", "_"));
-                    FileOutputStream fos = new FileOutputStream(localFile);
-                    logger.info("Downloading file from ftp server:" + path);
-                    // we have a valid path and there is a file at that path
-                    boolean status = client.retrieveFile(path, fos);
+                    //String localFileName = fullPathToFile;
+                    File internalInFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in" + File.separator + fullPathToFile.replace("/", "_"));
+                    FileOutputStream fos = new FileOutputStream(internalInFile);
+                    logger.info("Downloading file from ftp server:" + fullPathToFile);
+                    // we have a valid fullPathToFile and there is a file at that fullPathToFile
+                    boolean status = client.retrieveFile(fullPathToFile, fos);
                     if (status)
                     {
-                        logger.info("Downloading complete :" + localFile);
-                        localFile.setLastModified(ftpFilesAtPath[0].getTimestamp().getTimeInMillis());
+                        logger.info("Downloading complete :" + internalInFile);
+                        internalInFile.setLastModified(ftpFilesAtPath[0].getTimestamp().getTimeInMillis());
+
+                        // Get part of the message to store for querying purposes
+                        String message = getMessage(internalInFile);
+                        CommandMessage cmdMessage = new CommandMessage(message, internalInFile);
+                        commandMessages.add(cmdMessage);
                     } else
                     {
-                        logger.error("Failed to download remote file :" + path);
+                        logger.error("Failed to download remote file :" + fullPathToFile + " Status code received :" + status);
                     }
                     fos.close();
                 }
             }
             // all files downloaded to in folder - time to create and move them internally
-            commandMessages = FileReaderHelper.getCommands(node);
+//            commandMessages = FileReaderHelper.getCommands(node);
         }
         catch (Exception e)
         {
@@ -144,19 +146,19 @@ public class FtpReaderJob extends AbstractReader
     @Override
     protected void validate(Node node)
     {
-        Map endPointContext =  node.getInBound().getEndPointContext();
-        if (endPointContext == null )
+        Map endPointContext = node.getInBound().getEndPointContext();
+        if (endPointContext == null)
         {
             throw new RuntimeException("Context needs to be set for this type of EndPoint.");
         }
 
-        if ( endPointContext.get( FTP_HOST ) == null || endPointContext.get( FTP_HOST ).equals( "" ) )
+        if (node.getInBound().getUri() == null || node.getInBound().getUri().equals(""))
         {
             throw new RuntimeException("Can not use an empty ftp host to fetch data from.");
         }
 
 
-        if ( endPointContext.get( FILE_LIST ) == null || endPointContext.get( FILE_LIST ).equals( "" ) )
+        if (endPointContext.get(FILE_LIST) == null || endPointContext.get(FILE_LIST).equals(""))
         {
             throw new RuntimeException("Can not use an empty file list to fetch data from.");
         }
@@ -176,7 +178,7 @@ public class FtpReaderJob extends AbstractReader
         {
 
             Map map = node.getInBound().getEndPointContext();
-            host = (String) map.get(FTP_HOST);
+            host = node.getInBound().getUri();
             strPort = (String) map.get(FTP_PORT);
             client = new FTPClient();
             int port = FTP_DEFAULT_PORT;
@@ -190,8 +192,7 @@ public class FtpReaderJob extends AbstractReader
                 {
                     logger.info("Connected to ftp server :" + client.getRemoteAddress().getHostAddress());
                 }
-            }
-            else
+            } else
             {
                 client.connect(host, port);
                 int reply = client.getReplyCode();
@@ -296,5 +297,15 @@ public class FtpReaderJob extends AbstractReader
     public void interrupt() throws UnableToInterruptJobException
     {
         logger.info(node.getId() + " got request to stop");
+    }
+
+    private static final int MESSAGE_LENGTH = 100;
+
+    private static String getMessage(File currentFile)
+            throws IOException
+    {
+        String message = FileUtils.readFileToString(new File(currentFile.getPath()), "UTF-8");
+        return message.substring(0,MESSAGE_LENGTH);
+
     }
 }

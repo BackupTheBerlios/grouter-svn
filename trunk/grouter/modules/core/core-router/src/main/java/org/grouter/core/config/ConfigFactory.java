@@ -97,14 +97,14 @@ public class ConfigFactory
         EndPoint point = new EndPoint();
         point.setClazzName(endPoint.getClazzname());
 
-        String uri = null;
+        String uriValid = null;
         if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FILE_READER) ||
                 endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FILE_WRITER))
         {
-            uri = endPoint.getUri().replace("file://", "/");
-            if (!FileUtils.isValidDir(uri))
+            uriValid = endPoint.getUri().replace("file://", "/");
+            if (!FileUtils.isValidDir(uriValid))
             {
-                throw new IllegalArgumentException("Invalid uri path to a file type of endpoint. Path was :" + uri);
+                throw new IllegalArgumentException("Invalid uriValid path to a file type of endpoint. Path was :" + uriValid);
             }
         }
 
@@ -112,12 +112,10 @@ public class ConfigFactory
                 endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_WRITER))
         {
             String urlpath = new String( endPoint.getUri() );
-            uri = endPoint.getUri().replace("ftp://", "");
-            uri = endPoint.getUri().replaceAll( "/" , "");
-            if (uri.startsWith("ftp://"))
-            {
-                throw new IllegalArgumentException("Invalid uri path to a ftp type of endpoint. Path was :" + uri);
-            }
+            urlpath = urlpath.replace("ftp://", "");
+            uriValid = urlpath.replaceAll( "/" , "");
+            endPoint.setUri(uriValid);
+
         }
 
 
@@ -133,7 +131,7 @@ public class ConfigFactory
         }
 
 
-        point.setUri(uri);
+        point.setUri(uriValid);
         point.setId(endPoint.getId());
         point.setScheduleCron(endPoint.getCron());
         point.setEndPointContext( endPointContextMap );

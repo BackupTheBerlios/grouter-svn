@@ -6,20 +6,18 @@
          xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
          xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
 
-  <Node id="ftp_to_file" createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
+  <Node id="ftptest" createuniquename="true" senderStatic="BACARGO_C2K" receiverStatic="C2K">
     <name>Ftp to file</name>
     <createdOn>2007-01-01</createdOn>
     <modifiedOn>2007-01-01</modifiedOn>
     <inBoundEndPoint id="ftpreader_1" endPointType="FTP_READER">
       <uri>ftp://ftp.sunet.se/</uri>
       <clazzname>a classname</clazzname>
-      <cron>0/5 * * * * ?</cron>
+      <cron>0/10 * * * * ?</cron>
       <contextparam name="ftpAuthUser" value=""/>
       <contextparam name="ftpAuthPassword" value=""/>
-      <contextparam name="ftpHost" value="ftp://ftp.sunet.se/"/>
       <contextparam name="ftpPort" value=""/>
-      <contextparam name="fileList" value="/pub/pictures/ascii"/>
-      <contextparam name="file" value="art07"/>
+      <contextparam name="fileList" value="/pub/pictures/ascii/art07"/>
     </inBoundEndPoint>
     <outBoundEndPoint id="filewriter_1" endPointType="FILE_WRITER">
 
