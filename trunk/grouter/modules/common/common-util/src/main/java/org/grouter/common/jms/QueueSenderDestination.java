@@ -1,5 +1,20 @@
-/**
- * QueueDestination.java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 package org.grouter.common.jms;
 
@@ -23,14 +38,14 @@ import org.grouter.common.exception.RemoteGrouterException;
  * See {@link org.grouter.common.jms.AbstractDestination} and use abstract interface to concrete
  * implementations.
  *
- * @author
+ * @author Georges Polyzois
  */
 public class QueueSenderDestination extends AbstractSenderDestination
 {
     //The logger.
     private static Logger logger = Logger.getLogger(QueueSenderDestination.class);
     // The ConnectionFactory used to connect to the Queue.
-    protected QueueConnectionFactory queueConnectionFactory;
+    QueueConnectionFactory queueConnectionFactory;
     // Connection to the Queue.
     protected QueueConnection queueConnection;
     // The actual Queue or message channel.
@@ -239,7 +254,6 @@ public class QueueSenderDestination extends AbstractSenderDestination
         {
             logger.error("Connection to destination queue was null - " +
                     "can not close null connection, returning.");
-            return;
         } else
         {
             try
@@ -337,20 +351,14 @@ public class QueueSenderDestination extends AbstractSenderDestination
         }
     }
 
-    /**
-     * <b>See doocumentaion in {@link org.grouter.common.jms.QueueSenderDestination#sendMessage(java.io.Serializable,java.util.HashMap\<String, String>)}.</b><br>
-     * <br>
-     */
+    @Override
     public void rebind(AbstractDestination dest) throws RemoteGrouterException
     {
         rebindBehavior.rebind(this);
     }
 
 
-    /**
-     * <b>See documentaion in {@link org.grouter.common.jms.QueueSenderDestination#sendMessage(java.io.Serializable,int,int,long,java.util.HashMap)}.</b><br>
-     * <br>
-     */
+     @Override
     public synchronized void sendMessage(Serializable message, int deliveryMode,
                                          int messagePriority, long timeToLive,
                                          HashMap<String, String> headerProperties)
@@ -453,6 +461,11 @@ public class QueueSenderDestination extends AbstractSenderDestination
 
     /**
      * Helper method that simply puts key value pairs into the JMS header.
+     *
+     * @param message a serializable object instance
+     * @param headerProperties properties to store in header for JMS message
+     *
+     * @return ObjectMessage an object message
      */
     private ObjectMessage createMessage(Serializable message, HashMap<String,
             String> headerProperties)
@@ -481,7 +494,7 @@ public class QueueSenderDestination extends AbstractSenderDestination
      * Set header for JMS message. Only JMSReplyTo, JMSCorrelationID and JMSType can be set using setters.
      *
      * @param msg Message
-     * @throws javax.jms.JMSException
+     * @throws javax.jms.JMSException a JMS exception when failing to set the header values
      */
     private void setJMSHeader(Message msg) throws JMSException
     {

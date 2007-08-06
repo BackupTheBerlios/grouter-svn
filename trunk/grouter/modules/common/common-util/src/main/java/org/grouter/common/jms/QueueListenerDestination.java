@@ -1,6 +1,22 @@
-/**
- * QueueDestination.java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
+
 package org.grouter.common.jms;
 
 
@@ -26,14 +42,12 @@ import org.grouter.common.exception.RemoteGrouterException;
  * See {@link AbstractDestination} and use abstract interface to concrete
  * implementations.
  *
- * @author
+ * @author Georges Polyzois
  */
 public class QueueListenerDestination extends AbstractListenerDestination
 {
     //The logger.
     private static Logger logger = Logger.getLogger(QueueListenerDestination.class);
-    // The ConnectionFactory used to connect to the Queue.
-    private QueueConnectionFactory queueConnectionFactory;
     // Connection to the Queue.
     private QueueConnection queueConnection;
     // The actual Queue or message channel.
@@ -42,7 +56,9 @@ public class QueueListenerDestination extends AbstractListenerDestination
     protected QueueSender queueSender;
     // Session to the Queue.
     protected QueueSession queueSession;
-    /** Used for request / reply on the same session. */
+    /**
+     * Used for request / reply on the same session.
+     */
     private TemporaryQueue temporaryQueue;
 
     /**
@@ -79,10 +95,11 @@ public class QueueListenerDestination extends AbstractListenerDestination
      *                               then you will have to implement a receive behaviour in your consuming thread.
      */
     public QueueListenerDestination(String queueName,
-                            String queueConnectionFactory,
-                            RebindBehavior rebindBehavior,
-                            Context context,
-                            MessageListener listener)
+                                    String queueConnectionFactory,
+                                    RebindBehavior rebindBehavior,
+                                    Context context,
+                                    MessageListener listener
+    )
     {
         init(queueName, true, AcknowledgeMode.NONE, queueConnectionFactory, rebindBehavior, listener, context, false);
     }
@@ -118,11 +135,12 @@ public class QueueListenerDestination extends AbstractListenerDestination
      *                               acknowledge modes existing there.
      */
     public QueueListenerDestination(String queueName,
-                            final String queueConnectionFactory,
-                            RebindBehavior theRebindBehavior,
-                            Context context,
-                            MessageListener listener,
-                            AcknowledgeMode ackmode)
+                                    final String queueConnectionFactory,
+                                    RebindBehavior theRebindBehavior,
+                                    Context context,
+                                    MessageListener listener,
+                                    AcknowledgeMode ackmode
+    )
     {
         init(queueName, false, ackmode, queueConnectionFactory, theRebindBehavior, listener, context, false);
     }
@@ -162,12 +180,13 @@ public class QueueListenerDestination extends AbstractListenerDestination
      * @param useTemporaryQueue      will create a temporary queue for this session
      */
     public QueueListenerDestination(String queueName,
-                            final String queueConnectionFactory,
-                            RebindBehavior theRebindBehavior,
-                            Context context,
-                            MessageListener listener,
-                            AcknowledgeMode ackmode,
-                            boolean useTemporaryQueue)
+                                    final String queueConnectionFactory,
+                                    RebindBehavior theRebindBehavior,
+                                    Context context,
+                                    MessageListener listener,
+                                    AcknowledgeMode ackmode,
+                                    boolean useTemporaryQueue
+    )
     {
         init(queueName, false, ackmode, queueConnectionFactory, theRebindBehavior, listener, context, useTemporaryQueue);
     }
@@ -192,7 +211,8 @@ public class QueueListenerDestination extends AbstractListenerDestination
                       RebindBehavior theRebindBehavior,
                       MessageListener listener,
                       Context theContext,
-                      boolean useTemporaryQueue)
+                      boolean useTemporaryQueue
+    )
     {
         int mappedacknowledgeMode = getAcknowledgeMode(ackmode);
         if (theContext == null)
@@ -241,7 +261,6 @@ public class QueueListenerDestination extends AbstractListenerDestination
         {
             logger.error("Connection to destination queue was null - " +
                     "can not close null connection, returning.");
-            return;
         } else
         {
             try
@@ -306,7 +325,7 @@ public class QueueListenerDestination extends AbstractListenerDestination
         try
         {
             // Find ConnectionFactory
-            queueConnectionFactory = getInstance().getQueueConnectionFactory(connectionFactory, context);
+            final QueueConnectionFactory queueConnectionFactory = getInstance().getQueueConnectionFactory(connectionFactory, context);
             // Get queue
             queue = getInstance().getQueue(destinationName, context);
             // Create conneciton to queue
@@ -319,6 +338,7 @@ public class QueueListenerDestination extends AbstractListenerDestination
 
             // Sets the receiver which onMessage method will be called.
             messageConsumer.setMessageListener(listener);
+
 
             queueConnection.start();
             logger.info("Bound to destination " + destinationName);
@@ -334,7 +354,6 @@ public class QueueListenerDestination extends AbstractListenerDestination
             rebind(this);
         }
     }
-
 
 
     /**
@@ -360,8 +379,6 @@ public class QueueListenerDestination extends AbstractListenerDestination
             }
         }
     }
-
-
 
 
     /**

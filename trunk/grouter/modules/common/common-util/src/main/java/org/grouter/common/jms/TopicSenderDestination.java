@@ -1,5 +1,20 @@
-/**
- * TopicDestination.java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 package org.grouter.common.jms;
 
@@ -28,13 +43,9 @@ public class TopicSenderDestination extends AbstractSenderDestination
 {
     // The logger.
     private static Logger logger = Logger.getLogger(TopicSenderDestination.class);
-    // The ConnectionFactory used to connect to the Topic
-    private TopicConnectionFactory topicConnectionFactory;
     // Connection to the Topic.
     private TopicConnection topicConnection;
-    // The actual Topic.
-    private Topic topic;
-     // Sender to the Topic.
+    // Sender to the Topic.
     protected TopicPublisher topicPublisher;
     // Session to the Topic.
     private TopicSession topicSession;
@@ -192,17 +203,13 @@ public class TopicSenderDestination extends AbstractSenderDestination
     }
 
 
-    /**
-     * Disconnect from topic. This method should be called from the ejbRemove method
-     * if you are using a stateless session bean.
-     */
+    @Override
     public void unbind()
     {
         if (topicConnection == null)
         {
             logger.error("Connection to destination topic was null - " +
                     "can not close null connection, returning.");
-            return;
         } else
         {
             try
@@ -247,17 +254,16 @@ public class TopicSenderDestination extends AbstractSenderDestination
         return topicSession;
     }
 
-    /**
-     * Connect to topic  and open a session.
-     */
+
+    @Override
     public void bind()
     {
         try
         {
             // Find ConnectionFactory
-            topicConnectionFactory = getInstance().getTopicConnectionFactory(connectionFactory, context);
+            final TopicConnectionFactory topicConnectionFactory = getInstance().getTopicConnectionFactory(connectionFactory, context);
             // Get queue
-            topic = getInstance().getTopic(destinationName, context);
+            final Topic topic = getInstance().getTopic(destinationName, context);
             // Create conneciton to queue
             topicConnection = topicConnectionFactory.createTopicConnection();
             // Register an exceptionlistener
@@ -289,10 +295,7 @@ public class TopicSenderDestination extends AbstractSenderDestination
     }
 
 
-    /**
-     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(String)}.</b><br>
-     * <br>
-     */
+    @Override
     public void sendMessage(String message)
     {
         try
@@ -314,20 +317,14 @@ public class TopicSenderDestination extends AbstractSenderDestination
         }
     }
 
-    /**
-     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable)}.</b><br>
-     * <br>
-     */
+    @Override
     public void rebind(AbstractDestination dest)
     {
         rebindBehavior.rebind(this);
     }
 
 
-    /**
-     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable,java.util.HashMap)}.</b><br>
-     * <br>
-     */
+    @Override
     public synchronized void sendMessage(Serializable message, HashMap<String, String> headerProperties)
     {
         try
@@ -349,10 +346,7 @@ public class TopicSenderDestination extends AbstractSenderDestination
         }
     }
 
-    /**
-     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(javax.jms.Message,int,int,long)}.</b><br>
-     * <br>
-     */
+    @Override
     public synchronized void sendMessage(Message message, int deliveryMode,
                                          int messagePriority, long timeToLive)
     {
@@ -374,15 +368,13 @@ public class TopicSenderDestination extends AbstractSenderDestination
         }
     }
 
+    @Override
     public Session getSession()
     {
         return topicSession;
     }
 
-    /**
-     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(javax.jms.Message,int,int,long)}.</b><br>
-     * <br>
-     */
+    @Override
     public synchronized void sendMessage(Message message)
     {
         try
@@ -430,10 +422,7 @@ public class TopicSenderDestination extends AbstractSenderDestination
         }
     }
 
-    /**
-     * <b>See documentaion in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable)}.</b><br>
-     * <br>
-     */
+    @Override
     public void sendMessage(Serializable message)
     {
         try
@@ -457,6 +446,11 @@ public class TopicSenderDestination extends AbstractSenderDestination
     /**
      * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#sendMessage(java.io.Serializable,java.util.HashMap)}.</b><br>
      * <br>
+     *
+     * @param message a serializable object instance
+     * @param headerProperties properties to store in header for JMS message
+     *
+     * @return ObjectMessage an object message
      */
     private ObjectMessage createMessage(Serializable message, HashMap<String,
             String> headerProperties)
@@ -485,7 +479,7 @@ public class TopicSenderDestination extends AbstractSenderDestination
      * Set header for JMS message. Only JMSReplyTo, JMSCorrelationID and JMSType can be set using setters.
      *
      * @param msg Message
-     * @throws javax.jms.JMSException
+     * @throws javax.jms.JMSException  a JMSException
      */
     private void setJMSHeader(Message msg) throws JMSException
     {
@@ -548,6 +542,12 @@ public class TopicSenderDestination extends AbstractSenderDestination
     }
 */
 
+    /**
+     * Getter for temporary destination.
+     *
+     * @return TemporaryTopic
+     */
+
     public TemporaryTopic getTemporaryDestination()
     {
         if (useTemporaryReplyDestination)
@@ -561,10 +561,7 @@ public class TopicSenderDestination extends AbstractSenderDestination
     }
 
 
-    /**
-     * <b>See documentation in {@link org.grouter.common.jms.AbstractSenderDestination#waitAndGetReplyFromTemporaryDestination(long)}.</b><br>
-     * <br>
-     */
+    @Override
     public Message waitAndGetReplyFromTemporaryDestination(long waitForMs)
     {
         TopicSubscriber receiver = null;
@@ -587,7 +584,10 @@ public class TopicSenderDestination extends AbstractSenderDestination
         {
             try
             {
-                receiver.close();
+                if (receiver != null)
+                {
+                    receiver.close();
+                }
             } catch (JMSException ex1)
             {
                 //ignore
@@ -601,6 +601,7 @@ public class TopicSenderDestination extends AbstractSenderDestination
      * @return String
      * @see org.apache.commons.lang.builder.ToStringBuilder#reflectionToString
      */
+    @Override
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this);
