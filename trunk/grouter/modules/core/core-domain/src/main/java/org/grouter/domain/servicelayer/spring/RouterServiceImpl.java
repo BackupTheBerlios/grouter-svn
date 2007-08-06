@@ -1,17 +1,33 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.domain.servicelayer.spring;
 
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.NodeDAO;
-import org.grouter.domain.daolayer.RouterDAO;
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.Router;
+import org.grouter.domain.daolayer.*;
+import org.grouter.domain.entities.*;
 import org.grouter.domain.servicelayer.RouterService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.Validate;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -32,6 +48,7 @@ public class RouterServiceImpl implements RouterService
     private static Log logger = LogFactory.getLog(RouterServiceImpl.class);
     private MessageDAO messageDAO;
     private NodeDAO nodeDAO;
+    private EndPointTypeDAO endPointTypeDAO;
 
     private RouterDAO routerDAO;
 
@@ -41,6 +58,15 @@ public class RouterServiceImpl implements RouterService
     public RouterServiceImpl()
     {
 
+    }
+
+    /**
+     * Injected.
+     * @param endPointTypeDAO injected dao
+     */
+    public void setEndPointTypeDAO(EndPointTypeDAO endPointTypeDAO)
+    {
+        this.endPointTypeDAO = endPointTypeDAO;
     }
 
     /**
@@ -151,6 +177,11 @@ public class RouterServiceImpl implements RouterService
     public List<Node> findNodesWithNumberOfMessages(String routerId)
     {
         return nodeDAO.findNodesWithNumberOfMessages( routerId );  
+    }
+
+    public Map<Long,EndPointType> findAllEndPointTypes()
+    {
+        return EndPointType.values;
     }
 
 

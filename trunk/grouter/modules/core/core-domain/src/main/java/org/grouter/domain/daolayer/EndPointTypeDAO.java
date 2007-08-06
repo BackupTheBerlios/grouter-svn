@@ -17,23 +17,21 @@
  * under the License.
  */
 
-package org.grouter.domain.entities;
+package org.grouter.domain.daolayer;
+
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.EndPoint;
+import org.grouter.domain.entities.EndPointType;
+
+import java.util.List;
 
 /**
+ * Business DAO operations related to the <tt>EndPoint</tt> entity.
+ *
  * @author Georges Polyzois
  */
-public class JobState
+public interface EndPointTypeDAO extends GenericDAO<EndPointType, String>
 {
-    public static final JobState UNKNOWN = new JobState(1L, "UNKNOWN");
-    public static final JobState PENDING = new JobState(2L, "PENDING");
-    public static final JobState PROCESSING = new JobState(3L, "PROCESSING");
-    public static final JobState CANCELED = new JobState(4L, "CANCELED");
-    public static final JobState ABORTED = new JobState(5L, "ABORTED");
-    public static final JobState COMPLETED = new JobState(6L, "COMPLETED");
-    public static final JobState FAILED = new JobState(7L, "FAILED");
 
-    public JobState(long id, String name)
-    {
-
-    }
 }

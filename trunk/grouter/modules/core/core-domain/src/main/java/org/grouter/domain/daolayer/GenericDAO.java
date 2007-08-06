@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.domain.daolayer;
 
 
@@ -33,7 +52,7 @@ public interface GenericDAO<T, ID extends Serializable>
      *
      * @param id the id of the entity to search for
      * @param joinProps properties on the entity class we should join in
-     * @return
+     * @return T
      */
     T findById(ID id, String... joinProps);
 
@@ -43,7 +62,7 @@ public interface GenericDAO<T, ID extends Serializable>
      * @param clazz entity class
      * @param id the id of the entity to search for
      * @param joinProps properties on the entity class we should join in
-     * @return
+     * @return te enity found, or null if none found
      */
     T findById(Class clazz, T id, String... joinProps);
 
@@ -62,15 +81,25 @@ public interface GenericDAO<T, ID extends Serializable>
      * return routerDAO.findByExample( example, "nodes" , "upTime");
      * 
      *
-     * @param exampleInstance
-     * @param excludeProperty
+     * @param exampleInstance an example entity instance
+     * @param excludeProperty exceluding these properties, and thereby not joining in those
      * @return  list with entities matching the example provided
      */
     List<T> findByExample(T exampleInstance, String... excludeProperty);
 
+    /**
+     * Save and persiste the entity.
+     * @param entity enitty to persist
+     * @return the persisted entity (with id set)
+     */
     T save(T entity);
 
+    /**
+     * Mark for deletion on next session flush.
+     * @param entity the enitty to delete
+     */
     void delete(T entity);
+
 
     void delete( ID id );
 

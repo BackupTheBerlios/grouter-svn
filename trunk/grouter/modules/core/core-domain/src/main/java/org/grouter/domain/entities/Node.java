@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.domain.entities;
 
 import org.apache.log4j.Logger;
@@ -34,8 +53,8 @@ public class Node extends BaseEntity
     private String id;
 
     @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "displayName", nullable = false)
+    private String displayName;
 
     // A nodes sender - if one is provided by the message itself that sender is used to override this
     @Column(name = "senderstatic")
@@ -70,14 +89,18 @@ public class Node extends BaseEntity
     @Column(name = "outbound_endpoint_fk")
     private EndPoint outBound;
 
-    @Column(name = "backupurl")
-    @Length(max = 1000)
+    @Column(name = "backupuri")
+    @Length(max = 2048)
     private String backupUri;
+
+    @Column(name = "description")
+    @Length(max = 2048)
+    private String description;
 
     // a message read from a inbound endPoint is stored in this folder with a unique GUID - the command reader
     // thread will pull messages from this folder and process them  
     @Column(name = "internalqueueurl")
-    @Length(max = 1000)
+    @Length(max = 2048)
     private String internalQueueUri;
 
     @Transient
@@ -95,12 +118,12 @@ public class Node extends BaseEntity
      * Constructor for creating a valid entity.
      *
      * @param id
-     * @param name
+     * @param dislayName
      */
-    public Node(String id, String name)
+    public Node(String id, String dislayName)
     {
         this.id = id;
-        this.name = name;
+        this.displayName = dislayName;
     }
 
 
@@ -113,6 +136,8 @@ public class Node extends BaseEntity
     {
         this.id = id;
     }
+
+
 
 
     public Date getModifiedOn()
@@ -136,14 +161,14 @@ public class Node extends BaseEntity
         this.messages = messages;
     }
 
-    public String getName()
+    public String getDisplayName()
     {
-        return name;
+        return displayName;
     }
 
-    public void setName(String name)
+    public void setDisplayName(String displayName)
     {
-        this.name = name;
+        this.displayName = displayName;
     }
 
     public Router getRouter()
@@ -242,6 +267,17 @@ public class Node extends BaseEntity
     public void setInternalQueueUri(String internalQueueUri)
     {
         this.internalQueueUri = internalQueueUri;
+    }
+
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 
     public String toString()

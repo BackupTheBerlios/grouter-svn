@@ -1,8 +1,28 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.domain.servicelayer;
 
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
+import org.grouter.domain.entities.EndPointType;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,6 +35,7 @@ import org.grouter.domain.entities.Router;
 import javax.ejb.Remote;
 import javax.ejb.Local;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -98,6 +119,18 @@ public interface RouterService
      * @return list {@link Node}s with number of messages set
      */
     List<Node> findNodesWithNumberOfMessages( String routerId );
+
+
+    /**
+     * Retrieves all endpointtypes - this operation is cachable since it will always for the lifteime
+     * of the grouter be the same types. We can not support e.g. a corba endpointtype without some
+     * modifications and new release of the grouter.
+     *
+     *
+     * @return map with endpointtypes, key is id and value is the EndPointType insance
+     */
+    Map<Long,EndPointType> findAllEndPointTypes();
+
 
 
     Node findById( String nodeId);

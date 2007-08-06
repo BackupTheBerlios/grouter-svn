@@ -28,14 +28,20 @@ public class EndPointType extends BaseEntity
     public static EndPointType FILE_WRITER = new EndPointType(1L, "fileWriter");
     public static EndPointType FILE_READER = new EndPointType(2L, "fileReader");
     public static EndPointType FTP_READER = new EndPointType(3L, "ftpReader");
+    public static EndPointType FTP_WRITER = new EndPointType(4L, "ftpWriter");
+    public static EndPointType JMS_READER = new EndPointType(5L, "jmsReader");
+    public static EndPointType JMS_WRITER = new EndPointType(6L, "jmsWriter");
 
-    static Map<Long, EndPointType> values = new HashMap<Long, EndPointType>();
+    public static Map<Long, EndPointType> values = new HashMap<Long, EndPointType>();
 
     static
     {
         values.put(FILE_WRITER.getId(), FILE_WRITER);
         values.put(FILE_READER.getId(), FILE_READER);
         values.put(FTP_READER.getId(), FTP_READER);
+        values.put(FTP_WRITER.getId(), FTP_WRITER);
+        values.put(JMS_READER.getId(), JMS_READER);
+        values.put(JMS_WRITER.getId(), JMS_WRITER);
     }
 
     public static EndPointType valueOf(Long id)
