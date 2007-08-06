@@ -1,14 +1,30 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.core.readers;
 
 import org.apache.log4j.Logger;
-import org.apache.commons.io.filefilter.NotFileFilter;
-import org.apache.commons.io.filefilter.WildcardFilter;
 import org.apache.commons.io.FileUtils;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobDataMap;
 import org.quartz.UnableToInterruptJobException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTPClient;
@@ -39,16 +55,11 @@ import java.io.FileOutputStream;
 public class FtpReaderJob extends AbstractReader
 {
     private static Logger logger = Logger.getLogger(FtpReaderJob.class);
-    //private NodeConfig node;
-    private BlockingQueue<AbstractCommand> queue;
-    private NotFileFilter notFileFilter;
-    private WildcardFilter wildcardFilter;
     public final static String FTP_AUTH_USER = "ftpAuthUser";
     public final static String FTP_AUTH_PASSWORD = "ftpAuthPassword";
     public final static String FTP_PORT = "ftpPort";
     public final static String FILE_LIST = "fileList";
     private static final int FTP_DEFAULT_PORT = 21;
-
 
     /**
      * Empty - needed by Quartz framework.
@@ -57,7 +68,9 @@ public class FtpReaderJob extends AbstractReader
     {
     }
 
-    private void init(final Node node, BlockingQueue<AbstractCommand> blockingQueue)
+
+    @Override
+    void init(final Node node, BlockingQueue<AbstractCommand> blockingQueue)
     {
         if (node == null || blockingQueue == null)
         {
@@ -67,25 +80,19 @@ public class FtpReaderJob extends AbstractReader
         this.queue = blockingQueue;
         //which type of commands should this servicenode worker handle
         command = getCommand(node);
-        //       createFilter(node);
-        validate(node);
 
     }
 
-
-    /**
-     * @return a list of CommnadHolder instances or a null if validation fails
-     */
     @Override
     protected List<CommandMessage> readFromSource()
     {
         logger.info("Reading files from :" + node.getInBound().getUri());
 
         // a list of full paths on ftp server we will download from
-        Map endPointContext = (Map) node.getInBound().getEndPointContext();
+        Map endPointContext = node.getInBound().getEndPointContext();
 
         List<String> remoteFtpUriToFile = getPathIncludingFile((String) endPointContext.get(FILE_LIST));
-        List<CommandMessage> commandMessages = new ArrayList();
+        List<CommandMessage> commandMessages = new ArrayList<CommandMessage>();
         FTPClient client = null;
         try
         {
@@ -118,8 +125,6 @@ public class FtpReaderJob extends AbstractReader
                     fos.close();
                 }
             }
-            // all files downloaded to in folder - time to create and move them internally
-//            commandMessages = FileReaderHelper.getCommands(node);
         }
         catch (Exception e)
         {
@@ -163,15 +168,18 @@ public class FtpReaderJob extends AbstractReader
             throw new RuntimeException("Can not use an empty file list to fetch data from.");
         }
 
-        //endPointContext = (EndPointContext) node.getInBound().getEndPointContext().get(FTP_PORT);
-        //Validate.notNull( endPointContext.getValue(), "Can not use an empty file list to fetch data from." );
-
     }
 
+
+    /**
+     * Use configuration parameters to create a connection to the ftp endpoint.
+     * @return a FTPClient instance
+     * @throws Exception if connection problems
+     */
     private FTPClient initConnection()
-            throws IOException
+            throws Exception
     {
-        FTPClient client = null;
+        FTPClient client;
         String host = null;
         String strPort;
         try
@@ -223,25 +231,20 @@ public class FtpReaderJob extends AbstractReader
                     logger.info("Logged into ftp server :" + host);
                 }
             }
-        } catch (NumberFormatException e)
-        {
-            logger.error("Could not establish connection with ftp endpoint using host:" + host);
         } catch (Exception e)
         {
-            logger.error(e, e);
+            throw new Exception( "Could not establish connection with ftp endpoint using host:" + host , e);
         }
         return client;
     }
 
-    /**
-     * Hand it over to the in memory queue.
-     */
-    void pushToQueue()
+
+    @Override
+    void pushToIntMemoryQueue()
     {
         logger.debug("Putting cmd on queue " + command.toStringUsingReflection());
         queue.offer(command);
     }
-
 
     /**
      * Parses comma separated string of paths.
@@ -251,7 +254,7 @@ public class FtpReaderJob extends AbstractReader
      */
     private List<String> getPathIncludingFile(String pathIncludingFiles)
     {
-        List paths = new ArrayList();
+        List<String> paths = new ArrayList<String>();
         Scanner scanner = new Scanner(pathIncludingFiles);
         try
         {
@@ -274,20 +277,12 @@ public class FtpReaderJob extends AbstractReader
         return paths;
     }
 
-    public void setJobExecutionContext(JobExecutionContext jobExecutionContext)
-    {
-        JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
-        node = (Node) jobDataMap.get("node");
-        BlockingQueue<AbstractCommand> blockingQueue = (BlockingQueue<AbstractCommand>) jobDataMap.get("queue");
-        init(node, blockingQueue);
-    }
 
     public void execute(JobExecutionContext jobExecutionContext)
     {
         setJobExecutionContext(jobExecutionContext);
         execute();
     }
-
 
     public void setQueue(BlockingQueue<AbstractCommand> queue)
     {
@@ -299,13 +294,4 @@ public class FtpReaderJob extends AbstractReader
         logger.info(node.getId() + " got request to stop");
     }
 
-    private static final int MESSAGE_LENGTH = 100;
-
-    private static String getMessage(File currentFile)
-            throws IOException
-    {
-        String message = FileUtils.readFileToString(new File(currentFile.getPath()), "UTF-8");
-        return message.substring(0,MESSAGE_LENGTH);
-
-    }
 }

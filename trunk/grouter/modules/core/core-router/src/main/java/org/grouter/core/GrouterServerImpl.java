@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.core;
 
 import org.apache.log4j.Logger;
@@ -12,10 +31,8 @@ import org.grouter.domain.entities.Node;
 import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.remoting.rmi.RmiServiceExporter;
 
 import java.rmi.RemoteException;
-import java.net.InetAddress;
 
 /**
  * Main class for GRouter.
@@ -111,16 +128,20 @@ public class GrouterServerImpl implements Runnable, GrouterServer
         routerService = (RouterService) context.getBean( ROUTER_SERVICE );
         schedulerService = new SchedulerService(router.getNodes() );
         //RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean("serviceExporter");
-        RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean("rmiServiceExporterFactoryBean");
+
+/*        RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean("rmiServiceExporterFactoryBean");
         rmiServiceExporter.setRegistryPort( router.getRmiRegistryPort() );
         rmiServiceExporter.setServicePort( router.getRmiServicePort() );
         rmiServiceExporter.prepare();
+*/
 
-        String host = InetAddress.getLocalHost().getCanonicalHostName();
+//        String host = InetAddress.getLocalHost().getCanonicalHostName();
         //rmiServiceExporter.
 
         routerService.saveRouter( router );
+        logger.info("Router state saved in database");
         logStatus(router);
+
     }
 
     private void logStatus(Router router)
@@ -129,7 +150,7 @@ public class GrouterServerImpl implements Runnable, GrouterServer
         logger.info( "Number of nodes in conf file :" + router.getNodes().size() );
         for (Node node : router.getNodes())
         {
-            logger.info( "{id=" + node.getId() + ",name=" + node.getName() + "}" );
+            logger.info( "{id=" + node.getId() + ",name=" + node.getDisplayName() + "}" );
         }
     }
 

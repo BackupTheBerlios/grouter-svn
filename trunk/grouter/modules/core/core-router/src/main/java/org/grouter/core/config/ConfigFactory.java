@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.core.config;
 
 import org.apache.log4j.Logger;
@@ -11,12 +30,13 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
+import java.io.File;
 
 /**
  * Use this factory (or assemblee) to create Node entities from corresponding xml binding type of object.
  * NodeType.
  * <p/>
- * This factory will also do some basic validation or configuration parameters - like valid paths etc.
+ * This factory will also do some basic validation of configuration parameters - like valid paths etc.
  *
  * @author Georges Polyzois
  */
@@ -37,7 +57,8 @@ public class ConfigFactory
         Validate.notNull(grouterconfig, "Global config section is null, or you are lacking a valid grouter home element in your config file!");
 
         Router router = new Router();
-        router.setName(grouterconfig.getName());
+        router.setDisplayName(grouterconfig.getDisplayName());
+        router.setDescription(grouterconfig.getDescription());
         router.setId(grouterconfig.getId());
         router.setRmiRegistryPort(grouterconfig.getRmiRegistryPort());
         router.setRmiServicePort(grouterconfig.getRmiServicePort());
@@ -45,7 +66,7 @@ public class ConfigFactory
 
 
         String uri = grouterconfig.getHome();
-        if ( uri.startsWith("file://"))
+        if (uri.startsWith("file://"))
         {
             uri = grouterconfig.getHome().replace("file://", "/");
         }
@@ -73,10 +94,33 @@ public class ConfigFactory
         for (org.grouter.config.Node configNode : nodes)
         {
             Node nodeEntity = new Node();
-            nodeEntity.setName(configNode.getName());
+            nodeEntity.setDisplayName(configNode.getDisplayName());
             nodeEntity.setId(configNode.getId().getStringValue());
             nodeEntity.setReceiverStatic(configNode.getReceiverStatic());
             nodeEntity.setSenderStatic(configNode.getSenderStatic());
+
+            if (configNode.isSetBackup())
+            {
+                // we need to handle backups
+                if (configNode.getBackup().getOverrideDefaultUri() != null &&
+                        !configNode.getBackup().getOverrideDefaultUri().equalsIgnoreCase(""))
+                {
+                    String uriValid = configNode.getBackup().getOverrideDefaultUri().replace("file://", "/");
+                    nodeEntity.setBackupUri( uriValid );
+                }
+                else
+                {
+                    String uriValid = (router.getHomePath() + File.separator + "nodes" + File.separator +
+                            configNode.getId().getStringValue() + File.separator + "backup").replace("file://", "/");
+                    nodeEntity.setBackupUri( uriValid );
+                }
+                if (!FileUtils.isValidDir(nodeEntity.getBackupUri()))
+                {
+                    throw new IllegalArgumentException("Invalid uri path to backup folder specified. Path was :" + nodeEntity.getBackupUri());
+                }
+
+                logger.debug("Using backup path set to :" + nodeEntity.getBackupUri());
+            }
 
             EndPoint inbound = getEndPoint(configNode.getInBoundEndPoint());
             nodeEntity.setInBound(inbound);
@@ -92,10 +136,18 @@ public class ConfigFactory
         return result;
     }
 
+
+    /**
+     * Create an EndPoint from an EndPoint configuration instance.
+     *
+     * @param endPoint a configuration {@link org.grouter.config.EndPoint}
+     * @return an domain {@link EndPoint}
+     * @throws IllegalArgumentException if non valid config parameters are present
+     */
     private static EndPoint getEndPoint(org.grouter.config.EndPoint endPoint) throws IllegalArgumentException
     {
-        EndPoint point = new EndPoint();
-        point.setClazzName(endPoint.getClazzname());
+        EndPoint result = new EndPoint();
+        boolean supportedEndpointtypeFound = false;
 
         String uriValid = null;
         if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FILE_READER) ||
@@ -104,43 +156,53 @@ public class ConfigFactory
             uriValid = endPoint.getUri().replace("file://", "/");
             if (!FileUtils.isValidDir(uriValid))
             {
-                throw new IllegalArgumentException("Invalid uriValid path to a file type of endpoint. Path was :" + uriValid);
+                throw new IllegalArgumentException("Invalid path to a file type of endpoint. Make sure the path exists. Path was :" + uriValid);
             }
+            supportedEndpointtypeFound = true;
         }
 
         if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_READER) ||
                 endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_WRITER))
         {
-            String urlpath = new String( endPoint.getUri() );
+            String urlpath = endPoint.getUri();
             urlpath = urlpath.replace("ftp://", "");
-            uriValid = urlpath.replaceAll( "/" , "");
+            uriValid = urlpath.replaceAll("/", "");
             endPoint.setUri(uriValid);
-
+            supportedEndpointtypeFound = true;
         }
 
+        if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.JMS_READER) ||
+                endPoint.getEndPointType().equals(org.grouter.config.EndPointType.JMS_WRITER))
+        {
+            uriValid = endPoint.getUri();
+            supportedEndpointtypeFound = true;
+        }
+
+        if ( !supportedEndpointtypeFound )
+        {
+            throw new IllegalArgumentException("Unsupported endpoint type. Configuration showed :" +
+                    endPoint.getEndPointType() + " Add support in ConfigFactory and EndPointType for this EndPointType.");
+        }
 
         Context[] context = endPoint.getContextparamArray();
-        Map endPointContextMap = new HashMap();
-        if( context != null && context.length > 0 )
+        Map<String,String> endPointContextMap = new HashMap<String,String>();
+        if (context != null && context.length > 0)
         {
             for (Context context1 : context)
             {
-                EndPointContext endPointContext = new EndPointContext( context1.getName(), context1.getValue(), point );
-                endPointContextMap.put( context1.getName(), context1.getValue()  );
+                //EndPointContext endPointContext = new EndPointContext(context1.getDisplayName(), context1.getValue(), result);
+                endPointContextMap.put(context1.getName(), context1.getValue());
             }
         }
 
-
-        point.setUri(uriValid);
-        point.setId(endPoint.getId());
-        point.setScheduleCron(endPoint.getCron());
-        point.setEndPointContext( endPointContextMap );
+        result.setClazzName(endPoint.getClazzname());
+        result.setUri(uriValid);
+        result.setId(endPoint.getId());
+        result.setScheduleCron(endPoint.getCron());
+        result.setEndPointContext(endPointContextMap);
 
         EndPointType type = EndPointType.valueOf(new Long(endPoint.getEndPointType().intValue()));
-        point.setEndPointType(type);
-
-        return point;
+        result.setEndPointType(type);
+        return result;
     }
-
-
 }

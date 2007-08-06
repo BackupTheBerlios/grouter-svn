@@ -21,9 +21,9 @@ package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.Validate;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
+import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
 import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 import org.grouter.domain.servicelayer.ServiceFactory;
 import org.grouter.common.guid.GuidGenerator;
@@ -36,13 +36,13 @@ import java.io.File;
  *
  * @author Georges Polyzois
  */
-public class FileWriteCommand extends AbstractCommand
+public class JmsWriteCommand extends AbstractCommand
 {
-    private static Logger logger = Logger.getLogger(FileWriteCommand.class);
+    private static Logger logger = Logger.getLogger(JmsWriteCommand.class);
     ServiceFactory serviceFactory;
 
 
-    public FileWriteCommand()
+    public JmsWriteCommand()
     {
     }
 
@@ -50,18 +50,16 @@ public class FileWriteCommand extends AbstractCommand
     /**
      * Constructor.
      *
-     * @param node the node holding outbound information
+     * @param node
      * @throws IllegalArgumentException if node == null
      */
-    public FileWriteCommand(Node node)
+    public JmsWriteCommand(Node node)
     {
         if (node == null)
         {
             throw new IllegalArgumentException("You must provide a Node !!");
         }
         this.node = node;
-
-
     }
 
 
@@ -80,13 +78,9 @@ public class FileWriteCommand extends AbstractCommand
             logger.debug("Wrote a new file :" + commandMessage.getMessage());
             try
             {
-                // copy to you uri
-                FileUtils.copyFile(commandMessage.getInternalInFile(), new File(node.getOutBound().getUri() + File.separator + commandMessage.getInternalInFile().getName()));
-                File internalOutFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_" + GuidGenerator.getInstance().getGUID());
-                // copy to internal out uri
-                // FileUtils.copyFile(commandMessage.getInternalInFile(), internalOutFile);
-
-                // delete fron internal file - a backup was save if configured to do so...
+                FileUtils.copyFile( commandMessage.getInternalInFile(), new File(node.getOutBound().getUri() + File.separator  + commandMessage.getInternalInFile().getName() ) );
+                File internalOutFile = new File( node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_"  + GuidGenerator.getInstance().getGUID() );
+                FileUtils.copyFile( commandMessage.getInternalInFile(), internalOutFile  );
                 commandMessage.getInternalInFile().delete();
             }
             catch (Exception e)
@@ -110,9 +104,9 @@ public class FileWriteCommand extends AbstractCommand
             message.setContent(commandMessage.getMessage());
 //  produces stale exceptions            message.setId(commandMessage.getGuid());
 
-            message.setNode(node);
+            message.setNode( node );
 
-            LogStrategy jdbcLogStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+            LogStrategy jdbcLogStrategy = (JDBCLogStrategy) serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
             jdbcLogStrategy.log(message);
 
         }
@@ -123,7 +117,7 @@ public class FileWriteCommand extends AbstractCommand
     /**
      * Injected.
      *
-     * @param serviceFactory the servicefactory
+     * @param serviceFactory
      */
     public void setServiceFactory(ServiceFactory serviceFactory)
     {

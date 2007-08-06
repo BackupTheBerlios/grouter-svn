@@ -1,9 +1,24 @@
-/**
- * FileUtils.java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
+
 package org.grouter.core.util.file;
 
-//import com.sun.xml.bind.StringInputStream;
 
 import org.apache.log4j.Logger;
 
@@ -12,7 +27,7 @@ import java.io.*;
 /**
  * Misc file operations.
  *
- * @author Georges
+ * @author Georges Polyzois
  */
 public class FileUtils
 {
@@ -23,7 +38,7 @@ public class FileUtils
      *
      * @param file
      * @param skipfirstblankline
-     * @return
+     * @return a string with content
      */
     public static String getMessageContent(File file, boolean skipfirstblankline)
     {
@@ -58,9 +73,8 @@ public class FileUtils
      * whitespaces.
      *
      * @param fileReader         a file reader that will be decorated using a BufferedReader
-     * @param skipfirstblankline
+     * @param skipfirstblankline weteher to skip first ine in file
      * @return String message contents of file
-     *         TODO needs test
      */
     public static String getMessageContent(FileReader fileReader, boolean skipfirstblankline)
     {
@@ -94,49 +108,13 @@ public class FileUtils
         return returnval;
     }
 
-    /**
-     * Send in path to file and get the first line of the file back -
-     * for IOR files there are only one line.
-     *
-     * @param iorFile
-     * @return
-     * @throws Exception
-     */
-    public static String getIORFileContent(String iorFile) throws Exception
-    {
-        String ior = null;
-        BufferedReader inputBuffer = null;
-        try
-        {
-            inputBuffer = new BufferedReader(new FileReader(iorFile));
-            ior = inputBuffer.readLine();
-            inputBuffer.close();
-        }
-        catch (IOException ex)
-        {
-            throw new IOException("Could not find file : " + iorFile);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Could not create string representation of ior file : " + iorFile);
-        }
-        finally
-        {
-            if (inputBuffer != null)
-            {
-                inputBuffer.close();
-            }
-        }
-        return ior;
-    }
 
 
     /**
      * Counts number of file in a folder - excluding folders.
      *
-     * @param directory
+     * @param directory the directory to count number of files in
      * @return Long number of files excluding folders.
-     *         TODO needs test
      */
     public static long countNumberOfFileInFolder(String directory)
     {
@@ -165,7 +143,6 @@ public class FileUtils
      *
      * @param dir
      * @return java.util.Date date of last modification of file
-     *         TODO needs test
      */
     public static java.util.Date lastModifiedDateOfFile(String dir)
     {
@@ -199,121 +176,6 @@ public class FileUtils
         return last;
     }
 
-    /**
-     * Read a file and return the contents as a string
-     *
-     * @param readFrom
-     * @return
-     * @throws java.io.IOException
-     */
-    /*   public static String readFile(String readFrom) throws IOException
-     {
-         File inFile = new File(readFrom);
-         FileReaderThread reader = null;
-         StringBuffer buf = new StringBuffer();
-         if (inFile.exists())
-         {
-             if (inFile.isFile())
-             {
-                 try
-                 {
-                     reader = new FileReaderThread(inFile);
-                     BufferedReader bufreader = new BufferedReader(reader);
-                     String line = bufreader.readLine();
-
-                     while (line != null)
-                     {
-                         buf.append(line + "\n");
-                         line = bufreader.readLine();
-                     }
-                 }
-                 finally
-                 {
-                     if (reader != null)
-                     {
-                         try
-                         {
-                             reader.close();
-                         }
-                         catch (IOException e)
-                         {
-                             ;
-                         }
-                     }
-                 }
-
-             }
-             else
-             {
-                 throw new FileCopyException("FileRead: location is not a file: " + readFrom);
-             }
-         }
-         return buf.toString();
-
-     }
-    */
-
-    /**
-     * Create message contents in a file from message (String). If destination file
-     * exists or the destination file is unwritable an exception is raised.
-     *
-     * @param message
-     * @param writeToFilePath
-     * @throws FileCopyException
-     */
-    /*public static File createFile(String message, String writeToFilePath) throws IOException, FileNotFoundException
-    {
-        File writeToFile = new File(writeToFilePath);
-        StringInputStream source = new StringInputStream(message);
-        FileOutputStream destination = null;
-        byte[] buffer;
-        int bytes_read;
-
-        try
-        {
-            // Check if ok to write
-            isDestinationWritable(writeToFile);
-
-            destination = new FileOutputStream(writeToFile);
-            buffer = new byte[1024];
-            while (true)
-            {
-                bytes_read = source.execute(buffer);
-                if (bytes_read == -1)
-                {
-                    break;
-                }
-                destination.write(buffer, 0, bytes_read);
-            }
-        }
-        finally
-        {
-            if (source != null)
-            {
-                try
-                {
-                    source.close();
-                }
-                catch (IOException e)
-                {
-                    //Ignore.
-                }
-            }
-            if (destination != null)
-            {
-                try
-                {
-                    destination.close();
-                }
-                catch (IOException e)
-                {
-                    //Ignore.
-                }
-            }
-        }
-        return writeToFile;
-    }
-      */
 
 
     /**
@@ -361,34 +223,34 @@ public class FileUtils
     /**
      * Check if ok to write file to this location.
      *
-     * @param destination_file
-     * @throws FileCopyException TODO needs test
+     * @param destinationFile 
+     * @throws FileCopyException if failure to write file to this destination
      */
-    private static void isDestinationWritable(File destination_file)
+    private static void isDestinationWritable(File destinationFile)
             throws FileCopyException
     {
-        if (destination_file.exists())
+        if (destinationFile.exists())
         {
-            if (destination_file.isFile())
+            if (destinationFile.isFile())
             {
-                if (!destination_file.canWrite())
+                if (!destinationFile.canWrite())
                 {
-                    throw new FileCopyException("FileCreate: destination file is unwriteable: " + destination_file.getName());
+                    throw new FileCopyException("FileCreate: destination file is unwriteable: " + destinationFile.getName());
                 }
             } else
             {
-                throw new FileCopyException("FileCreate: destination is not a file: " + destination_file.getName());
+                throw new FileCopyException("FileCreate: destination is not a file: " + destinationFile.getName());
             }
         } else
         {
-            File parentdir = parent(destination_file);
+            File parentdir = parent(destinationFile);
             if (!parentdir.exists())
             {
-                throw new FileCopyException("FileCreate: destination directory doesn't exist: " + destination_file.getName());
+                throw new FileCopyException("FileCreate: destination directory doesn't exist: " + destinationFile.getName());
             }
             if (!parentdir.canWrite())
             {
-                throw new FileCopyException("FileCreate: destination directory is unwriteable: " + destination_file.getName());
+                throw new FileCopyException("FileCreate: destination directory is unwriteable: " + destinationFile.getName());
             }
         }
     }
@@ -412,8 +274,8 @@ public class FileUtils
     /**
      * Overloaded copy method.
      *
-     * @param sourceFile
-     * @param destFile
+     * @param sourceFile copy form this file
+     * @param destFile copy to this file
      * @throws IOException
      */
     public static void copy(File sourceFile, File destFile) throws IOException
@@ -427,6 +289,7 @@ public class FileUtils
      * @param source_name
      * @param dest_name
      * @throws java.io.IOException
+     * @throws FileCopyException if failure to copu file
      */
     public static void copy(String source_name, String dest_name) throws IOException, FileCopyException
     {
@@ -519,8 +382,8 @@ public class FileUtils
      * delete will not work if you have files in the directory -> use this instead
      * to remove files prior to deleteing directory.
      *
-     * @param deleteDirectory
-     * @param recursive
+     * @param deleteDirectory directory to delete
+     * @param recursive wether to delete recursively into sub folder
      */
     public static void deleteDirContents(File deleteDirectory, boolean recursive)
     {

@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.core.util;
 
 import org.apache.log4j.Logger;
@@ -7,17 +26,15 @@ import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandConsumerJob;
 import org.grouter.core.readers.FileReaderJob;
 import org.grouter.core.readers.FtpReaderJob;
+import org.grouter.core.readers.JmsReaderJob;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
-import org.grouter.domain.servicelayer.RouterService;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.concurrent.*;
 import java.util.Set;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * What's the right size for a thread pool, assuming the goal is to keep the
@@ -42,7 +59,7 @@ public class SchedulerService
     private Set<Node> nodes;
     private static final String GROUTER = "grouter";
 
-    
+
     /**
      * Consturctor
      */
@@ -71,7 +88,7 @@ public class SchedulerService
     {
         for (Node node : this.nodes)
         {
-            logger.info("Scheduling node : " + node.getName());
+            logger.info("Scheduling node : " + node.getDisplayName());
             BlockingQueue<AbstractCommand> blockingQueue = new ArrayBlockingQueue<AbstractCommand>(QUEUE_CAPACITY);
             if (node.getInBound().getEndPointType().getId() == EndPointType.FILE_READER.getId())
             {
@@ -81,7 +98,29 @@ public class SchedulerService
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
-            if ( node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId())
+            if (node.getInBound().getEndPointType().getId() == EndPointType.FTP_READER.getId())
+            {
+
+                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), FtpReaderJob.class);
+                jobDetail.getJobDataMap().put("node", node);
+                jobDetail.getJobDataMap().put("queue", blockingQueue);
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                scheduler.scheduleJob(jobDetail, cronTrigger);
+            }
+            if (node.getInBound().getEndPointType().getId() == EndPointType.JMS_READER.getId())
+            {
+                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), JmsReaderJob.class);
+                jobDetail.getJobDataMap().put("node", node);
+                jobDetail.getJobDataMap().put("queue", blockingQueue);
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                scheduler.scheduleJob(jobDetail, cronTrigger);
+
+            }
+
+            // For all WRITERS we need only create this
+            if ( node.getOutBound().getEndPointType().getId() == EndPointType.FILE_WRITER.getId() || 
+                 node.getOutBound().getEndPointType().getId() == EndPointType.JMS_WRITER.getId()  ||
+                 node.getOutBound().getEndPointType().getId() == EndPointType.FTP_WRITER.getId()   )
             {
                 JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), getTriggerGroup(node), CommandConsumerJob.class);
                 jobDetail.getJobDataMap().put("node", node);
@@ -90,20 +129,10 @@ public class SchedulerService
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
 
-            if( node.getInBound().getEndPointType().getId() == EndPointType.FTP_READER.getId())
-            {
-
-                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), FtpReaderJob.class);
-                jobDetail.getJobDataMap().put("node", node);
-                jobDetail.getJobDataMap().put("queue", blockingQueue);
-                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
-                scheduler.scheduleJob(jobDetail, cronTrigger);
-
-            }
 
         }
 
-        // Start the Scheduler running
+        // Start the Scheduler
         scheduler.start();
     }
 
@@ -156,9 +185,14 @@ public class SchedulerService
     }
 
 
+    /**
+     * Reschedules a job.
+     * @param node node to be rescheduled
+     * @throws Exception
+     */
     public void rescheduleNode(Node node) throws Exception
     {
-        logger.info("Rescheduling node : " + node.getName());
+        logger.info("Rescheduling node : " + node.getDisplayName());
         CronTrigger cronTriggerIn = (CronTrigger) scheduler.getTrigger(getTriggerName(node, true), getTriggerGroup(node));
         cronTriggerIn.setCronExpression(node.getInBound().getScheduleCron());
         scheduler.rescheduleJob(getTriggerName(node, true), getTriggerGroup(node), cronTriggerIn);

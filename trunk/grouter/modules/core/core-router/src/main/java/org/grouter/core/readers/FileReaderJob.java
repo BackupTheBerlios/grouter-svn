@@ -1,23 +1,35 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.core.readers;
 
 import org.apache.log4j.Logger;
-import org.apache.commons.io.filefilter.NotFileFilter;
-import org.apache.commons.io.filefilter.WildcardFilter;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
-import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.exception.ValidationException;
 import org.grouter.domain.entities.Node;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobDataMap;
 import org.quartz.UnableToInterruptJobException;
 
-import java.io.FileFilter;
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
 import java.util.List;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 
 /**
@@ -28,16 +40,6 @@ import java.net.URISyntaxException;
 public class FileReaderJob extends AbstractReader
 {
     private static Logger logger = Logger.getLogger(FileReaderJob.class);
-    //private NodeConfig node;
-    private BlockingQueue<AbstractCommand> queue;
-    private NotFileFilter notFileFilter;
-    private WildcardFilter wildcardFilter;
-    private FileFilter fileFilter;
-    private FileReaderHelper fileReaderHelper;
-    private static final String NODE = "node";
-    private static final String QUEUE = "queue";
-
-    private static boolean isValidated;
 
     /**
      * Empty - needed by Quartz framework.
@@ -46,7 +48,7 @@ public class FileReaderJob extends AbstractReader
     {
     }
 
-    private void init(final Node node, BlockingQueue<AbstractCommand> blockingQueue)
+    void init(final Node node, BlockingQueue<AbstractCommand> blockingQueue)
     {
         if (node == null || blockingQueue == null)
         {
@@ -57,30 +59,9 @@ public class FileReaderJob extends AbstractReader
         //which type of commands should this servicenode worker handle
         command = getCommand(node);
 
-        //validate path etc
-        validate(node);
-        //       createFilter(node );
+       
     }
 
-
-    /**
-     * A null filter means we do not have a filter and File.listfiles will take all files present in a dir.
-     *
-     * @param
-     */
-/*    private void createFilter(Node node)
-    {
-        String filter = node.getInFolderConfig().getFilterConfig().getFilter();
-        if (filter != null && filter.equalsIgnoreCase(""))
-        {
-            return;
-        }
-
-        this.wildcardFilter = new WildcardFilter(node.getInFolderConfig().getFilterConfig().getFilter());
-        this.notFileFilter = new NotFileFilter(wildcardFilter);
-        this.fileFilter = notFileFilter;
-    }
-*/
     @Override
     protected List<CommandMessage> readFromSource()
     {
@@ -89,20 +70,14 @@ public class FileReaderJob extends AbstractReader
     }
 
 
-    /**
-     * Hand it over to the in memory queue.
-     */
-    void pushToQueue()
+    @Override
+    void pushToIntMemoryQueue()
     {
         logger.debug("Putting cmd on queue " + command.toStringUsingReflection());
         queue.offer(command);
     }
 
-    /**
-     * Verify in and out directories.
-     *
-     * @param node
-     */
+    @Override
     void validate(Node node)
     {
         File file = new File(node.getInBound().getUri());
@@ -110,8 +85,6 @@ public class FileReaderJob extends AbstractReader
         {
             throw new ValidationException("Path does not exist for :" + node.getInBound().getUri());
         }
-
-        isValidated = true;
     }
 
     /**
@@ -128,13 +101,6 @@ public class FileReaderJob extends AbstractReader
         }
     }
 
-    public void setJobExecutionContext(JobExecutionContext jobExecutionContext)
-    {
-        JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
-        node = (Node) jobDataMap.get(NODE);
-        BlockingQueue<AbstractCommand> blockingQueue = (BlockingQueue<AbstractCommand>) jobDataMap.get(QUEUE);
-        init(node, blockingQueue);
-    }
 
     public void execute(JobExecutionContext jobExecutionContext)
     {
