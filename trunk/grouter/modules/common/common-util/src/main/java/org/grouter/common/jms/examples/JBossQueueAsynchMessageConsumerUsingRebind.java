@@ -12,10 +12,10 @@ import javax.naming.InitialContext;
 /**
  * Register and listen for messages asynch from Queueu.
  */
+@SuppressWarnings({"JavaDoc"})
 public class JBossQueueAsynchMessageConsumerUsingRebind extends AbstractJBossExample implements MessageListener, Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueAsynchMessageConsumerUsingRebind.class);
-    private QueueListenerDestination queueDestination;
 
 
     public JBossQueueAsynchMessageConsumerUsingRebind()
@@ -23,26 +23,21 @@ public class JBossQueueAsynchMessageConsumerUsingRebind extends AbstractJBossExa
         try
         {
             setupMessaging();
-        } catch (JMSException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (NamingException e)
         {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); 
         }
     }
 
     /**
      * Bootstrap.
      *
-     * @throws javax.jms.JMSException
-     * @throws javax.naming.NamingException
      */
-    private void setupMessaging() throws JMSException, NamingException
+    private void setupMessaging() throws NamingException
     {
         InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
         Object tmp = iniCtx.lookup("ConnectionFactory");
-        queueDestination = new QueueListenerDestination(QUEUE_TEST_QUEUE, null,
+        final QueueListenerDestination queueDestination = new QueueListenerDestination(QUEUE_TEST_QUEUE, null,
                 null, iniCtx, this);
         queueDestination.bind();
     }
@@ -87,7 +82,7 @@ public class JBossQueueAsynchMessageConsumerUsingRebind extends AbstractJBossExa
                 Thread.sleep(SLEEP);
             } catch (InterruptedException e)
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
         }
 

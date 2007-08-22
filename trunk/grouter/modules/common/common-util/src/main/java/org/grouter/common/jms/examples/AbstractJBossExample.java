@@ -5,13 +5,6 @@ import javax.jms.QueueConnection;
 import javax.jms.QueueSession;
 import javax.jms.QueueReceiver;
 
-/**
- * Created by IntelliJ IDEA.
- * User: geopol
- * Date: Sep 21, 2006
- * Time: 4:35:21 PM
- * To change this template use File | Settings | File Templates.
- */
 public abstract class AbstractJBossExample
 {
     protected Queue que;

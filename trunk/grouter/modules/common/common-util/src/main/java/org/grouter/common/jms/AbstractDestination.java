@@ -119,6 +119,7 @@ public abstract class AbstractDestination
      * @param dest Destination
      * @throws RemoteGrouterException Unchecked exception.
      */
+    @SuppressWarnings({"UnusedParameters"})
     abstract public void rebind(AbstractDestination dest) throws RemoteGrouterException;
 
 

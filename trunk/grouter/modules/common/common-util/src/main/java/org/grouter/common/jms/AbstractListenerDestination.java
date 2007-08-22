@@ -83,6 +83,7 @@ public abstract class AbstractListenerDestination extends AbstractDestination
      *
      * @param request Message
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     abstract public void sendReplyToTemporaryDestination(Message request);
     
 

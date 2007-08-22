@@ -5,13 +5,13 @@ import org.grouter.common.jms.AcknowledgeMode;
 import org.grouter.common.jms.QueueSenderDestination;
 import org.grouter.common.jndi.JNDIUtils;
 
-import javax.jms.*;
 import javax.naming.NamingException;
 import javax.naming.InitialContext;
 
 /**
  * Produces messages on queue.
  */
+@SuppressWarnings({"JavaDoc"})
 public class JBossQueueMessageProducerUsingRebind extends AbstractJBossExample implements Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueMessageProducerUsingRebind.class);
@@ -23,12 +23,10 @@ public class JBossQueueMessageProducerUsingRebind extends AbstractJBossExample i
         try
         {
             setupMessaging();
-        } catch (JMSException e)
+        } 
+        catch (NamingException e)
         {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (NamingException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();  
         }
 
     }
@@ -39,7 +37,7 @@ public class JBossQueueMessageProducerUsingRebind extends AbstractJBossExample i
      * @throws javax.jms.JMSException
      * @throws javax.naming.NamingException
      */
-    private void setupMessaging() throws JMSException, NamingException
+    private void setupMessaging() throws NamingException
     {
         InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
         queueDestination = new QueueSenderDestination(QUEUE_TEST_QUEUE, "ConnectionFactory",   null, iniCtx, 4000, AcknowledgeMode.NONE);

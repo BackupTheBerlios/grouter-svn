@@ -96,6 +96,7 @@ public class QueueSenderDestination extends AbstractSenderDestination
      * @param timeToLiveMs           set to 0 if no time to live should be uses - TTL is specified
      *                               in millisecons!!!
      */
+    @SuppressWarnings({"SameParameterValue", "SameParameterValue", "SameParameterValue"})
     public QueueSenderDestination(final String queueName,
                                   final String queueConnectionFactory,
                                   RebindBehavior rebindBehavior,
@@ -177,6 +178,7 @@ public class QueueSenderDestination extends AbstractSenderDestination
      *                               acknowledge modes existing there.
      * @param useTemporaryQueue      will create a temporary queue for this session
      */
+    @SuppressWarnings({"SameParameterValue", "SameParameterValue", "SameParameterValue", "SameParameterValue", "SameParameterValue"})
     public QueueSenderDestination(final String queueName,
                                   final String queueConnectionFactory,
                                   final RebindBehavior theRebindBehavior,

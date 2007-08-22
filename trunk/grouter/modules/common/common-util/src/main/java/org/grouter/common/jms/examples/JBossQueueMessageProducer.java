@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 /**
  * Produces messages on queue.
  */
+@SuppressWarnings({"JavaDoc"})
 public class JBossQueueMessageProducer  extends AbstractJBossExample implements Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueMessageProducer.class);
@@ -22,10 +23,10 @@ public class JBossQueueMessageProducer  extends AbstractJBossExample implements 
             setupMessaging();
         } catch (JMSException e)
         {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (NamingException e)
         {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();  
         }
 
     }
@@ -57,7 +58,7 @@ public class JBossQueueMessageProducer  extends AbstractJBossExample implements 
      * @throws NamingException
      */
     public void send(String text)
-            throws JMSException, NamingException
+            throws JMSException
     {
         QueueSender send = session.createSender(que);
         TextMessage tm = session.createTextMessage(text);

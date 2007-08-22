@@ -97,6 +97,7 @@ public class TopicSenderDestination extends AbstractSenderDestination
      * @param ackmode                this maps direclty to {@link javax.jms.Session} and the different types of
      *                               acknowledge modes existing there.
      */
+    @SuppressWarnings({"SameParameterValue", "SameParameterValue", "SameParameterValue", "SameParameterValue"})
     public TopicSenderDestination(String topicName,
                                   String topicConnectionFactory,
                                   RebindBehavior rebindBehavior,

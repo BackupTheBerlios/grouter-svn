@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 /**
  * Register and listen for messages asynch from Queueu.
  */
+@SuppressWarnings({"JavaDoc"})
 public class JBossQueueAsynchMessageConsumer extends AbstractJBossExample implements MessageListener, Runnable
 {
     private static Logger logger = Logger.getLogger(JBossQueueAsynchMessageConsumer.class);
@@ -30,7 +31,7 @@ public class JBossQueueAsynchMessageConsumer extends AbstractJBossExample implem
     /**
      * Bootstrap.
      *
-     * @throws JMSException
+     * @throws JMSException  
      * @throws NamingException
      */
     private void setupMessaging() throws JMSException, NamingException
@@ -80,14 +81,13 @@ public class JBossQueueAsynchMessageConsumer extends AbstractJBossExample implem
     {
         while (true)
         {
-
             try
             {
                 logger.info("Sleeping for " + SLEEP + " seconds");
                 Thread.sleep(SLEEP);
             } catch (InterruptedException e)
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();  
             }
         }
 

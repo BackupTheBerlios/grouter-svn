@@ -19,6 +19,7 @@
 package org.grouter.common.jms;
 
 import org.apache.log4j.Logger;
+import org.grouter.common.exception.RemoteGrouterException;
 
 /**
  * Rebinds x number of times.
@@ -50,10 +51,17 @@ public class XTimesRebind extends RebindBehavior
         logger.info("Rebinding using behavior implementation : " + this.getClass().getName());
         for (int i = 0; i < numberOfTimes; i++)
         {
-            dest.unbind();
-            dest.bind();
-            logger.debug("We rebinded to the destination on attempt number " + numberOfTimes);
-            return;
+            try
+            {
+                dest.unbind();
+                dest.bind();
+                logger.debug("We rebinded to the destination on attempt number " + numberOfTimes);
+                return;
+            } catch (RemoteGrouterException e)
+            {
+                //ignore
+            }
+
         }
     }
 }

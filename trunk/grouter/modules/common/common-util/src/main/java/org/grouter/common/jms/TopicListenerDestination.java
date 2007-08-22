@@ -76,6 +76,7 @@ public class TopicListenerDestination extends AbstractListenerDestination
      *                               i.e. a class that will be receiving callbacks from jms provider. If null specified
      *                               then you will have to implement a receive behaviour in your consuming thread.
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     public TopicListenerDestination(String topicName,
                                     String topicConnectionFactory,
                                     RebindBehavior rebindBehavior,

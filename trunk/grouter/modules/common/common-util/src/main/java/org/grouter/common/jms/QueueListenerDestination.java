@@ -94,6 +94,7 @@ public class QueueListenerDestination extends AbstractListenerDestination
      *                               i.e. a class that will be receiving callbacks from jms provider. If null specified
      *                               then you will have to implement a receive behaviour in your consuming thread.
      */
+    @SuppressWarnings({"SameParameterValue"})
     public QueueListenerDestination(String queueName,
                                     String queueConnectionFactory,
                                     RebindBehavior rebindBehavior,
@@ -179,6 +180,7 @@ public class QueueListenerDestination extends AbstractListenerDestination
      *                               acknowledge modes existing there.
      * @param useTemporaryQueue      will create a temporary queue for this session
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     public QueueListenerDestination(String queueName,
                                     final String queueConnectionFactory,
                                     RebindBehavior theRebindBehavior,

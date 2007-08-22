@@ -40,6 +40,7 @@ public abstract class AbstractSenderDestination extends AbstractDestination
      * @param waitForMs time to wait for a Message from the listener
      * @return Message
      */
+    @SuppressWarnings({"SameParameterValue"})
     abstract public Message waitAndGetReplyFromTemporaryDestination(long waitForMs);
 
 

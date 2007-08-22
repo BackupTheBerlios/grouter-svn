@@ -44,6 +44,7 @@ public class JMSRuntimeException extends RuntimeException
      * @param message   String is a text description of the reason for the error.
      * @param rootcause is the root cause for this exception.
      */
+    @SuppressWarnings({"SameParameterValue"})
     public JMSRuntimeException(String message, Throwable rootcause)
     {
         super(message, rootcause);
