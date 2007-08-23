@@ -31,22 +31,22 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Implements the generic CRUD data access operations using Hibernate APIs.
- * <p/>
+ * Implements the generic CRUD data access operations using Hibernate APIs and Spring support
+ * through HibernateDAOSupport.
+ *
  * To write a DAO, subclass and parameterize this class with your persistent class.
- * Of course, assuming that you have a traditional 1:1 appraoch for Entity:DAO design.
- * <p/>
+ *
  * You have to inject the <tt>Class</tt> object of the persistent class and a current
  * Hibernate <tt>Session</tt> to construct a DAO.
- * <p/>
+ * 
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
- *
+ * Also see this link : http://www.hibernate.org/328.html
+ * 
  * @author Georges Polyzois
  */
 public abstract class GenericHibernateDAO<T, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<T,ID>
 {
     private Class<T> entityClass;
-    private SessionFactory sessionFactory;
     protected Session session;
 
 
@@ -82,8 +82,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         criteria.setResultTransformer( CriteriaSpecification.DISTINCT_ROOT_ENTITY );
         return ( T ) criteria.uniqueResult(  );
     }
-    
-
 
     /**
      * {@inheritDoc}
@@ -93,8 +91,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         return findById( getEntityClass(), id, joinProps );
         //return (T) getSession().load(getEntityClass(), id, LockMode.FORCE);
     }
-
-
 
     /**
      * Find Entity by id.
@@ -106,8 +102,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     {
         return findById( getEntityClass(), id );
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -158,6 +152,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
 
     /**
      * Use this inside subclasses as a convenience method.
+     * @param criterion criteria as vararg
+     * @return a list of Ts
      */
     @SuppressWarnings("unchecked")
     protected List<T> findByCriteria(Criterion... criterion)
@@ -174,6 +170,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     /**
      * {@inheritDoc}
      */
+
     @SuppressWarnings("unchecked")
     public T findById(Class clazz, T id, String... joinProps)
     {

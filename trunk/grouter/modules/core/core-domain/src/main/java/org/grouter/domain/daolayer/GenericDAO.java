@@ -16,7 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package org.grouter.domain.daolayer;
 
 
@@ -24,16 +23,15 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Business data access objects share this interface.
- * <br/>
  * All CRUD (create, read, update, delete) basic data access operations are
  * isolated in this interface and shared accross all DAO implementations.
  * The current design is for a state-management oriented persistence layer
  * (for example, there is no UDPATE statement function) that provides
  * automatic transactional dirty checking of business objects in persistent
  * state.
- * <p/>
+ *
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
+ * Also see this link : http://www.hibernate.org/328.html
  *
  * @author Georges Polyzois
  */
@@ -50,7 +48,7 @@ public interface GenericDAO<T, ID extends Serializable>
     /**
      * Find entity by id, join using properties of entity class (optionally).
      *
-     * @param id the id of the entity to search for
+     * @param id        the id of the entity to search for
      * @param joinProps properties on the entity class we should join in
      * @return T
      */
@@ -59,8 +57,8 @@ public interface GenericDAO<T, ID extends Serializable>
     /**
      * Find entity by id and clazz, join using properties of entity class (optionally).
      *
-     * @param clazz entity class
-     * @param id the id of the entity to search for
+     * @param clazz     entity class
+     * @param id        the id of the entity to search for
      * @param joinProps properties on the entity class we should join in
      * @return te enity found, or null if none found
      */
@@ -68,27 +66,28 @@ public interface GenericDAO<T, ID extends Serializable>
 
     /**
      * Get all entities.
-     * @return list of entitites.
+     *
+     * @return list of entities.
      */
     List<T> findAll();
 
     /**
      * Find entities, excluding properties. Provide an instance of the queried class with some properties initialized,
      * and the query returns all persistent instances with matching property values.
-     *
+     * <p/>
      * E.g.
      * Router example = new Router();
      * return routerDAO.findByExample( example, "nodes" , "upTime");
-     * 
      *
      * @param exampleInstance an example entity instance
      * @param excludeProperty exceluding these properties, and thereby not joining in those
-     * @return  list with entities matching the example provided
+     * @return list with entities matching the example provided
      */
     List<T> findByExample(T exampleInstance, String... excludeProperty);
 
     /**
      * Save and persiste the entity.
+     *
      * @param entity enitty to persist
      * @return the persisted entity (with id set)
      */
@@ -96,11 +95,15 @@ public interface GenericDAO<T, ID extends Serializable>
 
     /**
      * Mark for deletion on next session flush.
+     *
      * @param entity the enitty to delete
      */
     void delete(T entity);
 
-
-    void delete( ID id );
-
+    /**
+     * Mark for deletion on next session flush.
+     *
+     * @param id the id of the enitty to delete
+     */
+    void delete(ID id);
 }

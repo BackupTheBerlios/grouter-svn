@@ -82,7 +82,7 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements No
         
         for (Node node : nodes)
         {
-            node.setNumberOfMessagesHandled(getNumberOfMessages(node.getId()));
+            node.setNumberOfMessagesHandled(getNumberOfMessages( node.getId()));
             Hibernate.initialize( node.getInBound() );
             Hibernate.initialize( node.getOutBound() );
         }

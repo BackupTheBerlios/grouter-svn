@@ -19,58 +19,49 @@
 
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.daolayer.RouterDAO;
+import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Settings;
+import org.grouter.domain.daolayer.NodeDAO;
+import org.grouter.domain.daolayer.SettingsDAO;
 import org.grouter.domain.daolayer.spring.GenericHibernateDAO;
-import org.grouter.domain.entities.Router;
 import org.hibernate.Session;
 import org.hibernate.Query;
+import org.hibernate.Hibernate;
 import org.hibernate.Criteria;
+import org.hibernate.type.Type;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Projection;
 
 import java.util.List;
 
-/**
- * @author Georges Polyzois
- */
-public class RouterDAOImpl extends GenericHibernateDAO<Router, String> implements RouterDAO
+
+public class SettingsDAOImpl extends GenericHibernateDAO<Settings, String> implements SettingsDAO
 {
-
-
-    protected RouterDAOImpl()
+    /**
+     * For reflection purposes, i.e. Spring needs this.
+     */
+    public SettingsDAOImpl()
     {
-        super(Router.class);
+        super(Settings.class);
     }
 
-    protected RouterDAOImpl(Class<Router> persistentClass)
+    public SettingsDAOImpl(Session session)
     {
-        super(persistentClass);
+        super(Settings.class, session);
     }
 
-    public RouterDAOImpl(Class<Router> persistentClass, Session session)
+
+    public void delete(String id)
     {
-        super(persistentClass, session);
-    }
-
-    public List<Router> findAllDistinct()
-    {
-
-        String hsql = "from Router";
-        Session session = getSession();
-        Query qr = session.createQuery(hsql);
-        return qr.list();
-    }
-
-    /*   public List<Router> findByProjection()
-    {
-        Criteria qriteria = getSession().createCriteria(getEntityClass())
-                .setProjection(Projections.projectionList()
-                        .add(Projections.id())
-                        .add(Projections.property("name")));
-        return qriteria.list();
-
+        logger.info( "Not deleting any settings" );
 
     }
 
-    */
+
+    public void delete(Settings entity)
+    {
+        logger.info( "Not deleting any settings" );
+
+    }
+
+
 }

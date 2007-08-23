@@ -56,23 +56,6 @@ public class RoleDAOImpl extends GenericHibernateDAO<Role, Long> implements Role
         session = s;
     }
 
-    @Override
-    public Role save( Role role )
-    {
-        throw new UnsupportedOperationException("Can not save a role - immutable type.");
-    }
-
-    @Override
-    public void delete( Role role )
-    {
-        throw new UnsupportedOperationException("Can not delete a role - immutable type.");
-    }
-
-
-    @Override
-    public void delete( Long role )
-    {
-        throw new UnsupportedOperationException("Can not delete a role - immutable type.");   
-    }
+    
 
 }

@@ -39,9 +39,6 @@ import java.util.List;
  */
 public class MessageDAOImpl extends GenericHibernateDAO<Message, String> implements MessageDAO
 {
-    /**
-     * For reflection purposes, i.e. Spring needs this.
-     */
     public MessageDAOImpl()
     {
         super(Message.class);
@@ -72,65 +69,4 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
         return criteria.addOrder(Order.asc("id")).list();
 
     }
-
-    /*
-    public List<Message> findByParams(Long messageId, String freetext, QueryColumn freeTextColumnName)
-    {
-        boolean freeTextColumnSet = (freeTextColumnName != null);
-        boolean freeTextSet = (freetext != null && !freetext.equalsIgnoreCase(""));
-
-        Criteria criteria = getSession().createCriteria(Message.class);
-
-
-        if (messageId != null)
-        {
-            criteria.add(Expression.eq("id", messageId)).setFetchMode("dealerType", FetchMode.JOIN);
-        }
-
-        if (!freeTextSet)
-        {
-            return criteria.addOrder(Order.asc("id")).list();
-        }
-
-        // no freeTextColumnName and freetext
-        if (!freeTextColumnSet && freeTextSet)
-        {
-            Long id = LongValidator.getInstance().validate(freetext);
-            if (id != null)
-            {
-                criteria.add(Restrictions.like("id", id)).setFetchMode("id", FetchMode.JOIN);
-                return criteria.addOrder(Order.asc("id")).list();
-            } else
-            {
-
-                criteria.createCriteria("address").add(Restrictions.like("companyName", freetext, MatchMode.START)).setFetchMode("companyName", FetchMode.JOIN);
-                return criteria.addOrder(Order.asc("id")).list();
-            }
-        }
-
-        // freeTextColumnName and freetext set
-        if (freeTextSet && freeTextColumnSet)
-        {
-            if (freeTextColumnName == QueryColumn.ZIP)
-            {
-                criteria.createCriteria("address").add(Restrictions.like("zip", freetext, MatchMode.START).ignoreCase()).setFetchMode("zip", FetchMode.JOIN) ;
-                return criteria.addOrder(Order.asc("id")).list();
-            }
-            if (freeTextColumnName == QueryColumn.CONTACTPERSON)
-            {
-                criteria.add(Restrictions.like("contactPerson", freetext, MatchMode.START).ignoreCase()).setFetchMode("contactPerson", FetchMode.JOIN);
-                return criteria.addOrder(Order.asc("id")).list();
-            }
-             if (freeTextColumnName == QueryColumn.PHONE)
-            {
-                criteria.createCriteria("address").add(Restrictions.like("phone1", freetext, MatchMode.START )).setFetchMode("phone1", FetchMode.JOIN);
-                return criteria.addOrder(Order.asc("id")).list();
-            }
-        }
-        // column but no text -> do nothing
-
-
-        return criteria.addOrder(Order.asc("id")).list();
-    }
-    */
 }
