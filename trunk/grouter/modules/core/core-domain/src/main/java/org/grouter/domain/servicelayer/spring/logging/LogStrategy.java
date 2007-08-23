@@ -20,11 +20,40 @@
 package org.grouter.domain.servicelayer.spring.logging;
 
 import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.SettingsContext;
+
+import javax.naming.Context;
+import java.util.Map;
 
 /**
  * @author Georges Polyzois
  */
 public interface LogStrategy
 {
+    /**
+     * Log a message handled.
+     * @param message
+     */
     void log( Message message );
+
+    /**
+     * Log a message handled.
+     * @param message
+     * @param settingsContext contains initial context parameters
+     */
+    void log( Message message, Map<String,String> settingsContext);
+
+    /**
+     * Used by writers / readers to update Node's status information.
+     * @param node
+     */
+    void log( Node node );
+
+
+    /**
+     * Used by writers / readers to update Node's status information.
+     * @param node
+     */
+    void log( Node node, Map<String,String> settingsContext  );
 }

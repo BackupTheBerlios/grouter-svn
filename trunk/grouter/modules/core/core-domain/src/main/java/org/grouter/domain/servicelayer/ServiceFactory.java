@@ -30,7 +30,8 @@ import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 public class ServiceFactory implements ApplicationContextAware
 {
     public final static String JDBCLOGSTRATEGY_BEAN = "jDBCLogStrategy";
-    
+    public final static String NODE_BEAN = "jDBCLogStrategy";
+
     protected static ApplicationContext applicationContext;
 
     public void setApplicationContext( ApplicationContext applicationContext )

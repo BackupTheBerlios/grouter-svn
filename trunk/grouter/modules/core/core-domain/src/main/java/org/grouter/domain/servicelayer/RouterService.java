@@ -19,10 +19,7 @@
 
 package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.Router;
-import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -105,8 +102,6 @@ public interface RouterService
      * Altering a node does not persiste between restarts of a Router, since the master config file
      * is read on every restart of the router.
      *
-     * TODO should we overwrite a config file for a router (backing up the previous one)?!?
-     *
      * @param node
      */
     void saveNode(Node node);
@@ -132,7 +127,9 @@ public interface RouterService
     Map<Long,EndPointType> findAllEndPointTypes();
 
 
-
     Node findById( String nodeId);
+
+
+    //Settings findSettings(  );
 
 }
