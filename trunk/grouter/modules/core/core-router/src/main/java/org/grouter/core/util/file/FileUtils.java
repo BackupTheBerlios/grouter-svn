@@ -192,11 +192,7 @@ public class FileUtils
         }
 
         File file = new File(path);
-        if ( file.isFile() )
-        {
-            return true;
-        }
-        return false;
+        return file.isFile();
     }
 
     /**
@@ -213,11 +209,7 @@ public class FileUtils
         }
 
         File file = new File(path);
-        if ( file.isDirectory() )
-        {
-            return true;
-        }
-        return false;
+        return file.isDirectory();
     }
 
     /**
@@ -286,8 +278,8 @@ public class FileUtils
     /**
      * Copy one file to another file
      *
-     * @param source_name
-     * @param dest_name
+     * @param source_name the source file path
+     * @param dest_name the destination file path
      * @throws java.io.IOException
      * @throws FileCopyException if failure to copu file
      */
@@ -359,7 +351,7 @@ public class FileUtils
                 }
                 catch (IOException e)
                 {
-                    e.printStackTrace();
+                    //ignore
                 }
             }
             if (destination != null)
@@ -370,8 +362,7 @@ public class FileUtils
                 }
                 catch (IOException e)
                 {
-                    e.printStackTrace();
-                    ;
+                    //ignorw
                 }
             }
         }

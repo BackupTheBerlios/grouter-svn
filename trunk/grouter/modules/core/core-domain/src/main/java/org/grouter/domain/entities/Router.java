@@ -59,6 +59,9 @@ public class Router extends BaseEntity
     //@JoinColumn(displayName = "router_fk", nullable = true)
     private Set<Node> nodes = new HashSet();
 
+    @ManyToOne
+    private Settings settings;
+
     @Column(name = "startedon")
     private Timestamp startedOn;
 
@@ -73,6 +76,10 @@ public class Router extends BaseEntity
 
     @Column(name = "homepath")
     private String homePath;
+
+
+
+
 
     public Router(String id, String displayName, String homePath)
     {
@@ -112,7 +119,6 @@ public class Router extends BaseEntity
         this.id = id;
         this.displayName = displayName;
     }
-
 
     public String getId()
     {
@@ -185,6 +191,16 @@ public class Router extends BaseEntity
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public Settings getSettings()
+    {
+        return settings;
+    }
+
+    public void setSettings(final Settings settings)
+    {
+        this.settings = settings;
     }
 
     public String toString()

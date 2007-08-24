@@ -21,12 +21,11 @@ package org.grouter.core.command;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.Validate;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.NodeStatus;
 import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 import org.grouter.domain.servicelayer.ServiceFactory;
-import org.grouter.common.guid.GuidGenerator;
 
 import java.io.File;
 
@@ -39,11 +38,14 @@ import java.io.File;
 public class FileWriteCommand extends AbstractCommand
 {
     private static Logger logger = Logger.getLogger(FileWriteCommand.class);
+    LogStrategy logStrategy;
     ServiceFactory serviceFactory;
+
 
 
     public FileWriteCommand()
     {
+
     }
 
 
@@ -80,43 +82,43 @@ public class FileWriteCommand extends AbstractCommand
             logger.debug("Wrote a new file :" + commandMessage.getMessage());
             try
             {
-                // copy to you uri
+                // copy to uri - if somehow the folder was deleted it will be recreated
+                // validation is done at bootstrap - folder might be deleted during the lifetime of
+                // the router - but we will then try creating that folder and copy the file
+                // there anyway. If an exception is raised we log that.
                 FileUtils.copyFile(commandMessage.getInternalInFile(), new File(node.getOutBound().getUri() + File.separator + commandMessage.getInternalInFile().getName()));
-                File internalOutFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_" + GuidGenerator.getInstance().getGUID());
-                // copy to internal out uri
-                // FileUtils.copyFile(commandMessage.getInternalInFile(), internalOutFile);
+                //File internalOutFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_" + GuidGenerator.getInstance().getGUID());
 
-                // delete fron internal file - a backup was save if configured to do so...
+                // delete fron internal file - a backup was saved if configured to do so...
                 commandMessage.getInternalInFile().delete();
             }
             catch (Exception e)
             {
+                logErroMessage("Could not write to " + node.getOutBound().getUri() + " Error:" + e.getMessage());
                 logger.error(e, e);
             }
         }
     }
 
 
-    public void log()
+    public void logInfoMessage()
     {
-
-        logger.info("Sending message to JMS consumer.");
-        // Todo refactor to use an special global endpoint for sending this message
-        //JMSDestinationSenderThread.getQueue().offer(commandMessages);
-
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
         for (CommandMessage commandMessage : commandMessages)
         {
             Message message = new Message();
             message.setContent(commandMessage.getMessage());
-//  produces stale exceptions            message.setId(commandMessage.getGuid());
-
             message.setNode(node);
-
-            LogStrategy jdbcLogStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
-            jdbcLogStrategy.log(message);
-
+            logStrategy.log(message);
         }
+    }
 
+    void logErroMessage(String errorMessage)
+    {
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        node.setNodeStatus(NodeStatus.ERROR);
+        node.setStatusMessage( errorMessage );
+        logStrategy.log(node);
     }
 
 

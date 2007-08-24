@@ -8,7 +8,10 @@
     </id>
     <property name="modifiedOn" not-null="false" type="timestamp" column="modifiedon"/>
     <property name="createdOn" not-null="false" type="timestamp" column="createdon"/>
-    <property name="name" not-null="false" type="java.lang.String" column="name"/>
+    <property name="displayName" not-null="false" type="java.lang.String" column="displayname"/>
+    <property name="backupUri" not-null="false" type="java.lang.String" column="backupuri"/>
+    <property name="description" not-null="false" type="java.lang.String" column="description"/>
+    <property name="statusMessage" not-null="false" type="java.lang.String" column="statusMessage"/>
     <property name="senderStatic" not-null="false"  column="senderstatic"/>
     <property name="receiverStatic" not-null="false"  column="receiverstatic"/>
 
@@ -19,6 +22,16 @@
             column="router_fk"
             cascade="save-update"
             update="false"
+            fetch="join">
+    </many-to-one>
+
+    <many-to-one
+            name="nodeStatus"
+            not-null="false"
+            class="org.grouter.domain.entities.NodeStatus"
+            column="nodestatus_fk"
+            cascade="save-update"
+            update="true"
             fetch="join">
     </many-to-one>
 

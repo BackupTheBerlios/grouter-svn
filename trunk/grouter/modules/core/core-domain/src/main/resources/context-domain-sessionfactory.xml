@@ -27,6 +27,9 @@
         <value>classpath:/org/grouter/domain/entities/User.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/UserRole.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/Role.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/NodeStatus.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Settings.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/SettingsContext.hbm.xml</value>
       </list>
     </property>
     <property name="hibernateProperties">

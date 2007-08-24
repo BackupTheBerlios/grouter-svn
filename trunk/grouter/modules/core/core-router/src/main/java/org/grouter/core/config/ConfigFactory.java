@@ -77,6 +77,7 @@ public class ConfigFactory
 
         router.setHomePath(uri);
 
+        router.setSettings( getSettingsFromConfig( grouterconfig, router )  );
 
         router.setNodes(getNodes(grouterconfig, router));
 
@@ -84,8 +85,22 @@ public class ConfigFactory
         return router;
     }
 
+    private static Settings getSettingsFromConfig(final GrouterDocument.Grouter grouterconfig,
+                                                  final Router router
+    )
+    {
+        Map<String,String>  settingsContext = new HashMap<String,String>();
+        settingsContext.put( SettingsContext.KEY_SETTINGS_JNDI_JAVA_NAMING_FACTORY_INITIAL, grouterconfig.getSettings().getJndi().getNamingFactoryInitial() );
+        settingsContext.put( SettingsContext.KEY_SETTINGS_JNDI_JAVA_NAMING_FACTORY_URL, grouterconfig.getSettings().getJndi().getNamingFactoryUrlPkgs() );
+        settingsContext.put( SettingsContext.KEY_SETTINGS_JNDI_JAVA_NAMING_PROVIDER_URL, grouterconfig.getSettings().getJndi().getNamingProviderUrl() );
+        settingsContext.put( SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY, grouterconfig.getSettings().getJndi().getNamingQueueconnectionfactoy() );
 
-    private static Set<Node> getNodes(GrouterDocument.Grouter grouterconfig, Router router) throws IllegalArgumentException
+        settingsContext.put( SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE, grouterconfig.getSettings().getLogging().getJmsLoggingQueue() );
+        return new Settings( router.getId(), settingsContext);
+    }
+
+
+    private static Set<Node> getNodes(final GrouterDocument.Grouter grouterconfig, final Router router) throws IllegalArgumentException
     {
         Set<Node> result = new HashSet<Node>();
 
@@ -144,7 +159,7 @@ public class ConfigFactory
      * @return an domain {@link EndPoint}
      * @throws IllegalArgumentException if non valid config parameters are present
      */
-    private static EndPoint getEndPoint(org.grouter.config.EndPoint endPoint) throws IllegalArgumentException
+    private static EndPoint getEndPoint(final org.grouter.config.EndPoint endPoint) throws IllegalArgumentException
     {
         EndPoint result = new EndPoint();
         boolean supportedEndpointtypeFound = false;

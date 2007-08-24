@@ -44,7 +44,12 @@ public class NullCommand extends AbstractCommand
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void log()
+    public void logInfoMessage()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    void logErroMessage(String errorMessage)
     {
         //To change body of implemented methods use File | Settings | File Templates.
     }

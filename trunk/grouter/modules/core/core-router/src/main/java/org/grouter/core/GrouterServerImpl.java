@@ -22,13 +22,14 @@ package org.grouter.core;
 import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
 import org.apache.commons.lang.Validate;
-import org.grouter.common.config.ConfigHandler;
+import org.grouter.common.config.XmlConfigHandler;
 import org.grouter.core.util.SchedulerService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.core.config.ConfigFactory;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.RouterCache;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -54,7 +55,7 @@ public class GrouterServerImpl implements Runnable, GrouterServer
     ApplicationContext context;
 
     // handler for configuration file
-    private ConfigHandler configHandler;
+    private XmlConfigHandler xmlConfigHandler;
 
     private Router router;
 
@@ -104,10 +105,13 @@ public class GrouterServerImpl implements Runnable, GrouterServer
         try
         {
             logger.info("Using config path : " + configPath);
-            configHandler = new ConfigHandler(configPath, null);
-            router = ConfigFactory.createRouter(configHandler.getGrouterConfigDocument().getGrouter());
+            xmlConfigHandler = new XmlConfigHandler(configPath, null);
+            router = ConfigFactory.createRouter(xmlConfigHandler.getGrouterConfigDocument().getGrouter());
 
             initRouter(router);
+
+            RouterCache.init( router );
+
         }
         catch (Exception ex)
         {
@@ -178,6 +182,10 @@ public class GrouterServerImpl implements Runnable, GrouterServer
     public void start() throws Exception
     {
         schedulerService.startAllNodes();
+
+        // update the status of the nodes
+        routerService.saveRouter( router );
+
         Thread thr = new Thread(this);
         logger.info("Adding shutdown hook");
         //       Runtime.getRuntime().addShutdownHook( thr );
@@ -209,7 +217,7 @@ public class GrouterServerImpl implements Runnable, GrouterServer
         catch (MissingResourceException e)
         {
             System.out.println("Missing resource : log4j.properties");
-            System.out.println("Grouter not started - see log file");
+            System.out.println("Grouter not started - see logInfoMessage file");
             System.exit(0);
         }
     }

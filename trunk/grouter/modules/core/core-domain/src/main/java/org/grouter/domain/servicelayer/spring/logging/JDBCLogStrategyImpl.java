@@ -40,28 +40,16 @@ public class JDBCLogStrategyImpl implements LogStrategy
         this.routerService = routerService;
     }
 
-    @Override
     public void log( Message message )
     {
         routerService.saveMessage( message );
 
     }
 
-    @Override
-    public void log(Message message, Map<String,String> settingsContext)
-    {
-        log( message,null );
-    }
 
-    @Override
     public void log(Node node)
     {
         routerService.saveNode( node );
     }
 
-    @Override
-    public void log(Node node, Map<String,String> settingsContext )
-    {
-        log(node,null);
-    }
 }

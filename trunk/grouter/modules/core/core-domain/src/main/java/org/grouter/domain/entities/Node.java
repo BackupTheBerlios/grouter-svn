@@ -40,7 +40,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "node")
-public class Node extends BaseEntity
+public class Node extends BaseEntity<String>
 {
     @Transient
     private static Logger logger = Logger.getLogger(Node.class);
@@ -56,9 +56,16 @@ public class Node extends BaseEntity
     @Column(name = "displayName", nullable = false)
     private String displayName;
 
+    @Column(name = "status_id", nullable = false)
+    private NodeStatus nodeStatus;
+
+    @Column(name = "status_message", nullable = false)
+    private String statusMessage;
+
+
+
     // A nodes sender - if one is provided by the message itself that sender is used to override this
     @Column(name = "senderstatic")
-
     private String senderStatic;
     // A nodes receiver - if one is provided by the message itself that receiver is used to override this
     @Column(name = "receiverstatic")
@@ -126,7 +133,6 @@ public class Node extends BaseEntity
         this.displayName = dislayName;
     }
 
-
     public String getId()
     {
         return id;
@@ -136,9 +142,6 @@ public class Node extends BaseEntity
     {
         this.id = id;
     }
-
-
-
 
     public Date getModifiedOn()
     {
@@ -280,6 +283,26 @@ public class Node extends BaseEntity
         this.description = description;
     }
 
+    public NodeStatus getNodeStatus()
+    {
+        return nodeStatus;
+    }
+
+    public void setNodeStatus(final NodeStatus nodeStatus)
+    {
+        this.nodeStatus = nodeStatus;
+    }
+
+    public String getStatusMessage()
+    {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(final String statusMessage)
+    {
+        this.statusMessage = statusMessage;
+    }
+
     public String toString()
     {
         String toString;
@@ -288,7 +311,11 @@ public class Node extends BaseEntity
         stringBuilder.append("name=" + id + ",");
         stringBuilder.append("senderStatic=" + senderStatic + ",");
         stringBuilder.append("receiverStatic=" + receiverStatic);
+        stringBuilder.append("nodeStatus=" + nodeStatus);
         toString = stringBuilder.toString();
         return toString;
     }
+
+
+
 }

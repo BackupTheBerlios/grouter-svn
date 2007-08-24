@@ -29,6 +29,7 @@ import org.grouter.core.readers.FtpReaderJob;
 import org.grouter.core.readers.JmsReaderJob;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.NodeStatus;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -68,6 +69,11 @@ public class SchedulerService
         Validate.noNullElements(nodes, "Can not handle null nodes!!");
 
         this.nodes = nodes;
+        for (Node node : nodes)
+        {
+            node.setNodeStatus( NodeStatus.NOTSTARTED );
+        }
+
         try
         {
             scheduler = StdSchedulerFactory.getDefaultScheduler();
@@ -76,6 +82,8 @@ public class SchedulerService
             logger.error("Could not create scheduler frm SchedulerFactory", e);
             throw new RuntimeException("Could not create scheduler from SchedulerFactory", e);
         }
+
+
 
     }
 
@@ -128,8 +136,7 @@ public class SchedulerService
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, false), getTriggerGroup(node), node.getOutBound().getScheduleCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
-
-
+            node.setNodeStatus(NodeStatus.SCHEDULED_TO_START);
         }
 
         // Start the Scheduler

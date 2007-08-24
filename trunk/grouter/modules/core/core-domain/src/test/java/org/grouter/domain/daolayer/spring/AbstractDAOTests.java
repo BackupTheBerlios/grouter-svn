@@ -11,24 +11,29 @@ import java.util.List;
 
 /**
  * Test the DAO using an external DB which is populated with data before the actual test is run
- * {@link #getTestDataLocation()} and then restored to a state as per before the tests were ran. All plumibng for rolling back the
- * state is taken care of by Springs  {@link org.springframework.test.AbstractTransactionalDataSourceSpringContextTests}
- * we we are subclassing from in AbstractDAOTests. AbstractDAOTests referes to the sql to be run before
- * any test are created and run.
- * <p/>
- * The only problem with these types of test are that as we go along and add more and more test the tests
- * start taking considerably long time to execute.
+ * {@link #getTestDataLocation()} and then restored to a state as per before the tests were ran.
+ *  All plumbing for rolling back the state is taken care of by Springs
+ * {@link org.springframework.test.AbstractTransactionalDataSourceSpringContextTests}
+ *
+ * AbstractDAOTests referes to the sql to be run before any test are created and run.
+ *
+ * We have some abstract methods in this abstract class to indicate to subclasses what they
+ * need to test.
+ *
+ * The only problem with these types of test are that as we go along and add more and more test
+ * the tests start taking considerably long time to execute.
  *
  * @author Georges Polyzois
  */
 public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSpringContextTests
 {
     // inserted test data and ids of some of the data
-    String MESSAGE_ID = "msgid_1";
-    String NODE_ID = "nid_1";
-    String NODE_ID_FTP = "nid_2";
-    String ROUTER_ID = "rid_1";
-    String ENDPOINT_ID = "1";
+    final static String MESSAGE_ID = "msgid_1";
+    final static String NODE_ID = "nid_1";
+    final static String NODE_ID_FTP = "nid_2";
+    final static String ROUTER_ID = "rid_1";
+    final static String ENDPOINT_ID = "1";
+    final static String SETTINGS_ID = "jndi";
     Long USER_ID = new Long(10002);
 
     SessionFactory sessionFactory;

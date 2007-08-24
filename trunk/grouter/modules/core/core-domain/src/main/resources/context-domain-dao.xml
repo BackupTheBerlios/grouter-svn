@@ -22,4 +22,6 @@
 
     <bean id="endPointDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.EndPointDAOImpl"/>
 
+    <bean id="settingsDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.SettingsDAOImpl"/>
+
 </beans>

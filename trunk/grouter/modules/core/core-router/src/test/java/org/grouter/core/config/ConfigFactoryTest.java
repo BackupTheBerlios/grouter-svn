@@ -1,7 +1,7 @@
 package org.grouter.core.config;
 
 import junit.framework.TestCase;
-import org.grouter.common.config.ConfigHandler;
+import org.grouter.common.config.XmlConfigHandler;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.entities.Node;
 import org.springframework.core.io.ClassPathResource;
@@ -30,9 +30,9 @@ public class ConfigFactoryTest extends TestCase
     {
         String configFile = "../../../../../resources/routerconfig/grouterconfig_file_file.xml";
         ClassPathResource classPathResource = new ClassPathResource( configFile );
-        ConfigHandler configHandler = new ConfigHandler( classPathResource.getInputStream() , null);
+        XmlConfigHandler xmlConfigHandler = new XmlConfigHandler( classPathResource.getInputStream() , null);
 
-        Router router = ConfigFactory.createRouter( configHandler.getGrouterConfigDocument().getGrouter() );
+        Router router = ConfigFactory.createRouter( xmlConfigHandler.getGrouterConfigDocument().getGrouter() );
 
         assertNotNull( router );
 

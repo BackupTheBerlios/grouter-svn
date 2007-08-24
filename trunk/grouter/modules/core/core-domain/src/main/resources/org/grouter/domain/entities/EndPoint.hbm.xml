@@ -14,7 +14,7 @@
     
     <many-to-one
             name="endPointType"
-            not-null="false"
+            not-null="true"
             class="org.grouter.domain.entities.EndPointType"
             column="endpoint_type_fk"
             cascade="save-update"

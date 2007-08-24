@@ -83,7 +83,7 @@ public abstract class AbstractFileReaderTests extends AbstractRouterTests
     {
         fileToFileNode = new Node("id_ftpToFileNode", "ftpToFileNode");
         fileToFileNode.setBackupUri( router.getHomePath() + "/nodes/" + fileToFileNode.getId() + "/internal/backup" );
-//        fileToFileNode.setInternalQueueUri( BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getName() + "/internalq" );
+//        fileToFileNode.setInternalQueueUri( BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getDisplayName() + "/internalq" );
 
         EndPoint inbound = new EndPoint();
         inbound.setUri(router.getHomePath() + "/nodes/" + fileToFileNode.getId() + "/in");

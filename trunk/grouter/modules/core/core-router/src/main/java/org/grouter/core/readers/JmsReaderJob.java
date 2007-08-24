@@ -25,6 +25,8 @@ import org.apache.commons.lang.Validate;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.NodeStatus;
+import org.grouter.domain.servicelayer.ServiceFactory;
 import org.grouter.common.jms.*;
 import org.grouter.common.guid.GuidGenerator;
 import org.quartz.JobExecutionContext;
@@ -61,6 +63,7 @@ public class JmsReaderJob extends AbstractReader
     private static final String JMS_CONTEXTFACTORY = "jndi.contextFactory";
     private static final String JMS_URLPKGPREFIXES = "jndi.urlPkgPrefixes";
     private static final int WAIT_TIME = 1000;
+    ServiceFactory serviceFactory;
 
 
     /**
@@ -68,6 +71,7 @@ public class JmsReaderJob extends AbstractReader
      */
     public JmsReaderJob()
     {
+       // logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
     }
 
 
@@ -241,6 +245,23 @@ public class JmsReaderJob extends AbstractReader
     public void interrupt() throws UnableToInterruptJobException
     {
         logger.info(node.getId() + " got request to stop");
+    }
+
+
+    void setNodeStatusToRunning()
+    {
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        node.setNodeStatus( NodeStatus.RUNNING );
+        node.setStatusMessage("");
+        logStrategy.log(node);
+    }
+
+    void setNodeStatusToNotRunning( String errorMessage )
+    {
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        node.setNodeStatus( NodeStatus.ERROR );
+        node.setStatusMessage( errorMessage );
+        logStrategy.log(node);
     }
 
 

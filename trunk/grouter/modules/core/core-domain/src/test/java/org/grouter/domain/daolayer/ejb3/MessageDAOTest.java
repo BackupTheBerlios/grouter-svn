@@ -35,7 +35,7 @@ public class MessageDAOTest extends AbstractDAOTests
         messageDAO.save(message);
         log.debug("Saved instance with id : " + message.getId());
 
-        Message result = messageDAO.findById(message.getId());
+        Message result = messageDAO.findById((String)message.getId());
         log.debug("Sender : " + result.getSender().getName());
 
         assertEquals("Persisted should be equals to found instance", result.getId(), message.getId());

@@ -30,7 +30,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user_role")
-public class UserRole extends BaseEntity implements Comparable
+public class UserRole extends BaseEntity   //implements Comparable
 {
     private Long id;
     private User user;
@@ -60,6 +60,7 @@ public class UserRole extends BaseEntity implements Comparable
     {
         this.id = id;
     }
+
 
     public User getUser()
     {
@@ -92,7 +93,7 @@ public class UserRole extends BaseEntity implements Comparable
      * @throws NullPointerException if anotherObject is null.
      * @throws ClassCastException   if anotherObject is not an Role object.
      */
-    public int compareTo(Object anotherObject) throws ClassCastException
+/*    public int compareTo(Object anotherObject) throws ClassCastException
     {
         if (this == anotherObject)
         {
@@ -102,5 +103,5 @@ public class UserRole extends BaseEntity implements Comparable
         UserRole compareTo = (UserRole) anotherObject;
         return getId().compareTo(compareTo.getId());
     }
-
+  */
 }

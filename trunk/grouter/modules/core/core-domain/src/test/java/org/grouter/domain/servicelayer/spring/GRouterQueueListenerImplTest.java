@@ -40,7 +40,7 @@ public class GRouterQueueListenerImplTest extends AbstractServiceTests
 
         Message message2 =  messageDAO.findById( MESSAGE_ID );
 
-        logger.debug("####  " + message2.getContent() );
+       // logger.debug("####  " + (String)message2.getContent() );
 
     }
 

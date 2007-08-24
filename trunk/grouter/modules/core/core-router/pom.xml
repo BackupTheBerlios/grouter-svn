@@ -11,7 +11,7 @@
     <version>0.1.1-SNAPSHOT</version>
   </parent>
   <dependencies>
-    <dependency>
+    <!--dependency>
       <groupId>org.grouter.platform.common</groupId>
       <artifactId>common-configbeans</artifactId>
       <version>${project.version}</version>
@@ -20,7 +20,7 @@
       <groupId>org.grouter.platform.common</groupId>
       <artifactId>common-util</artifactId>
       <version>${project.version}</version>
-    </dependency>
+    </dependency -->
     <dependency>
       <groupId>org.grouter.platform.core</groupId>
       <artifactId>core-domain</artifactId>

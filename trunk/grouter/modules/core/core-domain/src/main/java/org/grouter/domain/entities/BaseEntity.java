@@ -21,7 +21,9 @@ package org.grouter.domain.entities;
 
 import org.hibernate.LazyInitializationException;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.log4j.Logger;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
@@ -29,8 +31,13 @@ import java.io.Serializable;
  *
  * @author Georges Polyzois
  */
-public class BaseEntity implements Serializable
+// public class BaseEntity<ID extends Serializable> implements Serializable   Could not get this to work
+public class BaseEntity<ID extends Serializable> implements Serializable
 {
+    @Transient
+    private static Logger logger = Logger.getLogger(BaseEntity.class);
+
+    // private ID id;
 
     /**
      * A convenience method for outputting all attributes in the instances' state.
@@ -43,4 +50,14 @@ public class BaseEntity implements Serializable
     {
         return ToStringBuilder.reflectionToString(this);
     }
+
+    /*public ID getId()
+    {
+        return id;
+    }
+
+    public void setId(final ID id)
+    {
+        this.id = id;
+    }*/
 }

@@ -26,7 +26,7 @@
   -->
 
 
-  <bean id="jDBCLogStrategy" class="org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy"/>
+  <bean id="logStrategy" class="org.grouter.domain.servicelayer.spring.logging.JMSLogStrategyImpl"/>
 
   <bean id="serviceFactory" class="org.grouter.domain.servicelayer.ServiceFactory"/>
 

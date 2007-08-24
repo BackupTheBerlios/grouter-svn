@@ -20,10 +20,11 @@
 package org.grouter.core.readers;
 
 import org.apache.log4j.Logger;
-import org.apache.commons.io.FileUtils;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.NodeStatus;
+import org.grouter.domain.servicelayer.ServiceFactory;
 import org.quartz.JobExecutionContext;
 import org.quartz.UnableToInterruptJobException;
 import org.apache.commons.lang.StringUtils;
@@ -60,12 +61,14 @@ public class FtpReaderJob extends AbstractReader
     public final static String FTP_PORT = "ftpPort";
     public final static String FILE_LIST = "fileList";
     private static final int FTP_DEFAULT_PORT = 21;
+    ServiceFactory serviceFactory;
 
     /**
      * Empty - needed by Quartz framework.
      */
     public FtpReaderJob()
     {
+        //logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
     }
 
 
@@ -83,10 +86,13 @@ public class FtpReaderJob extends AbstractReader
 
     }
 
+
+
     @Override
     protected List<CommandMessage> readFromSource()
     {
         logger.info("Reading files from :" + node.getInBound().getUri());
+
 
         // a list of full paths on ftp server we will download from
         Map endPointContext = node.getInBound().getEndPointContext();
@@ -128,6 +134,10 @@ public class FtpReaderJob extends AbstractReader
         }
         catch (Exception e)
         {
+            // TODO We need to reset state if we start working again
+            node.setNodeStatus(NodeStatus.ERROR);
+            node.setStatusMessage( "Failed reading files from :" + node.getInBound().getUri() + " Error:" + e.getMessage() );
+            logStrategy.log( node );
             logger.warn("Connection problem with FTP server.", e);
         }
         finally
@@ -294,4 +304,21 @@ public class FtpReaderJob extends AbstractReader
         logger.info(node.getId() + " got request to stop");
     }
 
+
+    void setNodeStatusToRunning()
+    {
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        node.setNodeStatus( NodeStatus.RUNNING );
+        node.setStatusMessage("");
+        logStrategy.log(node);
+    }
+
+
+    void setNodeStatusToNotRunning( String errorMessage )
+    {
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        node.setNodeStatus( NodeStatus.ERROR );
+        node.setStatusMessage( errorMessage );
+        logStrategy.log(node);
+    }
 }

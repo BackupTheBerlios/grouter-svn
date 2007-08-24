@@ -25,6 +25,9 @@ import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.core.exception.ValidationException;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.NodeStatus;
+import org.grouter.domain.servicelayer.ServiceFactory;
+import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 import org.quartz.Job;
 import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
@@ -52,6 +55,8 @@ public abstract class AbstractReader implements Job, InterruptableJob
     protected BlockingQueue<AbstractCommand> queue;
     protected static final String NODE = "node";
     protected static final String QUEUE = "queue";
+    LogStrategy logStrategy;
+
 
     public void setNode(Node node)
     {
@@ -75,6 +80,7 @@ public abstract class AbstractReader implements Job, InterruptableJob
      */
     final protected void execute()
     {
+        setNodeStatusToRunning();
         validate( node );
         List<CommandMessage> arrCommandMessages = readFromSource();
         if (arrCommandMessages != null && arrCommandMessages.size() > 0)
@@ -83,6 +89,13 @@ public abstract class AbstractReader implements Job, InterruptableJob
             pushToIntMemoryQueue();
         }
     }
+
+    /**
+     * Beeing set every time the node executes - needs to be done since the state might have
+     * been set previously upon an exception.
+     */
+    abstract void setNodeStatusToRunning();
+    abstract void setNodeStatusToNotRunning( String errorMessage );
 
     /**
      * Find out what type of commands this node reader should handle

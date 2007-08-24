@@ -36,7 +36,7 @@ public class EndPointType extends BaseEntity
 
     static
     {
-        values.put(FILE_WRITER.getId(), FILE_WRITER);
+        values.put(  FILE_WRITER.getId(), FILE_WRITER);
         values.put(FILE_READER.getId(), FILE_READER);
         values.put(FTP_READER.getId(), FTP_READER);
         values.put(FTP_WRITER.getId(), FTP_WRITER);
@@ -81,4 +81,5 @@ public class EndPointType extends BaseEntity
     {
         this.id = id;
     }
+
 }

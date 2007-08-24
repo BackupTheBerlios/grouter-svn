@@ -33,7 +33,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "router")
-public class Role extends BaseEntity implements Comparable
+public class Role extends BaseEntity
 {
     private Long id;
     private String name;
@@ -45,6 +45,7 @@ public class Role extends BaseEntity implements Comparable
 
     private final static Map<Long, Role> valueOfMap = new LinkedHashMap<Long, Role>(4);
 
+    /*
     static
     {
         valueOfMap.put(ADMIN.getId(), ADMIN);
@@ -53,6 +54,7 @@ public class Role extends BaseEntity implements Comparable
         valueOfMap.put(EDITOR.getId(), EDITOR);
     }
 
+*/
 
     public Role()
     {
@@ -63,7 +65,6 @@ public class Role extends BaseEntity implements Comparable
         this.id = id;
         this.name = name;
     }
-
 
     @Id
     @Column(name = "id")
@@ -79,6 +80,7 @@ public class Role extends BaseEntity implements Comparable
     {
         this.id = id;
     }
+
 
 
     public static Role valueOf(Long id)
@@ -128,6 +130,7 @@ public class Role extends BaseEntity implements Comparable
      * @throws NullPointerException if anotherRole is null.
      * @throws ClassCastException   if anotherRole is not an Role object.
      */
+    /*
     public int compareTo(Object anotherRole) throws ClassCastException
     {
         //optimizing
@@ -140,4 +143,5 @@ public class Role extends BaseEntity implements Comparable
         return getId().compareTo(compareToRole.getId());
     }
 
+*/
 }

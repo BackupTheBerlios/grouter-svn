@@ -11,13 +11,13 @@ import java.util.Map;
 
 /**
  * Use this class to manually test different configurations with the grouter and asserting against database.
- *
+ * <p/>
  * The main method can be used to startup a Grouter with all services running - this can be combined
  * with manual client test against this running instance ( {@link GRouterClientManual} ).
  *
  * @author Georges Polyzois
  */
-public class GrouterServerFileTestManual extends TestCase //extends AbstractGrouterTests
+public class GrouterServerTestManual extends TestCase //extends AbstractGrouterTests
 {
     private static final String DATA_SOURCE_BEAN_NAME = "dataSource";
 
@@ -26,18 +26,61 @@ public class GrouterServerFileTestManual extends TestCase //extends AbstractGrou
      *
      * @throws Exception if failure to startup
      */
-    public static void manualStartUpGrouterWithValidConfig() throws Exception
+    public static void useJmsConfig() throws Exception
+    {
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_jms.xml");
+        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
+        grouter.start();
+    }
+
+
+    /**
+     * use cleanup script - build.xml - to recreate db after running this...
+     *
+     * @throws Exception if failure to startup
+     */
+    public static void useFtpConfig() throws Exception
+    {
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_ftp.xml");
+        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
+        grouter.start();
+    }
+
+    /**
+     * use cleanup script - build.xml - to recreate db after running this...
+     *
+     * @throws Exception if failure to startup
+     */
+    public static void useFileConfig() throws Exception
     {
         ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_file.xml");
         GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
         grouter.start();
     }
 
+
+
+    /**
+     * use cleanup script - build.xml - to recreate db after running this...
+     *
+     * @throws Exception if failure to startup
+     */
+    public static void useFtpAndFileConfig() throws Exception
+    {
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_ftp_and_file.xml");
+        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
+        grouter.start();
+    }
+
+
+
+
+
     public static void main(String[] args)
     {
         try
         {
-            manualStartUpGrouterWithValidConfig();
+            useFileConfig();
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -50,11 +93,6 @@ public class GrouterServerFileTestManual extends TestCase //extends AbstractGrou
         ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_file.xml");
         GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
         grouter.start();
-    }
-
-    public void doSetup()
-    {
-
     }
 
 

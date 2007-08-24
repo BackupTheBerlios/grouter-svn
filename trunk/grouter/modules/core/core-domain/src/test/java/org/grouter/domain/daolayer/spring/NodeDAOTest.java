@@ -1,15 +1,14 @@
 package org.grouter.domain.daolayer.spring;
 
 import org.grouter.domain.daolayer.NodeDAO;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.EndPoint;
-import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 
 import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * DAO tests for mappings, cascade saves etc.
@@ -32,6 +31,7 @@ public class NodeDAOTest extends AbstractDAOTests
         Node node = nodeDAO.findById(NODE_ID_FTP);
         assertNotNull(node.toString());
         assertEquals(NODE_ID_FTP, node.getId());
+        assertEquals( NodeStatus.NOTSTARTED.getId() , node.getNodeStatus().getId() );
 
         Map map = node.getInBound().getEndPointContext();
         assertEquals( "localhost", map.get( "ftpHost" ) );
@@ -69,20 +69,23 @@ public class NodeDAOTest extends AbstractDAOTests
     {
         Node node = new Node();
         node.setId("andid");
-        node.setName("A node");
+        node.setDisplayName("A node");
+        node.setNodeStatus( NodeStatus.NOTSTARTED );
 
         nodeDAO.save(node);
         flushSession();
 
+        assertNotNull( node.getNodeStatus().getId() );
+
         String id = node.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
-        assertEquals("A node", map.get("name"));
+        assertEquals("A node", map.get("displayname"));
     }
 
     public void testStoreWithEndpoints()
     {
         Node node = new Node();
-        node.setName("A node");
+        node.setDisplayName("A node");
         node.setId("anid");
 
         EndPoint inboundEndpoint = new EndPoint();
@@ -90,6 +93,13 @@ public class NodeDAOTest extends AbstractDAOTests
         inboundEndpoint.setScheduleCron("* * * * * ");
         inboundEndpoint.setUri("file://temp/in");
         inboundEndpoint.setEndPointType(EndPointType.FILE_READER);
+
+        EndPointContext endPointContext = new EndPointContext( "key1" , "value1", inboundEndpoint );
+        EndPointContext endPointContext2 = new EndPointContext( "key2" , "value2", inboundEndpoint );
+        Map contextMap = new HashMap();
+        contextMap.put( endPointContext.getKeyname(), endPointContext.getValue() );
+        contextMap.put( endPointContext2.getKeyname(), endPointContext2.getValue() );
+        inboundEndpoint.setEndPointContext( contextMap );
 
         EndPoint outBoundPoint = new EndPoint();
         outBoundPoint.setId("id");
@@ -106,12 +116,14 @@ public class NodeDAOTest extends AbstractDAOTests
 
         String id = node.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
-        assertEquals("A node", map.get("name"));
+        assertEquals("A node", map.get("displayname"));
 
-        map = jdbcTemplate.queryForMap("SELECT * FROM endpoint WHERE id = ?", new Object[]{inboundEndpoint.getId()});
-        assertEquals("file://temp/in", map.get("uri"));
-        assertEquals(2L, map.get("endpoint_type_fk"));
+        map = jdbcTemplate.queryForMap("SELECT * FROM endpoint_context WHERE endpoint_fk = ? AND keyname = ?", new Object[]{inboundEndpoint.getId(), "key1"});
+        assertEquals("value1", map.get("value"));
 
+
+
+       // setComplete();
 
     }
 
@@ -122,6 +134,7 @@ public class NodeDAOTest extends AbstractDAOTests
 
         assertNotNull(node);
 
+        // end transaction to simulate a remote request where the session was closed
         endTransaction();
 
         try

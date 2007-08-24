@@ -4,7 +4,7 @@ create table endpoint
     uri varchar(1000),
     clazzname varchar(1000),
     cron varchar(1000),
-    endpoint_type_fk bigint(20),
+    endpoint_type_fk bigint(20) not null,
     filter_type_fk bigint(20),
     primary key (id),
     foreign key (endpoint_type_fk) references endpoint_type (id)

@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS address;
 DROP TABLE IF EXISTS router;
 DROP TABLE IF EXISTS node_type;
 DROP TABLE IF EXISTS node;
+DROP TABLE IF EXISTS nodestatus;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS receiver;
 DROP TABLE IF EXISTS receiver_message;
@@ -19,11 +20,16 @@ DROP TABLE IF EXISTS endpoint_type;
 DROP TABLE IF EXISTS endpoint_context;
 -- DROP TABLE IF EXISTS endpoint_filereader;
 DROP TABLE IF EXISTS filter_type;
+DROP TABLE IF EXISTS settings;
+DROP TABLE IF EXISTS settings_context;
 
 set foreign_key_checks = 1;
 
 
-
+select 'settings.sql';
+\. settings.sql
+select 'settings_context.sql';
+\. settings_context.sql
 select 'address.sql';
 \. address.sql
 select 'property.sql';
@@ -42,6 +48,8 @@ select 'endpoint_context.sql';
 \. endpoint_context.sql
 select 'router.sql';
 \. router.sql
+select 'nodestatus.sql';
+\. nodestatus.sql
 select 'node_type.sql';
 \. node_type.sql
 select 'node.sql';

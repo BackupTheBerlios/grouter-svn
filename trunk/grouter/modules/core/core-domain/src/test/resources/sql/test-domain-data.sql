@@ -1,4 +1,8 @@
-insert into router (startedon, uptime, name, id) values ('2006-10-13 15:51:53', 100000000, 'ROUTER_TEST', 'rid_1');
+
+insert into settings(id) values ( 1 );
+insert into settings_context(id,keyname, value,settings_fk) values ( 1,'key1','value1',1);
+
+insert into router (startedon, uptime, displayname, id, homepath , description ,  settings_fk) values ('2006-10-13 15:51:53', 100000000, 'ROUTER_TEST', 'rid_1', '/homeofrouter'  ,'a description', 1);
 
 insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '1', 'file://temp/in', 'clazzname.FileReader','* * * * * ', 1);
 insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '2', 'file://temp/out', 'clazzname.FilWriter','* * * * * ', 2);
@@ -9,8 +13,8 @@ insert into endpoint_context (id, keyname, value, endpoint_fk) values (1000, 'ft
 insert into endpoint_context (id, keyname, value, endpoint_fk) values (1001, 'ftpPort', '12345', 3);
 insert into endpoint_context (id, keyname, value, endpoint_fk) values (1002, 'fileList', 'file1,file2', 3);
 
-insert into node (id, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, name) values ('nid_1', 1, 2, '2006-10-13 15:51:53', 'rid_1', 'FILE-TO-FILE1');
-insert into node (id, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, name) values ('nid_2', 3, 4, '2006-10-14 15:51:53',  'rid_1', 'FTP-TO-FILE');
+insert into node (id, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, displayname, nodestatus_fk) values ('nid_1', 1, 2, '2006-10-13 15:51:53', 'rid_1', 'FILE-TO-FILE1',2);
+insert into node (id, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, displayname, nodestatus_fk) values ('nid_2', 3, 4, '2006-10-14 15:51:53',  'rid_1', 'FTP-TO-FILE', 1);
 
 insert into sender (name, id) values ('SENDERNAME1', 'senderid_1');
 

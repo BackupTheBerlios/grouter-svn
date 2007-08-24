@@ -130,7 +130,6 @@ public class EndPoint extends BaseEntity
         this.endPointType = endPointType;
     }
 
-
     public String getId()
     {
         return id;
@@ -140,7 +139,6 @@ public class EndPoint extends BaseEntity
     {
         this.id = id;
     }
-
 
     public Map getEndPointContext()
     {

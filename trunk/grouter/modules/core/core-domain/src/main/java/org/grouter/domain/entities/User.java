@@ -51,7 +51,7 @@ public class User extends BaseEntity implements Comparable
     private Set<UserRole> roles = new HashSet<UserRole>();
     private Boolean deleted;
 
-
+    
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,6 +65,7 @@ public class User extends BaseEntity implements Comparable
     {
         this.id = id;
     }
+
 
     @Column(name = "pwd")
     public String getPassword()

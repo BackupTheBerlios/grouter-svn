@@ -7,11 +7,23 @@
       <generator class="assigned"/>
     </id>
     <property name="startedOn" not-null="false" type="timestamp" column="startedon"/>
-    <property name="name" not-null="true" type="java.lang.String" column="name"/>
+    <property name="displayName" not-null="true" type="java.lang.String" column="displayname"/>
+    <property name="description" not-null="true" type="java.lang.String" column="description"/>
     <property name="upTime" not-null="false" type="java.lang.Long" column="uptime"/>
     <property name="rmiRegistryPort" not-null="false" column="rmiregistryport"/>
     <property name="rmiServicePort" not-null="false"  column="rmiserviceport"/>
     <property name="homePath" not-null="true" type="java.lang.String" column="homepath"/>
+
+
+    <many-to-one
+            name="settings"
+            not-null="true"
+            class="org.grouter.domain.entities.Settings"
+            column="settings_fk"
+            cascade="save-update"
+            update="false"
+            fetch="join">
+    </many-to-one>
 
     <!-- Lazy relationship to the Node collection -->
     <set name="nodes" cascade="save-update,delete-orphan" inverse="true" table="node"  >

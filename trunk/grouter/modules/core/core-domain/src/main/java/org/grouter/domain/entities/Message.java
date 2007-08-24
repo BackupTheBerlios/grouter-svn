@@ -62,7 +62,7 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "message")
-public class Message extends BaseEntity 
+public class Message<String> extends BaseEntity 
 {
     //private static final long serialVersionUID = -6097635701783502292L;
 
@@ -137,7 +137,6 @@ public class Message extends BaseEntity
     }
 
 
-
     public String getId()
     {
         return id;
@@ -147,6 +146,7 @@ public class Message extends BaseEntity
     {
         return content;
     }
+
 
     public void setContent(String content)
     {

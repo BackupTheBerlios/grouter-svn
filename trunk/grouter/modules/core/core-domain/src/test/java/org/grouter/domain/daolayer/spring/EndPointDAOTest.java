@@ -28,11 +28,13 @@ public class EndPointDAOTest extends AbstractDAOTests
         this.endPointDAO = endPointDAO;
     }
 
+    @Override
     public void testLazyCollections()
     {
         assertTrue(true);
     }
 
+    @Override
     public void testFindById()
     {
         EndPoint endPoint = (EndPoint) endPointDAO.findById( ENDPOINT_ID );
@@ -47,18 +49,14 @@ public class EndPointDAOTest extends AbstractDAOTests
 //        assertEquals( "12345", map.get( "ftpPort" ) );
     }
 
+    @Override
     public void testDelete()
     {
         assertTrue(true);
-
-
     }
 
 
-    /**
-     * Build a Node with Enpoints, save and flush. Verify that cascade mappings are correct
-     * by pure sql after a flushed session.
-     */
+    @Override
     public void testSave()
     {
         assertTrue(true);

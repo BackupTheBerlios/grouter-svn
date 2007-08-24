@@ -42,6 +42,7 @@ import java.util.Set;
  * @deprecated 
  * @author Georges Polyzois
  */
+@SuppressWarnings({"FieldCanBeLocal"})
 public class ThreadPoolService
 {
     private static Logger logger = Logger.getLogger(ThreadPoolService.class);

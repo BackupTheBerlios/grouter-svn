@@ -17,30 +17,31 @@
  * under the License.
  */
 
-package org.grouter.domain.servicelayer.spring.logging;
+package org.grouter.domain;
 
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.SettingsContext;
+import org.grouter.domain.entities.Router;
 
-import javax.naming.Context;
-import java.util.Map;
 
 /**
  * @author Georges Polyzois
  */
-public interface LogStrategy
+public class RouterCache
 {
-    /**
-     * Log a message handled.
-     * @param message
-     */
-    void log( Message message );
+    private static Router router;
 
-    /**
-     * Used by writers / readers to update Node's status information.
-     * @param node
-     */
-    void log( Node node );
+    public static Router getSettingsContextCache()
+    {
+        if ( router == null )
+        {
+            throw new IllegalStateException("Settings cache must be initialized");
+        }
+        return router;
+    }
+
+    public static void init( final Router router )
+    {
+        RouterCache.router = router;
+    }
 
 }

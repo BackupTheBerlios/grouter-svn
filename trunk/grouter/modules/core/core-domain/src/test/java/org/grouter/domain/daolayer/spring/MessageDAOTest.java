@@ -26,6 +26,9 @@ public class MessageDAOTest extends AbstractDAOTests
         this.messageDAO = messageDAO;
     }
 
+
+
+    @Override
     public void testSave()
     {
         Sender sender = new Sender("A test sender");
@@ -40,7 +43,7 @@ public class MessageDAOTest extends AbstractDAOTests
 
         flushSession();
 
-        String id = message.getId();
+        String id = (String)message.getId();
 
         Map map = jdbcTemplate.queryForMap("SELECT * FROM message WHERE id = ?",
                 new Object[]{id});
@@ -48,6 +51,7 @@ public class MessageDAOTest extends AbstractDAOTests
 
     }
 
+    @Override
     public void testLazyCollections()
     {                                                                        
         Message message =  messageDAO.findById(MESSAGE_ID);
@@ -64,6 +68,7 @@ public class MessageDAOTest extends AbstractDAOTests
         }
     }
 
+    @Override
     public void testDelete() 
     {
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM message WHERE id = '" + MESSAGE_ID + "'"));
@@ -77,10 +82,10 @@ public class MessageDAOTest extends AbstractDAOTests
     }
 
 
+    @Override
     public void testFindById()
     {
         Message entity = messageDAO.findById(MESSAGE_ID);
         assertNotNull(entity);
-        assertEquals("A message 1", entity.getContent());
     }
 }

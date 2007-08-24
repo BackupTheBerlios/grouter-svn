@@ -5,7 +5,10 @@ create table router
     uptime bigint,
     rmiregistryport int,
     rmiserviceport int,
-    name varchar(255),
-    homepath varchar(1024),
-    primary key (id)
+    displayname varchar(255) not null ,
+    description varchar(2000) not null,
+    homepath varchar(2048) not null,
+    settings_fk varchar(36) not null,
+    primary key (id),
+    foreign key (settings_fk) references settings (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

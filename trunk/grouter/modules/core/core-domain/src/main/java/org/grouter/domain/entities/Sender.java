@@ -110,6 +110,7 @@ inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnNam
         this.name = name;
     }
 
+
     public String getId()
     {
         return id;

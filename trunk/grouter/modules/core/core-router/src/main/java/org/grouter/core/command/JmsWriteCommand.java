@@ -23,7 +23,8 @@ import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategy;
+import org.grouter.domain.entities.NodeStatus;
+import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategyImpl;
 import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 import org.grouter.domain.servicelayer.ServiceFactory;
 import org.grouter.common.guid.GuidGenerator;
@@ -39,6 +40,7 @@ import java.io.File;
 public class JmsWriteCommand extends AbstractCommand
 {
     private static Logger logger = Logger.getLogger(JmsWriteCommand.class);
+    LogStrategy logStrategy;
     ServiceFactory serviceFactory;
 
 
@@ -78,9 +80,9 @@ public class JmsWriteCommand extends AbstractCommand
             logger.debug("Wrote a new file :" + commandMessage.getMessage());
             try
             {
-                FileUtils.copyFile( commandMessage.getInternalInFile(), new File(node.getOutBound().getUri() + File.separator  + commandMessage.getInternalInFile().getName() ) );
-                File internalOutFile = new File( node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_"  + GuidGenerator.getInstance().getGUID() );
-                FileUtils.copyFile( commandMessage.getInternalInFile(), internalOutFile  );
+                FileUtils.copyFile(commandMessage.getInternalInFile(), new File(node.getOutBound().getUri() + File.separator + commandMessage.getInternalInFile().getName()));
+                File internalOutFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_" + GuidGenerator.getInstance().getGUID());
+                FileUtils.copyFile(commandMessage.getInternalInFile(), internalOutFile);
                 commandMessage.getInternalInFile().delete();
             }
             catch (Exception e)
@@ -91,26 +93,23 @@ public class JmsWriteCommand extends AbstractCommand
     }
 
 
-    public void log()
+    public void logInfoMessage()
     {
-
-        logger.info("Sending message to JMS consumer.");
-        // Todo refactor to use an special global endpoint for sending this message
-        //JMSDestinationSenderThread.getQueue().offer(commandMessages);
-
         for (CommandMessage commandMessage : commandMessages)
         {
             Message message = new Message();
             message.setContent(commandMessage.getMessage());
-//  produces stale exceptions            message.setId(commandMessage.getGuid());
-
-            message.setNode( node );
-
-            LogStrategy jdbcLogStrategy = (JDBCLogStrategy) serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+            message.setNode(node);
+            LogStrategy jdbcLogStrategy = (JDBCLogStrategyImpl) serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
             jdbcLogStrategy.log(message);
-
         }
+    }
 
+    void logErroMessage(String errorMessage)
+    {
+        node.setNodeStatus(NodeStatus.ERROR);
+        node.setStatusMessage(errorMessage);
+        logStrategy.log(node);
     }
 
 

@@ -1,3 +1,4 @@
+package org.grouter.domain.entities;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,30 +18,10 @@
  * under the License.
  */
 
-package org.grouter.domain.servicelayer.spring.logging;
-
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.SettingsContext;
-
-import javax.naming.Context;
-import java.util.Map;
 
 /**
  * @author Georges Polyzois
  */
-public interface LogStrategy
+public class SeetingItem
 {
-    /**
-     * Log a message handled.
-     * @param message
-     */
-    void log( Message message );
-
-    /**
-     * Used by writers / readers to update Node's status information.
-     * @param node
-     */
-    void log( Node node );
-
 }

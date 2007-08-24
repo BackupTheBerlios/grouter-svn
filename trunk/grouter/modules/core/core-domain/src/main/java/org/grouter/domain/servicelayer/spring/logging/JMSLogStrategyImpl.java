@@ -23,6 +23,7 @@ import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.SettingsContext;
 import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.RouterCache;
 import org.grouter.common.jms.*;
 import org.apache.log4j.Logger;
 
@@ -41,6 +42,7 @@ public class JMSLogStrategyImpl implements LogStrategy
     private static Logger logger = Logger.getLogger(JMSLogStrategyImpl.class);
     RouterService routerService;
 
+
     private final static String LOG_Q_NAME = "grouter/logq";
     private AbstractSenderDestination queueDestination;
     private static InitialContext initialContext;
@@ -54,18 +56,15 @@ public class JMSLogStrategyImpl implements LogStrategy
         //     logQDestination = new QueueSenderDestination( LOG_Q_NAME, AbstractDestination.JBOSSCONNECTIONFACTORY, new EternalRebind(), );
     }
 
-    @Override
     public void log(Message message)
     {
-        queueDestination.sendMessage(message);
-    }
-
-    public void log(Message message, Map<String, String> settingsContext)
-    {
-
         try
         {
-            queueDestination = new QueueSenderDestination(LOG_Q_NAME, true, "ConnectionFactory", null, getInitialContext( settingsContext ), 4000, null, AcknowledgeMode.NONE);
+            // The routercache is initialized when the router starts up
+            Map<String, String> settingsContext = RouterCache.getSettingsContextCache().getSettings().getSettingsContext();
+            queueDestination = new QueueSenderDestination(LOG_Q_NAME, (String) settingsContext.get(
+                    SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), null,
+                    getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
             queueDestination.bind();
             queueDestination.sendMessage("A message");
 
@@ -75,17 +74,18 @@ public class JMSLogStrategyImpl implements LogStrategy
         }
     }
 
-    @Override
-    public void log(Node node)
-    {
-        queueDestination.sendMessage(node);
-    }
 
-    public void log(Node node, Map<String, String> settingsContext)
+    public void log(Node node )
     {
         try
         {
-            queueDestination = new QueueSenderDestination(LOG_Q_NAME, true, "ConnectionFactory", null, getInitialContext( settingsContext ), 4000, null, AcknowledgeMode.NONE);
+            // The routercache is initialized when the router starts up
+            Map<String, String> settingsContext = RouterCache.getSettingsContextCache().getSettings().getSettingsContext();
+
+            queueDestination = new QueueSenderDestination(LOG_Q_NAME, (String) settingsContext.get(
+                    SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), new NeverRebind(),
+                    getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
+
             queueDestination.bind();
             queueDestination.sendMessage("A message");
 
@@ -95,10 +95,6 @@ public class JMSLogStrategyImpl implements LogStrategy
         }
     }
 
-    public void log(Node node, SettingsContext settingsContext)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
 
 
     /**

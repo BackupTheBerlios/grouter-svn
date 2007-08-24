@@ -23,6 +23,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.servicelayer.ServiceFactory;
+import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 import org.grouter.common.guid.GuidGenerator;
 
 import java.util.List;
@@ -42,7 +44,8 @@ public abstract class AbstractCommand
     private static Logger logger = Logger.getLogger(AbstractCommand.class);
     protected List<CommandMessage> commandMessages;
     Node node;
-    
+
+
 
     /**
      * Commands must override this method to provide an implementation of an execute command
@@ -56,7 +59,7 @@ public abstract class AbstractCommand
         backup();
         transform();
         write();
-        log();
+        logInfoMessage();
     }
 
 
@@ -98,7 +101,15 @@ public abstract class AbstractCommand
     /**
      * Log that we have sent a message - typically this should be to a JMS destination.
      */
-    abstract void log();
+    abstract void logInfoMessage();
+
+    /**
+     * Log when some exception is caught while trying o write to an endpoint. The status of the
+     * Node will be set to error.
+     *
+     * @param errorMessage the message to log on a Node instance if some failure ooccurs
+     */
+    abstract void logErroMessage( String errorMessage );
 
 
 

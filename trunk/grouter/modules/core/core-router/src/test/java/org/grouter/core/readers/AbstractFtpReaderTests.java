@@ -25,6 +25,7 @@ import org.springframework.core.io.ClassPathResource;
  *
  * @author Georges Polyzois
  */
+@SuppressWarnings({"ALL"})
 public abstract class AbstractFtpReaderTests extends AbstractRouterTests
 {
     private static Logger logger = Logger.getLogger(AbstractFtpReaderTests.class);
@@ -91,11 +92,11 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
     public void createNode()
     {
         ftpToFile = new Node("node_id_ftpToFileNode", "ftpToFileNode");
-        ftpToFile.setBackupUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getName() + "/backup");
-        ftpToFile.setInternalQueueUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getName() + "/internalq");
+        ftpToFile.setBackupUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/backup");
+        ftpToFile.setInternalQueueUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/internalq");
 
         EndPoint inbound = new EndPoint();
-        inbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getName() + "/in");
+        inbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/in");
         inbound.setEndPointType(EndPointType.FILE_READER);
         inbound.setScheduleCron("0/5 * * * * ?");
         inbound.setId("1");
@@ -107,7 +108,7 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
 
         EndPoint outbound = new EndPoint();
         outbound.setEndPointType(EndPointType.FILE_WRITER);
-        outbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getName() + "/out");
+        outbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/out");
         outbound.setEndPointType(EndPointType.FILE_WRITER);
         outbound.setScheduleCron("0/5 * * * * ?");
         outbound.setId("2");

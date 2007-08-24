@@ -24,6 +24,8 @@ import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.core.exception.ValidationException;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.NodeStatus;
+import org.grouter.domain.servicelayer.ServiceFactory;
 import org.quartz.JobExecutionContext;
 import org.quartz.UnableToInterruptJobException;
 
@@ -40,12 +42,15 @@ import java.util.List;
 public class FileReaderJob extends AbstractReader
 {
     private static Logger logger = Logger.getLogger(FileReaderJob.class);
+    ServiceFactory serviceFactory;
+        
 
     /**
      * Empty - needed by Quartz framework.
      */
     public FileReaderJob()
     {
+
     }
 
     void init(final Node node, BlockingQueue<AbstractCommand> blockingQueue)
@@ -83,6 +88,7 @@ public class FileReaderJob extends AbstractReader
         File file = new File(node.getInBound().getUri());
         if (!file.isDirectory())
         {
+            setNodeStatusToNotRunning( "Path does not exist for :" + node.getInBound().getUri() );
             throw new ValidationException("Path does not exist for :" + node.getInBound().getUri());
         }
     }
@@ -117,5 +123,22 @@ public class FileReaderJob extends AbstractReader
     public void interrupt() throws UnableToInterruptJobException
     {
         logger.info(node.getId() + " got request to stop");
+    }
+
+
+    void setNodeStatusToRunning()
+    {
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        node.setNodeStatus( NodeStatus.RUNNING );
+        node.setStatusMessage("");
+        logStrategy.log(node);
+    }
+
+    void setNodeStatusToNotRunning( String errorMessage )
+    {
+        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        node.setNodeStatus( NodeStatus.ERROR );
+        node.setStatusMessage( "Node is running but got errors." +  errorMessage );
+        logStrategy.log(node);
     }
 }

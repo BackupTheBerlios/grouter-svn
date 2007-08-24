@@ -34,18 +34,29 @@ import javax.persistence.*;
 @Table(name = "endpoint_context")
 public class EndPointContext  extends BaseEntity
 {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     Long id;
+
+    @Column(name = "keyname")
     String keyname;
+
+    @Column(name = "value")
     String value;
+
+    @Column(name = "endpoint_fk")
     EndPoint endPoint;
 
 
-    public EndPointContext(EndPoint endPoint)
+    public EndPointContext(final EndPoint endPoint)
     {
         this.endPoint = endPoint;
     }
 
-    public EndPointContext(String keyname, String value, EndPoint endPoint)
+    public EndPointContext(final String keyname,final String value,final EndPoint endPoint)
     {
         this.keyname = keyname;
         this.value = value;
@@ -56,20 +67,14 @@ public class EndPointContext  extends BaseEntity
     {
     }
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+
+
     public Long getId()
     {
         return id;
     }
 
-    /**
-     * Assigned id - no need to expose this setter.
-     *
-     * @param id
-     */
+
     private void setId(Long id)
     {
         this.id = id;
