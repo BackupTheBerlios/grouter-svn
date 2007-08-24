@@ -34,15 +34,17 @@ import org.grouter.common.exception.RemoteGrouterException;
  * A Destination is defined in JMS to be either a Topic or Queue.
  * <p/>
  * E.g.
+ *
  * <pre>
  * InitialContext iniCtx = JMSUtils.getJbossInitialContext();
- * Destination queueDestination = new QueueDestination(QUEUE_TEST_QUEUE, true, "ConnectionFactory",   null, iniCtx, 4000, null, AcknowledgeMode.NONE);
- * queueDestination.bind();
- * queueDestination.sendMessage("A message");
- * logger.info("Message sent");
+ * AbstractSenderDestination queueDestination queueDestination = new QueueSenderDestination(LOG_Q_NAME, (String) settingsContext.get(
+                    SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), null,
+                    getInitialContext(settingsContext), 4000, null);
+            queueDestination.bind();
+       queueDestination.sendMessage("A message");
+ *
  * </pre>
- * <p/>
- * <p/>
+ *
  * Purpose of Destination is to hide some JMS plumbing code using this Fascade and adding a
  * rebindbehavious based on a strategy pattern.
  * You can set a rebind behavior dynamically or statically in constructors. Be sure to use the
