@@ -15,6 +15,7 @@
 
 <!-- Banner -->
 <div id="banner" dir="ltr">
+	<img src="pics/browser.png"/> 
 <p style="margin-bottom: 0cm;"><span class="style2"><a name="bannerLeft"></a></span><br>
 </p>
 </div>

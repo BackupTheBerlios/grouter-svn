@@ -198,8 +198,9 @@ table {
 #banner {
     padding: 0px 0px 0px 0px;
     height: 105px;
-    background-color: #0033CC;
-    background: url( ../pics/sitebanner.png );
+    background-color: #ffffff;
+    //background: url( ../pics/browser.png );
+    
 }
 
 #navcolumn ul {

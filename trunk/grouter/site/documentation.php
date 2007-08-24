@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-
     <meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
     <title>Welcome to Grouter</title>
     <style type="text/css" media="all">
@@ -16,8 +15,8 @@
 <body style="direction: ltr;" lang="en-GB">
 
 <div id="banner" dir="ltr">
-    <p style="margin-bottom: 0cm;"><span class="style2"><a name="bannerLeft"></a></span><br>
-    </p>
+	<img src="pics/browser.png"/> 
+    
 </div>
 
 
@@ -45,9 +44,16 @@
 
         The grouter  project's developers can access the SVN tree via this method. Substitute developername with the proper value. Enter your site password when prompted.</p>
         <p class="source">svn checkout https://developername@svn.berlios.de/svnroot/repos/grouter/trunk </p>
+		
+		<br/>
+		Viewing the source online using a web interface:    <br/>    
+        <p class="source">http://svn.berlios.de/wsvn/grouter/trunk/grouter/?rev=0&sc=0</p>
 
       <h4>Building components</h4>
-        <p>Enter Maven nirvana - if you do not know Maven yet this is the time to learn it. This projects pom file are documented well - read the source and read up on Maven. First thing you will do is issue a build command to Maven. On first run this will pull down all third party dependencies for you and store them in your local dependecy cache ( ~/.m2/repository). Chenge directory to grouter/modules and do: </p>
+        <p>First thing you will do is issue a build command to Maven. On first run this will pull down all third party dependencies for you and store them in your 
+        local dependecy cache ( ~/.m2/repository). Change directory to grouter/modules/common/common-configbeans and do - only needed on first build: </p>
+        <p class="source">mvn clean install</p>
+        <p>Now change back to grouter/modules and do:
         <p class="source">mvn clean install</p>
         <p>If you want to skip the tests then add -Dmaven.test.skip=true as a parameter - which of course make the build much faster but more error prone.</p>
         <p class="source">mvn -Dmaven.test.skip=true clean install</p>
@@ -61,6 +67,9 @@
           [INFO] ------------------------------------------------------------------------ <br> 
        </p>
         <p>All components built for the grouter can be found in your local dependecy cache under ~~.m2/repository/org/grouter or under the target folder for every Maven project. </p>
+        
+        
+        TODO THIS SECTION IS IN PROGRESS...
         <h4 class="western">Building an assembly</h4>
         <p class="western">An assmembly is a deployment artifact for a standalone process - in this case the grouter core component. Assemblies are built using Maven and produces a compressed artifact with jars, scripts and folder structure.</p>
         <p class="western">TODO - finish this !!!!!!    </p>
