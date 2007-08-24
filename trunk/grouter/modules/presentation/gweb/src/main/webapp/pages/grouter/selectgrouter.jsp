@@ -47,7 +47,7 @@
     <form action="">
         <select name="nodeSelect" onchange="this.form.submit()">
             <c:forEach items="${nodes}" var="object">
-                <option value="${object.name}" >${object.name}</option>
+                <option value="${object.displayName}" >${object.displayName}</option>
             </c:forEach>
         </select>
     </form>

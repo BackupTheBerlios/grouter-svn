@@ -1,8 +1,12 @@
+
 <%@ page session="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ taglib prefix="f" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
+
+
+
 
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
@@ -82,9 +86,10 @@
                                 <option <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if> value="${object.id}" >${object.name}</option>
                             </c:forEach>
                         </select>
+                        <!-- Update in realtime: -->
+                                            Register for updates (realtime):<input id="checkboxIsRegisterdForCallbacks" type="checkbox" value="Read" onclick="registerForCallbacks()"/>
+                    
                     </form>
-                    <!-- Update in realtime: -->
-                    Register for updates (realtime):<input id="checkboxIsRegisterdForCallbacks" type="checkbox" value="Read" onclick="registerForCallbacks()"/>
 
                 </td>
 
@@ -114,6 +119,7 @@
         <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
+                    <th><a href="?sortBy=id">Status</a></th>
                     <th><a href="?sortBy=id">Id</a></th>
                     <th><a href="?sortBy=firstName">#Messages</a></th>
                     <th><a href="?sortBy=firstName">Name</a></th>
@@ -126,13 +132,16 @@
                 <c:forEach items="${nodes}" var="object">
                     <tr  >
                         <td>
+                            <c:out value="${object.nodeStatus.id}"/>
+                        </td>
+                        <td>
                             <c:out value="${object.id}"/>
                         </td>
                         <td id="${object.id}">
                             <c:out value="${object.numberOfMessagesHandled}"/>
                         </td>
                         <td>
-                            <c:out value="${object.name}"/>
+                            <c:out value="${object.displayName}"/>
                         </td>
                         <td>
                             <c:out value="${object.inBound.uri}"/>

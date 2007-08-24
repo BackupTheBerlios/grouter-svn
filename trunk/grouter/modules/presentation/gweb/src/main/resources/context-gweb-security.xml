@@ -79,6 +79,7 @@
 
   <bean id="filterSecurityInterceptor" class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
     <property name="authenticationManager">
+      <!--suppress SpringInjectionValueStyleInspection -->
       <ref bean="authenticationManager" />
     </property>
     <property name="accessDecisionManager">

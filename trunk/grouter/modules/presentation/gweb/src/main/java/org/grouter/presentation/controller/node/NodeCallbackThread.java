@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.grouter.presentation.controller.node;
 
 import java.util.*;
@@ -23,13 +42,13 @@ import org.grouter.domain.entities.Node;
  */
 public final class NodeCallbackThread implements Runnable
 {
-    static Map<String, Node> nodes = new Hashtable<String, Node>();
+    private static Map<String, Node> nodes = new Hashtable<String, Node>();
     private static transient boolean active = false;
     private static final Logger logger = Logger.getLogger(NodeCallbackThread.class);
     private WebContext wctx;
     public static final int CALLBACK_INTERVALL = 3000;
     private String routerId;
-    static Map<String, ScriptSession> clients = new Hashtable<String, ScriptSession>();
+    private static Map<String, ScriptSession> clients = new Hashtable<String, ScriptSession>();
 
     public NodeCallbackThread()
     {
@@ -67,7 +86,7 @@ public final class NodeCallbackThread implements Runnable
         // todo : handle multiple router ids - store in map and do find for every rouer id on thread execution
         this.routerId = routerId;
         clients.put(wctx.getScriptSession().getId(), wctx.getScriptSession());
-        if (this.active == false)
+        if ( !this.active )
         {
             this.active = true;
             new Thread(this).start();

@@ -36,8 +36,8 @@
             </tr>
             <tr>
                 <td>Name:</td>
-                <td><form:input path="node.name"/></td>
-                <td><form:errors path="node.name"/></td>
+                <td><form:input path="node.displayName"/></td>
+                <td><form:errors path="node.displayName"/></td>
             </tr>
             <tr>
                 <td>Last name:</td>
