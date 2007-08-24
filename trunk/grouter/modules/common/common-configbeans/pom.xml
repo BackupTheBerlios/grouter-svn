@@ -56,11 +56,11 @@
   </dependencies>
 
   <build>
-    <!--
-    | See usage of this plugin:
-    | http://mojo.codehaus.org/xmlbeans-maven-plugin/xmlbeans-mojo.html
-    -->
     <plugins>
+      <!--
+       | See usage of this plugin:
+       | http://mojo.codehaus.org/xmlbeans-maven-plugin/xmlbeans-mojo.html
+       -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>xmlbeans-maven-plugin</artifactId>

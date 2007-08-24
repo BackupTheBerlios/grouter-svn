@@ -7,12 +7,14 @@
 
   <!-- Root element  -->
   <xs:element name="Grouter">
+
     <xs:complexType>
       <xs:sequence>
-        <!-- xs:element name="Global" type="globalType"/ -->
+        <xs:element name="Settings" type="settingsType" maxOccurs="1" minOccurs="1"/>
         <xs:element name="Node" type="node" maxOccurs="unbounded"/>
       </xs:sequence>
-      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="displayName" type="xs:string" use="required"/>
+      <xs:attribute name="description" type="xs:string" use="optional"/>
       <xs:attribute name="id" type="xs:string" use="required"/>
       <xs:attribute name="home" type="xs:string" use="required"/>
       <xs:attribute name="rmiRegistryPort" type="xs:int" use="required"/>
@@ -20,10 +22,17 @@
     </xs:complexType>
   </xs:element>
 
+
   <!-- First level 	-->
+
   <!-- GlobalSettings -->
-  <xs:complexType name="globalType">
+  <xs:complexType name="settingsType">
     <xs:sequence>
+      <xs:element name="Jndi" type="jndiType" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="Logging" type="loggingType" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="Email" type="emailType" maxOccurs="1" minOccurs="0"/>
+
+
       <!--xs:element name="grouterHome" type="xs:string"/>
     <xs:element name="grouterDomain" type="grouterDomainType"/-->
       <!-- xs:element name="archiveHandler" type="archiveHandlerType"/ -->
@@ -34,26 +43,20 @@
   <!-- FeederNode -->
   <xs:complexType name="node">
     <xs:sequence>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="displayName" type="xs:string" minOccurs="0"/>
       <xs:element name="createdOn" type="xs:string" minOccurs="0"/>
       <xs:element name="modifiedOn" type="xs:string" minOccurs="0"/>
+      <xs:element name="backup" type="backup" minOccurs="0"/>
+      <!-- if none specified then no backups are made -->
       <xs:element name="inBoundEndPoint" type="endPoint" minOccurs="1"/>
       <xs:element name="outBoundEndPoint" type="endPoint" minOccurs="1"/>
-      <!-- xs:element name="inFolder" type="inFolderType" minOccurs="0"/>
-  <xs:element name="outFolder" type="outFolderType" minOccurs="0"/>
-  <xs:element name="email" type="emailType" minOccurs="0"/>
-  <xs:element name="localStore" type="localStoreType" minOccurs="0"/>
-  <xs:element name="transform" type="transformType" minOccurs="0"/>
-  <xs:element name="error" type="errorType"/>
-  <xs:element name="inactivity" type="inactivityType"/>
-  <xs:element name="nameService" type="nameServiceType" minOccurs="0"/ -->
     </xs:sequence>
     <xs:attribute name="id" use="required"/>
     <xs:attribute name="createuniquename" type="xs:boolean"/>
     <xs:attribute name="endPointType" type="xs:boolean"/>
     <xs:attribute name="senderStatic" type="xs:string"/>
     <xs:attribute name="receiverStatic" type="xs:string"/>
-
   </xs:complexType>
 
   <!-- Third level -->
@@ -62,6 +65,7 @@
       <xs:element name="uri" type="xs:string" minOccurs="0"/>
       <xs:element name="clazzname" type="xs:string" minOccurs="0"/>
       <xs:element name="cron" type="xs:string" minOccurs="0"/>
+      <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="endPointType" type="endPointType"/>
     <xs:attribute name="id" type="xs:string"/>
@@ -73,10 +77,25 @@
       <xs:enumeration value="FILE_READER"/>
       <xs:enumeration value="FTP_READER"/>
       <xs:enumeration value="FTP_WRITER"/>
+      <xs:enumeration value="JMS_READER"/>
+      <xs:enumeration value="JMS_WRITER"/>
     </xs:restriction>
   </xs:simpleType>
 
+  <!--
+  Need to specify explicitly in Node for backup to occur. If sepcified the default location
+  will be used and set to GROUTER_HOME/NODENAME OR if overrideDefaultUri this will be used in stead
+  -->
+  <xs:complexType name="backup">
+    <xs:sequence>
+      <xs:element name="overrideDefaultUri" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 
+  <xs:complexType name="context">
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
 
 
   <xs:complexType name="pollType">
@@ -109,16 +128,30 @@
   <xs:element name="emailBatchSize" type="xs:short"/>
 
 
-  <xs:complexType name="grouterDomainType">
+
+  <xs:complexType name="jndiType">
     <xs:sequence>
-      <xs:element name="java.naming.factory.initial" type="xs:string"
+      <xs:element name="naming.factory.initial" type="xs:string"
                   default="org.jnp.interfaces.NamingContextFactory"/>
-      <xs:element name="java.naming.provider.url" type="xs:string" default="jnp://localhost:1099"/>
-      <xs:element name="java.naming.factory.url.pkgs" type="xs:string" default="org.jboss.naming:org.jnp.interfaces"/>
-      <xs:element name="destinationJndiName" type="xs:string" default="queue/GrouterQueue"/>
+      <xs:element name="naming.provider.url" type="xs:string" default="jnp://localhost:1099" maxOccurs="1"/>
+      <xs:element name="naming.factory.url.pkgs" type="xs:string"
+                  default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
+      <xs:element name="naming.queueconnectionfactoy" type="xs:string"
+                    default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
+
+
+
     </xs:sequence>
-    <xs:attribute name="useGrouterDomain" type="xs:boolean" use="required"/>
-  </xs:complexType>
+   </xs:complexType>
+
+  <xs:complexType name="loggingType">
+    <xs:sequence>
+      <xs:element name="jms.loggingQueue" type="xs:string" default="queue/GrouterQueue" maxOccurs="1"/>
+    </xs:sequence>
+   </xs:complexType>
+
+
+
   <!--
 java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
 java.naming.provider.url=jnp://localhost:1099
@@ -145,7 +178,8 @@ java.naming.factory.url.pkgs=org.jboss.naming.client
   <!-- FeederNode::transformType -->
   <xs:complexType name="transformType">
     <xs:sequence>
-      <xs:element name="transformFile" type="transformFileType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="transformFile" type="transformFileType" minOccurs="0"
+                  maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="transformOn" type="xs:boolean" use="required"/>
   </xs:complexType>
@@ -326,8 +360,8 @@ java.naming.factory.url.pkgs=org.jboss.naming.client
   <xs:complexType name="emailType">
     <xs:sequence>
       <xs:element name="smtp" type="smtpType" minOccurs="0"/>
-      <xs:element name="pop" type="popType" minOccurs="0"/>
-      <xs:element name="imap" type="imapType" minOccurs="0"/>
+      <!-- xs:element name="pop" type="popType" minOccurs="0"/>
+      <xs:element name="imap" type="imapType" minOccurs="0"/ -->
     </xs:sequence>
     <xs:attribute name="sendintervallInMilliSeconds" type="xs:long" use="required"/>
   </xs:complexType>
