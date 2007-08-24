@@ -29,6 +29,7 @@ public class ServiceLocatorException extends RuntimeException
      * Constructor.
      * @param message the error message.
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     public ServiceLocatorException(String message)
     {
         super(message);

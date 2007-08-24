@@ -18,8 +18,6 @@
  */
 package org.grouter.common.jndi;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * A dto used by {@link JNDIUtils} holding information about implementation and where
@@ -77,7 +75,7 @@ public class BindingItem
 
     /**
      * Will return something like java:comp/mbeans/mybean
-     * @return
+     * @return jndi path java:comp/mbeans/mybean
      */
     public String getFullJnidPath()
     {

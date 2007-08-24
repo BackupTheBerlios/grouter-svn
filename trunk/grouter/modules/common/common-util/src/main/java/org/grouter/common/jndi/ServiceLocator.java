@@ -39,7 +39,6 @@ import javax.sql.DataSource;
  * lookuped up references to resouces for faster access without remote JNDI lookups.
  *
  * @author  Georges Polyzois
- * @version
  */
 public class ServiceLocator
 {
@@ -53,7 +52,7 @@ public class ServiceLocator
     /**
      * Private constructor.
      *
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException  if failure to create initialcontext
      */
     private ServiceLocator() throws ServiceLocatorException
     {
@@ -71,8 +70,8 @@ public class ServiceLocator
     /**
      * Access the ServiceLocator as a singelton
      *
-     * @throws ServiceLocatorException
      * @return ServiceLocator
+     * @throws ServiceLocatorException  if failure to create ServiceLocator
      */
     public static ServiceLocator getInstance() throws ServiceLocatorException
     {
@@ -87,13 +86,14 @@ public class ServiceLocator
      * Use this to access local ejbs
      *
      * @param jndiName String
-     * @throws ServiceLocatorException
      * @return EJBLocalHome
+     * @throws ServiceLocatorException if failure to lookup object in JNDI
      */
+    @SuppressWarnings({"SameParameterValue"})
     public EJBLocalHome getLocalHome(String jndiName) throws
             ServiceLocatorException
     {
-        EJBLocalHome result = null;
+        EJBLocalHome result;
         try
         {
             if (cache.containsKey(jndiName))
@@ -120,9 +120,10 @@ public class ServiceLocator
      * avoids JNDI lookups.
      *
      * @param jndiName String
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException if failure to lookup object in JNDI
      * @return EJBHome
      */
+    @SuppressWarnings({"SameParameterValue"})
     public EJBHome getHome(String jndiName) throws ServiceLocatorException
     {
         EJBHome result = null;
@@ -151,9 +152,10 @@ public class ServiceLocator
      * avoids JNDI lookups.
      *
      * @param jndiName String
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException if failure to lookup object in JNDI
      * @return DataSource
      */
+    @SuppressWarnings({"SameParameterValue"})
     public DataSource getDataSource(String jndiName) throws
             ServiceLocatorException
     {
@@ -184,9 +186,10 @@ public class ServiceLocator
      * avoids JNDI lookups.
      *
      * @param jndiName String
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException  if failure to lookup object in JNDI
      * @return TopicConnectionFactory
      */
+    @SuppressWarnings({"SameParameterValue"})
     public TopicConnectionFactory getTopicConnectionFactory(String jndiName) throws
             ServiceLocatorException
     {
@@ -217,9 +220,10 @@ public class ServiceLocator
      * avoids JNDI lookups.
      *
      * @param jndiName String
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException if failure to lookup object in JNDI
      * @return QueueConnectionFactory
      */
+    @SuppressWarnings({"SameParameterValue"})
     public QueueConnectionFactory getQueueConnectionFactory(String jndiName) throws
             ServiceLocatorException
     {
@@ -250,9 +254,10 @@ public class ServiceLocator
      * avoids JNDI lookups.
      *
      * @param jndiName String
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException  if failure to lookup object in JNDI
      * @return QueueConnectionFactory
      */
+    @SuppressWarnings({"SameParameterValue"})
     public Queue getQueue(String jndiName) throws ServiceLocatorException
     {
         Queue result = null;
@@ -281,9 +286,10 @@ public class ServiceLocator
      * avoids JNDI lookups.
      *
      * @param jndiName String
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException  if failure to lookup object in JNDI
      * @return Topic
      */
+    @SuppressWarnings({"SameParameterValue"})
     public Topic getTopic(String jndiName) throws ServiceLocatorException
     {
         Topic result = null;
@@ -304,17 +310,6 @@ public class ServiceLocator
         return result;
     }
 
-    /**
-     * If context needed use this.
-     *
-     * @return InitialContext
-     */
-    /*
-    public Context getContext()
-    {
-        return initialContext;
-    }    */
-
 
     /**
      * Return size of the current cache.
@@ -327,7 +322,7 @@ public class ServiceLocator
 
     /**
      * Exists so that we can mock the context in unit tests.
-     * @param initialContext
+     * @param initialContext the initialcontext touse
      */
     public void setInitialContext(Context initialContext)
     {

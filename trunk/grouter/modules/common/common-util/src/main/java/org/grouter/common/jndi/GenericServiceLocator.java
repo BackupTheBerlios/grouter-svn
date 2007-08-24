@@ -33,60 +33,62 @@ import javax.rmi.PortableRemoteObject;
 import javax.sql.DataSource;
 import javax.naming.NamingException;
 import javax.naming.Context;
+
 import org.apache.log4j.Logger;
 
 /**
  * Class for accessing ejbs, datasources and queues/topics. Provides caching of
  * looked up references to resouces for faster access without remote JNDI lookups
  * every time.
- *
+ * <p/>
  * Keys in cache will use jndiname, context hashcode and provider url (i.e. a distinction
  * between 127.0.0.1 and localhost will not be made).
  *
- * @author
- * @version
+ * @author Georges Polyzois
  */
 public class GenericServiceLocator
 {
-	/** Logger. */																				
+    /**
+     * Logger.
+     */
     private static Logger logger = Logger.getLogger(GenericServiceLocator.class);
-    /** Map with cached lookups. */
-    private Map cache;
-    /** Singelton instance. */
+    /**
+     * Map with cached lookups.
+     */
+    private Map<String,Object> cache;
+    /**
+     * Singelton instance.
+     */
     private static GenericServiceLocator instance;
 
     /**
      * Private constructor.
      *
-     * @throws ServiceLocatorException
+     * @throws ServiceLocatorException thrown when
      */
     private GenericServiceLocator() throws ServiceLocatorException
     {
-        try
-        {
-            cache = Collections.synchronizedMap(new HashMap());
-        } catch (Exception e)
-        {
-            throw new ServiceLocatorException(e);
-        }
+        cache = Collections.synchronizedMap(new HashMap());
     }
 
     /**
      * Produce a unique key for this jndi name and context.
-     * @param jndiName String
-     * @param context Context
-     * @return String
-     * @throws NamingException
+     *
+     * @param jndiName name of object in JNDI
+     * @param context  the Context
+     * @return String the unique key
+     * @throws NamingException see {@link NamingException}
      */
+    @SuppressWarnings({"UnnecessaryLocalVariable"})
     private synchronized String getKey(String jndiName, Context context) throws
             NamingException
     {
         StringBuilder builder = new StringBuilder();
         String providerurl = "nourl";
         int hashcode = -1;
-        if (context!=null)
+        if (context != null)
         {
-            providerurl = (String)context.getEnvironment().get(Context.PROVIDER_URL);
+            providerurl = (String) context.getEnvironment().get(Context.PROVIDER_URL);
             hashcode = context.hashCode();
         }
         builder.append(providerurl).append("_");
@@ -99,8 +101,8 @@ public class GenericServiceLocator
     /**
      * Access the ServiceLocator as a singelton
      *
-     * @throws ServiceLocatorException
      * @return ServiceLocator
+     * @throws ServiceLocatorException if failure to look up object in JNDI
      */
     public static GenericServiceLocator getInstance() throws ServiceLocatorException
     {
@@ -112,16 +114,17 @@ public class GenericServiceLocator
     }
 
     /**
-     * Use this to access local ejbs
+     * Use this to access local ejbs (ejb 2)
      *
-     * @param jndiName String
-     * @throws ServiceLocatorException
+     * @param jndiName name of object in JNDI
+     * @param context  used to lookup the object
      * @return EJBLocalHome
+     * @throws ServiceLocatorException if failure to look up object in JNDI
      */
     public EJBLocalHome getLocalHome(String jndiName, Context context) throws
             ServiceLocatorException
     {
-        EJBLocalHome result = null;
+        EJBLocalHome result;
         try
         {
             String key = getKey(jndiName, context);
@@ -142,17 +145,18 @@ public class GenericServiceLocator
 
     /**
      * Use this to access remote ejbs.
-     *
+     * <p/>
      * References are cached so that repeated client requests for this factory
      * avoids JNDI lookups.
      *
-     * @param jndiName String
-     * @throws ServiceLocatorException
+     * @param jndiName name of object in JNDI
+     * @param context  used to lookup the object
      * @return EJBHome
+     * @throws ServiceLocatorException if failure to look up object in JNDI
      */
     public EJBHome getHome(String jndiName, Context context) throws ServiceLocatorException
     {
-        EJBHome result = null;
+        EJBHome result;
         try
         {
             String key = getKey(jndiName, context);
@@ -174,18 +178,19 @@ public class GenericServiceLocator
 
     /**
      * Use this to access datasources.
-     *
+     * <p/>
      * References are cached so that repeated client requests for this factory
      * avoids JNDI lookups.
      *
-     * @param jndiName String
-     * @throws ServiceLocatorException
+     * @param jndiName name of object in JNDI
+     * @param context  used to lookup the object
      * @return DataSource
+     * @throws ServiceLocatorException if failure to look up object in JNDI
      */
     public DataSource getDataSource(String jndiName, Context context) throws
             ServiceLocatorException
     {
-        DataSource result = null;
+        DataSource result;
         try
         {
             String key = getKey(jndiName, context);
@@ -208,18 +213,19 @@ public class GenericServiceLocator
     /**
      * Use this to access topic factories and use factory to create
      * a TopicConnection and Topic.
-     *
+     * <p/>
      * References are cached so that repeated client requests for this factory
      * avoids JNDI lookups.
      *
-     * @param jndiName String
-     * @throws ServiceLocatorException
+     * @param jndiName name of object in JNDI
+     * @param context  used to lookup the object
      * @return TopicConnectionFactory
+     * @throws ServiceLocatorException   if failure to look up object in JNDI
      */
     public TopicConnectionFactory getTopicConnectionFactory(String jndiName, Context context) throws
             ServiceLocatorException
     {
-        TopicConnectionFactory result = null;
+        TopicConnectionFactory result;
         try
         {
             String key = getKey(jndiName, context);
@@ -242,18 +248,19 @@ public class GenericServiceLocator
     /**
      * Use this to access queue factories and use factory to create
      * a QueueConnection and Queue.
-     *
+     * <p/>
      * References are cached so that repeated client requests for this factory
      * avoids JNDI lookups.
      *
-     * @param jndiName String
-     * @throws ServiceLocatorException
+     * @param jndiName name of object in JNDI
+     * @param context  used to lookup the object
      * @return QueueConnectionFactory
+     * @throws ServiceLocatorException   if failure to look up object in JNDI
      */
     public QueueConnectionFactory getQueueConnectionFactory(String jndiName, Context context) throws
             ServiceLocatorException
     {
-        QueueConnectionFactory result = null;
+        QueueConnectionFactory result;
         try
         {
             String key = getKey(jndiName, context);
@@ -281,17 +288,18 @@ public class GenericServiceLocator
     /**
      * Use this to access queue factories and use factory to create
      * a QueueConnection and Queue.
-     *
+     * <p/>
      * References are cached so that repeated client requests for this factory
      * avoids JNDI lookups.
      *
-     * @param jndiName String
-     * @throws ServiceLocatorException
+     * @param jndiName name of object in JNDI
+     * @param context  used to lookup the object
      * @return QueueConnectionFactory
+     * @throws ServiceLocatorException  if failure to look up object in JNDI
      */
     public Queue getQueue(String jndiName, Context context) throws ServiceLocatorException
     {
-        Queue result = null;
+        Queue result;
         try
         {
             String key = getKey(jndiName, context);
@@ -315,20 +323,21 @@ public class GenericServiceLocator
     /**
      * Use this to access queue factories and use factory to create
      * a TopicConnection and Topic.
-     *
+     * <p/>
      * References are cached so that repeated client requests for this factory
      * avoids JNDI lookups.
      *
-     * @param jndiName String
-     * @throws ServiceLocatorException
+     * @param jndiName name of object in JNDI
+     * @param context  used to lookup the object
      * @return Topic
+     * @throws ServiceLocatorException  if failure to look up object in JNDI
      */
     public Topic getTopic(String jndiName, Context context) throws ServiceLocatorException
     {
-        Topic result = null;
+        Topic result;
         try
         {
-            String key = jndiName+context;
+            String key = jndiName + context;
             if (cache.containsKey(key))
             {
                 result = (Topic) cache.get(key);

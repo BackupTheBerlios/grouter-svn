@@ -124,7 +124,8 @@ public class HibernateUtil
      * Retrieves the current Session local to the thread.
      * <p/>
      * If no Session is open, opens a new Session for the running thread.
-     * @throws InfrastructureException
+     *
+     * @throws InfrastructureException if failure to retrieve session from SessionFactory
      *
      * @return Session
      */
@@ -157,6 +158,8 @@ public class HibernateUtil
 
     /**
      * Closes the Session local to the thread.
+     *
+    * @throws InfrastructureException if failure to retrieve session from SessionFactory
      */
     public static void closeSession() throws InfrastructureException
     {
@@ -178,6 +181,8 @@ public class HibernateUtil
 
     /**
      * Start a new database transaction.
+     *
+     * @throws InfrastructureException if failure to retrieve session from SessionFactory
      */
     public static void beginTransaction() throws InfrastructureException
     {
@@ -199,6 +204,8 @@ public class HibernateUtil
 
     /**
      * Commit the database transaction.
+     *
+     * @throws InfrastructureException if we get an HibbernateException. Commit is aborted.
      */
     public static void commitTransaction() throws InfrastructureException
     {
@@ -222,6 +229,8 @@ public class HibernateUtil
 
     /**
      * Commit the database transaction.
+     *
+     * @throws InfrastructureException if failure to retrieve session from SessionFactory
      */
     public static void rollbackTransaction() throws InfrastructureException
     {
@@ -231,7 +240,6 @@ public class HibernateUtil
             THREADTRANSACTION.set(null);
             if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack())
             {
-//                log.debug("Tyring to rollback database transaction of this thread.");
                 tx.rollback();
             }
         }
@@ -249,6 +257,7 @@ public class HibernateUtil
      * Reconnects a Hibernate Session to the current Thread.
      *
      * @param session The Hibernate Session to be reconnected.
+     * @throws InfrastructureException if failure to retrieve session from SessionFactory
      */
     public static void reconnect(Session session) throws
         InfrastructureException
@@ -268,6 +277,7 @@ public class HibernateUtil
      * Disconnect and return Session from current Thread.
      *
      * @return Session the disconnected Session
+     * @throws InfrastructureException if failure to retrieve session from SessionFactory
      */
     public static Session disconnectSession() throws InfrastructureException
     {
@@ -305,6 +315,7 @@ public class HibernateUtil
      * Get Hibernate interceptor.
      * @return Interceptor
      */
+    @SuppressWarnings({"UnnecessaryLocalVariable"})
     private static Interceptor getInterceptor()
     {
         Interceptor interceptor = (Interceptor) THREADINTERCEPTOR.get();

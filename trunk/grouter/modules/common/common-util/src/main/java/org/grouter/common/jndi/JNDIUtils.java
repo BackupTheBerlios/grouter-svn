@@ -47,7 +47,7 @@ public class JNDIUtils
      */
     public static void printJNDI(Context ctx, Logger alogger)
     {
-        Hashtable table = null;
+        Hashtable table;
         try
         {
             table = ctx.getEnvironment();
@@ -73,7 +73,7 @@ public class JNDIUtils
      */
     public static void printJNDI(Context ctx, final Log alogger)
     {
-        Hashtable table = null;
+        Hashtable table;
         try
         {
             table = ctx.getEnvironment();
@@ -118,12 +118,6 @@ public class JNDIUtils
                 //logger.debug(envContext.listBindings(initialContext.getNameInNamespace()));
             }
 
-            /*InitialContext initialContext = new InitialContext();
-          Context compContext = initialContext.createSubcontext("jndi:hibernate");
-          Context envContext =  compContext.createSubcontext("mbeans");
-          envContext.bind("jndi_name", "www.apache.org");
-            */
-
         } catch (NamingException e)
         {
             logger.error(e, e);
@@ -135,8 +129,8 @@ public class JNDIUtils
     /**
      * Get context for local jboss server.
      *
-     * @return
-     * @throws NamingException
+     * @return the initialcontext
+     * @throws NamingException  see {@link NamingException}
      */
     public static InitialContext getJbossInitialContext()
             throws NamingException
@@ -147,19 +141,19 @@ public class JNDIUtils
     /**
      * Get context for remote jboss server.
      *
-     * @param jndiUrl
-     * @return
-     * @throws NamingException
+     * @param jndiUrl the jndiurl, if null a default will be used for jboss
+     * @return initialcontext
+     * @throws NamingException  see {@link NamingException}
      */
+    @SuppressWarnings({"UnnecessaryLocalVariable", "SameParameterValue"})
     public static InitialContext getJbossInitialContextForServer(String jndiUrl)
             throws NamingException
     {
-
         if (jndiUrl == null)
         {
             jndiUrl = "jnp://localhost:1099";
         }
-        Hashtable hashtable = new Hashtable();
+        Hashtable<String,String> hashtable = new Hashtable<String,String>();
         hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
         hashtable.put(Context.PROVIDER_URL, jndiUrl);
         hashtable.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
@@ -167,5 +161,8 @@ public class JNDIUtils
         return iniCtx;
     }
 
+
+
+    
 
 }

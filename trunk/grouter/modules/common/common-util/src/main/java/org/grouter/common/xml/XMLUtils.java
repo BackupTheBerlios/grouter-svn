@@ -22,7 +22,7 @@ public class XMLUtils
      *  
      * @param file a file descriptor to output xml content to.
      * @param doc  a org.w3c.dom.Document containing the xml.
-     * @throws Exception
+     * @throws Exception if failure to write to file
      */
     public static void writeXMLFile(File file, Document doc) throws Exception
     {

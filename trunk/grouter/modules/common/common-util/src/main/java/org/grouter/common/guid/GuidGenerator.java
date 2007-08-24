@@ -35,6 +35,7 @@ import java.util.Random;
  *
  * @author Georges Polyzois
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class GuidGenerator
 {
     private static Logger logger = Logger.getLogger(GuidGenerator.class);
@@ -80,6 +81,7 @@ public class GuidGenerator
      *
      * @return String
      */
+    @SuppressWarnings({"UnnecessaryLocalVariable"})
     private String getInetAddress()
     {
         byte[] inetAddressByteArr = inetAddress.getAddress();
@@ -112,6 +114,7 @@ public class GuidGenerator
      * @param pad int padded up to this value
      * @return String
      */
+    @SuppressWarnings({"SameParameterValue"})
     private String padToHexFormat(int toHexvalue, int pad)
     {
         String s = Integer.toHexString(toHexvalue);
@@ -150,10 +153,11 @@ public class GuidGenerator
      * Generate current time in hex format.
      * @return String
      */
+    @SuppressWarnings({"UnnecessaryLocalVariable"})
     private String getTime()
     {
         long currentTimeMs = System.currentTimeMillis();
-        int i = (int) currentTimeMs & 0xffffffff;
+        int i = (int) currentTimeMs;
         String time = padToHexFormat(i, EIGHTCHARLENGTH);
         return time;
     }
@@ -164,6 +168,7 @@ public class GuidGenerator
      *
      * @return String
      */
+    @SuppressWarnings({"UnnecessaryLocalVariable"})
     private String getRandom()
     {
         int j;
@@ -178,6 +183,8 @@ public class GuidGenerator
 
     /**
      * Helper.
+     *
+     * @param useSeperator if true a '-' seperator will be uses between guid parts, e.g. Wwrwer-34234234-werwerw-23123123
      * @return String
      */
     private String createGUID( boolean useSeperator )
@@ -208,6 +215,7 @@ public class GuidGenerator
      * @param useSeperator boolean seperates the guid into 4 categories with seperator.
      * @return String
      */
+    @SuppressWarnings({"SameParameterValue"})
     public String getGUID( boolean useSeperator )
     {
         return createGUID( useSeperator );

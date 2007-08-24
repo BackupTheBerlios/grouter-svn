@@ -39,13 +39,13 @@ import java.text.MessageFormat;
  *
  * @author Georges Polyzois
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class MessageUtil
 {
-    private static ResourceBundle resourceBundle;
 
     private static String getMessageString(String messageKey, Locale locale)
     {
-        resourceBundle = ResourceBundle.getBundle("org.grouter.common.exception.GrouterResources", locale);
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("org.grouter.common.exception.GrouterResources", locale);
         return resourceBundle.getString(messageKey);
     }
 

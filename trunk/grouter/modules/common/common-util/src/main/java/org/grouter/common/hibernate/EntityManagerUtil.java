@@ -49,7 +49,7 @@ public class EntityManagerUtil
     /**
      * Corresponds to a Hibernate Session.
      *
-     * @return
+     * @return EntityManager
      */
     public static EntityManager getEntityManager()
     {

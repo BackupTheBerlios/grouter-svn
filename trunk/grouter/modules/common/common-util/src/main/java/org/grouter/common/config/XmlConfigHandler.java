@@ -43,22 +43,23 @@ import org.grouter.config.GrouterDocument;
  * @author Georges Polyzois
  *
  */
-public class ConfigHandler
+public class XmlConfigHandler
 {
     //ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
-    private static Logger logger = Logger.getLogger(ConfigHandler.class);
+    private static Logger logger = Logger.getLogger(XmlConfigHandler.class);
+    @SuppressWarnings({"UnusedDeclaration"})
     private XmlOptions xmlOptions;
-    private ArrayList validationErrors = new ArrayList();
+    //private ArrayList validationErrors = new ArrayList();
 
     //root handle to config
     private GrouterDocument gRouterConfigDocument;
 
     /**
      * Constructor.
-     * @param absoluteFilePath
-     * @param xmlOptions
+     * @param absoluteFilePath the absolut file path
+     * @param xmlOptions opetions see XmlBeans doc
      */
-    public ConfigHandler(String absoluteFilePath, XmlOptions xmlOptions)
+    public XmlConfigHandler(String absoluteFilePath, XmlOptions xmlOptions)
     {
         if (absoluteFilePath==null)
         {
@@ -76,10 +77,10 @@ public class ConfigHandler
 
     /**
      * Constructor.
-     * @param inputStream
-     * @param xmlOptions
+     * @param inputStream the stream to read from
+     * @param xmlOptions opetions see XmlBeans doc
      */
-    public ConfigHandler(InputStream inputStream, XmlOptions xmlOptions)
+    public XmlConfigHandler(InputStream inputStream, XmlOptions xmlOptions)
     {
         if (inputStream==null)
         {
@@ -110,6 +111,7 @@ public class ConfigHandler
      * into a type generated from schema.</p>
      *
      * @param inStream A stream to XML based on the schema in config.xsd.
+     * @param validationOptions opetions see XmlBeans doc
      * @return An instance of a generated schema type that contains the parsed XML.
      */
     private XmlObject parseXml(InputStream inStream, XmlOptions validationOptions)
@@ -133,6 +135,7 @@ public class ConfigHandler
      * into a type generated from schema.</p>
      *
      * @param xmlFilePath A path to XML based on the schema in config.xsd.
+    * @param validationOptions opetions see XmlBeans doc
      * @return An instance of a generated schema type that contains the parsed XML.
      */
     private XmlObject parseXml(String xmlFilePath, XmlOptions validationOptions)

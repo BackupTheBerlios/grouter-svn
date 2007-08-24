@@ -33,7 +33,9 @@ public class RemoteGrouterException extends GrouterRuntimeException
      * Create new exception.
      *
      * @param ex is the original remote exception.
+     * @param message message to store in exception
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     public RemoteGrouterException(String message, Exception ex)
     {
         super(message, ex);

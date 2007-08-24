@@ -133,7 +133,7 @@ public class BinaryBlobUserType  implements UserType
         Connection con = preparedStatment.getConnection();
         Statement sta = null;
         ResultSet rs = null;
-        String sql = null;
+        String sql;
         try
         {
             sql = "select seq_temp_blob_id.nextval from dual";

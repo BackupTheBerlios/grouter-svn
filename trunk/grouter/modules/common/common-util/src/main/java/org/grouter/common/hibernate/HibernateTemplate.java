@@ -35,7 +35,7 @@ public interface HibernateTemplate
      * Implemented for inversion.
      * @param session Session
      * @return Object
-     * @throws Exception
+     * @throws Exception if failure to operat on session etc
      */
     Object handle(Session session) throws Exception;
 }
