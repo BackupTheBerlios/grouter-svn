@@ -3,18 +3,40 @@
 # The purpose is to clean nodes in the grouter folder - 
 # backup and out folders.
 #
-# Atuhor: Georges Polyzois
+# It can also be used to create a base folder structure.
+#
+# Author: Georges Polyzois
 
 
 # List nodes to be cleaned
-nodes=(filetest-filetest testnode)
+nodes=(filetest filtest2 ftptest)
 
-GROUTERHOME=~/tmp/grouter_test_install
+GROUTERHOME=/temp/grouter
 backupFolder=backup
-outFolder=out
-inFolder="in"
+outFolder=internal/out
+inFolder=internal/in
+
 
 echo "Using grouterhome set to :$GROUTERHOME"
+
+#
+# Create nodes accroding to defined list above
+setup()
+{
+	echo "Seting up a grouter instance " 
+  	echo "Creating following nodes: ${nodes[*]}"
+  	
+  	rm -r $GROUTERHOME
+  	mkdir $GROUTERHOME
+  	
+  	for node in ${nodes[@]}; do
+		echo "Creating node= : " $node ;
+		mkdir -p $GROUTERHOME/nodes/$node; 
+		mkdir -p $GROUTERHOME/nodes/$node/$backupFolder;
+		mkdir -p $GROUTERHOME/nodes/$node/$inFolder;
+		mkdir -p $GROUTERHOME/nodes/$node/$outFolder;
+	done
+}
 
 #
 # Takes two argument, nodename and node's folder to be cleaned
@@ -75,6 +97,9 @@ archiveNode()
 }
 
 case "${1}" in
+        setup)
+                setup $2
+                ;;
         node)
                 cleanNode $2
                 ;;
@@ -85,7 +110,7 @@ case "${1}" in
                 cleanAll
                 ;;
         *)
-                echo "Please specify node or all"
+                echo "Please specify [setup cleanNode archiveNode cleanAll]"
                 exit 1
                 ;;
 esac
