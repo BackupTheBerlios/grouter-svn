@@ -3,23 +3,17 @@ package org.grouter.common.config;
 import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlOptions;
-import org.grouter.common.config.ConfigHandler;
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.File;
-import java.io.InputStream;
 
 /**
- * Test the confighandler class {@link ConfigHandler}
+ * Test the confighandler class {@link XmlConfigHandler}
  *
  * @author Georges Polyzois
  */
 public class ConfigHandlerTest extends TestCase
 {
     private static Logger logger = Logger.getLogger(ConfigHandlerTest.class);
-    private ConfigHandler configHandler;
-    private ClassLoader classLoader;
-    private static final String INVALID_GROUTERCONFIG_XML = "invalid_grouterconfig.xml";
     private static final String GROUTERCONFIG_XML = "grouterconfig.xml";
     ClassPathResource classPathResource;
 
@@ -29,7 +23,6 @@ public class ConfigHandlerTest extends TestCase
     public void setUp()
     {
         classPathResource = new ClassPathResource(GROUTERCONFIG_XML, this.getClass().getClassLoader());
-        classLoader = ConfigHandlerTest.class.getClassLoader();
     }
 
     /**
@@ -51,14 +44,13 @@ public class ConfigHandlerTest extends TestCase
     /**
      * Basic load test to see if we get expected values from INVALID xml file.
      *
-     * @throws Exception
      */
-    public void testLoadInvalidConfigFile() throws Exception
+    public void testLoadInvalidConfigFile()
     {
         logger.debug("Loading resource");
         try
         {
-            configHandler = new ConfigHandler( classPathResource.getInputStream() , new XmlOptions());
+            new XmlConfigHandler(classPathResource.getInputStream(), new XmlOptions());
         } catch (Exception e)
         {
             assertTrue(true);

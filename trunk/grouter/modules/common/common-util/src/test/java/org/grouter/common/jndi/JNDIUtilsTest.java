@@ -34,7 +34,7 @@ public class JNDIUtilsTest extends TestCase
 
         try
         {
-            BindingItem bindingItem = new BindingItem("jndiname1", "apache", new String[]{"","",""});
+            new BindingItem("jndiname1", "apache", new String[]{"","",""});
         } catch (Exception e)
         {
             assertTrue(true);

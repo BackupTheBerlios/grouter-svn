@@ -29,6 +29,7 @@ public abstract class AbstractDestinationTest extends TestCase
     AbstractListenerDestination qListenerTemporaryQueue;
 
     
+    @SuppressWarnings({"UnnecessaryLocalVariable"})
     public static InitialContext getJbossInitialContextForServer()
             throws NamingException
     {
@@ -41,6 +42,7 @@ public abstract class AbstractDestinationTest extends TestCase
         return iniCtx;
     }
 
+    @SuppressWarnings({"UnnecessaryLocalVariable"})
     public static InitialContext getInMemoryActiveMqContext()
             throws NamingException
     {

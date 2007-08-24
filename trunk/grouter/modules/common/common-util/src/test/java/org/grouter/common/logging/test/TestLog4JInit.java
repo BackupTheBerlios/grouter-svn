@@ -1,16 +1,15 @@
-/**
- * Created by IntelliJ IDEA.
- * User: georges.polyzois
- * Date: 2006-maj-23
- * Time: 07:49:03
- * To change this template use File | Settings | File Templates.
- */
 package org.grouter.common.logging.test;
 
 import junit.framework.TestCase;
 import org.grouter.common.logging.Log4JInit;
 import org.apache.log4j.Logger;
 
+
+/**
+ * Test
+ *
+ * @author Georges Polyzois
+ */
 public class TestLog4JInit extends TestCase
 {
 
