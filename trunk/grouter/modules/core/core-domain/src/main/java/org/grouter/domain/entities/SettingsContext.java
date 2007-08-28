@@ -19,7 +19,6 @@
 
 package org.grouter.domain.entities;
 
-import org.apache.log4j.Logger;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
@@ -31,7 +30,7 @@ import javax.persistence.*;
  * @Author Georges Polyzois
  */
 @Entity
-@Table(name = "jndi")
+@Table(name = "settings_context")
 public class SettingsContext extends BaseEntity<Long>
 {
     // These must match names specified in config.xsd
@@ -55,7 +54,9 @@ public class SettingsContext extends BaseEntity<Long>
     @Column(name = "value")
     String value;
 
-    @Column(name = "endpoint_fk")
+    @Column(name = "settings_fk")
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "settings_fk", nullable = false)
     Settings settings;
 
 
@@ -98,8 +99,6 @@ public class SettingsContext extends BaseEntity<Long>
     }
 
 
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinColumn(name = "endpoint_fk", nullable = false)
     public Settings getSettings()
     {
         return settings;

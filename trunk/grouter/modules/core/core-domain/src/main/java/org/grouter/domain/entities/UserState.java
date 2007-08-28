@@ -1,4 +1,3 @@
-package org.grouter.domain.entities;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,10 +17,15 @@ package org.grouter.domain.entities;
  * under the License.
  */
 
+package org.grouter.domain.entities;
 
 /**
  * @author Georges Polyzois
  */
-public class SeetingItem
+public class UserState
 {
+    // PENDIND if created but not activated by resetting One Time Password
+    // BLOCKED if retries exceeds max number of retries or if manually set to blocked by super user
+    // OPERATING normal state
+
 }

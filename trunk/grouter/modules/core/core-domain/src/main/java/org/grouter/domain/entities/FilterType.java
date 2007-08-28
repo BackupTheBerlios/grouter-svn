@@ -33,10 +33,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "filter_type")
-public class FilterType
+public class FilterType extends BaseEntity
 {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    @NotNull
     Long id;
+
+    @Column(name = "name")
     String name;
+
 
     public String getName()
     {
@@ -48,11 +56,6 @@ public class FilterType
         this.name = name;
     }
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "assigned")
-    @NotNull
     public Long getId()
     {
         return id;

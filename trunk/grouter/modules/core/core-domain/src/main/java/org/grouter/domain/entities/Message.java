@@ -106,7 +106,7 @@ public class Message<String> extends BaseEntity
      * Constructor for a Message. Must add senders and receivers using addXX methods
      * for domain object to be complete.
      *
-     * @param amessage
+     * @param amessage a message
      */
     public Message(String amessage)
     {
@@ -117,25 +117,7 @@ public class Message<String> extends BaseEntity
         this.content = amessage;
     }
 
-    /**
-     * Fully constructs a Message object.
-     *
-     * @param message
-     * @param receivers
-     * @param sender
-     */
-    public Message(String message, Set<Receiver> receivers, Sender sender, Node node)
-    {
-        if (message == null || receivers == null || sender == null || node == null)
-        {
-            throw new IllegalArgumentException("Non null parameters not allowed for this domain object.");
-        }
-        this.content = message;
-        this.receivers = receivers;
-        this.sender = sender;
-        this.node = node;
-    }
-
+    
 
     public String getId()
     {

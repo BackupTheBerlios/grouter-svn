@@ -19,7 +19,6 @@
 
 package org.grouter.domain.entities;
 
-import org.apache.log4j.Logger;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
@@ -38,7 +37,6 @@ import java.sql.Timestamp;
 @Table(name = "router")
 public class Router extends BaseEntity
 {
-    private static Logger logger = Logger.getLogger(Router.class);
 
 
     @Id
@@ -57,7 +55,7 @@ public class Router extends BaseEntity
 
     @OneToMany
     //@JoinColumn(displayName = "router_fk", nullable = true)
-    private Set<Node> nodes = new HashSet();
+    private Set<Node> nodes = new HashSet<Node>();
 
     @ManyToOne
     private Settings settings;
@@ -76,9 +74,6 @@ public class Router extends BaseEntity
 
     @Column(name = "homepath")
     private String homePath;
-
-
-
 
 
     public Router(String id, String displayName, String homePath)

@@ -29,7 +29,8 @@ import java.util.HashMap;
  */
 public class Job
 
-{    List<JobEvent> schedulerJobEvents = new ArrayList<JobEvent>();
+{
+    List<JobEvent> schedulerJobEvents = new ArrayList<JobEvent>();
 
     JobState jobState;
 

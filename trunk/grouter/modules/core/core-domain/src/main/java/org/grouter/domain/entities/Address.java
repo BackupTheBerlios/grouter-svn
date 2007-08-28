@@ -21,6 +21,7 @@ package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.Email;
+import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,29 +32,43 @@ import java.io.Serializable;
  *
  * @Author Georges Polyzois
  */
+
 @Entity
+@Table(name = "address")
 public class Address implements Serializable
 {
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @NotNull
     private String id;
+
     @Transient
     private Country country;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "mobilephone")
     private String mobilephone;
+    @Column(name = "street")
     private String street;
+    @Column(name = "zip")
     private String zip;
+    @Column(name = "city")
     private String city;
+    @Column(name = "fax")
     private String fax;
+    @Column(name = "homepageurl")
     private String homepageUrl;
+    @Column(name = "companyname")
     private String companyname;
+    @Column(name = "email")
+    @Email
     private String email;
 
     public Address()
     {
     }
 
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId()
     {
         return id;
@@ -156,7 +171,6 @@ public class Address implements Serializable
         this.companyname = companyname;
     }
 
-    @Email
     public String getEmail()
     {
         return email;

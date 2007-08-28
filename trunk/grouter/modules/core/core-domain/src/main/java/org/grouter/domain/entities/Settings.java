@@ -19,7 +19,6 @@
 
 package org.grouter.domain.entities;
 
-import org.apache.log4j.Logger;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
@@ -36,9 +35,6 @@ import java.util.HashMap;
 @Table(name = "settings")
 public class Settings extends BaseEntity
 {
-    @Transient
-    private static Logger logger = Logger.getLogger(Node.class);
-
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
@@ -49,9 +45,6 @@ public class Settings extends BaseEntity
 
     @OneToMany(targetEntity = org.grouter.domain.entities.SettingsContext.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Map settingsContext = new HashMap();
-
-
-
 
     public Settings()
     {

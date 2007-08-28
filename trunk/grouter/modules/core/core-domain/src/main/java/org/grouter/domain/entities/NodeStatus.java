@@ -3,9 +3,7 @@ package org.grouter.domain.entities;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 import java.util.Map;
 import java.util.HashMap;
 /*
@@ -33,6 +31,8 @@ import java.util.HashMap;
  *
  * @author Georges Polyzois
  */
+@Entity
+@Table(name = "nodestatus")
 public class NodeStatus
 {
 

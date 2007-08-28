@@ -32,12 +32,23 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "router")
+@Table(name = "role")
 public class Role extends BaseEntity
 {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "system-long")
+    @GenericGenerator(name = "system-long", strategy = "assigned")
+    @NotNull
     private Long id;
+
+    @Column( name = "name")
     private String name;
+
+    @Column( name = "displayname")
     private String displayName;
+
+    // static initialized types
     public static final Role ADMIN = new Role(1L, "ROLE_ADMIN");
     public static final Role REVIEWER = new Role(2L, "ROLE_REVIEWER");
     public static final Role SUPER_REVIEWER = new Role(3L, "ROLE_SUPER_REVIEWER");
@@ -45,7 +56,6 @@ public class Role extends BaseEntity
 
     private final static Map<Long, Role> valueOfMap = new LinkedHashMap<Long, Role>(4);
 
-    /*
     static
     {
         valueOfMap.put(ADMIN.getId(), ADMIN);
@@ -53,8 +63,6 @@ public class Role extends BaseEntity
         valueOfMap.put(SUPER_REVIEWER.getId(), SUPER_REVIEWER);
         valueOfMap.put(EDITOR.getId(), EDITOR);
     }
-
-*/
 
     public Role()
     {
@@ -66,11 +74,6 @@ public class Role extends BaseEntity
         this.name = name;
     }
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "assigned")
-    @NotNull
     public Long getId()
     {
         return id;

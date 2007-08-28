@@ -40,7 +40,12 @@ import java.io.Serializable;
 @Table(name = "user")
 public class User extends BaseEntity implements Comparable
 {
-    public final static int MAX_USER_NAME_LENGTH = 15;
+
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
     private String userName;
     private String firstName;
@@ -48,14 +53,20 @@ public class User extends BaseEntity implements Comparable
     private String password;
     private User createdBy;
     private Address address;
+
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
     private Set<UserRole> roles = new HashSet<UserRole>();
     private Boolean deleted;
 
-    
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+
+    public final static int MAX_USER_NAME_LENGTH = 15;
+
+
     public Long getId()
     {
         return id;
@@ -135,12 +146,6 @@ public class User extends BaseEntity implements Comparable
     }
 
 
-    @OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
     public Set<UserRole> getRoles()
     {
         return roles;

@@ -19,10 +19,7 @@
 
 package org.grouter.domain.entities;
 
-import org.apache.log4j.Logger;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.LazyInitializationException;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Length;
 
@@ -30,7 +27,6 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
-import java.io.Serializable;
 
 
 /**
@@ -42,9 +38,6 @@ import java.io.Serializable;
 @Table(name = "node")
 public class Node extends BaseEntity<String>
 {
-    @Transient
-    private static Logger logger = Logger.getLogger(Node.class);
-
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
@@ -56,10 +49,10 @@ public class Node extends BaseEntity<String>
     @Column(name = "displayName", nullable = false)
     private String displayName;
 
-    @Column(name = "status_id", nullable = false)
+    @Column(name = "nodestatus_fk", nullable = false)
     private NodeStatus nodeStatus;
 
-    @Column(name = "status_message", nullable = false)
+    @Column(name = "statusmessage", nullable = false)
     private String statusMessage;
 
 
@@ -113,8 +106,8 @@ public class Node extends BaseEntity<String>
     @Transient
     transient private Long numberOfMessagesHandled;
 
-    @Transient
-    private User modifiedByUser;
+    //@Transient
+    //private User modifiedByUser;
 
 
     public Node()
@@ -124,8 +117,8 @@ public class Node extends BaseEntity<String>
     /**
      * Constructor for creating a valid entity.
      *
-     * @param id
-     * @param dislayName
+     * @param id id of the node
+     * @param dislayName a name to display
      */
     public Node(String id, String dislayName)
     {
@@ -307,11 +300,11 @@ public class Node extends BaseEntity<String>
     {
         String toString;
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("id=" + id + ",");
-        stringBuilder.append("name=" + id + ",");
-        stringBuilder.append("senderStatic=" + senderStatic + ",");
-        stringBuilder.append("receiverStatic=" + receiverStatic);
-        stringBuilder.append("nodeStatus=" + nodeStatus);
+        stringBuilder.append("id=").append(id).append(",");
+        stringBuilder.append("name=").append(id).append(",");
+        stringBuilder.append("senderStatic=").append(senderStatic).append(",");
+        stringBuilder.append("receiverStatic=").append(receiverStatic);
+        stringBuilder.append("nodeStatus=").append(nodeStatus);
         toString = stringBuilder.toString();
         return toString;
     }
