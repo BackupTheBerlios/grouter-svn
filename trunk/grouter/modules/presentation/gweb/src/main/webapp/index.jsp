@@ -3,14 +3,12 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head><title>Simple jsp page</title></head>
+  <head><title>Grouter</title></head>
   <body>
-
-  <c:out value="${message.message}" />
-
-  <c:out value="${message.id}" /> 
+  .
 
 
+<a href="/node/list.do">Grouter nodes</a>
 
 
   </body>

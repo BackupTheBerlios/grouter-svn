@@ -24,7 +24,7 @@
                         <select id="routerid" name="routerid" onchange="this.form.submit()">
                             <option value="">--- router ---</option>
                             <c:forEach items="${routers}" var="object">
-                                <option <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if>  value="${object.id}">${object.name}</option>
+                                <option <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if>  value="${object.id}">${object.id}</option>
                             </c:forEach>
                         </select>
                         Node:
@@ -32,7 +32,7 @@
                             <option value="">--- node ---</option>
                             <c:forEach items="${nodes}" var="object">
                                 <option  <c:if test="${selectedNodeId eq object.id}">selected="selected"</c:if>
-                                    value="${object.id}">${object.name}</option>
+                                    value="${object.id}">${object.displayName}</option>
                             </c:forEach>
                         </select>
 

@@ -83,7 +83,7 @@
                         <select id="routerid" name="routerid" onchange="this.form.submit()">
                             <option value="">--- router ---</option>
                             <c:forEach items="${routers}" var="object">
-                                <option <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if> value="${object.id}" >${object.name}</option>
+                                <option <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if> value="${object.id}" >${object.id}</option>
                             </c:forEach>
                         </select>
                         <!-- Update in realtime: -->

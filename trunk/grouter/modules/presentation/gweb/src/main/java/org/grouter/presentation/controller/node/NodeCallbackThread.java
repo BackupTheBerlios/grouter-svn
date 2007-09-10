@@ -27,7 +27,7 @@ import org.directwebremoting.ScriptSession;
 import org.directwebremoting.proxy.dwr.Util;
 import org.directwebremoting.proxy.scriptaculous.Effect;
 import org.directwebremoting.util.Logger;
-import org.grouter.domain.servicelayer.ServiceFactory;
+import org.grouter.domain.servicelayer.BeanLocator;
 import org.grouter.domain.entities.Node;
 
 
@@ -107,7 +107,7 @@ public final class NodeCallbackThread implements Runnable
                 List<Node> nodesFromQuery = null;
                 if (clients.size() > 0)
                 {
-                    nodesFromQuery = ServiceFactory.getRouterService().findNodesWithNumberOfMessages(routerId);
+                    nodesFromQuery = BeanLocator.getRouterService().findNodesWithNumberOfMessages(routerId);
                     logger.debug("Number of nodesFromQuery for this routerId :" + routerId + " is:" + nodesFromQuery.size());
 
                     for (Node node : nodesFromQuery)
