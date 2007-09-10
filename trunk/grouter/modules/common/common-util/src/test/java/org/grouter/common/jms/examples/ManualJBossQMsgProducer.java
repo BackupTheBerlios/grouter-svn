@@ -11,12 +11,12 @@ import javax.naming.InitialContext;
  * Produces messages on queue.
  */
 @SuppressWarnings({"JavaDoc"})
-public class JBossQueueMessageProducer  extends AbstractJBossExample implements Runnable
+public class ManualJBossQMsgProducer extends AbstractJBossExample implements Runnable
 {
-    private static Logger logger = Logger.getLogger(JBossQueueMessageProducer.class);
+    private static Logger logger = Logger.getLogger(ManualJBossQMsgProducer.class);
 
 
-    public JBossQueueMessageProducer()
+    public ManualJBossQMsgProducer()
     {
         try
         {
@@ -26,7 +26,7 @@ public class JBossQueueMessageProducer  extends AbstractJBossExample implements 
             e.printStackTrace();
         } catch (NamingException e)
         {
-            e.printStackTrace();  
+            e.printStackTrace();
         }
 
     }
@@ -40,7 +40,7 @@ public class JBossQueueMessageProducer  extends AbstractJBossExample implements 
     private void setupMessaging() throws JMSException, NamingException
     {
         InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
-        Object tmp = iniCtx.lookup("ConnectionFactory");
+        Object tmp = iniCtx.lookup("UIL2ConnectionFactory");
         QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
         conn = qcf.createQueueConnection();
         que = (Queue) iniCtx.lookup(QUEUE_TEST_QUEUE);
@@ -60,11 +60,27 @@ public class JBossQueueMessageProducer  extends AbstractJBossExample implements 
     public void send(String text)
             throws JMSException
     {
-        QueueSender send = session.createSender(que);
-        TextMessage tm = session.createTextMessage(text);
-        send.send(tm);
-        logger.info("Message sennt");
-        send.close();
+        if (session != null)
+        {
+
+            QueueSender send = session.createSender(que);
+            TextMessage tm = session.createTextMessage(text);
+            send.send(tm);
+            logger.info("Message sent");
+            send.close();
+        }
+        else
+        {
+            logger.warn("No session");
+            try
+            {
+                setupMessaging();
+            } catch (NamingException e)
+            {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
     }
 
     /**
@@ -73,15 +89,15 @@ public class JBossQueueMessageProducer  extends AbstractJBossExample implements 
     public void run()
     {
         int i = 0;
-        while(true)
+        while (true)
         {
             try
             {
-                send("Message nr "+ i++);
+                send("Message nr " + i++);
                 Thread.sleep(SLEEP);
             } catch (Exception e)
             {
-                logger.error(e,e);
+                logger.error(e, e);
             }
         }
     }
@@ -89,8 +105,8 @@ public class JBossQueueMessageProducer  extends AbstractJBossExample implements 
 
     public static void main(String[] args)
     {
-        JBossQueueMessageProducer producer = new JBossQueueMessageProducer();
-        Thread thr = new Thread(producer);
+        ManualJBossQMsgProducer producerManual = new ManualJBossQMsgProducer();
+        Thread thr = new Thread(producerManual);
         thr.start();
     }
 

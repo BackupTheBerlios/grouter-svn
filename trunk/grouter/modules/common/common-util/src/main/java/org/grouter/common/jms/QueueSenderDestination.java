@@ -19,20 +19,20 @@
 package org.grouter.common.jms;
 
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.log4j.Logger;
+import org.grouter.common.exception.RemoteGrouterException;
+import org.grouter.common.jndi.JNDIUtils;
 import static org.grouter.common.jndi.ServiceLocatorContextAware.getInstance;
-
-import java.io.*;
-import java.util.*;
-import java.lang.IllegalStateException;
+import org.grouter.common.jndi.ServiceLocatorException;
 
 import javax.jms.*;
-import javax.jms.Queue;
-import javax.naming.*;
-
-import org.apache.commons.lang.builder.*;
-import org.apache.log4j.*;
-import org.grouter.common.jndi.ServiceLocatorException;
-import org.grouter.common.exception.RemoteGrouterException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import java.io.Serializable;
+import java.lang.IllegalStateException;
+import java.util.HashMap;
 
 /**
  * See {@link org.grouter.common.jms.AbstractDestination} and use abstract interface to concrete
@@ -296,6 +296,9 @@ public class QueueSenderDestination extends AbstractSenderDestination
     {
         try
         {
+            JNDIUtils.printJNDI(  context, logger );
+            logger.info( "Binding to destination :" + destinationName );
+
             // Find ConnectionFactory
             queueConnectionFactory = getInstance().getQueueConnectionFactory(connectionFactory, context);
             // Get queue

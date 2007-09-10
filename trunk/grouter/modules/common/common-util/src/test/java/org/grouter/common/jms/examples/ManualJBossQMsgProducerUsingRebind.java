@@ -12,13 +12,13 @@ import javax.naming.InitialContext;
  * Produces messages on queue.
  */
 @SuppressWarnings({"JavaDoc"})
-public class JBossQueueMessageProducerUsingRebind extends AbstractJBossExample implements Runnable
+public class ManualJBossQMsgProducerUsingRebind extends AbstractJBossExample implements Runnable
 {
-    private static Logger logger = Logger.getLogger(JBossQueueMessageProducerUsingRebind.class);
+    private static Logger logger = Logger.getLogger(ManualJBossQMsgProducerUsingRebind.class);
     private QueueSenderDestination queueDestination;
 
 
-    public JBossQueueMessageProducerUsingRebind()
+    public ManualJBossQMsgProducerUsingRebind()
     {
         try
         {
@@ -41,6 +41,11 @@ public class JBossQueueMessageProducerUsingRebind extends AbstractJBossExample i
     {
         InitialContext iniCtx = JNDIUtils.getJbossInitialContext();
         //queueDestination = new QueueSenderDestination(QUEUE_TEST_QUEUE, "ConnectionFactory",   null, iniCtx, 4000, AcknowledgeMode.NONE);
+
+         /*queueDestination = new QueueSenderDestination(LOG_Q_NAME, (String) settingsContext.get(
+                    SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), new NeverRebind(),
+                    getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
+           */
         queueDestination = new QueueSenderDestination(QUEUE_TEST_QUEUE, "UIL2ConnectionFactory",   null, iniCtx, 4000, AcknowledgeMode.NONE);
         queueDestination.bind();
     }
@@ -82,7 +87,7 @@ public class JBossQueueMessageProducerUsingRebind extends AbstractJBossExample i
 
     public static void main(String[] args)
     {
-        JBossQueueMessageProducerUsingRebind producer = new JBossQueueMessageProducerUsingRebind();
+        ManualJBossQMsgProducerUsingRebind producer = new ManualJBossQMsgProducerUsingRebind();
 
         Thread thr = new Thread(producer);
         thr.start();

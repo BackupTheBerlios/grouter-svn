@@ -20,6 +20,7 @@ package org.grouter.common.jms;
 
 
 import org.apache.log4j.Logger;
+import org.grouter.common.exception.RemoteGrouterException;
 
 /**
  * This "algorithm" just unbindes and leaves it with that.
@@ -39,6 +40,8 @@ public class NeverRebind extends RebindBehavior
 
     /**
      * The algorithm implementation for rebinding goes here.
+     * @throws RemoteGrouterException to clients that want to handle an exception and
+     * log it this exception is thrown (Runtime exception)
      */
     public void rebind(AbstractDestination dest)
     {
@@ -46,5 +49,6 @@ public class NeverRebind extends RebindBehavior
         // We unbind and do nothing more
         dest.unbind();
         logger.debug("We unbinded from the destination, if any.");
+        throw new RemoteGrouterException("Could not bind to JMS destination");
     }
 }

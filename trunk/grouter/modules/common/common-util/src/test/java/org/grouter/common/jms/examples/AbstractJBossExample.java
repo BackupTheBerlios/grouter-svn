@@ -12,5 +12,5 @@ public abstract class AbstractJBossExample
     protected QueueConnection conn;
     protected QueueSession session;
     protected QueueReceiver queueReceiver;
-    protected static final int SLEEP = 2000;
+    protected static final int SLEEP = 4000;
 }

@@ -151,7 +151,7 @@ public class JNDIUtils
     {
         if (jndiUrl == null)
         {
-            jndiUrl = "jnp://localhost:1099";
+            jndiUrl = "jnp://127.0.0.1:1099";
         }
         Hashtable<String,String> hashtable = new Hashtable<String,String>();
         hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");

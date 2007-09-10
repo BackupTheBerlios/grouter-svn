@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import java.util.concurrent.TimeUnit;
 
 /**
- * EternalRebind will continue to rebind 4ever. It will gracefully
+ * EternalRebind will continue to rebind "4ever". It will gracefully
  * wait longer end longer before rebinding again up till a MAXWAITFORREBIND
  * time period.
  *

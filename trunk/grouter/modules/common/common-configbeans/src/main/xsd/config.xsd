@@ -55,8 +55,15 @@
     <xs:attribute name="id" use="required"/>
     <xs:attribute name="createuniquename" type="xs:boolean"/>
     <xs:attribute name="endPointType" type="xs:boolean"/>
-    <xs:attribute name="senderStatic" type="xs:string"/>
-    <xs:attribute name="receiverStatic" type="xs:string"/>
+    <!--
+    A source is an optional attribute on a Node indicating from which source
+    we are getting messages. A message in it self can contain a sender - and different
+    messages arriving to an inbound endpoint for a node can have different senders.
+    A source might be e.g. BritishAirWaysCargoFtpServer but messages received from
+    that source might have senders different from BA.
+    -->
+    <xs:attribute name="source" type="xs:string"/>
+    <xs:attribute name="receiver" type="xs:string"/>
   </xs:complexType>
 
   <!-- Third level -->
@@ -79,6 +86,7 @@
       <xs:enumeration value="FTP_WRITER"/>
       <xs:enumeration value="JMS_READER"/>
       <xs:enumeration value="JMS_WRITER"/>
+      <xs:enumeration value="HTTP_READER"/>
     </xs:restriction>
   </xs:simpleType>
 
