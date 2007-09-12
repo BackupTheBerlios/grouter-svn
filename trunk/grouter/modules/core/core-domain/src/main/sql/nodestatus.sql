@@ -12,5 +12,6 @@ insert into nodestatus (id, name) values (3,'RUNNING');
 insert into nodestatus (id, name) values (4,'RESCHEDULED_TO_START');
 insert into nodestatus (id, name) values (5,'STOPPED');
 insert into nodestatus (id, name) values (6,'ERROR');
+insert into nodestatus (id, name) values (7,'NOT_CONFIGURED_TO_START');
 
 

@@ -11,4 +11,4 @@ insert into endpoint_type (id, name) values (3,'ftpReader');
 insert into endpoint_type (id, name) values (4,'ftpWriter');
 insert into endpoint_type (id, name) values (5,'jmsReader');
 insert into endpoint_type (id, name) values (6,'jmsWriter');
-
+insert into endpoint_type (id, name) values (7,'httpReader');

@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS sender;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS user_role;
+DROP TABLE IF EXISTS user_state;
 DROP TABLE IF EXISTS property;
 DROP TABLE IF EXISTS endpoint;
 DROP TABLE IF EXISTS endpoint_type;
@@ -22,6 +23,11 @@ DROP TABLE IF EXISTS endpoint_context;
 DROP TABLE IF EXISTS filter_type;
 DROP TABLE IF EXISTS settings;
 DROP TABLE IF EXISTS settings_context;
+DROP TABLE IF EXISTS job;
+DROP TABLE IF EXISTS job_context;
+DROP TABLE IF EXISTS job_state;
+DROP TABLE IF EXISTS job_type;
+DROP TABLE IF EXISTS job_event;
 
 set foreign_key_checks = 1;
 
@@ -34,6 +40,8 @@ select 'address.sql';
 \. address.sql
 select 'property.sql';
 \. property.sql
+select 'user_state.sql';
+\. user_state.sql
 select 'user.sql';
 \. user.sql
 select 'role.sql';
@@ -64,6 +72,16 @@ select 'sender.sql';
 \. sender.sql
 select 'filter_type.sql';
 \. filter_type.sql
+select 'job_state.sql';
+\. job_state.sql
+select 'job_type.sql';
+\. job_type.sql
+select 'job.sql';
+\. job.sql
+select 'job_context.sql';
+\. job_context.sql
+select 'job_event.sql';
+\. job_event.sql
 
 
 
