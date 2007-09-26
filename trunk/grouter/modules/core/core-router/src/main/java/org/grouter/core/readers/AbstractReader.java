@@ -25,9 +25,9 @@ import org.grouter.core.command.CommandFactory;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.core.exception.ValidationException;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.NodeStatus;
-import org.grouter.domain.servicelayer.ServiceFactory;
+import org.grouter.domain.servicelayer.BeanLocator;
 import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
+import org.grouter.common.guid.GuidGenerator;
 import org.quartz.Job;
 import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
@@ -55,7 +55,8 @@ public abstract class AbstractReader implements Job, InterruptableJob
     protected BlockingQueue<AbstractCommand> queue;
     protected static final String NODE = "node";
     protected static final String QUEUE = "queue";
-    LogStrategy logStrategy;
+    
+    protected static LogStrategy logStrategy =  BeanLocator.getLogStrategy(BeanLocator.LOGSTRATEGY_BEAN);
 
 
     public void setNode(Node node)
@@ -95,6 +96,7 @@ public abstract class AbstractReader implements Job, InterruptableJob
      * been set previously upon an exception.
      */
     abstract void setNodeStatusToRunning();
+    
     abstract void setNodeStatusToNotRunning( String errorMessage );
 
     /**
@@ -149,7 +151,35 @@ public abstract class AbstractReader implements Job, InterruptableJob
             throws IOException
     {
         String message = FileUtils.readFileToString(new File(currentFile.getPath()), "UTF-8");
-        return message.substring(0, MESSAGE_LENGTH);
+
+        int messageLength = MESSAGE_LENGTH;
+        if( message.length() < MESSAGE_LENGTH )
+        {
+            messageLength = message.length();
+        }
+
+        return message.substring(0, messageLength);
 
     }
+
+
+    /**
+     * Utility method to create a path to the internal stored file within this node. Replaces
+     * '/' in the path if present.
+     * E.g. it might return something like /install/grouter/nodes/filenode/internal/my_file
+     *
+     *
+     * @param fullPathToFile
+     * @return
+     */
+    protected File getInternalFile( String fullPathToFile )
+    {
+        return new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in" + File.separator + GuidGenerator.getInstance().getGUID());
+    }
+
+
+
+
+
+
 }

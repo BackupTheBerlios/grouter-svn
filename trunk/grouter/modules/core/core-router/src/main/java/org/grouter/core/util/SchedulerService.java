@@ -19,23 +19,25 @@
 
 package org.grouter.core.util;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.log4j.Logger;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandConsumerJob;
 import org.grouter.core.readers.FileReaderJob;
 import org.grouter.core.readers.FtpReaderJob;
+import org.grouter.core.readers.HttpReaderJob;
 import org.grouter.core.readers.JmsReaderJob;
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.NodeStatus;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.util.concurrent.*;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * What's the right size for a thread pool, assuming the goal is to keep the
@@ -118,6 +120,17 @@ public class SchedulerService
             if (node.getInBound().getEndPointType().getId() == EndPointType.JMS_READER.getId())
             {
                 JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), JmsReaderJob.class);
+                jobDetail.getJobDataMap().put("node", node);
+                jobDetail.getJobDataMap().put("queue", blockingQueue);
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                scheduler.scheduleJob(jobDetail, cronTrigger);
+
+            }
+
+
+            if (node.getInBound().getEndPointType().getId() == EndPointType.HTTP_READER.getId())
+            {
+                JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), HttpReaderJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
                 CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());

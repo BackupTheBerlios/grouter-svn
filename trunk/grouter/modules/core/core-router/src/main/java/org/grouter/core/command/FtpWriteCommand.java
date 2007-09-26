@@ -26,7 +26,7 @@ import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.NodeStatus;
 import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategyImpl;
 import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
-import org.grouter.domain.servicelayer.ServiceFactory;
+import org.grouter.domain.servicelayer.BeanLocator;
 import org.grouter.common.guid.GuidGenerator;
 
 import java.io.File;
@@ -41,7 +41,7 @@ public class FtpWriteCommand extends AbstractCommand
 {
     private static Logger logger = Logger.getLogger(FtpWriteCommand.class);
     LogStrategy logStrategy;
-        ServiceFactory serviceFactory;
+        BeanLocator beanLocator;
     
 
 
@@ -106,7 +106,7 @@ public class FtpWriteCommand extends AbstractCommand
             message.setContent(commandMessage.getMessage());
             message.setNode(node);
 
-            LogStrategy jdbcLogStrategy = (JDBCLogStrategyImpl) serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+            LogStrategy jdbcLogStrategy = (JDBCLogStrategyImpl) beanLocator.getLogStrategy(BeanLocator.LOGSTRATEGY_BEAN);
             jdbcLogStrategy.log(message);
         }
     }
@@ -123,10 +123,10 @@ public class FtpWriteCommand extends AbstractCommand
     /**
      * Injected.
      *
-     * @param serviceFactory
+     * @param beanLocator
      */
-    public void setServiceFactory(ServiceFactory serviceFactory)
+    public void setServiceFactory(BeanLocator beanLocator)
     {
-        this.serviceFactory = serviceFactory;
+        this.beanLocator = beanLocator;
     }
 }

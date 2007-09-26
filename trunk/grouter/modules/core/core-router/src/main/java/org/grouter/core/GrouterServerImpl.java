@@ -50,21 +50,15 @@ public class GrouterServerImpl implements Runnable, GrouterServer
 {
 
     private static Logger logger = Logger.getLogger(GrouterServerImpl.class);
-
     // spring context
     ApplicationContext context;
-
     // handler for configuration file
     private XmlConfigHandler xmlConfigHandler;
-
     private Router router;
-
     // scheduler service handles start / stop etc of nodes
     private static SchedulerService schedulerService;
-
     // operation against database are handled through this service
     static RouterService routerService;
-
     private static final String ROUTER_SERVICE = "routerService";
 
     /**
@@ -112,6 +106,8 @@ public class GrouterServerImpl implements Runnable, GrouterServer
 
             RouterCache.init( router );
 
+            logger.info( router.printNodes() );
+
         }
         catch (Exception ex)
         {
@@ -143,7 +139,11 @@ public class GrouterServerImpl implements Runnable, GrouterServer
         //rmiServiceExporter.
 
         routerService.saveRouter( router );
+
+        routerService.updateStateForNotConfiguredNodes( router.getId(),  router.getNodes() );
         logger.info("Router state saved in database");
+
+
         logStatus(router);
 
     }

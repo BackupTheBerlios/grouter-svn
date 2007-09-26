@@ -25,7 +25,7 @@ import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.NodeStatus;
 import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
-import org.grouter.domain.servicelayer.ServiceFactory;
+import org.grouter.domain.servicelayer.BeanLocator;
 
 import java.io.File;
 
@@ -39,7 +39,7 @@ public class FileWriteCommand extends AbstractCommand
 {
     private static Logger logger = Logger.getLogger(FileWriteCommand.class);
     LogStrategy logStrategy;
-    ServiceFactory serviceFactory;
+    BeanLocator beanLocator;
 
 
 
@@ -70,7 +70,7 @@ public class FileWriteCommand extends AbstractCommand
     @Override
     public void transform()
     {
-        // Todo
+        // Todo implement this
         logger.debug("Do a transform !!!!!!!");
     }
 
@@ -86,8 +86,11 @@ public class FileWriteCommand extends AbstractCommand
                 // validation is done at bootstrap - folder might be deleted during the lifetime of
                 // the router - but we will then try creating that folder and copy the file
                 // there anyway. If an exception is raised we log that.
-                FileUtils.copyFile(commandMessage.getInternalInFile(), new File(node.getOutBound().getUri() + File.separator + commandMessage.getInternalInFile().getName()));
-                //File internalOutFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getName() + "_" + GuidGenerator.getInstance().getGUID());
+                File outFile = new File( node.getOutBound().getUri() + File.separator + commandMessage.getInternalInFile().getName()  );
+                File inFile = commandMessage.getInternalInFile();
+                logger.debug( "Copying file from :" + outFile + " to :" +outFile );
+                FileUtils.copyFile( inFile, outFile);
+                //File internalOutFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out" + File.separator + commandMessage.getInternalInFile().getMessage() + "_" + GuidGenerator.getInstance().getGUID());
 
                 // delete fron internal file - a backup was saved if configured to do so...
                 commandMessage.getInternalInFile().delete();
@@ -103,7 +106,7 @@ public class FileWriteCommand extends AbstractCommand
 
     public void logInfoMessage()
     {
-        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        logStrategy = beanLocator.getLogStrategy(BeanLocator.LOGSTRATEGY_BEAN);
         for (CommandMessage commandMessage : commandMessages)
         {
             Message message = new Message();
@@ -115,7 +118,7 @@ public class FileWriteCommand extends AbstractCommand
 
     void logErroMessage(String errorMessage)
     {
-        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        logStrategy = beanLocator.getLogStrategy(BeanLocator.LOGSTRATEGY_BEAN);
         node.setNodeStatus(NodeStatus.ERROR);
         node.setStatusMessage( errorMessage );
         logStrategy.log(node);
@@ -125,10 +128,10 @@ public class FileWriteCommand extends AbstractCommand
     /**
      * Injected.
      *
-     * @param serviceFactory the servicefactory
+     * @param beanLocator the servicefactory
      */
-    public void setServiceFactory(ServiceFactory serviceFactory)
+    public void setServiceFactory(BeanLocator beanLocator)
     {
-        this.serviceFactory = serviceFactory;
+        this.beanLocator = beanLocator;
     }
 }

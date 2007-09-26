@@ -23,8 +23,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.servicelayer.ServiceFactory;
-import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 import org.grouter.common.guid.GuidGenerator;
 
 import java.util.List;
@@ -77,7 +75,6 @@ public abstract class AbstractCommand
     /**
      * If configured commandMessages are backuped.
      */
-
     public void backup()
     {
         // check if we should backup message to file

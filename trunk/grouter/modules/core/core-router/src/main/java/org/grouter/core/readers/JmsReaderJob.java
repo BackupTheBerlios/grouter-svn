@@ -26,7 +26,6 @@ import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.NodeStatus;
-import org.grouter.domain.servicelayer.ServiceFactory;
 import org.grouter.common.jms.*;
 import org.grouter.common.guid.GuidGenerator;
 import org.quartz.JobExecutionContext;
@@ -63,7 +62,6 @@ public class JmsReaderJob extends AbstractReader
     private static final String JMS_CONTEXTFACTORY = "jndi.contextFactory";
     private static final String JMS_URLPKGPREFIXES = "jndi.urlPkgPrefixes";
     private static final int WAIT_TIME = 1000;
-    ServiceFactory serviceFactory;
 
 
     /**
@@ -71,14 +69,13 @@ public class JmsReaderJob extends AbstractReader
      */
     public JmsReaderJob()
     {
-       // logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
     }
 
 
     @Override
     protected List<CommandMessage> readFromSource()
     {
-        logger.info("Reading JMS messages from :" + node.getInBound().getUri());
+        logger.info("In readFromSource using uri :" + node.getInBound().getUri());
 
         // a list of full paths on ftp server we will download from                                      node
         List<CommandMessage> commandMessages = new ArrayList<CommandMessage>();
@@ -98,7 +95,7 @@ public class JmsReaderJob extends AbstractReader
                 Message msg = clientQ.getMessageConsumer().receive(WAIT_TIME);
                 if (msg != null)
                 {
-                    File internalInFile = new File(node.getRouter().getHomePath() + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in" + File.separator + GuidGenerator.getInstance().getGUID());
+                    File internalInFile = getInternalFile( "jms" );
 
                     FileUtils.writeStringToFile(internalInFile, msg.toString());
 
@@ -111,12 +108,16 @@ public class JmsReaderJob extends AbstractReader
         }
         catch (Exception e)
         {
+            node.setNodeStatus(NodeStatus.ERROR);
+            node.setStatusMessage( "Failed reading from JMS destination :" + node.getInBound().getUri() + " Error:" + e.getMessage() );
+            logStrategy.log( node );
             logger.warn("Could not read data from destination. Probably connection problem with JMS server.", e);
         }
         finally
         {
             if (client != null)
             {
+                logger.debug( "Unbinding from JMS destination" );
                 client.unbind();
             }
         }
@@ -125,6 +126,7 @@ public class JmsReaderJob extends AbstractReader
 
     private AbstractDestination initConnection(Node node) throws Exception
     {
+        logger.debug( "Initializing connection to JMS" );
         Map endPointContext = node.getInBound().getEndPointContext();
         String destinationName = (String) endPointContext.get(JMS_DESTINATIONNAME);
         String queueConnectionFactory = (String) endPointContext.get(JMS_CONNECTIONFACTORY);
@@ -139,16 +141,17 @@ public class JmsReaderJob extends AbstractReader
             // Queue destination
             destination = new QueueListenerDestination(destinationName, queueConnectionFactory,
                     new NeverRebind(), getInitialContext(providerUrl, contextFactory, urlPkgPrefixes),
-                    null, AcknowledgeMode.CLIENT_ACKNOWLEDGE);
+                    null, AcknowledgeMode.AUTO_ACKNOWLEDGE);
         } else
         {
             // Topic destination
             destination = new TopicListenerDestination(destinationName, queueConnectionFactory,
                     new NeverRebind(), getInitialContext(providerUrl, contextFactory, urlPkgPrefixes),
-                    null, AcknowledgeMode.CLIENT_ACKNOWLEDGE);
+                    null, AcknowledgeMode.AUTO_ACKNOWLEDGE);
         }
         try
         {
+            logger.debug( "Trying to bind to JMS" );
             destination.bind();
         } catch (Exception e)
         {
@@ -212,7 +215,7 @@ public class JmsReaderJob extends AbstractReader
 
 
     /**
-     * Called to init every time Quartz innvokes execute.
+     * Called to init every times Quartz innvokes execute.
      *
      * @param node          the node
      * @param blockingQueue the blocking queue
@@ -250,7 +253,6 @@ public class JmsReaderJob extends AbstractReader
 
     void setNodeStatusToRunning()
     {
-        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
         node.setNodeStatus( NodeStatus.RUNNING );
         node.setStatusMessage("");
         logStrategy.log(node);
@@ -258,7 +260,7 @@ public class JmsReaderJob extends AbstractReader
 
     void setNodeStatusToNotRunning( String errorMessage )
     {
-        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
+        // get logger from global application context
         node.setNodeStatus( NodeStatus.ERROR );
         node.setStatusMessage( errorMessage );
         logStrategy.log(node);

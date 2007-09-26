@@ -24,6 +24,8 @@ import org.apache.commons.lang.Validate;
 import org.grouter.domain.entities.*;
 import org.grouter.config.GrouterDocument;
 import org.grouter.config.Context;
+import org.grouter.config.NodesType;
+import org.grouter.config.NodeType;
 import org.grouter.core.util.file.FileUtils;
 
 import java.util.Set;
@@ -100,19 +102,23 @@ public class ConfigFactory
     }
 
 
-    private static Set<Node> getNodes(final GrouterDocument.Grouter grouterconfig, final Router router) throws IllegalArgumentException
+    private static Set<Node> getNodes(final GrouterDocument.Grouter grouterconfig,
+                                      final Router router
+    ) throws IllegalArgumentException
     {
         Set<Node> result = new HashSet<Node>();
 
-        org.grouter.config.Node[] nodes = grouterconfig.getNodeArray();
+        NodesType nodes = grouterconfig.getNodes();
+        NodeType[] nodeArr = nodes.getNodeArray();
 
-        for (org.grouter.config.Node configNode : nodes)
+        for (NodeType configNode : nodeArr)
         {
+
             Node nodeEntity = new Node();
             nodeEntity.setDisplayName(configNode.getDisplayName());
             nodeEntity.setId(configNode.getId().getStringValue());
-            nodeEntity.setReceiverStatic(configNode.getReceiverStatic());
-            nodeEntity.setSenderStatic(configNode.getSenderStatic());
+            nodeEntity.setReceiver(configNode.getReceiver());
+            nodeEntity.setSource(configNode.getSource());
 
             if (configNode.isSetBackup())
             {
@@ -190,6 +196,16 @@ public class ConfigFactory
                 endPoint.getEndPointType().equals(org.grouter.config.EndPointType.JMS_WRITER))
         {
             uriValid = endPoint.getUri();
+            supportedEndpointtypeFound = true;
+        }
+
+        if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.HTTP_READER ) )
+        {
+            String urlpath = endPoint.getUri();
+            urlpath = urlpath.replace("http://", "");
+            urlpath = urlpath.replace("https://", "");
+            uriValid = urlpath.replaceAll("/", "");
+            endPoint.setUri(uriValid);
             supportedEndpointtypeFound = true;
         }
 

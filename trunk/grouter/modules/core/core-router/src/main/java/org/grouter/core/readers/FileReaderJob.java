@@ -20,18 +20,20 @@
 package org.grouter.core.readers;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.io.FileUtils;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.core.exception.ValidationException;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.NodeStatus;
-import org.grouter.domain.servicelayer.ServiceFactory;
 import org.quartz.JobExecutionContext;
 import org.quartz.UnableToInterruptJobException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -42,8 +44,7 @@ import java.util.List;
 public class FileReaderJob extends AbstractReader
 {
     private static Logger logger = Logger.getLogger(FileReaderJob.class);
-    ServiceFactory serviceFactory;
-        
+
 
     /**
      * Empty - needed by Quartz framework.
@@ -71,7 +72,51 @@ public class FileReaderJob extends AbstractReader
     protected List<CommandMessage> readFromSource()
     {
         logger.info(node.getId() + " is reading files from " + node.getInBound().getUri());
-        return FileReaderHelper.getCommands(node);
+        File inFolder = new File(node.getInBound().getUri());
+        File[] curFiles = inFolder.listFiles();  // TODO refactor to use generic Filter
+
+        if (curFiles == null || curFiles.length == 0)
+        {
+            logger.debug("No files found - empty : " + node.getInBound().getUri());
+            return null;
+        }
+        logger.debug("Found number of files and folders : " + curFiles.length);
+        List<CommandMessage> commandMessages = new ArrayList<CommandMessage>(curFiles.length);
+        for (File curFile : curFiles)
+        {
+            if (curFile.isDirectory())
+            {
+                try
+                {
+                    FileUtils.forceDelete(curFile);
+                } catch (IOException e)
+                {
+                    if (logger.isDebugEnabled())
+                    {
+                        logger.debug("Could not delete folder", e);
+                    }
+                }
+            } else
+            {
+                try
+                {
+                    // move file from inbound location to node's internal in folder
+                    File internalInFile = getInternalFile( "file" );
+                    FileUtils.copyFile(curFile, internalInFile);
+                    curFile.delete();
+
+                    // Get part of the message to store for querying purposes
+                    String message = getMessage(internalInFile);
+                    CommandMessage cmdMessage = new CommandMessage(message, internalInFile);
+                    commandMessages.add(cmdMessage);
+                }
+                catch (Exception ex)
+                {
+                    logger.info(ex, ex);
+                }
+            }
+        }
+        return commandMessages;
     }
 
 
@@ -128,7 +173,6 @@ public class FileReaderJob extends AbstractReader
 
     void setNodeStatusToRunning()
     {
-        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
         node.setNodeStatus( NodeStatus.RUNNING );
         node.setStatusMessage("");
         logStrategy.log(node);
@@ -136,7 +180,6 @@ public class FileReaderJob extends AbstractReader
 
     void setNodeStatusToNotRunning( String errorMessage )
     {
-        logStrategy = serviceFactory.getLogStrategy(ServiceFactory.JDBCLOGSTRATEGY_BEAN);
         node.setNodeStatus( NodeStatus.ERROR );
         node.setStatusMessage( "Node is running but got errors." +  errorMessage );
         logStrategy.log(node);
