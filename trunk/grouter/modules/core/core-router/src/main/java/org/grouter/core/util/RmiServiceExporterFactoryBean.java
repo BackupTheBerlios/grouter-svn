@@ -19,38 +19,34 @@
 
 package org.grouter.core.util;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.remoting.rmi.RmiServiceExporter;
-import org.grouter.core.GrouterServer;
-import org.grouter.core.GrouterServerImpl;
-
-import java.rmi.RemoteException;
+import org.grouter.core.RemoteRouterService;
+import org.grouter.core.RouterServerImpl;
 
 /**
- * A {@link RmiServiceExporter} configuration is static - so we have this delegator which implement a factory
- * interface in spring to be able to init ports before calling prepare() on RmiServiceExporter.
+ * A {@link RmiServiceExporter} configuration is static. This class delegates to
+ * {@link RmiServiceExporter} and implements a factory interface in spring to be able
+ * to init ports before calling prepare() on RmiServiceExporter - which registers
+ * the our RemoteRouterService in jndi.
  *
- * Another option would be to extend RmiServiceExporter and override afterPropertiesSet so that prepare is not
- * called.
+ * Another option would be to extend RmiServiceExporter and override afterPropertiesSet so
+ * that prepare is not called until we explicitly say so.
  *
  * @author Georges Polyzois
  */
 public class RmiServiceExporterFactoryBean implements FactoryBean
 {
-    GrouterServerImpl grouterServer;
+    RouterServerImpl routerServer;
     RmiServiceExporter rmiServiceExporter = new RmiServiceExporter();
-    private static final String GROUTER_SERVICE = "GrouterService";
+    private static final String REMOTE_ROUTER_SERVICE = "RemoteRouterService";
 
 
     public Object getObject() throws Exception
     {
-        rmiServiceExporter.setServiceName(GROUTER_SERVICE);
-        rmiServiceExporter.setServiceInterface(GrouterServer.class);
-        rmiServiceExporter.setService(grouterServer);
+        rmiServiceExporter.setServiceName(REMOTE_ROUTER_SERVICE);
+        rmiServiceExporter.setServiceInterface(RemoteRouterService.class);
+        rmiServiceExporter.setService(routerServer);
         return rmiServiceExporter;
     }
 
@@ -66,13 +62,10 @@ public class RmiServiceExporterFactoryBean implements FactoryBean
 
     /**
      * Injected.
-     * @param grouterServer
+     * @param routerServer
      */
-    public void setGrouterServer(GrouterServerImpl grouterServer)
+    public void setRouterServer(final RouterServerImpl routerServer)
     {
-        this.grouterServer = grouterServer;
+        this.routerServer = routerServer;
     }
-
-
-
 }

@@ -98,6 +98,20 @@ public class ConfigFactory
         settingsContext.put( SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY, grouterconfig.getSettings().getJndi().getNamingQueueconnectionfactoy() );
 
         settingsContext.put( SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE, grouterconfig.getSettings().getLogging().getJmsLoggingQueue() );
+
+
+
+        if( grouterconfig.getSettings().getDataSource() != null )
+        {
+            logger.info("Datasource was set in config");
+
+            settingsContext.put( SettingsContext.KEY_SETTINGS_DATASOURCE_DIALECT, grouterconfig.getSettings().getDataSource().getDialect() );
+            settingsContext.put( SettingsContext.KEY_SETTINGS_DATASOURCE_DRIVERCLASSNAME, grouterconfig.getSettings().getDataSource().getDriverClassName() );
+            settingsContext.put( SettingsContext.KEY_SETTINGS_DATASOURCE_URL, grouterconfig.getSettings().getDataSource().getUrl() );
+            settingsContext.put( SettingsContext.KEY_SETTINGS_DATASOURCE_USERNAME, grouterconfig.getSettings().getDataSource().getUserName() );
+            settingsContext.put( SettingsContext.KEY_SETTINGS_DATASOURCE_PASSWORD, grouterconfig.getSettings().getDataSource().getPassword() );
+        }
+
         return new Settings( router.getId(), settingsContext);
     }
 

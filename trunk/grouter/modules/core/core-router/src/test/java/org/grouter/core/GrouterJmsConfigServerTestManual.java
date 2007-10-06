@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author Georges Polyzois
  */
-public class GrouterServerTestManual extends TestCase //extends AbstractGrouterTests
+public class GrouterJmsConfigServerTestManual extends TestCase //extends AbstractGrouterTests
 {
     private static final String DATA_SOURCE_BEAN_NAME = "dataSource";
 
@@ -28,9 +28,9 @@ public class GrouterServerTestManual extends TestCase //extends AbstractGrouterT
      */
     public static void useJmsConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_jms.xml");
-        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
-        grouter.start();
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_jms.xml");
+        RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
+        router.start();
     }
 
 
@@ -41,9 +41,9 @@ public class GrouterServerTestManual extends TestCase //extends AbstractGrouterT
      */
     public static void useFtpConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_ftp.xml");
-        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
-        grouter.start();
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_ftp.xml");
+        RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
+        router.start();
     }
 
     /**
@@ -53,9 +53,9 @@ public class GrouterServerTestManual extends TestCase //extends AbstractGrouterT
      */
     public static void useFileConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_file.xml");
-        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
-        grouter.start();
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
+        router.start();
     }
 
 
@@ -67,9 +67,9 @@ public class GrouterServerTestManual extends TestCase //extends AbstractGrouterT
      */
     public static void useFtpAndFileConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_ftp_and_file.xml");
-        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
-        grouter.start();
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_ftp_and_file.xml");
+        RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
+        router.start();
     }
 
 
@@ -80,7 +80,7 @@ public class GrouterServerTestManual extends TestCase //extends AbstractGrouterT
     {
         try
         {
-            useFileConfig();
+            useJmsConfig();
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -90,9 +90,9 @@ public class GrouterServerTestManual extends TestCase //extends AbstractGrouterT
 
     public void testStartUpGrouterThread() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_file.xml");
-        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
-        grouter.start();
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
+        router.start();
     }
 
 
@@ -103,10 +103,10 @@ public class GrouterServerTestManual extends TestCase //extends AbstractGrouterT
      */
     public void testStartGrouterWithValidConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/grouterconfig_file.xml");
-        GrouterServerImpl grouter = new GrouterServerImpl(classPathResource.getFile().toString());
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
 
-        assertNotNull(grouter);
+        assertNotNull(router);
 
         ApplicationContext context = new ClassPathXmlApplicationContext(getConfigLocations());
         DataSource dataSource = (DataSource) context.getBean(DATA_SOURCE_BEAN_NAME);

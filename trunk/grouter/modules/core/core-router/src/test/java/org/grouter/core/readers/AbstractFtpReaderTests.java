@@ -102,7 +102,7 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
         inbound.setId("1");
         EndPointContext endPointContext3 = new EndPointContext(FtpReaderJob.FTP_PORT, "12345", inbound);
         Map map = new HashMap();
-        map.put(endPointContext3.getKeyname(), endPointContext3);
+        map.put(endPointContext3.getKeyName(), endPointContext3);
         inbound.setEndPointContext(map);
 
 
@@ -228,7 +228,7 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
             this.port = DEFAULT_PORT;
         } catch (IOException e)
         {
-            System.out.println("Failed to use default port");
+            logger.error( "Failed to use default port" );
             try
             {
                 // didn't work, try to find one dynamically

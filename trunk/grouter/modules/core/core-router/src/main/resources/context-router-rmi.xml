@@ -7,12 +7,10 @@
     <property name="location" value="file:/etc/grouter-environment.properties"/>
   </bean>
 
-
-
-
   <bean id="rmiServiceExporterFactoryBean" class="org.grouter.core.util.RmiServiceExporterFactoryBean"/>
 
-  <bean id="grouterServer" class="org.grouter.core.GrouterServerImpl"/>
+  <!-- Implementation class for the remote operations -->
+  <bean id="routerServer" class="org.grouter.core.RouterServerImpl"/>
 
   <!--
   This configuration works but is static. I order to have several grouters running on the same host

@@ -25,7 +25,7 @@ package org.grouter.core;
  *
  * @author Georges Polyzois
  */
-public interface GrouterServer
+public interface RemoteRouterService
 {
     void stopNode( String nodeId ) throws Exception;
 }
