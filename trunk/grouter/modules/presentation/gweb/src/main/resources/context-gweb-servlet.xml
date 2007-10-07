@@ -20,13 +20,17 @@
   <bean name="/node/edit.do" class="org.grouter.presentation.controller.node.NodeEditController"/>
   <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
   <bean name="/user/list.do" class="org.grouter.presentation.controller.user.UserListController"/>
-  <bean name="/grouter/select.do" class="org.grouter.presentation.controller.router.GrouterSelectController"/>
+  <bean name="/user/delete.do" class="org.grouter.presentation.controller.user.UserDeleteController"/>
+  <bean name="/router/list.do" class="org.grouter.presentation.controller.router.RouterListController"/>
+  <bean name="/job/edit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
+  <bean name="/job/list.do" class="org.grouter.presentation.controller.job.JobListController"/>
+  <bean name="/job/delete.do" class="org.grouter.presentation.controller.job.JobDeleteController"/>
 
 
-  <bean name="/security/*.do" class="org.grouter.presentation.controller.security.SecurityController">
+  <bean name="/security/**" class="org.grouter.presentation.controller.security.SecurityController">
     <property name="login" value="login/login"/>
-    <property name="logedOut" value="login/logedoOut"/>
-    <property name="loginDenied" value="login/loginDenied"/>
+    <property name="loggedOut" value="login/logedout"/>
+    <property name="loginDenied" value="login/logindenied"/>
   </bean>
 
   <!-- Config for JSP/JSTL -->

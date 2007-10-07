@@ -100,7 +100,8 @@
         /user/**=ROLE_ADMIN
         /message/**=ROLE_ADMIN
         /node/**=ROLE_ADMIN
-        /grouter/**=ROLE_ADMIN
+        /router/**=ROLE_ADMIN
+        /job/**=ROLE_ADMIN
         /images/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
         /css/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
         /javascript/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
@@ -141,7 +142,7 @@
       </value>
     </property>
     <property name="usersByUsernameQuery">
-      <value>SELECT id,pwd,'true',username, firstname FROM user WHERE username=?</value>
+      <value>SELECT id,password,'true',username, firstname FROM user WHERE username=?</value>
     </property>
   </bean>
 
