@@ -5,9 +5,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
 
-
-
-
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
 <html>
@@ -18,12 +15,16 @@
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
     <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/prototype.js"></script>
+    <script type="text/javascript" charset="iso8859-1"
+            src="/gweb/javascripts/prototype.js"></script>
     <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/scriptaculous.js"></script>
+    <script type="text/javascript" charset="iso8859-1"
+            src="/gweb/javascripts/scriptaculous.js"></script>
 
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script>
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/NodeCallbackThread.js"></script>
+    <script type="text/javascript" charset="iso8859-1"
+            src="/gweb/dwr/interface/RouterService.js"></script>
+    <script type="text/javascript" charset="iso8859-1"
+            src="/gweb/dwr/interface/NodeCallbackThread.js"></script>
 
     <script type="text/javascript">
         function handleGetData(str)
@@ -72,47 +73,48 @@
 
 <body onload="init();">
 
-<div id="menuAction">
-    <div id="form">
-        <table border="0">
-            <tr>
-
-                <td>
-                    <form action="" enctype="multipart/form-data" name="mainForm" method="get">
-                        List nodes for router:                                                              
-                        <select id="routerid" name="routerid" onchange="this.form.submit()">
-                            <option value="">--- router ---</option>
-                            <c:forEach items="${routers}" var="object">
-                                <option <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if> value="${object.id}" >${object.id}</option>
-                            </c:forEach>
-                        </select>
-                        <!-- Update in realtime: -->
-                                            Register for updates (realtime):<input id="checkboxIsRegisterdForCallbacks" type="checkbox" value="Read" onclick="registerForCallbacks()"/>
-                    
-                    </form>
-
-                </td>
-
-            </tr>
-        </table>
-    </div>
-</div>
 <!-- display:table name="" defaultsort="1" id="element" class="pagedList" -->
 <!-- display:column property="id" sortable="true" sortName="id" title="Id"/ -->
 <!-- display:column property="content" sortable="true" sortName="content" title="Content"/ -->
 <!--/display:table -->
 
 <div id="paragraph">
-    Search nodes.
-
+    View node.
 </div>
 
-<div id="content" >
+<div id="menuAction">
+    <table border="0">
+        <tr>
+            <td>
+                <form id="menuform" action="" enctype="multipart/form-data" name="mainForm"
+                      method="get">
+                    List nodes for router:
+                    <select id="routerid" name="routerid" onchange="this.form.submit()">
+                        <option value="">--- router ---</option>
+                        <c:forEach items="${routers}" var="object">
+                            <option
+                                    <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if>
+                                    value="${object.id}">${object.id}</option>
+                        </c:forEach>
+                    </select>
+                    <!-- Update in realtime: -->
+                    Register for updates (realtime):<input id="checkboxIsRegisterdForCallbacks"
+                                                           type="checkbox" value="Read"
+                                                           onclick="registerForCallbacks()"/>
+
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div id="content">
     <form id="mainForm" action="">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td></td>
-                <td align="right" >Number of nodes :<c:out value="${nodesSize}"/>
+                <td align="right">Number of nodes :<c:out value="${nodesSize}"/>
                 </td>
             </tr>
         </table>
@@ -120,9 +122,8 @@
             <thead>
                 <tr>
                     <th><a href="?sortBy=id">Status</a></th>
-                    <th><a href="?sortBy=id">Id</a></th>
-                    <th><a href="?sortBy=firstName">#Messages</a></th>
                     <th><a href="?sortBy=firstName">Name</a></th>
+                    <th><a href="?sortBy=firstName">#Messages</a></th>
                     <th><a href="?sortBy=firstName">In</a></th>
                     <th><a href="?sortBy=firstName">Out</a></th>
                     <th></th>
@@ -130,18 +131,26 @@
             </thead>
             <tbody>
                 <c:forEach items="${nodes}" var="object">
-                    <tr  >
-                        <td>
-                            <c:out value="${object.nodeStatus.id}"/>
+                    <tr>
+                        <td width="5">
+                            <c:if test="${object.nodeStatus.id eq 1}"><img
+                                    src="/gweb/images/icon_notstarted_15x15.gif"/></c:if>
+                            <c:if test="${object.nodeStatus.id eq 2}"><img
+                                    src="/gweb/images/icon_running_15x15.png"/></c:if>
+                            <c:if test="${object.nodeStatus.id eq 3}"><img
+                                    src="/gweb/images/icon_success_15x15.gif"/></c:if>
+                            <c:if test="${object.nodeStatus.id eq 4}"><img
+                                    src="/gweb/images/icon_stopped_15x15.gif"/></c:if>
+                            <c:if test="${object.nodeStatus.id eq 5}"><img
+                                    src="/gweb/images/icon_error_15x15.gif"/></c:if>
+
                         </td>
+
                         <td>
-                            <c:out value="${object.id}"/>
+                            <c:out value="${object.displayName}"/>
                         </td>
                         <td id="${object.id}">
                             <c:out value="${object.numberOfMessagesHandled}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.displayName}"/>
                         </td>
                         <td>
                             <c:out value="${object.inBound.uri}"/>
@@ -151,6 +160,8 @@
                         </td>
                         <td>
                             <a href='edit.do?id=<c:out value="${object.id}"/>'> Details </a>
+                            <a href='send.do?id=<c:out value="${object.id}"/>&operation=stop'> Stop </a>
+                            <a href='send.do?id=<c:out value="${object.id}"/>&operation=start'> Start </a>
                         </td>
                     </tr>
                 </c:forEach>

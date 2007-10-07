@@ -8,11 +8,16 @@
 <html>
 <head>
     <title>
-        Messages
+        Messages :: List
     </title>
                                      
 </head>
 <body>
+
+
+<div id="paragraph" >
+    Search messages.
+</div>
 
 <div id="menuAction" >
     <div id="form">
@@ -60,9 +65,6 @@
 <!-- display:column property="content" sortable="true" sortName="content" title="Content"/ -->
 <!--/display:table -->
 
-<div id="paragraph" >
-    Search messages.
-</div>
 
 
 <div id="content">

@@ -1,18 +1,18 @@
 <ul class="menu tabbed">
     <li>
-        <a href="/gweb/grouter/select.do">Router</a>
+        <a href="/gweb/router/list.do">Routers</a>
     </li>
     <li>
-        <a href="/gweb/message/list.do">Message</a>
+        <a href="/gweb/message/list.do">Messages</a>
     </li>
     <li>
-        <a href="/gweb/node/list.do">Node</a>
+        <a href="/gweb/node/list.do">Nodes</a>
     </li>
     <li>
-        <a href="/gweb/user/list.do">User</a>
+        <a href="/gweb/user/list.do">Users</a>
     </li>
     <li>
-        <a href="/gweb/node/list.do">Scheduling</a>
+        <a href="/gweb/job/list.do">Jobs</a>
     </li>
 
 </ul>

@@ -1,101 +1,120 @@
-
 div#contentHeader
 {
-    font: 12px,bold, Verdana, Arial, Helvetica, sans-serif;
+    font: 13px, bold, Verdana, Arial, Helvetica, sans-serif;
     margin: 5px;
-    padding: 5px;
+    padding: 1px;
+    background: white;
+    display: inline-table;
+   
 }
 
 div#content
 {
-    font: 11px Verdana, Arial, Helvetica, sans-serif;
+     font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
     margin: 5px;
     padding: 5px;
+    background: white;
+    display: inline-table;
+    border: 2px solid #afcff9;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomright: 10px;
 }
-
 
 img
 {
-	border: none;
+    border: none;
 }
-
 
 div#form
 {
     font: 9px Verdana, Arial, Helvetica, sans-serif;
 }
 
-
 /**
 * Used to display operations like edit, delete etc.
 */
 div#menuAction
 {
-	background: lavender;
-	padding: 5px;
-	padding-left: 25px;
-	margin-top: 0;
+    background: #f4f4f2;
     font: 9px Verdana, Arial, Helvetica, sans-serif;
+    display: inline-table;
+    padding: 10px;
+    border: 2px solid #afcff9;
+    margin:5px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomright: 10px;
 }
 
 div#paragraph
 {
-    font: 12px/14px Verdana, Arial, Helvetica, sans-serif;
-    margin: 5px;
-    padding: 5px;
-/*    border: 1px solid cornflowerblue; */
+    padding: 10px;
+    background: lavender;
+    font: 12px Verdana, Arial, Helvetica, sans-serif;
+    display: inline-table;
+    border: 2px solid #afcff9;
+    margin:5px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomright: 10px;
+
 }
 
-
-div#paragraphHeader {
-    font: 13px/19px Verdana, Arial, Helvetica, sans-serif;
-    font-weight:bold;
+div#paragraphHeader
+{
+    font: 13px / 19px Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;
     color: blue;
     padding: 5px;
 }
 
-
-
-
 /*
- * Tabbed menu using a <ul> list.
- */
-ul.menu {
-	display: inline;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	margin-left: 5px;
+* Tabbed menu using a <ul> list.
+*/
+ul.menu
+{
+    display: inline;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-left: 5px;
 }
 
 ul.menu li
 {
-	display: inline;
-	margin-right: 10px;
+    display: inline;
+    margin-right: 10px;
 }
 
 ul.tabbed a
 {
-	text-decoration: none;
-	color: black;
+    text-decoration: none;
+    color: black;
 }
 
 ul.tabbed li
 {
-	display: inline;
-	background: #f4f4f2;
-	padding: 4px 10px;
-	margin-right: -6px;
-	border: 2px solid #afcff9;
-	border-bottom: none;
-	-moz-border-radius-topleft: 10px;
-	-moz-border-radius-topright: 10px;
+    display: inline;
+    background: #f4f4f2;
+    padding: 4px 10px;
+    margin-right: -6px;
+    border: 2px solid #afcff9;
+    border-bottom: none;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
 }
 
 ul.tabbed li.active
 {
-	background: #fff;
-	border-top: 2px solid #ebaa46;
+    background: #fff;
+    border-top: 2px solid #ebaa46;
 }
 
 /**
@@ -103,64 +122,75 @@ ul.tabbed li.active
 */
 table.pagedList th
 {
-    font: 11px Verdana, Arial, Helvetica, sans-serif,bold;
-    background-image: url("/gweb/images/columnheader_gradient.gif");
-	height: 18px;
-	padding: 2px;
-	border-left: 2px solid lightgray;
+    font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
+    background-image: url( "/gweb/images/columnheader_gradient.gif" );
+    height: 18px;
+    padding: 2px;
+    border-left: 2px solid lightgray;
     text-align: left;
 }
 
 table.pagedList th a
 {
     text-decoration: none;
-	color: black;
+    color: black;
 }
 
 table.pagedList td
 {
-    font: 11px Verdana, Arial, Helvetica, sans-serif,bold;
+    font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
     padding: 5px 10px;
-	border-bottom: 1px solid #ccc;
-	white-space: nowrap;
+    border-bottom: 1px solid #ccc;
+    white-space: nowrap;
 }
 
 table.pagedList tr:hover
 {
-	background: #eee;
+    background: #eee;
     text-align: left;
 }
 
-
 /*
- * General error message style.
- */
-span.error {
-	color: red;
-	font-weight: bold;
+* General error message style.
+*/
+span.error
+{
+    color: red;
+    font-weight: bold;
 }
 
-span.errors {
-	color: red;
-	font-weight: bold;
+span.warning
+{
+    font-weight: bold;
+    color: orangered;
 }
 
-span.warning {
-	font-weight: bold;
-	color: orangered;
+span.message
+{
+    font-weight: bold;
+    color: green;
 }
 
 /*
  * Icon link.
  */
-a.iconlink {
-  text-decoration: none;
+a.iconlink
+{
+    text-decoration: none;
+    font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
+    margin: 5px;
+    padding: 5px;
+    vertical-align: top;
 }
 
-a.iconlink img {
-  vertical-align: top;
+a.iconlink img
+{
+    vertical-align: middle;
 }
 
-img.icon {
-  vertical-align: top;
+
+
+img.icon
+{
+    vertical-align: top;
 }
