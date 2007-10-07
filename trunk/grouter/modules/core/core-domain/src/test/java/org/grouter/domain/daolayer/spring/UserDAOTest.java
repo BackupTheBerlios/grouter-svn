@@ -1,12 +1,12 @@
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.daolayer.UserDAO;
-import org.grouter.domain.entities.User;
-import org.grouter.domain.entities.Role;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.grouter.domain.daolayer.UserDAO;
+import org.grouter.domain.entities.User;
 import org.hibernate.LazyInitializationException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +17,7 @@ import java.util.Map;
 public class UserDAOTest extends AbstractDAOTests
 {
     UserDAO userDAO;
-    private static Log log = LogFactory.getLog(NodeDAOTest.class);
+    private static Log log = LogFactory.getLog(UserDAOTest.class);
 
 
     public void setUserDAO(UserDAO userDAO)
@@ -89,13 +89,13 @@ public class UserDAOTest extends AbstractDAOTests
 
 
 
-    public void testMarkAsDeleted()
+    public void testUserState()
     {
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id = '" + USER_ID + "'"));
+        //assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id = '" + USER_ID + "'"));
         assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id = '" + USER_ID + "'"));
         assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
-        userDAO.markAsDeleted( USER_ID );
+        //userDAO.markAsDeleted( USER_ID );
         flushSession();
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id = '" + USER_ID + "'"));
         assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id = '" + USER_ID + "'"));
@@ -109,10 +109,16 @@ public class UserDAOTest extends AbstractDAOTests
     }
 
 
-    public void testLoadRoles()
+    public void testFindAll()
     {
-        User user = userDAO.findById( USER_ID );
+        List<User> user = userDAO.findAll(  );
+        assertTrue( user.size() == 1 );
+    }
 
+    public void testFindAll2()
+    {
+        List<User> user = userDAO.findAll( UserDAO.FIND_ALL );
+        assertTrue( user.size() == 1 );
     }
 
 }

@@ -2,7 +2,7 @@
 insert into settings(id) values ( 1 );
 insert into settings_context(id,keyname, value,settings_fk) values ( 1,'key1','value1',1);
 
-insert into router (startedon, uptime, displayname, id, homepath , description ,  settings_fk) values ('2006-10-13 15:51:53', 100000000, 'ROUTER_TEST', 'rid_1', '/homeofrouter'  ,'a description', 1);
+insert into router (id, startedon, uptime, displayname, homepath , description ,  settings_fk) values ('rid_1', '2006-10-13 15:51:53', 100000000, 'ROUTER_TEST', '/homeofrouter'  ,'a description', 1);
 
 insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '1', 'file://temp/in', 'clazzname.FileReader','* * * * * ', 1);
 insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '2', 'file://temp/out', 'clazzname.FilWriter','* * * * * ', 2);
@@ -30,8 +30,16 @@ insert into receiver (id, name ) values ( 'receiverid_2', 'A receiver');
 insert into receiver_message (receiver_fk , message_fk) values ( 'receiverid_1',  'msgid_1' );
 
 insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (1,  '0046 8 12345', '0046 701 12345', 'GeorgesStreet', '12345', 'El Stockholm', '12345', 'www.polyzois.se', 'Sweden', 'Denada', 'gepo01@yahoo.com');
-insert into user (id, username, pwd, firstname, lastname, address_fk) values (10002, 'gepo', 'gepo','Georges', 'Poly',  1);
+insert into user (id, username, password, firstname, lastname, address_fk) values (10002, 'gepo', 'gepo','Georges', 'Poly',  1);
 insert into user_role (id, user_id, role_id) values (10000, 10002, 1);
 insert into user_role (id, user_id, role_id) values (10001, 10002, 2);
 insert into user_role (id, user_id, role_id) values (10002, 10002, 3);
+
+
+-- Jobs
+
+--ADDDATE( CURDATE(), 1 )
+insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 1,'displayname','* * * * *', Now(), ADDDATE( CURDATE(), 1 ) ,1,1,'rid_1' );
+insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 2,'a name','* * * * *',Now(), ADDDATE( CURDATE(), 1 ), 2,1,'rid_1' );
+insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 3,'another name','* * * * *', Now(), Now(), 3,1,'rid_1' );
 

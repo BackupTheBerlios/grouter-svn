@@ -1,9 +1,6 @@
 package org.grouter.domain.entities;
 
-import org.hibernate.validator.InvalidValue;
 import org.apache.log4j.Logger;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 
 /**
@@ -39,7 +36,7 @@ public class RouterTest extends AbstractEntityTests
 
     public void testValidateValid()
     {
-        Router router = new Router("id","name");
+        Router router = new Router("id","message");
         InvalidValue[] invalidValues = EntityValidator.validate(router);
 
         assertTrue("Errors hen validating entity :" + ToStringBuilder.reflectionToString(invalidValues) , isEmpty(invalidValues) );

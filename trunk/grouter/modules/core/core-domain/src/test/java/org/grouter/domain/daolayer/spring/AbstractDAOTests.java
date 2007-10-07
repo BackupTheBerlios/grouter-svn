@@ -1,6 +1,5 @@
 package org.grouter.domain.daolayer.spring;
 
-import org.springframework.test.jpa.AbstractJpaTests;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StringUtils;
@@ -34,7 +33,8 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     final static String ROUTER_ID = "rid_1";
     final static String ENDPOINT_ID = "1";
     final static String SETTINGS_ID = "jndi";
-    Long USER_ID = new Long(10002);
+    final static Long JOB_ID = 1L;
+    Long USER_ID = 10002L;
 
     SessionFactory sessionFactory;
 
@@ -52,7 +52,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     /**
      * Our context files for these tests.
      *
-     * @return
+     * @return context files
      */
     @Override
     protected String[] getConfigLocations()
