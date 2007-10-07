@@ -57,9 +57,12 @@ public class MessageDAOHibernate extends GenericHibernateDAO<Message, String> im
 
     public List<Message> findMessagesForNode(String nodeId)
     {
-        String hsql = "from Message obj where obj.nodeId = : nodeId";
+        /*
+        String hsql = "from Message obj where obj.node.id  =: nodeId";
         Query qr = getSession().createQuery(hsql);
         return (List<Message>) qr.setParameter("nodeId", nodeId).list();
+        */
+        return null; // Todo check why intellij complains about above query
     }
 
     /**

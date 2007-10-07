@@ -25,13 +25,13 @@ import org.springframework.beans.BeansException;
 import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
 
 /**
+ * Global bean locator.
+ *
  * @author Georges Polyzois
  */
-public class ServiceFactory implements ApplicationContextAware
+public class BeanLocator implements ApplicationContextAware
 {
-    public final static String JDBCLOGSTRATEGY_BEAN = "logStrategy";
-    public final static String NODE_BEAN = "jDBCLogStrategy";
-
+    public final static String LOGSTRATEGY_BEAN = "logStrategy";
     protected static ApplicationContext applicationContext;
 
     public void setApplicationContext( ApplicationContext applicationContext )

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+  <class name="org.grouter.domain.entities.Job" table="job">
+    <id column="id" name="id" type="java.lang.Long">
+      <generator class="assigned"/>
+    </id>
+    <property name="displayName" not-null="true" type="java.lang.String" column="displayname"/>
+    <property name="cronExpression" not-null="true" type="java.lang.String" column="cron_expression"/>
+    <property name="startedOn" not-null="true" type="timestamp" column="started_on"/>
+    <property name="finishedAt" not-null="true" type="timestamp" column="finished_at"/>
+
+
+    <many-to-one
+            name="jobType"
+            not-null="true"
+            class="org.grouter.domain.entities.JobType"
+            column="job_type_fk"
+            cascade="none"
+            update="false"
+            fetch="join">
+    </many-to-one>
+
+    <many-to-one
+            name="jobState"
+            not-null="true"
+            class="org.grouter.domain.entities.JobState"
+            column="job_state_fk"
+            cascade="save-update"
+            update="true"
+            fetch="join">
+    </many-to-one>
+
+    <many-to-one
+            name="router"
+            not-null="true"
+            class="org.grouter.domain.entities.Router"
+            column="router_fk"
+            cascade="none"
+            update="true"
+            fetch="join">
+    </many-to-one>
+
+
+    <list name="jobEvents" fetch="join" table="job_event">
+      <key column="job_fk"/>
+      <list-index column="position" base="0"/>
+      <one-to-many class="org.grouter.domain.entities.JobEvent"/>
+    </list>
+
+  </class>
+</hibernate-mapping>

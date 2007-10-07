@@ -37,8 +37,6 @@ import java.sql.Timestamp;
 @Table(name = "router")
 public class Router extends BaseEntity
 {
-
-
     @Id
     @NotNull
     @Column(name = "id", nullable = false)
@@ -54,7 +52,6 @@ public class Router extends BaseEntity
     private String description;
 
     @OneToMany
-    //@JoinColumn(displayName = "router_fk", nullable = true)
     private Set<Node> nodes = new HashSet<Node>();
 
     @ManyToOne
@@ -198,6 +195,7 @@ public class Router extends BaseEntity
         this.settings = settings;
     }
 
+    /*
     public String toString()
     {
         return "Router{" +
@@ -209,6 +207,77 @@ public class Router extends BaseEntity
                 ", rmiServicePort=" + rmiServicePort +
                 ", upTime=" + upTime +
                 '}';
+    }        */
+
+
+    public String printNodes()
+    {
+        StringBuffer buf = new StringBuffer();
+
+        if (nodes != null)
+        {
+            buf.append("Nodes (total:" + nodes.size() + ")\n");
+            for (Node node : nodes)
+            {
+                buf.append(node.getId()).append("\n");
+            }
+        } else
+        {
+            buf.append("No nodes");
+        }
+        return buf.toString();
+
+    }
+
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if (object == null)
+        {
+            // Never equal to a null object
+            return false;
+        }
+
+        if (this == object)
+        {
+            // Always equal to self
+            return true;
+        }
+
+        if (!this.getClass().equals(object.getClass()))
+        {
+            // Must be same class
+            return false;
+        }
+
+        Router other = (Router) object;
+
+        if (this.id == null)
+        {
+            // If both ids are zero, delegate to super equals,
+            // otherwise not equal (this id is zero, but the other isn't)
+            return (other.getId() == null) && super.equals(object);
+        }
+
+        // Equal if the ids are equal
+        return (this.id.equals(other.getId()));
+    }
+
+
+    /**
+     * Uses the id property.
+     */
+    @Override
+    public int hashCode()
+    {
+        if (id == null)
+        {
+            return super.hashCode();
+        } else
+        {
+            return id.hashCode();
+        }
     }
 
 

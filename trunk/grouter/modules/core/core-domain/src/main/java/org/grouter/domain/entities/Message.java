@@ -26,7 +26,6 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.sql.Timestamp;
-import java.io.Serializable;
 import java.math.BigInteger;
 
 
@@ -79,7 +78,7 @@ public class Message<String> extends BaseEntity
     private Set<Receiver> receivers = new HashSet();
 
     //@ManyToOne(cascade = {CascadeType.PERSIST} , fetch = FetchType.EAGER )
-    //@JoinColumn(name = "sender_fk", nullable = false)
+    //@JoinColumn(message = "sender_fk", nullable = false)
     transient private Sender sender;
 
 

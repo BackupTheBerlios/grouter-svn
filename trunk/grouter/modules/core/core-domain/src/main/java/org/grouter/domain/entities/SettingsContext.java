@@ -39,6 +39,12 @@ public class SettingsContext extends BaseEntity<Long>
     public final static String KEY_SETTINGS_JNDI_JAVA_NAMING_FACTORY_URL = "naming.factory.url";
     public final static String KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY = "naming.queueconnectionfactoy";
     public final static String KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE = "jms.loggingQueue";
+    public final static String KEY_SETTINGS_DATASOURCE_DIALECT = "datasource.dialect";
+    public final static String KEY_SETTINGS_DATASOURCE_DRIVERCLASSNAME = "datasource.driverclassname";
+    public final static String KEY_SETTINGS_DATASOURCE_URL = "datasource.url";
+    public final static String KEY_SETTINGS_DATASOURCE_USERNAME = "datasource.username";
+    public final static String KEY_SETTINGS_DATASOURCE_PASSWORD = "datasource.password";
+
 
 
 

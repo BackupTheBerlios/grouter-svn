@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-  <class name="org.grouter.domain.entities.EndPointContext" table="endpoint_context" >
+  <class name="org.grouter.domain.entities.JobContext" table="job_context" >
     <id name="id">
       <generator class="native"/>
     </id>
@@ -12,10 +12,10 @@
     <property name="value" not-null="true" />
 
     <many-to-one
-            name="endPoint"
+            name="job"
             not-null="true"
-            class="org.grouter.domain.entities.EndPoint"
-            column="endpoint_fk"
+            class="org.grouter.domain.entities.Job"
+            column="job_fk"
             cascade="all"
             fetch="join">
     </many-to-one>

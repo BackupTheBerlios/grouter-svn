@@ -50,12 +50,12 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     protected Session session;
 
 
-    protected GenericHibernateDAO(Class<T> persistentClass)
+    protected GenericHibernateDAO(final Class<T> persistentClass)
     {
         this.entityClass = persistentClass;
     }
 
-    public GenericHibernateDAO(Class<T> persistentClass, Session session)
+    public GenericHibernateDAO(final Class<T> persistentClass, final Session session)
     {
         this.entityClass = persistentClass;
         this.session = session;
@@ -67,9 +67,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings( "unchecked" )
     public T findById( Class clazz, ID id, String... joinProps )
     {
@@ -83,38 +80,46 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         return ( T ) criteria.uniqueResult(  );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public T findById(ID id, String... joinProps)
+    public T findById(final ID id,final String... joinProps)
     {
         return findById( getEntityClass(), id, joinProps );
         //return (T) getSession().load(getEntityClass(), id, LockMode.FORCE);
     }
 
-    /**
-     * Find Entity by id.
-     *
-     * @param id the id of the entity
-     * @return an entity
-     */
-    public T findById(ID id)
+    public T findById(final ID id)
     {
         return findById( getEntityClass(), id );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     public List<T> findAll()
     {
-        return getSession(  ).createCriteria( getEntityClass() ).list();
+        //Criteria criteria = getSession(  ).createCriteria( getEntityClass() );
+        //criteria.setResultTransformer( CriteriaSpecification.DISTINCT_ROOT_ENTITY );
+        return findAllUsingFetchMode( getEntityClass(), FetchMode.JOIN, "" );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    public List<T> findAllUsingFetchMode( final Class clazz,  final FetchMode fetchMode , final String... joinProps)
+    {
+        Criteria criteria = getSession(  ).createCriteria( clazz );
+        for (String disJoinProp : joinProps)
+        {
+            criteria.setFetchMode( disJoinProp , fetchMode );
+        }
+        criteria.setResultTransformer( CriteriaSpecification.DISTINCT_ROOT_ENTITY );
+        return ( List<T> ) criteria.list();
+    }
+
+
+    public List<T> findAll( final String hql )
+    {
+        Session session = getSession();
+        Query qr = session.createQuery(hql);
+        return qr.list();
+    }
+
+
     @SuppressWarnings("unchecked")
     public List<T> findByExample(T exampleInstance, String... joinProps)
     {
@@ -128,35 +133,26 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         return crit.list();
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public T save(T entity)
+   @SuppressWarnings("unchecked")
+    public T save(final T entity)
     {
         getSession().saveOrUpdate(entity);
         return entity;
     }
 
-    public void delete(T entity)
+    public void delete(final T entity)
     {
         getSession().delete(entity);
     }
 
 
-    public void delete(ID id)
+    public void delete(final ID id)
     {
         getSession().delete(findById(id));
     }
 
-    /**
-     * Use this inside subclasses as a convenience method.
-     * @param criterion criteria as vararg
-     * @return a list of Ts
-     */
     @SuppressWarnings("unchecked")
-    protected List<T> findByCriteria(Criterion... criterion)
+    public List<T> findByCriteria(final Criterion... criterion)
     {
         Criteria crit = getSession().createCriteria(getEntityClass());
         for (Criterion c : criterion)
@@ -167,12 +163,11 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
+
+
 
     @SuppressWarnings("unchecked")
-    public T findById(Class clazz, T id, String... joinProps)
+    public T findById(final Class clazz, final T id, final String... joinProps)
     {
         Criteria criteria = getSession().createCriteria(clazz);
         criteria.add(Restrictions.idEq(id));

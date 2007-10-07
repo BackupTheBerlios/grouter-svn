@@ -34,8 +34,8 @@ import java.util.ArrayList;
  * @author Georges Polyzois
  */
 @Entity
-@Table(name = "job_state")
-public class JobState   extends BaseEntity
+@Table(name = "job_type")
+public class JobType  extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -49,44 +49,39 @@ public class JobState   extends BaseEntity
 
 
     // waiting to start
-    public static final JobState PENDING = new JobState(1L, "BACKUP");
-    public static final JobState RUNNING = new JobState(2L, "MAIL");
-    public static final JobState FINISHED = new JobState(3L, "FINISHED");
-    public static final JobState STOPPED = new JobState(4L, "STOPPED");
-    public static final JobState ERROR = new JobState(5L, "ERROR");
+    public static final JobType BACKUP = new JobType(1L, "BACKUP");
+    public static final JobType MAIL = new JobType(2L, "MAIL");
 
 
-    public JobState()
+    public static Map<Long, JobType> valueOfMap = new HashMap<Long, JobType>();
+
+    public JobType()
     {
     }
 
-    public JobState(final Long id, final String name)
+    public JobType(final Long id, final String name)
     {
         this.id = id;
         this.name = name;
     }
 
-    public static Map<Long, JobState> valueOfMap = new HashMap<Long, JobState>();
-
     static
     {
-        valueOfMap.put(PENDING.getId(), PENDING);
-        valueOfMap.put(RUNNING.getId(), RUNNING);
-        valueOfMap.put(FINISHED.getId(), FINISHED);
-        valueOfMap.put(STOPPED.getId(), STOPPED);
-        valueOfMap.put(ERROR.getId(), ERROR);
+        valueOfMap.put(BACKUP.getId(), BACKUP);
+        valueOfMap.put(MAIL.getId(), MAIL);
     }
 
-
-    public static List<JobState> values()
-    {
-        return new ArrayList<JobState>(valueOfMap.values());
-    }
-
-    public static JobState valueOf(Long id)
+    public static JobType valueOf(Long id)
     {
         return valueOfMap.get(id);
     }
+
+
+    public static List<JobType> values()
+    {
+        return new ArrayList<JobType>(valueOfMap.values());
+    }
+
 
     public Long getId()
     {

@@ -37,12 +37,16 @@ import javax.persistence.EntityManager;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 @Stateless
 public class RouterBeanService implements RouterLocalService, RouterRemoteService
 {
+    //Seam @Logger annotation is used to inject the component's Log instance
+    // @Logger
     private static Logger logger = Logger.getLogger(RouterBeanService.class);
+
     @PersistenceContext(unitName = PersistenceContextName.PERSISTENCE)
     private EntityManager entityManager;
 
@@ -88,22 +92,22 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         return messageDAO.findById(id);
     }
 
-    public List<Message> findAllMessages(String id)
+    public List<Message> findAllMessages(final String id)
     {
         return messageDAO.findMessagesForNode(id);
     }
 
-    public List<Node> findAllNodes(String routerId)
+    public List<Node> findAllNodes(final String routerId)
     {
         return nodeDAO.findAll();
     }
 
-    public void saveRouter(Router router)
+    public void saveRouter(final Router router)
     {
         routerDAO.save(router);
     }
 
-    public void saveNode(Node node)
+    public void saveNode(final Node node)
     {
         //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -132,6 +136,20 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
     public Node findById(String nodeId)
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void updateStateForNotConfiguredNodes(final String routerId,
+                                                 final Set<Node> configuredNodes
+    )
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void updateStateForNotConfiguredNodes(final String routerId,
+                                                 final List<Node> configuredNodes
+    )
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

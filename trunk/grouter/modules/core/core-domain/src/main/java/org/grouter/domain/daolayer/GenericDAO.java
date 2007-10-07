@@ -19,6 +19,9 @@
 package org.grouter.domain.daolayer;
 
 
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.Criterion;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,7 +32,7 @@ import java.util.List;
  * (for example, there is no UDPATE statement function) that provides
  * automatic transactional dirty checking of business objects in persistent
  * state.
- *
+ * <p/>
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
  * Also see this link : http://www.hibernate.org/328.html
  *
@@ -65,11 +68,41 @@ public interface GenericDAO<T, ID extends Serializable>
     T findById(Class clazz, T id, String... joinProps);
 
     /**
-     * Get all entities.
+     * Get all entities - performs a join with other associated entitites if so specified in the
+     * mapping. Sets a CriteriaSpecification.DISTINCT_ROOT_ENTITY so we do not get any duplictees
+     * in returning list.
+     *
+     * Alternatively use HQL - since HQL does not make a join if not specified. HQL does not
+     * looka at mapping strategies for lazy loading.
      *
      * @return list of entities.
      */
     List<T> findAll();
+
+    /**
+     * HQL queries can be used if you see that other criteria based queries do not perform
+     * or does not provide the functionality in the query that you need.
+     *
+     * HQL does not look at mapping strategies - so joining in a collection is not done even
+     * if the mapping says so.
+     *
+     *
+     * @param hql the query string in hql
+     * @return
+     */
+    List<T> findAll( String hql );
+
+
+    /**
+     * Get all entities - using a FetchMode strategy. Sets a CriteriaSpecification.DISTINCT_ROOT_ENTITY
+     * so we do not get any duplictees in returning list.
+     *
+     * Alternatively use HQL - since HQL does not make a join if not specified. HQL does not
+     * looka at mapping strategies for lazy loading.
+     *
+     * @return list of entities.
+     */
+    List<T> findAllUsingFetchMode(Class clazz, FetchMode fetchMode, String... disJoinProps);
 
     /**
      * Find entities, excluding properties. Provide an instance of the queried class with some properties initialized,
@@ -84,6 +117,9 @@ public interface GenericDAO<T, ID extends Serializable>
      * @return list with entities matching the example provided
      */
     List<T> findByExample(T exampleInstance, String... excludeProperty);
+
+
+    List<T> findByCriteria(Criterion... criterion);
 
     /**
      * Save and persiste the entity.
@@ -106,4 +142,6 @@ public interface GenericDAO<T, ID extends Serializable>
      * @param id the id of the enitty to delete
      */
     void delete(ID id);
+
+
 }

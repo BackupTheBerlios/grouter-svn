@@ -22,13 +22,11 @@ package org.grouter.domain.entities;
 
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Pattern;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.io.Serializable;
 
 
 /**
@@ -40,18 +38,54 @@ import java.io.Serializable;
 @Table(name = "user")
 public class User extends BaseEntity implements Comparable
 {
-
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private Long id;
+
+    @Column(name = "username")
+    @Length(min = 5, max = MAX_USER_NAME_LENGTH)
+    @NotNull
     private String userName;
+
+    @Column(name = "firstname")
+    @NotNull
     private String firstName;
+
+    @Column(name = "lastname")
+    @NotNull
     private String lastName;
+
+    @Column(name = "password")
+    @NotNull
     private String password;
+
+    @Column(name = "createdby")
+    @NotNull
     private User createdBy;
+
+    @Column(name = "createdon")
+    private Date createdOn;
+
+    @Column(name = "modifiedon")
+    private Date modifiedOn;
+
+    @Column(name = "expireson")
+    private User expiresOn;
+
+
+    @Column(name = "remaininglogonattempts")
+    private Integer remainingLogonAttempts;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_state_fk")
+    private UserState userState;
+
+
+    @ManyToOne
+    @JoinColumn(name = "address_fk")
     private Address address;
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
@@ -61,7 +95,6 @@ public class User extends BaseEntity implements Comparable
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
     private Set<UserRole> roles = new HashSet<UserRole>();
-    private Boolean deleted;
 
 
     public final static int MAX_USER_NAME_LENGTH = 15;
@@ -78,7 +111,6 @@ public class User extends BaseEntity implements Comparable
     }
 
 
-    @Column(name = "pwd")
     public String getPassword()
     {
         return password;
@@ -100,10 +132,6 @@ public class User extends BaseEntity implements Comparable
     }
 
 
-    @Column(name = "username")
-    @Length(min = 5, max = MAX_USER_NAME_LENGTH)
-    //@Pattern(regex="[0-9]+")
-    @NotNull
     public String getUserName()
     {
         return userName;
@@ -158,7 +186,6 @@ public class User extends BaseEntity implements Comparable
     }
 
 
-    @Column(name = "firstname")
     public String getFirstName()
     {
         return firstName;
@@ -169,7 +196,6 @@ public class User extends BaseEntity implements Comparable
         this.firstName = firstName;
     }
 
-    @Column(name = "lastname")
     public String getLastName()
     {
         return lastName;
@@ -180,19 +206,60 @@ public class User extends BaseEntity implements Comparable
         this.lastName = lastName;
     }
 
-    @Column(name = "deleted")
-    public Boolean getDeleted()
+
+    public UserState getUserState()
     {
-        return deleted;
+        return userState;
     }
 
-    public void setDeleted(Boolean deleted)
+    public void setUserState(final UserState userState)
     {
-        this.deleted = deleted;
+        this.userState = userState;
+    }
+
+
+    public Date getCreatedOn()
+    {
+        return createdOn;
+    }
+
+    public void setCreatedOn(final Date createdOn)
+    {
+        this.createdOn = createdOn;
+    }
+
+    public Date getModifiedOn()
+    {
+        return modifiedOn;
+    }
+
+    public void setModifiedOn(final Date modifiedOn)
+    {
+        this.modifiedOn = modifiedOn;
+    }
+
+    public User getExpiresOn()
+    {
+        return expiresOn;
+    }
+
+    public void setExpiresOn(final User expiresOn)
+    {
+        this.expiresOn = expiresOn;
+    }
+
+    public Integer getRemainingLogonAttempts()
+    {
+        return remainingLogonAttempts;
+    }
+
+    public void setRemainingLogonAttempts(final Integer remainingLogonAttempts)
+    {
+        this.remainingLogonAttempts = remainingLogonAttempts;
     }
 
     /**
-     * Sorting inmemory using {@link java.util.Collections} sort will do sort by name.
+     * Sorting inmemory using {@link java.util.Collections} sort will do sort by message.
      *
      * @param anotherObject is a non-null Role.
      * @throws NullPointerException if anotherObject is null.

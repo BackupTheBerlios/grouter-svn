@@ -17,41 +17,33 @@
  * under the License.
  */
 
-package org.grouter.domain.daolayer;
+package org.grouter.domain.servicelayer.spring.logging;
 
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
+import org.apache.log4j.Logger;
 
-import java.util.List;
+
 
 /**
- * Business DAO operations related to the <tt>Node</tt> entity.
- *
+ * This class performs no logging.
+ * 
  * @author Georges Polyzois
  */
-public interface NodeDAO extends GenericDAO<Node, String>
+public class NullLogStrategyImpl implements LogStrategy
 {
-    /**
-     * Use to get all all nodes for a given router with number of messages set on each node.
-     * 
-     * @param routerId get statistics for this router
-     * @return list with Nodes and number of messages for every node
-     */
-    List<Node> findNodesWithNumberOfMessages( String routerId );
+    private static Logger logger = Logger.getLogger(NullLogStrategyImpl.class);
+
+    public void log(Message message)
+    {
+        // intentionally blank method
+        logger.debug("No logging");
+    }
 
 
-    Long getNumberOfMessages( String nodeId );
-
-    /**
-     * Find all nodes for a given routerid and init endpoint if set to true.
-     * @param routerId id of router
-     * @param initEndPoint should we also load endpoints
-     * @return list with nodes
-     */
-    List<Node> findAllNodes(String routerId, boolean initEndPoint);
-
-    List<Node> findNodes();
-
-
-
+    public void log(Node node )
+    {
+        // intentionally blank method
+        logger.debug("No logging");
+    }
 }

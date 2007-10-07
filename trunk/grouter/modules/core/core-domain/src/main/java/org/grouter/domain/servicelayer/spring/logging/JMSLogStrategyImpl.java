@@ -43,7 +43,7 @@ public class JMSLogStrategyImpl implements LogStrategy
     RouterService routerService;
 
 
-    private final static String LOG_Q_NAME = "grouter/logq";
+//    private final static String LOG_Q_NAME = "grouter/logq";
     private AbstractSenderDestination queueDestination;
     private static InitialContext initialContext;
 
@@ -62,8 +62,8 @@ public class JMSLogStrategyImpl implements LogStrategy
         {
             // The routercache is initialized when the router starts up
             Map<String, String> settingsContext = RouterCache.getSettingsContextCache().getSettings().getSettingsContext();
-            queueDestination = new QueueSenderDestination(LOG_Q_NAME, (String) settingsContext.get(
-                    SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), null,
+            queueDestination = new QueueSenderDestination(  settingsContext.get(SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE)
+                    ,  settingsContext.get(SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), null,
                     getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
             queueDestination.bind();
             queueDestination.sendMessage("A message");
@@ -82,8 +82,8 @@ public class JMSLogStrategyImpl implements LogStrategy
             // The routercache is initialized when the router starts up
             Map<String, String> settingsContext = RouterCache.getSettingsContextCache().getSettings().getSettingsContext();
 
-            queueDestination = new QueueSenderDestination(LOG_Q_NAME, (String) settingsContext.get(
-                    SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), new NeverRebind(),
+            queueDestination = new QueueSenderDestination(settingsContext.get(SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE),
+                    settingsContext.get(SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), new NeverRebind(),
                     getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
 
             queueDestination.bind();

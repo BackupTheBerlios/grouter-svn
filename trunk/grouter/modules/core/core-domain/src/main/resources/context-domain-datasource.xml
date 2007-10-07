@@ -2,20 +2,35 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
        default-autowire="byName">
 
-  <bean id="dataSourceConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  <bean id="dataSourceConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location" value="file:/etc/grouter-environment.properties"/>
+    <property name="systemPropertiesModeName">
+      <value>SYSTEM_PROPERTIES_MODE_OVERRIDE</value>
+    </property>
+    <property name="searchSystemEnvironment">
+      <value type="boolean">true</value>
+    </property>
+    <property name="ignoreUnresolvablePlaceholders" value="true"/>
+
+
+    <!-- util:constant static-field="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDEr"/ -->
   </bean>
 
   <!-- use org.apache.commons.dbcp.BasicDataSource -->
-  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" lazy-init="true"
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        depends-on="dataSourceConfigurer"
+        lazy-init="true"
         destroy-method="close">
-    <property name="driverClassName" value="${grouter.db.driver}" />
-    <property name="url" value="${grouter.db.url}" />
-    <property name="username" value="${grouter.db.username}" />
-    <property name="password" value="${grouter.db.password}" />
+    <property name="driverClassName" value="${grouter.db.driver}"/>
+    <property name="url" value="${grouter.db.url}"/>
+    <property name="username" value="${grouter.db.username}"/>
+    <property name="password" value="${grouter.db.password}"/>
     <!--property name="defaultTransactionIsolation" value="2" />
     <property name="defaultAutoCommit" value="true" / -->
     <!--property name="initialSize" value="100" />

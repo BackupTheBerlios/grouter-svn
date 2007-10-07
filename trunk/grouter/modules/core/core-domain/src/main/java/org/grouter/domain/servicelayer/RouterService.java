@@ -19,20 +19,16 @@
 
 package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.entities.*;
+import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Router;
 
-/**
- * Created by IntelliJ IDEA.
- * User: georges.polyzois
- * Date: 2006-aug-18
- * Time: 12:35:20
- * To change this template use File | Settings | File Templates.
- */
-
-import javax.ejb.Remote;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -129,6 +125,15 @@ public interface RouterService
 
     Node findById( String nodeId);
 
+
+    /**
+     * A router config may change the id of a node - that node will still remain in the database
+     * This method changes the state of nodes with a valid router parent but that are not configured
+     * in router config startup xml file to {@link org.grouter.domain.entities.NodeStatus#NOT_CONFIGURED_TO_START}
+     *
+     * @param routerId
+     */
+    void updateStateForNotConfiguredNodes( final String routerId, final Set<Node> configuredNodes  );
 
     //Settings findSettings(  );
 

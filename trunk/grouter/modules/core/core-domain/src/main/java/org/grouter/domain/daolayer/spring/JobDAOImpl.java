@@ -20,33 +20,30 @@
 package org.grouter.domain.daolayer.spring;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.daolayer.UserDAO;
-import org.grouter.domain.entities.User;
+import org.grouter.domain.daolayer.JobDAO;
+import org.grouter.domain.entities.Job;
 import org.hibernate.Session;
-import org.hibernate.Query;
-
-import java.util.List;
 
 /**
- * Hibernate-specific implementation of the {@link UserDAO} interface.
+ * Hibernate-specific implementation of the {@link org.grouter.domain.daolayer.JobDAO} interface.
  *
  * @author Georges Polyzois
  */
-public class UserDAOImpl extends GenericHibernateDAO<User, Long> implements UserDAO
+public class JobDAOImpl extends GenericHibernateDAO<Job, Long> implements JobDAO
 {
-    Logger logger = Logger.getLogger(UserDAOImpl.class);
+    Logger logger = Logger.getLogger(JobDAOImpl.class);
 
     /**
      * For reflection purposes, i.e. Spring needs this.
      */
-    public UserDAOImpl()
+    public JobDAOImpl()
     {
-        super(User.class);
+        super(Job.class);
     }
 
-    public UserDAOImpl(Session session)
+    public JobDAOImpl(Session session)
     {
-        super(User.class, session);
+        super(Job.class, session);
     }
 
 
@@ -55,14 +52,4 @@ public class UserDAOImpl extends GenericHibernateDAO<User, Long> implements User
         session = s;
     }
 
-    public List<User> findAllDistinct(String hql)
-    {
-        String hsql = "select obj from User obj";
-        Session session = getSession();
-        Query qr = session.createQuery(hsql);
-        return qr.list();
-    }
-
-
-    
 }

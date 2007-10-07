@@ -19,31 +19,181 @@
 
 package org.grouter.domain.entities;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
+import java.util.*;
 
 /**
+ * Domain entity representing a scheduled job.
+ * 
  * @author Georges Polyzois
  */
-public class Job
-
+@Entity
+@Table(name = "job")
+public class Job extends BaseEntity
 {
-    List<JobEvent> schedulerJobEvents = new ArrayList<JobEvent>();
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    Long id;
 
-    JobState jobState;
+    @Column(name = "displayname")
+    @NotNull
+    String displayName;
 
-    // on or off
-    Boolean enabled;
-
-    String jobName;
-
+    @Column(name = "cron_expression")
+    @NotNull
     String cronExpression;
 
+    List<JobEvent> jobEvents = new ArrayList<JobEvent>();
+
+    @ManyToOne
+    @JoinColumn(name = "job_state_fk")
+    @NotNull
+    JobState jobState;
+
+    @Column
+    Date startedOn;
+
+    @Column
+    Date finishedAt;
 
 
-    Map<String, String> jobContext = new HashMap<String,String>();
+    @ManyToOne
+    @JoinColumn(name = "job_type_fk")
+    @NotNull
+    JobType jobType;
+
+    @ManyToOne
+    @JoinColumn(name = "router_fk")
+    @NotNull
+    Router router;
+
+    // on or off
+//    Boolean enabled;
+
+    @OneToMany( targetEntity = org.grouter.domain.entities.JobContext.class,
+                cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    Map<String, String> jobContext = new HashMap<String, String>();
 
 
+    public Job()
+    {
+    }
+
+    public Job(final Long id, final String displayName, final String cronExpression,
+               final JobState jobState,
+               final JobType jobType,
+               final Router router
+    )
+    {
+        this.id = id;
+        this.displayName = displayName;
+        this.cronExpression = cronExpression;
+        this.jobState = jobState;
+        this.jobType = jobType;
+        this.router = router;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(final Long id)
+    {
+        this.id = id;
+    }
+
+    public String getDisplayName()
+    {
+        return displayName;
+    }
+
+    public void setDisplayName(final String displayName)
+    {
+        this.displayName = displayName;
+    }
+
+    public String getCronExpression()
+    {
+        return cronExpression;
+    }
+
+    public void setCronExpression(final String cronExpression)
+    {
+        this.cronExpression = cronExpression;
+    }
+
+    public List<JobEvent> getJobEvents()
+    {
+        return jobEvents;
+    }
+
+    public void setJobEvents(final List<JobEvent> jobEvents)
+    {
+        this.jobEvents = jobEvents;
+    }
+
+    public JobState getJobState()
+    {
+        return jobState;
+    }
+
+    public void setJobState(final JobState jobState)
+    {
+        this.jobState = jobState;
+    }
+
+    public JobType getJobType()
+    {
+        return jobType;
+    }
+
+    public void setJobType(final JobType jobType)
+    {
+        this.jobType = jobType;
+    }
+
+    public Router getRouter()
+    {
+        return router;
+    }
+
+    public void setRouter(final Router router)
+    {
+        this.router = router;
+    }
+
+    public Map<String, String> getJobContext()
+    {
+        return jobContext;
+    }
+
+    public void setJobContext(final Map<String, String> jobContext)
+    {
+        this.jobContext = jobContext;
+    }
+
+    public Date getStartedOn()
+    {
+        return startedOn;
+    }
+
+    public void setStartedOn(final Date startedOn)
+    {
+        this.startedOn = startedOn;
+    }
+
+    public Date getFinishedAt()
+    {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(final Date finishedAt)
+    {
+        this.finishedAt = finishedAt;
+    }
 }

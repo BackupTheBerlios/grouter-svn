@@ -19,29 +19,43 @@
 
 package org.grouter.domain.entities;
 
+import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author Georges Polyzois
  */
-public class JobEvent
+@Entity
+@Table(name = "job_event")
+public class JobEvent  extends BaseEntity
 {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     Long id;
 
-    JobState jobState;
-
+    @Column(name = "created")
+    @NotNull
     Date created;
 
-    String description;
 
+    @Column(name = "message")
+    @NotNull
+    String message;
+
+    @ManyToOne
+    @JoinColumn(name = "job_fk")
     Job job;
 
-    Long runTimeInMs;
+    @Column( name = "processtime_ms" )
+    Long processTimeInMs;
 
+
+    @Column( name = "position")
     Long position;
-
-    Boolean wasTiggeredManually = Boolean.FALSE;
-
 
 
     public Date getCreated()
@@ -54,14 +68,14 @@ public class JobEvent
         this.created = created;
     }
 
-    public String getDescription()
+    public String getMessage()
     {
-        return description;
+        return message;
     }
 
-    public void setDescription(String description)
+    public void setMessage(String message)
     {
-        this.description = description;
+        this.message = message;
     }
 
 
@@ -76,35 +90,24 @@ public class JobEvent
     }
 
 
-    public Long getRunTimeInMs()
+    public Long getProcessTimeInMs()
     {
-        return runTimeInMs;
+        return processTimeInMs;
     }
 
-    public void setRunTimeInMs(Long runTimeInMs)
+    public void setProcessTimeInMs(Long processTimeInMs)
     {
-        this.runTimeInMs = runTimeInMs;
+        this.processTimeInMs = processTimeInMs;
     }
 
-
-    public Boolean getWasTiggeredManually()
-    {
-        return wasTiggeredManually;
-    }
-
-    public void setWasTiggeredManually(Boolean wasTiggeredManually)
-    {
-        this.wasTiggeredManually = wasTiggeredManually;
-    }
 
     public Long getRunTimeInMinutes()
     {
 
-        if( runTimeInMs != null && runTimeInMs >0 )
+        if (processTimeInMs != null && processTimeInMs > 0)
         {
-            return runTimeInMs / 60000 ;
-        }
-        else
+            return processTimeInMs / 60000;
+        } else
         {
             return 0L;
         }
@@ -112,11 +115,10 @@ public class JobEvent
 
     public Long getRunTimeInSeconds()
     {
-        if( runTimeInMs != null && runTimeInMs >0 )
+        if (processTimeInMs != null && processTimeInMs > 0)
         {
-            return runTimeInMs / 1000 ;
-        }
-        else
+            return processTimeInMs / 1000;
+        } else
         {
             return 0L;
         }
@@ -131,16 +133,6 @@ public class JobEvent
     public void setId(Long id)
     {
         this.id = id;
-    }
-
-    public JobState getJobState()
-    {
-        return jobState;
-    }
-
-    public void setJobState(JobState jobState)
-    {
-        this.jobState = jobState;
     }
 
     public Job getJob()
@@ -158,13 +150,11 @@ public class JobEvent
     {
         return "JobEvent{" +
                 "id=" + id +
-                ", jobState=" + jobState +
                 ", created=" + created +
-                ", description='" + description + '\'' +
+                ", message='" + message + '\'' +
                 ", job=" + job +
-                ", runTimeInMs=" + runTimeInMs +
+                ", processTimeInMs=" + processTimeInMs +
                 ", position=" + position +
-                ", wasTiggeredManually=" + wasTiggeredManually +
                 '}';
     }
 }

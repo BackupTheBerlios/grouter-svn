@@ -20,15 +20,16 @@
 package org.grouter.domain.servicelayer.ejb3;
 
 import org.apache.log4j.Logger;
+import org.grouter.domain.entities.Node;
 
-import javax.ejb.MessageDriven;
+import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.MessageDriven;
 import javax.ejb.SessionContext;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.annotation.Resource;
+import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 
 /**
  * A Message Driven Bean registering for callbacks on a in queue, receiving events.
@@ -74,6 +75,11 @@ public class RouterQueueMDB implements MessageListener
             {
                 persist(objectMessage);
 
+            }
+            if (objectMessage.getObject() instanceof org.grouter.domain.entities.Node)
+            {
+                persistNode(objectMessage);
+
             } else
             {
                 logger.debug("Got unknown type of message!!!");
@@ -98,6 +104,21 @@ public class RouterQueueMDB implements MessageListener
         logger.debug("Got message");
         RouterLocalService gRouterLocal = (RouterLocalService)sc.lookup( RouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
         gRouterLocal.saveMessage(message);
+    }
+
+    /**
+     * Call session ejb for processing of event.
+     *
+     * @param node
+     * @throws JMSException
+     */
+    private void persistNode(ObjectMessage node)
+            throws JMSException
+    {
+        Node message = (Node) node.getObject();
+        logger.debug("Got node status update");
+        RouterLocalService gRouterLocal = (RouterLocalService)sc.lookup( RouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
+        gRouterLocal.saveNode(message);
     }
 
 

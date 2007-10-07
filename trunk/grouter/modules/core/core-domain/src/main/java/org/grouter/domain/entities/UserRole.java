@@ -87,7 +87,7 @@ public class UserRole extends BaseEntity   //implements Comparable
 
 
     /**
-     * Sorting inmemory using Collections.sort will do sort by name.
+     * Sorting inmemory using Collections.sort will do sort by message.
      *
      * @param anotherObject is a non-null Role.
      * @throws NullPointerException if anotherObject is null.

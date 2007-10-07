@@ -17,7 +17,6 @@
             not-null="true"
             class="org.grouter.domain.entities.EndPointType"
             column="endpoint_type_fk"
-            cascade="save-update"
             fetch="join">
     </many-to-one>
 

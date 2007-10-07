@@ -24,7 +24,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
-import java.io.Serializable;
 
 
 /**
@@ -76,9 +75,9 @@ public class Sender extends BaseEntity
      */
     /*
      @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-@JoinTable(name = "USER_CONTACT_XREF",
-joinColumns = { @JoinColumn(name = "user_fk", referencedColumnName = "user_id") },
-inverseJoinColumns = { @JoinColumn(name = "contact_info_fk", referencedColumnName = "contact_info_id") })
+@JoinTable(message = "USER_CONTACT_XREF",
+joinColumns = { @JoinColumn(message = "user_fk", referencedColumnName = "user_id") },
+inverseJoinColumns = { @JoinColumn(message = "contact_info_fk", referencedColumnName = "contact_info_id") })
      */
     public Set<Message> getMessages()
     {

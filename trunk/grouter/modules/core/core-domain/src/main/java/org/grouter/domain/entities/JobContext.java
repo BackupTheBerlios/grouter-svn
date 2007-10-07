@@ -19,17 +19,37 @@
 
 package org.grouter.domain.entities;
 
+import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
+
 /**
- * Holds data as name value pairs. JobContext data are stored persistently and are used for any given
- * job under its execution.
+ * Holds data as message value pairs. JobContext data are stored persistently and are used for
+ * any given job under its execution.
  *
  * @author Georges Polyzois
  */
-public class JobContext
-{
+@Entity
+@Table(name = "job_context")
+public class JobContext  extends BaseEntity
+{             
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "job_fk")
     Job job;
-    String name;
+
+    @Column(name = "keyname")
+    @NotNull
+    String keyName;
+
+
+    @Column(name = "value")
+    @NotNull
     String value;
 
 
@@ -37,7 +57,7 @@ public class JobContext
     {
     }
 
-  
+
     public Long getId()
     {
         return id;
@@ -58,14 +78,14 @@ public class JobContext
         this.job = job;
     }
 
-    public String getName()
+    public String getKeyName()
     {
-        return name;
+        return keyName;
     }
 
-    public void setName(String name)
+    public void setKeyName(String keyName)
     {
-        this.name = name;
+        this.keyName = keyName;
     }
 
     public String getValue()

@@ -27,7 +27,7 @@ import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
- * Base class for Domain entities. 
+ * Base class for Domain entities.
  *
  * @author Georges Polyzois
  */
@@ -37,14 +37,14 @@ public class BaseEntity<ID extends Serializable> implements Serializable
     @Transient
     private static Logger logger = Logger.getLogger(BaseEntity.class);
 
-    // private ID id;
+   // private ID id;
 
     /**
      * A convenience method for outputting all attributes in the instances' state.
      *
-     * @return a string with name, value pairs, {@link org.apache.commons.lang.builder.ToStringBuilder#reflectionToString(Object)}
+     * @return a string with message, value pairs, {@link org.apache.commons.lang.builder.ToStringBuilder#reflectionToString(Object)}
      * @throws LazyInitializationException if the entity was not fully initialized, eg. if you try
-     * to print out state of instance while decoupled and instance was not loaded completely
+     *                                     to print out state of instance while decoupled and instance was not loaded completely
      */
     public String reflectionToString()
     {
@@ -60,4 +60,7 @@ public class BaseEntity<ID extends Serializable> implements Serializable
     {
         this.id = id;
     }*/
+
+
+
 }

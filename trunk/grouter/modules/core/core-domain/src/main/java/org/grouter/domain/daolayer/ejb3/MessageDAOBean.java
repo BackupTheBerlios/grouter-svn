@@ -22,6 +22,7 @@ package org.grouter.domain.daolayer.ejb3;
 import org.apache.log4j.Logger;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.entities.Message;
+import org.hibernate.FetchMode;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
@@ -51,5 +52,16 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
         throw new NotImplementedException();
     }
 
+    public List<Message> findAllLazy(final Class clazz, final String... disJoinProps)
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public List<Message> findAllUsingFetchMode(final Class clazz, final FetchMode fetchMode, final
+    String... disJoinProps
+    )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
 

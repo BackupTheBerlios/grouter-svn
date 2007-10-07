@@ -12,15 +12,15 @@
     <property name="backupUri" not-null="false" type="java.lang.String" column="backupuri"/>
     <property name="description" not-null="false" type="java.lang.String" column="description"/>
     <property name="statusMessage" not-null="false" type="java.lang.String" column="statusMessage"/>
-    <property name="senderStatic" not-null="false"  column="senderstatic"/>
-    <property name="receiverStatic" not-null="false"  column="receiverstatic"/>
+    <property name="source" not-null="false" type="java.lang.String" column="source"/>
+    <property name="receiver" not-null="false" type="java.lang.String" column="receiver"/>
 
     <many-to-one
             name="router"
             not-null="false"  
             class="org.grouter.domain.entities.Router"
             column="router_fk"
-            cascade="save-update"
+            cascade="none"
             update="false"
             fetch="join">
     </many-to-one>
@@ -30,8 +30,6 @@
             not-null="false"
             class="org.grouter.domain.entities.NodeStatus"
             column="nodestatus_fk"
-            cascade="save-update"
-            update="true"
             fetch="join">
     </many-to-one>
 

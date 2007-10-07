@@ -17,41 +17,53 @@
  * under the License.
  */
 
-package org.grouter.domain.daolayer;
+package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Job;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
- * Business DAO operations related to the <tt>Node</tt> entity.
+ * Main interface for operations with the grouter internal domain.
+ *
+ * There are a spring based implementation and
  *
  * @author Georges Polyzois
  */
-public interface NodeDAO extends GenericDAO<Node, String>
+@Remote
+@Local
+public interface JobService
 {
     /**
-     * Use to get all all nodes for a given router with number of messages set on each node.
-     * 
-     * @param routerId get statistics for this router
-     * @return list with Nodes and number of messages for every node
+     * Retrieve a list with all grouters available.
+     * @return
      */
-    List<Node> findNodesWithNumberOfMessages( String routerId );
+    List<Job> findAll();
 
-
-    Long getNumberOfMessages( String nodeId );
 
     /**
-     * Find all nodes for a given routerid and init endpoint if set to true.
-     * @param routerId id of router
-     * @param initEndPoint should we also load endpoints
-     * @return list with nodes
+     * Stores a message - all relationships need to be inplace for persitence operation is to succeed.
+     * @param job a message to persist
+     * @return
      */
-    List<Node> findAllNodes(String routerId, boolean initEndPoint);
+    void save(Job job);
 
-    List<Node> findNodes();
+    /**
+     * Get user.
+     *
+     * @param id of user
+     * @return a User
+     */
+    Job findById(Long id);
 
+
+    /**
+     * Delete the job permanently - and all events associated to it.
+     * @param id
+     */
+    void delete( Long id );
 
 
 }

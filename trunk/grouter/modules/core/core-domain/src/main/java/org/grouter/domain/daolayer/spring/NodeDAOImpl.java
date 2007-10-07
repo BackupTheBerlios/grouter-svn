@@ -47,12 +47,9 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements No
         super(Node.class, session);
     }
 
-    /**
-     * {@inheritDoc }
-     */
     public List<Node> findNodesWithNumberOfMessages(String routerId)
     {
-        String hsql = "from Node obj where obj.router.id = :routerId";
+        String hsql = "select obj from Node obj where obj.router.id = :routerId";
         Session session = getSession();
         Query qr = session.createQuery(hsql);
         List<Node> nodes = qr.setParameter("routerId", routerId).list();
@@ -65,17 +62,16 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements No
 
     public Long getNumberOfMessages(String nodeId)
     {
-        String hsql = "select count(*) from Message obj where obj.node.id = :nodeid";
+        String hsql = "select count(obj) from Message obj where obj.node.id = :nodeid";
         Session session = getSession();
         Query qr = session.createQuery(hsql);
         return (Long) qr.setParameter("nodeid", nodeId).uniqueResult();
     }
 
 
-    // todo inefficient - try using selec count(*)
-    public List<Node> findAllNodes(String routerId)
+    public List<Node> findAllNodes(String routerId, boolean initEndPoint)
     {
-        String hsql = "from Node obj where obj.router.id = :routerId"; 
+        String hsql = "select obj from Node obj where obj.router.id = :routerId";
         Session session = getSession();
         Query qr = session.createQuery(hsql);
         List<Node> nodes = qr.setParameter("routerId", routerId).list();
@@ -83,8 +79,11 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements No
         for (Node node : nodes)
         {
             node.setNumberOfMessagesHandled(getNumberOfMessages( node.getId()));
-            Hibernate.initialize( node.getInBound() );
-            Hibernate.initialize( node.getOutBound() );
+            if( initEndPoint )
+            {
+                Hibernate.initialize( node.getInBound() );
+                Hibernate.initialize( node.getOutBound() );
+            }
         }
         return nodes;
 

@@ -34,7 +34,6 @@ import javax.persistence.*;
 @Table(name = "endpoint_context")
 public class EndPointContext  extends BaseEntity
 {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +41,7 @@ public class EndPointContext  extends BaseEntity
     Long id;
 
     @Column(name = "keyname")
-    String keyname;
+    String keyName;
 
     @Column(name = "value")
     String value;
@@ -56,9 +55,9 @@ public class EndPointContext  extends BaseEntity
         this.endPoint = endPoint;
     }
 
-    public EndPointContext(final String keyname,final String value,final EndPoint endPoint)
+    public EndPointContext(final String keyName,final String value,final EndPoint endPoint)
     {
-        this.keyname = keyname;
+        this.keyName = keyName;
         this.value = value;
         this.endPoint = endPoint;
     }
@@ -80,14 +79,14 @@ public class EndPointContext  extends BaseEntity
         this.id = id;
     }
 
-    public String getKeyname()
+    public String getKeyName()
     {
-        return keyname;
+        return keyName;
     }
 
-    public void setKeyname(String keyname)
+    public void setKeyName(String keyName)
     {
-        this.keyname = keyname;
+        this.keyName = keyName;
     }
 
     public String getValue()

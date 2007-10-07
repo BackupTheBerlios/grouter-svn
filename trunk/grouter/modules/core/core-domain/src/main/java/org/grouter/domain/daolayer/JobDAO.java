@@ -19,18 +19,15 @@
 
 package org.grouter.domain.daolayer;
 
-import org.grouter.domain.entities.User;
-
-import java.util.List;
+import org.grouter.domain.entities.Job;
 
 
 /**
- * Interface for {@link User} DAO operations.
+ * Interface for {@link org.grouter.domain.entities.Job} DAO operations.
  *
  * @author Georges Polyzois
  */
-public interface UserDAO extends GenericDAO<User, Long>
+public interface JobDAO extends GenericDAO<Job, Long>
 {
-    public final static String FIND_ALL = "select obj from User obj";
+    
 }
-

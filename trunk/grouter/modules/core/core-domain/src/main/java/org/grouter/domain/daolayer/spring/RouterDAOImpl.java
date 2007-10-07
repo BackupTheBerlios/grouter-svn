@@ -54,7 +54,6 @@ public class RouterDAOImpl extends GenericHibernateDAO<Router, String> implement
 
     public List<Router> findAllDistinct()
     {
-
         String hsql = "from Router";
         Session session = getSession();
         Query qr = session.createQuery(hsql);

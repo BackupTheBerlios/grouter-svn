@@ -19,18 +19,16 @@
 
 package org.grouter.domain.servicelayer;
 
-import org.grouter.domain.entities.Router;
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.User;
+import org.grouter.domain.entities.UserState;
 
-import javax.ejb.Remote;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * Main interface for operations with the grouter internal domain.
- *
+ * 
  * There are a spring based implementation and
  *
  * @author Georges Polyzois
@@ -41,20 +39,35 @@ public interface UserService
 {
     /**
      * Retrieve a list with all grouters available.
+     *
      * @return
      */
     List<User> findAll();
 
+    /**
+     * Retrieve a list with all grouters available.
+     *
+     * @return
+     */
+    List<User> findAll( String hql );
+
 
     /**
      * Stores a message - all relationships need to be inplace for persitence operation is to succeed.
+     *
      * @param user a message to persist
      * @return
      */
-    void saveUser(User user);
+    void save(User user);
 
     /**
-     * Get user.
+     * Deletes a user.
+     * @param id the id of the user to delete
+     */
+    void delete( Long id );
+
+    /**
+     * Get user with id.
      *
      * @param id of user
      * @return a User
@@ -62,8 +75,11 @@ public interface UserService
     User findById(Long id);
 
     /**
-     * Marks a user as deleted. A user will never physically be deleted.
-     * @param id id of the user to be marked as deleted
+     * Change the state of this user - {@link UserState}
+     *
+     * @param id        id of user
+     * @param userState the new state for this user
      */
-    void deleteUser( Long id );
+    void changeState(Long id, UserState userState);
+
 }

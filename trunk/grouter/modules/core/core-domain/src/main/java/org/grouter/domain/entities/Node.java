@@ -56,20 +56,20 @@ public class Node extends BaseEntity<String>
     private String statusMessage;
 
 
-
     // A nodes sender - if one is provided by the message itself that sender is used to override this
-    @Column(name = "senderstatic")
-    private String senderStatic;
+    @Column(name = "source", nullable = false)
+    private String source;
+
     // A nodes receiver - if one is provided by the message itself that receiver is used to override this
-    @Column(name = "receiverstatic")
-    private String receiverStatic;
+    @Column(name = "receiver", nullable = false)
+    private String receiver;
 
 
     @OneToMany(cascade = {CascadeType.REMOVE},
             mappedBy = "node_fk")
-//    @JoinTable(name = "NODE_MESSAGE",
-//            joinColumns = {@JoinColumn(name = "NODE_FK")},
-//            inverseJoinColumns = {@JoinColumn(name = "MESSAGE_FK")})
+//    @JoinTable(message = "NODE_MESSAGE",
+//            joinColumns = {@JoinColumn(message = "NODE_FK")},
+//            inverseJoinColumns = {@JoinColumn(message = "MESSAGE_FK")})
     private Set<Message> messages = new HashSet<Message>();
 
     @Column(name = "modifiedon")
@@ -117,8 +117,8 @@ public class Node extends BaseEntity<String>
     /**
      * Constructor for creating a valid entity.
      *
-     * @param id id of the node
-     * @param dislayName a name to display
+     * @param id         id of the node
+     * @param dislayName a message to display
      */
     public Node(String id, String dislayName)
     {
@@ -189,7 +189,6 @@ public class Node extends BaseEntity<String>
     }
 
 
-
     public EndPoint getInBound()
     {
         return inBound;
@@ -220,29 +219,6 @@ public class Node extends BaseEntity<String>
     {
         this.backupUri = backupUri;
     }
-
-
-    public String getSenderStatic()
-    {
-        return senderStatic;
-    }
-
-    public void setSenderStatic(String senderStatic)
-    {
-        this.senderStatic = senderStatic;
-    }
-
-
-    public String getReceiverStatic()
-    {
-        return receiverStatic;
-    }
-
-    public void setReceiverStatic(String receiverStatic)
-    {
-        this.receiverStatic = receiverStatic;
-    }
-
 
     public Long getNumberOfMessagesHandled()
     {
@@ -296,19 +272,96 @@ public class Node extends BaseEntity<String>
         this.statusMessage = statusMessage;
     }
 
-    public String toString()
+    public String getSource()
     {
-        String toString;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("id=").append(id).append(",");
-        stringBuilder.append("name=").append(id).append(",");
-        stringBuilder.append("senderStatic=").append(senderStatic).append(",");
-        stringBuilder.append("receiverStatic=").append(receiverStatic);
-        stringBuilder.append("nodeStatus=").append(nodeStatus);
-        toString = stringBuilder.toString();
-        return toString;
+        return source;
     }
 
+    public void setSource(final String source)
+    {
+        this.source = source;
+    }
+
+    public String getReceiver()
+    {
+        return receiver;
+    }
+
+    public void setReceiver(final String receiver)
+    {
+        this.receiver = receiver;
+    }
+
+
+    
+
+    /*
+        @Override
+        public boolean equals(Object object)
+        {
+            if (object == null)
+            {
+                // Never equal to a null object
+                return false;
+            }
+
+            if (this == object)
+            {
+                // Always equal to self
+                return true;
+            }
+
+            if (!this.getClass().equals(object.getClass()))
+            {
+                // Must be same class
+                return false;
+            }
+
+            Node other = (Node) object;
+
+            if (this.id == null)
+            {
+                // If both ids are zero, delegate to super equals,
+                // otherwise not equal (this id is zero, but the other isn't)
+                return (other.getId() == null) && super.equals(object);
+            }
+
+            // Equal if the ids are equal
+            return (this.id.equals(other.getId()));
+        }
+
+
+        @Override
+        public int hashCode()
+        {
+            if (id == null)
+            {
+                return super.hashCode();
+            } else
+            {
+                return id.hashCode();
+            }
+        }
+    */
+
+    public boolean equals(final Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final Node node = (Node) o;
+
+        if (id != null ? !id.equals(node.id) : node.id != null) return false;
+
+        return true;
+    }
+
+    public int hashCode()
+    {
+        return (id != null ? id.hashCode() : 0);
+    }
+
+    
 
 
 }

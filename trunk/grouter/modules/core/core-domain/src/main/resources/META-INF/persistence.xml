@@ -7,8 +7,8 @@
         <description>Data source for Grouter</description>
         <jta-data-source>java:/DefaultDS</jta-data-source>
         <!--jar-file>../MyApp.jar</jar-file-->
-        <!--  JBoss scans all so this is useless
-        class>org.grouter.domain.entities.Message</class>
+        <!--  JBoss scans all so this is useless -->
+        <!-- class>org.grouter.domain.entities.Message</class>
         <class>org.grouter.domain.entities.Sender</class>
         <class>org.grouter.domain.entities.Receiver</class>
         <class>org.grouter.domain.entities.Node</class>

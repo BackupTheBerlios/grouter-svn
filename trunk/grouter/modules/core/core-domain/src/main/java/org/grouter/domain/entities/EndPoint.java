@@ -21,20 +21,16 @@ package org.grouter.domain.entities;
 
 import org.hibernate.validator.NotNull;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Collection;
-import java.io.Serializable;
 
 /**
  * An EndPoint represents the interface for inbound and outbound messaging. A Node can have one
  * inbound Endpoint and one outbound EndPoint.
- * Tied to an EndPoint is a collection of EndPointContext items, keyname/value pairs with both optional
- * keyname/value pairs and keyname/value pairs to override existing default keyname/value pairs in a worker thread -
+ * Tied to an EndPoint is a collection of EndPointContext items, keyName/value pairs with both optional
+ * keyName/value pairs and keyName/value pairs to override existing default keyName/value pairs in a worker thread -
  * a reader or writer.
  * <p/>
  * Quartz is used to schedule reader and writer jobs (threads) tied to each EndPoint.
@@ -74,8 +70,8 @@ public class EndPoint extends BaseEntity
     transient Filter filter;
 
     @OneToMany( targetEntity = org.grouter.domain.entities.EndPointContext.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER )
-//    @JoinTable( name="endpoint_context",
-//                joinColumns = @JoinColumn(name="endpoint_fk"))
+//    @JoinTable( message="endpoint_context",
+//                joinColumns = @JoinColumn(message="endpoint_fk"))
 //    @OnDelete( action = OnDeleteAction.CASCADE )
     Map endPointContext = new HashMap();
 

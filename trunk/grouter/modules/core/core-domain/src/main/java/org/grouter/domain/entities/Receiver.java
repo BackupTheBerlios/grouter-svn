@@ -49,7 +49,7 @@ public class Receiver implements Serializable
     /**
      * The "mappedBy" makes Hibernate ignore changes made to this class - Receiver -
      * and that the other end of the association is the master. Corresponda to inverse=true
-     * in Hibernate and has to name the inverse property of the target entity.
+     * in Hibernate and has to message the inverse property of the target entity.
      * 
      * @return
      */

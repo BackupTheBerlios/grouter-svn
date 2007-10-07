@@ -24,4 +24,6 @@
 
     <bean id="settingsDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.SettingsDAOImpl"/>
 
+    <bean id="jobDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.JobDAOImpl"/>
+
 </beans>

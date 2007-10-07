@@ -21,6 +21,9 @@ package org.grouter.domain.daolayer.ejb3;
 
 import org.grouter.domain.daolayer.UserDAO;
 import org.grouter.domain.entities.User;
+import org.hibernate.FetchMode;
+
+import java.util.List;
 
 
 public class UserDAOBean extends GenericEjb3DAO<User, Long> implements UserDAO
@@ -39,5 +42,17 @@ public class UserDAOBean extends GenericEjb3DAO<User, Long> implements UserDAO
     public void markAsDeleted(Long id)
     {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public List<User> findAllLazy(final Class clazz, final String... disJoinProps)
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public List<User> findAllUsingFetchMode(final Class clazz, final FetchMode fetchMode,
+                                            final String... disJoinProps
+    )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

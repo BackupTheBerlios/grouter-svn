@@ -23,6 +23,8 @@ import org.apache.log4j.Logger;
 import org.grouter.domain.daolayer.GenericDAO;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Session;
+import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.CriteriaSpecification;
@@ -103,7 +105,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
 
 
     @SuppressWarnings("unchecked")
-    public T findById(ID id, boolean lock)
+    public T findById(final ID id, final boolean lock)
     {
         T entity;
         if (lock)
@@ -121,7 +123,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     /**
      * {@inheritDoc}
      */
-    public T findById(ID id, String... joinProps)
+    public T findById(final ID id, final String... joinProps)
     {
         org.hibernate.Session session = ((HibernateEntityManager) getEntityManager()).getSession();
         org.hibernate.Criteria criteria = session.createCriteria(getPersistentClass());
@@ -134,18 +136,12 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         return (T) criteria.uniqueResult();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public T findById(ID id)
+    public T findById(final ID id)
     {
         return (T) em.find(getPersistentClass(), id);
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     public List<T> findAll()
     {
@@ -153,12 +149,18 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     }
 
 
+    public List<T> findAll( final String hql )
+    {
+        return getEntityManager().createQuery( hql ).getResultList();
+    }
+
+
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public List<T> findByExample(T exampleInstance, String[] excludeProperty)
+    public List<T> findByExample(final T exampleInstance, final String... excludeProperty)
     {
         // Using Hibernate, more difficult with EntityManager and EJB-QL
         Criteria crit = ((HibernateEntityManager) getEntityManager()).getSession()
@@ -172,19 +174,12 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         return crit.list();
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public T save(T entity)
     {
         return getEntityManager().merge(entity);
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     public void delete(T entity)
     {
         getEntityManager().remove(entity);
@@ -198,7 +193,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
 
 
     @SuppressWarnings("unchecked")
-    protected List<T> findByCriteria(org.hibernate.criterion.Criterion... criterion)
+    public List<T> findByCriteria(org.hibernate.criterion.Criterion... criterion)
     {
         // Using Hibernate, more difficult with EntityManager and EJB-QL
         org.hibernate.Session session = ((HibernateEntityManager) getEntityManager()).getSession();
@@ -211,12 +206,8 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     }
 
 
-
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
-    public T findById(Class clazz, T id, String... joinProps)
+    public T findById(final Class clazz, final T id, final String... joinProps)
     {
         org.hibernate.Session session = ((HibernateEntityManager) getEntityManager()).getSession();
         org.hibernate.Criteria criteria = session.createCriteria(getPersistentClass());

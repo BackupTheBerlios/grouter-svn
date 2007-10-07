@@ -26,15 +26,15 @@
   -->
 
 
-  <bean id="logStrategy" class="org.grouter.domain.servicelayer.spring.logging.JMSLogStrategyImpl"/>
+  <bean id="logStrategy" class="org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategyImpl"/>
 
-  <bean id="serviceFactory" class="org.grouter.domain.servicelayer.ServiceFactory"/>
+  <bean id="serviceFactory" class="org.grouter.domain.servicelayer.BeanLocator"/>
 
 
   <!-- The "old" way of doint it without the aop config style -->
 
   <!--  RouterService Proxy -->
-  <bean id="routerService" name="routerService" class="org.springframework.aop.framework.ProxyFactoryBean">
+  <bean id="routerService"  class="org.springframework.aop.framework.ProxyFactoryBean">
     <!-- dwr:remote javascript="routerAjaxService"/ -->
     <property name="proxyInterfaces">
       <value>org.grouter.domain.servicelayer.RouterService</value>
@@ -56,8 +56,30 @@
   </bean>
 
 
+
+  <!--  JobService Proxy -->
+  <bean id="jobService"  class="org.springframework.aop.framework.ProxyFactoryBean">
+    <!-- dwr:remote javascript="routerAjaxService"/ -->
+    <property name="proxyInterfaces">
+      <value>org.grouter.domain.servicelayer.JobService</value>
+    </property>
+    <property name="interceptorNames">
+      <list>
+        <idref local="transactionInterceptor"/>
+        <idref local="jobServiceTarget"/>
+      </list>
+    </property>            
+  </bean>
+
+
+  <!-- JobService Target -->
+  <bean id="jobServiceTarget" class="org.grouter.domain.servicelayer.spring.JobServiceImpl">
+    <property name="jobDAO" ref="jobDAO"/>
+  </bean>
+
+
   <!-- UserService Proxy -->
-  <bean id="userService" name="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
+  <bean id="userService"  class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="proxyInterfaces">
       <value>org.grouter.domain.servicelayer.UserService</value>
     </property>
@@ -68,11 +90,10 @@
       </list>
     </property>
   </bean>
-
+                                   
 
   <!-- Grouter Service Target -->
-  <bean id="userServiceTarget" name="userServiceTarget"
-        class="org.grouter.domain.servicelayer.spring.UserServiceImpl">
+  <bean id="userServiceTarget" class="org.grouter.domain.servicelayer.spring.UserServiceImpl">
     <property name="userDAO" ref="userDAO"/>
   </bean>
 
@@ -88,6 +109,7 @@
       <value>
         org.grouter.domain.servicelayer.RouterService.*=PROPAGATION_REQUIRED
         org.grouter.domain.servicelayer.UserService.*=PROPAGATION_REQUIRED
+        org.grouter.domain.servicelayer.JobService.*=PROPAGATION_REQUIRED
         org.grouter.domain.servicelayer.spring.RouterQueueListenerImpl.process*=PROPAGATION_REQUIRED
       </value>
     </property>
