@@ -15,11 +15,8 @@
 </head>
 
 <body>
-<div id="menuAction">
-    <a href="list.do"><img src="/images/view_detailed_24x24.png" alt="List"/></a>
-    &nbsp;&nbsp;&nbsp;
-    <a href="edit.do"> <img src="/gweb/images/edit_add_24x24.png" alt="New"></a>
-</div>
+
+<jsp:include page="menu.jsp"/>
 
 
 <div id="paragraph">
@@ -27,41 +24,47 @@
 </div>
 
 
-<form:form commandName="usercommand" id="form">
-    <table>
-        <tr>
-            <td>User name:</td>
-            <td><form:input path="user.userName"/></td>
-            <td><form:errors path="user.userName"/></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><form:input path="user.password"/></td>
-            <td><form:errors path="user.password"/></td>
-        </tr>
-        <tr>
-            <td>Role:</td>
-            <td>
-                <form:select path="user.roles">
-                    <form:option value="-" label="--Please Select"/>
-                    <form:options items="${roles}" itemValue="id" itemLabel="name"/>
-                </form:select>
-            </td>
-        </tr>
-        <tr>
-            <td>First name:</td>
-            <td><form:input path="user.firstName"/></td>
-        </tr>
-        <tr>
-            <td>Last name:</td>
-            <td><form:input path="user.lastName"/></td>
-        </tr>
-        <tr>
-            <td colspan="3">
-                <input type="submit" value="Save Changes"/>
-            </td>
-        </tr>
-    </table>
-</form:form>
+<div id="content">
+    <form:form commandName="usercommand" id="form">
+        <table>
+            <tr>
+                <td>User name:</td>
+                <td><form:input path="user.userName"/></td>
+                <td><form:errors path="user.userName"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><form:input path="user.password"/></td>
+                <td><form:errors path="user.password"/></td>
+            </tr>
+            <tr>
+                <td>Role:</td>
+                <td>
+                    <form:select path="user.roles">
+                        <form:option value="-" label="---- Please Select -----"/>
+                        <form:options items="${roles}" itemValue="id" itemLabel="name"/>
+                    </form:select>
+                </td>
+            </tr>
+            <tr>
+                <td>First name:</td>
+                <td><form:input path="user.firstName"/></td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td><form:input path="user.lastName"/></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right">
+                    <a href="/gweb/user/list.do"><input type="button" value="Cancel" /></a>
+
+                    <input type="submit" value="Save Changes"/>
+                </td>
+            </tr>
+        </table>
+    </form:form>
+
+</div>
+
 </body>
 </html>
