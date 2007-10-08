@@ -1,0 +1,17 @@
+<!--
+Assembly descriptor for jboss with mysql as datasource distribution.
+-->
+<assembly>
+  <id>full</id>
+  <formats>
+    <format>zip</format>
+    <!-- format>tar.gz</format -->
+  </formats>
+
+  <fileSets>
+    <fileSet>
+      <directory>./src/main/resources/jboss-4.0.2-mysql</directory>
+      <outputDirectory></outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>
