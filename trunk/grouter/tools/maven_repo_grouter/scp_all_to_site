@@ -1,0 +1,5 @@
+scp -r com gepo01@shell.berlios.de:/home/groups/grouter/htdocs/maven
+
+scp -r javax gepo01@shell.berlios.de:/home/groups/grouter/htdocs/maven
+
+scp -r org gepo01@shell.berlios.de:/home/groups/grouter/htdocs/maven

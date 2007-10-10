@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-validator</artifactId>
+  <version>3.0.0.ga</version>
+  <versioning>
+    <versions>
+      <version>3.0.0.ga</version>
+    </versions>
+    <lastUpdated>20070516113824</lastUpdated>
+  </versioning>
+</metadata>
