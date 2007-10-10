@@ -1,5 +1,7 @@
-scp -r com gepo01@shell.berlios.de:/home/groups/grouter/htdocs/maven
-
-scp -r javax gepo01@shell.berlios.de:/home/groups/grouter/htdocs/maven
-
-scp -r org gepo01@shell.berlios.de:/home/groups/grouter/htdocs/maven
+scp -r -exclude svn com gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
+# scp -r javax gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
+#scp -r org gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
+# --dry-run   --exclude=.svn									    	
+# rsync -avz -e ssh --recursive --progress --verbose --compress --exclude=.svn  gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos  /cygdrive/c/java/grouter/grouter/tools/maven_repo_grouter/com
+#rsync -e ssh --recursive --progress --verbose --compress --exclude=.svn org gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
+#rsync -e ssh --recursive --progress --verbose --compress --exclude=.svn javax gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
