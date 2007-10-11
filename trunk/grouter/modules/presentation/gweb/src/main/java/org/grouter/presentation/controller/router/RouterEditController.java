@@ -110,10 +110,11 @@ public class RouterEditController extends SimpleFormController
     protected Object formBackingObject( HttpServletRequest request )
             throws Exception
     {
-        RouterCommand cmd;
+        RouterCommand cmd = null;
         String id = ServletRequestUtils.getStringParameter( request, ID);
         logger.debug("Get for id : " + id);
 
+        /*
         if ( id != null )
         {
             Router router = routerService.findRouterById( id );
@@ -122,7 +123,7 @@ public class RouterEditController extends SimpleFormController
         else
         {
             cmd = new RouterCommand(  );
-        }
+        }       */
 
         return cmd;
     }
