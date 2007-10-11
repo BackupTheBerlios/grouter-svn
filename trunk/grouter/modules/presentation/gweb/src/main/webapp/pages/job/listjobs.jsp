@@ -4,7 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
 
-<% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
 
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
