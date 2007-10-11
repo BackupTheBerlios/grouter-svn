@@ -7,23 +7,20 @@
 
   <!-- Root element  -->
   <xs:element name="Grouter">
-
     <xs:complexType>
       <xs:sequence>
         <xs:element name="Settings" type="settingsType" maxOccurs="1" minOccurs="1"/>
-        <xs:element name="Node" type="node" maxOccurs="unbounded"/>
+        <xs:element name="GlobalJobs" type="jobsType" maxOccurs="1" minOccurs="0"/>
+        <xs:element name="Nodes" type="nodesType" maxOccurs="1" />
       </xs:sequence>
       <xs:attribute name="displayName" type="xs:string" use="required"/>
       <xs:attribute name="description" type="xs:string" use="optional"/>
       <xs:attribute name="id" type="xs:string" use="required"/>
       <xs:attribute name="home" type="xs:string" use="required"/>
-      <xs:attribute name="rmiRegistryPort" type="xs:int" use="required"/>
-      <xs:attribute name="rmiServicePort" type="xs:int" use="required"/>
+      <xs:attribute name="rmiRegistryPort" type="xs:int" use="optional"/>
+      <xs:attribute name="rmiServicePort" type="xs:int" use="optional"/>
     </xs:complexType>
   </xs:element>
-
-
-  <!-- First level 	-->
 
   <!-- GlobalSettings -->
   <xs:complexType name="settingsType">
@@ -31,17 +28,36 @@
       <xs:element name="Jndi" type="jndiType" maxOccurs="1" minOccurs="1"/>
       <xs:element name="Logging" type="loggingType" maxOccurs="1" minOccurs="1"/>
       <xs:element name="Email" type="emailType" maxOccurs="1" minOccurs="0"/>
-
-
-      <!--xs:element name="grouterHome" type="xs:string"/>
-    <xs:element name="grouterDomain" type="grouterDomainType"/-->
-      <!-- xs:element name="archiveHandler" type="archiveHandlerType"/ -->
-      <!-- xs:element name="email" type="emailType"/ -->
+      <xs:element name="DataSource" type="dataSourceType" maxOccurs="1" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
-  <!-- FeederNode -->
-  <xs:complexType name="node">
+
+  <!-- Jobs -->
+  <xs:complexType name="jobsType">
+    <xs:sequence>
+      <xs:element name="Job" type="jobType" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="jobType">
+    <xs:sequence>
+      <xs:element name="displayname" type="xs:string" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="cron" type="xs:string" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" use="required"/>
+    <xs:attribute name="jobType" type="jobTypeType"/>
+  </xs:complexType>
+
+
+  <!-- Nodes -->
+  <xs:complexType name="nodesType">
+    <xs:sequence>
+      <xs:element name="Node" type="nodeType" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="nodeType">
     <xs:sequence>
       <xs:element name="description" type="xs:string" minOccurs="0"/>
       <xs:element name="displayName" type="xs:string" minOccurs="0"/>
@@ -55,6 +71,7 @@
     <xs:attribute name="id" use="required"/>
     <xs:attribute name="createuniquename" type="xs:boolean"/>
     <xs:attribute name="endPointType" type="xs:boolean"/>
+    <xs:attribute name="createDirectories" type="xs:boolean" use="required"/>
     <!--
     A source is an optional attribute on a Node indicating from which source
     we are getting messages. A message in it self can contain a sender - and different
@@ -87,6 +104,13 @@
       <xs:enumeration value="JMS_READER"/>
       <xs:enumeration value="JMS_WRITER"/>
       <xs:enumeration value="HTTP_READER"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="jobTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ARCHIVER"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -136,28 +160,43 @@
   <xs:element name="emailBatchSize" type="xs:short"/>
 
 
-
   <xs:complexType name="jndiType">
     <xs:sequence>
       <xs:element name="naming.factory.initial" type="xs:string"
                   default="org.jnp.interfaces.NamingContextFactory"/>
-      <xs:element name="naming.provider.url" type="xs:string" default="jnp://localhost:1099" maxOccurs="1"/>
+      <xs:element name="naming.provider.url" type="xs:string" default="jnp://localhost:1099"
+                  maxOccurs="1"/>
       <xs:element name="naming.factory.url.pkgs" type="xs:string"
                   default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
       <xs:element name="naming.queueconnectionfactoy" type="xs:string"
-                    default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
-
+                  default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
 
 
     </xs:sequence>
-   </xs:complexType>
+  </xs:complexType>
+
+
+  <xs:complexType name="dataSourceType" >
+      <xs:sequence>
+        <!-- org.hibernate.dialect.PostgreSQLDialect, org.hibernate.dialect.Oracle9Dialect --> 
+        <xs:element name="dialect" type="xs:string" default="org.hibernate.dialect.MySQLInnoDBDialect"/>
+        <xs:element name="driverClassName" type="xs:string" default="org.gjt.mm.mysql.Driver"/>
+        <xs:element name="url" type="xs:string" default="jdbc:mysql://localhost:3306/grouter"/>
+        <xs:element name="userName" type="xs:string" default="grouter"/>
+        <xs:element name="password" type="xs:string" default="grouter"/>
+      </xs:sequence>
+    </xs:complexType>
+
+
+
+
 
   <xs:complexType name="loggingType">
     <xs:sequence>
-      <xs:element name="jms.loggingQueue" type="xs:string" default="queue/GrouterQueue" maxOccurs="1"/>
+      <xs:element name="jms.loggingQueue" type="xs:string" default="queue/GrouterQueue"
+                  maxOccurs="1"/>
     </xs:sequence>
-   </xs:complexType>
-
+  </xs:complexType>
 
 
   <!--

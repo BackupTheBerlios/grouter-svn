@@ -346,13 +346,13 @@ public class QueueListenerDestination extends AbstractListenerDestination
             logger.info("Bound to destination " + destinationName);
         } catch (JMSException e)
         {
-            logger.error("Got exception with JMS provider during bind to destination " + destinationName + ". Error code : " + e.getErrorCode());
+            logger.error("Got exception with JMS provider during bind to destination " +
+                    destinationName + ". Got error message :" + e.getMessage());
             rebind(this);
         } catch (ServiceLocatorException ex)
         {
-            logger.error(
-                    "Got exception with JMS provider during bind to destination " +
-                            destinationName + ". Got error message : " + ex.getMessage());
+            logger.error( "Got exception with JMS provider during bind to destination " +
+                    destinationName + ". Got error message : " + ex.getMessage());
             rebind(this);
         }
     }
