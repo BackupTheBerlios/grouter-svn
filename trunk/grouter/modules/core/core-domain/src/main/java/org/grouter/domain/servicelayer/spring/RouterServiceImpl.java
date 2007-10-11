@@ -162,7 +162,12 @@ public class RouterServiceImpl implements RouterService
     }
 
 
-    public Node findById(String nodeId)
+    public Router findRouterById(String routerId)
+    {
+        return routerDAO.findById(routerId);
+    }
+
+    public Node findNodeById(String nodeId)
     {
         return nodeDAO.findById(nodeId);
     }

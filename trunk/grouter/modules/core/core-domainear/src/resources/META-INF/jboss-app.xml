@@ -4,6 +4,11 @@
         "http://www.jboss.org/j2ee/dtd/jboss-app_4_0.dtd">
 
 <jboss-app>
+  <!--loader-repository>org.grouter:loader=grouter-ear-jboss-${version}.ear
+        <loader-repository-config>
+            java2ParentDelegaton=false
+        </loader-repository-config>
+    </loader-repository -->
     <!--module>
         <service>example.beans</service>
     </module-->

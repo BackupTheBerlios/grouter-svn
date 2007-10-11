@@ -6,6 +6,7 @@ create table node
     displayname varchar(255),
     description varchar(2048),
     statusmessage varchar(1024),
+    createdirectories boolean,
     source varchar(36),
     receiver varchar(36),
     internalqueueurl varchar(1000),

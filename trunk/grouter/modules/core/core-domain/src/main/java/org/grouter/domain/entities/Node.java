@@ -86,8 +86,12 @@ public class Node extends BaseEntity<String>
     @Column(name = "inbound_endpoint_fk")
     private EndPoint inBound;
 
+    @Column(name = "createdirectories")
+    private Boolean createDirectories;
+
     @Column(name = "outbound_endpoint_fk")
     private EndPoint outBound;
+
 
     @Column(name = "backupuri")
     @Length(max = 2048)
@@ -292,8 +296,15 @@ public class Node extends BaseEntity<String>
         this.receiver = receiver;
     }
 
+    public Boolean getCreateDirectories()
+    {
+        return createDirectories;
+    }
 
-    
+    public void setCreateDirectories(final Boolean createDirectories)
+    {
+        this.createDirectories = createDirectories;
+    }
 
     /*
         @Override

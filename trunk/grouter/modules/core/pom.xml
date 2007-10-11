@@ -17,6 +17,6 @@
         <!-- module>cmn-configbeans</module -->
         <module>core-domain</module>
         <module>core-router</module>
-        <!-- module>core-domainear</module -->
+        <module>core-domainear</module>
     </modules>
 </project>

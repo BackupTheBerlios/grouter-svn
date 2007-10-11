@@ -41,7 +41,7 @@ public class FtpWriteCommand extends AbstractCommand
 {
     private static Logger logger = Logger.getLogger(FtpWriteCommand.class);
     LogStrategy logStrategy;
-        BeanLocator beanLocator;
+    BeanLocator beanLocator;
     
 
 
@@ -106,7 +106,7 @@ public class FtpWriteCommand extends AbstractCommand
             message.setContent(commandMessage.getMessage());
             message.setNode(node);
 
-            LogStrategy jdbcLogStrategy = (JDBCLogStrategyImpl) beanLocator.getLogStrategy(BeanLocator.LOGSTRATEGY_BEAN);
+            LogStrategy jdbcLogStrategy = beanLocator.getLogStrategy(BeanLocator.LOGSTRATEGY_BEAN);
             jdbcLogStrategy.log(message);
         }
     }

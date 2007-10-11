@@ -43,7 +43,7 @@
   </GlobalJobs>
 
   <Nodes>
-    <Node id="filetest11212" createuniquename="true" source="BACARGO_C2K" receiver="C2K1">
+    <Node id="filetest11212" createuniquename="true" source="BACARGO_C2K" receiver="C2K1" createDirectories="true">
       <description>Test node 1</description>
       <displayName>FileTest</displayName>
       <createdOn>2007-01-01</createdOn>
@@ -63,7 +63,7 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="internal">
+    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
       <description>Another file to file node</description>
       <displayName>FileToFileTest2</displayName>
       <createdOn>2007-01-01</createdOn>

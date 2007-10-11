@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Grouter displayName="Test router for ftp" id="grouter_id_2" rmiRegistryPort="1099"
-         rmiServicePort="2000"
+<Grouter displayName="Test router for ftp" id="grouter_id_http" 
          description="tipota"
          home="file://temp/grouter"
          xmlns="http://grouter.org/config.xsd"
@@ -21,7 +20,7 @@
   </Settings>
 
   <Nodes>
-    <Node id="httptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K">
+    <Node id="httptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
       <displayName>Http to file</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>
@@ -32,7 +31,7 @@
         <contextparam name="httpPort" value="8080"/>
         <contextparam name="fileList" value="/status"/>
       </inBoundEndPoint>
-      <outBoundEndPoint id="filewriter_1" endPointType="FILE_WRITER">
+      <outBoundEndPoint id="filewriter_1_httptest" endPointType="FILE_WRITER">
         <uri>file://temp/grouter/nodes/httptest/out</uri>
         <clazzname>a classname</clazzname>
         <cron>0/5 * * * * ?</cron>

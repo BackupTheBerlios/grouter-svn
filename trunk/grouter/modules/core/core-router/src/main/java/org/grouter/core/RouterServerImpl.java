@@ -20,7 +20,6 @@
 package org.grouter.core;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
 import org.grouter.common.config.XmlConfigHandler;
@@ -28,16 +27,17 @@ import org.grouter.core.config.ConfigFactory;
 import org.grouter.core.util.SchedulerService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.domain.RouterCache;
+import org.grouter.domain.entities.EndPointType;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.entities.SettingsContext;
 import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.remoting.rmi.RmiServiceExporter;
 
 import java.io.File;
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 /**
@@ -67,22 +67,6 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
     private static final String ROUTER_SERVICE = "routerService";
     private static final String RMI_SERVICE_EXPORTER_FACTORY_BEAN = "rmiServiceExporterFactoryBean";
 
-    /**
-     * Constructor.
-     *
-     * @param router
-     */
-    public RouterServerImpl(Router router)
-    {
-        Validate.notNull(router, "A null router can not be used to start.");
-        try
-        {
-            initApplicationContext(router);
-        } catch (Exception e)
-        {
-            logger.error(e, e);
-        }
-    }
 
     public RouterServerImpl()
     {
@@ -107,16 +91,21 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
             logger.info("Using config path : " + configPath);
             readConfiguration(configPath);
 
-            initApplicationContext(router);
+            initApplicationContext();
+
+            forceMakeDirectories();
 
             RouterCache.init(router);
 
-            updateDatabase(router);
-            initRmi(router);
+
+            updatePersistentState();
+
+
+            initRmi();
 
             logger.info(router.printNodes());
 
-            logStatus(router);
+            logStatus();
         }
         catch (Exception ex)
         {
@@ -133,72 +122,51 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
         logger.info("Parsing completed. Router config was read.");
     }
 
-
     /**
      * Load config file and store reference for further processing of config data.
-     *
-     * @param router configuration
      */
-    private void initApplicationContext(Router router) throws Exception
+    private void initApplicationContext() throws Exception
     {
-        overrideContext(router);
-
+        overrideContext();
         logger.info("Initializing router context");
         context = new ClassPathXmlApplicationContext(getConfigLocations());
         routerService = (RouterService) context.getBean(ROUTER_SERVICE);
         schedulerService = new SchedulerService(router.getNodes());
-
-
-
     }
 
-    private void overrideContext(final Router router)
+    /**
+     * Override properties set in Spring context files.
+     */
+    private void overrideContext()
     {
-        logger.info("Overriding datasource context from router config file");
-        String driverClassName = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_DRIVERCLASSNAME );
-        String url = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_URL );
-        String userName = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_USERNAME );
-        String password = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_PASSWORD );
+        String driverClassName = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_DRIVERCLASSNAME);
+        String url = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_URL);
+        String userName = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_USERNAME);
+        String password = (String) router.getSettings().getSettingsContext().get(SettingsContext.KEY_SETTINGS_DATASOURCE_PASSWORD);
 
-        System.setProperty( "grouter.db.driver",driverClassName );
-        System.setProperty( "grouter.db.url",url );
-        System.setProperty( "grouter.db.username",userName );
-        System.setProperty( "grouter.db.password",password );
+        if (StringUtils.isNotEmpty(driverClassName) && StringUtils.isNotEmpty(url) &&
+                StringUtils.isNotEmpty(userName) && StringUtils.isNotEmpty(password))
+        {
+            logger.info("Overriding datasource context from router config file");
 
-        //logger.info("Looking up datasource");
-        /*DriverManagerDataSource driverManagerDataSource = (DriverManagerDataSource) context.getBean( "dataSource" );
+            logger.info("Overriding datasource context from router config file: grouter.db.driver=" + driverClassName);
+            System.setProperty("grouter.db.driver", driverClassName);
+            logger.info("Overriding datasource context from router config file: grouter.db.url=" + url);
+            System.setProperty("grouter.db.url", url);
+            logger.info("Overriding datasource context from router config file: grouter.db.username=" + userName);
+            System.setProperty("grouter.db.username", userName);
+            logger.info("Overriding datasource context from router config file: grouter.db.password=" + password);
+            System.setProperty("grouter.db.password", password);
+        }
 
-        if( StringUtils.isNotEmpty( url ) )
-        {
-            logger.info("Setting datasource url :" + url);
-            driverManagerDataSource.setUrl( url );
-        }
-        if( StringUtils.isNotEmpty( driverClassName ) )
-        {
-            logger.info("Setting datasource driverClassName :" + driverClassName);
-            driverManagerDataSource.setDriverClassName( driverClassName );
-        }
-        if( StringUtils.isNotEmpty( userName ) )
-        {
-            logger.info("Setting datasource userName :" + userName);
-            driverManagerDataSource.setUsername(userName );
-        }
-        if( StringUtils.isNotEmpty( password ) )
-        {
-            logger.info("Setting datasource password :" + password);
-            driverManagerDataSource.setPassword( password );
-        }
-        */
     }
 
 
     /**
      * Save configuration of raouter in database and also update any nodes that do not have
      * a parent.
-     *
-     * @param router configuration
      */
-    private void updateDatabase(final Router router)
+    private void updatePersistentState()
     {
         logger.info("Saving router state in database");
         routerService.saveRouter(router);
@@ -210,17 +178,15 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
     /**
      * If there is a rmi port configured then we register the router in jndi.
      * <p/>
-     * Liokup up bean in  context and use our config files parameters to set
+     * Lookup up bean in  context and use our config files parameters to set
      * port etc and finally call prepare to fire things up.
-     *
-     * @param router configuration
      */
-    private void initRmi(final Router router)
+    private void initRmi()
     {
         logger.info("Check if we are to register as RMI service");
-        if (router.getRmiRegistryPort() != null || router.getRmiServicePort() != null)
+        if (router.getRmiRegistryPort() > 0 || router.getRmiServicePort() > 0)
         {
-            try
+            try                   
             {
                 logger.info("Try to register in router as RMI service jndi");
                 RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean(RMI_SERVICE_EXPORTER_FACTORY_BEAN);
@@ -240,7 +206,7 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
 
     }
 
-    private void logStatus(Router router)
+    private void logStatus()
     {
         logger.info("Startup statistics");
         logger.info("Number of nodes in conf file :" + router.getNodes().size());
@@ -249,22 +215,6 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
             logger.info("{id=" + node.getId() + ",name=" + node.getDisplayName() + "}");
         }
     }
-
-    /**
-     * Starts GRouter... and adds shutdown hook.
-     *
-
-     public static void main(String[] args) throws Exception
-     {
-     String grouterHome = System.getProperty("user.dir");
-     logger.info("Working dir : " + grouterHome);
-     String configFile = "/core/core-router/src/test/resources/grouterconfig_file_file.xml";
-
-     GRouterServer grouter = new GRouterServer(grouterHome + configFile);
-     grouter.start();
-
-
-     }   */
 
 
     /**
@@ -319,9 +269,38 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
     // todo
     private void forceMakeDirectories()
     {
+        String homePath = router.getHomePath();
         for (Node node : router.getNodes())
         {
-            //if ( node.getInBound().getUri().startsWith("file://")   )
+            if (node.getCreateDirectories().booleanValue() == true)
+            {
+                logger.info("Trying to create node directories. Path for this node:" + homePath + node.getId());
+                try
+                {
+                    org.apache.commons.io.FileUtils.forceMkdir(new File(homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in"));
+                    org.apache.commons.io.FileUtils.forceMkdir(new File(homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out"));
+                } catch (IOException e)
+                {
+                    logger.error("Could not create directory for :" + homePath + node.getId());
+                }
+
+                if (node.getInBound().getEndPointType().equals(EndPointType.FILE_READER))
+                {
+
+                    try
+                    {
+                        org.apache.commons.io.FileUtils.forceMkdir(new File(homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "in"));
+                    } catch (IOException e)
+                    {
+                        logger.error("Could not create directory for :" + homePath + node.getId());
+                    }
+                }
+            } else
+            {
+                logger.info("Not creating directories for node:" + node.getId());
+
+            }
+
         }
     }
 
@@ -351,7 +330,7 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
      */
     public void stopNode(String nodeId) throws RemoteException
     {
-        Node node = routerService.findById(nodeId);
+        Node node = routerService.findNodeById(nodeId);
 
         logger.info("Stopping node :" + node.getId());
 
@@ -367,12 +346,12 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
 
     public static void main(String[] args)
     {
-        
+
         try
         {
-            String configPath = System.getProperty( "grouter.configfile" );
-            File configFile = new File( configPath );
-            RouterServerImpl router = new RouterServerImpl( configFile.getPath() );
+            String configPath = System.getProperty("grouter.configfile");
+            File configFile = new File(configPath);
+            RouterServerImpl router = new RouterServerImpl(configFile.getPath());
             router.start();
         } catch (Exception e)
         {

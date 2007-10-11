@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Grouter displayName="router2" description="Test router for jms" id="grouter_id_3"
-         rmiRegistryPort="2099" rmiServicePort="2100"
          home="file://temp/grouter"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
          xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
-
+<!--          rmiRegistryPort="2099" rmiServicePort="2100"
+-->
   <Settings>
     <Jndi>
       <naming.factory.initial>org.jnp.interfaces.NamingContextFactory</naming.factory.initial>
@@ -21,8 +21,8 @@
 
 
   <Nodes>
-    <Node id="jmstest123" createuniquename="true" source="BACARGO_C2K" receiver="C2K">
-      <description>Ftp to file</description>
+    <Node id="jmstest123" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
+      <description>Jms to file</description>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>
       <inBoundEndPoint id="jmsreader_1" endPointType="JMS_READER">

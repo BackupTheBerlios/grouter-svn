@@ -14,6 +14,7 @@
     <property name="statusMessage" not-null="false" type="java.lang.String" column="statusMessage"/>
     <property name="source" not-null="false" type="java.lang.String" column="source"/>
     <property name="receiver" not-null="false" type="java.lang.String" column="receiver"/>
+    <property name="createDirectories" not-null="false" type="java.lang.Boolean" column="createdirectories"/>
 
     <many-to-one
             name="router"

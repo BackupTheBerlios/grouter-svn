@@ -33,6 +33,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Use this factory (or assemblee) to create Node entities from corresponding xml binding type of object.
@@ -133,6 +134,7 @@ public class ConfigFactory
             nodeEntity.setId(configNode.getId().getStringValue());
             nodeEntity.setReceiver(configNode.getReceiver());
             nodeEntity.setSource(configNode.getSource());
+            nodeEntity.setCreateDirectories(configNode.getCreateDirectories());
 
             if (configNode.isSetBackup())
             {
@@ -149,9 +151,19 @@ public class ConfigFactory
                             configNode.getId().getStringValue() + File.separator + "backup").replace("file://", "/");
                     nodeEntity.setBackupUri( uriValid );
                 }
-                if (!FileUtils.isValidDir(nodeEntity.getBackupUri()))
+                if (!FileUtils.isValidDir(nodeEntity.getBackupUri()) && !nodeEntity.getCreateDirectories()  )
                 {
-                    throw new IllegalArgumentException("Invalid uri path to backup folder specified. Path was :" + nodeEntity.getBackupUri());
+                    throw new IllegalArgumentException("CreateDirectory flag for node was false and path did not exist - was :" + nodeEntity.getBackupUri());
+                }
+                else if( !FileUtils.isValidDir(nodeEntity.getBackupUri()) && nodeEntity.getCreateDirectories()  )
+                {
+                    try
+                    {
+                        org.apache.commons.io.FileUtils.forceMkdir(new File( nodeEntity.getBackupUri() ) );
+                    } catch (IOException e)
+                    {
+                        throw new IllegalArgumentException("Invalid uri path to backup folder specified. Could not create path:" + nodeEntity.getBackupUri());
+                    }
                 }
 
                 logger.debug("Using backup path set to :" + nodeEntity.getBackupUri());

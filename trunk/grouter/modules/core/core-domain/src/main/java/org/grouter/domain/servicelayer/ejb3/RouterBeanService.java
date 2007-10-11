@@ -133,7 +133,7 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
     }
 
     //todo
-    public Node findById(String nodeId)
+    public Node findNodeById(String nodeId)
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

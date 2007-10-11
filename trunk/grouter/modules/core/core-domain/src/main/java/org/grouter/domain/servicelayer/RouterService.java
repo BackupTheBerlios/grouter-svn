@@ -123,7 +123,7 @@ public interface RouterService
     Map<Long,EndPointType> findAllEndPointTypes();
 
 
-    Node findById( String nodeId);
+    Node findNodeById( String nodeId);
 
 
     /**
