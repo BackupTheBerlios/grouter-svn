@@ -17,59 +17,57 @@
  * under the License.
  */
 
-package org.grouter.presentation.controller.node;
+package org.grouter.presentation.controller.router;
 
-import org.springframework.web.servlet.mvc.AbstractController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.RouterService;
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
+import org.grouter.domain.servicelayer.RouterService;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A controller for Message listing.
  *
  * @author Georges Polyzois
  */
-public class NodeListController extends AbstractController
+public class RouterListController extends AbstractController
 {
-    private static Logger logger = Logger.getLogger(NodeListController.class);
-    private static final String LIST_VIEW = "node/listnodes";
+    private static Logger logger = Logger.getLogger(RouterListController.class);
+    private static final String LIST_VIEW = "router/listrouters";
 
     private RouterService routerService;
 
 
-    public void setRouterService(RouterService routerService)
+    public void setRouterService(final RouterService routerService)
     {
         this.routerService = routerService;
     }
 
     @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
+    protected ModelAndView handleRequestInternal(HttpServletRequest request,
+                                                 HttpServletResponse response
+    )
             throws Exception
     {
         Map<String, Object> map = new HashMap<String, Object>();
-
         String routerId = ServletRequestUtils.getStringParameter(request, "routerid", null);
-
-                                    
-        List<Router> routers = routerService.findAll();
-        map.put("routers", routers);
-
-        if ( routerId != null)
+        if( routerId != null )
         {
-            List<Node> nodes = routerService.findAllNodes( routerId );
-            map.put("nodes", nodes);
-            map.put("nodesSize", nodes.size() );
-            map.put("selectedRouterId",routerId );
+       //     routerService.f
         }
+
+        List<Router> routers = routerService.findAll();
+        logger.debug("Found number of routers :" + routers.size());
+        map.put("routers", routers);
+        map.put("routersSize", routers.size());
+
 
         return new ModelAndView(LIST_VIEW, map);
     }

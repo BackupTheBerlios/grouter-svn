@@ -31,9 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Date;
-import java.util.List;
-import java.text.SimpleDateFormat;
 
 /**
  * Handles the edit form for a Node.
@@ -69,7 +66,7 @@ public class NodeEditController extends SimpleFormController
 
 
     /**
-     * Called on submit - stores a User.
+     * Called on submit - stores a Node.
      */
     @Override
     protected ModelAndView onSubmit( HttpServletRequest req, HttpServletResponse res, Object object, BindException bex )
@@ -113,7 +110,7 @@ public class NodeEditController extends SimpleFormController
 
         if ( id != null )
         {
-            Node node = routerService.findById( id );
+            Node node = routerService.findNodeById( id );
             cmd = new NodeCommand( node );
         }
         else
@@ -128,6 +125,7 @@ public class NodeEditController extends SimpleFormController
     /**
      * Data needed by view.
      * <p/>
+     * 
      * {@inheritDoc}
      *
      * @param request

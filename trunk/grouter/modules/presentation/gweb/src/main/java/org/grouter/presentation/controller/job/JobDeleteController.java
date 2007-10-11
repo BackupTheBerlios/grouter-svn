@@ -17,11 +17,12 @@
  * under the License.
  */
 
-package org.grouter.presentation.controller.user;
+package org.grouter.presentation.controller.job;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.UserService;
+import org.grouter.domain.servicelayer.JobService;
 import org.grouter.presentation.controller.RouterAbstractController;
+import org.grouter.presentation.controller.user.UserListController;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,22 +37,14 @@ import java.util.Map;
  *
  * @author Georges Polyzois
  */
-class UserDeleteController extends RouterAbstractController
+class JobDeleteController extends RouterAbstractController
 {
     private static Logger logger = Logger.getLogger(UserListController.class);
-    private UserService userService;
-    protected static final String LIST_VIEW = "redirect:/user/list.do?";
+    private JobService jobService;
+    protected static final String LIST_VIEW = "redirect:/job/list.do?";
 
 
-    /**       
-     * Injected.
-     *
-     * @param userService the service
-     */
-    public void setUserService(UserService userService)
-    {
-        this.userService = userService;
-    }
+
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
@@ -59,17 +52,17 @@ class UserDeleteController extends RouterAbstractController
     {
         Map<String, Object> map = new HashMap<String, Object>();
         Long id = getId(request, ID);
-        logger.debug("Got request to delete user with id : " + id);
+        logger.debug("Got request to delete job with id : " + id);
 
+                      
 
         if (id != null)
         {
-            userService.delete( id );
-            map.put(MESSAGE, "message=" + "User was deleted " + "(id=" + id + ")" );
+            jobService.delete( id );
+            map.put(MESSAGE, "message=" + "Job was deleted" + "(id=" + id + ")" );
         }
 
 
-        logger.debug("Redirecting to :" + LIST_VIEW);
         return new ModelAndView(LIST_VIEW , map);
     }
 
@@ -96,5 +89,12 @@ class UserDeleteController extends RouterAbstractController
         }
 
         return null;
+    }
+
+
+
+    public void setJobService(final JobService jobService)
+    {
+        this.jobService = jobService;
     }
 }

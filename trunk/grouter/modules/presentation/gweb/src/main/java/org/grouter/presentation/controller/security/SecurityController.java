@@ -31,19 +31,21 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Controller used for redirecting an authenticated user or non authenticated user to a resource.
- * Normally if a user tries to access a certain url he/she will be presetnted with a logn form
+ * Normally if a user tries to access a certain url he/she will be presented with a login form
  * as specified by the login attribute of this class. Upon a succesfull authentication the user
  * will be forwarded to the resource url.
- * If unsuccesfull attempt is made then the user is redirected to a login denied form as specified
+ *
+ * If an unsuccesfull attempt is made then the user is redirected to a login denied form as specified
  * by the loginDenied attribute.
- * When user logs out the session data are removed and they are redirected to the logedOut url.
+ *
+ * When user logs out the session data are removed and they are redirected to the loggedOut url.
  *
  * @author Georges Polyzois
  */
 public class SecurityController extends MultiActionController
 {
     private String login;
-    private String logedOut;
+    private String loggedOut;
     private String loginDenied;
 
 
@@ -53,9 +55,9 @@ public class SecurityController extends MultiActionController
     }
 
 
-    public void setLogedOut(String logedOut)
+    public void setLoggedOut(String loggedOut)
     {
-        this.logedOut = logedOut;
+        this.loggedOut = loggedOut;
     }
 
     public void setLoginDenied( String loginDenied )
@@ -72,7 +74,9 @@ public class SecurityController extends MultiActionController
     public ModelAndView loggedOut( HttpServletRequest request, HttpServletResponse response )
             throws Exception
     {
-        return new ModelAndView( this.logedOut);
+        SecurityContextHolder.clearContext();
+
+        return new ModelAndView( this.loggedOut);
     }
 
     public ModelAndView loginDenied( HttpServletRequest request, HttpServletResponse response )

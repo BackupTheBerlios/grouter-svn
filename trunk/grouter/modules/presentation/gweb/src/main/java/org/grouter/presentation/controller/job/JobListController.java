@@ -17,12 +17,11 @@
  * under the License.
  */
 
-package org.grouter.presentation.controller.user;
+package org.grouter.presentation.controller.job;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.daolayer.UserDAO;
-import org.grouter.domain.entities.User;
-import org.grouter.domain.servicelayer.UserService;
+import org.grouter.domain.entities.Job;
+import org.grouter.domain.servicelayer.JobService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -33,36 +32,33 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A controller for User listing.
+ * A controller for Job listing.
  *
  * @author Georges Polyzois
  */
-public class UserListController extends AbstractController
+public class JobListController extends AbstractController
 {
-    private static Logger logger = Logger.getLogger(UserListController.class);
-    private static final String LIST_VIEW = "user/listusers";
-    private UserService userService;
+    private static Logger logger = Logger.getLogger(JobListController.class);
+    private static final String LIST_VIEW = "job/listjobs";
 
+    private JobService jobService;
 
-    /**
-     * Injected.
-     * @param userService the service
-     */
-    public void setUserService(UserService userService)
+    public void setJobService(final JobService jobService)
     {
-        this.userService = userService;
+        this.jobService = jobService;
     }
 
     @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
+    protected ModelAndView handleRequestInternal(HttpServletRequest request,
+                                                 HttpServletResponse response
+    )
             throws Exception
     {
         Map<String, Object> map = new HashMap<String, Object>();
-        List<User> users = userService.findAll(UserDAO.FIND_ALL );
-        logger.info( "Found users :" + users);
-        map.put("users", users);
-        map.put("usersSize", users.size());
+        List<Job> jobs = jobService.findAll();
+        logger.debug("Finder returned number of jobs :" + jobs.size());
+        map.put("jobs", jobs);
+        map.put("jobsSize", jobs.size());
         return new ModelAndView(LIST_VIEW, map);
-
     }
 }

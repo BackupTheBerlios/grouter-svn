@@ -17,59 +17,52 @@
  * under the License.
  */
 
-package org.grouter.presentation.controller.user;
+package org.grouter.presentation.controller.router;
 
 import org.apache.log4j.Logger;
-
+import org.grouter.domain.entities.Router;
+import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.presentation.controller.job.JobCommand;
 import org.springframework.validation.BindException;
-
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.grouter.domain.servicelayer.UserService;
-import org.grouter.domain.entities.User;
-import org.grouter.domain.entities.Role;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 
 /**
- * Handles the edit form for a Node.
+ * Handles the edit form for a Router.
  *
  * @author Georges Polyzois
  */
-public class UserEditController extends SimpleFormController
+public class RouterEditController extends SimpleFormController
 {
-    private static Logger logger = Logger.getLogger( UserEditController.class );
+    private static Logger logger = Logger.getLogger( RouterEditController.class );
     private final static String ID = "id";
-    private static final String FORMVIEW = "user/edituser";
+    private static final String FORMVIEW = "router/editrouter";
     private static final String SUCCESSVIEW = "redirect:list.do";
-    private static final String USER = "usercommand";
+    private static final String ROUTER = "routercommand";
 
-    public void setUserService(UserService userService)
-    {
-        this.userService = userService;
-    }
 
-    private UserService userService;
+    private RouterService routerService;
 
 
     /**
      * Prefered way of init these settings since they are static.
      */
-    public UserEditController(  )
+    public RouterEditController(  )
     {
         setSessionForm( true );
-        setCommandClass( UserCommand.class );
+        setCommandClass( JobCommand.class );
         setFormView( FORMVIEW );
         setSuccessView( SUCCESSVIEW );
-        setCommandName( USER );
+        setCommandName(ROUTER);
         //setValidator();
     }
 
@@ -82,14 +75,15 @@ public class UserEditController extends SimpleFormController
             throws Exception
     {
         String message;
-        UserCommand cmd = ( UserCommand ) object;
+        RouterCommand cmd = ( RouterCommand ) object;
+
+        Router router = cmd.getRouter();
 
 
-        User user = cmd.getUser(  );
 
         try
         {
-            userService.save( user );
+            routerService.saveRouter( router );
             message = "Saved";
         }
         catch ( Exception e )
@@ -116,18 +110,18 @@ public class UserEditController extends SimpleFormController
     protected Object formBackingObject( HttpServletRequest request )
             throws Exception
     {
-        UserCommand cmd;
-        Long id = getId( request, ID);
+        RouterCommand cmd;
+        String id = ServletRequestUtils.getStringParameter( request, ID);
         logger.debug("Get for id : " + id);
 
         if ( id != null )
         {
-            User user = userService.findById( id );
-            cmd = new UserCommand( user );
+            Router router = routerService.findRouterById( id );
+            cmd = new RouterCommand( router );
         }
         else
         {
-            cmd = new UserCommand(  );
+            cmd = new RouterCommand(  );
         }
 
         return cmd;
@@ -160,14 +154,10 @@ public class UserEditController extends SimpleFormController
 
 
 
+
     /**
      * Data needed by view.
-     * <p/>
      * {@inheritDoc}
-     *
-     * @param request
-     * @return
-     * @throws Exception
      */
     @Override
     protected Map referenceData( HttpServletRequest request )
@@ -175,13 +165,17 @@ public class UserEditController extends SimpleFormController
     {
         Map<String, Object> model = new HashMap<String, Object>(  );
 
-        List<Role> allRoles = Role.values();
 
-        List<User> users = userService.findAll();
-        model.put( "users", users );
-        model.put( "roles", allRoles );
+        List<Router> routers = routerService.findAll();
+        model.put( "routers", routers );
+
 
         return model;
     }
 
+
+    public void setRouterService(final RouterService routerService)
+    {
+        this.routerService = routerService;
+    }
 }
