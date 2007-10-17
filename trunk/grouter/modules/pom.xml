@@ -126,6 +126,14 @@
 
   <repositories>
 
+
+<repository>
+  <id>repository.jboss.org</id>
+  <name>JBoss Maven Repository</name>
+  <url>http://repository.jboss.org/maven2</url>
+  <layout>default</layout>
+</repository>
+
     <!-- repository>
        <id>maven2</id>
        <name>Danish Maven2 repository</name>
@@ -858,6 +866,24 @@
           </exclusion>
         </exclusions>
       </dependency>
+      
+      <!-- Hibernate Search -->
+      <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-search</artifactId>
+         <version>3.0.0.ga</version>
+      </dependency>
+      <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-annotations</artifactId>
+         <version>3.3.0.ga</version>
+      </dependency>
+      <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-entitymanager</artifactId>
+         <version>3.3.1.ga</version>
+      </dependency>
+      
 
 
     </dependencies>
