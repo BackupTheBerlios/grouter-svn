@@ -63,8 +63,6 @@
       <groupId>com.javasoft</groupId>
       <artifactId>el-ri</artifactId>
     </dependency>
-
-
     <dependency>
       <groupId>myfaces</groupId>
       <artifactId>myfaces-api</artifactId>
@@ -77,14 +75,15 @@
       <groupId>myfaces</groupId>
       <artifactId>tomahawk</artifactId>
     </dependency>
-
-
     <dependency>
       <artifactId>sitemesh</artifactId>
       <groupId>opensymphony</groupId>
     </dependency>
 
-
+    <dependency>
+        <groupId>displaytag</groupId>
+        <artifactId>displaytag</artifactId>
+    </dependency>
 
     <!--
     | Test: Needed for HttpUnitTests!
@@ -120,7 +119,7 @@
           <connectors>
             <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
               <port>8080</port>
-              <maxIdleTime>60000</maxIdleTime>
+              <maxIdleTime>60000</maxIdleTime>                                               
             </connector>
           </connectors>
         </configuration>

@@ -29,7 +29,7 @@
     <link href="../../css/page_main.css" type="text/css" rel="stylesheet"/>
     <link href="../../css/lightwindow.css" type="text/css" rel="stylesheet"/>
 
-    <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+    <link href="../../css/default.css"  type="text/css" rel="stylesheet" />
     <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/>
     <!-- link href="/gweb/css/default.css" type="text/css" rel="stylesheet"/ -->
 

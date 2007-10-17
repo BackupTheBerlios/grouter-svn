@@ -1,17 +1,34 @@
 <decorators defaultdir="/decorators">
-    <excludes>
-        <pattern>/html/*</pattern>
-    </excludes>
-    <decorator name="main" page="decorator_main.jsp">
-      
-          <pattern>/*</pattern>
-    </decorator>
+  <excludes>
+    <pattern>/html/*</pattern>
+  </excludes>
 
-    <!-- decorator name="message" page="decorator.jsp">
-          <pattern>/message/list.do</pattern>
-    </decorator>
+  <excludes>
+    <pattern>/javascripts/*</pattern>
+  </excludes>
 
-    <decorator name="main" page="main.dec">
-          <pattern>*.do</pattern>
-    </decorator -->
+  <excludes>
+    <pattern>/css/*</pattern>
+  </excludes>
+
+  <excludes>
+    <pattern>/yui/*</pattern>
+  </excludes>
+
+  <decorator name="main" page="decorator_main.jsp">
+    <pattern>/router/*</pattern>
+    <pattern>/node/*</pattern>
+    <pattern>/job/*</pattern>
+    <pattern>/message/*</pattern>
+    <pattern>/user/*</pattern>
+    <pattern>/security/*</pattern>
+  </decorator>
+
+  <!-- decorator name="message" page="decorator.jsp">
+       <pattern>/message/list.do</pattern>
+ </decorator>
+
+ <decorator name="main" page="main.dec">
+       <pattern>*.do</pattern>
+ </decorator -->
 </decorators>

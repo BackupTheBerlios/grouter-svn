@@ -17,42 +17,46 @@
  * under the License.
  */
 
-package org.grouter.presentation.beans;
+package org.grouter.presentation.controller.setting;
 
-import org.grouter.domain.servicelayer.RouterService;
-import org.grouter.domain.entities.Message;
-import org.apache.log4j.Logger;
+import org.grouter.domain.entities.User;
 
-import java.util.List;
 
 /**
  * @author Georges Polyzois
  */
-public class MessageBean
+public class SettingCommand
 {
-    private RouterService grouterService;
-    private Message message;
+    private String language;
+    private User user;
 
-    public void setGrouterService(RouterService grouterService)
+    public SettingCommand()
     {
-        this.grouterService = grouterService;
+
     }
 
-    public Message getMessage()
+    public SettingCommand(final User user)
     {
-        return message;                 
+        this.user = user;
     }
 
-    public void setMessage(Message message)
+    public User getUser()
     {
-        this.message = message;
+        return user;
     }
 
-    public List<Message> getMessages( String nodeid )
+    public void setUser(final User user)
     {
-        List<Message> messages =  grouterService.findAllMessages( nodeid  );
-        return messages;
+        this.user = user;
     }
 
+    public String getLanguage()
+    {
+        return language;
+    }
 
+    public void setLanguage(final String language)
+    {
+        this.language = language;
+    }
 }

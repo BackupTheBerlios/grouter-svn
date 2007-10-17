@@ -1,6 +1,8 @@
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"  %>
+
 
 <!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
@@ -41,7 +43,7 @@
                             </c:forEach>
                         </select>
 
-                        <input id="searchText" value="" name="searchText" type="text">
+                        <!-- input id="searchText" value="" name="searchText" type="text">
 
                         <select id="column" name="column">
                             <option value="">--- column ---</option>
@@ -50,34 +52,43 @@
                             <option value="SENDER">Sender</option>
                             <option value="RECEIVER">Receiver</option>
                         </select>
-                        <input type="submit" value="Search" name="searchCustomer" size="10"/>
+                        <input type="submit" value="Search" name="searchCustomer" size="10"/ -->
                     </form>
                     </td>
 
                 </tr>
             </table>
-        <a href="list.do"><img src="/gweb/images/remove_24x24.png" alt="Delete all messages"/></a>
 
     </div>
 </div>
-<!-- display:table name="" defaultsort="1" id="element" class="pagedList" -->
-<!-- display:column property="id" sortable="true" sortName="id" title="Id"/ -->
-<!-- display:column property="content" sortable="true" sortName="content" title="Content"/ -->
-<!--/display:table -->
 
 
 
 <div id="content">
+
+
+
+        <display:table name="${messages}" export="true" id="row" class="dataTable" pagesize="3"
+                       cellspacing="0" decorator="org.displaytag.decorator.TotalTableDecorator"  requestURI="/gweb/message/list.do">
+
+            <display:column property="counter" title="NAME" sortable="true"  class="name" headerClass="name"/>
+            <display:column property="creationTimestamp" title="CREATED" sortable="true"  class="orderNumber" headerClass="orderNumber" format="{0,date,short}" />
+            <display:column property="content" title="CONTENT" sortable="true"  class="orderNumber" headerClass="orderNumber"/>
+
+            <display:column value="Detail" title="" sortable="false" href='edit.do' paramId="id" paramProperty="id" />
+        </display:table>
+
+
     <form id="mainForm" action="">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <!-- table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td></td>
                 <td align="right">Number of messages :
-                    <c:out value="${nodesSize}"/>
+                    <c:out value="{nodesSize}"/>
                 </td>
             </tr>
-        </table>
-        <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
+        </table -->
+        <!-- table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
 
             <thead>
                 <tr>
@@ -87,21 +98,21 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${messages}" var="object">
+                <c:forEach items="{messages}" var="object">
                     <tr>
                         <td>
-                            <c:out value="${object.id}"/>
+                            <c:out value="{object.id}"/>
                         </td>
                         <td>
-                            <c:out value="${object.creationTimestamp}"/>
+                            <c:out value="{object.creationTimestamp}"/>
                         </td>
                         <td>
-                            <c:out value="${object.content}"/>
+                            <c:out value="{object.content}"/>
                         </td>
                     </tr>
                 </c:forEach>
             </tbody>
-        </table>
+        </table  -->
 
     </form>
 
