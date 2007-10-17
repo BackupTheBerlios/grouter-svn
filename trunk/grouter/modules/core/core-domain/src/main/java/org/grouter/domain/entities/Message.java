@@ -61,7 +61,7 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "message")
-public class Message<String> extends BaseEntity 
+public class Message<String> extends BaseEntity implements Comparable
 {
     //private static final long serialVersionUID = -6097635701783502292L;
 
@@ -227,4 +227,20 @@ public class Message<String> extends BaseEntity
         this.counter = counter;
     }
 
+    public int compareTo(final Object compareTo)
+    {
+        if( compareTo == null )
+        {
+            return -1;
+        }
+
+        if( !(compareTo instanceof Message) )
+        {
+            throw new ClassCastException( "Wrong class type. Was " + compareTo.getClass() );
+        }
+
+
+
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

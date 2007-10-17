@@ -15,6 +15,7 @@
     <property name="mappingLocations">
       <list>
         <value>classpath:/org/grouter/domain/entities/Router.hbm.xml</value>
+        <value>classpath:/org/grouter/domain/entities/Locale.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/Node.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/Message.hbm.xml</value>
         <value>classpath:/org/grouter/domain/entities/Sender.hbm.xml</value>

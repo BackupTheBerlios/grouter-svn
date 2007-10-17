@@ -10,10 +10,12 @@ CREATE TABLE user (
   expireson datetime,
   remaininglogonattempts int,
   user_state_fk bigint(20),
+  locale_fk bigint(20),
   createdby bigint(20) default NULL,
   PRIMARY KEY  (id),
   FOREIGN KEY (createdby) REFERENCES  user (id),
   FOREIGN KEY (address_fk) REFERENCES  address (id),
+  FOREIGN KEY (locale_fk) REFERENCES  locale (id),
   FOREIGN KEY (user_state_fk) REFERENCES  user_state (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

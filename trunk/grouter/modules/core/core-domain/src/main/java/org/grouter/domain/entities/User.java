@@ -74,14 +74,16 @@ public class User extends BaseEntity implements Comparable
     @Column(name = "expireson")
     private User expiresOn;
 
-
     @Column(name = "remaininglogonattempts")
     private Integer remainingLogonAttempts;
-
 
     @ManyToOne
     @JoinColumn(name = "user_state_fk")
     private UserState userState;
+
+    @ManyToOne
+    @JoinColumn(name = "locale_fk")
+    private Locale locale;
 
 
     @ManyToOne
@@ -256,6 +258,16 @@ public class User extends BaseEntity implements Comparable
     public void setRemainingLogonAttempts(final Integer remainingLogonAttempts)
     {
         this.remainingLogonAttempts = remainingLogonAttempts;
+    }
+
+    public Locale getLocale()
+    {
+        return locale;
+    }
+
+    public void setLocale(final Locale locale)
+    {
+        this.locale = locale;
     }
 
     /**

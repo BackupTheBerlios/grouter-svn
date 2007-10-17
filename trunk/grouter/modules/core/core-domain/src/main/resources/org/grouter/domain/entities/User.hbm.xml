@@ -26,6 +26,14 @@
                  fetch="join"
                  lazy="false"/>
 
+    <many-to-one name="locale"
+                 column="locale_fk"
+                 cascade="all"
+                 class="org.grouter.domain.entities.Locale"
+                 not-null="false"
+                 fetch="join"
+                 lazy="false"/>
+
     <many-to-one name="createdBy"
                  column="createdby"
                  class="org.grouter.domain.entities.User"

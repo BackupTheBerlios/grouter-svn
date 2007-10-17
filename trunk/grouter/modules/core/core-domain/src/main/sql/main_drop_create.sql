@@ -28,12 +28,15 @@ DROP TABLE IF EXISTS job_context;
 DROP TABLE IF EXISTS job_state;
 DROP TABLE IF EXISTS job_type;
 DROP TABLE IF EXISTS job_event;
+DROP TABLE IF EXISTS locale;
 
 set foreign_key_checks = 1;
 
 
 select 'settings.sql';
 \. settings.sql
+select 'locale.sql';
+\. locale.sql
 select 'settings_context.sql';
 \. settings_context.sql
 select 'address.sql';

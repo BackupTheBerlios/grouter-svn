@@ -90,7 +90,7 @@ public class NodeStatus
     /**
      * Util method.
      *
-     * @return
+     * @return lsit of NodeStatus
      */
     public static List<NodeStatus> values()
     {

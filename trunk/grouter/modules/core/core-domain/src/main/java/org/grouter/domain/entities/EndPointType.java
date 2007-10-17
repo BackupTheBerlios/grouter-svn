@@ -4,8 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * @author Georges Polyzois
@@ -51,6 +50,15 @@ public class EndPointType extends BaseEntity
         return values.get(id);
     }
 
+    /**
+     * Util method.
+     *
+     * @return lsit of NodeStatus
+     */
+    public static List<EndPointType> values()
+    {
+        return Collections.unmodifiableList(new ArrayList<EndPointType>(values.values()));
+    }
 
     public EndPointType(Long id, String name)
     {
@@ -83,5 +91,6 @@ public class EndPointType extends BaseEntity
     {
         this.id = id;
     }
+
 
 }
