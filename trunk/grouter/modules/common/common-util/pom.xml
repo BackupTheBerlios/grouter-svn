@@ -51,14 +51,11 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate</artifactId>
     </dependency>
-
-
     <dependency>
       <groupId>jboss</groupId>
       <artifactId>jnp-client</artifactId>
       <version>4.0.2</version>
     </dependency>
-
     <dependency>
       <groupId>jboss</groupId>
       <artifactId>jboss-client</artifactId>
@@ -72,11 +69,31 @@
     </dependency>
 
 
+    <!-- Template engines -->
+      <dependency>
+        <groupId>velocity</groupId>
+        <artifactId>velocity</artifactId>
+      </dependency>
+
     <dependency>
       <groupId>activemq</groupId>
       <artifactId>activemq-core</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-search</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+
 
   </dependencies>
 </project>
