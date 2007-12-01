@@ -2,10 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.grouter.platform.presentation</groupId>
-  <artifactId>presentation-gweb</artifactId>
+  <artifactId>gweb</artifactId>
 
   <packaging>war</packaging>
   <name>${artifactId}</name>
+
 
   <parent>
     <groupId>org.grouter.platform</groupId>
@@ -30,10 +31,10 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate</artifactId>
     </dependency>
-    <dependency>
+    <!-- dependency>
       <groupId>velocity</groupId>
       <artifactId>velocity</artifactId>
-    </dependency>
+    </dependency -->
     <!-- dependency>
       <groupId>freemarker</groupId>
       <artifactId>freemarker</artifactId>
