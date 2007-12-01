@@ -29,7 +29,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "job_event")
-public class JobEvent  extends BaseEntity
+public class JobEvent  //extends BaseEntity
 {
     @Id
     @Column(name = "id")

@@ -17,16 +17,15 @@
       <value type="boolean">true</value>
     </property>
     <property name="ignoreUnresolvablePlaceholders" value="true"/>
-
-
     <!-- util:constant static-field="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDEr"/ -->
   </bean>
+
+
 
   <!-- use org.apache.commons.dbcp.BasicDataSource -->
   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
         depends-on="dataSourceConfigurer"
-        lazy-init="true"
-        destroy-method="close">
+        lazy-init="true">
     <property name="driverClassName" value="${grouter.db.driver}"/>
     <property name="url" value="${grouter.db.url}"/>
     <property name="username" value="${grouter.db.username}"/>

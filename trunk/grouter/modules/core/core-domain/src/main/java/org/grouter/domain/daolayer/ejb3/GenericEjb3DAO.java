@@ -20,21 +20,25 @@
 package org.grouter.domain.daolayer.ejb3;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.Query;
 import org.grouter.domain.daolayer.GenericDAO;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-import org.hibernate.Session;
-import org.hibernate.Query;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.ejb.HibernateEntityManager;
+import org.hibernate.search.jpa.FullTextEntityManager;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +58,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     private static Logger logger = Logger.getLogger(GenericEjb3DAO.class);
     private Class persistentClass;
 
-    @PersistenceContext(unitName = PersistenceContextName.PERSISTENCE)
+    @PersistenceContext( unitName = PersistenceContextName.PERSISTENCE)
     EntityManager em;
 
     static InitialContext initialContext;
@@ -149,11 +153,10 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     }
 
 
-    public List<T> findAll( final String hql )
+    public List<T> findAll(final String hql)
     {
-        return getEntityManager().createQuery( hql ).getResultList();
+        return getEntityManager().createQuery(hql).getResultList();
     }
-
 
 
     /**
@@ -219,5 +222,72 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
         return (T) criteria.uniqueResult();
     }
+
+
+    
+
+    public void purge(final T entity, final ID id)
+    {
+        throw new UnsupportedOperationException("Not implemented yet");
+        /*FullTextEntityManager fullTextSession = Search.createFullTextSession(getSession());
+        Transaction tx = fullTextSession.beginTransaction();
+        fullTextSession.purge( entity, id );
+        tx.commit();*/
+    }
+
+
+
+    public void optimizeIndex(final T entity)
+    {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    /**
+     * We remove this entity from the query index.
+     *
+     * @param entity entity to remove
+     */
+    public void purgeFromIndex(final T entity, final ID id)
+    {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+
+    public List<T> findFromIndex(final String queryString, final String... columns)
+    {
+
+        List<T> list = new ArrayList<T>();
+
+        String[] queryColumns = new String[columns.length];
+        int i = 0;
+        for (String column : columns)
+        {
+            queryColumns[i] = column;
+            i++;
+        }
+
+
+        EntityManager em = getEntityManager();
+        FullTextEntityManager fullTextEntityManager =
+        org.hibernate.search.jpa.Search.createFullTextEntityManager(em);
+        MultiFieldQueryParser parser = new MultiFieldQueryParser( queryColumns , new StandardAnalyzer());
+        Query query = null;
+        try
+        {
+            query = parser.parse( queryString );
+            org.hibernate.Query hibQuery = (org.hibernate.Query) fullTextEntityManager.createFullTextQuery( query, getPersistentClass() );
+            list = hibQuery.list();
+
+
+        } catch (ParseException e)
+        {
+            logger.warn("Faile to query for :" + queryString);
+        }
+
+        return list;
+    }
+
+
+
 }
 

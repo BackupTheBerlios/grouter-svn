@@ -37,4 +37,8 @@ public interface MessageDAO extends GenericDAO<Message, String>
 
     List<Message> findMessagesForNode(String nodeId);
 
+
+    
+
+
 }

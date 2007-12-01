@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public interface GenericDAO<T, ID extends Serializable>
+public interface GenericDAO<T, ID extends Serializable> extends GenericSearchDAO
 {
     /**
      * Find Entity by id.
@@ -71,7 +71,7 @@ public interface GenericDAO<T, ID extends Serializable>
      * Get all entities - performs a join with other associated entitites if so specified in the
      * mapping. Sets a CriteriaSpecification.DISTINCT_ROOT_ENTITY so we do not get any duplictees
      * in returning list.
-     *
+     * <p/>
      * Alternatively use HQL - since HQL does not make a join if not specified. HQL does not
      * looka at mapping strategies for lazy loading.
      *
@@ -82,21 +82,20 @@ public interface GenericDAO<T, ID extends Serializable>
     /**
      * HQL queries can be used if you see that other criteria based queries do not perform
      * or does not provide the functionality in the query that you need.
-     *
+     * <p/>
      * HQL does not look at mapping strategies - so joining in a collection is not done even
      * if the mapping says so.
-     *
      *
      * @param hql the query string in hql
      * @return
      */
-    List<T> findAll( String hql );
+    List<T> findAll(String hql);
 
 
     /**
      * Get all entities - using a FetchMode strategy. Sets a CriteriaSpecification.DISTINCT_ROOT_ENTITY
      * so we do not get any duplictees in returning list.
-     *
+     * <p/>
      * Alternatively use HQL - since HQL does not make a join if not specified. HQL does not
      * looka at mapping strategies for lazy loading.
      *
@@ -143,5 +142,33 @@ public interface GenericDAO<T, ID extends Serializable>
      */
     void delete(ID id);
 
+
+
+
+
+    /**
+     * We are using Hibernate Search. In order to update the index for a specific entity use
+     * this method.
+     *
+     * @param entity is the entity for which we willupdate the index
+     */
+    public void optimizeIndex(final T entity);
+
+    /**
+     * We remove this entity from the query index.
+     *
+     * @param entity entity to remove
+     */
+    public void purgeFromIndex(final T entity, final ID id);
+
+
+    /**
+     *
+     * @param queryString
+     * @param columns
+     * @return
+     */
+    public List<T> findFromIndex(final String queryString, final String... columns);
+    
 
 }

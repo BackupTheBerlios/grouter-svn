@@ -56,10 +56,10 @@ public class EntityValidator
     {
         if (Router.class.equals(clazz))
         {
-            return ROUTER_VALIDATOR;
+            return null;//ROUTER_VALIDATOR;
         } else if (Node.class.equals(clazz))
         {
-            return NODE_VALIDATOR;
+            return null;//NODE_VALIDATOR;
         } else
         {
             throw new IllegalArgumentException("Unsupported class was passed.");

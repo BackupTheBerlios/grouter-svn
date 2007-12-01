@@ -38,7 +38,7 @@ insert into user_role (id, user_id, role_id) values (10002, 10002, 3);
 
 -- Jobs
 
---ADDDATE( CURDATE(), 1 )
+-- ADDDATE( CURDATE(), 1 )
 insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 1,'displayname','* * * * *', Now(), ADDDATE( CURDATE(), 1 ) ,1,1,'rid_1' );
 insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 2,'a name','* * * * *',Now(), ADDDATE( CURDATE(), 1 ), 2,1,'rid_1' );
 insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 3,'another name','* * * * *', Now(), Now(), 3,1,'rid_1' );

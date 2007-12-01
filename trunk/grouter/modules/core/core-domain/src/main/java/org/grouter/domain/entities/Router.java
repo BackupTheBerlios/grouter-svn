@@ -23,9 +23,10 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Set;
-import java.util.HashSet;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -35,7 +36,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "router")
-public class Router extends BaseEntity
+public class Router implements Serializable  //extends BaseEntity
 {
     @Id
     @NotNull
@@ -51,10 +52,19 @@ public class Router extends BaseEntity
     @Column(name = "description")
     private String description;
 
-    @OneToMany
+    /*
+     * The inverse target property of the target entity. We do not need to enter the foreign
+     * key kolumn as we do in the hbm mapping file -> less verbose.
+     * mappedBy means inverse="true"  meaning that any changes made to this collection
+     * is not persisted. If you want to persist it you need to call node.setRouter(...)
+     * on the item in the Set
+     *
+     */
+    @OneToMany ( mappedBy = "router" )
     private Set<Node> nodes = new HashSet<Node>();
 
     @ManyToOne
+    @JoinColumn( name = "settings_fk", nullable = false)
     private Settings settings;
 
     @Column(name = "startedon")

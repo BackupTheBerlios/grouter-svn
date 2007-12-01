@@ -17,14 +17,8 @@ import java.util.HashMap;
  */
 public class NodeDAOTest extends AbstractDAOTests
 {
-    NodeDAO nodeDAO;
     private static Log log = LogFactory.getLog(NodeDAOTest.class);
 
-
-    public void setNodeDAO(NodeDAO nodeDAO)
-    {
-        this.nodeDAO = nodeDAO;
-    }
 
     public void testFindById()
     {

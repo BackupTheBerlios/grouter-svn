@@ -31,10 +31,9 @@ import java.util.HashSet;
  *
  * @Author Georges Polyzois
  */
-@SuppressWarnings({"PersistenceModelORMInspection"})
 @Entity
 @Table(name = "sender")
-public class Sender extends BaseEntity
+public class Sender //extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -44,6 +43,7 @@ public class Sender extends BaseEntity
 
 
     @ManyToOne(targetEntity = Address.class )
+    @JoinColumn( name = "address_fk", nullable = false)
     private Address address;
 
     @Column(name = "name")

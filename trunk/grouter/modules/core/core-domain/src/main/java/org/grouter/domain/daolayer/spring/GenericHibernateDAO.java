@@ -19,32 +19,39 @@
 
 package org.grouter.domain.daolayer.spring;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
 import org.grouter.domain.daolayer.GenericDAO;
 import org.hibernate.*;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.SearchFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Implements the generic CRUD data access operations using Hibernate APIs and Spring support
  * through HibernateDAOSupport.
- *
+ * <p/>
  * To write a DAO, subclass and parameterize this class with your persistent class.
- *
+ * <p/>
  * You have to inject the <tt>Class</tt> object of the persistent class and a current
  * Hibernate <tt>Session</tt> to construct a DAO.
- * 
+ * <p/>
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
  * Also see this link : http://www.hibernate.org/328.html
- * 
+ *
  * @author Georges Polyzois
  */
-public abstract class GenericHibernateDAO<T, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<T,ID>
+public abstract class GenericHibernateDAO<T, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<T, ID>
 {
     private Class<T> entityClass;
     protected Session session;
@@ -67,28 +74,28 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     }
 
 
-    @SuppressWarnings( "unchecked" )
-    public T findById( Class clazz, ID id, String... joinProps )
+    @SuppressWarnings("unchecked")
+    public T findById(Class clazz, ID id, String... joinProps)
     {
-        Criteria criteria = getSession(  ).createCriteria( clazz );
-        criteria.add( Restrictions.idEq( id ) );
-        for ( String prop : joinProps )
+        Criteria criteria = getSession().createCriteria(clazz);
+        criteria.add(Restrictions.idEq(id));
+        for (String prop : joinProps)
         {
-            criteria.setFetchMode( prop, FetchMode.JOIN );
+            criteria.setFetchMode(prop, FetchMode.JOIN);
         }
-        criteria.setResultTransformer( CriteriaSpecification.DISTINCT_ROOT_ENTITY );
-        return ( T ) criteria.uniqueResult(  );
+        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        return (T) criteria.uniqueResult();
     }
 
-    public T findById(final ID id,final String... joinProps)
+    public T findById(final ID id, final String... joinProps)
     {
-        return findById( getEntityClass(), id, joinProps );
+        return findById(getEntityClass(), id, joinProps);
         //return (T) getSession().load(getEntityClass(), id, LockMode.FORCE);
     }
 
     public T findById(final ID id)
     {
-        return findById( getEntityClass(), id );
+        return findById(getEntityClass(), id);
     }
 
     @SuppressWarnings("unchecked")
@@ -96,23 +103,25 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     {
         //Criteria criteria = getSession(  ).createCriteria( getEntityClass() );
         //criteria.setResultTransformer( CriteriaSpecification.DISTINCT_ROOT_ENTITY );
-        return findAllUsingFetchMode( getEntityClass(), FetchMode.JOIN, "" );
+        return findAllUsingFetchMode(getEntityClass(), FetchMode.JOIN, "");
     }
 
 
-    public List<T> findAllUsingFetchMode( final Class clazz,  final FetchMode fetchMode , final String... joinProps)
+    public List<T> findAllUsingFetchMode(final Class clazz, final FetchMode fetchMode,
+                                         final String... joinProps
+    )
     {
-        Criteria criteria = getSession(  ).createCriteria( clazz );
+        Criteria criteria = getSession().createCriteria(clazz);
         for (String disJoinProp : joinProps)
         {
-            criteria.setFetchMode( disJoinProp , fetchMode );
+            criteria.setFetchMode(disJoinProp, fetchMode);
         }
-        criteria.setResultTransformer( CriteriaSpecification.DISTINCT_ROOT_ENTITY );
-        return ( List<T> ) criteria.list();
+        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        return (List<T>) criteria.list();
     }
 
 
-    public List<T> findAll( final String hql )
+    public List<T> findAll(final String hql)
     {
         Session session = getSession();
         Query qr = session.createQuery(hql);
@@ -133,12 +142,17 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         return crit.list();
     }
 
-   @SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     public T save(final T entity)
     {
         getSession().saveOrUpdate(entity);
+
+
         return entity;
     }
+
+
 
     public void delete(final T entity)
     {
@@ -163,9 +177,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     }
 
 
-
-
-
     @SuppressWarnings("unchecked")
     public T findById(final Class clazz, final T id, final String... joinProps)
     {
@@ -178,5 +189,53 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
         return (T) criteria.uniqueResult();
     }
+
+
+
+    public void optimizeIndex(final T entity)
+        {
+            FullTextSession fullTextSession = Search.createFullTextSession(getSession());
+            SearchFactory searchFactory = fullTextSession.getSearchFactory();
+            searchFactory.optimize(entity.getClass());
+        }
+
+        public void purgeFromIndex(final T entity, final ID id)
+        {
+
+            FullTextSession fullTextSession = Search.createFullTextSession(session);
+            Transaction tx = fullTextSession.beginTransaction();
+            fullTextSession.purge(entity.getClass(), id);
+            tx.commit();
+        }
+
+
+
+    public List<T> findFromIndex(final String queryString, final String... columns)
+    {
+        List<T> list = new ArrayList<T>();
+        FullTextSession fullTextSession = Search.createFullTextSession(getSession());
+
+        String[] queryColumns = new String[columns.length];
+        int i = 0;
+        for (String column : columns)
+        {
+            queryColumns[i] = column;
+            i++;
+        }
+
+        MultiFieldQueryParser parser = new MultiFieldQueryParser( queryColumns , new StandardAnalyzer());
+        org.apache.lucene.search.Query query = null;
+        try
+        {
+            query = parser.parse(queryString);
+            org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery(query, getEntityClass() );
+            list = hibQuery.list();
+        } catch (ParseException e)
+        {
+            logger.warn( "Failure to query index for :" + queryString );
+        }
+        return list;
+    }
+
 }
 

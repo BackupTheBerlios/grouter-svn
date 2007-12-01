@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 @Entity
 @Table(name = "job_type")
-public class JobType  extends BaseEntity
+public class JobType // extends BaseEntity
 {
     @Id
     @Column(name = "id")

@@ -33,7 +33,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "role")
-public class Role extends BaseEntity
+public class Role //extends BaseEntity
 {
     @Id
     @Column(name = "id")

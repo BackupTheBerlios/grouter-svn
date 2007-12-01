@@ -27,6 +27,7 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
+import java.io.Serializable;
 
 
 /**
@@ -36,7 +37,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "node")
-public class Node extends BaseEntity<String>
+public class Node implements Serializable   //extends BaseEntity<String>
 {
     @Id
     @Column(name = "id")
@@ -49,7 +50,8 @@ public class Node extends BaseEntity<String>
     @Column(name = "displayName", nullable = false)
     private String displayName;
 
-    @Column(name = "nodestatus_fk", nullable = false)
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "nodestatus_fk", nullable = true)
     private NodeStatus nodeStatus;
 
     @Column(name = "statusmessage", nullable = false)
@@ -65,11 +67,7 @@ public class Node extends BaseEntity<String>
     private String receiver;
 
 
-    @OneToMany(cascade = {CascadeType.REMOVE},
-            mappedBy = "node_fk")
-//    @JoinTable(message = "NODE_MESSAGE",
-//            joinColumns = {@JoinColumn(message = "NODE_FK")},
-//            inverseJoinColumns = {@JoinColumn(message = "MESSAGE_FK")})
+    @OneToMany( cascade = {CascadeType.REMOVE}, mappedBy = "node")
     private Set<Message> messages = new HashSet<Message>();
 
     @Column(name = "modifiedon")
@@ -78,18 +76,19 @@ public class Node extends BaseEntity<String>
     @Column(name = "createdon")
     private Date createdOn;
 
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE} )
     @JoinColumn(name = "router_fk", nullable = true)
     private Router router;
 
-    // to store messages persistently
-    @Column(name = "inbound_endpoint_fk")
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "inbound_endpoint_fk", nullable = true)
     private EndPoint inBound;
 
     @Column(name = "createdirectories")
     private Boolean createDirectories;
 
-    @Column(name = "outbound_endpoint_fk")
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "outbound_endpoint_fk", nullable = true)
     private EndPoint outBound;
 
 

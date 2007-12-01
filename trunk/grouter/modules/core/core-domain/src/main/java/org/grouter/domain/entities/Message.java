@@ -20,13 +20,15 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.*;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Set;
-import java.util.HashSet;
-import java.sql.Timestamp;
+import java.io.Serializable;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -59,9 +61,11 @@ import java.math.BigInteger;
  * @Author Georges Polyzois
  */
 
+
+@Indexed ( index="indexes/message" )  // Entity will be indexed for querying using Hibernate Search
 @Entity
 @Table(name = "message")
-public class Message<String> extends BaseEntity implements Comparable
+public class Message implements Comparable, Serializable   //extends BaseEntity 
 {
     //private static final long serialVersionUID = -6097635701783502292L;
 
@@ -69,21 +73,22 @@ public class Message<String> extends BaseEntity implements Comparable
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @DocumentId // Hibernate search
     private String id;
 
-    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE} )
+    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE} , fetch = FetchType.EAGER )
     @JoinTable( name = "receiver_message",
                 joinColumns = {@JoinColumn(name = "message_fk")},
                 inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
     private Set<Receiver> receivers = new HashSet();
 
-    //@ManyToOne(cascade = {CascadeType.PERSIST} , fetch = FetchType.EAGER )
-    //@JoinColumn(message = "sender_fk", nullable = false)
-    transient private Sender sender;
+    @ManyToOne(cascade = {CascadeType.PERSIST} , fetch = FetchType.EAGER )
+    @JoinColumn( name = "sender_fk", nullable = true)
+    private Sender sender;
 
-
+    @NotNull   // Hibernate Validator
     @Column(name = "content", nullable = false)
-    @NotNull
+    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate Search  - fields to be indexed
     private String content;
 
     @Column(name = "counter")
@@ -93,6 +98,8 @@ public class Message<String> extends BaseEntity implements Comparable
     @Column(name = "creationtimestamp")
     private Timestamp creationTimestamp;
 
+    
+    @NotNull
     @ManyToOne( cascade = {CascadeType.ALL, CascadeType.MERGE} )
     @JoinColumn(name = "node_fk", nullable = false)
     private Node node;
@@ -129,7 +136,7 @@ public class Message<String> extends BaseEntity implements Comparable
     }
 
 
-    public void setContent(String content)
+    public void setContent(final String content)
     {
         this.content = content;
     }
@@ -153,7 +160,6 @@ public class Message<String> extends BaseEntity implements Comparable
     {
         this.receivers = receivers;
     }
-
 
     public Sender getSender()
     {

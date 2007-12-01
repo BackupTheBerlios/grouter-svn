@@ -31,7 +31,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "settings_context")
-public class SettingsContext extends BaseEntity<Long>
+public class SettingsContext //extends BaseEntity<Long>
 {
     // These must match names specified in config.xsd
     public final static String KEY_SETTINGS_JNDI_JAVA_NAMING_FACTORY_INITIAL = "naming.factory.initial";
@@ -60,7 +60,6 @@ public class SettingsContext extends BaseEntity<Long>
     @Column(name = "value")
     String value;
 
-    @Column(name = "settings_fk")
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
     @JoinColumn(name = "settings_fk", nullable = false)
     Settings settings;

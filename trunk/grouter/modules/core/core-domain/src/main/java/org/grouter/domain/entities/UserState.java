@@ -45,15 +45,15 @@ public class UserState
     String name;
 
     // created
-    public static EndPointType NEW = new EndPointType(1L, "NEW");
+    public static UserState NEW = new UserState(1L, "NEW");
     // avaiting activation - user received One Time Password adn needs to change it
-    public static EndPointType ACTIVATION_PENDING = new EndPointType(3L, "ACTIVATION_PENDIN");
+    public static UserState ACTIVATION_PENDING = new UserState(3L, "ACTIVATION_PENDIN");
     // user activated
-    public static EndPointType ACTIVE = new EndPointType(2L, "ACTIVE");
+    public static UserState ACTIVE = new UserState(2L, "ACTIVE");
     // if retries exceeds max number of retries or if manually set to blocked by super user
-    public static EndPointType BLOCKED = new EndPointType(4L, "BLOCKED");
+    public static UserState BLOCKED = new UserState(4L, "BLOCKED");
 
-    public static Map<Long, EndPointType> values = new HashMap<Long, EndPointType>();
+    public static Map<Long, UserState> values = new HashMap<Long, UserState>();
 
     static
     {
@@ -61,6 +61,17 @@ public class UserState
         values.put(ACTIVATION_PENDING.getId(), ACTIVATION_PENDING);
         values.put(ACTIVE.getId(), ACTIVE);
         values.put(BLOCKED.getId(), BLOCKED);
+    }
+
+
+    public UserState()
+    {
+    }
+
+    public UserState(final Long id, final String name)
+    {
+        this.id = id;
+        this.name = name;
     }
 
     public Long getId()

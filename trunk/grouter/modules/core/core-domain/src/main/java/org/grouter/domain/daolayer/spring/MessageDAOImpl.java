@@ -19,17 +19,18 @@
 
 package org.grouter.domain.daolayer.spring;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.Query;
 import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.spring.GenericHibernateDAO;
 import org.grouter.domain.entities.Message;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
+import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 
 import java.util.List;
 
@@ -69,4 +70,26 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
         return criteria.addOrder(Order.asc("id")).list();
 
     }
+
+    /*
+    public List<Message> findMessagesFromIndex(final String queryForMe)
+    {
+
+        FullTextSession fullTextSession = Search.createFullTextSession(getSession());
+
+        MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"content"}, new StandardAnalyzer());
+        Query query = null;
+        try
+        {
+            query = parser.parse( queryForMe );
+            org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Message.class );
+            return hibQuery.list();
+        } catch (ParseException e)
+        {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return null;
+
+
+    } */
 }

@@ -32,7 +32,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "endpoint_context")
-public class EndPointContext  extends BaseEntity
+public class EndPointContext  //extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -46,7 +46,8 @@ public class EndPointContext  extends BaseEntity
     @Column(name = "value")
     String value;
 
-    @Column(name = "endpoint_fk")
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "endpoint_fk", nullable = true)
     EndPoint endPoint;
 
 

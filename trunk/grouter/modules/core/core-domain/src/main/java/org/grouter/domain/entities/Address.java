@@ -79,7 +79,6 @@ public class Address implements Serializable
         this.id = id;
     }
 
-    @Transient
     public Country getCountry()
     {
         return country;

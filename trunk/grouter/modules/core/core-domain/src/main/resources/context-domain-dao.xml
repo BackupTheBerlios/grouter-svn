@@ -10,7 +10,7 @@
 
 
     <!-- Core specific Data Access Object (DAO) Beans -->
-    <bean id="messageDAO"  parent="abstractDao" class="org.grouter.domain.daolayer.spring.MessageDAOImpl"/>
+    <bean id="messageDAO"  parent="abstractDao" class="org.grouter.domain.daolayer.spring.MessageDAOImpl" />
 
     <bean id="nodeDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.NodeDAOImpl"/>
 

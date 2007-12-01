@@ -1,32 +1,40 @@
-package org.grouter.domain.daolayer.spring;
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.grouter.domain.search;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StringUtils;
-import org.hibernate.SessionFactory;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.NodeDAO;
+import org.grouter.domain.entities.Message;
+import org.grouter.common.hibernatesearch.FullIndexHandler;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 /**
- * Test the DAO using an external DB which is populated with data before the actual test is run
- * {@link #getTestDataLocation()} and then restored to a state as per before the tests were ran.
- *  All plumbing for rolling back the state is taken care of by Springs
- * {@link org.springframework.test.AbstractTransactionalDataSourceSpringContextTests}
- *
- * AbstractDAOTests referes to the sql to be run before any test are created and run.
- *
- * We have some abstract methods in this abstract class to indicate to subclasses what they
- * need to test.
- *
- * The only problem with these types of test are that as we go along and add more and more test
- * the tests start taking considerably long time to execute.
- *
  * @author Georges Polyzois
  */
-public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSpringContextTests
+public abstract class AbstractHibernateSearchTest extends AbstractTransactionalDataSourceSpringContextTests
 {
     // inserted test data and ids of some of the data
     final static String MESSAGE_ID = "msgid_1";
@@ -77,12 +85,17 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
      */
     protected String getTestDataLocation()
     {
-        return "sql/test-domain-data.sql";
+        return "sql/test-data-search.sql";
     }
 
     protected void flushSession()
     {
         sessionFactory.getCurrentSession().flush();
+    }
+
+    protected Session getSession()
+    {
+        return sessionFactory.getCurrentSession();
     }
 
 
@@ -101,32 +114,13 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
                 jdbcTemplate.execute(line);
             }
         }
+
+
+        FullIndexHandler fullIndexHandler = new FullIndexHandler();
+        fullIndexHandler.doFullIndex( 1000, Message.class, getSession() );
+
     }
 
-
-    /**
-     * Subclasses need to override this and implement a test whereby the relationships are tested. Is a relationship
-     * to be loaded lazy or not?
-     */
-    abstract void testLazyCollections();
-
-    /**
-     * Subclasses need to override this and implement a test whereby they load an entity and verify that
-     * some of the loaded attributes ot hhe entity are valid.
-     */
-    abstract void testFindById();
-
-    /**
-     * Subclasses need to override this and implement a test whereby they delete an entity and verify that the
-     * entity was deleted (or in some cases marked as deleted) and that any cascade options are valid.
-     */
-    abstract void testDelete();
-
-    /**
-     * Subclasses need to override this and implement a test whereby they save an entity and verify that
-     * the entity was actually saved.
-     */
-    abstract void testSave();
 
     public void setMessageDAO(MessageDAO messageDAO)
     {
@@ -138,3 +132,4 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
         this.nodeDAO = nodeDAO;
     }
 }
+

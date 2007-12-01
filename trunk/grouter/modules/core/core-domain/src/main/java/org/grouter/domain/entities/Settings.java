@@ -33,7 +33,7 @@ import java.util.HashMap;
  */
 @Entity
 @Table(name = "settings")
-public class Settings extends BaseEntity
+public class Settings //extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -43,7 +43,8 @@ public class Settings extends BaseEntity
     private String id;
 
 
-    @OneToMany(targetEntity = org.grouter.domain.entities.SettingsContext.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@OneToMany ( mappedBy = "settings", targetEntity = SettingsContext.class,   cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Transient
     Map settingsContext = new HashMap();
 
     public Settings()

@@ -52,6 +52,11 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
         throw new NotImplementedException();
     }
 
+    public List<Message> findMessagesFromIndex(final String queryForMe)
+    {
+        throw new NotImplementedException();
+    }
+
     public List<Message> findAllLazy(final Class clazz, final String... disJoinProps)
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.

@@ -128,6 +128,9 @@ public class RouterQueueMDB implements MessageListener
      * @param messages
      * @return
      */
+
+
+    /*
     private String printMessages(org.grouter.domain.entities.Message[] messages)
     {
         StringBuffer stringBuffer = new StringBuffer();
@@ -137,5 +140,5 @@ public class RouterQueueMDB implements MessageListener
         }
         return stringBuffer.toString();
 
-    }
+    } */
 }

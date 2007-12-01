@@ -42,7 +42,7 @@ import java.util.HashMap;
 
 @Entity
 @Table(name = "endpoint")
-public class EndPoint extends BaseEntity
+public class EndPoint //extends BaseEntity
 {
     @Id
     @NotNull
@@ -61,7 +61,7 @@ public class EndPoint extends BaseEntity
     private String scheduleCron;
 
     // Unidirectional ManyToOne
-    @ManyToOne
+    @ManyToOne( targetEntity = EndPointType.class )
     @JoinColumn( name = "endpoint_type_fk")
     @NotNull
     EndPointType endPointType;
@@ -69,10 +69,13 @@ public class EndPoint extends BaseEntity
     @Transient
     transient Filter filter;
 
-    @OneToMany( targetEntity = org.grouter.domain.entities.EndPointContext.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+//    @OneToMany( targetEntity = org.grouter.domain.entities.EndPointContext.class,
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER )
 //    @JoinTable( message="endpoint_context",
 //                joinColumns = @JoinColumn(message="endpoint_fk"))
 //    @OnDelete( action = OnDeleteAction.CASCADE )
+    @Transient
     Map endPointContext = new HashMap();
 
     public Filter getFilter()

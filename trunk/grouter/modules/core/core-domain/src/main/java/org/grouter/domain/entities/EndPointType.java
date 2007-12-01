@@ -12,7 +12,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "endpoint_type")
-public class EndPointType extends BaseEntity
+public class EndPointType //extends BaseEntity
 {
     @Id
     @Column(name = "id")
