@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Grouter displayName="Router 1" id="grouter_id_1" rmiRegistryPort="1099" rmiServicePort="2000"
+<Grouter displayName="Router 1" id="grouter_id_1" rmiRegistryPort="2099" rmiServicePort="2098"
          description="Test router for file nodes"
+        
          home="file://temp/grouter"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -30,7 +31,7 @@
 
 
   <Nodes>
-    <Node id="filetest" createuniquename="true" source="BACARGO_C2K" receiver="C2K">
+    <Node id="filetest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
       <description>blaba albaba</description>
       <displayName>FileTest</displayName>
       <createdOn>2007-01-01</createdOn>
@@ -50,7 +51,7 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node id="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K">
+    <Node id="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
       <displayName>Ftp to file</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>
@@ -70,7 +71,7 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="C2K">
+    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="C2K" createDirectories="true">
       <description>Another file to file node</description>
       <displayName>FileToFileTest2</displayName>
       <createdOn>2007-01-01</createdOn>

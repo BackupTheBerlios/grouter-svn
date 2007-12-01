@@ -91,17 +91,17 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
             logger.info("Using config path : " + configPath);
             readConfiguration(configPath);
 
+            overrideContext();
+
             initApplicationContext();
 
             forceMakeDirectories();
 
             RouterCache.init(router);
 
-
             updatePersistentState();
 
-
-            initRmi();
+     //       initRmi();
 
             logger.info(router.printNodes());
 
@@ -127,7 +127,7 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
      */
     private void initApplicationContext() throws Exception
     {
-        overrideContext();
+
         logger.info("Initializing router context");
         context = new ClassPathXmlApplicationContext(getConfigLocations());
         routerService = (RouterService) context.getBean(ROUTER_SERVICE);
@@ -159,6 +159,20 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
             System.setProperty("grouter.db.password", password);
         }
 
+
+        final String registryPort =    Integer.toString( router.getRmiRegistryPort() );
+        final String rmiSericePort = Integer.toString(router.getRmiServicePort());
+        if (StringUtils.isNotEmpty(rmiSericePort) && StringUtils.isNotEmpty(registryPort) )
+        {
+            logger.info("Overriding rmi properties in context files from grouter config");
+
+            logger.info("grouter.rmi.registryPort:" + registryPort);
+            System.setProperty("grouter.rmi.registryPort", registryPort);
+            logger.info("grouter.rmi.servicePort:" + rmiSericePort);
+            System.setProperty("grouter.rmi.servicePort", rmiSericePort);
+
+
+        }
     }
 
 
@@ -188,10 +202,14 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
         {
             try                   
             {
-                logger.info("Try to register in router as RMI service jndi");
+                logger.info("Trying to register in router as RMI service jndi");
+                logger.info("Rmiregistryport :" + router.getRmiRegistryPort());
+                logger.info("Rmiserviceport :" + router.getRmiServicePort());
+                logger.debug("Get rmi exporter bean from context :" + RMI_SERVICE_EXPORTER_FACTORY_BEAN);
                 RmiServiceExporter rmiServiceExporter = (RmiServiceExporter) context.getBean(RMI_SERVICE_EXPORTER_FACTORY_BEAN);
                 rmiServiceExporter.setRegistryPort(router.getRmiRegistryPort());
                 rmiServiceExporter.setServicePort(router.getRmiServicePort());
+                logger.debug("Calling prepare on rmi exporter" );
                 rmiServiceExporter.prepare();
                 logger.info("Registered ok as RMI service jndi");
             } catch (RemoteException e)
@@ -314,10 +332,12 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
     {
         return new String[]
                 {
-                        // "context-domain-aop.xml","context-domain-datasource.xml", "context-domain-dao.xml",
-                        "context-domain-datasource.xml", "context-domain-dao.xml",
-                        "context-domain-sessionfactory.xml", "context-domain-service.xml",
-                        "context-router.xml", "context-router-rmi.xml"
+                        "context-domain-aop.xml",
+                        "context-domain-datasource.xml",
+                        "context-domain-service.xml",
+                        "context-domain-dao.xml",
+                        "context-domain-sessionfactory.xml" ,
+                        "context-router.xml"//, "context-router-rmi.xml"
                 };
     }
 
