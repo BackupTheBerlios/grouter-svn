@@ -25,7 +25,7 @@
 
      <echo>Setting up data</echo>
      <exec executable="${mysql}" dir="${basedir}/core/core-domain/src/test/resources/sql"
-           input="${basedir}/core/core-domain/src/test/resources/sql/base-data.sql">
+           input="${basedir}/core/core-domain/src/test/resources/sql/test-domain-data.sql">
        <arg value="-ugrouter"/>
        <arg value="-pgrouter"/>
        <arg value="grouter"/>
