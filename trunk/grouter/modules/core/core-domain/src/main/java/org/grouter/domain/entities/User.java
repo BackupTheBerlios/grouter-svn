@@ -1,7 +1,7 @@
 /*
  *
  * $HeadURL$
- * $ID$
+ * $Id$
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -36,15 +36,8 @@ import java.util.Set;
 /**
  * Domain entity.
  *
- *
- *
- *
- * $Date$
- *
  * @author $Author$ , Georges Polyzois
  * @version $Rev$ $Date$
- * @since $Created$
- *
  */
 @Entity
 @Table(name = "user")
