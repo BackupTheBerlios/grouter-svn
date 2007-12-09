@@ -1,4 +1,8 @@
 /*
+ *
+ * $HeadeUrl$
+ * $Id$
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -33,12 +37,12 @@ import java.util.Set;
  * Domain entity.
  *
  *
- * $HeadURL$
+ *
  *
  * $Date$
  *
  * @author $Author$ , Georges Polyzois
- * @version  $Revision$  Lastchanged: $LastChangedDate$
+ * @version $Rev$ $Date$
  * @since $Created$
  *
  */
