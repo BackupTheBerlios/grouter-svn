@@ -32,9 +32,14 @@ import java.util.Set;
 /**
  * Domain entity.
  *
- * $Author$
  *
- * @author Georges Polyzois
+ *
+ * $Date$
+ *
+ * @author $Author$ , Georges Polyzois
+ * @version  $Revision$
+ * @since $Created$
+ *
  */
 @Entity
 @Table(name = "user")
