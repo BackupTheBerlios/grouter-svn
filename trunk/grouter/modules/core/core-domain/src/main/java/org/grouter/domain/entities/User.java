@@ -32,6 +32,8 @@ import java.util.Set;
 /**
  * Domain entity.
  *
+ * $Author$
+ *
  * @author Georges Polyzois
  */
 @Entity
