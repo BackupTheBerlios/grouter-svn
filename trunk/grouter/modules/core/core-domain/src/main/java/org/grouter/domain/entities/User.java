@@ -33,6 +33,7 @@ import java.util.Set;
  * Domain entity.
  *
  *
+ * $HeadURL$
  *
  * $Date$
  *
