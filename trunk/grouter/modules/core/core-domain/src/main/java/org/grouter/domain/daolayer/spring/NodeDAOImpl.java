@@ -35,14 +35,15 @@ import java.util.List;
  *
  *
  *
-$Rev::               $:  Revision of last commit
-$Author::            $:  Author of last commit
-$Date::              $:  Date of last commit
+$Rev::                    $:  Revision of last commit
+$Author::                 $:  Author of last commit
+$Date::                   $:  Date of last commit
  *
  * $Revision$
  * $HeadURL$
  * $Date$
- * @author @Author$
+ * 
+ * @author $Author$
  */
 public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements NodeDAO
 {
