@@ -21,7 +21,6 @@ package org.grouter.domain.daolayer.spring;
 
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.daolayer.NodeDAO;
-import org.grouter.domain.daolayer.spring.GenericHibernateDAO;
 import org.hibernate.Session;
 import org.hibernate.Query;
 import org.hibernate.Hibernate;
@@ -32,6 +31,11 @@ import org.hibernate.criterion.Projections;
 import java.util.List;
 
 
+/**
+ *
+ * $Date$
+ * @author Georges Polyzois
+ */
 public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements NodeDAO
 {
     /**
