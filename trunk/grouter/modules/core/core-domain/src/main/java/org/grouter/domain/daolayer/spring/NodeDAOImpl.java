@@ -33,8 +33,10 @@ import java.util.List;
 
 /**
  *
+ * $Revision$
+ * $HeadURL$
  * $Date$
- * @author Georges Polyzois
+ * @author @Author$
  */
 public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements NodeDAO
 {
