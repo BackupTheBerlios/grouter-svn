@@ -48,10 +48,7 @@ public class RouterEditController extends SimpleFormController
     private static final String FORMVIEW = "router/editrouter";
     private static final String SUCCESSVIEW = "redirect:list.do";
     private static final String ROUTER = "routercommand";
-
-
     private RouterService routerService;
-
 
     /**
      * Prefered way of init these settings since they are static.

@@ -20,12 +20,10 @@
 package org.grouter.presentation.controller.setting;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.entities.Locale;
 import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.servicelayer.UserService;
 import org.grouter.presentation.controller.user.UserCommand;
-import org.grouter.presentation.controller.user.UserEditController;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -46,7 +44,7 @@ import java.util.Map;
  */
 public class SettingEditController extends SimpleFormController
 {
-    private static Logger logger = Logger.getLogger( UserEditController.class );
+    private static Logger logger = Logger.getLogger( SettingEditController.class );
     private final static String ID = "id";
     private static final String FORMVIEW = "setting/editsetting";
     private static final String SETTINGCOMMAND = "settingcommand";

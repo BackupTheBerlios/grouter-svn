@@ -23,48 +23,23 @@
     <!--link href="../../css/lightwindow.css" type="text/css" rel="stylesheet"/>
     <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/ -->
 
+
     <link href="../../css/page_main.css" type="text/css" rel="stylesheet"/>
     <link href="../../css/default.css" type="text/css" rel="stylesheet" />
-
-    <!-- link href="../../css/accordion.css" rel="stylesheet" type="text/css" >
-    <link href="/gweb/css/accordion.css" rel="stylesheet" type="text/css"  -->
 
     <link href="../../css/datatable.css" rel="stylesheet" type="text/css" >
     <link href="/gweb/css/datatable.css" rel="stylesheet" type="text/css" >
 
-   
+
     <link href="../css/page_main.css" type="text/css" rel="stylesheet"/>
     <link href="../css/decorator_main.css" type="text/css" rel="stylesheet"/>
-
-    <link href="../../css/lightwindow.css" type="text/css" rel="stylesheet"/>
-    <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/>
-
-    
-
-
-    <script type="text/javascript" charset="iso8859-1" src="../javascripts/common.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
-        <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
-        <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/common.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/prototype.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/effects.js"></script>
-        <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/scriptaculous.js"></script -->
-    
-
 
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/util.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script>
 
-
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/lightwindow-2.0.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/lightwindow-2.0.js"></script>
-
-    <script type="text/javascript" charset="iso8859-1" src="../../javascripts/accordion-2.0.js"></script>
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/accordion-2.0.js"></script>
-
-
 
     <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
 
@@ -73,30 +48,11 @@
 
 <body  class="tundra" width="800">
 <div id="container">
-    <div id="logoBar">
-        <img id="logo" src="../images/browser.png" width="48" height="48" alt="logo"/>
-        <decorator:title/>
-        <div id="usersettings">
-            <jsp:include page="../pages/user/usersettings.jsp"/>
-        </div>
-    </div>
 
     <br/>
 
-    <div id="menu">
-        <jsp:include page="../pages/menu/menu.jsp"/>
-    </div>
-
     <div id="body">
         <decorator:body/>
-    </div>
-
-    <div id="footer">
-        <p class="copyright">&copy; <a href="http://grouter.berlios.de/">Grouter</a></p>
-
-        <div class="links">
-            <a href="http://apache.maven.org/" title="Maven">Maven</a> &#183;
-        </div>
     </div>
 
 </div>

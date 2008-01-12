@@ -14,18 +14,26 @@
   </bean>
 
 
+                                                                        
+  <!-- Used to create hibernate search index on deployment -->
+  <bean name="hibernateSearchIndexContextListener"
+        class="org.grouter.presentation.util.HibernateSearchIndexContextListener"/>
 
   <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController"/>
+  <bean name="/message/search.do" class="org.grouter.presentation.controller.message.MessageSearchController"/>
   <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController"/>
   <bean name="/node/edit.do" class="org.grouter.presentation.controller.node.NodeEditController"/>
-  <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
   <bean name="/user/list.do" class="org.grouter.presentation.controller.user.UserListController"/>
+  <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
+  <bean name="/user/lwedit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
+
+  <bean name="/user/listtest.do" class="org.grouter.presentation.controller.user.UserListController"/>
   <bean name="/user/delete.do" class="org.grouter.presentation.controller.user.UserDeleteController"/>
   <bean name="/router/list.do" class="org.grouter.presentation.controller.router.RouterListController"/>
   <bean name="/job/edit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
   <bean name="/job/list.do" class="org.grouter.presentation.controller.job.JobListController"/>
   <bean name="/job/delete.do" class="org.grouter.presentation.controller.job.JobDeleteController"/>
-
+  <bean name="/job/lwedit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
 
   <bean name="/security/**" class="org.grouter.presentation.controller.security.SecurityController">
     <property name="login" value="login/login"/>
@@ -51,6 +59,10 @@
       </props>
     </property>
   </bean>
+
+
+
+    
 
    <!-- Reverse Ajax -->
   <!-- bean name="nodeCallbackThread" class="org.grouter.presentation.controller.node.NodeCallbackThread" / -->

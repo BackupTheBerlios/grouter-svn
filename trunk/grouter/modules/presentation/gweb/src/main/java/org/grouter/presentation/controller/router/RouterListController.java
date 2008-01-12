@@ -22,7 +22,6 @@ package org.grouter.presentation.controller.router;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.servicelayer.RouterService;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -53,18 +52,10 @@ public class RouterListController extends AbstractController
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
                                                  HttpServletResponse response
-    )
-            throws Exception
+    ) throws Exception
     {
         Map<String, Object> map = new HashMap<String, Object>();
-        String routerId = ServletRequestUtils.getStringParameter(request, "routerid", null);
-        if( routerId != null )
-        {
-       //     routerService.f
-        }
-
         List<Router> routers = routerService.findAll();
-        logger.debug("Found number of routers :" + routers.size());
         map.put("routers", routers);
         map.put("routersSize", routers.size());
 

@@ -17,6 +17,10 @@
 <body>
 
 
+<jsp:include page="menu.jsp"/>
+
+
+
 <div id="paragraph" >
     Search messages.
 </div>

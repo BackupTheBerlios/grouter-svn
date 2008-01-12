@@ -20,23 +20,20 @@
 package org.grouter.presentation.controller.user;
 
 import org.apache.log4j.Logger;
-
+import org.grouter.domain.entities.Role;
+import org.grouter.domain.entities.User;
+import org.grouter.domain.servicelayer.UserService;
 import org.springframework.validation.BindException;
-
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.grouter.domain.servicelayer.UserService;
-import org.grouter.domain.entities.User;
-import org.grouter.domain.entities.Role;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -83,10 +80,7 @@ public class UserEditController extends SimpleFormController
     {
         String message;
         UserCommand cmd = ( UserCommand ) object;
-
-
         User user = cmd.getUser(  );
-
         try
         {
             userService.save( user );
@@ -116,8 +110,8 @@ public class UserEditController extends SimpleFormController
     protected Object formBackingObject( HttpServletRequest request )
             throws Exception
     {
-        UserCommand cmd;
-        Long id = getId( request, ID);
+        final UserCommand cmd;
+        final Long id = getId( request, ID);
         logger.debug("Get for id : " + id);
 
         if ( id != null )

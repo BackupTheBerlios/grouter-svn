@@ -12,7 +12,7 @@
         <a href="/gweb/user/list.do">Users</a>
     </li>
     <li>
-        <a href="/gweb/job/list.do">Jobs</a>
+        <a href="/gweb/job/list.do">Scheduler</a>
     </li>
 
 </ul>

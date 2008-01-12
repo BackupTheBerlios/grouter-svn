@@ -1,34 +1,43 @@
 <decorators defaultdir="/decorators">
-  <excludes>
-    <pattern>/html/*</pattern>
-  </excludes>
+    <excludes>
+        <pattern>/html/*</pattern>
+    </excludes>
 
-  <excludes>
-    <pattern>/javascripts/*</pattern>
-  </excludes>
+    <excludes>
+        <pattern>/javascripts/*</pattern>
+    </excludes>
 
-  <excludes>
-    <pattern>/css/*</pattern>
-  </excludes>
+    <excludes>
+        <pattern>/css/*</pattern>
+    </excludes>
 
-  <excludes>
-    <pattern>/yui/*</pattern>
-  </excludes>
+    <excludes>
+        <pattern>/yui/*</pattern>
+    </excludes>
 
-  <decorator name="main" page="decorator_main.jsp">
-    <pattern>/router/*</pattern>
-    <pattern>/node/*</pattern>
-    <pattern>/job/*</pattern>
-    <pattern>/message/*</pattern>
-    <pattern>/user/*</pattern>
-    <pattern>/security/*</pattern>
-  </decorator>
 
-  <!-- decorator name="message" page="decorator.jsp">
-       <pattern>/message/list.do</pattern>
- </decorator>
+    <decorator name="lightwindow" page="decorator_llightwindow.jsp">
+            <pattern>/user/lwedit.do</pattern>
+    </decorator>
+    <decorator name="lightwindow" page="decorator_llightwindow.jsp">
+            <pattern>/job/lwedit.do</pattern>
+    </decorator>
 
- <decorator name="main" page="main.dec">
-       <pattern>*.do</pattern>
- </decorator -->
+    <decorator name="main" page="decorator_main.jsp">
+        <pattern>/router/*</pattern>
+        <pattern>/node/*</pattern>
+        <pattern>/job/*</pattern>
+        <pattern>/message/*</pattern>
+        <pattern>/user/*</pattern>
+        <pattern>/security/*</pattern>
+    </decorator>
+
+
+    <!-- decorator name="message" page="decorator.jsp">
+         <pattern>/message/list.do</pattern>
+   </decorator>
+
+   <decorator name="main" page="main.dec">
+         <pattern>*.do</pattern>
+   </decorator -->
 </decorators>
