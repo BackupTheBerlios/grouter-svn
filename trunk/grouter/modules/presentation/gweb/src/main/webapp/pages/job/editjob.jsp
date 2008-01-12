@@ -16,7 +16,7 @@
 
 <body>
 
-<jsp:include page="../job/jobmenu.jsp"/>
+<jsp:include page="../job/menu.jsp"/>
 
 
 <div id="paragraph">

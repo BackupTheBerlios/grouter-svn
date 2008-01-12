@@ -22,7 +22,7 @@
     Jobs are scheduled via cron expression. A job can have different states.
 </div>
 
-<jsp:include page="jobmenu.jsp"/>
+<jsp:include page="menu.jsp"/>
 
 
 <div id="content">
