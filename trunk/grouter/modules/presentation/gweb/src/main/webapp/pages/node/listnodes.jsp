@@ -1,9 +1,8 @@
-
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
+<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
 
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
@@ -14,10 +13,8 @@
     </title>
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
-    <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
     <script type="text/javascript" charset="iso8859-1"
             src="/gweb/javascripts/prototype.js"></script>
-    <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
     <script type="text/javascript" charset="iso8859-1"
             src="/gweb/javascripts/scriptaculous.js"></script>
 
@@ -73,14 +70,12 @@
 
 <body onload="init();">
 
-<!-- display:table name="" defaultsort="1" id="element" class="pagedList" -->
-<!-- display:column property="id" sortable="true" sortName="id" title="Id"/ -->
-<!-- display:column property="content" sortable="true" sortName="content" title="Content"/ -->
-<!--/display:table -->
 
-<div id="paragraph">
-    View node.
-</div>
+
+
+<jsp:include page="../node/menu.jsp"/>
+
+
 
 <div id="menuAction">
     <table border="0">

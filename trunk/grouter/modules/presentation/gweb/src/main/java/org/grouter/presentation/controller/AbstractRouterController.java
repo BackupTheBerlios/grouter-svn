@@ -1,6 +1,3 @@
-package org.grouter.presentation.controller;
-
-import org.springframework.web.servlet.mvc.AbstractController;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,13 +17,27 @@ import org.springframework.web.servlet.mvc.AbstractController;
  * under the License.
  */
 
+package org.grouter.presentation.controller;
+
+import org.springframework.web.servlet.mvc.AbstractController;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * @author Georges Polyzois
  */
-abstract public class RouterAbstractController extends AbstractController
+abstract public class AbstractRouterController extends AbstractController
 {
-
     protected final static String ID = "id";
     protected static final String MESSAGE = "message";
+
+    static protected Map<String, Object> map = new HashMap<String, Object>();
+
+    static
+    {
+        map.put( MESSAGE, "" );
+    }
+
 }

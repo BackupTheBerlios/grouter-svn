@@ -1,9 +1,8 @@
 <%@ page session="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ taglib prefix="f" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
+<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
 
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
@@ -19,8 +18,9 @@
 <jsp:include page="menu.jsp"/>
 
 
-<div id="paragraph">
-    Edit user.
+
+<div id="message" >
+     <c:out value="${message}"/>
 </div>
 
 

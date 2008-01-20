@@ -6,87 +6,118 @@
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
        default-autowire="byName">
 
-  <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
-    <property name="interceptors">
-      <list>
-      </list>
-    </property>
-  </bean>
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+        <property name="interceptors">
+            <list>
+            </list>
+        </property>
+    </bean>
+
+    <!--
+    Localization Bean.
+    It’s important to name the bean messageSource because that’s the name Spring will use to look for a
+    message source. As for the location of the message properties file, this is determined by the
+    basename property. Here the base name is set to messages. This means that, by
+    default, externalized messages will be retrieved from a file called messages.prop-
+    erties in the classpath (under /WEB-INF/classes/mes-
+    sages.properties)
+    -->
+        <bean id="messageSource" class=
+        "org.springframework.context.support.ResourceBundleMessageSource">
+      <property name="basename" value="messages" />
+    </bean>
 
 
-                                                                        
-  <!-- Used to create hibernate search index on deployment -->
-  <bean name="hibernateSearchIndexContextListener"
-        class="org.grouter.presentation.util.HibernateSearchIndexContextListener"/>
 
-  <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController"/>
-  <bean name="/message/search.do" class="org.grouter.presentation.controller.message.MessageSearchController"/>
-  <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController"/>
-  <bean name="/node/edit.do" class="org.grouter.presentation.controller.node.NodeEditController"/>
-  <bean name="/user/list.do" class="org.grouter.presentation.controller.user.UserListController"/>
-  <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
-  <bean name="/user/lwedit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
-
-  <bean name="/user/listtest.do" class="org.grouter.presentation.controller.user.UserListController"/>
-  <bean name="/user/delete.do" class="org.grouter.presentation.controller.user.UserDeleteController"/>
-  <bean name="/router/list.do" class="org.grouter.presentation.controller.router.RouterListController"/>
-  <bean name="/job/edit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
-  <bean name="/job/list.do" class="org.grouter.presentation.controller.job.JobListController"/>
-  <bean name="/job/delete.do" class="org.grouter.presentation.controller.job.JobDeleteController"/>
-  <bean name="/job/lwedit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
-
-  <bean name="/security/**" class="org.grouter.presentation.controller.security.SecurityController">
-    <property name="login" value="login/login"/>
-    <property name="loggedOut" value="login/logedout"/>
-    <property name="loginDenied" value="login/logindenied"/>
-  </bean>
-
-  <!-- Config for JSP/JSTL -->
-  <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="/pages/"/>
-    <property name="suffix" value=".jsp"/>
-    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-  </bean>
-
-  <!-- DWR -->
-  <bean name="/**/*" class="org.springframework.web.servlet.mvc.ServletWrappingController">
-    <!-- property name="servletClass" value="uk.ltd.getahead.dwr.DWRServlet"/ -->
-    <property name="servletClass" value="org.directwebremoting.servlet.DwrServlet"/>
-    <property name="initParameters">
-      <props>
-        <prop key="debug">true</prop>
-        <prop key="pollAndCometEnabled">true</prop>
-      </props>
-    </property>
-  </bean>
-
-
+    <!--
+    SimpleMappingExceptionResolver comes to the rescue when an exception is
+    thrown from a controller. Use the following <bean> definition to configure Sim-
+    pleMappingExceptionResolver to gracefully handle any java.lang.Exceptions
+    thrown from Spring MVC controllers:
+     -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+      <property name="exceptionMappings">
+        <props>
+            <!-- The error page under /pages/error folder -->
+          <prop key="java.lang.Exception">error/error</prop> 
+        </props>
+      </property>
+    </bean>
 
     
+    <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController"/>
+    <bean name="/message/search.do" class="org.grouter.presentation.controller.message.MessageSearchController"/>
+    <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController"/>
+    <bean name="/node/edit.do" class="org.grouter.presentation.controller.node.NodeEditController"/>
+    <bean name="/node/search.do" class="org.grouter.presentation.controller.node.NodeSearchController"/>
 
-   <!-- Reverse Ajax -->
-  <!-- bean name="nodeCallbackThread" class="org.grouter.presentation.controller.node.NodeCallbackThread" / -->
+    <bean name="/user/list.do" class="org.grouter.presentation.controller.user.UserListController"/>
+    <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
+
+    <bean name="/user/lwedit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
+    <bean name="/user/search.do" class="org.grouter.presentation.controller.user.UserSearchController"/>
+    <bean name="/user/listtest.do" class="org.grouter.presentation.controller.user.UserListController"/>
+    <bean name="/user/delete.do" class="org.grouter.presentation.controller.user.UserDeleteController"/>
+    <bean name="/router/list.do" class="org.grouter.presentation.controller.router.RouterListController"/>
+    <bean name="/job/edit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
+    <bean name="/job/list.do" class="org.grouter.presentation.controller.job.JobListController"/>
+    <bean name="/job/delete.do" class="org.grouter.presentation.controller.job.JobDeleteController"/>
+    <bean name="/job/lwedit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
+
+    <bean name="/security/**" class="org.grouter.presentation.controller.security.SecurityController">
+        <property name="login" value="login/login"/>
+        <property name="loggedOut" value="login/logedout"/>
+        <property name="loginDenied" value="login/logindenied"/>
+    </bean>
+
+    <!--
+    Config for JSP/JSTL
+    A view resolver’s job  is to take the view name returned in the ModelAndView and map it to a view.
+    We need a view resolver to resolve the logical view name returned in the ModelAndView to a JSP file
+    that renders the homepage.
+    -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/pages/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    </bean>
+
+    <!-- DWR -->
+    <bean name="/**/*" class="org.springframework.web.servlet.mvc.ServletWrappingController">
+        <!-- property name="servletClass" value="uk.ltd.getahead.dwr.DWRServlet"/ -->
+        <property name="servletClass" value="org.directwebremoting.servlet.DwrServlet"/>
+        <property name="initParameters">
+            <props>
+                <prop key="debug">true</prop>
+                <prop key="pollAndCometEnabled">true</prop>
+            </props>
+        </property>
+    </bean>
 
 
 
-  <!--bean id="dwrController" class="org.springframework.web.servlet.mvc.ServletWrappingController">
-    <property name="servletClass">
-      <value>uk.ltd.getahead.dwr.DWRServlet</value>
-    </property>
-    <property name="initParameters">
-      <props>
-        <prop key="debug">true</prop>
-      </props>
-    </property>
-  </bean>
+    <!-- Reverse Ajax -->
+    <!-- bean name="nodeCallbackThread" class="org.grouter.presentation.controller.node.NodeCallbackThread" / -->
 
-  <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-    <property name="mappings">
-      <props>
-        <prop key="/**/*">dwrController</prop>
-      </props>
-    </property>
-  </bean -->
+
+    <!--bean id="dwrController" class="org.springframework.web.servlet.mvc.ServletWrappingController">
+     <property name="servletClass">
+       <value>uk.ltd.getahead.dwr.DWRServlet</value>
+     </property>
+     <property name="initParameters">
+       <props>
+         <prop key="debug">true</prop>
+       </props>
+     </property>
+   </bean>
+
+   <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+     <property name="mappings">
+       <props>
+         <prop key="/**/*">dwrController</prop>
+       </props>
+     </property>
+   </bean -->
 
 
 </beans>

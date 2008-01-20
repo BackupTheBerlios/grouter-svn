@@ -21,12 +21,8 @@ package org.grouter.presentation.controller.security;
 
 import org.acegisecurity.Authentication;
 import org.acegisecurity.GrantedAuthority;
-
 import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
-
-import org.acegisecurity.userdetails.UserDetails;
-
 import org.apache.log4j.Logger;
 
 
@@ -50,8 +46,6 @@ public class SecurityManagerImpl implements SecurityManager
     {
         this.authentication = authentication;
     }
-
-
 
     /**
      * See {@link SecurityManager#hasAlias()}
@@ -185,7 +179,7 @@ public class SecurityManagerImpl implements SecurityManager
 
 
 
-    public String getModelUserId(  )
+    public String getUserId(  )
     {
         String username = null;
         Object obj = getAuthentication(  ).getPrincipal(  );
@@ -199,10 +193,10 @@ public class SecurityManagerImpl implements SecurityManager
             ExtendedUserDetailsImpl userDetailsImpl = ( ExtendedUserDetailsImpl ) obj;
             username = userDetailsImpl.getUsername(  );
         }
-
         return username;
     }
 
+    /*
     public String getUserName(  )
     {
         String username = null;
@@ -217,9 +211,8 @@ public class SecurityManagerImpl implements SecurityManager
             UserDetails userDetails = ( UserDetails ) obj;
             username = userDetails.getUsername(  );
         }
-
         return username;
-    }
+    } */
 
 
 
@@ -239,19 +232,17 @@ public class SecurityManagerImpl implements SecurityManager
 
 
 
-    public Long getModelUserIdAsLong(  )
+    public Long getUserIdAsLong(  )
     {
         Long userid = null;
-
         try
         {
-            userid = Long.parseLong( getModelUserId(  ) );
+            userid = Long.parseLong( getUserId(  ) );
         }
         catch ( NumberFormatException e )
         {
             logger.error( "User name was not of number type", e );
         }
-
         return userid;
     }
 

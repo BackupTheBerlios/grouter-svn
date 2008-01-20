@@ -30,7 +30,6 @@ import org.acegisecurity.Authentication;
  */
 public interface SecurityManager
 {
-
     /**
      * Check if user has a certain role.
      * @param role  check to see if this role is among the roles of the current user
@@ -38,11 +37,7 @@ public interface SecurityManager
      */
     boolean isUserInRole( String role );
 
-
-
     boolean isUserInRole( String[] authorizedRoles );
-
-
 
     /**
      * Check to see if current user autheticated is of type anonymous.
@@ -50,15 +45,11 @@ public interface SecurityManager
      */
     boolean isUserAnonymous(  );
 
-
-
     /**
      * Get username as defined by Acegi.
      * @return
      */
-    String getUserName(  );
-
-
+    //String getUserName(  );
 
     /**
      * Get fullname if any, else a null i sreturne.
@@ -66,24 +57,18 @@ public interface SecurityManager
      */
     String getModelFullName(  );
 
-
-
     /**
      * Helper method that returns the id of the logged in user as a Long - if failure to retrieve the user or
      * a user with a non number representation found a null is returned.
      * @return
      */
-    Long getModelUserIdAsLong(  );
-
-
+    Long getUserIdAsLong(  );
 
     /**
      * The user id corresponds to the domain models {@link  org.grouter.domain.entities.User}.
-     * @return
+     * @return the userid
      */
-    String getModelUserId(  );
-
-
+    String getUserId(  );
 
     /**
      * For injection and unit testing.
@@ -91,15 +76,11 @@ public interface SecurityManager
      */
     void setAuthentication( Authentication authentication );
 
-
-
     /**
      * Get authentication instance.
      * @return  an {@link org.acegisecurity.Authentication} instance
      */
     Authentication getAuthentication(  );
-
-
 
     /**
      * Does current authenitcated user also an alias, i.e. he/she has selected and additional user to impersonate
@@ -108,15 +89,11 @@ public interface SecurityManager
      */
     boolean hasAlias(  );
 
-
-
     /**
      * Get the alias id.
      * @return
      */
     Long getAliasId(  );
-
-
 
     /**
      * Get the alias for authenitcated user impersonating an other user.

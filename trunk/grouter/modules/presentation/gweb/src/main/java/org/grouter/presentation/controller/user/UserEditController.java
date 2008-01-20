@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.servicelayer.UserService;
+import org.grouter.presentation.controller.security.SecurityManagerImpl;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -48,12 +49,13 @@ public class UserEditController extends SimpleFormController
     private static final String FORMVIEW = "user/edituser";
     private static final String SUCCESSVIEW = "redirect:list.do";
     private static final String USER = "usercommand";
+    private org.grouter.presentation.controller.security.SecurityManager securityManager = new SecurityManagerImpl();
 
     public void setUserService(UserService userService)
     {
         this.userService = userService;
     }
-
+                                               
     private UserService userService;
 
 
@@ -65,7 +67,7 @@ public class UserEditController extends SimpleFormController
         setSessionForm( true );
         setCommandClass( UserCommand.class );
         setFormView( FORMVIEW );
-        setSuccessView( SUCCESSVIEW );
+        setSuccessView( FORMVIEW );
         setCommandName( USER );
         //setValidator();
     }
@@ -78,9 +80,16 @@ public class UserEditController extends SimpleFormController
     protected ModelAndView onSubmit( HttpServletRequest req, HttpServletResponse res, Object object, BindException bex )
             throws Exception
     {
+        Long userId = securityManager.getUserIdAsLong();
+
+        User createdBy = new User();
+        createdBy.setId( userId );
+
+
         String message;
         UserCommand cmd = ( UserCommand ) object;
         User user = cmd.getUser(  );
+        user.setCreatedBy( createdBy );
         try
         {
             userService.save( user );
@@ -89,14 +98,14 @@ public class UserEditController extends SimpleFormController
         catch ( Exception e )
         {
             logger.error( e, e );
-            message = "Could not save";
+            message = "Could not save " + e.getMessage();
         }
 
         Map<String, Object> model = new HashMap<String, Object>(  );
         model.put( "message", message );
 
-        //return showForm( req, res, bex, model );
-        return new ModelAndView( SUCCESSVIEW, model );
+        return showForm( req, res, bex, model );
+        // return new ModelAndView( SUCCESSVIEW, model );
     }
 
 

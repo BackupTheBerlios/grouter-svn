@@ -21,7 +21,7 @@ package org.grouter.presentation.controller.user;
 
 import org.apache.log4j.Logger;
 import org.grouter.domain.servicelayer.UserService;
-import org.grouter.presentation.controller.RouterAbstractController;
+import org.grouter.presentation.controller.AbstractRouterController;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * @author Georges Polyzois
  */
-class UserDeleteController extends RouterAbstractController
+class UserDeleteController extends AbstractRouterController
 {
     private static Logger logger = Logger.getLogger(UserListController.class);
     private UserService userService;

@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net"  %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"  %>
 
 <?xml version="1.0" encoding="iso-8859-1"?>

@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>
-        Messages :: List
+        <spring:message code="message.title.list"  />
     </title>
                                      
 </head>
@@ -24,6 +24,7 @@
 <div id="paragraph" >
     Search messages.
 </div>
+<br/>
 
 <div id="menuAction" >
     <div id="form">

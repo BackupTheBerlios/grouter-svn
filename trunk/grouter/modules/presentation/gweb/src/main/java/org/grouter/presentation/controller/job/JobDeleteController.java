@@ -21,7 +21,7 @@ package org.grouter.presentation.controller.job;
 
 import org.apache.log4j.Logger;
 import org.grouter.domain.servicelayer.JobService;
-import org.grouter.presentation.controller.RouterAbstractController;
+import org.grouter.presentation.controller.AbstractRouterController;
 import org.grouter.presentation.controller.user.UserListController;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * @author Georges Polyzois
  */
-class JobDeleteController extends RouterAbstractController
+class JobDeleteController extends AbstractRouterController
 {
     private static Logger logger = Logger.getLogger(UserListController.class);
     private JobService jobService;

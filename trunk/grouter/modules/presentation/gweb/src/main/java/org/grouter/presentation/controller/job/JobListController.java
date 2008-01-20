@@ -52,7 +52,7 @@ public class JobListController extends AbstractController
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
                                                  HttpServletResponse response
     )
-            throws Exception
+            throws Exception                                       
     {
         Map<String, Object> map = new HashMap<String, Object>();
         List<Job> jobs = jobService.findAll();

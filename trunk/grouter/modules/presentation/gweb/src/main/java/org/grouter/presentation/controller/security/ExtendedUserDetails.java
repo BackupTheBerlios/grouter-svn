@@ -40,15 +40,11 @@ public interface ExtendedUserDetails extends UserDetails
      */
     void setModelFullName( String modelFullName );
 
-
-
     /**
      * Get fullname of user in domain model.
      * @return
      */
     String getModelFullName(  );
-
-
 
     /**
      * Set user name as defined in domain model.
@@ -56,15 +52,11 @@ public interface ExtendedUserDetails extends UserDetails
      */
     void setModelUserName( String modelUserName );
 
-
-
     /**
      * Get user name as defined in doain model.
      * @return
      */
     String getModelUserName(  );
-
-
 
     /**
      * Get alias id. Typically an administrator role may opt to use an alias to be able to impersonate
@@ -73,8 +65,6 @@ public interface ExtendedUserDetails extends UserDetails
      */
     Long getAliaUserId(  );
 
-
-
     /**
      * Set alias. Typically an administrator role may opt to use an alias to be able to impersonate
      * another user and act as if he was the user.
@@ -82,16 +72,12 @@ public interface ExtendedUserDetails extends UserDetails
      */
     void setAliasUserId( Long aliasId );
 
-
-
     /**
      * Get the alias username. Typically an administrator role may opt to use an alias to be able to impersonate
      * another user and act as if he was the user.
      * @return
      */
     public String getAliasUserName(  );
-
-
 
     /**
      * Set the alias user name. Typically an administrator role may opt to use an alias to be able to impersonate

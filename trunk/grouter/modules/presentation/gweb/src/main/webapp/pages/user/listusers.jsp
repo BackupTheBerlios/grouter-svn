@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
 
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
@@ -9,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <title>
-        Users :: List
+        <spring:message code="user.title"  />
     </title>
     <link href="../css/common.css" type="text/css" rel="stylesheet"/>
 
@@ -30,13 +31,13 @@
 <br/>
 
 <div id="message" style="display:none;">
-    <c:out value="${message}"/>
+                    <c:out value="${message}"/>
 </div>
 
-<div class="example" id="demo-effect-slidedown"  onclick="new Effect.SlideDown(this)"><div style="height:120px;">
+<!-- div class="example" id="demo-effect-slidedown"  onclick="new Effect.SlideDown(this)"><div style="height:120px;">
         <span>Click for Effect.SlideDown demo</span>
       </div>
-</div>
+</div -->
 
 
 <div id="content">
@@ -44,13 +45,12 @@
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td></td>
-                <td align="right"> Number of users :
+                <td align="right"> <spring:message code="user.content.number.of.users" />
                     <c:out value="${usersSize}"/>
                 </td>
             </tr>
         </table>
         <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
-
             <thead>
                 <tr>
                     <th>Id</th>
@@ -68,9 +68,6 @@
                     <tr>
                         <td>
                             <c:out value="${object.id}"/>
-
-
-
                         </td>
                         <td>
                             <c:out value="${object.userName}"/>
@@ -92,12 +89,12 @@
                         </td>
                         <td>
                             <a href='edit.do?id=<c:out value="${object.id}"/>' class="iconlink">
-                                <img src="/gweb/images/edit_24x24.png" alt="Delete" width="14"
-                                     height="14"> Edit </a> &nbsp;
+                                <img src="/gweb/images/edit_24x24.png" alt="edit" width="14"
+                                     height="14"> <spring:message code="user.content.edit" /> </a> &nbsp;
 
                             <a href='delete.do?id=<c:out value="${object.id}"/>' class="iconlink">
                                 <img src="/gweb/images/remove_24x24.png" alt="Delete" width="14"
-                                     height="14">Delete </a>
+                                     height="14"><spring:message code="user.content.delete" /></a>
 
                             <a href="/gweb/user/edit.do" params="lightwindow_width=175,lightwindow_height=60" class="lightwindow page-options"><strong>Form Example</strong> - Submit a form in a lightWindow!</a>
 
