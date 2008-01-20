@@ -19,12 +19,12 @@
 
 package org.grouter.domain.entities;
 
-import org.hibernate.validator.NotNull;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An EndPoint represents the interface for inbound and outbound messaging. A Node can have one
@@ -42,7 +42,7 @@ import java.util.HashMap;
 
 @Entity
 @Table(name = "endpoint")
-public class EndPoint //extends BaseEntity
+public class EndPoint extends BaseEntity
 {
     @Id
     @NotNull

@@ -31,7 +31,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "settings_context")
-public class SettingsContext //extends BaseEntity<Long>
+public class SettingsContext extends BaseEntity 
 {
     // These must match names specified in config.xsd
     public final static String KEY_SETTINGS_JNDI_JAVA_NAMING_FACTORY_INITIAL = "naming.factory.initial";
@@ -46,6 +46,7 @@ public class SettingsContext //extends BaseEntity<Long>
     public final static String KEY_SETTINGS_DATASOURCE_PASSWORD = "datasource.password";
 
 
+    
 
 
     @Id
@@ -64,6 +65,8 @@ public class SettingsContext //extends BaseEntity<Long>
     @JoinColumn(name = "settings_fk", nullable = false)
     Settings settings;
 
+    public SettingsContext() {
+    }
 
     public SettingsContext(Long id, String keyname, String value)
     {

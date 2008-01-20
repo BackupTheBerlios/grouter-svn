@@ -19,18 +19,12 @@
 
 package org.grouter.domain.daolayer.spring;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.search.Query;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.entities.Message;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 
 import java.util.List;
 
@@ -75,7 +69,7 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
     public List<Message> findMessagesFromIndex(final String queryForMe)
     {
 
-        FullTextSession fullTextSession = Search.createFullTextSession(getSession());
+        FullTextSession fullTextSession = SystemServiceImpl.createFullTextSession(getSession());
 
         MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"content"}, new StandardAnalyzer());
         Query query = null;

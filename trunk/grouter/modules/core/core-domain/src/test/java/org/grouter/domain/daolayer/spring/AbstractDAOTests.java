@@ -1,12 +1,12 @@
 package org.grouter.domain.daolayer.spring;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StringUtils;
-import org.hibernate.SessionFactory;
 import org.apache.commons.io.FileUtils;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.NodeDAO;
+import org.hibernate.SessionFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -77,7 +77,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
      */
     protected String getTestDataLocation()
     {
-        return "sql/test-domain-data.sql";
+        return "/test-domain-data.sql";
     }
 
     protected void flushSession()

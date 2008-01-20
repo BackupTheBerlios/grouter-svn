@@ -38,8 +38,7 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public interface GenericDAO<T, ID extends Serializable> extends GenericSearchDAO
-{
+public interface GenericDAO<T, ID extends Serializable> {
     /**
      * Find Entity by id.
      *
@@ -147,7 +146,7 @@ public interface GenericDAO<T, ID extends Serializable> extends GenericSearchDAO
 
 
     /**
-     * We are using Hibernate Search. In order to update the index for a specific entity use
+     * We are using Hibernate SystemServiceImpl. In order to update the index for a specific entity use
      * this method.
      *
      * @param entity is the entity for which we willupdate the index

@@ -76,6 +76,17 @@ public interface RouterService
      */
     List<Message> findAllMessages(String nodeId);
 
+
+
+    /**
+     * Find messages for this node.
+     *
+     * @param searchText text to use for index search
+     * @return a list of {@link Message}s
+     */
+    List<Message> searchMessages(String searchText);
+
+
     /**
      * @param routerId
      * @return
@@ -110,6 +121,16 @@ public interface RouterService
      * @return list {@link Node}s with number of messages set
      */
     List<Node> findNodesWithNumberOfMessages( String routerId );
+
+
+
+    /**
+     * Find messages for this node.
+     *
+     * @param searchText text to use for index search
+     * @return a list of {@link Node}s
+     */
+    List<Node> searchNodes(String searchText);
 
 
     /**

@@ -22,8 +22,8 @@ package org.grouter.domain.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -33,7 +33,7 @@ import java.util.HashSet;
  */
 @Entity
 @Table(name = "sender")
-public class Sender //extends BaseEntity
+public class Sender extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -50,7 +50,7 @@ public class Sender //extends BaseEntity
     private String name;
 
     @OneToMany
-    private Set<Message> messages = new HashSet();
+    private Set<Message> messages = new HashSet<Message>();
 
     public Sender()
     {

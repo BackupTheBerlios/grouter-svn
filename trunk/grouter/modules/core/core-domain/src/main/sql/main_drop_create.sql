@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS endpoint_context;
 DROP TABLE IF EXISTS filter_type;
 DROP TABLE IF EXISTS settings;
 DROP TABLE IF EXISTS settings_context;
+DROP TABLE IF EXISTS jobgrup;
 DROP TABLE IF EXISTS job;
 DROP TABLE IF EXISTS job_context;
 DROP TABLE IF EXISTS job_state;
@@ -79,15 +80,14 @@ select 'job_state.sql';
 \. job_state.sql
 select 'job_type.sql';
 \. job_type.sql
+select 'jobgroup.sql';
+\. jobgroup.sql
 select 'job.sql';
 \. job.sql
 select 'job_context.sql';
 \. job_context.sql
 select 'job_event.sql';
 \. job_event.sql
-
-
-
 
 COMMIT;
 

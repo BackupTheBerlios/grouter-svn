@@ -31,7 +31,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "locale")
-public class Locale
+public class Locale extends BaseEntity
 {
     @Id
     @Column(name = "id")

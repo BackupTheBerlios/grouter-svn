@@ -24,16 +24,15 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ArrayList;
-import java.io.Serializable;
+import java.util.Map;
 
 
 @Entity
 @Table(name = "role")
-public class Role //extends BaseEntity
+public class Role extends BaseEntity
 {
     @Id
     @Column(name = "id")

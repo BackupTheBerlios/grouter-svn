@@ -19,10 +19,10 @@
 
 package org.grouter.domain.servicelayer.spring;
 
-import org.grouter.domain.servicelayer.UserService;
+import org.grouter.domain.daolayer.UserDAO;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.UserState;
-import org.grouter.domain.daolayer.UserDAO;
+import org.grouter.domain.servicelayer.UserService;
 
 import java.util.List;
 
@@ -85,5 +85,10 @@ public class UserServiceImpl implements UserService
         User user = findById( id );
         user.setUserState( userState );
         save( user );
+    }
+
+    public List<User> searchUsers(String searchText)
+    {
+        return userDAO.findFromIndex(  searchText, "userName", "id", "lastName");
     }
 }

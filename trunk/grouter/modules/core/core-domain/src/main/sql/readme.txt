@@ -5,9 +5,12 @@ To create a database in mysql
 0. Drop if you have any existing grouter database already.
 mysqladmin -u root -pXYZ DROP grouter;
 
-
 1. Start up mysql the mysql demon
 > sudo ./mysql/bin/mysqld_safe
+
+1.5 Set password for mysql
+> mysqladmin -u root password dmnb330qqww
+
 
 2. Issue create
 > mysqladmin -u root -pthepwd  CREATE grouter
@@ -16,7 +19,7 @@ And then reload the database
 
 3. Grant grouter user
 As root create a mingle user
-mysql -u root -pdmnb330  mysql
+mysql -u root -pdmnb330  grouter
 Then create the grouter user with (INSERT...)
 mysql> GRANT ALL PRIVILEGES ON grouter.* TO 'grouter'@'localhost'  IDENTIFIED BY 'grouter' WITH GRANT OPTION;
 

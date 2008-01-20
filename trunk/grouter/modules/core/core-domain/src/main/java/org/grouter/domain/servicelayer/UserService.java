@@ -52,10 +52,11 @@ public interface UserService
     List<User> findAll( String hql );
 
 
+
     /**
-     * Stores a message - all relationships need to be inplace for persitence operation is to succeed.
+     * Stores a user - all relationships need to be inplace for persitence operation is to succeed.
      *
-     * @param user a message to persist
+     * @param user a user to persist
      * @return
      */
     void save(User user);
@@ -81,5 +82,15 @@ public interface UserService
      * @param userState the new state for this user
      */
     void changeState(Long id, UserState userState);
+
+
+    /**
+     * Find messages for this node.
+     *
+     * @param searchText text to use for index search
+     * @return a list of {@link User}s
+     */
+    List<User> searchUsers(String searchText);
+
 
 }

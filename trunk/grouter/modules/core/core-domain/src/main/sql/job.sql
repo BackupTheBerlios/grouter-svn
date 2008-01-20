@@ -4,16 +4,17 @@ CREATE TABLE if not exists job (
   cron_expression varchar(255) default NULL,
   job_state_fk bigint(20) NOT NULL,
   job_type_fk bigint(20) NOT NULL,
-  router_fk varchar(36) NOT NULL,
+  -- a job can optionally be associated to a router, but can also run independently
+  router_fk varchar(36),
   started_on datetime  null,
   finished_at datetime null,
---  instance varchar(255) NOT NULL,
---  class text NOT NULL,
+  jobordernumber bigint(20) not null,
+  jobgroup_fk bigint(20) NOT NULL,
   PRIMARY KEY  (id),
   KEY (id),
   FOREIGN KEY (job_type_fk) REFERENCES job_type (id),
   FOREIGN KEY (job_state_fk) REFERENCES job_state (id),
-  FOREIGN KEY (router_fk) REFERENCES router (id)
+  FOREIGN KEY (jobgroup_fk) REFERENCES jobgroup (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- create index index_job_name on job (name);

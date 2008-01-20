@@ -23,8 +23,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Domain class.
@@ -33,7 +33,7 @@ import java.util.HashMap;
  */
 @Entity
 @Table(name = "settings")
-public class Settings //extends BaseEntity
+public class Settings extends BaseEntity
 {
     @Id
     @Column(name = "id")

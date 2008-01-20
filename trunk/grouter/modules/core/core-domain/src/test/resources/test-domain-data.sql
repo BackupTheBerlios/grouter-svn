@@ -23,7 +23,7 @@ insert into message (id, creationtimestamp, sender_fk, node_fk, content) values 
 insert into message (id, creationtimestamp, sender_fk, node_fk, content) values ( 'msgid_4', NOW(), 'senderid_1', 'nid_1', 'A message 4');
 insert into message (id, creationtimestamp, sender_fk, node_fk, content) values ( 'msgid_5', NOW(), 'senderid_1', 'nid_1', 'A message 5');
 insert into message (id, creationtimestamp, sender_fk, node_fk, content) values ( 'msgid_6', NOW(), 'senderid_1', 'nid_1', 'A message 6');
-
+         
 insert into receiver (id, name ) values ( 'receiverid_1', 'A receiver');
 insert into receiver (id, name ) values ( 'receiverid_2', 'A receiver');
 insert into receiver_message (receiver_fk , message_fk) values ( 'receiverid_1',  'msgid_1' );

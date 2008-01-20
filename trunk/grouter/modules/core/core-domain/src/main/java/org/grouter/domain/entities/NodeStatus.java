@@ -32,7 +32,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "nodestatus")
-public class NodeStatus
+public class NodeStatus  extends BaseEntity
 {
 
     @Id

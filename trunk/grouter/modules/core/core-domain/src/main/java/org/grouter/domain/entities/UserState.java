@@ -32,7 +32,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "user_state")
-public class UserState
+public class UserState  extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -46,7 +46,7 @@ public class UserState
 
     // created
     public static UserState NEW = new UserState(1L, "NEW");
-    // avaiting activation - user received One Time Password adn needs to change it
+    // avaiting activation - user received One Time Password and needs to change it
     public static UserState ACTIVATION_PENDING = new UserState(3L, "ACTIVATION_PENDIN");
     // user activated
     public static UserState ACTIVE = new UserState(2L, "ACTIVE");

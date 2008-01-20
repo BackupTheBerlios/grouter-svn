@@ -19,14 +19,14 @@
 
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.daolayer.NodeDAO;
-import org.hibernate.Session;
-import org.hibernate.Query;
-import org.hibernate.Hibernate;
+import org.grouter.domain.entities.Node;
 import org.hibernate.Criteria;
-import org.hibernate.type.Type;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
+import org.hibernate.type.Type;
 
 import java.util.List;
 
@@ -34,16 +34,7 @@ import java.util.List;
 /**
  *
  *
- *
-$Rev::                    $:  Revision of last commit
-$Author::                 $:  Author of last commit
-$Date::                   $:  Date of last commit
- *
- * $Revision$
- * $HeadURL$
- * $Date$
- * 
- * @author $Author$
+ * @author Georges Polyzois
  */
 public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements NodeDAO
 {

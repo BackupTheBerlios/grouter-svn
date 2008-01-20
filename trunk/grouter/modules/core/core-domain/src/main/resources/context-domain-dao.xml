@@ -2,28 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   default-autowire="byName">
-
+    
     <!-- Abstract DAO -->
     <bean id="abstractDao" abstract="true">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-
     <!-- Core specific Data Access Object (DAO) Beans -->
+    <bean id="systemDAO"  parent="abstractDao" class="org.grouter.domain.daolayer.spring.SystemDAOImpl" />
     <bean id="messageDAO"  parent="abstractDao" class="org.grouter.domain.daolayer.spring.MessageDAOImpl" />
-
     <bean id="nodeDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.NodeDAOImpl"/>
-
     <bean id="routerDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RouterDAOImpl"/>
-
     <bean id="userDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.UserDAOImpl"/>
-
     <bean id="roleDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RoleDAOImpl"/>
-
     <bean id="endPointDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.EndPointDAOImpl"/>
-
     <bean id="settingsDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.SettingsDAOImpl"/>
-
     <bean id="jobDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.JobDAOImpl"/>
-
 </beans>

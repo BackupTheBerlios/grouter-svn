@@ -27,24 +27,32 @@ import java.util.List;
 
 /**
  * Main interface for operations with the grouter internal domain.
- *
+ * <p/>
  * There are a spring based implementation and
  *
  * @author Georges Polyzois
  */
 @Remote
 @Local
-public interface JobService
-{
+public interface JobService {
     /**
      * Retrieve a list with all grouters available.
+     *
      * @return
      */
     List<Job> findAll();
 
+    /**
+     * Find messages for this node.
+     *
+     * @param searchText text to use for index search
+     * @return a list of {@link Job}s
+     */
+    List<Job> searchJobs(String searchText);
 
     /**
      * Stores a message - all relationships need to be inplace for persitence operation is to succeed.
+     *
      * @param job a message to persist
      * @return
      */
@@ -61,9 +69,10 @@ public interface JobService
 
     /**
      * Delete the job permanently - and all events associated to it.
+     *
      * @param id
      */
-    void delete( Long id );
+    void delete(Long id);
 
 
 }

@@ -29,7 +29,10 @@ import org.grouter.domain.daolayer.RouterDAO;
 import org.grouter.domain.entities.*;
 import org.grouter.domain.servicelayer.RouterService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -132,6 +135,10 @@ public class RouterServiceImpl implements RouterService
         return messageDAO.findMessagesForNode(nodeId);
     }
 
+    public List<Message> searchMessages(String searchText) {
+        return messageDAO.findFromIndex( searchText, "content", "id"  );
+    }
+
 
     public List<Node> findAllNodes(final String routerId)
     {
@@ -154,6 +161,12 @@ public class RouterServiceImpl implements RouterService
     public List<Node> findNodesWithNumberOfMessages(final String routerId)
     {
         return nodeDAO.findNodesWithNumberOfMessages(routerId);
+    }
+
+    public List<Node> searchNodes(String searchText)
+    {
+        return nodeDAO.findFromIndex( searchText, "displayName", "id", "statusMessage", "source","receiver",
+                "modifiedOn", "createdOn"  );
     }
 
     public Map<Long, EndPointType> findAllEndPointTypes()

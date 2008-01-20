@@ -30,61 +30,56 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user_role")
-public class UserRole extends BaseEntity   //implements Comparable
+public class UserRole extends BaseEntity
 {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
+
+    @ManyToOne
     private User user;
+
+    @ManyToOne
     private Role role;
 
-    public UserRole()
-    {
+    public UserRole() {
     }
 
-    public UserRole(User user, Role role)
-    {
+    public UserRole(User user, Role role) {
         this.user = user;
         this.role = role;
     }
 
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue( strategy=GenerationType.AUTO )
-    @NotNull
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public User getUser()
-    {
+    public User getUser() {
         return user;
     }
 
 
-    public void setUser(User user)
-    {
+    public void setUser(User user) {
         this.user = user;
     }
 
 
-    public Role getRole()
-    {
+    public Role getRole() {
         return role;
     }
 
 
-    public void setRole(Role role)
-    {
+    public void setRole(Role role) {
         this.role = role;
     }
-
 
     /**
      * Sorting inmemory using Collections.sort will do sort by message.

@@ -49,6 +49,11 @@ public class JobServiceImpl implements JobService
         return jobDAO.findAll();
     }
 
+    public List<Job> searchJobs(String searchText)
+    {
+        return jobDAO.findFromIndex(searchText , "displayName" );
+    }
+
     public void save(final Job job)
     {
         if( job.getJobState() == null )

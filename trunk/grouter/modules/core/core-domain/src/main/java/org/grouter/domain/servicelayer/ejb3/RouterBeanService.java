@@ -19,22 +19,22 @@
 
 package org.grouter.domain.servicelayer.ejb3;
 
+import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
+import org.grouter.domain.daolayer.*;
+import org.grouter.domain.daolayer.ejb3.PersistenceContextName;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
-import org.grouter.domain.daolayer.*;
-import org.grouter.domain.daolayer.ejb3.PersistenceContextName;
-import org.apache.log4j.Logger;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.NotImplementedException;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.ejb.SessionContext;
-import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
-import javax.annotation.Resource;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -97,6 +97,10 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         return messageDAO.findMessagesForNode(id);
     }
 
+    public List<Message> searchMessages(String searchText) {
+        throw new NotImplementedException("implemente this"); 
+    }
+
     public List<Node> findAllNodes(final String routerId)
     {
         return nodeDAO.findAll();
@@ -109,22 +113,27 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
 
     public void saveNode(final Node node)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        throw new NotImplementedException("implemente this");
     }
 
     public List<Node> findNodesWithNumberOfMessages(String routerId)
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        throw new NotImplementedException("implemente this");
+    }
+
+    public List<Node> searchNodes(String searchText) {
+        throw new NotImplementedException("implemente this");
     }
 
     public Map findAllEndPointTypes()
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        throw new NotImplementedException("implemente this");
     }
 
     public List<Node> getNodeWithNumberOfMessages(String routerId)
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        throw new NotImplementedException("implemente this");
     }
 
     public Long getNumberOfMessages(String nodeId)
@@ -135,21 +144,20 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
     //todo
     public Node findNodeById(String nodeId)
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        throw new NotImplementedException("implemente this");
     }
 
     public void updateStateForNotConfiguredNodes(final String routerId,
                                                  final Set<Node> configuredNodes
     )
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        throw new NotImplementedException("implemente this");
     }
 
     public void updateStateForNotConfiguredNodes(final String routerId,
-                                                 final List<Node> configuredNodes
-    )
+                                                 final List<Node> configuredNodes)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        throw new NotImplementedException("implemente this");
     }
 
 

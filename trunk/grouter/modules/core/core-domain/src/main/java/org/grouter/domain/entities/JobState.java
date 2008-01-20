@@ -23,10 +23,10 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Domain entity representing the state of a job.
@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 @Entity
 @Table(name = "job_state")
-public class JobState   //extends BaseEntity
+public class JobState  extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -48,9 +48,8 @@ public class JobState   //extends BaseEntity
     String name;
 
 
-    // waiting to start
-    public static final JobState PENDING = new JobState(1L, "BACKUP");
-    public static final JobState RUNNING = new JobState(2L, "MAIL");
+    public static final JobState PENDING = new JobState(1L, "PENDING");
+    public static final JobState RUNNING = new JobState(2L, "RUNNING");
     public static final JobState FINISHED = new JobState(3L, "FINISHED");
     public static final JobState STOPPED = new JobState(4L, "STOPPED");
     public static final JobState ERROR = new JobState(5L, "ERROR");

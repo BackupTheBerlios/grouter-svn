@@ -19,9 +19,9 @@
 
 package org.grouter.domain.entities;
 
-import org.hibernate.LazyInitializationException;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
+import org.hibernate.LazyInitializationException;
 
 import javax.persistence.Transient;
 import java.io.Serializable;
@@ -37,6 +37,8 @@ public class BaseEntity<ID extends Serializable> implements Serializable
     @Transient
     private static Logger logger = Logger.getLogger(BaseEntity.class);
 
+    private AuditInfo auditInfo;
+
    // private ID id;
 
     /**
@@ -49,6 +51,14 @@ public class BaseEntity<ID extends Serializable> implements Serializable
     public String reflectionToString()
     {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public AuditInfo getAuditInfo() {
+        return auditInfo;
+    }
+
+    public void setAuditInfo(AuditInfo auditInfo) {
+        this.auditInfo = auditInfo;
     }
 
     /*public ID getId()

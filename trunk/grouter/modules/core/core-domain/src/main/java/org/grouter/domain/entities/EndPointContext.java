@@ -63,7 +63,7 @@ public class EndPointContext  //extends BaseEntity
         this.endPoint = endPoint;
     }
 
-    EndPointContext()
+    public EndPointContext()
     {
     }
 
@@ -90,7 +90,7 @@ public class EndPointContext  //extends BaseEntity
         this.keyName = keyName;
     }
 
-    public String getValue()
+    public String getValue()                                               
     {
         return value;
     }

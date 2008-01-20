@@ -1,13 +1,10 @@
 package org.grouter.domain.daolayer.ejb3;
 
 import org.apache.commons.io.FileUtils;
-import org.hibernate.SessionFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.test.jpa.AbstractJpaTests;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 
@@ -32,7 +29,7 @@ public abstract class AbstractDAOTests extends AbstractJpaTests
 
     protected String getTestDataLocation()
     {
-        return "sql/test-domain-data.sql";
+        return "/test-domain-data.sql";
     }
 
 

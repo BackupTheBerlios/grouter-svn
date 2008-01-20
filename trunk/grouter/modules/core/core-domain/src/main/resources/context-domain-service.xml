@@ -27,6 +27,28 @@
   <!-- The "old" way of setting up it without the aop config style -->
   <!-- ########################################################### -->
 
+    <!--  RouterService Proxy -->
+      <bean id="systemService"  class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+          <value>org.grouter.domain.servicelayer.SystemService</value>
+        </property>
+        <property name="interceptorNames">
+          <list>
+            <idref local="transactionInterceptor"/>
+            <idref local="systemServiceTarget"/>
+          </list>
+        </property>
+      </bean>
+
+
+      <!-- RouterService Target -->
+      <bean id="systemServiceTarget" name="systemServiceServiceTarget"
+            class="org.grouter.domain.servicelayer.spring.SystemServiceImpl">
+        <property name="systemDAO" ref="systemDAO"/>
+      </bean>
+
+
+
   <!--  RouterService Proxy -->
   <bean id="routerService"  class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="proxyInterfaces">
@@ -104,6 +126,7 @@
         org.grouter.domain.servicelayer.UserService.*=PROPAGATION_REQUIRED
         org.grouter.domain.servicelayer.JobService.*=PROPAGATION_REQUIRED
         org.grouter.domain.servicelayer.spring.RouterQueueListenerImpl.process*=PROPAGATION_REQUIRED
+        org.grouter.domain.search.HibernateSearchIndexContextListener.*=PROPAGATION_REQUIRED
       </value>
     </property>
   </bean>

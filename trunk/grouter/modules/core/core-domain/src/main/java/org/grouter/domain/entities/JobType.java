@@ -23,10 +23,10 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Domain entity representing the state of a job.
@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 @Entity
 @Table(name = "job_type")
-public class JobType // extends BaseEntity
+public class JobType  extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -49,7 +49,7 @@ public class JobType // extends BaseEntity
 
 
     // waiting to start
-    public static final JobType BACKUP = new JobType(1L, "BACKUP");
+    public static final JobType BACKUP = new JobType(1L, "SINGLE");
     public static final JobType MAIL = new JobType(2L, "MAIL");
 
 

@@ -25,11 +25,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
+ * A Job can fire of an event which will be stored for lateer viewing.
+ *
  * @author Georges Polyzois
  */
 @Entity
 @Table(name = "job_event")
-public class JobEvent  //extends BaseEntity
+public class JobEvent  extends BaseEntity
 {
     @Id
     @Column(name = "id")

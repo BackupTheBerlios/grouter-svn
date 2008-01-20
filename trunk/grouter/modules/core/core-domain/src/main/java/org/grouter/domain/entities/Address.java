@@ -24,7 +24,6 @@ import org.hibernate.validator.Email;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 
 /**
@@ -35,7 +34,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "address")
-public class Address implements Serializable
+public class Address extends BaseEntity
 {
     @Id
     @GeneratedValue(generator = "system-uuid")

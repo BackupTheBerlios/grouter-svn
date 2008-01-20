@@ -1,11 +1,11 @@
 package org.grouter.domain.servicelayer.spring;
 
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StringUtils;
-import org.hibernate.SessionFactory;
 import org.apache.commons.io.FileUtils;
+import org.hibernate.SessionFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public abstract class AbstractServiceTests extends AbstractTransactionalDataSour
      */
     protected String getTestDataLocation()
     {
-        return "sql/test-domain-data.sql";
+        return "/test-domain-data.sql";
     }
 
     /**

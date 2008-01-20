@@ -1,7 +1,6 @@
 /*
  *
  * $HeadURL$
- * $Id$
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -24,6 +23,7 @@
 package org.grouter.domain.entities;
 
 
+import org.hibernate.search.annotations.*;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
@@ -41,25 +41,30 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "user")
-public class User extends BaseEntity implements Comparable
+@Indexed( index="indexes/job" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
+public class User extends BaseEntity 
 {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @DocumentId
+    //@NotNull
     private Long id;
 
     @Column(name = "username")
     @Length(min = 5, max = MAX_USER_NAME_LENGTH)
     @NotNull
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String userName;
 
     @Column(name = "firstname")
     @NotNull
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String firstName;
 
     @Column(name = "lastname")
     @NotNull
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String lastName;
 
     @Column(name = "password")
@@ -71,6 +76,7 @@ public class User extends BaseEntity implements Comparable
     private User createdBy;
 
     @Column(name = "createdon")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private Date createdOn;
 
     @Column(name = "modifiedon")
@@ -90,17 +96,19 @@ public class User extends BaseEntity implements Comparable
     @JoinColumn(name = "locale_fk")
     private Locale locale;
 
-
     @ManyToOne
     @JoinColumn(name = "address_fk")
     private Address address;
 
-    @OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
+    /*
+     * The inverse target property of the target entity. We do not need to enter the foreign
+     * key kolumn as we do in the hbm mapping file -> less verbose.
+     * mappedBy means inverse="true"  meaning that any changes made to this collection
+     * is not persisted. If you want to persist it you need to call node.setRouter(...)
+     * on the item in the Set
+     *
+     */
+    @OneToMany ( mappedBy = "user" )
     private Set<UserRole> roles = new HashSet<UserRole>();
 
 

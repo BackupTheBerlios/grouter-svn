@@ -229,7 +229,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     public void purge(final T entity, final ID id)
     {
         throw new UnsupportedOperationException("Not implemented yet");
-        /*FullTextEntityManager fullTextSession = Search.createFullTextSession(getSession());
+        /*FullTextEntityManager fullTextSession = SystemServiceImpl.createFullTextSession(getSession());
         Transaction tx = fullTextSession.beginTransaction();
         fullTextSession.purge( entity, id );
         tx.commit();*/

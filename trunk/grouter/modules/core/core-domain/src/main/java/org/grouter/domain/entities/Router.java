@@ -23,7 +23,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,7 +35,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "router")
-public class Router implements Serializable  //extends BaseEntity
+public class Router extends BaseEntity
 {
     @Id
     @NotNull

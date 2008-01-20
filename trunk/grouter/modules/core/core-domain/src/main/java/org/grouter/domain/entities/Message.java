@@ -24,7 +24,6 @@ import org.hibernate.search.annotations.*;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -62,13 +61,11 @@ import java.util.Set;
  */
 
 
-@Indexed ( index="indexes/message" )  // Entity will be indexed for querying using Hibernate Search
+@Indexed ( index="indexes/message" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
 @Entity
 @Table(name = "message")
-public class Message implements Comparable, Serializable   //extends BaseEntity 
+public class Message extends BaseEntity implements Comparable
 {
-    //private static final long serialVersionUID = -6097635701783502292L;
-
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
@@ -80,7 +77,7 @@ public class Message implements Comparable, Serializable   //extends BaseEntity
     @JoinTable( name = "receiver_message",
                 joinColumns = {@JoinColumn(name = "message_fk")},
                 inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
-    private Set<Receiver> receivers = new HashSet();
+    private Set<Receiver> receivers = new HashSet<Receiver>();
 
     @ManyToOne(cascade = {CascadeType.PERSIST} , fetch = FetchType.EAGER )
     @JoinColumn( name = "sender_fk", nullable = true)
@@ -88,7 +85,7 @@ public class Message implements Comparable, Serializable   //extends BaseEntity
 
     @NotNull   // Hibernate Validator
     @Column(name = "content", nullable = false)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate Search  - fields to be indexed
+    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
     private String content;
 
     @Column(name = "counter")
@@ -154,7 +151,7 @@ public class Message implements Comparable, Serializable   //extends BaseEntity
     /**
      * Prevent direct access to this Set.
      *
-     * @param receivers
+     * @param receivers receivers collection
      */
     public void setReceivers(Set<Receiver> receivers)
     {
@@ -174,7 +171,7 @@ public class Message implements Comparable, Serializable   //extends BaseEntity
     /**
      * Enforce bi-directionality in Java - needs to be done manually (in cotrast to ejb cmp).
      *
-     * @param receiver
+     * @param receiver the receivers to add
      */
     public void addToReceivers(Receiver receiver)
     {
@@ -185,7 +182,7 @@ public class Message implements Comparable, Serializable   //extends BaseEntity
     /**
      * Enforce bi-directionality in Java - nothing special but needs to be done (in cotrast to ejb cmp).
      *
-     * @param receiver
+     * @param receiver remove this collection of receiverers
      */
     public void removeFromReceivers(Receiver receiver)
     {
@@ -245,8 +242,6 @@ public class Message implements Comparable, Serializable   //extends BaseEntity
             throw new ClassCastException( "Wrong class type. Was " + compareTo.getClass() );
         }
 
-
-
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0;  
     }
 }
