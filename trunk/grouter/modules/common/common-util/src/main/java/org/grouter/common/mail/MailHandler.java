@@ -96,8 +96,8 @@ public class MailHandler
 
         try
         {
-            createHeader(mimeMessageContent, mailDto.getTo(), mailDto.getSubject(),
-                    mailDto.getFrom(), mailDto.getSenderNote());
+ //           createHeader(mimeMessageContent, mailDto.getTo(), mailDto.getSubject(),
+ //                   mailDto.getFrom(), mailDto.getSenderNote());
 
             createHtmlAndPlainTextBody(mimeMessageContent, mailDto);
 
@@ -164,10 +164,6 @@ public class MailHandler
 
     /**
      * @param mimeMessage
-     * @param to
-     * @param subject
-     * @param from
-     * @param senderNote
      * @throws UnsupportedEncodingException
      * @throws MessagingException
      */

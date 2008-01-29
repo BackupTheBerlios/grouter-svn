@@ -29,6 +29,7 @@ import java.io.Serializable;
  *
  * To avoid OutOfMemoryExceptions we need to provide hibernate.search.worker.batch_size
  *
+ * @depracated
  * @author Georges Polyzois
  */
 public class FullIndexHandler
@@ -45,6 +46,13 @@ public class FullIndexHandler
         tx.commit(); //index are written at commit time
     }
 
+
+    /**
+     * Purges the entity class from the index.
+     *
+     * @param session
+     * @param entity
+     */
     public void purgeAll( Session session, Class entity )
     {
         FullTextSession fullTextSession = Search.createFullTextSession(session);

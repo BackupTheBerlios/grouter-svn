@@ -19,20 +19,20 @@
 
 package org.grouter.presentation.controller.message;
 
-import org.springframework.web.servlet.mvc.AbstractController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.servicelayer.RouterService;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A controller for Message listing.
@@ -84,7 +84,8 @@ public class MessageListController extends AbstractController
             map.put("selectedRouterId", routerId );
         }
 
-        return new ModelAndView(LIST_VIEW, map);
+        throw new Exception("Det blev ffel");
+        //return new ModelAndView(LIST_VIEW, map);
     }
 
 

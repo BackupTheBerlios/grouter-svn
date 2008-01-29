@@ -15,10 +15,10 @@
 
 
 
-  <bean id="grouterServerClient" class="org.grouter.core.GrouterServerAdapter">
+  <!--bean id="grouterServerClient" class="org.grouter.core.GrouterServerAdapter">
     <property name="grouterServerProxy">
       <ref local="grouterServerProxy"/>
     </property>
-  </bean>
+  </bean -->
 
 </beans>

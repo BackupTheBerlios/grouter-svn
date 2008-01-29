@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <title>
-        <spring:message code="user.title"  />
+        <spring:message code="user.title.list"  />
     </title>
     <link href="../css/common.css" type="text/css" rel="stylesheet"/>
 

@@ -22,29 +22,36 @@
     erties in the classpath (under /WEB-INF/classes/mes-
     sages.properties)
     -->
-        <bean id="messageSource" class=
-        "org.springframework.context.support.ResourceBundleMessageSource">
-      <property name="basename" value="messages" />
+    <bean id="messageSource" class=
+            "org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
     </bean>
-
 
 
     <!--
-    SimpleMappingExceptionResolver comes to the rescue when an exception is
-    thrown from a controller. Use the following <bean> definition to configure Sim-
-    pleMappingExceptionResolver to gracefully handle any java.lang.Exceptions
-    thrown from Spring MVC controllers:
-     -->
-    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-      <property name="exceptionMappings">
-        <props>
-            <!-- The error page under /pages/error folder -->
-          <prop key="java.lang.Exception">error/error</prop> 
-        </props>
-      </property>
+   SimpleMappingExceptionResolver comes to the rescue when an exception is
+   thrown from a controller. Use the following <bean> definition to configure Sim-
+   pleMappingExceptionResolver to gracefully handle any java.lang.Exceptions
+   thrown from Spring MVC controllers:
+    -->
+    <bean id="exceptionResolver" class="org.grouter.presentation.util.ApplicationMappingExceptionResolver">
+        <property name="order" value="1"/>
+        <!--property name="mappedHandlers">
+           <set>
+               <ref bean="/message/list.do"/>
+               <ref bean="/message/search.do"/>
+           </set>
+       </property -->
+        <property name="exceptionMappings">
+            <props>
+                <!-- The error page under /pages/error folder -->
+                <prop key="java.lang.Exception">error/error</prop>
+                <prop key="Exception">error/error</prop>
+            </props>
+        </property>
     </bean>
 
-    
+
     <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController"/>
     <bean name="/message/search.do" class="org.grouter.presentation.controller.message.MessageSearchController"/>
     <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController"/>
@@ -93,7 +100,6 @@
             </props>
         </property>
     </bean>
-
 
 
     <!-- Reverse Ajax -->
