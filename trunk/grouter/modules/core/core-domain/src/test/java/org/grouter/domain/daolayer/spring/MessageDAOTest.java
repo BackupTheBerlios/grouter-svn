@@ -2,11 +2,8 @@ package org.grouter.domain.daolayer.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.NodeDAO;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Receiver;
-import org.grouter.domain.entities.Sender;
 import org.hibernate.LazyInitializationException;
 
 import java.util.Map;
@@ -18,7 +15,6 @@ import java.util.Map;
  */
 public class MessageDAOTest extends AbstractDAOTests
 {
-
     private static Log log = LogFactory.getLog(MessageDAOTest.class);
 
 

@@ -58,6 +58,14 @@
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
                 <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider
                 </prop>
+
+
+                <!-- Hibernate cache 
+                enable statistics, and force Hibernate to keep the cache entries in a more human-understandable format
+                -->
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.cache.use_structured_entries">true</prop>
+
                 <!-- Where to store the index files is externalized -->
                 <prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>
                 <prop key="hibernate.search.default.refresh">600</prop>
@@ -65,6 +73,7 @@
                 <prop key="hibernate.search.autoregister_listeners">true</prop>
                 <prop key="hibernate.search.worker.batch_size">1</prop>
             </props>
+
         </property>
     </bean>
 </beans>
