@@ -20,8 +20,8 @@
 package org.grouter.domain.servicelayer.spring;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.Message;
+import org.grouter.domain.servicelayer.RouterService;
 
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
@@ -30,7 +30,7 @@ import javax.jms.ObjectMessage;
 /**
  * @author Georges Polyzois
  */
-public class RouterQueueListenerImpl  implements MessageListener // no need since we are using an adapter implements MessageListener
+public class RouterQueueListenerImpl implements MessageListener // no need since we are using an adapter implements MessageListener
 {
     private static Logger logger = Logger.getLogger(RouterQueueListenerImpl.class);
     RouterService service;
@@ -48,7 +48,7 @@ public class RouterQueueListenerImpl  implements MessageListener // no need sinc
             logger.debug("Got message : " + objectMessage.getObject());
             if (objectMessage.getObject() instanceof org.grouter.domain.entities.Message)
             {
-                process( (Message) objectMessage);
+                process((Message) objectMessage);
 
             } else
             {
@@ -64,12 +64,11 @@ public class RouterQueueListenerImpl  implements MessageListener // no need sinc
 
     /**
      * Call session ejb for processing of event.
-     *
      */
     public void process(Message message)
     {
         //org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
-        logger.debug("##### Got a message and persisting it : " + message.getId() );
+        logger.debug("##### Got a message and persisting it : " + message.getId());
         service.saveMessage(message);
     }
 

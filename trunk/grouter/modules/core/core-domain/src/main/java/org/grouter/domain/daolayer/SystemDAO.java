@@ -24,7 +24,7 @@ package org.grouter.domain.daolayer;
  *
  * @author Georges Polyzois
  */
-public interface SystemDAO 
+public interface SystemDAO
 {
     void initSearchIndex();
 

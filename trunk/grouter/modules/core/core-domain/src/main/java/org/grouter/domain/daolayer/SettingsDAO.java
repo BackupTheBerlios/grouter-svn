@@ -19,10 +19,7 @@
 
 package org.grouter.domain.daolayer;
 
-import org.grouter.domain.entities.Router;
 import org.grouter.domain.entities.Settings;
-
-import java.util.List;
 
 /**
  * @author Georges Polyzois

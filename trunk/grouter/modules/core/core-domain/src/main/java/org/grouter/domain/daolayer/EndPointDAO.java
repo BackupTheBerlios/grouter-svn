@@ -19,11 +19,7 @@
 
 package org.grouter.domain.daolayer;
 
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPoint;
-
-import java.util.List;
 
 /**
  * Business DAO operations related to the <tt>EndPoint</tt> entity.
@@ -33,5 +29,5 @@ import java.util.List;
  */
 public interface EndPointDAO extends GenericDAO<EndPoint, String>
 {
-    
+
 }

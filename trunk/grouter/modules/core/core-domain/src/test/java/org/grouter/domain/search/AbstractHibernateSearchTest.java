@@ -19,10 +19,10 @@
 package org.grouter.domain.search;
 
 import org.apache.commons.io.FileUtils;
+import org.grouter.common.hibernatesearch.FullIndexHandler;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.NodeDAO;
 import org.grouter.domain.entities.Message;
-import org.grouter.common.hibernatesearch.FullIndexHandler;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -81,6 +81,7 @@ public abstract class AbstractHibernateSearchTest extends AbstractTransactionalD
 
     /**
      * Location of test data realtive to the resources location.
+     *
      * @return relative path to test data location
      */
     protected String getTestDataLocation()
@@ -117,7 +118,7 @@ public abstract class AbstractHibernateSearchTest extends AbstractTransactionalD
 
 
         FullIndexHandler fullIndexHandler = new FullIndexHandler();
-        fullIndexHandler.doFullIndex( 1000, Message.class, getSession() );
+        fullIndexHandler.doFullIndex(1000, Message.class, getSession());
 
     }
 

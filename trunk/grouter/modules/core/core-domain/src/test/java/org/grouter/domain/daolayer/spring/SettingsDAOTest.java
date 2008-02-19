@@ -1,15 +1,14 @@
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.daolayer.NodeDAO;
-import org.grouter.domain.daolayer.SettingsDAO;
-import org.grouter.domain.entities.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.grouter.domain.daolayer.SettingsDAO;
+import org.grouter.domain.entities.Settings;
 import org.hibernate.LazyInitializationException;
 
-import java.util.Map;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * DAO tests for mappings, cascade saves etc.
@@ -32,7 +31,6 @@ public class SettingsDAOTest extends AbstractDAOTests
         Settings settings = settingsDAO.findById(SETTINGS_ID);
         assertNotNull(settings.toString());
         assertEquals(SETTINGS_ID, settings.getId());
-
 
         //Map map = settings.getSettingsContext();
         //assertEquals( "localhost", map.get( "ftpHost" ) );
@@ -57,17 +55,17 @@ public class SettingsDAOTest extends AbstractDAOTests
         Settings settings = new Settings();
         settings.setId("anid");
 
-        Map<String,String> context = new HashMap<String,String>();
-        context.put("key","value");
-        context.put( "key2", "value2" );
-        context.put( "key2", "value2" );   // since we are using a map this does not matter
+        Map<String, String> context = new HashMap<String, String>();
+        context.put("key", "value");
+        context.put("key2", "value2");
+        context.put("key2", "value2");   // since we are using a map this does not matter
 
-        settings.setSettingsContext( context );
+        settings.setSettingsContext(context);
 
         settingsDAO.save(settings);
         flushSession();
 
-        assertNotNull( settings.getId() );
+        assertNotNull(settings.getId());
 
         String id = settings.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM settings WHERE id = ?", new Object[]{id});
@@ -75,7 +73,7 @@ public class SettingsDAOTest extends AbstractDAOTests
 
         List list = jdbcTemplate.queryForList("SELECT * FROM settings_context WHERE settings_fk = ?", new Object[]{id});
         //assertEquals("anid", map.get("settings_fk"));
-        assertTrue( list.size() == 2  );
+        assertTrue(list.size() == 2);
 
     }
 
@@ -85,7 +83,7 @@ public class SettingsDAOTest extends AbstractDAOTests
     {
         Settings settings = settingsDAO.findById(SETTINGS_ID);
 
-        assertNotNull( settings );
+        assertNotNull(settings);
 
         // end transaction to simulate a remote request where the session was closed
         endTransaction();

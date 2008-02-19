@@ -23,9 +23,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Set;
-import java.util.HashSet;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "receiver")
@@ -50,14 +50,14 @@ public class Receiver implements Serializable
      * The "mappedBy" makes Hibernate ignore changes made to this class - Receiver -
      * and that the other end of the association is the master. Corresponda to inverse=true
      * in Hibernate and has to message the inverse property of the target entity.
-     * 
+     *
      * @return
      */
-    @ManyToMany( mappedBy = "receivers" )
+    @ManyToMany(mappedBy = "receivers")
     @JoinTable(
-        name = "receiver_message",
-        joinColumns = {@JoinColumn(name = "receiver_fk")},
-        inverseJoinColumns = {@JoinColumn(name = "message_fk")}
+            name = "receiver_message",
+            joinColumns = {@JoinColumn(name = "receiver_fk")},
+            inverseJoinColumns = {@JoinColumn(name = "message_fk")}
     )
     public Set<Message> getMessages()
     {
@@ -75,7 +75,7 @@ public class Receiver implements Serializable
         return address;
     }
 
-    @Column(name = "name" )
+    @Column(name = "name")
     public String getName()
     {
         return name;

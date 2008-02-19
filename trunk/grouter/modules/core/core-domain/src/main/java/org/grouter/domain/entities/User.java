@@ -41,8 +41,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "user")
-@Indexed( index="indexes/job" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
-public class User extends BaseEntity 
+@Indexed(index = "indexes/job")
+// Entity will be indexed for querying using Hibernate SystemServiceImpl
+public class User extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -71,8 +72,8 @@ public class User extends BaseEntity
     @NotNull
     private String password;
 
-    @Column(name = "createdby")
-    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "createdby")
     private User createdBy;
 
     @Column(name = "createdon")
@@ -108,7 +109,7 @@ public class User extends BaseEntity
      * on the item in the Set
      *
      */
-    @OneToMany ( mappedBy = "user" )
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> roles = new HashSet<UserRole>();
 
 

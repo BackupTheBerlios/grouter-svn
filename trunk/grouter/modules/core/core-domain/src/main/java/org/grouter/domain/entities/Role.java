@@ -41,10 +41,10 @@ public class Role extends BaseEntity
     @NotNull
     private Long id;
 
-    @Column( name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column( name = "displayname")
+    @Column(name = "displayname")
     private String displayName;
 
     // static initialized types
@@ -82,7 +82,6 @@ public class Role extends BaseEntity
     {
         this.id = id;
     }
-
 
 
     public static Role valueOf(Long id)
@@ -123,7 +122,6 @@ public class Role extends BaseEntity
     {
         return ToStringBuilder.reflectionToString(this);
     }
-
 
     /**
      * Sorting inmemory using Collections.sort will do sort by id.

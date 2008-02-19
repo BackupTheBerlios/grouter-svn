@@ -51,7 +51,7 @@ public class Settings extends BaseEntity
     {
     }
 
-    public Settings(final String id, final Map<String,String> settingsContext)
+    public Settings(final String id, final Map<String, String> settingsContext)
     {
         this.id = id;
         this.settingsContext = settingsContext;

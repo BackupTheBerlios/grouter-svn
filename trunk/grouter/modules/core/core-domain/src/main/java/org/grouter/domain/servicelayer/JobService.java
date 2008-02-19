@@ -34,7 +34,8 @@ import java.util.List;
  */
 @Remote
 @Local
-public interface JobService {
+public interface JobService
+{
     /**
      * Retrieve a list with all grouters available.
      *

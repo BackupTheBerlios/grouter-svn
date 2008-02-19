@@ -1,14 +1,15 @@
 package org.grouter.domain.daolayer.spring;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.daolayer.UserDAO;
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Sender;
 import org.grouter.domain.entities.Receiver;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.grouter.domain.entities.Sender;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Initialization of test data for the domain model. Data are created as domain objects.

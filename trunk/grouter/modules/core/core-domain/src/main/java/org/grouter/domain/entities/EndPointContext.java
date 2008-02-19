@@ -56,7 +56,7 @@ public class EndPointContext  //extends BaseEntity
         this.endPoint = endPoint;
     }
 
-    public EndPointContext(final String keyName,final String value,final EndPoint endPoint)
+    public EndPointContext(final String keyName, final String value, final EndPoint endPoint)
     {
         this.keyName = keyName;
         this.value = value;
@@ -66,7 +66,6 @@ public class EndPointContext  //extends BaseEntity
     public EndPointContext()
     {
     }
-
 
 
     public Long getId()
@@ -90,7 +89,7 @@ public class EndPointContext  //extends BaseEntity
         this.keyName = keyName;
     }
 
-    public String getValue()                                               
+    public String getValue()
     {
         return value;
     }

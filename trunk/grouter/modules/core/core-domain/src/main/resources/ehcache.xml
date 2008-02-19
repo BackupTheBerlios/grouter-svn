@@ -55,22 +55,34 @@
 
         -->
 
-    <!-- Sample cache named sampleCache1
-        This cache contains a maximum in memory of 10000 elements, and will expire
-        an element if it is idle for more than 5 minutes and lives for more than
-        10 minutes.
 
-        If there are more than 10000 elements it will overflow to the
-        disk cache, which in this configuration will go to wherever java.io.tmp is
-        defined on your system. On a standard Linux system this will be /tmp"
-        -->
-    <cache name="data"
-           maxElementsInMemory="10000"
+    <!-- Sample cache named "cache region" org.grouter.domain.entities.Message
+    This cache contains a maximum in memory of 1000 elements, and will expire
+    an element if it is idle for more than 300 s and lives for more than
+    600 s.
+
+    If there are more than 1000 elements it will overflow to the
+    disk cache, which in this configuration will go to wherever java.io.tmp is
+    defined on your system. On a standard Linux system this will be /tmp"
+    -->
+    <cache name="org.grouter.domain.entities.Message"
+           maxElementsInMemory="1000"
            eternal="false"
-           timeToIdleSeconds="300"
            timeToLiveSeconds="600"
-           overflowToDisk="true"
-            />
+           overflowToDisk="false"/>
 
 
+    <cache
+            name="org.hibernate.cache.StandardQueryCache"
+            maxElementsInMemory="500"
+            eternal="false"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"/>
+
+
+    <cache
+            name="org.hibernate.cache.UpdateTimestampsCache"
+            maxElementsInMemory="5000"
+            eternal="true"
+            overflowToDisk="true"/>
 </ehcache>

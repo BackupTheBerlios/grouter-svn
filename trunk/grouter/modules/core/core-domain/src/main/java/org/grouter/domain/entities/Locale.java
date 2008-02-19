@@ -54,11 +54,7 @@ public class Locale extends BaseEntity
 
     public static Map<Long, Locale> values = new HashMap<Long, Locale>();
 
-    public Locale(
-            final Long id,
-            final String language,
-            final String country,
-            final Long sortOrder
+    public Locale(final Long id, final String language, final String country, final Long sortOrder
     )
     {
         this.id = id;

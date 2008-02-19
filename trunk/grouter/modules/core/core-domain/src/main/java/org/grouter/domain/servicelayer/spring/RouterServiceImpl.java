@@ -135,8 +135,9 @@ public class RouterServiceImpl implements RouterService
         return messageDAO.findMessagesForNode(nodeId);
     }
 
-    public List<Message> searchMessages(String searchText) {
-        return messageDAO.findFromIndex( searchText, "content", "id"  );
+    public List<Message> searchMessages(String searchText)
+    {
+        return messageDAO.findFromIndex(searchText, "content", "id");
     }
 
 
@@ -165,8 +166,8 @@ public class RouterServiceImpl implements RouterService
 
     public List<Node> searchNodes(String searchText)
     {
-        return nodeDAO.findFromIndex( searchText, "displayName", "id", "statusMessage", "source","receiver",
-                "modifiedOn", "createdOn"  );
+        return nodeDAO.findFromIndex(searchText, "displayName", "id", "statusMessage", "source", "receiver",
+                "modifiedOn", "createdOn");
     }
 
     public Map<Long, EndPointType> findAllEndPointTypes()
@@ -194,19 +195,18 @@ public class RouterServiceImpl implements RouterService
         List<Node> changeStatenodes = new ArrayList<Node>();
         for (Node aPotentialOrphan : allNodesIncludingOrphans)
         {
-            if( !allConfiguredNodes.contains( aPotentialOrphan ) )
+            if (!allConfiguredNodes.contains(aPotentialOrphan))
             {
-                changeStatenodes.add( aPotentialOrphan );
+                changeStatenodes.add(aPotentialOrphan);
             }
         }
         for (Node node : changeStatenodes)
         {
             // changing the node state
-            node.setNodeStatus( NodeStatus.NOT_CONFIGURED_TO_START );
-            nodeDAO.save( node );
+            node.setNodeStatus(NodeStatus.NOT_CONFIGURED_TO_START);
+            nodeDAO.save(node);
         }
     }
-
 
 
 }

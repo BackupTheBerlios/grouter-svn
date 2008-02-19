@@ -21,8 +21,6 @@ package org.grouter.domain.daolayer;
 
 import org.grouter.domain.entities.User;
 
-import java.util.List;
-
 
 /**
  * Interface for {@link User} DAO operations.

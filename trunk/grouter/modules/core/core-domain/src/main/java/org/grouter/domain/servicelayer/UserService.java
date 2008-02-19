@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Main interface for operations with the grouter internal domain.
- * 
+ * <p/>
  * There are a spring based implementation and
  *
  * @author Georges Polyzois
@@ -49,8 +49,7 @@ public interface UserService
      *
      * @return
      */
-    List<User> findAll( String hql );
-
+    List<User> findAll(String hql);
 
 
     /**
@@ -63,9 +62,10 @@ public interface UserService
 
     /**
      * Deletes a user.
+     *
      * @param id the id of the user to delete
      */
-    void delete( Long id );
+    void delete(Long id);
 
     /**
      * Get user with id.

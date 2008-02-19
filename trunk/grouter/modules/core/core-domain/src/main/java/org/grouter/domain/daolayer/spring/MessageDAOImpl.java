@@ -22,6 +22,7 @@ package org.grouter.domain.daolayer.spring;
 import org.grouter.domain.daolayer.MessageDAO;
 import org.grouter.domain.entities.Message;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
@@ -53,10 +54,10 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
 
     public List<Message> findMessagesForNode(String nodeId)
     {
-       /* String hsql = "from Message obj where obj.node.id = :nodeid";
-        Session session = getSession();
-        Query qr = session.createQuery(hsql);
-        return (List<Message>) qr.setParameter("nodeid", nodeId).list();*/
+        /* String hsql = "from Message obj where obj.node.id = :nodeid";
+     Session session = getSession();
+     Query qr = session.createQuery(hsql);
+     return (List<Message>) qr.setParameter("nodeid", nodeId).list();*/
 
 
         Criteria criteria = getSession().createCriteria(Message.class);
@@ -65,25 +66,35 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
 
     }
 
-    /*
-    public List<Message> findMessagesFromIndex(final String queryForMe)
+
+    public List<Message> findAllMessages()
     {
+        String hsql = "from Message as m";
+        Session session = getSession();
+        Query qr = session.createQuery(hsql);
+        qr.setCacheable(true);
+        return (List<Message>) qr.list();
+    }
 
-        FullTextSession fullTextSession = SystemServiceImpl.createFullTextSession(getSession());
+    /*
+   public List<Message> findMessagesFromIndex(final String queryForMe)
+   {
 
-        MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"content"}, new StandardAnalyzer());
-        Query query = null;
-        try
-        {
-            query = parser.parse( queryForMe );
-            org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Message.class );
-            return hibQuery.list();
-        } catch (ParseException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return null;
+       FullTextSession fullTextSession = SystemServiceImpl.createFullTextSession(getSession());
+
+       MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"content"}, new StandardAnalyzer());
+       Query query = null;
+       try
+       {
+           query = parser.parse( queryForMe );
+           org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Message.class );
+           return hibQuery.list();
+       } catch (ParseException e)
+       {
+           e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+       }
+       return null;
 
 
-    } */
+   } */
 }

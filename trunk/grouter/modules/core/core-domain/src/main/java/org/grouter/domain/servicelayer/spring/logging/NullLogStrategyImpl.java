@@ -19,15 +19,14 @@
 
 package org.grouter.domain.servicelayer.spring.logging;
 
+import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
-import org.apache.log4j.Logger;
-
 
 
 /**
  * This class performs no logging.
- * 
+ *
  * @author Georges Polyzois
  */
 public class NullLogStrategyImpl implements LogStrategy
@@ -41,7 +40,7 @@ public class NullLogStrategyImpl implements LogStrategy
     }
 
 
-    public void log(Node node )
+    public void log(Node node)
     {
         // intentionally blank method
         logger.debug("No logging");

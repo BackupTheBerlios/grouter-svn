@@ -34,8 +34,7 @@ import javax.ejb.Remote;
 public interface RouterRemoteService extends RouterService
 {
     //Deployed in ear with name daomin -> prepend ear name to jndi name
-     public static final String DOMAIN_GROUTER_BEAN_REMOTE = "domain/GRouterBeanService/remote";
-
+    public static final String DOMAIN_GROUTER_BEAN_REMOTE = "domain/GRouterBeanService/remote";
 
     /**
      * Persist into domain and broadcast to clients on a topic to inform of new event.

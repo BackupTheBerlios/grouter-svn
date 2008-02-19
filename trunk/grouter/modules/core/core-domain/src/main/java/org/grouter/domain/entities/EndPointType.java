@@ -1,5 +1,7 @@
 package org.grouter.domain.entities;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
@@ -12,6 +14,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "endpoint_type")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class EndPointType //extends BaseEntity
 {
     @Id

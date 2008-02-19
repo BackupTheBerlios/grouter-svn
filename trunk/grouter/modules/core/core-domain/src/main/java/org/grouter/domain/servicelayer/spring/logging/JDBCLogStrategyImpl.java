@@ -19,12 +19,9 @@
 
 package org.grouter.domain.servicelayer.spring.logging;
 
-import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.SettingsContext;
-
-import java.util.Map;
+import org.grouter.domain.servicelayer.RouterService;
 
 /**
  * @author Georges Polyzois
@@ -32,7 +29,6 @@ import java.util.Map;
 public class JDBCLogStrategyImpl implements LogStrategy
 {
     RouterService routerService;
-    
 
 
     public void setRouterService(RouterService routerService)
@@ -40,16 +36,16 @@ public class JDBCLogStrategyImpl implements LogStrategy
         this.routerService = routerService;
     }
 
-    public void log( Message message )
+    public void log(Message message)
     {
-        routerService.saveMessage( message );
+        routerService.saveMessage(message);
 
     }
 
 
     public void log(Node node)
     {
-        routerService.saveNode( node );
+        routerService.saveNode(node);
     }
 
 }

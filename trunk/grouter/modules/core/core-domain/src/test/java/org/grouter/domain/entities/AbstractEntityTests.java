@@ -10,20 +10,19 @@ abstract class AbstractEntityTests extends TestCase
 {
 
     /**
-     *
      * @param invalidValues
      * @return
      */
-    protected boolean isEmpty( InvalidValue[]  invalidValues )
+    protected boolean isEmpty(InvalidValue[] invalidValues)
     {
         for (InvalidValue invalidValue : invalidValues)
         {
-            if ( !invalidValue.getMessage().equalsIgnoreCase("") )
+            if (!invalidValue.getMessage().equalsIgnoreCase(""))
             {
                 return false;
             }
         }
         return true;
     }
-    
+
 }

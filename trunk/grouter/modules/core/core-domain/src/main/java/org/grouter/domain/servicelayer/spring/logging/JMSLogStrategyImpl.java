@@ -19,19 +19,22 @@
 
 package org.grouter.domain.servicelayer.spring.logging;
 
+import org.apache.log4j.Logger;
+import org.grouter.common.jms.AbstractSenderDestination;
+import org.grouter.common.jms.AcknowledgeMode;
+import org.grouter.common.jms.NeverRebind;
+import org.grouter.common.jms.QueueSenderDestination;
+import org.grouter.domain.RouterCache;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.SettingsContext;
 import org.grouter.domain.servicelayer.RouterService;
-import org.grouter.domain.RouterCache;
-import org.grouter.common.jms.*;
-import org.apache.log4j.Logger;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.naming.Context;
-import java.util.Map;
 import java.util.Hashtable;
+import java.util.Map;
 
 
 /**
@@ -43,7 +46,7 @@ public class JMSLogStrategyImpl implements LogStrategy
     RouterService routerService;
 
 
-//    private final static String LOG_Q_NAME = "grouter/logq";
+    //    private final static String LOG_Q_NAME = "grouter/logq";
     private AbstractSenderDestination queueDestination;
     private static InitialContext initialContext;
 
@@ -62,8 +65,8 @@ public class JMSLogStrategyImpl implements LogStrategy
         {
             // The routercache is initialized when the router starts up
             Map<String, String> settingsContext = RouterCache.getSettingsContextCache().getSettings().getSettingsContext();
-            queueDestination = new QueueSenderDestination(  settingsContext.get(SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE)
-                    ,  settingsContext.get(SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), null,
+            queueDestination = new QueueSenderDestination(settingsContext.get(SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE)
+                    , settingsContext.get(SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), null,
                     getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
             queueDestination.bind();
             queueDestination.sendMessage("A message");
@@ -75,7 +78,7 @@ public class JMSLogStrategyImpl implements LogStrategy
     }
 
 
-    public void log(Node node )
+    public void log(Node node)
     {
         try
         {
@@ -94,7 +97,6 @@ public class JMSLogStrategyImpl implements LogStrategy
             logger.error("Failed to send a log message on JMS to log queue", e);
         }
     }
-
 
 
     /**

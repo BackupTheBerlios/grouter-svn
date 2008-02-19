@@ -13,7 +13,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jobgroup")
-public class JobGroup {
+public class JobGroup
+{
 
     @Id
     @Column(name = "id")
@@ -27,21 +28,25 @@ public class JobGroup {
     @OrderBy("jobOrderNumber")
     private List<Job> jobs = new ArrayList<Job>();
 
-                  
-    public Long getId() {
+
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
 
-    public List<Job> getJobs() {
+    public List<Job> getJobs()
+    {
         return jobs;
     }
 
-    public void setJobs(List<Job> jobs) {
+    public void setJobs(List<Job> jobs)
+    {
         this.jobs = jobs;
     }
 }

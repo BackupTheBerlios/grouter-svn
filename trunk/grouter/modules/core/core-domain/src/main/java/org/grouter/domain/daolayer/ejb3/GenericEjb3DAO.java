@@ -58,7 +58,7 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     private static Logger logger = Logger.getLogger(GenericEjb3DAO.class);
     private Class persistentClass;
 
-    @PersistenceContext( unitName = PersistenceContextName.PERSISTENCE)
+    @PersistenceContext(unitName = PersistenceContextName.PERSISTENCE)
     EntityManager em;
 
     static InitialContext initialContext;
@@ -123,6 +123,12 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         return entity;
     }
 
+
+    public Object load(final ID id)
+    {
+        org.hibernate.Session session = ((HibernateEntityManager) getEntityManager()).getSession();
+        return session.load(getPersistentClass(), id);
+    }
 
     /**
      * {@inheritDoc}
@@ -224,8 +230,6 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
     }
 
 
-    
-
     public void purge(final T entity, final ID id)
     {
         throw new UnsupportedOperationException("Not implemented yet");
@@ -234,7 +238,6 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
         fullTextSession.purge( entity, id );
         tx.commit();*/
     }
-
 
 
     public void optimizeIndex(final T entity)
@@ -269,13 +272,13 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
 
         EntityManager em = getEntityManager();
         FullTextEntityManager fullTextEntityManager =
-        org.hibernate.search.jpa.Search.createFullTextEntityManager(em);
-        MultiFieldQueryParser parser = new MultiFieldQueryParser( queryColumns , new StandardAnalyzer());
+                org.hibernate.search.jpa.Search.createFullTextEntityManager(em);
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(queryColumns, new StandardAnalyzer());
         Query query = null;
         try
         {
-            query = parser.parse( queryString );
-            org.hibernate.Query hibQuery = (org.hibernate.Query) fullTextEntityManager.createFullTextQuery( query, getPersistentClass() );
+            query = parser.parse(queryString);
+            org.hibernate.Query hibQuery = (org.hibernate.Query) fullTextEntityManager.createFullTextQuery(query, getPersistentClass());
             list = hibQuery.list();
 
 
@@ -286,7 +289,6 @@ public abstract class GenericEjb3DAO<T, ID extends Serializable> implements Gene
 
         return list;
     }
-
 
 
 }

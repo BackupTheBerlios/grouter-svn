@@ -19,12 +19,7 @@
 
 package org.grouter.domain.daolayer;
 
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.EndPointType;
-
-import java.util.List;
 
 /**
  * Business DAO operations related to the <tt>EndPoint</tt> entity.

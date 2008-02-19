@@ -27,6 +27,6 @@ package org.grouter.domain.servicelayer;
  */
 public interface StatisticsService
 {
-    
+
 
 }

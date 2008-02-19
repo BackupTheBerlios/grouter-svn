@@ -20,13 +20,9 @@
 package org.grouter.domain.daolayer.spring;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.daolayer.UserDAO;
 import org.grouter.domain.daolayer.RoleDAO;
-import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.Role;
 import org.hibernate.Session;
-
-import java.util.List;
 
 /**
  * Hibernate-specific implementation of the {@link org.grouter.domain.daolayer.RoleDAO} interface.
@@ -56,6 +52,5 @@ public class RoleDAOImpl extends GenericHibernateDAO<Role, Long> implements Role
         session = s;
     }
 
-    
 
 }

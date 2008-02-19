@@ -19,35 +19,40 @@ public class HibernateSearchIndexContextListener implements ApplicationContextAw
 {
     SystemService systemService;
     private ApplicationContext applicationContext;
-    
+
     private static Logger logger = Logger.getLogger(HibernateSearchIndexContextListener.class);
 
 
     // override hook method
-    public void initApplicationContext() throws BeansException {
+    public void initApplicationContext() throws BeansException
+    {
         initialize();
     }
 
-    public void initialize() {
+    public void initialize()
+    {
         logger.info("##################Initializing the search index");
         systemService.initIndex();
     }
 
 
-    protected Session getSession() {
-        SessionFactory  sessionFactory =  ((SessionFactory) applicationContext.getBean("sessionFactory"));
-        
+    protected Session getSession()
+    {
+        SessionFactory sessionFactory = ((SessionFactory) applicationContext.getBean("sessionFactory"));
+
         return sessionFactory.getCurrentSession();
         //return ((SessionFactory) getApplicationContext().getBean("sessionFactory")).getCurrentSession();
     }
 
 
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
+    {
 
-        this.applicationContext =  applicationContext;
+        this.applicationContext = applicationContext;
     }
 
-    public void setSystemService(SystemService systemService) {
+    public void setSystemService(SystemService systemService)
+    {
         this.systemService = systemService;
     }
 }

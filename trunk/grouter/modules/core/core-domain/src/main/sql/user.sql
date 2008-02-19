@@ -9,7 +9,7 @@ CREATE TABLE user (
   modifiedon datetime,
   expireson datetime,
   remaininglogonattempts int,
-  user_state_fk bigint(20),
+  user_state_fk bigint(20) not null,
   locale_fk bigint(20),
   createdby bigint(20) default NULL,
   PRIMARY KEY  (id),
@@ -20,7 +20,6 @@ CREATE TABLE user (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-
-insert into user (id, username, password) values (1, 'admin', 'nimda');
-insert into user (id, username, password) values (2, 'view', 'view');
+insert into user (id, username, password, user_state) values (1, 'admin', 'nimda', 3);
+insert into user (id, username, password, user_state) values (2, 'view', 'view', 3);
 

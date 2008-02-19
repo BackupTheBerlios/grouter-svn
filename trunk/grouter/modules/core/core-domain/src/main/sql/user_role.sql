@@ -10,11 +10,11 @@ CREATE TABLE user_role (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- admin
+-- Add all admin users
 insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 1);
 
--- super reviewers
+-- Add all super reviewers
 insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 3);
 
--- reviewers
+-- Add all reviewers
 insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 2);

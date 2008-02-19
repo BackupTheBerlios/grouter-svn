@@ -1,14 +1,19 @@
 package org.grouter.domain.daolayer.spring;
 
-import org.hibernate.*;
-import org.hibernate.context.ThreadLocalSessionContext;
-import org.hibernate.cfg.Configuration;
-import org.apache.commons.logging.*;
-import org.grouter.domain.daolayer.DAOFactory;
-import org.grouter.common.logging.Log4JInit;
-import org.grouter.common.hibernate.HibernateUtilContextAware;
-import org.grouter.domain.entities.*;
 import junit.framework.TestCase;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.grouter.common.hibernate.HibernateUtilContextAware;
+import org.grouter.common.logging.Log4JInit;
+import org.grouter.domain.daolayer.DAOFactory;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Receiver;
+import org.grouter.domain.entities.Sender;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.context.ThreadLocalSessionContext;
 
 /**
  * Unit test configuration is coded in here.

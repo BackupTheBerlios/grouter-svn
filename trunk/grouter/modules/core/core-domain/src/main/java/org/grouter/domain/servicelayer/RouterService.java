@@ -63,6 +63,7 @@ public interface RouterService
 
     /**
      * Finder.
+     *
      * @param id of a Message enitty
      * @return
      */
@@ -75,7 +76,6 @@ public interface RouterService
      * @return a list of {@link Message}s
      */
     List<Message> findAllMessages(String nodeId);
-
 
 
     /**
@@ -116,12 +116,11 @@ public interface RouterService
 
     /**
      * Retrieve number of messages for every node on this router instance - using select count(*).
-     * 
+     *
      * @param routerId id of the node we want to query
      * @return list {@link Node}s with number of messages set
      */
-    List<Node> findNodesWithNumberOfMessages( String routerId );
-
+    List<Node> findNodesWithNumberOfMessages(String routerId);
 
 
     /**
@@ -138,13 +137,12 @@ public interface RouterService
      * of the grouter be the same types. We can not support e.g. a corba endpointtype without some
      * modifications and new release of the grouter.
      *
-     *
      * @return map with endpointtypes, key is id and value is the EndPointType insance
      */
-    Map<Long,EndPointType> findAllEndPointTypes();
+    Map<Long, EndPointType> findAllEndPointTypes();
 
 
-    Node findNodeById( String nodeId);
+    Node findNodeById(String nodeId);
 
 
     /**
@@ -154,7 +152,7 @@ public interface RouterService
      *
      * @param routerId
      */
-    void updateStateForNotConfiguredNodes( final String routerId, final Set<Node> configuredNodes  );
+    void updateStateForNotConfiguredNodes(final String routerId, final Set<Node> configuredNodes);
 
     //Settings findSettings(  );
 

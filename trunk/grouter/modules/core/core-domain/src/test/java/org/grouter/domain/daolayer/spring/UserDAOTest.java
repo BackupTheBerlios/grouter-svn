@@ -48,7 +48,7 @@ public class UserDAOTest extends AbstractDAOTests
         user.setLastName("A last name");
         user.setPassword("password");
         user.setUserName("username");
-        user.setCreatedBy( admin  );
+        user.setCreatedBy(admin);
         userDAO.save(user);
         flushSession();
         Long id = user.getId();
@@ -85,14 +85,14 @@ public class UserDAOTest extends AbstractDAOTests
     @Override
     public void testDelete()
     {
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) from user WHERE id =" + USER_ID ));
-        assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + USER_ID ));
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) from user WHERE id =" + USER_ID));
+        assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + USER_ID));
         assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
-        userDAO.delete( USER_ID );
+        userDAO.delete(USER_ID);
         flushSession();
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id =" + USER_ID ));
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + USER_ID ));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id =" + USER_ID));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + USER_ID));
         assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
     }
@@ -100,27 +100,27 @@ public class UserDAOTest extends AbstractDAOTests
     public void testSetUserStateToInactive()
     {
         User found = userDAO.findById(USER_ID);
-        assertNotNull( found );
+        assertNotNull(found);
         found.setUserState(UserState.BLOCKED);
 
         flushSession();
 
         User foundBlocked = userDAO.findById(USER_ID);
-        assertNotNull( foundBlocked );
-        assertEquals( UserState.BLOCKED , foundBlocked.getUserState()  );
+        assertNotNull(foundBlocked);
+        assertEquals(UserState.BLOCKED, foundBlocked.getUserState());
     }
 
 
     public void testFindAll()
     {
-        List<User> user = userDAO.findAll(  );
-        assertEquals(3, user.size() );
+        List<User> user = userDAO.findAll();
+        assertEquals(3, user.size());
     }
 
     public void testFindAll2()
     {
-        List<User> user = userDAO.findAll( UserDAO.FIND_ALL );
-        assertEquals(3, user.size() );
+        List<User> user = userDAO.findAll(UserDAO.FIND_ALL);
+        assertEquals(3, user.size());
     }
 
 }

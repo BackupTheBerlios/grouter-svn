@@ -19,9 +19,7 @@
 
 package org.grouter.domain.entities;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.Email;
-import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 
@@ -37,10 +35,10 @@ import javax.persistence.*;
 public class Address extends BaseEntity
 {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @NotNull
-    private String id;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@DocumentId
+    private Long id;
 
     @Transient
     private Country country;
@@ -68,12 +66,12 @@ public class Address extends BaseEntity
     {
     }
 
-    public String getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(Long id)
     {
         this.id = id;
     }

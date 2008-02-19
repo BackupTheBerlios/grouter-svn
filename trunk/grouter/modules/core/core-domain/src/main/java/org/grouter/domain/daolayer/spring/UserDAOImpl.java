@@ -22,8 +22,8 @@ package org.grouter.domain.daolayer.spring;
 import org.apache.log4j.Logger;
 import org.grouter.domain.daolayer.UserDAO;
 import org.grouter.domain.entities.User;
-import org.hibernate.Session;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -64,5 +64,4 @@ public class UserDAOImpl extends GenericHibernateDAO<User, Long> implements User
     }
 
 
-    
 }

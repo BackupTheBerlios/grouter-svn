@@ -19,6 +19,8 @@
 
 package org.grouter.domain.entities;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.NotNull;
@@ -35,7 +37,7 @@ import java.util.Set;
  * <p/>
  * The Collection type may contain duplicates while the Set type does not contain duplicates.
  * <p/>
- *
+ * <p/>
  * A Message can have one and only one Sender. We have two tables:
  * Tables:
  * MESSAGE
@@ -61,31 +63,36 @@ import java.util.Set;
  */
 
 
-@Indexed ( index="indexes/message" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
+@Indexed(index = "indexes/message")
+// Entity will be indexed for querying using Hibernate SystemServiceImpl
 @Entity
 @Table(name = "message")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "org.grouter.domain.entities.Message")
 public class Message extends BaseEntity implements Comparable
 {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @DocumentId // Hibernate search
+    @DocumentId
+    // Hibernate search
     private String id;
 
-    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE} , fetch = FetchType.EAGER )
-    @JoinTable( name = "receiver_message",
-                joinColumns = {@JoinColumn(name = "message_fk")},
-                inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
+    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "receiver_message",
+            joinColumns = {@JoinColumn(name = "message_fk")},
+            inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
     private Set<Receiver> receivers = new HashSet<Receiver>();
 
-    @ManyToOne(cascade = {CascadeType.PERSIST} , fetch = FetchType.EAGER )
-    @JoinColumn( name = "sender_fk", nullable = true)
+    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_fk", nullable = true)
     private Sender sender;
 
-    @NotNull   // Hibernate Validator
+    @NotNull
+    // Hibernate Validator
     @Column(name = "content", nullable = false)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private String content;
 
     @Column(name = "counter")
@@ -95,9 +102,9 @@ public class Message extends BaseEntity implements Comparable
     @Column(name = "creationtimestamp")
     private Timestamp creationTimestamp;
 
-    
+
     @NotNull
-    @ManyToOne( cascade = {CascadeType.ALL, CascadeType.MERGE} )
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "node_fk", nullable = false)
     private Node node;
 
@@ -120,7 +127,6 @@ public class Message extends BaseEntity implements Comparable
         this.content = amessage;
     }
 
-    
 
     public String getId()
     {
@@ -191,8 +197,6 @@ public class Message extends BaseEntity implements Comparable
     }
 
 
-
-
     public Timestamp getCreationTimestamp()
     {
         return creationTimestamp;
@@ -232,16 +236,16 @@ public class Message extends BaseEntity implements Comparable
 
     public int compareTo(final Object compareTo)
     {
-        if( compareTo == null )
+        if (compareTo == null)
         {
             return -1;
         }
 
-        if( !(compareTo instanceof Message) )
+        if (!(compareTo instanceof Message))
         {
-            throw new ClassCastException( "Wrong class type. Was " + compareTo.getClass() );
+            throw new ClassCastException("Wrong class type. Was " + compareTo.getClass());
         }
 
-        return 0;  
+        return 0;
     }
 }

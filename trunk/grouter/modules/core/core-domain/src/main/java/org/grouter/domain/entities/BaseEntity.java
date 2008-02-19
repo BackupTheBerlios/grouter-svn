@@ -39,7 +39,7 @@ public class BaseEntity<ID extends Serializable> implements Serializable
 
     private AuditInfo auditInfo;
 
-   // private ID id;
+    // private ID id;
 
     /**
      * A convenience method for outputting all attributes in the instances' state.
@@ -53,11 +53,13 @@ public class BaseEntity<ID extends Serializable> implements Serializable
         return ToStringBuilder.reflectionToString(this);
     }
 
-    public AuditInfo getAuditInfo() {
+    public AuditInfo getAuditInfo()
+    {
         return auditInfo;
     }
 
-    public void setAuditInfo(AuditInfo auditInfo) {
+    public void setAuditInfo(AuditInfo auditInfo)
+    {
         this.auditInfo = auditInfo;
     }
 
@@ -70,7 +72,6 @@ public class BaseEntity<ID extends Serializable> implements Serializable
     {
         this.id = id;
     }*/
-
 
 
 }

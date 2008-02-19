@@ -1,15 +1,16 @@
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.daolayer.RouterDAO;
-import org.grouter.domain.entities.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.grouter.domain.daolayer.RouterDAO;
+import org.grouter.domain.entities.Node;
+import org.grouter.domain.entities.Router;
 import org.hibernate.LazyInitializationException;
 
-import java.util.Map;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * DAO tests for mappings, cascade saves etc.
@@ -30,17 +31,17 @@ public class RouterDAOTest extends AbstractDAOTests
     public void testSave()
     {
         Router router = new Router();
-        router.setId( "testid" );
+        router.setId("testid");
         router.setDisplayName("a name");
         router.setDescription("a descr");
         router.setHomePath("/file");
 
 
         Node node = new Node();
-        node.setId( "testnode" );
+        node.setId("testnode");
         node.setDisplayName("a node name");
         Set<Node> nodes = new HashSet<Node>();
-        nodes.add( node );
+        nodes.add(node);
 
         routerDAO.save(router);
         log.debug("Saved instance with id : " + router.getId());
@@ -58,8 +59,8 @@ public class RouterDAOTest extends AbstractDAOTests
 
     public void testLazyCollections()
     {
-        Router router =  routerDAO.findById(ROUTER_ID);
-        assertNotNull( router );
+        Router router = routerDAO.findById(ROUTER_ID);
+        assertNotNull(router);
         endTransaction();
         try
         {
@@ -74,26 +75,26 @@ public class RouterDAOTest extends AbstractDAOTests
 
     public void testFindById()
     {
-        Router router = routerDAO.findById( ROUTER_ID );
-        assertNotNull( router );
-        assertEquals( "ROUTER_TEST", router.getDisplayName() );
+        Router router = routerDAO.findById(ROUTER_ID);
+        assertNotNull(router);
+        assertEquals("ROUTER_TEST", router.getDisplayName());
     }
 
     public void testFindById2()
     {
         List<Router> routers = routerDAO.findAllDistinct();
-        assertNotNull( routers );
+        assertNotNull(routers);
     }
 
     public void testFindAndJoin()
     {
-        Router router = routerDAO.findById(ROUTER_ID, "nodes" );
+        Router router = routerDAO.findById(ROUTER_ID, "nodes");
         assertNotNull(router);
         endTransaction();
         try
         {
             router.getNodes().toString();
-            assertEquals( 2, router.getNodes().size() );
+            assertEquals(2, router.getNodes().size());
         }
         catch (LazyInitializationException lie)
         {
@@ -107,7 +108,7 @@ public class RouterDAOTest extends AbstractDAOTests
         // A delete should cascde into node and into a nodes enpoints... a very dangerous operation.
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
         assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
-        routerDAO.delete( ROUTER_ID );
+        routerDAO.delete(ROUTER_ID);
         flushSession();
         assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
         assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));

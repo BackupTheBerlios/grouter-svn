@@ -31,7 +31,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "job_event")
-public class JobEvent  extends BaseEntity
+public class JobEvent extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -52,11 +52,11 @@ public class JobEvent  extends BaseEntity
     @JoinColumn(name = "job_fk")
     Job job;
 
-    @Column( name = "processtime_ms" )
+    @Column(name = "processtime_ms")
     Long processTimeInMs;
 
 
-    @Column( name = "position")
+    @Column(name = "position")
     Long position;
 
 

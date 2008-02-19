@@ -19,8 +19,8 @@
 
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.daolayer.EndPointDAO;
+import org.grouter.domain.entities.EndPoint;
 import org.hibernate.Session;
 
 

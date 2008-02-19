@@ -29,5 +29,5 @@ import org.grouter.domain.entities.Job;
  */
 public interface JobDAO extends GenericDAO<Job, Long>
 {
-    
+
 }

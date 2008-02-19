@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * Test the DAO using an external DB which is populated with data before the actual test is run
  * {@link #getTestDataLocation()} and then restored to a state as per before the tests were ran.
- *  All plumbing for rolling back the state is taken care of by Springs
+ * All plumbing for rolling back the state is taken care of by Springs
  * {@link org.springframework.test.AbstractTransactionalDataSourceSpringContextTests}
- *
+ * <p/>
  * AbstractDAOTests referes to the sql to be run before any test are created and run.
- *
+ * <p/>
  * We have some abstract methods in this abstract class to indicate to subclasses what they
  * need to test.
- *
+ * <p/>
  * The only problem with these types of test are that as we go along and add more and more test
  * the tests start taking considerably long time to execute.
  *
@@ -29,14 +29,15 @@ import java.util.List;
 public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSpringContextTests
 {
     // inserted test data and ids of some of the data
-    final static String MESSAGE_ID = "msgid_1";
-    final static String NODE_ID = "nid_1";
+    final static String MESSAGE_ID = "-msgid_1";
+    final static String NODE_ID = "-nid_1";
     final static String NODE_ID_FTP = "nid_2";
     final static String ROUTER_ID = "rid_1";
     final static String ENDPOINT_ID = "1";
     final static String SETTINGS_ID = "jndi";
     final static Long JOB_ID = 1L;
     Long USER_ID = 10002L;
+    Long ADMIN_ID = 1L;
 
     SessionFactory sessionFactory;
     MessageDAO messageDAO;
@@ -73,6 +74,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
 
     /**
      * Location of test data realtive to the resources location.
+     *
      * @return relative path to test data location
      */
     protected String getTestDataLocation()

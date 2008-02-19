@@ -21,7 +21,6 @@ package org.grouter.domain.search;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.common.hibernatesearch.FullIndexHandler;
 import org.grouter.domain.entities.Message;
 
 import java.util.List;
@@ -35,24 +34,24 @@ public class MessageSearchIndexTest extends AbstractHibernateSearchTest
     private static Log log = LogFactory.getLog(MessageSearchIndexTest.class);
 
 
-       public void testFind()
-       {
+    public void testFind()
+    {
 
-           //flushSession();
+        //flushSession();
 
-           List<Message> messageList = messageDAO.findFromIndex( "java", "content","kalle" );
-
-
-           assertNotNull( messageList );
-           assertTrue( messageList.size() > 0 );
+        List<Message> messageList = messageDAO.findFromIndex("java", "content", "kalle");
 
 
-           for (Message message : messageList)
-           {
-               log.debug( "##" + message );
-           }
-           
-       }
+        assertNotNull(messageList);
+        assertTrue(messageList.size() > 0);
+
+
+        for (Message message : messageList)
+        {
+            log.debug("##" + message);
+        }
+
+    }
 
 
 }

@@ -1,14 +1,14 @@
 package org.grouter.domain.servicelayer.ejb3;
 
+import org.apache.log4j.Logger;
 import org.grouter.common.jms.AcknowledgeMode;
 import org.grouter.common.jms.QueueSenderDestination;
 import org.grouter.common.jndi.JNDIUtils;
 import org.grouter.domain.servicelayer.RouterMessageFactory;
-import org.apache.log4j.Logger;
 
 import javax.jms.*;
-import javax.naming.NamingException;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  * Produces messages on queue.

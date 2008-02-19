@@ -45,9 +45,9 @@ public class JobDAOTest extends AbstractDAOTests
     @Override
     public void testSave()
     {
-        Router router = routerDAO.findById( ROUTER_ID );
+        Router router = routerDAO.findById(ROUTER_ID);
 
-        Job job = new Job(123L,"displayname","cronexpr", JobState.RUNNING, JobType.BACKUP, router);
+        Job job = new Job(123L, "displayname", "cronexpr", JobState.RUNNING, JobType.BACKUP, router);
         job.setDisplayName("A displayname");
         jobDAO.save(job);
         flushSession();
@@ -94,15 +94,10 @@ public class JobDAOTest extends AbstractDAOTests
     public void testDelete()
     {
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + JOB_ID));
-        jobDAO.delete( JOB_ID );
+        jobDAO.delete(JOB_ID);
         flushSession();
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + JOB_ID ));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + JOB_ID));
     }
-
-
-
-
-
 
 
 }

@@ -42,8 +42,8 @@ public class Sender extends BaseEntity
     private String id;
 
 
-    @ManyToOne(targetEntity = Address.class )
-    @JoinColumn( name = "address_fk", nullable = false)
+    @ManyToOne(targetEntity = Address.class)
+    @JoinColumn(name = "address_fk", nullable = false)
     private Address address;
 
     @Column(name = "name")

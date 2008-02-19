@@ -55,9 +55,9 @@ public class Job extends BaseEntity
     @Field(index = Index.TOKENIZED, store = Store.YES)
     String displayName;
 
-    @Column(name = "jobordernumber")
-    @NotNull
-    Long jobOrderNumber;
+//    @Column(name = "jobordernumber")
+//    @NotNull
+//    Long jobOrderNumber;
 
     @ManyToOne
     @NotNull
@@ -102,14 +102,16 @@ public class Job extends BaseEntity
     Map jobContext = new HashMap();
 
 
-    public Job() {
+    public Job()
+    {
     }
 
     public Job(final Long id, final String displayName, final String cronExpression,
                final JobState jobState,
                final JobType jobType,
                final Router router
-    ) {
+    )
+    {
         this.id = id;
         this.displayName = displayName;
         this.cronExpression = cronExpression;
@@ -118,84 +120,95 @@ public class Job extends BaseEntity
         this.router = router;
     }
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final Long id)
+    {
         this.id = id;
     }
 
-    public String getDisplayName() {
+    public String getDisplayName()
+    {
         return displayName;
     }
 
-    public void setDisplayName(final String displayName) {
+    public void setDisplayName(final String displayName)
+    {
         this.displayName = displayName;
     }
 
-    public String getCronExpression() {
+    public String getCronExpression()
+    {
         return cronExpression;
     }
 
-    public void setCronExpression(final String cronExpression) {
+    public void setCronExpression(final String cronExpression)
+    {
         this.cronExpression = cronExpression;
     }
 
 
-    public JobState getJobState() {
+    public JobState getJobState()
+    {
         return jobState;
     }
 
-    public void setJobState(final JobState jobState) {
+    public void setJobState(final JobState jobState)
+    {
         this.jobState = jobState;
     }
 
-    public JobType getJobType() {
+    public JobType getJobType()
+    {
         return jobType;
     }
 
-    public void setJobType(final JobType jobType) {
+    public void setJobType(final JobType jobType)
+    {
         this.jobType = jobType;
     }
 
-    public Router getRouter() {
+    public Router getRouter()
+    {
         return router;
     }
 
-    public void setRouter(final Router router) {
+    public void setRouter(final Router router)
+    {
         this.router = router;
     }
 
-    public Map<String, String> getJobContext() {
+    public Map<String, String> getJobContext()
+    {
         return jobContext;
     }
 
-    public void setJobContext(final Map<String, String> jobContext) {
+    public void setJobContext(final Map<String, String> jobContext)
+    {
         this.jobContext = jobContext;
     }
 
-    public Date getStartedOn() {
+    public Date getStartedOn()
+    {
         return startedOn;
     }
 
-    public void setStartedOn(final Date startedOn) {
+    public void setStartedOn(final Date startedOn)
+    {
         this.startedOn = startedOn;
     }
 
-    public Date getFinishedAt() {
+    public Date getFinishedAt()
+    {
         return finishedAt;
     }
 
-    public void setFinishedAt(final Date finishedAt) {
+    public void setFinishedAt(final Date finishedAt)
+    {
         this.finishedAt = finishedAt;
     }
 
-    public Long getJobOrderNumber() {
-        return jobOrderNumber;
-    }
-
-    public void setJobOrderNumber(Long jobOrderNumber) {
-        this.jobOrderNumber = jobOrderNumber;
-    }
 }

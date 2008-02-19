@@ -18,7 +18,7 @@ public abstract class AbstractDAOTests extends AbstractJpaTests
     @Override
     protected String[] getConfigLocations()
     {
-        
+
         return new String[]
                 {
                         "context-domain-dao.xml", "context-domain-datasource.xml",

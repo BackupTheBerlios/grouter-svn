@@ -35,7 +35,7 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "job_state")
-public class JobState  extends BaseEntity
+public class JobState extends BaseEntity
 {
     @Id
     @Column(name = "id")

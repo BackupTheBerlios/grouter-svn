@@ -32,8 +32,6 @@ import java.util.List;
 
 
 /**
- *
- *
  * @author Georges Polyzois
  */
 public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements NodeDAO
@@ -79,14 +77,14 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements No
         Session session = getSession();
         Query qr = session.createQuery(hsql);
         List<Node> nodes = qr.setParameter("routerId", routerId).list();
-        
+
         for (Node node : nodes)
         {
-            node.setNumberOfMessagesHandled(getNumberOfMessages( node.getId()));
-            if( initEndPoint )
+            node.setNumberOfMessagesHandled(getNumberOfMessages(node.getId()));
+            if (initEndPoint)
             {
-                Hibernate.initialize( node.getInBound() );
-                Hibernate.initialize( node.getOutBound() );
+                Hibernate.initialize(node.getInBound());
+                Hibernate.initialize(node.getOutBound());
             }
         }
         return nodes;

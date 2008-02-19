@@ -37,6 +37,7 @@ public class JobServiceImpl implements JobService
 
     /**
      * Injected.
+     *
      * @param jobDAO injected DAO
      */
     public void setJobDAO(JobDAO jobDAO)
@@ -51,27 +52,27 @@ public class JobServiceImpl implements JobService
 
     public List<Job> searchJobs(String searchText)
     {
-        return jobDAO.findFromIndex(searchText , "displayName" );
+        return jobDAO.findFromIndex(searchText, "displayName");
     }
 
     public void save(final Job job)
     {
-        if( job.getJobState() == null )
+        if (job.getJobState() == null)
         {
             job.setJobState(JobState.STOPPED);
         }
-        jobDAO.save( job );
+        jobDAO.save(job);
     }
 
 
     public Job findById(Long id)
     {
-        return jobDAO.findById( id );
+        return jobDAO.findById(id);
     }
 
     public void delete(final Long id)
     {
-        jobDAO.delete( id );
+        jobDAO.delete(id);
     }
 
 }

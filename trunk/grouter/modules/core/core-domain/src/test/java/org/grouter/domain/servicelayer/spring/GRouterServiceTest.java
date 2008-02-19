@@ -1,13 +1,12 @@
 package org.grouter.domain.servicelayer.spring;
 
-import org.grouter.domain.servicelayer.RouterService;
-import org.grouter.domain.entities.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.grouter.domain.entities.*;
+import org.grouter.domain.servicelayer.RouterService;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -50,7 +49,7 @@ public class GRouterServiceTest extends AbstractServiceTests
         messages.add(message);
 
         Node node = new Node("file node", "name");
-        node.setMessages( messages );
+        node.setMessages(messages);
         message.setNode(node);
 
         Set<Node> nodes = new HashSet<Node>();

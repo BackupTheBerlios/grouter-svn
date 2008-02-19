@@ -37,19 +37,17 @@ import javax.jms.ObjectMessage;
 
 @SuppressWarnings({"EjbErrors"})
 @MessageDriven(activationConfig =
-{
+        {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/GrouterQueue"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto.acknowledge")
-})
+                })
 public class RouterQueueMDB implements MessageListener
 {
     //@JndiInject(jndiName = ExternalSystemsLocal.LOOKUP_NAME)
     //private ExternalSystemsHandler externalSystemsHandler;
 
     private static Logger logger = Logger.getLogger(RouterQueueMDB.class);
-
-    
 
     // This does not work in jboss...
     //@EJB
@@ -93,7 +91,7 @@ public class RouterQueueMDB implements MessageListener
 
     /**
      * Call session ejb for processing of event.
-     * 
+     *
      * @param objectMessage
      * @throws JMSException
      */
@@ -102,7 +100,7 @@ public class RouterQueueMDB implements MessageListener
     {
         org.grouter.domain.entities.Message message = (org.grouter.domain.entities.Message) objectMessage.getObject();
         logger.debug("Got message");
-        RouterLocalService gRouterLocal = (RouterLocalService)sc.lookup( RouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
+        RouterLocalService gRouterLocal = (RouterLocalService) sc.lookup(RouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL);
         gRouterLocal.saveMessage(message);
     }
 
@@ -117,28 +115,26 @@ public class RouterQueueMDB implements MessageListener
     {
         Node message = (Node) node.getObject();
         logger.debug("Got node status update");
-        RouterLocalService gRouterLocal = (RouterLocalService)sc.lookup( RouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL );
+        RouterLocalService gRouterLocal = (RouterLocalService) sc.lookup(RouterLocalService.DOMAIN_GROUTER_BEAN_LOCAL);
         gRouterLocal.saveNode(message);
     }
 
-
     /**
      * Util method.
-     * 
+     *
      * @param messages
      * @return
      */
 
-
     /*
-    private String printMessages(org.grouter.domain.entities.Message[] messages)
-    {
-        StringBuffer stringBuffer = new StringBuffer();
-        for (org.grouter.domain.entities.Message message : messages)
-        {
-            stringBuffer.append(message.reflectionToString()).append("\n");
-        }
-        return stringBuffer.toString();
+   private String printMessages(org.grouter.domain.entities.Message[] messages)
+   {
+       StringBuffer stringBuffer = new StringBuffer();
+       for (org.grouter.domain.entities.Message message : messages)
+       {
+           stringBuffer.append(message.reflectionToString()).append("\n");
+       }
+       return stringBuffer.toString();
 
-    } */
+   } */
 }

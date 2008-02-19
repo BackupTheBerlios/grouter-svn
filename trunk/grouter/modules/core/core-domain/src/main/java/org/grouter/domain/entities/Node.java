@@ -37,7 +37,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "node")
-@Indexed( index="indexes/node" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
+@Indexed(index = "indexes/node")
+// Entity will be indexed for querying using Hibernate SystemServiceImpl
 public class Node extends BaseEntity
 {
     @Id
@@ -45,12 +46,14 @@ public class Node extends BaseEntity
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "assigned")
     @NotNull
-    @DocumentId // Hibernate search
+    @DocumentId
+    // Hibernate search
     private String id;
 
     @NotNull
     @Column(name = "displayName", nullable = false)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private String displayName;
 
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
@@ -58,32 +61,37 @@ public class Node extends BaseEntity
     private NodeStatus nodeStatus;
 
     @Column(name = "statusmessage", nullable = false)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private String statusMessage;
 
 
     // A nodes sender - if one is provided by the message itself that sender is used to override this
     @Column(name = "source", nullable = false)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private String source;
 
     // A nodes receiver - if one is provided by the message itself that receiver is used to override this
     @Column(name = "receiver", nullable = false)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private String receiver;
 
-    @OneToMany( cascade = {CascadeType.REMOVE}, mappedBy = "node")
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "node")
     private Set<Message> messages = new HashSet<Message>();
 
     @Column(name = "modifiedon")
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private Date modifiedOn;
 
     @Column(name = "createdon")
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private Date createdOn;
 
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE} )
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
     @JoinColumn(name = "router_fk", nullable = true)
     private Router router;
 
@@ -101,12 +109,14 @@ public class Node extends BaseEntity
 
     @Column(name = "backupuri")
     @Length(max = 2048)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private String backupUri;
 
     @Column(name = "description")
     @Length(max = 2048)
-    @Field(index= Index.TOKENIZED, store= Store.YES)   // Hibernate SystemServiceImpl  - fields to be indexed
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    // Hibernate SystemServiceImpl  - fields to be indexed
     private String description;
 
     // a message read from a inbound endPoint is stored in this folder with a unique GUID - the command reader
@@ -379,8 +389,6 @@ public class Node extends BaseEntity
     {
         return (id != null ? id.hashCode() : 0);
     }
-
-    
 
 
 }

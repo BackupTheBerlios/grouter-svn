@@ -8,13 +8,13 @@ CREATE TABLE if not exists job (
   router_fk varchar(36),
   started_on datetime  null,
   finished_at datetime null,
-  jobordernumber bigint(20) not null,
-  jobgroup_fk bigint(20) NOT NULL,
+  -- jobordernumber bigint(20) not null,
+  -- jobgroup_fk bigint(20) NOT NULL,
   PRIMARY KEY  (id),
   KEY (id),
   FOREIGN KEY (job_type_fk) REFERENCES job_type (id),
-  FOREIGN KEY (job_state_fk) REFERENCES job_state (id),
-  FOREIGN KEY (jobgroup_fk) REFERENCES jobgroup (id)
+  FOREIGN KEY (job_state_fk) REFERENCES job_state (id)
+  -- FOREIGN KEY (jobgroup_fk) REFERENCES jobgroup (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- create index index_job_name on job (name);

@@ -48,6 +48,9 @@ import java.util.List;
  * <p/>
  * See the Hibernate Caveat tutorial and complementary code by Christian Bauer @ jboss )
  * Also see this link : http://www.hibernate.org/328.html
+ * <p/>
+ * <p/>
+ * It also provides queries for the Hibernate (Lucene) Search index.
  *
  * @author Georges Polyzois
  */
@@ -98,6 +101,11 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         return findById(getEntityClass(), id);
     }
 
+    public Object load(final ID id)
+    {
+        return getSession().load(getEntityClass(), id);
+    }
+
     @SuppressWarnings("unchecked")
     public List<T> findAll()
     {
@@ -107,9 +115,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     }
 
 
-    public List<T> findAllUsingFetchMode(final Class clazz, final FetchMode fetchMode,
-                                         final String... joinProps
-    )
+    public List<T> findAllUsingFetchMode(final Class clazz, final FetchMode fetchMode, final String... joinProps)
     {
         Criteria criteria = getSession().createCriteria(clazz);
         for (String disJoinProp : joinProps)
@@ -147,11 +153,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     public T save(final T entity)
     {
         getSession().saveOrUpdate(entity);
-
-
         return entity;
     }
-
 
 
     public void delete(final T entity)
@@ -190,24 +193,21 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
         return (T) criteria.uniqueResult();
     }
 
-
-
     public void optimizeIndex(final T entity)
-        {
-            FullTextSession fullTextSession = Search.createFullTextSession(getSession());
-            SearchFactory searchFactory = fullTextSession.getSearchFactory();
-            searchFactory.optimize(entity.getClass());
-        }
+    {
+        FullTextSession fullTextSession = Search.createFullTextSession(getSession());
+        SearchFactory searchFactory = fullTextSession.getSearchFactory();
+        searchFactory.optimize(entity.getClass());
+    }
 
-        public void purgeFromIndex(final T entity, final ID id)
-        {
+    public void purgeFromIndex(final T entity, final ID id)
+    {
 
-            FullTextSession fullTextSession = Search.createFullTextSession(session);
-            Transaction tx = fullTextSession.beginTransaction();
-            fullTextSession.purge(entity.getClass(), id);
-            tx.commit();
-        }
-
+        FullTextSession fullTextSession = Search.createFullTextSession(session);
+        Transaction tx = fullTextSession.beginTransaction();
+        fullTextSession.purge(entity.getClass(), id);
+        tx.commit();
+    }
 
 
     public List<T> findFromIndex(final String queryString, final String... columns)
@@ -223,19 +223,18 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
             i++;
         }
 
-        MultiFieldQueryParser parser = new MultiFieldQueryParser( queryColumns , new StandardAnalyzer());
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(queryColumns, new StandardAnalyzer());
         org.apache.lucene.search.Query query = null;
         try
         {
             query = parser.parse(queryString);
-            org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery(query, getEntityClass() );
+            org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery(query, getEntityClass());
             list = hibQuery.list();
         } catch (ParseException e)
         {
-            logger.warn( "Failure to query index for :" + queryString );
+            logger.warn("Failure to query index for :" + queryString);
         }
         return list;
     }
-
 }
 

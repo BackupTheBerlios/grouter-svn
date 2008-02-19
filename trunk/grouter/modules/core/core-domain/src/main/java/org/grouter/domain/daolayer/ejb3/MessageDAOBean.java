@@ -52,6 +52,12 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
         throw new NotImplementedException();
     }
 
+    // suing a cache
+    public List<Message> findAllMessages()
+    {
+        throw new NotImplementedException();
+    }
+
     public List<Message> findMessagesFromIndex(final String queryForMe)
     {
         throw new NotImplementedException();
@@ -62,9 +68,7 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public List<Message> findAllUsingFetchMode(final Class clazz, final FetchMode fetchMode, final
-    String... disJoinProps
-    )
+    public List<Message> findAllUsingFetchMode(final Class clazz, final FetchMode fetchMode, final String... disJoinProps)
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

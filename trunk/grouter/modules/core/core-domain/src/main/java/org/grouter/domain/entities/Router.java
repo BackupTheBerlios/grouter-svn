@@ -59,11 +59,11 @@ public class Router extends BaseEntity
      * on the item in the Set
      *
      */
-    @OneToMany ( mappedBy = "router" )
+    @OneToMany(mappedBy = "router")
     private Set<Node> nodes = new HashSet<Node>();
 
     @ManyToOne
-    @JoinColumn( name = "settings_fk", nullable = false)
+    @JoinColumn(name = "settings_fk", nullable = false)
     private Settings settings;
 
     @Column(name = "startedon")

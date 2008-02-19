@@ -2,9 +2,9 @@ package org.grouter.domain.servicelayer.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.servicelayer.RouterService;
-import org.grouter.domain.entities.*;
 import org.grouter.domain.daolayer.MessageDAO;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.servicelayer.RouterService;
 import org.springframework.jms.core.JmsTemplate;
 
 /**
@@ -22,7 +22,7 @@ public class GRouterQueueListenerImplTest extends AbstractServiceTests
 
     public GRouterQueueListenerImplTest()
     {
-       setAutowireMode(AUTOWIRE_BY_NAME);
+        setAutowireMode(AUTOWIRE_BY_NAME);
     }
 
 
@@ -30,17 +30,17 @@ public class GRouterQueueListenerImplTest extends AbstractServiceTests
     {
         assertTrue(true);
 
-        Message message =  messageDAO.findById( MESSAGE_ID );
-        assertNotNull( message );
+        Message message = messageDAO.findById(MESSAGE_ID);
+        assertNotNull(message);
 
-        message.setContent( "Some content" );
+        message.setContent("Some content");
 
-        jmsTemplate.convertAndSend( message );
+        jmsTemplate.convertAndSend(message);
 
 
-        Message message2 =  messageDAO.findById( MESSAGE_ID );
+        Message message2 = messageDAO.findById(MESSAGE_ID);
 
-       // logger.debug("####  " + (String)message2.getContent() );
+        // logger.debug("####  " + (String)message2.getContent() );
 
     }
 

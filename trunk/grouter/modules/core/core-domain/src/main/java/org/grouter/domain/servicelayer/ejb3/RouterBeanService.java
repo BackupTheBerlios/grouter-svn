@@ -97,8 +97,9 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         return messageDAO.findMessagesForNode(id);
     }
 
-    public List<Message> searchMessages(String searchText) {
-        throw new NotImplementedException("implemente this"); 
+    public List<Message> searchMessages(String searchText)
+    {
+        throw new NotImplementedException("implemente this");
     }
 
     public List<Node> findAllNodes(final String routerId)
@@ -122,7 +123,8 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         throw new NotImplementedException("implemente this");
     }
 
-    public List<Node> searchNodes(String searchText) {
+    public List<Node> searchNodes(String searchText)
+    {
         throw new NotImplementedException("implemente this");
     }
 

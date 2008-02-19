@@ -34,9 +34,9 @@ import javax.ejb.Local;
 public interface RouterLocalService extends RouterService
 {
     public static final String DOMAIN_GROUTER_BEAN_LOCAL = "domain/GRouterBeanService/local";
-    
+
     /**
      * Persist into domain and broadcast to clients on a topic to inform of new event.
      * @param message
-     */          
+     */
 }

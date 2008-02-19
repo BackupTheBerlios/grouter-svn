@@ -19,13 +19,15 @@ import org.grouter.domain.servicelayer.SystemService;
  */
 public class SystemServiceImpl implements SystemService
 {
-    SystemDAO systemDAO;                           
+    SystemDAO systemDAO;
 
-    public void initIndex() {
+    public void initIndex()
+    {
         systemDAO.initSearchIndex();
     }
 
-    public void setSystemDAO(SystemDAO systemDAO) {
+    public void setSystemDAO(SystemDAO systemDAO)
+    {
         this.systemDAO = systemDAO;
     }
 }

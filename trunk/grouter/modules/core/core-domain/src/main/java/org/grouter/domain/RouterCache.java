@@ -19,7 +19,6 @@
 
 package org.grouter.domain;
 
-import org.grouter.domain.entities.SettingsContext;
 import org.grouter.domain.entities.Router;
 
 
@@ -32,14 +31,14 @@ public class RouterCache
 
     public static Router getSettingsContextCache()
     {
-        if ( router == null )
+        if (router == null)
         {
             throw new IllegalStateException("Settings cache must be initialized");
         }
         return router;
     }
 
-    public static void init( final Router router )
+    public static void init(final Router router)
     {
         RouterCache.router = router;
     }

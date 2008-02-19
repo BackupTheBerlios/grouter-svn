@@ -19,19 +19,9 @@
 
 package org.grouter.domain.daolayer.spring;
 
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.Settings;
-import org.grouter.domain.daolayer.NodeDAO;
 import org.grouter.domain.daolayer.SettingsDAO;
-import org.grouter.domain.daolayer.spring.GenericHibernateDAO;
+import org.grouter.domain.entities.Settings;
 import org.hibernate.Session;
-import org.hibernate.Query;
-import org.hibernate.Hibernate;
-import org.hibernate.Criteria;
-import org.hibernate.type.Type;
-import org.hibernate.criterion.Projections;
-
-import java.util.List;
 
 
 public class SettingsDAOImpl extends GenericHibernateDAO<Settings, String> implements SettingsDAO
@@ -52,14 +42,14 @@ public class SettingsDAOImpl extends GenericHibernateDAO<Settings, String> imple
 
     public void delete(String id)
     {
-        logger.info( "Not deleting any settings" );
+        logger.info("Not deleting any settings");
 
     }
 
 
     public void delete(Settings entity)
     {
-        logger.info( "Not deleting any settings" );
+        logger.info("Not deleting any settings");
 
     }
 

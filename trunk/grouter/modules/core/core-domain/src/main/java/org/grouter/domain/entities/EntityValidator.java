@@ -21,21 +21,21 @@ package org.grouter.domain.entities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.validator.InvalidValue;
 import org.hibernate.validator.ClassValidator;
+import org.hibernate.validator.InvalidValue;
 
 
 /**
  * Helper for validating an entity instance manually, e.g. in an application layer
- *
+ * <p/>
  * Hibernate will automagically do validation if it finds entity classes mapped with Hibernata Validation
  * annotations. From documentation:
  * "Hibernate Validator has two built-in Hibernate event listeners. Whenever a PreInsertEvent or PreUpdateEvent
  * occurs, the listeners will verify all constraints of the entity instance and throw an exception if any constraint
  * is violated. Basically, objects will be checked before any inserts and before any updates made by Hibernate."
  * To avoid this (why?) use:
- *      hibernate.validator.autoregister_listeners=false if not tovlidate on preInsert or preUpdate events.
- *
+ * hibernate.validator.autoregister_listeners=false if not tovlidate on preInsert or preUpdate events.
+ * <p/>
  * ClassValidator are recommended to be cached -> static declared in this helper.
  *
  * @author Georges
@@ -49,6 +49,7 @@ public class EntityValidator
 
     /**
      * Helper.
+     *
      * @param clazz
      * @return a ClassValidator for a given entity class
      */
@@ -79,8 +80,9 @@ public class EntityValidator
 
     /**
      * VAlidates an entity for a given property.
+     *
      * @param modelObject entity
-     * @param property attribute of entity we want to validate
+     * @param property    attribute of entity we want to validate
      * @return
      */
     public static InvalidValue[] validate(BaseEntity modelObject,

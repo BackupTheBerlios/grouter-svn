@@ -38,7 +38,8 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public interface GenericDAO<T, ID extends Serializable> {
+public interface GenericDAO<T, ID extends Serializable>
+{
     /**
      * Find Entity by id.
      *
@@ -46,6 +47,8 @@ public interface GenericDAO<T, ID extends Serializable> {
      * @return an entity
      */
     T findById(ID id);
+
+    Object load(ID id);
 
     /**
      * Find entity by id, join using properties of entity class (optionally).
@@ -142,9 +145,6 @@ public interface GenericDAO<T, ID extends Serializable> {
     void delete(ID id);
 
 
-
-
-
     /**
      * We are using Hibernate SystemServiceImpl. In order to update the index for a specific entity use
      * this method.
@@ -162,12 +162,11 @@ public interface GenericDAO<T, ID extends Serializable> {
 
 
     /**
-     *
      * @param queryString
      * @param columns
      * @return
      */
     public List<T> findFromIndex(final String queryString, final String... columns);
-    
+
 
 }

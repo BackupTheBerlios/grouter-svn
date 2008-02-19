@@ -61,8 +61,8 @@ public class EndPoint extends BaseEntity
     private String scheduleCron;
 
     // Unidirectional ManyToOne
-    @ManyToOne( targetEntity = EndPointType.class )
-    @JoinColumn( name = "endpoint_type_fk")
+    @ManyToOne(targetEntity = EndPointType.class)
+    @JoinColumn(name = "endpoint_type_fk")
     @NotNull
     EndPointType endPointType;
 
@@ -74,7 +74,7 @@ public class EndPoint extends BaseEntity
 //            fetch = FetchType.EAGER )
 //    @JoinTable( message="endpoint_context",
 //                joinColumns = @JoinColumn(message="endpoint_fk"))
-//    @OnDelete( action = OnDeleteAction.CASCADE )
+    //    @OnDelete( action = OnDeleteAction.CASCADE )
     @Transient
     Map endPointContext = new HashMap();
 

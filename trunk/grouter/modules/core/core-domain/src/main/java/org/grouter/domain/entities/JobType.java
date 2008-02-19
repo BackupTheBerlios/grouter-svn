@@ -19,6 +19,8 @@
 
 package org.grouter.domain.entities;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
@@ -35,7 +37,8 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "job_type")
-public class JobType  extends BaseEntity
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+public class JobType extends BaseEntity
 {
     @Id
     @Column(name = "id")

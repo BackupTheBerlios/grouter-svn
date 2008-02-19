@@ -15,35 +15,43 @@ public class AuditInfo
     User modifiedBy;
 
 
-    public Date getCreated() {
+    public Date getCreated()
+    {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Date created)
+    {
         this.created = created;
     }
 
-    public Date getModified() {
+    public Date getModified()
+    {
         return modified;
     }
 
-    public void setModified(Date modified) {
+    public void setModified(Date modified)
+    {
         this.modified = modified;
     }
 
-    public User getCreatedBy() {
+    public User getCreatedBy()
+    {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy) {
+    public void setCreatedBy(User createdBy)
+    {
         this.createdBy = createdBy;
     }
 
-    public User getModifiedBy() {
+    public User getModifiedBy()
+    {
         return modifiedBy;
     }
 
-    public void setModifiedBy(User modifiedBy) {
+    public void setModifiedBy(User modifiedBy)
+    {
         this.modifiedBy = modifiedBy;
     }
 }

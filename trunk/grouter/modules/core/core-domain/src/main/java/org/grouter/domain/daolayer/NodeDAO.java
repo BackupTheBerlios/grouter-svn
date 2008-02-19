@@ -19,7 +19,6 @@
 
 package org.grouter.domain.daolayer;
 
-import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 
 import java.util.List;
@@ -33,25 +32,25 @@ public interface NodeDAO extends GenericDAO<Node, String>
 {
     /**
      * Use to get all all nodes for a given router with number of messages set on each node.
-     * 
+     *
      * @param routerId get statistics for this router
      * @return list with Nodes and number of messages for every node
      */
-    List<Node> findNodesWithNumberOfMessages( String routerId );
+    List<Node> findNodesWithNumberOfMessages(String routerId);
 
 
-    Long getNumberOfMessages( String nodeId );
+    Long getNumberOfMessages(String nodeId);
 
     /**
      * Find all nodes for a given routerid and init endpoint if set to true.
-     * @param routerId id of router
+     *
+     * @param routerId     id of router
      * @param initEndPoint should we also load endpoints
      * @return list with nodes
      */
     List<Node> findAllNodes(String routerId, boolean initEndPoint);
 
     List<Node> findNodes();
-
 
 
 }

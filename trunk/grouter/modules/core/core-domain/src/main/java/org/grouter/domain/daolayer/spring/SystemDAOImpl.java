@@ -32,12 +32,13 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * Hibernate-specific implementation of the {@link org.grouter.domain.daolayer.SystemDAO} interface.
  * <p/>
  * Handles search index operations.
- *
+ * <p/>
  * To avoid OutOfMemoryExceptions we need to provide hibernate.search.worker.batch_size
  *
  * @author Georges Polyzois
  */
-public class SystemDAOImpl extends HibernateDaoSupport implements SystemDAO {
+public class SystemDAOImpl extends HibernateDaoSupport implements SystemDAO
+{
 
     public void initSearchIndex()
     {
@@ -57,10 +58,12 @@ public class SystemDAOImpl extends HibernateDaoSupport implements SystemDAO {
 //Scrollable results will avoid loading too many objects in memory
         ScrollableResults results = fullTextSession.createCriteria(theIndexClass).scroll(ScrollMode.FORWARD_ONLY);
         int index = 0;
-        while (results.next()) {
+        while (results.next())
+        {
             index++;
             fullTextSession.index(results.get(0)); //index each element
-            if (index % batchSize == 0) {
+            if (index % batchSize == 0)
+            {
                 session.clear(); //clear every batchSize since the queue is processed
             }
         }

@@ -31,8 +31,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "job_context")
-public class JobContext  extends BaseEntity
-{             
+public class JobContext extends BaseEntity
+{
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)

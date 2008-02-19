@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService
 
     /**
      * Injected.
+     *
      * @param userDAO injected DAO
      */
     public void setUserDAO(UserDAO userDAO)
@@ -51,44 +52,44 @@ public class UserServiceImpl implements UserService
 
     public List<User> findAll(final String hql)
     {
-        return userDAO.findAll( hql );
+        return userDAO.findAll(hql);
 
     }
 
 
     public void save(User user)
     {
-        userDAO.save( user );
+        userDAO.save(user);
     }
 
     public void delete(final Long id)
     {
-        userDAO.delete( id );
+        userDAO.delete(id);
     }
 
     public User findById(Long id)
     {
-        return userDAO.findById( id );
+        return userDAO.findById(id);
     }
-    
+
     public void changeState(final Long id, final UserState userState)
     {
-        if (id == null )
+        if (id == null)
         {
-            throw new IllegalArgumentException( "User id was null" );
+            throw new IllegalArgumentException("User id was null");
         }
-        if( UserState.values.get(userState) == null )
+        if (UserState.values.get(userState) == null)
         {
-             throw new IllegalArgumentException( "Provided state does not exist. user :" + userState );
+            throw new IllegalArgumentException("Provided state does not exist. user :" + userState);
         }
 
-        User user = findById( id );
-        user.setUserState( userState );
-        save( user );
+        User user = findById(id);
+        user.setUserState(userState);
+        save(user);
     }
 
     public List<User> searchUsers(String searchText)
     {
-        return userDAO.findFromIndex(  searchText, "userName", "id", "lastName");
+        return userDAO.findFromIndex(searchText, "userName", "id", "lastName");
     }
 }
