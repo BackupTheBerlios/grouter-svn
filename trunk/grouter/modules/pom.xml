@@ -527,7 +527,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate</artifactId>
-                <version>3.2.4.ga</version>
+                <version>3.2.5.ga</version>
                 <!--
                 | Excluding jars is a powerful feature. Here I know I
                 | will not use swarmcache, so I do not need downloading
@@ -805,9 +805,8 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.0.3</version>
+                <version>5.1.5</version>
             </dependency>
-
             <!-- Xml binding framework -->
             <dependency>
                 <groupId>xmlbeans</groupId>
