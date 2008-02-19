@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.daolayer.UserDAO;
 import org.grouter.domain.entities.User;
+import org.grouter.domain.entities.UserState;
 import org.hibernate.LazyInitializationException;
 
 import java.util.List;
@@ -37,8 +38,17 @@ public class UserDAOTest extends AbstractDAOTests
     @Override
     public void testSave()
     {
+
+        User admin = userDAO.findById(USER_ID);
+        //User admin = new User();
+        //admin.setId( ADMIN_ID );
+
         User user = new User();
         user.setFirstName("A first name");
+        user.setLastName("A last name");
+        user.setPassword("password");
+        user.setUserName("username");
+        user.setCreatedBy( admin  );
         userDAO.save(user);
         flushSession();
         Long id = user.getId();
@@ -75,50 +85,42 @@ public class UserDAOTest extends AbstractDAOTests
     @Override
     public void testDelete()
     {
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id = '" + USER_ID + "'"));
-        assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id = '" + USER_ID + "'"));
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) from user WHERE id =" + USER_ID ));
+        assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + USER_ID ));
         assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
         userDAO.delete( USER_ID );
         flushSession();
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id = '" + USER_ID + "'"));
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id = '" + USER_ID + "'"));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id =" + USER_ID ));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + USER_ID ));
         assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
     }
 
-
-
-    public void testUserState()
+    public void testSetUserStateToInactive()
     {
-        //assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id = '" + USER_ID + "'"));
-        assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id = '" + USER_ID + "'"));
-        assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
-        //userDAO.markAsDeleted( USER_ID );
+        User found = userDAO.findById(USER_ID);
+        assertNotNull( found );
+        found.setUserState(UserState.BLOCKED);
+
         flushSession();
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id = '" + USER_ID + "'"));
-        assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id = '" + USER_ID + "'"));
-        assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=1"));
 
-
-        Map map = jdbcTemplate.queryForMap("SELECT * FROM user WHERE id = ?",
-                        new Object[]{ USER_ID });
-        assertEquals(true, map.get("deleted"));
+        User foundBlocked = userDAO.findById(USER_ID);
+        assertNotNull( foundBlocked );
+        assertEquals( UserState.BLOCKED , foundBlocked.getUserState()  );
     }
 
 
     public void testFindAll()
     {
         List<User> user = userDAO.findAll(  );
-        assertTrue( user.size() == 1 );
+        assertEquals(3, user.size() );
     }
 
     public void testFindAll2()
     {
         List<User> user = userDAO.findAll( UserDAO.FIND_ALL );
-        assertTrue( user.size() == 1 );
+        assertEquals(3, user.size() );
     }
 
 }
