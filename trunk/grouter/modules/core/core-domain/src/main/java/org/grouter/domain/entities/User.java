@@ -91,6 +91,7 @@ public class User extends BaseEntity
 
     @ManyToOne
     @JoinColumn(name = "user_state_fk")
+    @NotNull
     private UserState userState;
 
     @ManyToOne

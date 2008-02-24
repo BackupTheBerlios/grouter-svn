@@ -1,7 +1,7 @@
 package org.grouter.domain.search;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.SystemService;
+import org.grouter.domain.service.SystemService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.BeansException;

@@ -26,19 +26,21 @@ import org.hibernate.validator.InvalidValue;
 
 
 /**
- * Helper for validating an entity instance manually, e.g. in an application layer
+ * Helper for validating an entity instance manually, e.g. in an application layer. The EntityValidator will use
+ * a Hibernate mapped entity with validation annotations and validate the entity.
  * <p/>
  * Hibernate will automagically do validation if it finds entity classes mapped with Hibernata Validation
  * annotations. From documentation:
  * "Hibernate Validator has two built-in Hibernate event listeners. Whenever a PreInsertEvent or PreUpdateEvent
  * occurs, the listeners will verify all constraints of the entity instance and throw an exception if any constraint
  * is violated. Basically, objects will be checked before any inserts and before any updates made by Hibernate."
- * To avoid this (why?) use:
+ *
+ * To avoid valiaation (why?) use:
  * hibernate.validator.autoregister_listeners=false if not tovlidate on preInsert or preUpdate events.
  * <p/>
  * ClassValidator are recommended to be cached -> static declared in this helper.
  *
- * @author Georges
+ * @author Georges Polyzois
  */
 public class EntityValidator
 {
@@ -46,6 +48,7 @@ public class EntityValidator
 
     public static final ClassValidator<Router> ROUTER_VALIDATOR = new ClassValidator<Router>(Router.class);
     public static final ClassValidator<Node> NODE_VALIDATOR = new ClassValidator<Node>(Node.class);
+    public static final ClassValidator<User> USER_VALIDATOR = new ClassValidator<User>(User.class);
 
     /**
      * Helper.
@@ -61,9 +64,14 @@ public class EntityValidator
         } else if (Node.class.equals(clazz))
         {
             return null;//NODE_VALIDATOR;
-        } else
+        }
+        if (User.class.equals(clazz))
         {
-            throw new IllegalArgumentException("Unsupported class was passed.");
+            return USER_VALIDATOR;
+        }
+        else
+        {
+            throw new IllegalArgumentException("Unsupported class was passed for validation.");
         }
     }
 
@@ -85,8 +93,7 @@ public class EntityValidator
      * @param property    attribute of entity we want to validate
      * @return
      */
-    public static InvalidValue[] validate(BaseEntity modelObject,
-                                          String property)
+    public static InvalidValue[] validate(BaseEntity modelObject, String property)
     {
         Class<? extends BaseEntity> clazz = modelObject.getClass();
         ClassValidator validator = getValidator(clazz);
