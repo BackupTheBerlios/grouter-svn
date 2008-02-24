@@ -1,9 +1,9 @@
-package org.grouter.domain.daolayer.spring;
+package org.grouter.domain.dao.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.UserDAO;
+import org.grouter.domain.dao.MessageDAO;
+import org.grouter.domain.dao.UserDAO;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Receiver;
 import org.grouter.domain.entities.Sender;

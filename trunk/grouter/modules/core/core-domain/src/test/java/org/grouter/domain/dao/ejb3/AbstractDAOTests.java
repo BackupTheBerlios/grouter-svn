@@ -1,4 +1,4 @@
-package org.grouter.domain.daolayer.ejb3;
+package org.grouter.domain.dao.ejb3;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;

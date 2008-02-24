@@ -1,11 +1,11 @@
-package org.grouter.domain.daolayer.spring;
+package org.grouter.domain.dao.spring;
 
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.grouter.common.hibernate.HibernateUtilContextAware;
 import org.grouter.common.logging.Log4JInit;
-import org.grouter.domain.daolayer.DAOFactory;
+import org.grouter.domain.dao.DAOFactory;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Receiver;

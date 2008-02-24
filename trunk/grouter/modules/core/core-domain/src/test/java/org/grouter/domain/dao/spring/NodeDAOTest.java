@@ -1,4 +1,4 @@
-package org.grouter.domain.daolayer.spring;
+package org.grouter.domain.dao.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

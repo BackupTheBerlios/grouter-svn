@@ -1,11 +1,14 @@
-package org.grouter.domain.daolayer.spring;
+package org.grouter.domain.dao.spring;
 
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.daolayer.UserDAO;
+import org.grouter.domain.dao.UserDAO;
+import org.grouter.domain.entities.EntityValidator;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.UserState;
 import org.hibernate.LazyInitializationException;
+import org.hibernate.validator.InvalidValue;
 
 import java.util.List;
 import java.util.Map;
@@ -49,11 +52,28 @@ public class UserDAOTest extends AbstractDAOTests
         user.setPassword("password");
         user.setUserName("username");
         user.setCreatedBy(admin);
+        user.setUserState(UserState.BLOCKED);
         userDAO.save(user);
         flushSession();
         Long id = user.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM user WHERE id = ?", new Object[]{id});
         assertEquals("A first name", map.get("firstname"));
+    }
+
+    public void testUserEntityValidator()
+    {
+        User user = new User();
+        // username, firsname,password and userstate can not be null
+        InvalidValue[] invalidValues = EntityValidator.validate(user);
+        assertNotNull(invalidValues);
+        try
+        {
+            Validate.notEmpty(invalidValues);
+        }
+        catch (Exception e)
+        {
+            fail();
+        }
     }
 
     @Override

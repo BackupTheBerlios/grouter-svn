@@ -1,9 +1,9 @@
-package org.grouter.domain.daolayer.spring;
+package org.grouter.domain.dao.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.daolayer.JobDAO;
-import org.grouter.domain.daolayer.RouterDAO;
+import org.grouter.domain.dao.JobDAO;
+import org.grouter.domain.dao.RouterDAO;
 import org.grouter.domain.entities.Job;
 import org.grouter.domain.entities.JobState;
 import org.grouter.domain.entities.JobType;

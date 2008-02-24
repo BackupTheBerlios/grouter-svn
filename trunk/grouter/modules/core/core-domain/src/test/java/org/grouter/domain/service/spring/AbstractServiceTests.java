@@ -1,4 +1,4 @@
-package org.grouter.domain.servicelayer.spring;
+package org.grouter.domain.service.spring;
 
 
 import org.apache.commons.io.FileUtils;

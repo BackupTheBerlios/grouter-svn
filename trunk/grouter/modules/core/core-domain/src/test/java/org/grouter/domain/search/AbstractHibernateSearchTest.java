@@ -20,8 +20,8 @@ package org.grouter.domain.search;
 
 import org.apache.commons.io.FileUtils;
 import org.grouter.common.hibernatesearch.FullIndexHandler;
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.NodeDAO;
+import org.grouter.domain.dao.MessageDAO;
+import org.grouter.domain.dao.NodeDAO;
 import org.grouter.domain.entities.Message;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

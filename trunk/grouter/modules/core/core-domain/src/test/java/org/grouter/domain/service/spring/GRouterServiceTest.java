@@ -1,9 +1,9 @@
-package org.grouter.domain.servicelayer.spring;
+package org.grouter.domain.service.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.entities.*;
-import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.service.RouterService;
 
 import java.sql.Timestamp;
 import java.util.HashSet;

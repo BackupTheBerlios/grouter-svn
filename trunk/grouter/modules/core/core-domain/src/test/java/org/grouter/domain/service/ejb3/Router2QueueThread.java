@@ -1,10 +1,10 @@
-package org.grouter.domain.servicelayer.ejb3;
+package org.grouter.domain.service.ejb3;
 
 import org.apache.log4j.Logger;
 import org.grouter.common.jms.AcknowledgeMode;
 import org.grouter.common.jms.QueueSenderDestination;
 import org.grouter.common.jndi.JNDIUtils;
-import org.grouter.domain.servicelayer.RouterMessageFactory;
+import org.grouter.domain.service.RouterMessageFactory;
 
 import javax.jms.*;
 import javax.naming.InitialContext;

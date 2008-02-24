@@ -1,8 +1,8 @@
-package org.grouter.domain.daolayer.spring;
+package org.grouter.domain.dao.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.daolayer.RoleDAO;
+import org.grouter.domain.dao.RoleDAO;
 import org.grouter.domain.entities.Role;
 
 /**

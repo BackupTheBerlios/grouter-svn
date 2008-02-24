@@ -1,4 +1,4 @@
-package org.grouter.domain.servicelayer;
+package org.grouter.domain.service;
 
 import org.grouter.domain.entities.*;
 

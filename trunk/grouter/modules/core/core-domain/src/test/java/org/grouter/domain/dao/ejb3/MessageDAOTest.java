@@ -1,4 +1,4 @@
-package org.grouter.domain.daolayer.ejb3;
+package org.grouter.domain.dao.ejb3;
 
 /**
  * Unit test MessageDAOImpl interface.
@@ -8,9 +8,9 @@ package org.grouter.domain.daolayer.ejb3;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.daolayer.DAOFactory;
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.spring.MessageDAOImpl;
+import org.grouter.domain.dao.DAOFactory;
+import org.grouter.domain.dao.MessageDAO;
+import org.grouter.domain.dao.spring.MessageDAOImpl;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Receiver;
 import org.grouter.domain.entities.Sender;

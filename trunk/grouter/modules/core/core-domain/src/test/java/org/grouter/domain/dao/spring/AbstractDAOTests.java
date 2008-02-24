@@ -1,8 +1,8 @@
-package org.grouter.domain.daolayer.spring;
+package org.grouter.domain.dao.spring;
 
 import org.apache.commons.io.FileUtils;
-import org.grouter.domain.daolayer.MessageDAO;
-import org.grouter.domain.daolayer.NodeDAO;
+import org.grouter.domain.dao.MessageDAO;
+import org.grouter.domain.dao.NodeDAO;
 import org.hibernate.SessionFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
