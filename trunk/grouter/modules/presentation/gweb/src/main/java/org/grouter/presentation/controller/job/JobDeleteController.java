@@ -20,7 +20,7 @@
 package org.grouter.presentation.controller.job;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.JobService;
+import org.grouter.domain.service.JobService;
 import org.grouter.presentation.controller.AbstractRouterController;
 import org.grouter.presentation.controller.user.UserListController;
 import org.springframework.web.bind.ServletRequestBindingException;

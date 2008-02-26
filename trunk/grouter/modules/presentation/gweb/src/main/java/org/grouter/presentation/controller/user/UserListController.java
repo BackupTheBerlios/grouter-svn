@@ -20,9 +20,9 @@
 package org.grouter.presentation.controller.user;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.daolayer.UserDAO;
+import org.grouter.domain.dao.UserDAO;
 import org.grouter.domain.entities.User;
-import org.grouter.domain.servicelayer.UserService;
+import org.grouter.domain.service.UserService;
 import org.grouter.presentation.controller.AbstractRouterController;
 import org.springframework.web.servlet.ModelAndView;
 

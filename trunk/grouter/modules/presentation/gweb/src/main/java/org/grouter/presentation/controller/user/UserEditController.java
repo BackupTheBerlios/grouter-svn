@@ -22,7 +22,7 @@ package org.grouter.presentation.controller.user;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
-import org.grouter.domain.servicelayer.UserService;
+import org.grouter.domain.service.UserService;
 import org.grouter.presentation.controller.security.SecurityManagerImpl;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -50,13 +50,12 @@ public class UserEditController extends SimpleFormController
     private static final String SUCCESSVIEW = "redirect:list.do";
     private static final String USER = "usercommand";
     private org.grouter.presentation.controller.security.SecurityManager securityManager = new SecurityManagerImpl();
+    private UserService userService;
 
     public void setUserService(UserService userService)
     {
         this.userService = userService;
     }
-                                               
-    private UserService userService;
 
 
     /**
@@ -107,10 +106,6 @@ public class UserEditController extends SimpleFormController
         return showForm( req, res, bex, model );
         // return new ModelAndView( SUCCESSVIEW, model );
     }
-
-
-
-
 
     /**
      * Callback method for intializing command/form bean.

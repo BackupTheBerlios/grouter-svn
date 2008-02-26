@@ -23,7 +23,7 @@ package org.grouter.presentation.controller;
 import org.apache.log4j.Logger;
 import org.grouter.common.jndi.GlobalBeanLocator;
 import org.grouter.domain.entities.Message;
-import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.service.RouterService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -43,7 +43,7 @@ class SpringAppController implements Controller, ApplicationContextAware
         this.gRouterService = gRouterService;
     }
 
-    public org.grouter.domain.servicelayer.RouterService gRouterService;
+    public org.grouter.domain.service.RouterService gRouterService;
     protected static BeanFactory factory;
     private final static String beanName = "messageServiceManager";
 

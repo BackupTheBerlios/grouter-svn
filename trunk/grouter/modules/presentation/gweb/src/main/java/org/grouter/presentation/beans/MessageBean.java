@@ -19,9 +19,8 @@
 
 package org.grouter.presentation.beans;
 
-import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.Message;
-import org.apache.log4j.Logger;
+import org.grouter.domain.service.RouterService;
 
 import java.util.List;
 

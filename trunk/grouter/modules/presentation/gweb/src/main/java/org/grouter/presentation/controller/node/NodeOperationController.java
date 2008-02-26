@@ -21,8 +21,7 @@ package org.grouter.presentation.controller.node;
 
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Router;
-import org.grouter.domain.servicelayer.RouterService;
-import org.grouter.presentation.controller.router.RouterListController;
+import org.grouter.domain.service.RouterService;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;

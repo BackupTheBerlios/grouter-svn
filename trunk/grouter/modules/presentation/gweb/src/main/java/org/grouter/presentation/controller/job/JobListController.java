@@ -21,7 +21,7 @@ package org.grouter.presentation.controller.job;
 
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Job;
-import org.grouter.domain.servicelayer.JobService;
+import org.grouter.domain.service.JobService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 

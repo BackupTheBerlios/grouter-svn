@@ -19,16 +19,16 @@
 
 package org.grouter.presentation.controller.node;
 
-import java.util.*;
-
-import org.directwebremoting.WebContextFactory;
-import org.directwebremoting.WebContext;
 import org.directwebremoting.ScriptSession;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.proxy.dwr.Util;
 import org.directwebremoting.proxy.scriptaculous.Effect;
 import org.directwebremoting.util.Logger;
-import org.grouter.domain.servicelayer.BeanLocator;
 import org.grouter.domain.entities.Node;
+import org.grouter.domain.service.BeanLocator;
+
+import java.util.*;
 
 
 /**

@@ -21,7 +21,7 @@ package org.grouter.presentation.controller.router;
 
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Router;
-import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.service.RouterService;
 import org.grouter.presentation.controller.job.JobCommand;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;

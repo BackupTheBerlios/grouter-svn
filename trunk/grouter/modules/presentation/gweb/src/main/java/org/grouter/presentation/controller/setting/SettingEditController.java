@@ -22,7 +22,7 @@ package org.grouter.presentation.controller.setting;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
-import org.grouter.domain.servicelayer.UserService;
+import org.grouter.domain.service.UserService;
 import org.grouter.presentation.controller.user.UserCommand;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;

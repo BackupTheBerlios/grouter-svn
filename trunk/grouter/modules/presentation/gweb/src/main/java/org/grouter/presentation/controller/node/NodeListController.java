@@ -19,19 +19,19 @@
 
 package org.grouter.presentation.controller.node;
 
-import org.springframework.web.servlet.mvc.AbstractController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.apache.log4j.Logger;
-import org.grouter.domain.servicelayer.RouterService;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
+import org.grouter.domain.service.RouterService;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A controller for Message listing.

@@ -19,9 +19,9 @@
 
 package org.grouter.presentation.beans;
 
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.servicelayer.RouterService;
 import org.apache.log4j.Logger;
+import org.grouter.domain.entities.Node;
+import org.grouter.domain.service.RouterService;
 
 /**
  * @author Georges Polyzois

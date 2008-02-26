@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
-import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.service.RouterService;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
