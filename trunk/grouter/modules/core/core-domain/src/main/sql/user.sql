@@ -20,6 +20,6 @@ CREATE TABLE user (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into user (id, username, password, user_state) values (1, 'admin', 'nimda', 3);
-insert into user (id, username, password, user_state) values (2, 'view', 'view', 3);
+insert into user (id, username, password, user_state_fk) values (1, 'admin', 'nimda', 3);
+insert into user (id, username, password, user_state_fk) values (2, 'view', 'view', 3);
 

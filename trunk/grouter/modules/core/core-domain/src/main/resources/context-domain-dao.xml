@@ -9,13 +9,13 @@
     </bean>
 
     <!-- Core specific Data Access Object (DAO) Beans -->
-    <bean id="systemDAO"  parent="abstractDao" class="org.grouter.domain.daolayer.spring.SystemDAOImpl" />
-    <bean id="messageDAO"  parent="abstractDao" class="org.grouter.domain.daolayer.spring.MessageDAOImpl" />
-    <bean id="nodeDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.NodeDAOImpl"/>
-    <bean id="routerDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RouterDAOImpl"/>
-    <bean id="userDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.UserDAOImpl"/>
-    <bean id="roleDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.RoleDAOImpl"/>
-    <bean id="endPointDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.EndPointDAOImpl"/>
-    <bean id="settingsDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.SettingsDAOImpl"/>
-    <bean id="jobDAO" parent="abstractDao" class="org.grouter.domain.daolayer.spring.JobDAOImpl"/>
+    <bean id="systemDAO"  parent="abstractDao" class="org.grouter.domain.dao.spring.SystemDAOImpl" />
+    <bean id="messageDAO"  parent="abstractDao" class="org.grouter.domain.dao.spring.MessageDAOImpl" />
+    <bean id="nodeDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.NodeDAOImpl"/>
+    <bean id="routerDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.RouterDAOImpl"/>
+    <bean id="userDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.UserDAOImpl"/>
+    <bean id="roleDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.RoleDAOImpl"/>
+    <bean id="endPointDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.EndPointDAOImpl"/>
+    <bean id="settingsDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.SettingsDAOImpl"/>
+    <bean id="jobDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.JobDAOImpl"/>
 </beans>

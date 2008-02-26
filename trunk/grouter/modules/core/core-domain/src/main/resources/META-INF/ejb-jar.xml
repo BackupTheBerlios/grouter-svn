@@ -11,7 +11,7 @@
         <commandMessage-driven>
             <display-name>GRouterQueueMDB</display-name>
             <ejb-name>GRouterQueueMDB</ejb-name>
-            <ejb-class>org.grouter.domain.servicelayer.ejb3.GRouterQueueMDB</ejb-class>
+            <ejb-class>org.grouter.domain.service.ejb3.GRouterQueueMDB</ejb-class>
             <transaction-type>Container</transaction-type>
         </commandMessage-driven>
     </enterprise-beans-->

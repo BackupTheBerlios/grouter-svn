@@ -42,7 +42,7 @@
   </bean -->
 
   <!-- this is the Message Driven POJO (MDP) -->
-  <bean id="messageListenerService" class="org.grouter.domain.servicelayer.spring.RouterQueueListenerImpl"/>
+  <bean id="messageListenerService" class="org.grouter.domain.service.spring.RouterQueueListenerImpl"/>
 
   <!-- With this adapter we need not have any knowledge at all about JMS MessageListener interface at all!!! -->
   <bean id="messageListenerServiceAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
