@@ -71,10 +71,12 @@
     <bean name="/job/delete.do" class="org.grouter.presentation.controller.job.JobDeleteController"/>
     <bean name="/job/lwedit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
 
+
+
     <bean name="/security/**" class="org.grouter.presentation.controller.security.SecurityController">
-        <property name="login" value="login/login"/>
-        <property name="loggedOut" value="login/logedout"/>
-        <property name="loginDenied" value="login/logindenied"/>
+        <property name="login" value="security/login"/>  <!-- /gweb/seucurity/login.do  -->
+        <property name="loggedOut" value="security/logedout"/>  <!-- /gweb/seucurity/logedout.do  -->
+        <property name="loginDenied" value="security/logindenied"/>
     </bean>
 
     <!--

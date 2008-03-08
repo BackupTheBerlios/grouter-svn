@@ -27,11 +27,17 @@
     </property>
   </bean>
 
-  <!-- START Filters as ordered in the filterchaingproxy -->
+  <!--
+  START Filters as ordered in the filterchaingproxy
+   -->
+
+  <!--  HttpSessionContextIntegrationFilter: Populates the SecurityContextHolder with information obtained from the HttpSession. -->
   <bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter" />
 
+  <!-- LogoutFilter: Logs a principal out. -->
   <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
-    <constructor-arg value="/security/logedOut.do"></constructor-arg>
+    <!-- Redirect to this page after logout -->  
+    <constructor-arg value="/security/logedout.do"></constructor-arg>
     <constructor-arg>
       <list>
         <!-- bean class="util.web.PreLogoutHandler" / -->
@@ -40,12 +46,13 @@
         </bean>
       </list>
     </constructor-arg>
+    <!-- this is the default, can be omitted -->
     <property name="filterProcessesUrl" value="/j_acegi_logout" />
   </bean>
 
   <bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
     <property name="authenticationManager" ref="authenticationManager" />
-    <property name="authenticationFailureUrl" value="/security/loginDenied.do" />
+    <property name="authenticationFailureUrl" value="/security/logindenied.do" />
     <property name="defaultTargetUrl" value="/message/list.do" />
     <property name="alwaysUseDefaultTargetUrl" value="false" />
     <property name="filterProcessesUrl" value="/j_acegi_security_check" />
@@ -73,7 +80,7 @@
     </property>
     <property name="accessDeniedHandler">
       <bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl">
-        <property name="errorPage" value="/security/loginDenied.do" />
+        <property name="errorPage" value="/security/logindenied.do" />
       </bean>
     </property>
   </bean>
@@ -108,6 +115,7 @@
         /javascript/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
         /dwr/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
         /=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
+        /security/**=ROLE_USER,ROLE_ADMIN,ROLE_ANONYMOUS
       </value>
     </property>
   </bean>

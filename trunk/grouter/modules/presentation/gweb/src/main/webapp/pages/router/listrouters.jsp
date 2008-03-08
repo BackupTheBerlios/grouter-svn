@@ -81,7 +81,7 @@
                             <a href='delete.do?id=<c:out value="${object.id}"/>' class="iconlink">
                                 <img src="/gweb/images/remove_24x24.png" alt="Delete" width="14"
                                      height="14">Delete </a>
-                            <a href="/gweb/user/edit.do" params="lightwindow_width=175,lightwindow_height=60" class="lightwindow page-options"><strong>Form Example</strong> - Submit a form in a lightWindow!</a>
+                            
                         </td>
                     </tr>
                 </c:forEach>

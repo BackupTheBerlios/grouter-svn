@@ -32,7 +32,6 @@
 
 
     <link href="../css/page_main.css" type="text/css" rel="stylesheet"/>
-    <link href="../css/decorator_main.css" type="text/css" rel="stylesheet"/>
 
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/util.js"></script>

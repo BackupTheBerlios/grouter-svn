@@ -38,7 +38,9 @@
         <param-value>/WEB-INF/classes/log4j.properties</param-value>
     </context-param>
 
-    <!-- Setup the Acegi Filter Chain Proxy -->
+    <!--
+    Setup the Acegi Filter Chain Proxy 
+    -->
     <filter>
         <filter-name>Acegi Filter Chain Proxy</filter-name>
         <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
@@ -91,12 +93,8 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <servlet>
-        <servlet-name>org.grouter.presentation.gwt.gweb-module GwebRemoteService</servlet-name>
-        <servlet-class>org.grouter.presentation.gwt.server.GwebRemoteServiceImpl</servlet-class>
-    </servlet>
 
-    <!-- servlet>
+    <servlet>
      <display-name>DWR Servlet</display-name>
      <servlet-name>dwr-invoker</servlet-name>
      <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
@@ -109,7 +107,7 @@
    <servlet-mapping>
      <servlet-name>dwr-invoker</servlet-name>
      <url-pattern>/dwr/*</url-pattern>
-   </servlet-mapping -->
+   </servlet-mapping>
 
     <!--
     All .do urls goes to gweb context
@@ -119,10 +117,10 @@
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
+    <!--servlet-mapping>
         <servlet-name>gweb</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping -->
     
     <!-- servlet-mapping>
         <servlet-name>org.grouter.presentation.gwt.gweb-module GwebRemoteService</servlet-name>
@@ -140,8 +138,9 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+
     <welcome-file-list>
-        <welcome-file>../html/index.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
 

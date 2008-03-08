@@ -22,6 +22,7 @@ package org.grouter.presentation.controller.user;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
+import org.grouter.domain.entities.UserState;
 import org.grouter.domain.service.UserService;
 import org.grouter.presentation.controller.security.SecurityManagerImpl;
 import org.springframework.validation.BindException;
@@ -89,6 +90,7 @@ public class UserEditController extends SimpleFormController
         UserCommand cmd = ( UserCommand ) object;
         User user = cmd.getUser(  );
         user.setCreatedBy( createdBy );
+        user.setUserState(UserState.NEW );
         try
         {
             userService.save( user );
@@ -103,8 +105,8 @@ public class UserEditController extends SimpleFormController
         Map<String, Object> model = new HashMap<String, Object>(  );
         model.put( "message", message );
 
-        return showForm( req, res, bex, model );
-        // return new ModelAndView( SUCCESSVIEW, model );
+        // to same view return showForm( req, res, bex, model );
+        return new ModelAndView( SUCCESSVIEW, model );
     }
 
     /**

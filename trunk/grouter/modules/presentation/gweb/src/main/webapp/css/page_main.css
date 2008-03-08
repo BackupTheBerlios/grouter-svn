@@ -1,21 +1,111 @@
-div#contentHeader
+#container
 {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	margin: 0 auto;
+	padding: 5px 5px;
+	font-size: 11pt;
+}
+
+#headingBar
+{
+	margin-bottom: 20px;
+	border-bottom: 1px solid #ccc;
+	padding: 5px;
+}
+
+#headingBar h1
+{
+	padding: 0 20px 5px 30px;
+	display: inline;
+	font-size: 10pt;
+	color: blue;
+	border-right: 1px solid #ccc;
+}
+
+div#userSettings
+{
+    font: 11px Verdana, Arial, Helvetica, sans-serif;
+    color: blue;
+    float:right;
+    padding: 12px;
+    background: lavender;
+    display: inline-table;
+    border: 2px solid #afcff9;
+    margin: 2px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomright: 10px;
+}
+
+#logoBar
+{
+	background-image: url( "/gweb/images/titlegradient.png" );
+	background-repeat: repeat-x;
+	height: 33px;
+}
+
+img#logo
+{
+	margin-left: 15px;
+	margin-top: 0px;
+}
+
+#logoBar a
+{
+	padding: 5px 10px;
+	float: right;
+	font-size: 10pt;
+}
+
+#logoBar img
+{
+	float: left;
+}
+
+
+div#menu {
+	margin: 0px auto;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	text-align: left;
+	padding: 5px 5px;
+    border-bottom: #ccc 2px solid;
+
+}
+
+
+
+div#body
+{
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 5px 5px;
+    font-size: 11pt;
+
+}
+
+
+
+div#contentHeader {
     font: 13px, bold, Verdana, Arial, Helvetica, sans-serif;
     margin: 5px;
     padding: 1px;
     background: white;
     display: inline-table;
-   
+    width: 98%;
+
 }
 
-div#content
-{
-     font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
+div#content {
+    font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
     margin: 5px;
     padding: 5px;
     background: white;
     display: inline-table;
     border: 2px solid #afcff9;
+    width: 98%;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
@@ -23,27 +113,43 @@ div#content
     -moz-border-radius-bottomright: 10px;
 }
 
-img
-{
+img {
     border: none;
 }
 
-div#form
-{
+div#form {
     font: 9px Verdana, Arial, Helvetica, sans-serif;
 }
+
+div#formPanel {
+        margin: 5px;
+        padding: 5px;
+        background: white;
+        display: inline-table;
+        border: 1px solid #afcff9;
+}
+
+
+div#formPanelButtons {
+        margin: 5px;
+        padding: 5px;
+        background: white;
+        display: inline-table;
+        width:inherit;
+}
+
 
 /**
 * Used to display operations like edit, delete etc.
 */
-div#menuAction
-{
+div#menuAction {
     background: #f4f4f2;
     font: 9px Verdana, Arial, Helvetica, sans-serif;
     display: inline-table;
     padding: 10px;
     border: 2px solid #afcff9;
-    margin:5px;
+    margin: 5px;
+    width: 98%;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
@@ -51,25 +157,23 @@ div#menuAction
     -moz-border-radius-bottomright: 10px;
 }
 
-div#paragraph
-{
+div#paragraph {
     padding: 10px;
     background: lavender;
     font: 12px Verdana, Arial, Helvetica, sans-serif;
     display: inline-table;
     border: 2px solid #afcff9;
-    margin:5px;
+    margin: 5px;
+    width: 98%;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
     -moz-border-radius-bottomright: 10px;
     -moz-border-radius-bottomright: 10px;
 
-    
 }
 
-div#paragraphHeader
-{
+div#paragraphHeader {
     font: 13px / 19px Verdana, Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: blue;
@@ -79,8 +183,7 @@ div#paragraphHeader
 /*
 * Tabbed menu using a <ul> list.
 */
-ul.menu
-{
+ul.menu {
     display: inline;
     margin: 0;
     padding: 0;
@@ -88,20 +191,17 @@ ul.menu
     margin-left: 5px;
 }
 
-ul.menu li
-{
+ul.menu li {
     display: inline;
     margin-right: 10px;
 }
 
-ul.tabbed a
-{
+ul.tabbed a {
     text-decoration: none;
     color: black;
 }
 
-ul.tabbed li
-{
+ul.tabbed li {
     display: inline;
     background: #f4f4f2;
     padding: 4px 10px;
@@ -112,17 +212,23 @@ ul.tabbed li
     -moz-border-radius-topright: 10px;
 }
 
-ul.tabbed li.active
-{
+ul.tabbed li.active {
     background: #fff;
-    border-top: 2px solid #ebaa46;
+    border-top: 2px sx  olid #ebaa46;
 }
 
 /**
 *
 */
-table.pagedList th
-{
+table tr td {
+    font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
+    height: 18px;
+    padding: 2px;
+    text-align: left;
+}
+
+
+table.pagedList th {
     font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
     background-image: url( "/gweb/images/columnheader_gradient.gif" );
     height: 18px;
@@ -131,22 +237,19 @@ table.pagedList th
     text-align: left;
 }
 
-table.pagedList th a
-{
+table.pagedList th a {
     text-decoration: none;
     color: black;
 }
 
-table.pagedList td
-{
+table.pagedList td {
     font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
     padding: 5px 10px;
     border-bottom: 1px solid #ccc;
     white-space: nowrap;
 }
 
-table.pagedList tr:hover
-{
+table.pagedList tr:hover {
     background: #eee;
     text-align: left;
 }
@@ -154,20 +257,17 @@ table.pagedList tr:hover
 /*
 * General error message style.
 */
-span.error
-{
+span.error {
     color: red;
     font-weight: bold;
 }
 
-span.warning
-{
+span.warning {
     font-weight: bold;
     color: orangered;
 }
 
-span.message
-{
+span.message {
     font-weight: bold;
     color: green;
 }
@@ -175,8 +275,7 @@ span.message
 /*
  * Icon link.
  */
-a.iconlink
-{
+a.iconlink {
     text-decoration: none;
     font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
     margin: 5px;
@@ -184,14 +283,131 @@ a.iconlink
     vertical-align: top;
 }
 
-a.iconlink img
-{
+a.iconlink img {
     vertical-align: middle;
+}
+
+img.icon {
+    vertical-align: top;
+}
+
+<!--
+Form styling
+-->
+form.decoratedform {
+    width: 370px;
+    font-size: 1.0em;
+    color: #333;
+}
+
+form.decoratedform legend {
+    padding-left: 0;
+}
+
+form.decoratedform legend, form.decoratedform label {
+    color: #333;
+}
+
+form.decoratedform fieldset {
+    border: none;
+    border-top: 1px solid #C9DCA6;
+    background: url( ../images/cmxform-fieldset.gif ) left bottom repeat-x;
+    background-color: #F8FDEF;
+}
+
+form.decoratedform fieldset fieldset {
+    background: none;
+}
+
+form.decoratedform fieldset p, form.decoratedform fieldset fieldset {
+    padding: 5px 10px 7px;
+    background: url( ../images/cmxform-divider.gif ) left bottom repeat-x;
+}
+
+form.decoratedform label.error, label.error {
+/* remove the next line when you have trouble in IE6 with labels in list */
+    color: red;
+    font-style: italic;
+    padding-left: 16px;
+
+    background: url( "/gweb/images/unchecked.gif" ) no-repeat 0px 0px;
+}
+
+em.error {
+    background: url( "images/unchecked.gif" ) no-repeat 0px 0px;
+    padding-left: 16px;
+}
+
+em.success {
+    background: url( "images/checked.gif" ) no-repeat 0px 0px;
+    padding-left: 16px;
+}
+
+div.error {
+    display: none;
+}
+
+input {
+    border: 1px solid black;
+}
+
+input:focus {
+    border: 1px dotted black;
+}
+
+input.error {
+    border: 1px dotted red;
+}
+
+form.decoratedform .gray * {
+    color: gray;
 }
 
 
 
-img.icon
+
+
+
+
+
+
+
+/*
+ * Decorator footer
+ */
+#footer
 {
-    vertical-align: top;
+	font-size: 11px;
+	border-top: #ccc 1px solid;
+	margin-top: 30px;
+	padding-top: 4px;
+	clear: both;
+}
+
+#footer :after
+{
+	content: ".";
+	clear: both;
+	font-size: 1px;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+* html #footer
+{
+	height: 9px;
+}
+
+#footer p
+{
+	float: left;
+	clear: left;
+	margin-bottom: 10px;
+}
+
+#footer .links
+{
+	float: right;
+	clear: right;
 }

@@ -71,7 +71,7 @@ public class SecurityController extends MultiActionController
         return new ModelAndView( this.login );
     }
 
-    public ModelAndView loggedOut( HttpServletRequest request, HttpServletResponse response )
+    public ModelAndView logedout( HttpServletRequest request, HttpServletResponse response )
             throws Exception
     {
         SecurityContextHolder.clearContext();
@@ -79,11 +79,19 @@ public class SecurityController extends MultiActionController
         return new ModelAndView( this.loggedOut);
     }
 
-    public ModelAndView loginDenied( HttpServletRequest request, HttpServletResponse response )
+    /**
+     * Correspond to a call to /context/security/logindenied.do
+     * 
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    public ModelAndView logindenied( HttpServletRequest request, HttpServletResponse response )
             throws Exception
     {
-        SecurityContextHolder.clearContext();
+        //SecurityContextHolder.clearContext();
 
-        return new ModelAndView( this.loginDenied );
+        return new ModelAndView( this.loginDenied);
     }
 }

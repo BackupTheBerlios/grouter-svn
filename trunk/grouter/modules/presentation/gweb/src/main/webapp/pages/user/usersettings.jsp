@@ -1,33 +1,37 @@
-<div class="example" id="demo-effect-slidedown" onclick="new Effect.SlideDown('userSettings')">
-    <div style="height:10px;">
-        <span>Settings</span>
-    </div>
+<div id="userSettings">
+    <table>
+        <!-- tr align="right">
+            <td colspan="4"  align="right">
+                <form action="" enctype="multipart/form-data" name="mainForm" method="get">
+                        <input id="searchText" value="" name="searchText" type="text">
+                        <input type="submit" value="Search" name="search" size="10"/>
+                    </form>
+            </td>
+        </tr -->
 
+        <tr>
+            <td>
+                <a href="/gweb/grouter/select.do">Settings</a>
+            </td>
+            <td>
+                <a href="/gweb/security/logedout.do">Log out</a>
+            </td>
+            <td>
+                <a href="/gweb/security/login.do">Log in</a>
+            </td>
+            <td>
+                <a href="">User </a>
+            </td>
+        </tr>
+    </table>
 </div>
 
-    <div id="userSettings">
-        <table>
-            <tr>
-                <td>
-                    <a href="/gweb/grouter/select.do">Settings</a>
-                </td>
-                <td>
-                    <a href="/gweb/security/logedOut.do">Log out</a>
-                </td>
-                <td>
-                    <a href="/gweb/security/login.do">Log in</a>
+<div>
+    <a href="#" onclick="Element.hide('userSettings'); return true;"><img src="/gweb/images/gtk-goto-first-rtl.png" alt="" /></a>
 
-                </td>
-                <td>
-                    <a href="">User </a>
-                </td>
-
-            </tr>
-        </table>
-    </div>
-
-    <a href="#" onclick="Element.hide('userSettings'); return true;">Hide</a>
-    <a href="#" onclick="Element.show('userSettings'); return false;">Show</a>
+    <a href="#" onclick="Element.show('userSettings'); return false;"><img src="/gweb/images/gtk-goto-last-rtl.png" alt="" /></a>
+    
+</div>
 
 
 

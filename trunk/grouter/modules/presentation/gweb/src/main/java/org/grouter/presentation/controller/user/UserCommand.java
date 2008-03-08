@@ -20,6 +20,7 @@
 package org.grouter.presentation.controller.user;
 
 import org.grouter.domain.entities.User;
+import org.grouter.domain.entities.Address;
 
 /**
  * @author Georges Polyzois
@@ -27,14 +28,27 @@ import org.grouter.domain.entities.User;
 public class UserCommand
 {
     private User user = new User();
+    private Address address = new Address();
+
+    public Address getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(Address address)
+    {
+        this.address = address;
+    }
 
     public UserCommand(User user)
     {
         this.user = user;
+        this.user.setAddress( address );
     }
 
     public UserCommand()
     {
+        this.user.setAddress( address );
         
     }
 
@@ -47,4 +61,7 @@ public class UserCommand
     {
         this.user = user;
     }
+
+
+
 }

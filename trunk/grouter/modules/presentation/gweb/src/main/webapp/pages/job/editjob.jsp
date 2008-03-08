@@ -23,11 +23,9 @@
     Edit Job.
 </div>
 
-
 <div id="content">
     <form:form commandName="jobcommand" id="form">
         <table>
-
             <tr>
                 <td>Router:</td>
                  <td>
@@ -59,14 +57,11 @@
             <tr>
                 <td colspan="3" align="right">
                     <a href="/gweb/job/list.do"><input type="button" value="Cancel"/></a>
-
                     <input type="submit" value="Save Changes"/>
                 </td>
             </tr>
         </table>
     </form:form>
-
 </div>
-
 </body>
 </html>

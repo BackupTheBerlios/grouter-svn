@@ -77,6 +77,8 @@
 
 
 
+<br>
+
 <div id="menuAction">
     <table border="0">
         <tr>
@@ -103,6 +105,7 @@
     </table>
 </div>
 
+<br>
 
 <div id="content">
     <form id="mainForm" action="">
