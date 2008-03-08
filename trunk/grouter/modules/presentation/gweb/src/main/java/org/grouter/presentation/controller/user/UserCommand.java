@@ -30,26 +30,22 @@ public class UserCommand
     private User user = new User();
     private Address address = new Address();
 
-    public Address getAddress()
-    {
-        return address;
-    }
-
-    public void setAddress(Address address)
-    {
-        this.address = address;
-    }
-
     public UserCommand(User user)
     {
         this.user = user;
-        this.user.setAddress( address );
+        if( user.getAddress() == null )
+        {
+            user.setAddress( address );
+        }
+
+        //this.user.setAddress( address );
     }
+
 
     public UserCommand()
     {
         this.user.setAddress( address );
-        
+
     }
 
     public User getUser()
@@ -62,6 +58,13 @@ public class UserCommand
         this.user = user;
     }
 
+    public Address getAddress()
+    {
+        return address;
+    }
 
-
+    public void setAddress(Address address)
+    {
+        this.address = address;
+    }
 }

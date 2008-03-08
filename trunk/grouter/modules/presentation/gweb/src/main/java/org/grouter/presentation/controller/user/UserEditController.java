@@ -80,6 +80,7 @@ public class UserEditController extends SimpleFormController
     protected ModelAndView onSubmit( HttpServletRequest req, HttpServletResponse res, Object object, BindException bex )
             throws Exception
     {
+        // Get the user id of logged on user
         Long userId = securityManager.getUserIdAsLong();
 
         User createdBy = new User();

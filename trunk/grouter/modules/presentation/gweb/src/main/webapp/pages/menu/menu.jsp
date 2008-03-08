@@ -1,6 +1,6 @@
 <ul class="menu tabbed">
     <li>
-		<span id="pretty" title="Under Routers zou will find the available Routers you can manage!">
+		<span id="pretty" title="Routers - the available Routers you can manage">
             <a href="/gweb/router/list.do">Routers</a>
         </span>
     </li>

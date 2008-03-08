@@ -19,7 +19,7 @@
 
 
 <div id="paragraph" nowrap>
-    An error was caught
+    An unexpected error was caught by the system.
 </div>
 
 <jsp:include page="menu.jsp"/>

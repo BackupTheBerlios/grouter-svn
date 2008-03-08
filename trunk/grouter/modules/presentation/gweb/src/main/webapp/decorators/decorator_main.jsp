@@ -11,33 +11,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
+
+<% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
+
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
     <title>Grouter - <decorator:title/></title>
 
-
-    <!-- script type="text/javascript" charset="iso8859-1"
-            src="../../javascripts/lightwindow.js"></script>
-    <script type="text/javascript" charset="iso8859-1"
-            src="/gweb/javascripts/lightwindow.js"></script -->
-
-    <!--link href="../../css/lightwindow.css" type="text/css" rel="stylesheet"/>
-    <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/ -->
-
-    <link href="../../css/page_main.css" type="text/css" rel="stylesheet"/>
     <link href="/gweb/css/page_main.css" type="text/css" rel="stylesheet" />
-    <link href="../../css/default.css" type="text/css" rel="stylesheet" />
+    <!-- link href="../../css/default.css" type="text/css" rel="stylesheet" / -->
 
-    <!-- link href="../../css/accordion.css" rel="stylesheet" type="text/css" >
-    <link href="/gweb/css/accordion.css" rel="stylesheet" type="text/css"  -->
-
-    <link href="../../css/datatable.css" rel="stylesheet" type="text/css" >
     <link href="/gweb/css/datatable.css" rel="stylesheet" type="text/css" >
 
    
-
-    <link href="../../css/lightwindow.css" type="text/css" rel="stylesheet"/>
     <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/>
 
 
@@ -70,21 +58,14 @@
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script>
 
 
-    <script type="text/javascript" charset="iso8859-1" src="../../javascripts/lightwindow-2.0.js"></script>
+    <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/lightwindow-2.0.js"></script -->
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/lightwindow-2.0.js"></script>
 
-    <script type="text/javascript" charset="iso8859-1" src="../../javascripts/accordion-2.0.js"></script>
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/accordion-2.0.js"></script>
-
-
-
+    <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/accordion-2.0.js"></script -->
+    <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/accordion-2.0.js"></script -->
     <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
 
-
-
     <script type="text/javascript">
-
-
         $(function()
         {
             $('#pretty').tooltip({
@@ -138,12 +119,8 @@
                 opacity: 0.95,
                 left: 0
             });
-
         });
-
-
     </script>
-
 
     <decorator:head/>
 </head>

@@ -27,11 +27,11 @@ div#userSettings
     font: 11px Verdana, Arial, Helvetica, sans-serif;
     color: blue;
     float:right;
-    padding: 12px;
+    padding: 2px;
     background: lavender;
     display: inline-table;
     border: 2px solid #afcff9;
-    margin: 2px;
+    margin: 1px;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
@@ -127,6 +127,17 @@ div#formPanel {
         background: white;
         display: inline-table;
         border: 1px solid #afcff9;
+}
+
+
+div#formPanelHeader {
+        font: 12px Verdana, Arial, Helvetica, sans-serif, bold;
+        margin-left: -5px;
+        margin-top:-5px;
+        padding: 5px;
+        background: #afcff9;
+        display: inline-table;
+        width:100%;
 }
 
 

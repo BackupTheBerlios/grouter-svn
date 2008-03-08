@@ -28,6 +28,10 @@
 
         <div id="formPanel">
 
+            <div id="formPanelHeader">
+                User
+            </div>
+
             <table>
                 <tr>
                     <td>First name:</td>
@@ -56,14 +60,13 @@
                         </form:select>
                     </td>
                 </tr>
-
             </table>
-
-
         </div>
 
         <div id="formPanel">
-
+            <div id="formPanelHeader">
+            Address
+                </div>
             <table>
 
                 <tr>
