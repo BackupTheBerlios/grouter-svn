@@ -21,38 +21,25 @@
     <title>Grouter - <decorator:title/></title>
 
     <link href="/gweb/css/page_main.css" type="text/css" rel="stylesheet" />
-    <!-- link href="../../css/default.css" type="text/css" rel="stylesheet" / -->
-
     <link href="/gweb/css/datatable.css" rel="stylesheet" type="text/css" >
-
-   
     <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/>
 
 
-
-    <!-- JQuery Validation plugin -->
-    <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/>
-    <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
     <!-- script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
- <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
- <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script -->
+    <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
+    <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script -->
+
 
 
     <script type="text/javascript" charset="iso8859-1" src="../javascripts/common.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
-        <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
-        <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/common.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/prototype.js"></script>
-        <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/effects.js"></script>
-        <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/scriptaculous.js"></script -->
+    <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
+    <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/common.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/prototype.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/effects.js"></script>
+    <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/scriptaculous.js"></script -->
     
-
-
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/util.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script>
@@ -64,6 +51,8 @@
     <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/accordion-2.0.js"></script -->
     <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/accordion-2.0.js"></script -->
     <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
+
+
 
     <script type="text/javascript">
         $(function()
@@ -122,6 +111,14 @@
         });
     </script>
 
+    <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
+    <!-- JQuery Validation plugin -->
+    <!-- link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/ -->
+    <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
+    <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
+    <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
+        
+
     <decorator:head/>
 </head>
 
@@ -134,25 +131,19 @@
             <jsp:include page="../pages/user/usersettings.jsp"/>
         </div>
     </div>
-
     <br/>
-
     <div id="menu">
         <jsp:include page="../pages/menu/menu.jsp"/>
     </div>
-
     <div id="body">
         <decorator:body/>
     </div>
-
     <div id="footer">
         <p class="copyright">&copy; <a href="http://grouter.berlios.de/">Grouter</a></p>
-
         <div class="links">
             <a href="http://apache.maven.org/" title="Maven">Maven</a> &#183;
         </div>
     </div>
-
 </div>
 </body>
 </html>

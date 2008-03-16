@@ -128,21 +128,43 @@
             /org.grouter.presentation.gwt.gweb-module/org.grouter.presentation.gwt.gweb-module/GwebRemoteService
         </url-pattern>
     </servlet-mapping -->
-
+                     
     <!-- servlet-mapping>
      <servlet-name>gweb</servlet-name>
      <url-pattern>*.dec</url-pattern>
    </servlet-mapping -->
 
 
+    <!--
+       Timout overrides default timeout of  contianer. Specified in minutes.
+    -->
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>60</session-timeout>
     </session-config>
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorpage.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorpage.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/errorpage.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/errorpage.jsp</location>
+    </error-page>
 
     <!-- jsp-config>
          <taglib>

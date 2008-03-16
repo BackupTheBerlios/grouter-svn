@@ -30,7 +30,11 @@
         <pattern>/message/*</pattern>
         <pattern>/user/*</pattern>
         <pattern>/security/*</pattern>
+        <pattern>/errorpage.jsp</pattern>
     </decorator>
+
+
+
 
 
     <!-- decorator name="message" page="decorator.jsp">

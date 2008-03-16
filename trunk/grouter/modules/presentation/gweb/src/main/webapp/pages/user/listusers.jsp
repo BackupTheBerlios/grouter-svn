@@ -31,14 +31,8 @@
 <br/>
 
 <div id="message" style="display:none;">
-                    <c:out value="${message}"/>
+    <c:out value="${message}"/>
 </div>
-
-<!-- div class="example" id="demo-effect-slidedown"  onclick="new Effect.SlideDown(this)"><div style="height:120px;">
-        <span>Click for Effect.SlideDown demo</span>
-      </div>
-</div -->
-
 
 <div id="content">
     <form action="">
@@ -53,13 +47,13 @@
         <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Username</th>
-                    <th>First</th>
-                    <th>Last</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Company</th>
+                    <th><spring:message code="user.list.table.id" /></th>
+                    <th><spring:message code="user.list.table.username" /></th>
+                    <th><spring:message code="user.list.table.firstname" /></th>
+                    <th><spring:message code="user.list.table.lastname" /></th>
+                    <th><spring:message code="user.list.table.phone" /></th>
+                    <th><spring:message code="user.list.table.email" /></th>
+                    <th><spring:message code="user.list.table.companyname" /></th>
                     <th></th>
                 </tr>
             </thead>
@@ -95,14 +89,11 @@
                             <a href='delete.do?id=<c:out value="${object.id}"/>' class="iconlink">
                                 <img src="/gweb/images/remove_24x24.png" alt="Delete" width="14"
                                      height="14"><spring:message code="user.content.delete" /></a>
-
                         </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-
-
     </form>
 </div>
 </body>

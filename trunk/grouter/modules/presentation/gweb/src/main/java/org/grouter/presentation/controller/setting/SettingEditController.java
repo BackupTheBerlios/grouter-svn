@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.service.UserService;
-import org.grouter.presentation.controller.user.UserCommand;
+import org.grouter.presentation.controller.user.UserEditCommand;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -110,18 +110,18 @@ public class SettingEditController extends SimpleFormController
     protected Object formBackingObject( HttpServletRequest request )
             throws Exception
     {
-        UserCommand cmd;
+        UserEditCommand cmd;
         Long id = getId( request, ID);
         logger.debug("Get for id : " + id);
 
         if ( id != null )
         {
             User user = userService.findById( id );
-            cmd = new UserCommand( user );
+            cmd = new UserEditCommand( user );
         }
         else
         {
-            cmd = new UserCommand(  );
+            cmd = new UserEditCommand(  );
         }
 
         return cmd;

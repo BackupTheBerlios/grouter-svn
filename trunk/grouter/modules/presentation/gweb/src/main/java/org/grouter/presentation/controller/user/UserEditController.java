@@ -24,6 +24,7 @@ import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.UserState;
 import org.grouter.domain.service.UserService;
+import org.grouter.domain.validator.UserValidator;
 import org.grouter.presentation.controller.security.SecurityManagerImpl;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -52,6 +53,9 @@ public class UserEditController extends SimpleFormController
     private static final String USER = "usercommand";
     private org.grouter.presentation.controller.security.SecurityManager securityManager = new SecurityManagerImpl();
     private UserService userService;
+    private UserEditCommandValidator userEditCommandValidator = new UserEditCommandValidator();
+
+
 
     public void setUserService(UserService userService)
     {
@@ -65,11 +69,11 @@ public class UserEditController extends SimpleFormController
     public UserEditController(  )
     {
         setSessionForm( true );
-        setCommandClass( UserCommand.class );
+        setCommandClass( UserEditCommand.class );
         setFormView( FORMVIEW );
         setSuccessView( FORMVIEW );
         setCommandName( USER );
-        //setValidator();
+        setValidator( userEditCommandValidator );
     }
 
 
@@ -88,12 +92,14 @@ public class UserEditController extends SimpleFormController
 
 
         String message;
-        UserCommand cmd = ( UserCommand ) object;
+        UserEditCommand cmd = (UserEditCommand) object;
         User user = cmd.getUser(  );
+//        User user = (User) object;
         user.setCreatedBy( createdBy );
         user.setUserState(UserState.NEW );
         try
         {
+
             userService.save( user );
             message = "Saved";
         }
@@ -117,18 +123,18 @@ public class UserEditController extends SimpleFormController
     protected Object formBackingObject( HttpServletRequest request )
             throws Exception
     {
-        final UserCommand cmd;
+        final UserEditCommand cmd;
         final Long id = getId( request, ID);
         logger.debug("Get for id : " + id);
 
         if ( id != null )
         {
             User user = userService.findById( id );
-            cmd = new UserCommand( user );
+            cmd = new UserEditCommand( user );
         }
         else
         {
-            cmd = new UserCommand(  );
+            cmd = new UserEditCommand(  );
         }
 
         return cmd;

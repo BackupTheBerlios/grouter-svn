@@ -12,91 +12,105 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 
-    <link href="/gweb/css/page_main.css" type="text/css" rel="stylesheet"/>
-
-    <link href="/gweb/css/decorator_main.css" type="text/css" rel="stylesheet"/>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/>
-    <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script>
+    <link href="/gweb/css/page_main.css" type="text/css" rel="stylesheet" />
+       <link href="/gweb/css/datatable.css" rel="stylesheet" type="text/css" >
+       <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/>
 
 
-    <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
-
-
-    <script type="text/javascript">
-        $(document).ready(function()
-        {
-            $("#loginForm").validate();
-        });
+       <!-- script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
+       <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
+       <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script -->
 
 
 
+       <script type="text/javascript" charset="iso8859-1" src="../javascripts/common.js"></script>
+       <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
+       <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
+       <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
+       <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/common.js"></script>
+       <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/prototype.js"></script>
+       <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/effects.js"></script>
+       <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/scriptaculous.js"></script -->
 
-        $(function()
-        {
-            $('#pretty').tooltip({
-                track: true,
-                delay: 0,
-                showURL: false,
-                showBody: " - ",
-                extraClass: "pretty",
-                fixPNG: true,
-                opacity: 0.95,
-                left: 0
-            });
-            $('#pretty2').tooltip({
-                track: true,
-                delay: 0,
-                showURL: false,
-                showBody: " - ",
-                extraClass: "pretty",
-                fixPNG: true,
-                opacity: 0.95,
-                left: -0
-            });
-            $('#pretty3').tooltip({
-                track: true,
-                delay: 0,
-                showURL: true,
-                showBody: " - ",
-                extraClass: "pretty",
-                fixPNG: true,
-                opacity: 0.95,
-                left: 0
-            });
-            $('#pretty4').tooltip({
-                track: true,
-                delay: 0,
-                showURL: false,
-                showBody: " - ",
-                extraClass: "pretty",
-                fixPNG: true,
-                opacity: 0.95,
-                left: 0
-            });
-
-            $('#pretty5').tooltip({
-                track: true,
-                delay: 0,
-                showURL: false,
-                showBody: " - ",
-                extraClass: "pretty",
-                fixPNG: true,
-                opacity: 0.95,
-                left: 0
-            });
-
-        });
+       <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/engine.js"></script>
+       <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/util.js"></script>
+       <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script>
 
 
-    </script>
+       <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/lightwindow-2.0.js"></script -->
+       <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/lightwindow-2.0.js"></script>
+
+       <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/accordion-2.0.js"></script -->
+       <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/accordion-2.0.js"></script -->
+       <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
+
+
+
+       <script type="text/javascript">
+           $(function()
+           {
+               $('#pretty').tooltip({
+                   track: true,
+                   delay: 0,
+                   showURL: false,
+                   showBody: " - ",
+                   extraClass: "pretty",
+                   fixPNG: true,
+                   opacity: 0.95,
+                   left: 0
+               });
+               $('#pretty2').tooltip({
+                   track: true,
+                   delay: 0,
+                   showURL: false,
+                   showBody: " - ",
+                   extraClass: "pretty",
+                   fixPNG: true,
+                   opacity: 0.95,
+                   left: -0
+               });
+               $('#pretty3').tooltip({
+                   track: true,
+                   delay: 0,
+                   showURL: true,
+                   showBody: " - ",
+                   extraClass: "pretty",
+                   fixPNG: true,
+                   opacity: 0.95,
+                   left: 0
+               });
+               $('#pretty4').tooltip({
+                   track: true,
+                   delay: 0,
+                   showURL: false,
+                   showBody: " - ",
+                   extraClass: "pretty",
+                   fixPNG: true,
+                   opacity: 0.95,
+                   left: 0
+               });
+
+               $('#pretty5').tooltip({
+                   track: true,
+                   delay: 0,
+                   showURL: false,
+                   showBody: " - ",
+                   extraClass: "pretty",
+                   fixPNG: true,
+                   opacity: 0.95,
+                   left: 0
+               });
+           });
+       </script>
+
+       <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
+       <!-- JQuery Validation plugin -->
+       <!-- link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/ -->
+       <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
+       <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
+       <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
+
+
 
 
 </head>
@@ -129,7 +143,8 @@
             <table>
                 <tr>
                     <td nowrap><label for="j_username">User name</label></td>
-                    <td nowrap><input type="text" name="j_username" class="required" minlength="4" maxlength="15"
+                    <td nowrap>
+                        <input type="text" name="j_username" class="required" minlength="4" maxlength="15"
                                       title="Please enter username with at least 3 and max 15 characters!"/>
                     </td>
                     <td class="status"></td>

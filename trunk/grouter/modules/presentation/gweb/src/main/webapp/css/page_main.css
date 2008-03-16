@@ -135,6 +135,7 @@ div#formPanelHeader {
         margin-left: -5px;
         margin-top:-5px;
         padding: 5px;
+    padding-right: 10px;
         background: #afcff9;
         display: inline-table;
         width:100%;
@@ -191,6 +192,7 @@ div#paragraphHeader {
     padding: 5px;
 }
 
+
 /*
 * Tabbed menu using a <ul> list.
 */
@@ -236,6 +238,7 @@ table tr td {
     height: 18px;
     padding: 2px;
     text-align: left;
+    vertical-align:top;
 }
 
 
@@ -343,6 +346,24 @@ form.decoratedform label.error, label.error {
 
     background: url( "/gweb/images/unchecked.gif" ) no-repeat 0px 0px;
 }
+
+form.decoratedform label.errornorgif, label.errornorgif {
+/* remove the next line when you have trouble in IE6 with labels in list */
+    color: red;
+    font-style: italic;
+    padding-left: 16px;
+}
+
+
+form.decoratedform table.errornorgif, label.errornorgif {
+/* remove the next line when you have trouble in IE6 with labels in list */
+    color: red;
+    font-style: italic;
+    padding-left: 16px;
+}
+
+
+
 
 em.error {
     background: url( "images/unchecked.gif" ) no-repeat 0px 0px;

@@ -6,12 +6,31 @@
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
        default-autowire="byName">
 
+    <!--
+      Maps incoming HTTP requests to names of beans
+    -->
     <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
         <property name="interceptors">
             <list>
+                <ref bean="localeChangeInterceptor"/>
             </list>
         </property>
     </bean>
+
+
+    <!--
+       E.g. http://www.myapp.com/home?lang=en_GB
+    -->
+    <bean id="localeChangeInterceptor"
+          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName">
+            <value>lang</value>
+        </property>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
+
+
 
     <!--
     Localization Bean.
@@ -58,13 +77,14 @@
     <bean name="/node/edit.do" class="org.grouter.presentation.controller.node.NodeEditController"/>
     <bean name="/node/search.do" class="org.grouter.presentation.controller.node.NodeSearchController"/>
 
+    <bean name="/user" class="org.grouter.presentation.controller.user.UserListController"/>
     <bean name="/user/list.do" class="org.grouter.presentation.controller.user.UserListController"/>
     <bean name="/user/edit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
-
     <bean name="/user/lwedit.do" class="org.grouter.presentation.controller.user.UserEditController"/>
     <bean name="/user/search.do" class="org.grouter.presentation.controller.user.UserSearchController"/>
     <bean name="/user/listtest.do" class="org.grouter.presentation.controller.user.UserListController"/>
     <bean name="/user/delete.do" class="org.grouter.presentation.controller.user.UserDeleteController"/>
+
     <bean name="/router/list.do" class="org.grouter.presentation.controller.router.RouterListController"/>
     <bean name="/job/edit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
     <bean name="/job/list.do" class="org.grouter.presentation.controller.job.JobListController"/>
@@ -90,6 +110,7 @@
         <property name="suffix" value=".jsp"/>
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
+
 
     <!-- DWR -->
     <bean name="/**/*" class="org.springframework.web.servlet.mvc.ServletWrappingController">
