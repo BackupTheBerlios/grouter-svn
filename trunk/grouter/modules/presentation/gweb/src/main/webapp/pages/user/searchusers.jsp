@@ -16,12 +16,7 @@
 </head>
 <body>
 
-
 <jsp:include page="../user/menu.jsp"/>
-
-
-
-
 
 <div id="content">
     <display:table name="${users}" export="true" id="row" class="dataTable" pagesize="10"

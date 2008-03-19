@@ -9,9 +9,8 @@
 <html>
 <head>
     <title>
-        <spring:message code="user.title.list" />
+        <spring:message code="user.title.list"/>
     </title>
-
 
 
 </head>
@@ -31,7 +30,7 @@
 <div id="content">
 
 
-<form:form commandName="usercommand" id="userEditForm" cssClass="decoratedform">
+<form:form commandName="usereditcommand" id="userEditForm" cssClass="decoratedform">
 
 <div id="formPanel">
 
@@ -40,39 +39,57 @@
     </div>
 
     <table>
-        <tr >
-            <td><spring:message code="user.edit.form.user.label.firstname" /></td>
+        <tr>
+            <td><spring:message code="user.edit.form.user.label.firstname"/></td>
             <td><form:input path="user.firstName"/>*
-            <br/>
-            <form:errors path="user.firstName" cssClass="error"/>
-                 
+                <br/>
+                <form:errors path="user.firstName" cssClass="error"/>
+
             </td>
         </tr>
-        <tr >
-            <td><spring:message code="user.edit.form.user.label.lastname" /></td>
+        <tr>
+            <td><spring:message code="user.edit.form.user.label.lastname"/></td>
             <td><form:input path="user.lastName"/></td>
         </tr>
-        <tr >
-            <td><spring:message code="user.edit.form.user.label.username" /></td>
+        <tr>
+            <td><spring:message code="user.edit.form.user.label.username"/></td>
             <td><form:input path="user.userName"/>*
                 <br/><form:errors path="user.userName" cssClass="error"/>
             </td>
         </tr>
-        <tr >
-            <td><spring:message code="user.edit.form.user.label.password" /></td>
+        <tr>
+            <td><spring:message code="user.edit.form.user.label.password"/></td>
             <td><form:input path="user.password"/>*
-            <br/>
-            <form:errors path="user.password" cssClass="error"/>
+                <br/>
+                <form:errors path="user.password" cssClass="error"/>
             </td>
         </tr>
-        <tr >
-            <td><spring:message code="user.edit.form.user.label.role" /></td>
+        <tr>
+            <td><spring:message code="user.edit.form.user.label.role"/></td>
             <td>
 
-            <form:select path="user.roles">
-                <form:option value="-" label="---- Please Select -----"/>
-                <form:options items="${roles}" itemValue="id" itemLabel="name"/>
-            </form:select>
+
+                <spring:bind path="usereditcommand.user.userRoles">
+                    <select name="${status.expression}" multiple="multiple" style="width: 150px">
+                        <c:forEach items="${allroles}" var="role">
+                            <c:forEach items="${usereditcommand.user.userRoles}" var="currentRole">
+                                <c:if test="${currentRole.role.id == role.id}">
+                                    <c:set var="selected" value="true"/> 
+                                </c:if>
+                                </c:forEach>
+                                <option value="${role.id}"
+                                <c:if test="${selected}">selected="selected"</c:if>>
+                                    ${role.name}
+                                </option>
+                                <c:remove var="selected"/>
+                        </c:forEach>
+                    </select>
+                </spring:bind>
+                <br/><form:errors path="user.userRoles" cssClass="error"/>
+
+
+
+
             </td>
         </tr>
     </table>
@@ -82,43 +99,43 @@
     <div id="formPanelHeader">
         Address
     </div>
-    <table >
-        <tr >
-            <td><spring:message code="user.edit.form.user.address.label.email" /></td>
+    <table>
+        <tr>
+            <td><spring:message code="user.edit.form.user.address.label.email"/></td>
             <td><form:input path="user.address.email"/>*
                 <br/><form:errors path="user.address.email" cssClass="error"/>
             </td>
         </tr>
-        <tr >
-            <td><spring:message code="user.edit.form.user.address.label.phone" /></td>
+        <tr>
+            <td><spring:message code="user.edit.form.user.address.label.phone"/></td>
             <td><form:input path="user.address.phone"/></td>
         </tr>
         <tr>
-            <td><spring:message code="user.edit.form.user.address.label.mobilephone" /></td>
+            <td><spring:message code="user.edit.form.user.address.label.mobilephone"/></td>
             <td><form:input path="user.address.mobilephone"/></td>
         </tr>
         <tr>
-            <td><spring:message code="user.edit.form.user.address.label.fax" /></td>
+            <td><spring:message code="user.edit.form.user.address.label.fax"/></td>
             <td><form:input path="user.address.fax"/></td>
         </tr>
         <tr>
-            <td><spring:message code="user.edit.form.user.address.label.zip" /></td>
+            <td><spring:message code="user.edit.form.user.address.label.zip"/></td>
             <td><form:input path="user.address.zip"/></td>
         </tr>
         <tr>
-            <td><spring:message code="user.edit.form.user.address.label.street" /></td>
+            <td><spring:message code="user.edit.form.user.address.label.street"/></td>
             <td><form:input path="user.address.street"/></td>
         </tr>
         <tr>
-            <td><spring:message code="user.edit.form.user.address.label.city" />¬</td>
+            <td><spring:message code="user.edit.form.user.address.label.city"/>¬</td>
             <td><form:input path="user.address.city"/></td>
         </tr>
         <tr>
-            <td><spring:message code="user.edit.form.user.address.label.company" /></td>
+            <td><spring:message code="user.edit.form.user.address.label.company"/></td>
             <td><form:input path="user.address.companyname"/></td>
         </tr>
         <tr>
-            <td><spring:message code="user.edit.form.user.address.label.homepage" /></td>
+            <td><spring:message code="user.edit.form.user.address.label.homepage"/></td>
             <td><form:input path="user.address.homepageUrl"/></td>
         </tr>
     </table>

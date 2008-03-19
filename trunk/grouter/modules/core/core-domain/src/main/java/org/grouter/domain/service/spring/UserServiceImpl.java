@@ -20,11 +20,14 @@
 package org.grouter.domain.service.spring;
 
 import org.grouter.domain.dao.UserDAO;
+import org.grouter.domain.dao.UserRoleDAO;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.UserState;
+import org.grouter.domain.entities.UserRole;
 import org.grouter.domain.service.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Handles operations on Users and user roles.
@@ -34,6 +37,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService
 {
     UserDAO userDAO;
+    UserRoleDAO userRoleDAO;
 
     /**
      * Injected.
@@ -45,6 +49,11 @@ public class UserServiceImpl implements UserService
         this.userDAO = userDAO;
     }
 
+    public void setUserRoleDAO(UserRoleDAO userRoleDAO)
+    {
+        this.userRoleDAO = userRoleDAO;
+    }
+
     public List<User> findAll()
     {
         return userDAO.findAll();
@@ -53,12 +62,14 @@ public class UserServiceImpl implements UserService
     public List<User> findAll(final String hql)
     {
         return userDAO.findAll(hql);
-
     }
 
 
     public void save(User user)
     {
+        
+
+
         userDAO.save(user);
     }
 
@@ -91,5 +102,20 @@ public class UserServiceImpl implements UserService
     public List<User> searchUsers(String searchText)
     {
         return userDAO.findFromIndex(searchText, "userName", "id", "lastName");
+    }
+
+    public UserRole findUserRoleById(Long id)
+    {
+        return userRoleDAO.findById( id );
+    }
+
+    public UserRole findUserRoleByUserIdAndRoleId(Long userid, Long roleId)
+    {
+        return userRoleDAO.findUserRoleByUserIdAndRoleId( userid, roleId );
+    }
+
+    public void deleteUserRoles( Long userId )
+    {
+        userRoleDAO.deleteUserRole( userId );
     }
 }

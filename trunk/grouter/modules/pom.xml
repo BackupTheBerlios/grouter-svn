@@ -663,6 +663,7 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-mock</artifactId>
                 <version>${spring-version}</version>
+                <scope>test</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>struts</groupId>
@@ -740,13 +741,10 @@
                         <groupId>ant</groupId>
                         <artifactId>ant</artifactId>
                     </exclusion>
-
-
                     <exclusion>
                         <groupId>tomcat</groupId>
                         <artifactId>jasper-compiler-jdt</artifactId>
                     </exclusion>
-
                     <exclusion>
                         <groupId>ognl</groupId>
                         <artifactId>ognl</artifactId>
@@ -783,13 +781,8 @@
                         <groupId>opensymphony</groupId>
                         <artifactId>webwork</artifactId>
                     </exclusion>
-
-
                 </exclusions>
-
-
             </dependency>
-
 
             <!-- Database jdbc drivers -->
             <dependency>
@@ -823,7 +816,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
 
             <!-- Scheduler framework -->
             <dependency>
@@ -885,7 +877,6 @@
                 <artifactId>mygwt</artifactId>
                 <version>0.4.3</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -1197,8 +1188,15 @@
                             <server>server</server>
                         </manifestEntries-->
                     </archiver>
+
+                    <webappDirectory>/Users/georgespolyzois/jboss/server/default/deploy/gweb.war</webappDirectory>
                 </configuration>
+                            
             </plugin>
+
+
+
+
             <!--
             | The site plugin will produce a nice Maven looking
             | project site - with reports according to your

@@ -108,7 +108,8 @@
 
   <!-- Grouter Service Target -->
   <bean id="userServiceTarget" class="org.grouter.domain.service.spring.UserServiceImpl">
-    <property name="userDAO" ref="userDAO"/>
+    <!-- property name="userDAO" ref="userDAO"/>
+    <property name="userRoleDAO" ref="userRoleDAO"/ -->
   </bean>
 
 

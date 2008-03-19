@@ -48,6 +48,11 @@ public interface GenericDAO<T, ID extends Serializable>
      */
     T findById(ID id);
 
+    /**
+     * Loads enity by id. Also loads eagerly mapped associations.
+     * @param id
+     * @return
+     */
     Object load(ID id);
 
     /**

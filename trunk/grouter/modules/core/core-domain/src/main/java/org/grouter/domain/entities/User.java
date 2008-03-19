@@ -41,7 +41,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "user")
-@Indexed(index = "indexes/job")
+@Indexed(index = "indexes/user")
 // Entity will be indexed for querying using Hibernate SystemServiceImpl
 public class User extends BaseEntity
 {
@@ -98,9 +98,9 @@ public class User extends BaseEntity
     @JoinColumn(name = "locale_fk")
     private Locale locale;
 
-    @ManyToOne
-    @JoinColumn(name = "address_fk")
-    private Address address;
+    @ManyToOne ( cascade = {CascadeType.ALL}, fetch=FetchType.EAGER )
+    @JoinColumn(name = "address_fk" )
+    private Address address = new Address();
 
     /*
      * The inverse target property of the target entity. We do not need to enter the foreign
@@ -111,7 +111,7 @@ public class User extends BaseEntity
      *
      */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<UserRole> roles = new HashSet<UserRole>();
+    private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 
     public final static int MAX_USER_NAME_LENGTH = 15;
@@ -163,19 +163,19 @@ public class User extends BaseEntity
 
     public boolean isSuperReviewer()
     {
-        return roles.contains(Role.SUPER_REVIEWER);
+        return userRoles.contains(Role.SUPER_REVIEWER);
     }
 
 
     public boolean isAdmin()
     {
-        return roles.contains(Role.ADMIN);
+        return userRoles.contains(Role.ADMIN);
     }
 
 
     public boolean isReviewer()
     {
-        return roles.contains(Role.REVIEWER);
+        return userRoles.contains(Role.REVIEWER);
     }
 
 
@@ -191,15 +191,15 @@ public class User extends BaseEntity
     }
 
 
-    public Set<UserRole> getRoles()
+    public Set<UserRole> getUserRoles()
     {
-        return roles;
+        return userRoles;
     }
 
 
-    public void setRoles(Set<UserRole> roles)
+    public void setUserRoles(Set<UserRole> userRoles)
     {
-        this.roles = roles;
+        this.userRoles = userRoles;
     }
 
 

@@ -21,10 +21,12 @@ package org.grouter.domain.service;
 
 import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.UserState;
+import org.grouter.domain.entities.UserRole;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Main interface for operations with the grouter internal domain.
@@ -75,6 +77,7 @@ public interface UserService
      */
     User findById(Long id);
 
+
     /**
      * Change the state of this user - {@link UserState}
      *
@@ -93,4 +96,9 @@ public interface UserService
     List<User> searchUsers(String searchText);
 
 
+    UserRole findUserRoleById( Long id );
+
+    UserRole findUserRoleByUserIdAndRoleId( Long userid, Long roleId );
+
+    void deleteUserRoles( Long userId );
 }

@@ -26,7 +26,7 @@
        <ref bean="routerService"/>
      </property>
      <property name="serviceInterface">
-       <value>org.grouter.domain.servicelayer.RouterService</value>
+       <value>org.grouter.domain.service.RouterService</value>
      </property>
      <property name="registryPort">
        <value>${grouter.rmi.registryPort}</value>

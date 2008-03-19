@@ -31,7 +31,7 @@ import org.grouter.domain.entities.EndPointType;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.entities.SettingsContext;
-import org.grouter.domain.servicelayer.RouterService;
+import org.grouter.domain.service.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.remoting.rmi.RmiServiceExporter;

@@ -227,7 +227,7 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
      */
     protected String getTestDataLocation()
     {
-        return "sql/test-router-data.sql";
+        return "sql/test-router-data.sql_notused";
     }
 
     /**

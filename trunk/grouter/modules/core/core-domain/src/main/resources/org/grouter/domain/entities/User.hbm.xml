@@ -39,7 +39,7 @@
                  class="org.grouter.domain.entities.User"
                  not-null="false"/>
 
-    <set name="roles"
+    <set name="userRoles"
          inverse="true"
          cascade="delete-orphan"
          lazy="false"

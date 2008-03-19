@@ -12,9 +12,7 @@ CREATE TABLE user_role (
 
 -- Add all admin users
 insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 1);
-
--- Add all super reviewers
-insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 3);
-
 -- Add all reviewers
 insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 2);
+-- Add all super reviewers
+insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 3);

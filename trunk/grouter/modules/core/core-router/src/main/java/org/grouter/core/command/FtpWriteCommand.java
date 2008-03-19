@@ -24,9 +24,8 @@ import org.apache.commons.io.FileUtils;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.NodeStatus;
-import org.grouter.domain.servicelayer.spring.logging.JDBCLogStrategyImpl;
-import org.grouter.domain.servicelayer.spring.logging.LogStrategy;
-import org.grouter.domain.servicelayer.BeanLocator;
+import org.grouter.domain.service.spring.logging.LogStrategy;
+import org.grouter.domain.service.BeanLocator;
 import org.grouter.common.guid.GuidGenerator;
 
 import java.io.File;

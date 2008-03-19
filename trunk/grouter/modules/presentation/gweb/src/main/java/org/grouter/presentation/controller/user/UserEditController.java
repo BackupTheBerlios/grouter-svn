@@ -23,20 +23,20 @@ import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.UserState;
+import org.grouter.domain.entities.UserRole;
 import org.grouter.domain.service.UserService;
-import org.grouter.domain.validator.UserValidator;
 import org.grouter.presentation.controller.security.SecurityManagerImpl;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -46,15 +46,15 @@ import java.util.Map;
  */
 public class UserEditController extends SimpleFormController
 {
-    private static Logger logger = Logger.getLogger( UserEditController.class );
+    private static Logger logger = Logger.getLogger(UserEditController.class);
     private final static String ID = "id";
     private static final String FORMVIEW = "user/edituser";
     private static final String SUCCESSVIEW = "redirect:list.do";
-    private static final String USER = "usercommand";
+    // This is used in the view for spring:bind
+    private static final String USEREDITCOMMAND = "usereditcommand";
     private org.grouter.presentation.controller.security.SecurityManager securityManager = new SecurityManagerImpl();
     private UserService userService;
     private UserEditCommandValidator userEditCommandValidator = new UserEditCommandValidator();
-
 
 
     public void setUserService(UserService userService)
@@ -66,14 +66,14 @@ public class UserEditController extends SimpleFormController
     /**
      * Prefered way of init these settings since they are static.
      */
-    public UserEditController(  )
+    public UserEditController()
     {
-        setSessionForm( true );
-        setCommandClass( UserEditCommand.class );
-        setFormView( FORMVIEW );
-        setSuccessView( FORMVIEW );
-        setCommandName( USER );
-        setValidator( userEditCommandValidator );
+        setSessionForm(true);
+        setCommandClass(UserEditCommand.class);
+        setFormView(FORMVIEW);
+        setSuccessView(FORMVIEW);
+        setCommandName(USEREDITCOMMAND);
+        setValidator(userEditCommandValidator);
     }
 
 
@@ -81,84 +81,87 @@ public class UserEditController extends SimpleFormController
      * Called on submit - stores a User.
      */
     @Override
-    protected ModelAndView onSubmit( HttpServletRequest req, HttpServletResponse res, Object object, BindException bex )
+    protected ModelAndView onSubmit(HttpServletRequest req, HttpServletResponse res, Object object, BindException bex)
             throws Exception
     {
         // Get the user id of logged on user
         Long userId = securityManager.getUserIdAsLong();
-
         User createdBy = new User();
-        createdBy.setId( userId );
+        createdBy.setId(userId);
+
+        //List<Role> seelctedRoles = (List<Role>)req.getParameterValues("roles");
 
 
         String message;
         UserEditCommand cmd = (UserEditCommand) object;
-        User user = cmd.getUser(  );
-//        User user = (User) object;
-        user.setCreatedBy( createdBy );
-        user.setUserState(UserState.NEW );
+        User user = cmd.getUser();
+        user.setCreatedBy(createdBy);
+        user.setUserState(UserState.NEW);
         try
         {
+            // delete
 
-            userService.save( user );
+
+
+            //userService.deleteUserRoles( user.getId() );
+            userService.save(user);
             message = "Saved";
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
-            logger.error( e, e );
+            logger.error(e, e);
             message = "Could not save " + e.getMessage();
         }
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        model.put( "message", message );
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("message", message);
 
         // to same view return showForm( req, res, bex, model );
-        return new ModelAndView( SUCCESSVIEW, model );
+        return new ModelAndView(SUCCESSVIEW, model);
     }
 
     /**
      * Callback method for intializing command/form bean.
      */
     @Override
-    protected Object formBackingObject( HttpServletRequest request )
+    protected Object formBackingObject(HttpServletRequest request)
             throws Exception
     {
         final UserEditCommand cmd;
-        final Long id = getId( request, ID);
+        final Long id = getId(request, ID);
         logger.debug("Get for id : " + id);
 
-        if ( id != null )
+        if (id != null)
         {
-            User user = userService.findById( id );
-            cmd = new UserEditCommand( user );
-        }
-        else
+            User user = userService.findById(id);
+            cmd = new UserEditCommand(user);
+        } else
         {
-            cmd = new UserEditCommand(  );
+            cmd = new UserEditCommand();
         }
 
         return cmd;
     }
 
 
-
     /**
      * Helper.
-     * @param request  a HttpServletRequest
-     * @param id   an id
+     *
+     * @param request a HttpServletRequest
+     * @param id      an id
      * @return an id
      */
-    private Long getId( HttpServletRequest request, String id )
+    private Long getId(HttpServletRequest request, String id)
     {
-        if ( ( request != null ) && ( request.getParameter( id ) != null ) )
+        if ((request != null) && (request.getParameter(id) != null))
         {
             try
             {
-                return ServletRequestUtils.getLongParameter( request, id );
+                return ServletRequestUtils.getLongParameter(request, id);
             }
-            catch ( ServletRequestBindingException e )
+            catch (ServletRequestBindingException e)
             {
-                logger.error( "Could not get id from request - probably not a valid Long", e );
+                logger.error("Could not get id from request - probably not a valid Long", e);
             }
         }
 
@@ -166,29 +169,59 @@ public class UserEditController extends SimpleFormController
     }
 
 
-
     /**
-     * Data needed by view.
-     * <p/>
-     * {@inheritDoc}
+     * Data needed by view. Her we need the list of available roles.
      *
      * @param request
-     * @return
+     * @return a map with reference data
      * @throws Exception
      */
     @Override
-    protected Map referenceData( HttpServletRequest request )
+    protected Map referenceData(HttpServletRequest request)
             throws Exception
     {
-        Map<String, Object> model = new HashMap<String, Object>(  );
-
+        Map<String, Object> model = new HashMap<String, Object>();
         List<Role> allRoles = Role.values();
-
-        List<User> users = userService.findAll();
-        model.put( "users", users );
-        model.put( "roles", allRoles );
-
+        model.put("allroles", allRoles);
         return model;
+    }
+
+
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder)
+    {
+
+        final Long userId;
+        try
+        {
+            userId = ServletRequestUtils.getLongParameter( request, "id");
+        } catch (ServletRequestBindingException e)
+        {
+            // ignore
+            return;
+        }
+
+        binder.registerCustomEditor(Set.class, new CustomCollectionEditor(Set.class)
+        {
+            protected Object convertElement(Object element)
+            {
+                if (element != null )
+                {
+                    Long roleId = new Long((String) element);
+                    UserRole userRole = userService.findUserRoleByUserIdAndRoleId(userId, roleId);
+                    if(userRole != null)
+                    {
+                       return userRole;
+                    }
+                    else
+                    {
+                        User user = new User();
+                        user.setId( userId );
+                        return new UserRole( user, Role.valueOf( roleId ) );
+                    }
+                }
+                return null;
+            }
+        });
     }
 
 }

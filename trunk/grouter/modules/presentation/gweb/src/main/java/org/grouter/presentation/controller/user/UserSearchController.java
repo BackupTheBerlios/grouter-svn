@@ -34,16 +34,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
- * User: georgespolyzois
- * Date: Jan 19, 2008
- * Time: 5:30:26 PM
- * To change this template use File | Settings | File Templates.
+ * 
+ *
+ * @author Georges Polyzois
  */
 public class UserSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String LIST_VIEW = "user/searchusers";
+    private static final String LIST_VIEW = "user/listusers";
 
     private UserService userService;
 
@@ -51,9 +49,7 @@ public class UserSearchController extends AbstractController
         this.userService = userService;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
             throws Exception {

@@ -1,12 +1,9 @@
 package org.grouter.core;
 
-import org.grouter.domain.servicelayer.RouterService;
-import org.grouter.domain.entities.Router;
+import org.grouter.domain.service.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.apache.log4j.Logger;
-
-import java.util.List;
 
 import junit.framework.TestCase;
 

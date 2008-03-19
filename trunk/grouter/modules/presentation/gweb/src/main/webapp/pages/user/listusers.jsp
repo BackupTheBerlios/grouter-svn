@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
@@ -36,65 +37,20 @@
 
 <div id="content">
     <form action="">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-                <td></td>
-                <td align="right"> <spring:message code="user.content.number.of.users" />
-                    <c:out value="${usersSize}"/>
-                </td>
-            </tr>
-        </table>
-        <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th><spring:message code="user.list.table.id" /></th>
-                    <th><spring:message code="user.list.table.username" /></th>
-                    <th><spring:message code="user.list.table.firstname" /></th>
-                    <th><spring:message code="user.list.table.lastname" /></th>
-                    <th><spring:message code="user.list.table.phone" /></th>
-                    <th><spring:message code="user.list.table.email" /></th>
-                    <th><spring:message code="user.list.table.companyname" /></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${users}" var="object">
-                    <tr>
-                        <td>
-                            <c:out value="${object.id}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.userName}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.firstName}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.lastName}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.address.phone}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.address.email}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.address.companyname}"/>
-                        </td>
-                        <td>
-                            <a href='edit.do?id=<c:out value="${object.id}"/>' class="iconlink">
-                                <img src="/gweb/images/edit_24x24.png" alt="edit" width="14"
-                                     height="14"> <spring:message code="user.content.edit" /> </a> &nbsp;
-
-                            <a href='delete.do?id=<c:out value="${object.id}"/>' class="iconlink">
-                                <img src="/gweb/images/remove_24x24.png" alt="Delete" width="14"
-                                     height="14"><spring:message code="user.content.delete" /></a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </form>
+        <display:table name="${users}" export="true" id="row" class="dataTable" pagesize="5"
+                   cellspacing="0" decorator="org.displaytag.decorator.TotalTableDecorator"
+                   requestURI="/gweb/user/list.do">
+        <display:column property="id" titleKey="user.list.table.id" sortable="true" class="name" headerClass="name"/>
+        <display:column property="userName" titleKey="user.list.table.username" sortable="true" class="name" headerClass="name"/>
+        <display:column property="firstName" titleKey="user.list.table.firstname" sortable="true" class="orderNumber" headerClass="orderNumber" format="{0,date,short}"/>
+        <display:column property="lastName" titleKey="user.list.table.lastname" sortable="true" class="orderNumber" headerClass="orderNumber"/>
+        <display:column property="address.phone" titleKey="user.list.table.phone" sortable="true" class="orderNumber" headerClass="orderNumber"/>
+        <display:column property="address.email" titleKey="user.list.table.email" sortable="true" class="orderNumber" headerClass="orderNumber"/>
+        <display:column property="address.companyname" titleKey="user.list.table.companyname" sortable="true" class="orderNumber" headerClass="orderNumber"/>
+        <display:column value=">> Detail" title="" sortable="false" href='edit.do' paramId="id" paramProperty="id"/>
+        <display:column value="- Delete" title="" sortable="false" href='delete.do?id=' paramId="id" paramProperty="id"/>
+    </display:table>
+  </form>
 </div>
 </body>
 </html>

@@ -6,7 +6,7 @@ CREATE TABLE role (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into role (id, name, displayname) values (1, 'ROLE_ADMIN','admin');
-insert into role (id, name, displayname) values (2, 'ROLE_REVIEWER','reviewer');
-insert into role (id, name, displayname) values (3, 'ROLE_SUPER_REVIEWER','superreviewer');
+insert into role (id, name, displayname) values (1, 'ROLE_ADMIN', 'admin');
+insert into role (id, name, displayname) values (2, 'ROLE_REVIEWER', 'reviewer');
+insert into role (id, name, displayname) values (3, 'ROLE_SUPER_REVIEWER', 'superreviewer');
 insert into role (id, name, displayname) values (4, 'ROLE_EDITOR', 'editor');

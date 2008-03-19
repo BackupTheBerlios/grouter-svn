@@ -36,8 +36,9 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     final static String ENDPOINT_ID = "1";
     final static String SETTINGS_ID = "jndi";
     final static Long JOB_ID = 1L;
-    Long USER_ID = 10002L;
+    Long USER_ID = -1L;
     Long ADMIN_ID = 1L;
+    final static int TOTALNUMBEROFUSERS = 6;
 
     SessionFactory sessionFactory;
     MessageDAO messageDAO;

@@ -27,7 +27,6 @@ import org.grouter.core.command.CommandMessage;
 import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.NodeStatus;
 import org.grouter.common.jms.*;
-import org.grouter.common.guid.GuidGenerator;
 import org.quartz.JobExecutionContext;
 import org.quartz.UnableToInterruptJobException;
 

@@ -28,17 +28,31 @@ insert into receiver (id, name ) values ( '-receiverid_1', 'A receiver');
 insert into receiver (id, name ) values ( '-receiverid_2', 'A receiver');
 insert into receiver_message (receiver_fk , message_fk) values ( '-receiverid_1',  '-msgid_1' );
 
-insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (1,  '0046 8 12345', '0046 701 12345', 'GeorgesStreet', '12345', 'El Stockholm', '12345', 'www.polyzois.se', 'Sweden', 'Denada', 'gepo01@yahoo.com');
-insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (10002, 'gepo', 'gepo','Georges', 'Poly',  1,3 );
-insert into user_role (id, user_id, role_id) values (10000, 10002, 1);
-insert into user_role (id, user_id, role_id) values (10001, 10002, 2);
-insert into user_role (id, user_id, role_id) values (10002, 10002, 3);
 
+-- User
+
+insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-1,  '0046 8 12345', '0046 701 12345', 'Kungsgatan', '12', 'Stockholm', '12345', 'http://www.stockholm.se', 'Sweden', 'Lšnneberga', 'astrid.lindgren@stockholm.se');
+insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (-1, 'ast', 'rid','Astrid', 'Lindgren',  -1, 3 );
+insert into user_role (id, user_id, role_id) values (-1, -1, 1);
+insert into user_role (id, user_id, role_id) values (-2, -1, 2);
+insert into user_role (id, user_id, role_id) values (-3, -1, 3);
+
+insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-2,  '0041 8 12345', '0041 701 12345', 'Bahnohostrasse', '12345', 'Zurich', '12345', 'http://www.zurich.ch', 'Switzerland', 'Company2', 'albert.einstein@bluemail.com');
+insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (-2, 'ken', 'obi','Obi', 'Van',  -2, 3 );
+insert into user_role (id, user_id, role_id) values (-4, -2, 1);
+
+insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-3,  '0011 8 12345', '0011 701 12345', 'Swazzistrasse', '5555', 'Nairobi', '3333', 'http://www.zurich.ch', 'Swaziland', 'Company3', 'email@gmail.com');
+insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (-3, 'pla', 'ton','Platon', '',  -3, 3 );
+insert into user_role (id, user_id, role_id) values (-5, -3, 1);
+
+insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-4,  '0031 8 12345', '0031 701 12345', 'Athensroad', '6666', 'Athens', '444', 'http://www.zurich.ch', 'Greece', 'Company4', 'email@gmail.com');
+insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (-4, 'sok', 'tonrates','Sokrates', '',  -4, 3 );
+insert into user_role (id, user_id, role_id) values (-6, -4, 1);
 
 -- Jobs
 
 -- ADDDATE( CURDATE(), 1 )
-insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 1,'displayname','* * * * *', Now(), ADDDATE( CURDATE(), 1 ) ,1,1,'rid_1' );
-insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 2,'a name','* * * * *',Now(), ADDDATE( CURDATE(), 1 ), 2,1,'rid_1' );
-insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( 3,'another name','* * * * *', Now(), Now(), 3,1,'rid_1' );
+insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( -1,'displayname','* * * * *', Now(), ADDDATE( CURDATE(), 1 ) ,1,1,'rid_1' );
+insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( -2,'a name','* * * * *',Now(), ADDDATE( CURDATE(), 1 ), 2,1,'rid_1' );
+insert into job (id,displayname,cron_expression,started_on, finished_at, job_state_fk,job_type_fk,router_fk) values ( -3,'another name','* * * * *', Now(), Now(), 3,1,'rid_1' );
 

@@ -21,6 +21,9 @@ package org.grouter.presentation.controller.user;
 
 import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.Address;
+import org.grouter.domain.entities.Role;
+
+import java.util.List;
 
 /**
  * @author Georges Polyzois
@@ -28,24 +31,16 @@ import org.grouter.domain.entities.Address;
 public class UserEditCommand
 {
     private User user = new User();
-    private Address address = new Address();
 
     public UserEditCommand(User user)
     {
         this.user = user;
-        if( user.getAddress() == null )
-        {
-            user.setAddress( address );
-        }
-
-        //this.user.setAddress( address );
     }
-
 
     public UserEditCommand()
     {
-        //this.user.setAddress( address );
-
+        Address address = new Address();
+        user.setAddress( address );
     }
 
     public User getUser()
@@ -56,15 +51,5 @@ public class UserEditCommand
     public void setUser(User user)
     {
         this.user = user;
-    }
-
-    public Address getAddress()
-    {
-        return address;
-    }
-
-    public void setAddress(Address address)
-    {
-        this.address = address;
     }
 }

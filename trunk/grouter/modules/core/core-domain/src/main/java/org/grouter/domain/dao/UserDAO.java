@@ -20,6 +20,7 @@
 package org.grouter.domain.dao;
 
 import org.grouter.domain.entities.User;
+import org.grouter.domain.entities.UserRole;
 
 
 /**

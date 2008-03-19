@@ -15,7 +15,7 @@
     </li>
     <li>
         <span id="pretty4" title="Users - manage users for authentication and authorization to the grouter">
-        <a href="/gweb/user/search.do">Users</a>
+        <a href="/gweb/user/list.do">Users</a>
             </span>
     </li>
     <li>

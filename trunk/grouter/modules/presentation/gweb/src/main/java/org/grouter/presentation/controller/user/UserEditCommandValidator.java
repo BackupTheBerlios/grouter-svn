@@ -39,12 +39,19 @@ public class UserEditCommandValidator implements Validator
         ValidationUtils.rejectIfEmpty(errors, "user.userName", "userEditCommand.user.userName", "Username is required.");
         ValidationUtils.rejectIfEmpty(errors, "user.password", "userEditCommand.user.password", "Password is required.");
         ValidationUtils.rejectIfEmpty(errors, "user.firstName", "userEditCommand.user.firstName", "Firstname is required.");
-        //ValidationUtils.rejectIfEmpty(errors, "user.roles", "userEditCommand.user.firstName", "Firstname is required.");
+        ValidationUtils.rejectIfEmpty(errors, "user.userRoles", "userEditCommand.user.userRoles", "A user must have at least one role.");
         ValidationUtils.rejectIfEmpty(errors, "user.address.email", "userEditCommand.user.address.email", "Email is required.");
 
         if( !EmailValidator.getInstance().isValid( userEditCommand.getUser().getAddress().getEmail() ) )
         {
             errors.rejectValue( "user.address.email", "userEditCommand.user.address.emailInvalid", "Email is invalid.");
+        }
+
+
+        if(  userEditCommand.getUser().getUserRoles()  == null || userEditCommand.getUser().getUserRoles().size() == 0  )
+        {
+            errors.rejectValue( "user.userRoles", "userEditCommand.user.userRoles", "Email is invalid.");
+
         }
 
 

@@ -21,7 +21,7 @@ package org.grouter.core.util;
 
 import org.grouter.common.jms.*;
 import org.grouter.core.command.CommandMessage;
-//import org.grouter.domain.servicelayer.jms.GRouterPublishEventDTO;
+//import org.grouter.domain.service.jms.GRouterPublishEventDTO;
 import org.apache.log4j.Logger;
 
 import javax.naming.NamingException;
