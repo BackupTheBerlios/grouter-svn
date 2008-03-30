@@ -1,0 +1,6 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.ftpserver</groupId>
+  <artifactId>ftpserver-core</artifactId>
+  <version>1.0-mule-temp</version>
+</project>
