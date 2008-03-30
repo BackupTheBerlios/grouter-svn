@@ -66,21 +66,26 @@ Assembly descriptor for the full Mule distribution.
         Libraries
     ============================
     -->
+      <dependencySets>
 
-
-
-  <!-- 
-       TODO: http://jira.codehaus.org/browse/MASSEMBLY-41 is now fixed. 
-       Update to use wildcards. 
-
-       Unfortunately we still cannot use wildcards, see
-       http://jira.codehaus.org/browse/MASSEMBLY-220
-  -->
-  <dependencySets>
+    
+     <!-- Mule libraries -->
     <dependencySet>
-      <outputDirectory>lib</outputDirectory>
+      <outputDirectory>lib/grouter</outputDirectory>
       <!-- outputFileNameMapping>${artifactId}.${extension}</outputFileNameMapping -->
-      
+      <scope>runtime</scope>
+      <includes>
+        <!-- Core -->
+        <!-- include>org.grouter.platform.core:core-router</include -->
+        <!-- Transports -->
+        <!-- Modules -->
+        <!-- Tools -->
+      </includes>
+      <!-- no XML -->
+      <excludes>
+          <exclude>xml-apis:xml-apis</exclude>
+          <exclude>xerces:xercesImpl</exclude>
+      </excludes>
     </dependencySet>
  </dependencySets>
 </assembly>
