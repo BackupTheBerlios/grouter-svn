@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.grouter.domain.entities.EndPoint" table="endpoint">
+    <comment>Hibernate Mapping for EndPoint</comment>
+    <id name="id" >
+      <generator class="assigned" />
+    </id>
+    <property name="uri" column="uri" />
+    <property name="scheduleCron" column="cron" />
+    
+    <many-to-one
+            name="endPointType"
+            not-null="true"
+            class="org.grouter.domain.entities.EndPointType"
+            column="endpoint_type_fk"
+            fetch="join">
+    </many-to-one>
+
+    <map name="endPointContext" inverse="false" table="endpoint_context"  lazy="false" fetch="join" cascade="all" >
+        <!-- For a parent object associated with N child objects (cascade=”all”),
+        the setting on-delete=”cascade”  avoids issuing N deletes to the database
+        if the parent were to be deleted. -->
+        <key column="endpoint_fk" not-null="true"/>
+        <map-key column="keyname" type="string"/>
+        <element column="value" type="string" not-null="true"/>
+    </map>
+
+
+  </class>
+</hibernate-mapping>

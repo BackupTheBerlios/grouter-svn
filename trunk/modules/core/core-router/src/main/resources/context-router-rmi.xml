@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+       default-autowire="byName">
+
+  <bean id="rmiConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location" value="file:/etc/grouter-environment.properties"/>
+  </bean>
+
+  <!-- bean id="rmiServiceExporterFactoryBean" class="org.grouter.core.util.RmiServiceExporterFactoryBean"/ -->
+
+  <!-- Implementation class for the remote operations -->
+  <bean id="routerServer" class="org.grouter.core.RouterServerImpl"/>
+
+  <!--
+  This configuration works but is static. I order to have several grouters running on the same host
+  under different rmi registry ports we need to be able to change these ports on startup. One way of
+  doing this is to use a FactoryBean instead and set properties dynamically.
+  -->
+  <bean id="serviceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">
+     <property name="serviceName">
+       <value>RouterService</value>
+     </property>
+    <!-- The bean name impe -->
+     <property name="service">
+       <ref bean="routerService"/>
+     </property>
+     <property name="serviceInterface">
+       <value>org.grouter.domain.service.RouterService</value>
+     </property>
+     <property name="registryPort">
+       <value>${grouter.rmi.registryPort}</value>
+     </property>
+     <property name="servicePort">
+       <value>${grouter.rmi.servicePort}</value>
+     </property>
+   </bean>
+
+</beans>

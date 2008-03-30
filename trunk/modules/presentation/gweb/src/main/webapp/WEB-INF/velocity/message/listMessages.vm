@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <title>
+        Dagens bilar
+    </title>
+    <link href="$context.contextPath/css/main.css" rel="stylesheet"/>
+</head>
+<body>
+#parse("/include/submenu.vm")
+
+
+<div id="actionMenu" nowrap >
+
+
+</div>
+
+
+<form id="mainForm" action="">
+    <table class="hitList" border="0" width="100%" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Message</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            #foreach($object in $messages)
+            <tr  >
+                <td>$date.format('yyyy-MM-dd',$object.date)
+                    #if ($object.inQueue)
+                      <img src="$context.contextPath/images/queue.gif"  height="18" width="18" />
+                    #end    </td>
+                <td>$object.message</td>
+            </tr>
+            #end
+
+    </table>
+
+</form>
+</body>
+</html>

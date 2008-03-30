@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.grouter</groupId>
+        <artifactId>platform</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grouter.platform</groupId>
+    <artifactId>core</artifactId>
+    <packaging>pom</packaging>
+    <name>${artifactId}</name>
+    <modules>
+    	<!-- Removed : intellij adds a source dep to this module, but
+    	since this module only generates sources under /target we 
+    	need to have this binary instead -->
+        <!-- module>cmn-configbeans</module -->
+        <module>core-domain</module>
+        <module>core-router</module>
+        <!-- module>core-domainear</module -->
+    </modules>
+</project>

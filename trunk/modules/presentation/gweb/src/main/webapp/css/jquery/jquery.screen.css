@@ -1,0 +1,52 @@
+
+.com      { color: green; }
+.regexp   { color: maroon; }
+.string   { color: teal; }
+.keywords { color: blue; }
+.global   { color: #008; }
+.numbers  { color: #880; }
+.comm     { color: green; }
+.tag      { color: blue; }
+.entity   { color: blue; }
+.string   { color: teal; }
+.aname    { color: maroon; }
+.avalue   { color: maroon; }
+.jquery   { color: #00a; }
+.plugin   { color: red; }
+
+#tooltip.pretty {
+    font: 13px, bold, Verdana, Arial, Helvetica, sans-serif;
+
+	border: none;
+	width: 210px;
+	padding:20px;
+	height: 135px;
+	opacity: 0.8;
+	background: url('/gweb/images/jquery/shadow.png');
+}
+
+#tooltip.pretty h3 {
+    font: 14px, bold, Verdana, Arial, Helvetica, sans-serif;
+
+    margin-bottom: 0.75em;
+	font-size: 12pt;
+	width: 220px;
+	text-align: left;
+}
+#tooltip.pretty div { width: 220px; text-align: left; }
+
+#tooltip.fancy {
+	background: url('/gweb/images/jquery/shadow2.png');
+	padding-top: 5em;
+	height: 100px;
+}
+#tooltip.fancy.viewport-right {
+	background: url('/gweb/images/jquery/shadow2-reverse.png');
+}
+
+#extended { margin: 2em 0; }
+#extended label { text-decoration: underline; }
+#yahoo { width: 7em; }
+#right, #right2 { text-align: right; }
+#tooltip.right { width: 250px; }
+#fancy2 { float: right; }

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    <class name="org.grouter.domain.entities.Message" table="MESSAGE">
+        <id column="id" name="id" type="java.lang.String" unsaved-value="null">
+            <generator class="uuid"/>
+        </id>
+        <property name="creationTimestamp" not-null="false" type="timestamp" column="creationtimestamp"/>
+        <property name="content" not-null="false" type="java.lang.String" column="content"/>
+        <property name="counter" not-null="true"  column="counter" generated="always" />
+
+        <set name="receivers" cascade="all" lazy="false" inverse="true" table="receiver_message" fetch="join">
+            <key>
+                <column name="message_fk" not-null="false"/>
+            </key>
+            <many-to-many class="org.grouter.domain.entities.Receiver" column="receiver_fk" fetch="join"  lazy="false"/>
+        </set>
+
+        <!-- The column attribute in the many-to-many element is for the FK residing in this
+        table from the table SENDER.
+        Tables:
+                 MESSAGE
+                 ID     NAME     CREATIONTIME       SENDERID (FK)
+                 SENDER
+                 ID     NAME
+        -->
+        <many-to-one
+                name="sender"
+                not-null="false"
+                class="org.grouter.domain.entities.Sender"
+                column="sender_fk"
+                cascade="save-update,persist"
+                fetch="join">
+        </many-to-one>
+
+        <many-to-one
+                name="node"
+                not-null="false"
+                class="org.grouter.domain.entities.Node"
+                column="node_fk"
+                cascade="save-update"
+                update="false">
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

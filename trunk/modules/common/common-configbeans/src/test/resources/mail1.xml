@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EmailMessage name="emailmessage"
+              xmlns="http://grouter.org/emailmessage.xsd"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://grouter.org/emailmessage.xsd ../xsd/emailmessage.xsd"
+              xsi:noNamespaceSchemaLocation="../../main/xsd/emailmessage.xsd">
+
+
+  </EmailMessage>

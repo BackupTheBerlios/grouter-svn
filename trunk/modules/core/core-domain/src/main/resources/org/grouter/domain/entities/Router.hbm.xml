@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+  <class name="org.grouter.domain.entities.Router" table="router">
+    <id column="id" name="id" type="java.lang.String" >
+      <generator class="assigned"/>
+    </id>
+    <property name="startedOn" not-null="false" type="timestamp" column="startedon"/>
+    <property name="displayName" not-null="true" type="java.lang.String" column="displayname"/>
+    <property name="description" not-null="true" type="java.lang.String" column="description"/>
+    <property name="upTime" not-null="false" type="java.lang.Long" column="uptime"/>
+    <property name="rmiRegistryPort" not-null="false" column="rmiregistryport"/>
+    <property name="rmiServicePort" not-null="false"  column="rmiserviceport"/>
+    <property name="homePath" not-null="true" type="java.lang.String" column="homepath"/>
+
+
+    <many-to-one
+            name="settings"
+            not-null="true"
+            class="org.grouter.domain.entities.Settings"
+            column="settings_fk"
+            cascade="save-update"
+            update="false"
+            fetch="join">
+    </many-to-one>
+
+    <!-- Lazy relationship to the Node collection -->
+    <set name="nodes" cascade="save-update,delete-orphan" inverse="true" table="node"  >
+      <key>
+        <column name="router_fk" not-null="true"/>
+      </key>
+      <one-to-many class="org.grouter.domain.entities.Node"/>
+    </set>
+
+
+  </class>
+</hibernate-mapping>

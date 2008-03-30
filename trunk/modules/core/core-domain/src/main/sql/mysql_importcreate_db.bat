@@ -1,0 +1,1 @@
+mysql -h localhost -u grouter -pgrouter grouter < main_drop_create.sql

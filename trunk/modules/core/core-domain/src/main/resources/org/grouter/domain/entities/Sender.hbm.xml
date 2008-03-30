@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    <class name="org.grouter.domain.entities.Sender" table="SENDER">
+        <id column="id" name="id" type="java.lang.String">
+            <generator class="uuid"/>
+        </id>
+        <!-- Options for caching : "transactional|read-write|nonstrict-read-write|read-only -->
+        <!-- cache usage="read-only" / -->
+
+        <!--
+            The key element is the name of the foreign key in the MESSAGE table (the
+            parent's id or in this case the Senders id).
+            The one-to-many element is the class name of other side of the raltionships (the
+            child class name).
+
+            Tables:
+                 MESSAGE
+                 ID     NAME     CREATIONTIME       SENDERID (FK)
+            
+                 SENDER
+                 ID     NAME
+         -->
+        <set name="messages" cascade="all" lazy="true" inverse="true" table="message">
+            <key>
+                <column name="sender_fk" not-null="true"/>
+            </key>
+            <one-to-many class="org.grouter.domain.entities.Message"/>
+        </set>
+
+         <!-- The column attribute in the many-to-many element is for the FK residing in this
+        table from the table ADDRESS.
+        Tables:
+                 ADDRESS
+                 ID     NAME     ADDRESS
+                 SENDER
+                 ID     NAME     ADRESS_ID (FK)
+        -->
+        <many-to-one
+                name="address"
+                not-null="false"
+                class="org.grouter.domain.entities.Address"
+                column="ADDRESS_FK"
+                cascade="save-update,persist">
+            
+        </many-to-one>
+      
+
+    </class>
+</hibernate-mapping>

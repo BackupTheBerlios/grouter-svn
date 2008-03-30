@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Grouter displayName="Test router for ftp" id="grouter_id_2" rmiRegistryPort="1099"
+         rmiServicePort="2000"
+         description="tipota"
+         home="file://temp/grouter"
+         xmlns="http://grouter.org/config.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
+
+  <Settings>
+    <Jndi>
+      <naming.factory.initial>org.jnp.interfaces.NamingContextFactory</naming.factory.initial>
+      <naming.provider.url>jnp://localhost:1099</naming.provider.url>
+      <naming.factory.url.pkgs>org.jboss.naming:org.jnp.interfaces</naming.factory.url.pkgs>
+      <naming.queueconnectionfactoy>UIL2ConnectionFactory</naming.queueconnectionfactoy>
+    </Jndi>
+    <Logging>
+      <jms.loggingQueue>queue/GrouterQueue</jms.loggingQueue>
+    </Logging>
+  </Settings>
+
+
+  <Nodes>
+    <Node id="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K">
+      <displayName>Ftp to file</displayName>
+      <createdOn>2007-01-01</createdOn>
+      <modifiedOn>2007-01-01</modifiedOn>
+      <inBoundEndPoint id="ftpreader_1" endPointType="FTP_READER">
+        <uri>ftp://ftp.sunet.se/</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/10 * * * * ?</cron>
+        <contextparam name="ftpAuthUser" value=""/>
+        <contextparam name="ftpAuthPassword" value=""/>
+        <contextparam name="ftpPort" value=""/>
+        <contextparam name="fileList" value="/pub/pictures/ascii/art07,/pub/pictures/ascii/art08"/>
+      </inBoundEndPoint>
+      <outBoundEndPoint id="filewriter_1" endPointType="FILE_WRITER">
+        <uri>file://temp/grouter/nodes/ftptest/out</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/5 * * * * ?</cron>
+      </outBoundEndPoint>
+    </Node>
+  </Nodes>
+</Grouter>

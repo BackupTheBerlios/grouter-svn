@@ -1,0 +1,166 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grouter.platform.presentation</groupId>
+    <artifactId>gweb</artifactId>
+    <packaging>war</packaging>
+    <name>${artifactId}</name>
+    <parent>
+        <groupId>org.grouter.platform</groupId>
+        <artifactId>presentation</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>org.grouter.platform.core</groupId>
+            <artifactId>core-domain</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ltd.getahead</groupId>
+            <artifactId>dwr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+        </dependency>
+        <!-- dependency>
+         <groupId>velocity</groupId>
+         <artifactId>velocity</artifactId>
+       </dependency -->
+        <!-- dependency>
+         <groupId>freemarker</groupId>
+         <artifactId>freemarker</artifactId>
+       </dependency -->
+        <dependency>
+            <groupId>org.acegisecurity</groupId>
+            <artifactId>acegi-security</artifactId>
+        </dependency>
+
+        <!--
+        | Third party dependencies
+        |-->
+        <dependency>
+            <groupId>com.javasoft</groupId>
+            <artifactId>javaee</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.javasoft</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javasoft</groupId>
+            <artifactId>el-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javasoft</groupId>
+            <artifactId>el-ri</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>myfaces</groupId>
+            <artifactId>myfaces-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>myfaces</groupId>
+            <artifactId>myfaces-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>myfaces</groupId>
+            <artifactId>tomahawk</artifactId>
+        </dependency>
+        <dependency>
+            <artifactId>sitemesh</artifactId>
+            <groupId>opensymphony</groupId>
+        </dependency>
+        <dependency>
+            <groupId>displaytag</groupId>
+            <artifactId>displaytag</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mygwt</groupId>
+            <artifactId>mygwt</artifactId>
+        </dependency>
+        <!--
+        | Test: Needed for HttpUnitTests!
+        |-->
+        <dependency>
+            <groupId>httpunit</groupId>
+            <artifactId>httpunit</artifactId>
+            <version>1.6</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>nekohtml</groupId>
+                    <artifactId>nekohtml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>rhino</groupId>
+                    <artifactId>js</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <build>
+        <!--  Skip version number in war name -> simplifies depeloy process -->
+        <finalName>gweb</finalName>
+        <plugins>
+            <!-- Run using mvn jetty6:run  -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty6-plugin</artifactId>
+                <version>6.0.0beta17</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <connectors>
+                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                            <port>8080</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                </configuration>
+            </plugin>
+            
+
+            <!--plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <tasks>
+                                <mkdir dir="${project.build.directory}"/>
+                                <copy file="${basedir}/src/main/webapp/WEB-INF/framework.xml"
+                                      todir="${project.build.directory}/test-classes"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin-->
+            <plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${basedir}/classes</outputDirectory>
+                    <projectnatures>
+                        <projectnature>org.eclipse.jem.workbench.JavaEMFNature</projectnature>
+                        <projectnature>org.eclipse.jdt.core.javanature</projectnature>
+                        <projectnature>org.eclipse.wst.common.modulecore.ModuleCoreNature</projectnature>
+                        <projectnature>com.sysdeo.eclipse.tomcat.tomcatnature</projectnature>
+                    </projectnatures>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

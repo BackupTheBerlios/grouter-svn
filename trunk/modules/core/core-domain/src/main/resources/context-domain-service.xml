@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+       default-autowire="byName">
+
+
+  <!-- This declaratino together with the context-domain-aop.xml context should do
+       the AOP style does not work currently - a lot of dependencies to cglib, asm etc
+       are messing things up
+
+  <bean id="grouterService" class="org.grouter.domain.service.spring.GRouterServiceImpl"/>
+  -->
+
+
+  <bean id="logStrategy" class="org.grouter.domain.service.spring.logging.JDBCLogStrategyImpl"/>
+
+  <bean id="serviceFactory" class="org.grouter.domain.service.BeanLocator"/>
+
+
+  <!-- ########################################################### -->
+  <!-- The "old" way of setting up it without the aop config style -->
+  <!-- ########################################################### -->
+
+    <!--  RouterService Proxy -->
+      <bean id="systemService"  class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+          <value>org.grouter.domain.service.SystemService</value>
+        </property>
+        <property name="interceptorNames">
+          <list>
+            <idref local="transactionInterceptor"/>
+            <idref local="systemServiceTarget"/>
+          </list>
+        </property>
+      </bean>
+
+
+      <!-- RouterService Target -->
+      <bean id="systemServiceTarget" name="systemServiceServiceTarget"
+            class="org.grouter.domain.service.spring.SystemServiceImpl">
+        <property name="systemDAO" ref="systemDAO"/>
+      </bean>
+
+
+
+  <!--  RouterService Proxy -->
+  <bean id="routerService"  class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="proxyInterfaces">
+      <value>org.grouter.domain.service.RouterService</value>
+    </property>
+    <property name="interceptorNames">
+      <list>
+        <idref local="transactionInterceptor"/>
+        <idref local="routerServiceTarget"/>
+      </list>
+    </property>
+  </bean>
+
+
+  <!-- RouterService Target -->
+  <bean id="routerServiceTarget" name="grouterServiceTarget"
+        class="org.grouter.domain.service.spring.RouterServiceImpl">
+    <property name="messageDAO" ref="messageDAO"/>
+    <property name="nodeDAO" ref="nodeDAO"/>
+  </bean>
+
+
+
+  <!--  JobService Proxy -->
+  <bean id="jobService"  class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="proxyInterfaces">
+      <value>org.grouter.domain.service.JobService</value>
+    </property>
+    <property name="interceptorNames">
+      <list>
+        <idref local="transactionInterceptor"/>
+        <idref local="jobServiceTarget"/>
+      </list>
+    </property>            
+  </bean>
+
+
+  <!-- JobService Target -->
+  <bean id="jobServiceTarget" class="org.grouter.domain.service.spring.JobServiceImpl">
+    <property name="jobDAO" ref="jobDAO"/>
+  </bean>
+
+
+  <!-- UserService Proxy -->
+  <bean id="userService"  class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="proxyInterfaces">
+      <value>org.grouter.domain.service.UserService</value>
+    </property>
+    <property name="interceptorNames">
+      <list>
+        <idref local="transactionInterceptor"/>
+        <idref local="userServiceTarget"/>
+      </list>
+    </property>
+  </bean>
+                                   
+
+  <!-- Grouter Service Target -->
+  <bean id="userServiceTarget" class="org.grouter.domain.service.spring.UserServiceImpl">
+    <!-- property name="userDAO" ref="userDAO"/>
+    <property name="userRoleDAO" ref="userRoleDAO"/ -->
+  </bean>
+
+
+  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+
+  <!-- Service Transaction Interceptor -->
+  <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+    <property name="transactionManager" ref="transactionManager"/>
+    <property name="transactionAttributeSource">
+      <value>
+          org.grouter.domain.service.RouterService.*=PROPAGATION_REQUIRED
+          org.grouter.domain.service.UserService.*=PROPAGATION_REQUIRED
+          org.grouter.domain.service.JobService.*=PROPAGATION_REQUIRED
+          org.grouter.domain.service.spring.RouterQueueListenerImpl.process*=PROPAGATION_REQUIRED
+        org.grouter.domain.search.HibernateSearchIndexContextListener.*=PROPAGATION_REQUIRED
+      </value>
+    </property>
+  </bean>
+
+</beans>

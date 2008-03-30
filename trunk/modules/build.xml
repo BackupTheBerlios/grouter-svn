@@ -1,0 +1,40 @@
+<!--
+   Use to drop and recreate the database.
+-->
+<project basedir="." name="Util " default="redeploy_war">
+    <property name="mysql" value="/usr/local/mysql/bin/mysql"/>
+    <property name="mavenlocalrepos" value="/home/ci/.m2/repository"/>
+    <property name="applicationserverHome" value="/Applications/resin....."/>
+    <property name="warInLocalRepost" value="/org/grouter/...../2.0-SNAPSHOT/gweb-1.0-SNAPSHOT.war"/>
+
+
+    <!-- Deploy war modules to Resing on test server -->
+    <target name="recreate_db" description="Recreate the database">
+        <echo>Running database clean script and restore</echo>
+        <exec executable="${mysql}" dir="${basedir}/core/core-domain/src/main/sql"
+              input="${basedir}/core/core-domain/src/main/sql/main_drop_create.sql">
+            <arg value="-ugrouter"/>
+            <arg value="-pgrouter"/>
+            <arg value="grouter"/>
+        </exec>
+    </target>
+
+    <target name="load_base_test_data_db" description="Recreate the database">
+        <echo>Setting up data</echo>
+        <exec executable="${mysql}" dir="${basedir}/core/core-domain/src/test/resources/sql"
+              input="${basedir}/core/core-domain/src/test/resources/test-domain-data.sql">
+            <arg value="-ugrouter"/>
+            <arg value="-pgrouter"/>
+            <arg value="grouter"/>
+        </exec>
+    </target>
+
+    <!-- Deploy war modules to Resing on test server -->
+    <target name="redeploy_war" description="Redeploy deploly war file from local repostitory">
+        <echo></echo>
+        <echo></echo>
+        <echo>Copying gweb war file to resing web app for deployment</echo>
+        <copy file="${mavenlocalrepos}${warInLocalRepost}" todir="${applicationserverHome}/webapps/"/>
+        <echo>Finished copying of file</echo>
+    </target>
+</project>

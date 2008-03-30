@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.grouter.platform</groupId>
+    <artifactId>common</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.grouter.platform.common</groupId>
+  <artifactId>common-util</artifactId>
+  <packaging>jar</packaging>
+  <name>${artifactId}</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.grouter.platform.common</groupId>
+      <artifactId>common-configbeans</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-naming</groupId>
+      <artifactId>commons-naming-factory</artifactId>
+      <version>20031201.015542</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-naming</groupId>
+      <artifactId>commons-naming-core</artifactId>
+      <version>20031116.223527</version>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.javasoft</groupId>
+      <artifactId>javaee</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.acegisecurity</groupId>
+      <artifactId>acegi-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xmlbeans</groupId>
+      <artifactId>xbean</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jboss</groupId>
+      <artifactId>jnp-client</artifactId>
+      <version>4.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>jboss</groupId>
+      <artifactId>jboss-client</artifactId>
+      <version>4.0.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>jboss</groupId>
+      <artifactId>jboss-common-client</artifactId>
+      <version>3.2.3</version> <!-- Could not find 4.0.2 in repos.. -->
+    </dependency>
+
+
+    <!-- Template engines -->
+      <dependency>
+        <groupId>velocity</groupId>
+        <artifactId>velocity</artifactId>
+      </dependency>
+
+    <dependency>
+      <groupId>activemq</groupId>
+      <artifactId>activemq-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-search</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+
+
+  </dependencies>
+</project>

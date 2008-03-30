@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+  <class name="org.grouter.domain.entities.JobEvent" table="job_event">
+    <id column="id" name="id" type="java.lang.Long">
+      <generator class="increment"/>
+    </id>
+
+    <property name="message" not-null="false" type="java.lang.String" />
+    <property name="created" not-null="true" type="timestamp" />
+   
+
+
+  </class>
+</hibernate-mapping>

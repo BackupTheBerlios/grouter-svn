@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Grouter displayName="Test router for ftp" id="grouter_id_http" 
+         description="tipota"
+         home="file://temp/grouter"
+         xmlns="http://grouter.org/config.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
+
+  <Settings>
+    <Jndi>
+      <naming.factory.initial>org.jnp.interfaces.NamingContextFactory</naming.factory.initial>
+      <naming.provider.url>jnp://localhost:1099</naming.provider.url>
+      <naming.factory.url.pkgs>org.jboss.naming:org.jnp.interfaces</naming.factory.url.pkgs>
+      <naming.queueconnectionfactoy>UIL2ConnectionFactory</naming.queueconnectionfactoy>
+    </Jndi>
+    <Logging>
+      <jms.loggingQueue>queue/GrouterQueue</jms.loggingQueue>
+    </Logging>
+  </Settings>
+
+  <Nodes>
+    <Node id="httptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
+      <displayName>Http to file</displayName>
+      <createdOn>2007-01-01</createdOn>
+      <modifiedOn>2007-01-01</modifiedOn>
+      <inBoundEndPoint id="httpreader" endPointType="HTTP_READER">
+        <uri>http://127.0.0.1/</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/10 * * * * ?</cron>
+        <contextparam name="httpPort" value="8080"/>
+        <contextparam name="fileList" value="/status"/>
+      </inBoundEndPoint>
+      <outBoundEndPoint id="filewriter_1_httptest" endPointType="FILE_WRITER">
+        <uri>file://temp/grouter/nodes/httptest/out</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/5 * * * * ?</cron>
+      </outBoundEndPoint>
+    </Node>
+  </Nodes>
+</Grouter>

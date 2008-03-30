@@ -1,0 +1,10 @@
+<module>
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name='net.mygwt.ui.MyGWT'/>
+
+     <!--source path='dto' / --> 
+
+    <entry-point class='org.grouter.presentation.gwt.client.MainApp'/>
+    <!-- servlet path="/GwebRemoteService" class="org.grouter.presentation.gwt.server.GwebRemoteServiceImpl"/ -->
+    <stylesheet src='gweb.css'/>
+</module>
