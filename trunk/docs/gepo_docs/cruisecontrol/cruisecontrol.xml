@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+	This example shows two different projects running in // for this system.
+	It uses Maven1 as the build manager.
+	
+	systemcontinuum 	Check cvs every X miutes time period and do a clean
+	                    cvs checkout and a complete rebuild using maven.
+	                    Failures will be reported to last cvs commiters since
+	                    previous successful build.
+					
+	systemnightly		Builds the report site every night at a specified time.
+	
+	Deploy a war to an application server - tomcat, geronimo or jboss to be
+	able to view the builds and metrics.
+	Buildarea is set to	/home/user/cruisebuildarea/ under which a log area is 
+	dedicated for logs (used by deployed war in jboss). Logs can be viewed
+	under:
+	
+	http://builder:8081/cruisecontrol/
+
+	Cruisecontrol needs to be started using e.g.:
+	
+	nohup maven cruisecontrol:run &
+
+	CC_BUILD=/home/user/cruisebuildarea
+	CC_INSTALL=/home/user/tools/cruisecontrol-2.2.1/
+-->
+<cruisecontrol>
+    <project name="systemcontinuum">
+        <!-- Here you put things you want to be done prior to a build. In our
+        case below we want a log statement to be published to a directory -
+        it DOES not mean that a build will be run though. -->
+        <bootstrappers>
+            <currentbuildstatusbootstrapper file="$CRUISEHOME/workarea/logs/systemcontinuum/currentbuildstatus.txt"/>
+        </bootstrappers>
+        <!-- A build will be attempted if something that a modiicationset is
+        watching has changed.
+        For very large scale builds try using a modificationsset using
+        filesystem instead of cvs (as depicted here). Then let cvs update
+        using a trigger a modification file which is watched from this
+        modificationsset.
+        The quietperiod property means that the modificationset must be quit
+        for 120s before a build is attempted. Suppose you are commiting in
+        100 file - after 5 files beeing commited cc tries to do a build.
+        But there is no chance i hell that the build will success since all
+        files beeing committed are not in yet - thats why the quietperiod
+        comes in handy. CC will wait for in this case cvs to be quiet before
+        trying any build.
+        -->
+        <modificationset quietperiod="120">
+            <!-- Modules contain all Maven projects. -->
+            <cvs localWorkingCopy="modules"
+                 cvsroot=":ext:cvsuser@cvsserver:/CVS"/>
+        </modificationset>
+        <!-- Schedule is just what it says - we will in this case try a new build every 1800s. -->
+        <schedule interval="1800">
+            <maven goal="deletemodules_and_checkout buildall"
+                   projectfile="project.xml"
+                   mavenscript="/home/user/tools/maven-1.0.2/bin/maven"/>
+        </schedule>
+        <!-- Log every build attempt. -->
+        <log dir="$CRUISEHOME/workarea/logs/systemcontinuum"
+             encoding="ISO-8859-1">
+        </log>
+        <!-- Publis the results. -->
+        <publishers>
+            <currentbuildstatuspublisher file="$CRUISEHOME/workarea/logs/systemcontinuum/currentbuildstatus.txt"/>
+            <xsltlogpublisher directory="$CRUISEHOME/workarea/logs/systemcontinuum"
+                              outfilename="mavenlog.html" publishonfail="yes"
+                              xsltfile="$CC_INSTALL/reporting/jsp/webcontent/xsl/maven.xsl"/>
+            <htmlemail spamwhilebroken="false" reportsuccess="fixes"
+                       css="$CC_INSTALL/reporting/jsp/webcontent/css/cruisecontrol.css"
+                       mailhost="smtpserver"
+                       buildresultsurl="http://builder.user.proj:8081/cruisecontrol/"
+                       subjectprefix="[CRUISE CONTROL BUILD]"
+                       defaultsuffix="@email.com"
+                       xsldir="$CC_INSTALL/reporting/jsp/webcontent/xsl"
+                       logdir="$CRUISEHOME/workarea/logs/systemnightly"
+                       skipusers="false"
+                       returnaddress="user@userstore.user.proj">
+                <failure address="gepo01@email"/>
+                <!-- Use this when debugging: success address="gepo01@email"/ -->
+            </htmlemail>
+        </publishers>
+        <plugins>
+        </plugins>
+    </project>
+
+    <project name="systemnightly">
+        <bootstrappers>
+            <currentbuildstatusbootstrapper file="$CRUISEHOME/workarea/logs/systemnightly/currentbuildstatus.txt"/>
+        </bootstrappers>
+        <modificationset requiremodification="no" quietperiod="60">
+            <alwaysbuild/>
+        </modificationset>
+        <schedule>
+            <!-- Run report builds every night when the developers are sleeping :-). -->
+            <maven time="0300" goal="buildsite deploysite"  projectfile="project.xml"
+                   mavenscript="/home/user/tools/maven-1.0.2/bin/maven" />
+        </schedule>
+        <log dir="$CRUISEHOME/workarea/logs/systemnightly" encoding="ISO-8859-1">
+        </log>
+        <publishers>
+            <currentbuildstatuspublisher file="$CRUISEHOME/workarea/logs/systemnightly/currentbuildstatus.txt"/>
+            <xsltlogpublisher directory="$CRUISEHOME/workarea/logs/systemnightly"
+                              outfilename="mavenlog.html" publishonfail="yes"
+                              xsltfile="$CC_INSTALL/reporting/jsp/webcontent/xsl/maven.xsl"/>
+        </publishers>
+        <plugins>
+        </plugins>
+    </project>
+</cruisecontrol>
