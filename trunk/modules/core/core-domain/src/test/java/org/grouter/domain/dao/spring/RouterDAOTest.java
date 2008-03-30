@@ -38,7 +38,6 @@ public class RouterDAOTest extends AbstractDAOTests
 
 
         Node node = new Node();
-        node.setId("testnode");
         node.setDisplayName("a node name");
         Set<Node> nodes = new HashSet<Node>();
         nodes.add(node);

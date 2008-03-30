@@ -91,7 +91,7 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
      */
     public void createNode()
     {
-        ftpToFile = new Node("node_id_ftpToFileNode", "ftpToFileNode");
+        ftpToFile = new Node(-4343L, "ftpToFileNode");
         ftpToFile.setBackupUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/backup");
         ftpToFile.setInternalQueueUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/internalq");
 

@@ -28,7 +28,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.List;
 
 
-public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements MessageDAO
+public class MessageDAOBean extends GenericEjb3DAO<Message, Long> implements MessageDAO
 {
     private static Logger logger = Logger.getLogger(MessageDAOBean.class);
 
@@ -47,7 +47,7 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, String> implements M
         throw new NotImplementedException();
     }
 
-    public List<Message> findMessagesForNode(String nodeId)
+    public List<Message> findMessagesForNode(Long nodeId)
     {
         throw new NotImplementedException();
     }

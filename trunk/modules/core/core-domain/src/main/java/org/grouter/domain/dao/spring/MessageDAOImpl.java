@@ -33,7 +33,7 @@ import java.util.List;
  * Hibernate-specific implementation of the <tt>MessageDAOImpl</tt>
  * non-CRUD data access object.
  */
-public class MessageDAOImpl extends GenericHibernateDAO<Message, String> implements MessageDAO
+public class MessageDAOImpl extends GenericHibernateDAO<Message, Long> implements MessageDAO
 {
     public MessageDAOImpl()
     {
@@ -52,7 +52,7 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, String> impleme
     }
 
 
-    public List<Message> findMessagesForNode(String nodeId)
+    public List<Message> findMessagesForNode(Long nodeId)
     {
         /* String hsql = "from Message obj where obj.node.id = :nodeid";
      Session session = getSession();

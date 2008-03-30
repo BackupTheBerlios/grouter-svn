@@ -53,7 +53,7 @@ public class ServiceLocatorContextAwareMockTest extends MockObjectTestCase
     /**
      * Test cache size increases as expected.
      */
-    public void testCacheSizeIncreaseOnLookup()
+  /*  public void testCacheSizeIncreaseOnLookup()
     {
         //setup - could cal   l mock instead...
         mockContext1 = mock(Context.class);
@@ -107,7 +107,7 @@ public class ServiceLocatorContextAwareMockTest extends MockObjectTestCase
         assertEquals(7,instanceUnderTest.getCacheSize());
         instanceUnderTest.getQueueConnectionFactory(JNDINAME_QUEUEFACTORY,(Context)mockContext1.proxy());
         assertEquals(7,instanceUnderTest.getCacheSize());  //should produce a cache hit!!
-    }
+    }            */
 
     /**
      * Test cache size increases as expected.

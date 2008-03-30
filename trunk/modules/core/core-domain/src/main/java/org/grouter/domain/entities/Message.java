@@ -72,11 +72,12 @@ public class Message extends BaseEntity implements Comparable
 {
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    //@GeneratedValue(generator = "system-uuid")
+    //@GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @DocumentId
     // Hibernate search
-    private String id;
+    private Long id;
 
     @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "receiver_message",
@@ -128,7 +129,7 @@ public class Message extends BaseEntity implements Comparable
     }
 
 
-    public String getId()
+    public Long getId()
     {
         return id;
     }
@@ -219,7 +220,7 @@ public class Message extends BaseEntity implements Comparable
         this.creationTimestamp = creationTimestamp;
     }
 
-    public void setId(String id)
+    public void setId(Long id)
     {
         this.id = id;
     }

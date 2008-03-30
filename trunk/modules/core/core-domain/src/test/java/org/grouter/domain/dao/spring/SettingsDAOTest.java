@@ -71,7 +71,6 @@ public class SettingsDAOTest extends AbstractDAOTests
         Map map = jdbcTemplate.queryForMap("SELECT * FROM settings WHERE id = ?", new Object[]{id});
         assertEquals(id , map.get("id"));
 
-        setComplete();
         
         List list = jdbcTemplate.queryForList("SELECT * FROM settings_context WHERE settings_fk = ?", new Object[]{id});
         assertEquals(2, list.size() );

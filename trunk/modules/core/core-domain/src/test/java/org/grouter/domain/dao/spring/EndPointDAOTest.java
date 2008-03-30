@@ -30,7 +30,7 @@ public class EndPointDAOTest extends AbstractDAOTests
     @Override
     public void testFindById()
     {
-        EndPoint endPoint = (EndPoint) endPointDAO.findById(ENDPOINT_ID);
+        EndPoint endPoint = endPointDAO.findById(ENDPOINT_ID);
 
         //  setComplete();
         assertNotNull(endPoint.toString());

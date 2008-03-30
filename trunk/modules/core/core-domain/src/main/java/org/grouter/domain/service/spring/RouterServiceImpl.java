@@ -122,7 +122,7 @@ public class RouterServiceImpl implements RouterService
         messageDAO.save(message);
     }
 
-    public Message findMessageById(final String id)
+    public Message findMessageById(final Long id)
     {
         Validate.notNull(id, "In parameter can not be null");
         Message foundMessage = messageDAO.findById(id);
@@ -130,7 +130,7 @@ public class RouterServiceImpl implements RouterService
     }
 
 
-    public List<Message> findAllMessages(final String nodeId)
+    public List<Message> findAllMessages(final Long nodeId)
     {
         return messageDAO.findMessagesForNode(nodeId);
     }
@@ -181,7 +181,7 @@ public class RouterServiceImpl implements RouterService
         return routerDAO.findById(routerId);
     }
 
-    public Node findNodeById(String nodeId)
+    public Node findNodeById(Long nodeId)
     {
         return nodeDAO.findById(nodeId);
     }

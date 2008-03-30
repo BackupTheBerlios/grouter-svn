@@ -27,7 +27,7 @@ public class CommandFactoryTest extends TestCase
     public void testValidNode()
     {
         Node node = new Node();
-        node.setId("anid");
+        node.setIdNo("anid");
 
         EndPoint inboundEndpoint = new EndPoint();
         inboundEndpoint.setId("id1");

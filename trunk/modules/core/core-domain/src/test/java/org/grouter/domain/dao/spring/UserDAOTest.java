@@ -76,7 +76,6 @@ public class UserDAOTest extends AbstractDAOTests
         map = jdbcTemplate.queryForMap("SELECT createdby, modifiedby FROM user WHERE id =" + id );
         assertEquals(User.SYSTEM.getId(), map.get("createdby"));
 
-        setComplete();
     }
 
     public void testUserEntityValidator()

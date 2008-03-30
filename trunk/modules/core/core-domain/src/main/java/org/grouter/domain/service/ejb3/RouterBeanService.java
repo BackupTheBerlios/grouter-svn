@@ -87,12 +87,12 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         messageDAO.save(message);
     }
 
-    public Message findMessageById(String id)
+    public Message findMessageById(Long id)
     {
         return messageDAO.findById(id);
     }
 
-    public List<Message> findAllMessages(final String id)
+    public List<Message> findAllMessages(final Long id)
     {
         return messageDAO.findMessagesForNode(id);
     }
@@ -138,13 +138,13 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         throw new NotImplementedException("implemente this");
     }
 
-    public Long getNumberOfMessages(String nodeId)
+    public Long getNumberOfMessages(Long nodeId)
     {
         throw new NotImplementedException("implemente this");
     }
 
     //todo
-    public Node findNodeById(String nodeId)
+    public Node findNodeById(Long nodeId)
     {
         throw new NotImplementedException("implemente this");
     }

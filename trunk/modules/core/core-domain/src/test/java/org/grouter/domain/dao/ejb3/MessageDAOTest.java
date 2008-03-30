@@ -34,7 +34,7 @@ public class MessageDAOTest extends AbstractDAOTests
         messageDAO.save(message);
         log.debug("Saved instance with id : " + message.getId());
 
-        Message result = messageDAO.findById((String) message.getId());
+        Message result = messageDAO.findById( message.getId());
         log.debug("Sender : " + result.getSender().getName());
 
         assertEquals("Persisted should be equals to found instance", result.getId(), message.getId());
@@ -43,7 +43,7 @@ public class MessageDAOTest extends AbstractDAOTests
     public void testFinder()
     {
         MessageDAO messageDAO = (MessageDAO) DAOFactory.getFactory(DAOFactory.FactoryType.EJB3_PERSISTENCE);
-        Message resultNotFound = messageDAO.findById("-123");
+        Message resultNotFound = messageDAO.findById( -123L );
         log.debug("### Sender : " + resultNotFound.getId());
         assertNull(resultNotFound);
         //log.debug("Sender : " + resultNotFound);

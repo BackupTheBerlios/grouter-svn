@@ -33,7 +33,7 @@ public class MessageDAOTest extends AbstractDAOTests
 
         flushSession();
 
-        String id = (String) message.getId();
+        Long id =  message.getId();
 
         Map map = jdbcTemplate.queryForMap("SELECT * FROM message WHERE id = ?",
                 new Object[]{id});

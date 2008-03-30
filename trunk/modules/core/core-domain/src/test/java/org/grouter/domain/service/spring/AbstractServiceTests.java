@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class AbstractServiceTests extends AbstractTransactionalDataSourceSpringContextTests
 {
     SessionFactory sessionFactory;
-    String MESSAGE_ID = "msgid_1";
+    Long MESSAGE_ID = -1L;
     String NODE_ID = "nodeid_1";
 
 

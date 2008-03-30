@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public interface MessageDAO extends GenericDAO<Message, String>
+public interface MessageDAO extends GenericDAO<Message, Long>
 {
     public enum QueryColumn
     {
@@ -38,7 +38,7 @@ public interface MessageDAO extends GenericDAO<Message, String>
 
     List<Message> findConcrete(Class concreteClass);
 
-    List<Message> findMessagesForNode(String nodeId);
+    List<Message> findMessagesForNode(Long nodeId);
 
 
     // suing a cache

@@ -45,7 +45,7 @@
             <xs:element name="cron" type="xs:string" maxOccurs="1" minOccurs="1"/>
             <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="id" use="required"/>
+        <xs:attribute name="idno" use="required"/>
         <xs:attribute name="jobType" type="jobTypeType"/>
     </xs:complexType>
 
@@ -68,7 +68,7 @@
             <xs:element name="inBoundEndPoint" type="endPoint" minOccurs="1"/>
             <xs:element name="outBoundEndPoint" type="endPoint" minOccurs="1"/>
         </xs:sequence>
-        <xs:attribute name="id" use="required"/>
+        <xs:attribute name="idno" use="required"/>
         <xs:attribute name="createuniquename" type="xs:boolean"/>
         <xs:attribute name="endPointType" type="xs:boolean"/>
         <xs:attribute name="createDirectories" type="xs:boolean" use="required"/>

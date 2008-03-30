@@ -28,7 +28,7 @@
   </Settings>
 
   <GlobalJobs>
-    <Job id="backuphandler" jobType="ARCHIVER">
+    <Job idno="backuphandler" jobType="ARCHIVER">
       <displayname></displayname>
       <cron>0/10 * * * * ?</cron>
       <contextparam name="ftpAuthUser" value=""/>
@@ -36,14 +36,14 @@
       <contextparam name="ftpPort" value=""/>
       <contextparam name="fileList" value="/pub/pictures/ascii/art07,/pub/pictures/ascii/art08"/>
     </Job>
-    <Job id="1s23" jobType="ARCHIVER">
+    <Job idno="1s23" jobType="ARCHIVER">
       <displayname></displayname>
       <cron></cron>
     </Job>
   </GlobalJobs>
 
   <Nodes>
-    <Node id="filetest11212" createuniquename="true" source="BACARGO_C2K" receiver="C2K1" createDirectories="true">
+    <Node idno="filetest11212" createuniquename="true" source="BACARGO_C2K" receiver="C2K1" createDirectories="true">
       <description>Test node 1</description>
       <displayName>FileTest</displayName>
       <createdOn>2007-01-01</createdOn>
@@ -63,7 +63,7 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
+    <Node idno="filetest2" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
       <description>Another file to file node</description>
       <displayName>FileToFileTest2</displayName>
       <createdOn>2007-01-01</createdOn>
@@ -81,5 +81,4 @@
       </outBoundEndPoint>
     </Node>
   </Nodes>
-
 </Grouter>

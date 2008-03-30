@@ -43,12 +43,16 @@ public class Node extends BaseEntity
 {
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    //@GeneratedValue(generator = "system-uuid")
+    //@GenericGenerator(name = "system-uuid", strategy = "assigned")
+     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @DocumentId
     // Hibernate search
-    private String id;
+    private Long id;
+
+    @Column(name = "idno", nullable = false)
+    private String idNo;
 
     @NotNull
     @Column(name = "displayName", nullable = false)
@@ -142,18 +146,18 @@ public class Node extends BaseEntity
      * @param id         id of the node
      * @param dislayName a message to display
      */
-    public Node(String id, String dislayName)
+    public Node(Long id, String dislayName)
     {
         this.id = id;
         this.displayName = dislayName;
     }
 
-    public String getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -372,6 +376,17 @@ public class Node extends BaseEntity
             }
         }
     */
+
+
+    public String getIdNo()
+    {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo)
+    {
+        this.idNo = idNo;
+    }
 
     public boolean equals(final Object o)
     {

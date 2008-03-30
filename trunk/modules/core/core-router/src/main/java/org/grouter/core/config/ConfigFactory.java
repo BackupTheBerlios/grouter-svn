@@ -126,7 +126,7 @@ public class ConfigFactory
         {
             final Node nodeEntity = new Node();
             nodeEntity.setDisplayName(configNode.getDisplayName());
-            nodeEntity.setId(configNode.getId().getStringValue());
+            nodeEntity.setIdNo(configNode.getId().getStringValue());
             nodeEntity.setReceiver(configNode.getReceiver());
             nodeEntity.setSource(configNode.getSource());
             nodeEntity.setCreateDirectories(configNode.getCreateDirectories());

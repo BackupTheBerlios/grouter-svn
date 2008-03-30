@@ -17,8 +17,8 @@ insert into node (id, idno, inbound_endpoint_fk, outbound_endpoint_fk, modifiedo
                                         
 insert into sender (name, id) values ('SENDERNAME1', '-senderid_1');
 
-insert into message (id,idno, creationtimestamp, sender_fk, node_fk, content) values (-1, '-msgid_1', NOW(), '-senderid_1', -1, 'A message 1');
-insert into message (id,idno, creationtimestamp, sender_fk, node_fk, content) values ( -2,'-msgid_2', NOW(), '-senderid_1', -1, 'A message 2');
+insert into message (id, idno, creationtimestamp, sender_fk, node_fk, content) values (-1, '-msgid_1', NOW(), '-senderid_1', -1, 'A message 1');
+insert into message (id, idno, creationtimestamp, sender_fk, node_fk, content) values ( -2,'-msgid_2', NOW(), '-senderid_1', -1, 'A message 2');
 insert into message (id, idno,creationtimestamp, sender_fk, node_fk, content) values (-3, '-msgid_3', NOW(), '-senderid_1', -1, 'A message 3');
 insert into message (id, idno,creationtimestamp, sender_fk, node_fk, content) values (-4, '-msgid_4', NOW(), '-senderid_1', -1, 'A message 4');
 insert into message (id, idno,creationtimestamp, sender_fk, node_fk, content) values (-5, '-msgid_5', NOW(), '-senderid_1', -1, 'A message 5');

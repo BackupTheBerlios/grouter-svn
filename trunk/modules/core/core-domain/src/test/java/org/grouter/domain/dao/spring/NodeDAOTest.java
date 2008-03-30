@@ -61,7 +61,6 @@ public class NodeDAOTest extends AbstractDAOTests
     public void testSave()
     {
         Node node = new Node();
-        node.setId("andid");
         node.setDisplayName("A node");
         node.setNodeStatus(NodeStatus.NOTSTARTED);
 
@@ -70,7 +69,7 @@ public class NodeDAOTest extends AbstractDAOTests
 
         assertNotNull(node.getNodeStatus().getId());
 
-        String id = node.getId();
+        Long id = node.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
         assertEquals("A node", map.get("displayname"));
     }
@@ -79,7 +78,6 @@ public class NodeDAOTest extends AbstractDAOTests
     {
         Node node = new Node();
         node.setDisplayName("A node");
-        node.setId("anid");
 
         EndPoint inboundEndpoint = new EndPoint();
         inboundEndpoint.setId("id1");
@@ -107,7 +105,7 @@ public class NodeDAOTest extends AbstractDAOTests
         flushSession();
 
 
-        String id = node.getId();
+        Long id = node.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
         assertEquals("A node", map.get("displayname"));
 
@@ -182,7 +180,7 @@ public class NodeDAOTest extends AbstractDAOTests
 
         for (Node node : nodes)
         {
-            if (node.getId().equalsIgnoreCase(NODE_ID))
+            if (node.getId().equals(NODE_ID))
             {
                 assertEquals(new Long(6), node.getNumberOfMessagesHandled());
             }

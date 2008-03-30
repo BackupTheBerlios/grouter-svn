@@ -67,7 +67,7 @@ public interface RouterService
      * @param id of a Message enitty
      * @return
      */
-    Message findMessageById(String id);
+    Message findMessageById(Long id);
 
     /**
      * Find messages for this node.
@@ -75,7 +75,7 @@ public interface RouterService
      * @param nodeId a node for which we want all messages
      * @return a list of {@link Message}s
      */
-    List<Message> findAllMessages(String nodeId);
+    List<Message> findAllMessages(Long nodeId);
 
 
     /**
@@ -142,7 +142,7 @@ public interface RouterService
     Map<Long, EndPointType> findAllEndPointTypes();
 
 
-    Node findNodeById(String nodeId);
+    Node findNodeById(Long nodeId);
 
 
     /**

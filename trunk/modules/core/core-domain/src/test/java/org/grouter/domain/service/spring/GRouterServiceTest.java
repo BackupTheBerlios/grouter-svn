@@ -48,7 +48,7 @@ public class GRouterServiceTest extends AbstractServiceTests
         Set<Message> messages = new HashSet<Message>();
         messages.add(message);
 
-        Node node = new Node("file node", "name");
+        Node node = new Node(-1234L, "name");
         node.setMessages(messages);
         message.setNode(node);
 

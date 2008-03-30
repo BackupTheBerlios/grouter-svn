@@ -30,5 +30,5 @@ import java.rmi.RemoteException;
  */
 public interface RemoteRouterService extends Remote
 {
-    void stopNode( String nodeId ) throws RemoteException;
+    void stopNode( Long nodeId ) throws RemoteException;
 }

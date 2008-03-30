@@ -32,7 +32,7 @@ public class TestSchedulerService extends TestCase
     public void testStart()
     {
 
-        Node node = new Node("testid","name");
+        Node node = new Node(-321L,"name");
         Set<Node> setNodes = new HashSet<Node>();
         setNodes.add( node );
         

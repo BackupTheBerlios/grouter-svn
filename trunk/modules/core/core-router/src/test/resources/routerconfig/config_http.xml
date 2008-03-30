@@ -20,7 +20,7 @@
   </Settings>
 
   <Nodes>
-    <Node id="httptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
+    <Node idno="httptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
       <displayName>Http to file</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>

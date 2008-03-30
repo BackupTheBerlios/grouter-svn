@@ -351,7 +351,7 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
      * @param nodeId id of node to stop
      * @throws RemoteException if we encounter som exception trying to stop a node
      */
-    public void stopNode(String nodeId) throws RemoteException
+    public void stopNode(Long nodeId) throws RemoteException
     {
         Node node = routerService.findNodeById(nodeId);
 

@@ -29,12 +29,12 @@ import java.util.List;
 public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSpringContextTests
 {
     // inserted test data and ids of some of the data
-    final static String MESSAGE_ID = "-msgid_1";
-    final static String NODE_ID = "-nid_1";
-    final static String NODE_ID_FTP = "nid_2";
+    final static Long MESSAGE_ID = -1L;
+    final static Long NODE_ID = -1L;
+    final static Long NODE_ID_FTP = -2L;
     final static String ROUTER_ID = "rid_1";
-    final static String ENDPOINT_ID = "1";
-    final static Long SETTINGS_ID = new Long(-1L);
+    final static String ENDPOINT_ID = "-1";
+    final static Long SETTINGS_ID = -1L;
     final static Long JOB_ID = -1L;
     Long USER_ID = -1L;
     Long ADMIN_ID = 1L;
