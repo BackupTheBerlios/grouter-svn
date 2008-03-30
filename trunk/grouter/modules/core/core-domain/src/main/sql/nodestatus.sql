@@ -1,6 +1,9 @@
 create table nodestatus
 (
     id bigint(20) not null,
+    idno varchar(36) not null,
+    createdon datetime,
+    modifiedon datetime,
     name varchar(255),
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

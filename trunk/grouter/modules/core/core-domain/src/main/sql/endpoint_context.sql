@@ -1,6 +1,9 @@
 create table endpoint_context
 (
     id bigint(20) not null auto_increment,
+    idno varchar(36),
+    createdon datetime,
+    modifiedon datetime,
     keyname varchar(1000) not null,
     value varchar(1000) not null,
     endpoint_fk varchar(36) not null,

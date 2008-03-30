@@ -40,7 +40,6 @@ public class Router extends BaseEntity
     @Id
     @NotNull
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "assigned")
     private String id;
 
@@ -203,21 +202,6 @@ public class Router extends BaseEntity
     {
         this.settings = settings;
     }
-
-    /*
-    public String toString()
-    {
-        return "Router{" +
-                "id='" + id + '\'' +
-                ", displayName='" + displayName + '\'' +
-                ", nodes=" + nodes +
-                ", startedOn=" + startedOn +
-                ", rmiRegistryPort=" + rmiRegistryPort +
-                ", rmiServicePort=" + rmiServicePort +
-                ", upTime=" + upTime +
-                '}';
-    }        */
-
 
     public String printNodes()
     {

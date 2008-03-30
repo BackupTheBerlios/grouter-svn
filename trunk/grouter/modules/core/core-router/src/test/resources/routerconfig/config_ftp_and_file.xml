@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Grouter displayName="Router 1" id="grouter_id_1" rmiRegistryPort="2099" rmiServicePort="2098"
          description="Test router for file nodes"
-        
          home="file://temp/grouter"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -27,6 +26,9 @@
       <userName></userName>
       <password></password>
     </DataSource>
+      <General>
+          <forceCreateHomePathOnStartUp>true</forceCreateHomePathOnStartUp>
+      </General>
   </Settings>
 
 
@@ -51,7 +53,7 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node id="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
+    <Node id="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true" >
       <displayName>Ftp to file</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>

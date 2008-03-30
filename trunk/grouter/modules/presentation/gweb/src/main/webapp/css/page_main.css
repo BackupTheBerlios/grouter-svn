@@ -4,6 +4,7 @@
 	margin: 0 auto;
 	padding: 5px 5px;
 	font-size: 11pt;
+
 }
 
 #headingBar
@@ -130,12 +131,11 @@ div#formPanel {
 }
 
 
-div#formPanelHeader {
+div#formPanel label {
         font: 12px Verdana, Arial, Helvetica, sans-serif, bold;
         margin-left: -5px;
         margin-top:-5px;
         padding: 5px;
-    padding-right: 10px;
         background: #afcff9;
         display: inline-table;
         width:100%;
@@ -161,7 +161,7 @@ div#menuAction {
     padding: 10px;
     border: 2px solid #afcff9;
     margin: 5px;
-    width: 98%;
+    width: 100%;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
@@ -176,7 +176,7 @@ div#paragraph {
     display: inline-table;
     border: 2px solid #afcff9;
     margin: 5px;
-    width: 98%;
+    width: 100%;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;

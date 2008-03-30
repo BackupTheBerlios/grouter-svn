@@ -28,11 +28,11 @@ insert into receiver (id, name ) values ( '-receiverid_1', 'A receiver');
 insert into receiver (id, name ) values ( '-receiverid_2', 'A receiver');
 insert into receiver_message (receiver_fk , message_fk) values ( '-receiverid_1',  '-msgid_1' );
 
-insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (1,  '0046 8 12345', '0046 701 12345', 'GeorgesStreet', '12345', 'El Stockholm', '12345', 'www.polyzois.se', 'Sweden', 'Denada', 'gepo01@yahoo.com');
-insert into user (id, username, password, firstname, lastname, address_fk) values (10002, 'gepo', 'gepo','Georges', 'Poly',  1);
-insert into user_role (id, user_id, role_id) values (10000, 10002, 1);
-insert into user_role (id, user_id, role_id) values (10001, 10002, 2);
-insert into user_role (id, user_id, role_id) values (10002, 10002, 3);
+insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-11,  '0046 8 12345', '0046 701 12345', 'GeorgesStreet', '12345', 'El Stockholm', '12345', 'www.polyzois.se', 'Sweden', 'Denada', 'gepo01@yahoo.com');
+insert into user (id, username, password, firstname, lastname, address_fk) values (-1, 'gepo', 'gepo','Georges', 'Poly',  -1);
+insert into user_role (id, user_id, role_id) values (-1, -1, 1);
+insert into user_role (id, user_id, role_id) values (-2, -1, 2);
+insert into user_role (id, user_id, role_id) values (-3, -1, 3);
 
 
 -- Jobs

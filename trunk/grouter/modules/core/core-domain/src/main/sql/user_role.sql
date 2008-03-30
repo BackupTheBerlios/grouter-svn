@@ -1,5 +1,8 @@
 CREATE TABLE user_role (
   id bigint(20) NOT NULL auto_increment,
+--  idno varchar(36) not null,
+  createdon datetime,
+  modifiedon datetime,
   user_id bigint(20) NOT NULL,
   role_id bigint(20) NOT NULL,
   PRIMARY KEY  (id),

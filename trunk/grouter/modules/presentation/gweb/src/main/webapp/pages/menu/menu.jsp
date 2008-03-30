@@ -7,6 +7,7 @@
     <li>
         <span id="pretty2" title="Messages - query router for messages">
         <a href="/gweb/message/search.do">Messages</a>
+        </span>    
     </li>
     <li>
         <span id="pretty3" title="Node - query a node for messages, get real time messages processed by a node.">

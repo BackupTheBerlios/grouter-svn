@@ -1,38 +1,57 @@
 package org.grouter.domain.entities;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.Embeddable;
+import javax.persistence.Column;
 import java.util.Date;
 
 /**
  * All entities extends the Basentity which holds a reference to an AuditInfo instance.
+ * Auditinfo is an embeddable composite used to store information about who and when an entity
+ * was edited.
  *
  * @author Georges Polyzois
  */
+@Embeddable
 public class AuditInfo
 {
-    Date created;
-    Date modified;
+    @Column(name = "createdon")
+    //@Field(index = Index.TOKENIZED, store = Store.YES)
+    Date createdOn;
+    @Column(name = "modifiedon")
+    //@Field(index = Index.TOKENIZED, store = Store.YES)
+    Date modifiedOn;
+    @ManyToOne
+    @JoinColumn(name = "createdby")
     User createdBy;
+    @ManyToOne
+    @JoinColumn(name = "modifiedby")
     User modifiedBy;
 
 
-    public Date getCreated()
+    public Date getCreatedOn()
     {
-        return created;
+        return createdOn;
     }
 
-    public void setCreated(Date created)
+    public void setCreatedOn(Date createdOn)
     {
-        this.created = created;
+        this.createdOn = createdOn;
     }
 
-    public Date getModified()
+    public Date getModifiedOn()
     {
-        return modified;
+        return modifiedOn;
     }
 
-    public void setModified(Date modified)
+    public void setModifiedOn(Date modifiedOn)
     {
-        this.modified = modified;
+        this.modifiedOn = modifiedOn;
     }
 
     public User getCreatedBy()

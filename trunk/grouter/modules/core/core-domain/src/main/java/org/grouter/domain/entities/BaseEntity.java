@@ -24,6 +24,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.LazyInitializationException;
 
 import javax.persistence.Transient;
+import javax.persistence.Embedded;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
@@ -32,12 +34,15 @@ import java.io.Serializable;
  * @author Georges Polyzois
  */
 // public class BaseEntity<ID extends Serializable> implements Serializable   Could not get this to work
+@Embeddable
 public class BaseEntity<ID extends Serializable> implements Serializable
 {
     @Transient
     private static Logger logger = Logger.getLogger(BaseEntity.class);
 
+    @Embedded
     private AuditInfo auditInfo;
+
 
     // private ID id;
 

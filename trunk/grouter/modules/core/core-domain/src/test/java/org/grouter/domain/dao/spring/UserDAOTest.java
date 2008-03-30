@@ -8,6 +8,7 @@ import org.hibernate.validator.InvalidValue;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 /**
  * DAO tests for mappings, cascade saves etc.
@@ -31,31 +32,28 @@ public class UserDAOTest extends AbstractDAOTests
         assertNotNull(found.toString());
         assertEquals(USER_ID, found.getId());
         assertEquals("rid", found.getPassword());
-
         endTransaction();
-
         assertEquals( "astrid.lindgren@stockholm.se", found.getAddress().getEmail() );
-
     }
 
     @Override
     public void testSave()
     {
-        User admin = userDAO.findById(USER_ID);
-        //User admin = new User();
-        //admin.setId( ADMIN_ID );
-
         Address address = new Address();
         address.setEmail("email");
                 
+        AuditInfo auditInfo = new AuditInfo();
+        auditInfo.setCreatedOn( new Date() );
+        auditInfo.setModifiedOn( new Date() );
+        auditInfo.setCreatedBy(User.SYSTEM);
 
         User user = new User();
+        user.setAuditInfo(auditInfo);
         user.setAddress( address );
         user.setFirstName("A first name");
         user.setLastName("A last name");
         user.setPassword("password");
         user.setUserName("username");
-        user.setCreatedBy(admin);
         user.setUserState(UserState.BLOCKED);
 
         UserRole userRole = new UserRole( user, Role.SUPER_REVIEWER );
@@ -74,6 +72,11 @@ public class UserDAOTest extends AbstractDAOTests
         int size = jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + id );
         assertEquals(3, size);
 
+
+        map = jdbcTemplate.queryForMap("SELECT createdby, modifiedby FROM user WHERE id =" + id );
+        assertEquals(User.SYSTEM.getId(), map.get("createdby"));
+
+        setComplete();
     }
 
     public void testUserEntityValidator()

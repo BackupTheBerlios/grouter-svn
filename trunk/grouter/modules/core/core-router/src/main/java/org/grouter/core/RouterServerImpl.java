@@ -51,7 +51,7 @@ import java.rmi.RemoteException;
  *
  * @author Georges Polyzois
  */
-public class RouterServerImpl implements Runnable, RemoteRouterService
+final public class RouterServerImpl implements Runnable, RemoteRouterService
 {
 
     private static Logger logger = Logger.getLogger(RouterServerImpl.class);
@@ -67,10 +67,8 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
     private static final String ROUTER_SERVICE = "routerService";
     private static final String RMI_SERVICE_EXPORTER_FACTORY_BEAN = "rmiServiceExporterFactoryBean";
 
-
     public RouterServerImpl()
     {
-
     }
 
     /**
@@ -186,8 +184,13 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
         routerService.saveRouter(router);
         routerService.updateStateForNotConfiguredNodes(router.getId(), router.getNodes());
         logger.info("Router state saved in database");
+    }
+
+    private void forceCreateHomePathOnStartUp()
+    {
 
     }
+
 
     /**
      * If there is a rmi port configured then we register the router in jndi.
@@ -361,12 +364,10 @@ public class RouterServerImpl implements Runnable, RemoteRouterService
         {
             throw new RemoteException("Could not stop the node :" + nodeId + " Got exception :" + e.getMessage());
         }
-
     }
 
     public static void main(String[] args)
     {
-
         try
         {
             String configPath = System.getProperty("grouter.configfile");

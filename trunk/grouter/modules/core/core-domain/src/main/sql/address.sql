@@ -1,5 +1,8 @@
 CREATE TABLE address (
   id bigint(20) NOT NULL auto_increment,
+--  idno varchar(36) not null,
+  createdon datetime,
+  modifiedon datetime,
   firstname varchar(255) default NULL,
   lastname varchar(255) default NULL,
   phone varchar(255) default NULL,

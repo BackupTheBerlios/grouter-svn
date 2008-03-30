@@ -23,8 +23,10 @@ import org.grouter.domain.dao.SettingsDAO;
 import org.grouter.domain.entities.Settings;
 import org.hibernate.Session;
 
+import javax.persistence.Id;
 
-public class SettingsDAOImpl extends GenericHibernateDAO<Settings, String> implements SettingsDAO
+
+public class SettingsDAOImpl extends GenericHibernateDAO<Settings, Long> implements SettingsDAO
 {
     /**
      * For reflection purposes, i.e. Spring needs this.
@@ -39,19 +41,9 @@ public class SettingsDAOImpl extends GenericHibernateDAO<Settings, String> imple
         super(Settings.class, session);
     }
 
-
-    public void delete(String id)
+    public void delete( Settings entity )
     {
-        logger.info("Not deleting any settings");
-
+        throw new UnsupportedOperationException("Delete not supported for Settings");
     }
-
-
-    public void delete(Settings entity)
-    {
-        logger.info("Not deleting any settings");
-
-    }
-
 
 }

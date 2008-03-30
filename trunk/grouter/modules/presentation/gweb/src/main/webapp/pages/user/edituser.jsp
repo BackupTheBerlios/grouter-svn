@@ -34,9 +34,9 @@
 
 <div id="formPanel">
 
-    <div id="formPanelHeader">
+    <label >
         User
-    </div>
+    </label>
 
     <table>
         <tr>
@@ -96,9 +96,9 @@
 </div>
 
 <div id="formPanel">
-    <div id="formPanelHeader">
+    <label >
         Address
-    </div>
+    </label>
     <table>
         <tr>
             <td><spring:message code="user.edit.form.user.address.label.email"/></td>

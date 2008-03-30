@@ -39,7 +39,7 @@ public class JobEvent extends BaseEntity
     @NotNull
     Long id;
 
-    @Column(name = "created")
+    @Column(name = "createdOn")
     @NotNull
     Date created;
 
@@ -152,7 +152,7 @@ public class JobEvent extends BaseEntity
     {
         return "JobEvent{" +
                 "id=" + id +
-                ", created=" + created +
+                ", createdOn=" + created +
                 ", message='" + message + '\'' +
                 ", job=" + job +
                 ", processTimeInMs=" + processTimeInMs +

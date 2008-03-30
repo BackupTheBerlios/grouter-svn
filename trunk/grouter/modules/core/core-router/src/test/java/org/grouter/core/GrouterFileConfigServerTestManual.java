@@ -33,12 +33,6 @@ public class GrouterFileConfigServerTestManual extends TestCase //extends Abstra
         router.start();
     }
 
-
-
-
-
-
-
     public static void main(String[] args)
     {
         try

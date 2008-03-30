@@ -36,10 +36,12 @@ public class JobDAOTest extends AbstractDAOTests
     @Override
     public void testFindById()
     {
+       // setComplete();
         Job found = jobDAO.findById(JOB_ID);
         assertNotNull(found.toString());
         assertEquals(JOB_ID, found.getId());
         assertEquals("displayname", found.getDisplayName());
+       // setComplete();
     }
 
     @Override

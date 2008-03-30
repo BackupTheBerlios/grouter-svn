@@ -28,9 +28,7 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -52,6 +50,7 @@ public class User extends BaseEntity
     //@NotNull
     private Long id;
 
+
     @Column(name = "username")
     @Length(min = 5, max = MAX_USER_NAME_LENGTH)
     @NotNull
@@ -71,17 +70,6 @@ public class User extends BaseEntity
     @Column(name = "password")
     @NotNull
     private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "createdby")
-    private User createdBy;
-
-    @Column(name = "createdon")
-    @Field(index = Index.TOKENIZED, store = Store.YES)
-    private Date createdOn;
-
-    @Column(name = "modifiedon")
-    private Date modifiedOn;
 
     @Column(name = "expireson")
     private User expiresOn;
@@ -114,8 +102,28 @@ public class User extends BaseEntity
     private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 
+    // static initialized types - users that are alwqys creatd in the system
+    public static final User SYSTEM = new User(1L);
+    public static final User ADMIN = new User(2L);
+    private final static Map<Long, User> valueOfMap = new LinkedHashMap<Long, User>(2);
+    static
+    {
+        valueOfMap.put(ADMIN.getId(), ADMIN);
+        valueOfMap.put(SYSTEM.getId(), SYSTEM);
+
+    }
+
     public final static int MAX_USER_NAME_LENGTH = 15;
 
+
+    public User()
+    {
+    }
+
+    public User(Long id)
+    {
+        this.id = id;
+    }
 
     public Long getId()
     {
@@ -178,24 +186,10 @@ public class User extends BaseEntity
         return userRoles.contains(Role.REVIEWER);
     }
 
-
-    public User getCreatedBy()
-    {
-        return createdBy;
-    }
-
-
-    public void setCreatedBy(User createdBy)
-    {
-        this.createdBy = createdBy;
-    }
-
-
     public Set<UserRole> getUserRoles()
     {
         return userRoles;
     }
-
 
     public void setUserRoles(Set<UserRole> userRoles)
     {
@@ -234,27 +228,6 @@ public class User extends BaseEntity
         this.userState = userState;
     }
 
-
-    public Date getCreatedOn()
-    {
-        return createdOn;
-    }
-
-    public void setCreatedOn(final Date createdOn)
-    {
-        this.createdOn = createdOn;
-    }
-
-    public Date getModifiedOn()
-    {
-        return modifiedOn;
-    }
-
-    public void setModifiedOn(final Date modifiedOn)
-    {
-        this.modifiedOn = modifiedOn;
-    }
-
     public User getExpiresOn()
     {
         return expiresOn;
@@ -284,6 +257,22 @@ public class User extends BaseEntity
     {
         this.locale = locale;
     }
+
+    // TODO
+    // This is also set  in super class - but the mapping from that class did not work....
+    @Embedded
+    private AuditInfo auditInfo;
+
+    public AuditInfo getAuditInfo()
+        {
+            return auditInfo;
+        }
+
+        public void setAuditInfo(AuditInfo auditInfo)
+        {
+            this.auditInfo = auditInfo;
+        }
+
 
     /**
      * Sorting inmemory using {@link java.util.Collections} sort will do sort by message.

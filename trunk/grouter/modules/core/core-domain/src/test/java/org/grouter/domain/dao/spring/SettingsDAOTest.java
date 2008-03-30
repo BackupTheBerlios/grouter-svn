@@ -40,6 +40,7 @@ public class SettingsDAOTest extends AbstractDAOTests
     public void testDelete()
     {
         // we are not deleteing settings - overrideing delete in DAOImpl
+        // settings
         settingsDAO.delete(SETTINGS_ID);
 
         flushSession();
@@ -53,8 +54,7 @@ public class SettingsDAOTest extends AbstractDAOTests
     public void testSave()
     {
         Settings settings = new Settings();
-        settings.setId("anid");
-
+        
         Map<String, String> context = new HashMap<String, String>();
         context.put("key", "value");
         context.put("key2", "value2");
@@ -67,14 +67,14 @@ public class SettingsDAOTest extends AbstractDAOTests
 
         assertNotNull(settings.getId());
 
-        String id = settings.getId();
+        Long id = settings.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM settings WHERE id = ?", new Object[]{id});
-        assertEquals("anid", map.get("id"));
+        assertEquals(id , map.get("id"));
 
+        setComplete();
+        
         List list = jdbcTemplate.queryForList("SELECT * FROM settings_context WHERE settings_fk = ?", new Object[]{id});
-        //assertEquals("anid", map.get("settings_fk"));
-        assertTrue(list.size() == 2);
-
+        assertEquals(2, list.size() );
     }
 
 

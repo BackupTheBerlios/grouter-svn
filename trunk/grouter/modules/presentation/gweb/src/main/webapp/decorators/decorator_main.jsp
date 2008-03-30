@@ -8,29 +8,19 @@
 
 
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
-
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
     <title>Grouter - <decorator:title/></title>
-
     <link href="/gweb/css/page_main.css" type="text/css" rel="stylesheet" />
     <link href="/gweb/css/datatable.css" rel="stylesheet" type="text/css" >
     <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/>
 
-
     <!-- script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script -->
-
-
 
     <script type="text/javascript" charset="iso8859-1" src="../javascripts/common.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
@@ -40,21 +30,14 @@
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/prototype.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/effects.js"></script>
     <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/scriptaculous.js"></script -->
-    
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/util.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script>
-
-
     <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/lightwindow-2.0.js"></script -->
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/lightwindow-2.0.js"></script>
-
     <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/accordion-2.0.js"></script -->
     <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/accordion-2.0.js"></script -->
     <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
-
-
-
     <script type="text/javascript">
         $(function()
         {
@@ -118,7 +101,8 @@
     <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
-        
+
+
 
     <decorator:head/>
 </head>
@@ -128,9 +112,7 @@
     <div id="logoBar">
         <img id="logo" src="../images/browser.png" width="48" height="48" alt="logo"/>
         <decorator:title/>
-        <div id="usersettings">
-            <jsp:include page="../pages/user/usersettings.jsp"/>
-        </div>
+        <jsp:include page="../pages/user/usersettings.jsp"/>
     </div>
     <br/>
     <div id="menu">

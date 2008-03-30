@@ -16,8 +16,6 @@
 
 <body>
 
-
-
 <div id="paragraph">
     Edit settings.
 </div>

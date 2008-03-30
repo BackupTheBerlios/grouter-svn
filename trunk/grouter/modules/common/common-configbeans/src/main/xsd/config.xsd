@@ -5,457 +5,461 @@
            xmlns:mstns="http://grouter.org/config.xsd"
            elementFormDefault="qualified">
 
-  <!-- Root element  -->
-  <xs:element name="Grouter">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="Settings" type="settingsType" maxOccurs="1" minOccurs="1"/>
-        <xs:element name="GlobalJobs" type="jobsType" maxOccurs="1" minOccurs="0"/>
-        <xs:element name="Nodes" type="nodesType" maxOccurs="1" />
-      </xs:sequence>
-      <xs:attribute name="displayName" type="xs:string" use="required"/>
-      <xs:attribute name="description" type="xs:string" use="optional"/>
-      <xs:attribute name="id" type="xs:string" use="required"/>
-      <xs:attribute name="home" type="xs:string" use="required"/>
-      <xs:attribute name="rmiRegistryPort" type="xs:int" use="optional"/>
-      <xs:attribute name="rmiServicePort" type="xs:int" use="optional"/>
+    <!-- Root element  -->
+    <xs:element name="Grouter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Settings" type="settingsType" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="GlobalJobs" type="jobsType" maxOccurs="1" minOccurs="0"/>
+                <xs:element name="Nodes" type="nodesType" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="displayName" type="xs:string" use="required"/>
+            <xs:attribute name="description" type="xs:string" use="optional"/>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="home" type="xs:string" use="required"/>
+            <xs:attribute name="rmiRegistryPort" type="xs:int" use="optional"/>
+            <xs:attribute name="rmiServicePort" type="xs:int" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- GlobalSettings -->
+    <xs:complexType name="settingsType">
+        <xs:sequence>
+            <xs:element name="Jndi" type="jndiType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="Logging" type="loggingType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="Email" type="emailType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="DataSource" type="dataSourceType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="General" type="generalType" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
     </xs:complexType>
-  </xs:element>
 
-  <!-- GlobalSettings -->
-  <xs:complexType name="settingsType">
-    <xs:sequence>
-      <xs:element name="Jndi" type="jndiType" maxOccurs="1" minOccurs="1"/>
-      <xs:element name="Logging" type="loggingType" maxOccurs="1" minOccurs="1"/>
-      <xs:element name="Email" type="emailType" maxOccurs="1" minOccurs="0"/>
-      <xs:element name="DataSource" type="dataSourceType" maxOccurs="1" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <!-- Jobs -->
-  <xs:complexType name="jobsType">
-    <xs:sequence>
-      <xs:element name="Job" type="jobType" maxOccurs="unbounded" minOccurs="1"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="jobType">
-    <xs:sequence>
-      <xs:element name="displayname" type="xs:string" maxOccurs="1" minOccurs="1"/>
-      <xs:element name="cron" type="xs:string" maxOccurs="1" minOccurs="1"/>
-      <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="id" use="required"/>
-    <xs:attribute name="jobType" type="jobTypeType"/>
-  </xs:complexType>
-
-
-  <!-- Nodes -->
-  <xs:complexType name="nodesType">
-    <xs:sequence>
-      <xs:element name="Node" type="nodeType" maxOccurs="unbounded" minOccurs="1"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="nodeType">
-    <xs:sequence>
-      <xs:element name="description" type="xs:string" minOccurs="0"/>
-      <xs:element name="displayName" type="xs:string" minOccurs="0"/>
-      <xs:element name="createdOn" type="xs:string" minOccurs="0"/>
-      <xs:element name="modifiedOn" type="xs:string" minOccurs="0"/>
-      <xs:element name="backup" type="backup" minOccurs="0"/>
-      <!-- if none specified then no backups are made -->
-      <xs:element name="inBoundEndPoint" type="endPoint" minOccurs="1"/>
-      <xs:element name="outBoundEndPoint" type="endPoint" minOccurs="1"/>
-    </xs:sequence>
-    <xs:attribute name="id" use="required"/>
-    <xs:attribute name="createuniquename" type="xs:boolean"/>
-    <xs:attribute name="endPointType" type="xs:boolean"/>
-    <xs:attribute name="createDirectories" type="xs:boolean" use="required"/>
-    <!--
-    A source is an optional attribute on a Node indicating from which source
-    we are getting messages. A message in it self can contain a sender - and different
-    messages arriving to an inbound endpoint for a node can have different senders.
-    A source might be e.g. BritishAirWaysCargoFtpServer but messages received from
-    that source might have senders different from BA.
-    -->
-    <xs:attribute name="source" type="xs:string"/>
-    <xs:attribute name="receiver" type="xs:string"/>
-  </xs:complexType>
-
-  <!-- Third level -->
-  <xs:complexType name="endPoint">
-    <xs:sequence>
-      <xs:element name="uri" type="xs:string" minOccurs="0"/>
-      <xs:element name="clazzname" type="xs:string" minOccurs="0"/>
-      <xs:element name="cron" type="xs:string" minOccurs="0"/>
-      <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="endPointType" type="endPointType"/>
-    <xs:attribute name="id" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:simpleType name="endPointType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="FILE_WRITER"/>
-      <xs:enumeration value="FILE_READER"/>
-      <xs:enumeration value="FTP_READER"/>
-      <xs:enumeration value="FTP_WRITER"/>
-      <xs:enumeration value="JMS_READER"/>
-      <xs:enumeration value="JMS_WRITER"/>
-      <xs:enumeration value="HTTP_READER"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-
-  <xs:simpleType name="jobTypeType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ARCHIVER"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!--
-  Need to specify explicitly in Node for backup to occur. If sepcified the default location
-  will be used and set to GROUTER_HOME/NODENAME OR if overrideDefaultUri this will be used in stead
-  -->
-  <xs:complexType name="backup">
-    <xs:sequence>
-      <xs:element name="overrideDefaultUri" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="context">
-    <xs:attribute name="name" type="xs:string"/>
-    <xs:attribute name="value" type="xs:string"/>
-  </xs:complexType>
-
-
-  <xs:complexType name="pollType">
-    <xs:sequence>
-      <xs:element ref="commandMessageMessage"/>
-      <xs:element ref="pollIntervallMilliSeconds"/>
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <!-- FeederNode::infolderType -->
-  <xs:complexType name="inFolderType">
-    <xs:sequence>
-      <xs:element ref="inPath" minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="pollIntervallMilliSeconds" minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="skipFirstblankline"/>
-      <xs:element ref="excludeFilter"/>
-      <xs:element ref="sortAlpha"/>
-      <xs:element name="batchRead" type="batchReadType"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!-- FeederNode::emailsettingsType -->
-  <xs:complexType name="emailSettingsType">
-    <xs:sequence>
-      <xs:element ref="emailBatchSize"/>
-      <xs:element ref="emailSendIntervallInMilliSeconds"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="emailBatchSize" type="xs:short"/>
-
-
-  <xs:complexType name="jndiType">
-    <xs:sequence>
-      <xs:element name="naming.factory.initial" type="xs:string"
-                  default="org.jnp.interfaces.NamingContextFactory"/>
-      <xs:element name="naming.provider.url" type="xs:string" default="jnp://localhost:1099"
-                  maxOccurs="1"/>
-      <xs:element name="naming.factory.url.pkgs" type="xs:string"
-                  default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
-      <xs:element name="naming.queueconnectionfactoy" type="xs:string"
-                  default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
-
-
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <xs:complexType name="dataSourceType" >
-      <xs:sequence>
-        <!-- org.hibernate.dialect.PostgreSQLDialect, org.hibernate.dialect.Oracle9Dialect --> 
-        <xs:element name="dialect" type="xs:string" default="org.hibernate.dialect.MySQLInnoDBDialect"/>
-        <xs:element name="driverClassName" type="xs:string" default="org.gjt.mm.mysql.Driver"/>
-        <xs:element name="url" type="xs:string" default="jdbc:mysql://localhost:3306/grouter"/>
-        <xs:element name="userName" type="xs:string" default="grouter"/>
-        <xs:element name="password" type="xs:string" default="grouter"/>
-      </xs:sequence>
+    <!-- Jobs -->
+    <xs:complexType name="jobsType">
+        <xs:sequence>
+            <xs:element name="Job" type="jobType" maxOccurs="unbounded" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="jobType">
+        <xs:sequence>
+            <xs:element name="displayname" type="xs:string" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="cron" type="xs:string" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" use="required"/>
+        <xs:attribute name="jobType" type="jobTypeType"/>
     </xs:complexType>
 
 
+    <!-- Nodes -->
+    <xs:complexType name="nodesType">
+        <xs:sequence>
+            <xs:element name="Node" type="nodeType" maxOccurs="unbounded" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
 
+    <xs:complexType name="nodeType">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="displayName" type="xs:string" minOccurs="0"/>
+            <xs:element name="createdOn" type="xs:string" minOccurs="0"/>
+            <xs:element name="modifiedOn" type="xs:string" minOccurs="0"/>
+            <xs:element name="backup" type="backup" minOccurs="0"/>
+            <!-- if none specified then no backups are made -->
+            <xs:element name="inBoundEndPoint" type="endPoint" minOccurs="1"/>
+            <xs:element name="outBoundEndPoint" type="endPoint" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="id" use="required"/>
+        <xs:attribute name="createuniquename" type="xs:boolean"/>
+        <xs:attribute name="endPointType" type="xs:boolean"/>
+        <xs:attribute name="createDirectories" type="xs:boolean" use="required"/>
+        <!--
+        A source is an optional attribute on a Node indicating from which source
+        we are getting messages. A message in it self can contain a sender - and different
+        messages arriving to an inbound endpoint for a node can have different senders.
+        A source might be e.g. BritishAirWaysCargoFtpServer but messages received from
+        that source might have senders different from BA.
+        -->
+        <xs:attribute name="source" type="xs:string"/>
+        <xs:attribute name="receiver" type="xs:string"/>
+    </xs:complexType>
 
+    <!-- Third level -->
+    <xs:complexType name="endPoint">
+        <xs:sequence>
+            <xs:element name="uri" type="xs:string" minOccurs="0"/>
+            <xs:element name="clazzname" type="xs:string" minOccurs="0"/>
+            <xs:element name="cron" type="xs:string" minOccurs="0"/>
+            <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="endPointType" type="endPointType"/>
+        <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
 
-  <xs:complexType name="loggingType">
-    <xs:sequence>
-      <xs:element name="jms.loggingQueue" type="xs:string" default="queue/GrouterQueue"
-                  maxOccurs="1"/>
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <!--
-java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
-java.naming.provider.url=jnp://localhost:1099
-java.naming.factory.url.pkgs=org.jboss.naming.client
-  -->
-
-  <!-- FeederNode::outfolderType -->
-  <xs:complexType name="outFolderType">
-    <xs:sequence>
-      <xs:element ref="outPath" minOccurs="1" maxOccurs="1"/>
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <!-- FeederNode::backupType -->
-  <xs:complexType name="localStoreType">
-    <xs:sequence>
-      <xs:element ref="backupPath"/>
-      <xs:element ref="sortAlpha" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="localStoreOn" type="xs:boolean" use="required"/>
-  </xs:complexType>
-
-  <!-- FeederNode::transformType -->
-  <xs:complexType name="transformType">
-    <xs:sequence>
-      <xs:element name="transformFile" type="transformFileType" minOccurs="0"
-                  maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="transformOn" type="xs:boolean" use="required"/>
-  </xs:complexType>
-
-  <!-- FeederNode::errorType -->
-  <xs:complexType name="errorType">
-    <xs:sequence>
-      <xs:element ref="errorFolderPath"/>
-      <xs:element ref="errorInFolderPath"/>
-      <xs:element ref="sortOnResend"/>
-      <xs:element ref="cronJob"/>
-      <xs:element name="errorNotification" type="errorNotificationType"/>
-    </xs:sequence>
-    <xs:attribute name="errorHandlerOn" type="xs:boolean" use="required"/>
-  </xs:complexType>
-
-  <!-- FeederNode::inactivityType -->
-  <xs:complexType name="inactivityType">
-    <xs:sequence>
-      <xs:element ref="maxInactivityPeriodInMilliSeconds" minOccurs="0"/>
-      <xs:element ref="emailOnInactivity" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="inactivityOn" type="xs:boolean" use="required"/>
-  </xs:complexType>
-
-  <!-- FeederNode::nameserviceType -->
-  <xs:complexType name="nameServiceType">
-    <xs:sequence>
-      <xs:element ref="iorPath"/>
-      <xs:element ref="objectName"/>
-      <xs:element ref="objectMethod"/>
-      <xs:element ref="paramType"/>
-      <xs:element ref="reconnectToObjectInMilliSeconds"/>
-      <xs:element ref="reconnectToObjectPolicy"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:element name="archivePath" type="xs:anyURI"/>
-
-
-  <xs:complexType name="appenderType">
-    <xs:sequence>
-      <xs:element ref="maxFileSize" minOccurs="0"/>
-      <xs:element ref="maxBackupIndex" minOccurs="0"/>
-      <xs:element ref="rollingSchedule" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="type" type="xs:string" use="required"/>
-  </xs:complexType>
-  <xs:complexType name="archiveHandlerType">
-    <xs:sequence>
-      <xs:element ref="cronJob"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="backupPath" type="xs:anyURI"/>
-  <xs:complexType name="emailNotificationType">
-    <xs:sequence>
-      <xs:element ref="emailOnFailure"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="emailOnFailure" type="xs:anyURI"/>
-  <xs:element name="emailSendIntervallInMilliSeconds" type="xs:long"/>
-  <xs:element name="emailService" type="xs:anyURI"/>
-
-  <xs:element name="maxInactivityPeriodInMilliSeconds" type="xs:long"/>
-  <xs:element name="emailOnInactivity" type="xs:anyURI"/>
-
-  <xs:element name="errorFolderPath" type="xs:anyURI"/>
-  <xs:element name="errorInFolderPath" type="xs:anyURI"/>
-
-  <xs:complexType name="errorNotificationType">
-    <xs:sequence>
-      <xs:element ref="notifyEveryIntervallInMilliSeconds" minOccurs="0"/>
-      <xs:element ref="numberOfErrors" minOccurs="0"/>
-      <xs:element name="emailNotification" type="emailNotificationType" minOccurs="0"/>
-      <xs:element name="sms" type="smsType" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="errorNotificationOn" type="xs:boolean" use="required"/>
-  </xs:complexType>
-  <xs:element name="notifyEveryIntervallInMilliSeconds" type="xs:long"/>
-  <xs:element name="batchSize" type="xs:short"/>
-  <xs:element name="batchThreshold" type="xs:short"/>
-  <xs:element name="inPath" type="xs:anyURI"/>
-
-  <xs:complexType name="batchReadType">
-    <xs:sequence>
-      <xs:element ref="batchSize"/>
-      <xs:element ref="batchThreshold"/>
-    </xs:sequence>
-    <xs:attribute name="isBatchOn" type="xs:boolean" use="required"/>
-  </xs:complexType>
-
-  <xs:element name="cronJob" type="cronIntervallType"/>
-  <xs:simpleType name="cronIntervallType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-
-  <xs:element name="pollIntervallMilliSeconds">
-    <xs:simpleType>
-      <xs:restriction base="xs:long">
-        <xs:minInclusive value="2000"/>
-      </xs:restriction>
+    <xs:simpleType name="endPointType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FILE_WRITER"/>
+            <xs:enumeration value="FILE_READER"/>
+            <xs:enumeration value="FTP_READER"/>
+            <xs:enumeration value="FTP_WRITER"/>
+            <xs:enumeration value="JMS_READER"/>
+            <xs:enumeration value="JMS_WRITER"/>
+            <xs:enumeration value="HTTP_READER"/>
+        </xs:restriction>
     </xs:simpleType>
-  </xs:element>
-  <xs:element name="logFolderPath" type="xs:anyURI"/>
-  <!--xs:complexType name="loggingType">
-      <xs:sequence>
-          <xs:element name="appender" type="appenderType"/>
-          <xs:element ref="logpattern"/>
-          <xs:element ref="logfolderpath"/>
-          <xs:element ref="loglevel"/>
-      </xs:sequence>
-  </xs:complexType>
-  <xs:element name="logpattern" type="xs:string"/>
-  <xs:element name="loglevel" type="loglevelType"/>
-  <xs:simpleType name="loglevelType">
-      <xs:restriction base="xs:string">
-          <xs:enumeration value="DEBUG"/>
-          <xs:enumeration value="INFO"/>
-          <xs:enumeration value="WARN"/>
-          <xs:enumeration value="ERROR"/>
-          <xs:enumeration value="FATAL"/>
-      </xs:restriction>
-  </xs:simpleType-->
-  <xs:element name="maxBackupIndex" type="xs:short"/>
-  <xs:element name="maxFileSize" type="xs:string"/>
-  <xs:element name="rollingSchedule" type="xs:string"/>
-  <xs:element name="commandMessageMessage" type="xs:string"/>
-
-  <xs:element name="iorPath" type="xs:anyURI"/>
-  <xs:element name="objectMethod" type="xs:string"/>
-  <xs:element name="objectName" type="xs:string"/>
-  <xs:element name="paramType" type="xs:string"/>
-  <xs:element name="reconnectToObjectInMilliSeconds" type="xs:long"/>
-  <xs:element name="reconnectToObjectPolicy" type="reconnectToObjectPolicyType"/>
-  <xs:simpleType name="reconnectToObjectPolicyType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="reconnectOnNewMessage"/>
-      <xs:enumeration value="reconnectForever"/>
-      <xs:enumeration value="doNotReconnect"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="numberOfErrors" type="xs:short"/>
-  <xs:element name="outPath" type="xs:anyURI"/>
-  <xs:element name="servicerootpath" type="xs:anyURI"/>
-  <xs:element name="skipFirstblankline" type="xs:boolean"/>
-
-  <xs:complexType name="smsType">
-    <xs:sequence>
-      <xs:element ref="smsOnFailure"/>
-      <xs:element ref="smsService"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="smsOnFailure" type="xs:anyURI"/>
-  <xs:element name="smsService" type="xs:anyURI"/>
-  <xs:element name="sortAlpha" type="xs:boolean"/>
-  <xs:element name="sortOnResend" type="xs:boolean"/>
-
-  <xs:complexType name="transformFileType">
-    <xs:simpleContent>
-      <xs:extension base="transformFileSimpleType">
-        <xs:attribute name="transformmessage" type="xs:string" use="required"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:simpleType name="transformFileSimpleType">
-    <xs:restriction base="xs:anyURI"/>
-  </xs:simpleType>
 
 
-  <xs:element name="excludeFilter" type="xs:string"/>
+    <xs:simpleType name="jobTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ARCHIVER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--
+    Need to specify explicitly in Node for backup to occur. If sepcified the default location
+    will be used and set to GROUTER_HOME/NODENAME OR if overrideDefaultUri this will be used in stead
+    -->
+    <xs:complexType name="backup">
+        <xs:sequence>
+            <xs:element name="overrideDefaultUri" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="context">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
 
 
-  <xs:simpleType name="wildCardFilterType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
+    <xs:complexType name="pollType">
+        <xs:sequence>
+            <xs:element ref="commandMessageMessage"/>
+            <xs:element ref="pollIntervallMilliSeconds"/>
+        </xs:sequence>
+    </xs:complexType>
 
 
-  <xs:complexType name="emailType">
-    <xs:sequence>
-      <xs:element name="smtp" type="smtpType" minOccurs="0"/>
-      <!-- xs:element name="pop" type="popType" minOccurs="0"/>
-      <xs:element name="imap" type="imapType" minOccurs="0"/ -->
-    </xs:sequence>
-    <xs:attribute name="sendintervallInMilliSeconds" type="xs:long" use="required"/>
-  </xs:complexType>
+    <!-- FeederNode::infolderType -->
+    <xs:complexType name="inFolderType">
+        <xs:sequence>
+            <xs:element ref="inPath" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="pollIntervallMilliSeconds" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="skipFirstblankline"/>
+            <xs:element ref="excludeFilter"/>
+            <xs:element ref="sortAlpha"/>
+            <xs:element name="batchRead" type="batchReadType"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="imapType">
-    <xs:sequence>
-      <xs:element name="imapserver" type="imapserverType" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="imapserverType">
-    <xs:simpleContent>
-      <xs:extension base="imapserverSimpleType">
-        <xs:attribute name="id" use="required"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:simpleType name="imapserverSimpleType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  <xs:complexType name="popType">
-    <xs:sequence>
-      <xs:element name="popserver" type="popserverType" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="popserverType">
-    <xs:simpleContent>
-      <xs:extension base="popserverSimpleType">
-        <xs:attribute name="id" use="required"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:simpleType name="popserverSimpleType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  <xs:complexType name="smtpType">
-    <xs:sequence>
-      <xs:element name="smtpserver" type="smtpserverType" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="smtpserverType">
-    <xs:simpleContent>
-      <xs:extension base="smtpserverSimpleType">
-        <xs:attribute name="id" use="required"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:simpleType name="smtpserverSimpleType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
+    <!-- FeederNode::emailsettingsType -->
+    <xs:complexType name="emailSettingsType">
+        <xs:sequence>
+            <xs:element ref="emailBatchSize"/>
+            <xs:element ref="emailSendIntervallInMilliSeconds"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="emailBatchSize" type="xs:short"/>
+
+
+    <xs:complexType name="jndiType">
+        <xs:sequence>
+            <xs:element name="naming.factory.initial" type="xs:string"
+                        default="org.jnp.interfaces.NamingContextFactory"/>
+            <xs:element name="naming.provider.url" type="xs:string" default="jnp://localhost:1099"
+                        maxOccurs="1"/>
+            <xs:element name="naming.factory.url.pkgs" type="xs:string"
+                        default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
+            <xs:element name="naming.queueconnectionfactoy" type="xs:string"
+                        default="org.jboss.naming:org.jnp.interfaces" maxOccurs="1"/>
+
+
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="dataSourceType">
+        <xs:sequence>
+            <!-- org.hibernate.dialect.PostgreSQLDialect, org.hibernate.dialect.Oracle9Dialect -->
+            <xs:element name="dialect" type="xs:string" default="org.hibernate.dialect.MySQLInnoDBDialect"/>
+            <xs:element name="driverClassName" type="xs:string" default="org.gjt.mm.mysql.Driver"/>
+            <xs:element name="url" type="xs:string" default="jdbc:mysql://localhost:3306/grouter"/>
+            <xs:element name="userName" type="xs:string" default="grouter"/>
+            <xs:element name="password" type="xs:string" default="grouter"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="loggingType">
+        <xs:sequence>
+            <xs:element name="jms.loggingQueue" type="xs:string" default="queue/GrouterQueue"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--
+  java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+  java.naming.provider.url=jnp://localhost:1099
+  java.naming.factory.url.pkgs=org.jboss.naming.client
+    -->
+
+    <!-- FeederNode::outfolderType -->
+    <xs:complexType name="outFolderType">
+        <xs:sequence>
+            <xs:element ref="outPath" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- FeederNode::backupType -->
+    <xs:complexType name="localStoreType">
+        <xs:sequence>
+            <xs:element ref="backupPath"/>
+            <xs:element ref="sortAlpha" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="localStoreOn" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <!-- FeederNode::transformType -->
+    <xs:complexType name="transformType">
+        <xs:sequence>
+            <xs:element name="transformFile" type="transformFileType" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="transformOn" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <!-- FeederNode::errorType -->
+    <xs:complexType name="errorType">
+        <xs:sequence>
+            <xs:element ref="errorFolderPath"/>
+            <xs:element ref="errorInFolderPath"/>
+            <xs:element ref="sortOnResend"/>
+            <xs:element ref="cronJob"/>
+            <xs:element name="errorNotification" type="errorNotificationType"/>
+        </xs:sequence>
+        <xs:attribute name="errorHandlerOn" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <!-- FeederNode::inactivityType -->
+    <xs:complexType name="inactivityType">
+        <xs:sequence>
+            <xs:element ref="maxInactivityPeriodInMilliSeconds" minOccurs="0"/>
+            <xs:element ref="emailOnInactivity" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="inactivityOn" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <!-- FeederNode::nameserviceType -->
+    <xs:complexType name="nameServiceType">
+        <xs:sequence>
+            <xs:element ref="iorPath"/>
+            <xs:element ref="objectName"/>
+            <xs:element ref="objectMethod"/>
+            <xs:element ref="paramType"/>
+            <xs:element ref="reconnectToObjectInMilliSeconds"/>
+            <xs:element ref="reconnectToObjectPolicy"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="archivePath" type="xs:anyURI"/>
+
+
+    <xs:complexType name="appenderType">
+        <xs:sequence>
+            <xs:element ref="maxFileSize" minOccurs="0"/>
+            <xs:element ref="maxBackupIndex" minOccurs="0"/>
+            <xs:element ref="rollingSchedule" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="archiveHandlerType">
+        <xs:sequence>
+            <xs:element ref="cronJob"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="backupPath" type="xs:anyURI"/>
+    <xs:complexType name="emailNotificationType">
+        <xs:sequence>
+            <xs:element ref="emailOnFailure"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="emailOnFailure" type="xs:anyURI"/>
+    <xs:element name="emailSendIntervallInMilliSeconds" type="xs:long"/>
+    <xs:element name="emailService" type="xs:anyURI"/>
+
+    <xs:element name="maxInactivityPeriodInMilliSeconds" type="xs:long"/>
+    <xs:element name="emailOnInactivity" type="xs:anyURI"/>
+
+    <xs:element name="errorFolderPath" type="xs:anyURI"/>
+    <xs:element name="errorInFolderPath" type="xs:anyURI"/>
+
+    <xs:complexType name="errorNotificationType">
+        <xs:sequence>
+            <xs:element ref="notifyEveryIntervallInMilliSeconds" minOccurs="0"/>
+            <xs:element ref="numberOfErrors" minOccurs="0"/>
+            <xs:element name="emailNotification" type="emailNotificationType" minOccurs="0"/>
+            <xs:element name="sms" type="smsType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="errorNotificationOn" type="xs:boolean" use="required"/>
+    </xs:complexType>
+    <xs:element name="notifyEveryIntervallInMilliSeconds" type="xs:long"/>
+    <xs:element name="batchSize" type="xs:short"/>
+    <xs:element name="batchThreshold" type="xs:short"/>
+    <xs:element name="inPath" type="xs:anyURI"/>
+
+    <xs:complexType name="batchReadType">
+        <xs:sequence>
+            <xs:element ref="batchSize"/>
+            <xs:element ref="batchThreshold"/>
+        </xs:sequence>
+        <xs:attribute name="isBatchOn" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="cronJob" type="cronIntervallType"/>
+    <xs:simpleType name="cronIntervallType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:element name="pollIntervallMilliSeconds">
+        <xs:simpleType>
+            <xs:restriction base="xs:long">
+                <xs:minInclusive value="2000"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="logFolderPath" type="xs:anyURI"/>
+    <!--xs:complexType name="loggingType">
+        <xs:sequence>
+            <xs:element name="appender" type="appenderType"/>
+            <xs:element ref="logpattern"/>
+            <xs:element ref="logfolderpath"/>
+            <xs:element ref="loglevel"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="logpattern" type="xs:string"/>
+    <xs:element name="loglevel" type="loglevelType"/>
+    <xs:simpleType name="loglevelType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DEBUG"/>
+            <xs:enumeration value="INFO"/>
+            <xs:enumeration value="WARN"/>
+            <xs:enumeration value="ERROR"/>
+            <xs:enumeration value="FATAL"/>
+        </xs:restriction>
+    </xs:simpleType-->
+    <xs:element name="maxBackupIndex" type="xs:short"/>
+    <xs:element name="maxFileSize" type="xs:string"/>
+    <xs:element name="rollingSchedule" type="xs:string"/>
+    <xs:element name="commandMessageMessage" type="xs:string"/>
+
+    <xs:element name="iorPath" type="xs:anyURI"/>
+    <xs:element name="objectMethod" type="xs:string"/>
+    <xs:element name="objectName" type="xs:string"/>
+    <xs:element name="paramType" type="xs:string"/>
+    <xs:element name="reconnectToObjectInMilliSeconds" type="xs:long"/>
+    <xs:element name="reconnectToObjectPolicy" type="reconnectToObjectPolicyType"/>
+    <xs:simpleType name="reconnectToObjectPolicyType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="reconnectOnNewMessage"/>
+            <xs:enumeration value="reconnectForever"/>
+            <xs:enumeration value="doNotReconnect"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="numberOfErrors" type="xs:short"/>
+    <xs:element name="outPath" type="xs:anyURI"/>
+    <xs:element name="servicerootpath" type="xs:anyURI"/>
+    <xs:element name="skipFirstblankline" type="xs:boolean"/>
+
+    <xs:complexType name="smsType">
+        <xs:sequence>
+            <xs:element ref="smsOnFailure"/>
+            <xs:element ref="smsService"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="smsOnFailure" type="xs:anyURI"/>
+    <xs:element name="smsService" type="xs:anyURI"/>
+    <xs:element name="sortAlpha" type="xs:boolean"/>
+    <xs:element name="sortOnResend" type="xs:boolean"/>
+
+    <xs:complexType name="transformFileType">
+        <xs:simpleContent>
+            <xs:extension base="transformFileSimpleType">
+                <xs:attribute name="transformmessage" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="transformFileSimpleType">
+        <xs:restriction base="xs:anyURI"/>
+    </xs:simpleType>
+
+
+    <xs:element name="excludeFilter" type="xs:string"/>
+
+
+    <xs:simpleType name="wildCardFilterType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+
+    <xs:complexType name="emailType">
+        <xs:sequence>
+            <xs:element name="smtp" type="smtpType" minOccurs="0"/>
+            <!-- xs:element name="pop" type="popType" minOccurs="0"/>
+        <xs:element name="imap" type="imapType" minOccurs="0"/ -->
+        </xs:sequence>
+        <xs:attribute name="sendintervallInMilliSeconds" type="xs:long" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="imapType">
+        <xs:sequence>
+            <xs:element name="imapserver" type="imapserverType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="imapserverType">
+        <xs:simpleContent>
+            <xs:extension base="imapserverSimpleType">
+                <xs:attribute name="id" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="imapserverSimpleType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:complexType name="popType">
+        <xs:sequence>
+            <xs:element name="popserver" type="popserverType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="popserverType">
+        <xs:simpleContent>
+            <xs:extension base="popserverSimpleType">
+                <xs:attribute name="id" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="popserverSimpleType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:complexType name="smtpType">
+        <xs:sequence>
+            <xs:element name="smtpserver" type="smtpserverType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="smtpserverType">
+        <xs:simpleContent>
+            <xs:extension base="smtpserverSimpleType">
+                <xs:attribute name="id" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="smtpserverSimpleType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:complexType name="generalType">
+        <xs:sequence>
+                <xs:element name="forceCreateHomePathOnStartUp" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+
+    </xs:complexType>
 </xs:schema>

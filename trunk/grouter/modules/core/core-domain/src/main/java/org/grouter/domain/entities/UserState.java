@@ -47,7 +47,7 @@ public class UserState extends BaseEntity
     @Column(name = "name")
     String name;
 
-    // created
+    // createdOn
     public static UserState NEW = new UserState(1L, "NEW");
     // avaiting activation - user received One Time Password and needs to change it
     public static UserState ACTIVATION_PENDING = new UserState(3L, "ACTIVATION_PENDIN");

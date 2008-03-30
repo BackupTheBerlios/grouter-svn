@@ -24,7 +24,7 @@ import org.grouter.domain.entities.Settings;
 /**
  * @author Georges Polyzois
  */
-public interface SettingsDAO extends GenericDAO<Settings, String>
+public interface SettingsDAO extends GenericDAO<Settings, Long>
 {
     void delete(Settings entity);
 

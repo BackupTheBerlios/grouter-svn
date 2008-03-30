@@ -20,6 +20,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
@@ -37,37 +38,41 @@ public class Settings extends BaseEntity
 {
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    //@GeneratedValue(generator = "system-uuid")
+    //@GenericGenerator(name = "system-uuid", strategy = "assigned")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    private String id;
+    private Long id;
 
 
-    //@OneToMany ( mappedBy = "settings", targetEntity = SettingsContext.class,   cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Transient
-    Map settingsContext = new HashMap();
+    //@OneToMany ( mappedBy = "settings", targetEntity = SettingsContext.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @org.hibernate.annotations.CollectionOfElements
+    @JoinTable( name = "settings_context", joinColumns = @JoinColumn(name = "settings_fk"))
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @org.hibernate.annotations.MapKey(columns = @Column(name="keyname"))
+    @Column(name = "value")
+    Map<String,String> settingsContext = new HashMap<String,String>();
 
     public Settings()
     {
     }
 
-    public Settings(final String id, final Map<String, String> settingsContext)
+    public Settings( final Map<String, String> settingsContext)
     {
-        this.id = id;
+        //this.id = id;
         this.settingsContext = settingsContext;
     }
 
-
-    public String getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(Long id)
     {
         this.id = id;
     }
-
 
     public Map getSettingsContext()
     {

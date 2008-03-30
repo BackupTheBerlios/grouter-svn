@@ -21,9 +21,7 @@
             DWRUtil.useLoadingMessage();
         }
     </script>
-
 </head>
-
 
 <body onload="init();">
 
@@ -37,18 +35,20 @@
 
 <div id="content">
     <form action="">
-        <display:table name="${users}" export="true" id="row" class="dataTable" pagesize="5"
-                   cellspacing="0" decorator="org.displaytag.decorator.TotalTableDecorator"
-                   requestURI="/gweb/user/list.do">
-        <display:column property="id" titleKey="user.list.table.id" sortable="true" class="name" headerClass="name"/>
+        <display:table name="${users}" export="true" id="row" class="dataTable" pagesize="5" cellspacing="0"
+                       decorator="org.displaytag.decorator.TotalTableDecorator" requestURI="/gweb/user/list.do">
+        <display:column value=">>" title="" sortable="false" href='edit.do' paramId="id" paramProperty="id" />
+        <display:column property="id" titleKey="user.list.table.id" sortable="true" class="name" headerClass="name" />
         <display:column property="userName" titleKey="user.list.table.username" sortable="true" class="name" headerClass="name"/>
         <display:column property="firstName" titleKey="user.list.table.firstname" sortable="true" class="orderNumber" headerClass="orderNumber" format="{0,date,short}"/>
         <display:column property="lastName" titleKey="user.list.table.lastname" sortable="true" class="orderNumber" headerClass="orderNumber"/>
         <display:column property="address.phone" titleKey="user.list.table.phone" sortable="true" class="orderNumber" headerClass="orderNumber"/>
         <display:column property="address.email" titleKey="user.list.table.email" sortable="true" class="orderNumber" headerClass="orderNumber"/>
         <display:column property="address.companyname" titleKey="user.list.table.companyname" sortable="true" class="orderNumber" headerClass="orderNumber"/>
-        <display:column value=">> Detail" title="" sortable="false" href='edit.do' paramId="id" paramProperty="id"/>
-        <display:column value="- Delete" title="" sortable="false" href='delete.do?id=' paramId="id" paramProperty="id"/>
+        <display:column sortable="false"   paramId="id" paramProperty="id" >
+            <input type='checkbox'  id='id' />
+        </display:column>
+        <display:column value="Delete" title="" sortable="false" href='delete.do?id=' paramId="id" paramProperty="id"/>
     </display:table>
   </form>
 </div>

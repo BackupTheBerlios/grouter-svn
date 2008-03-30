@@ -1,10 +1,14 @@
 create table settings_context
 (
     id bigint(20) not null auto_increment,
+--    idno varchar(36) not null,
+    createdon datetime,
+    modifiedon datetime,
 --    id varchar(36) not null,
     keyname varchar(1000) not null,
     value varchar(1000) not null,
-    settings_fk varchar(36) not null,
+--    settings_fk varchar(36) not null,
+    settings_fk bigint(20) NOT NULL,
     primary key (id),
     key(settings_fk),
     key(keyname),

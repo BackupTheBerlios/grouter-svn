@@ -1,14 +1,5 @@
 <div id="userSettings">
     <table>
-        <!-- tr align="right">
-            <td colspan="4"  align="right">
-                <form action="" enctype="multipart/form-data" name="mainForm" method="get">
-                        <input id="searchText" value="" name="searchText" type="text">
-                        <input type="submit" value="Search" name="search" size="10"/>
-                    </form>
-            </td>
-        </tr -->
-
         <tr>
             <td>
                 <a href="/gweb/grouter/select.do">Settings</a>
@@ -28,9 +19,7 @@
 
 <div>
     <a href="#" onclick="Element.hide('userSettings'); return true;"><img src="/gweb/images/gtk-goto-first-rtl.png" alt="" /></a>
-
     <!--a href="#" onclick="Element.show('userSettings'); return false;"><img src="/gweb/images/gtk-goto-last-rtl.png" alt="" /></a -->
-    
 </div>
 
 

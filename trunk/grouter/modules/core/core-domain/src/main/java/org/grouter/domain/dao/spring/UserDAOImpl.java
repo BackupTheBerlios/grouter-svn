@@ -64,4 +64,6 @@ public class UserDAOImpl extends GenericHibernateDAO<User, Long> implements User
     }
 
 
+
+
 }

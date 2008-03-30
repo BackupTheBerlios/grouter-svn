@@ -41,7 +41,8 @@ import java.util.Map;
 public class UserSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String LIST_VIEW = "user/listusers";
+    private static final String VIEW_TAMPLATE = "user/listusers";
+
 
     private UserService userService;
 
@@ -62,7 +63,7 @@ public class UserSearchController extends AbstractController
             map.put("users", users);
         }
 
-        return new ModelAndView(LIST_VIEW, map);
+        return new ModelAndView(VIEW_TAMPLATE, map);
     }
 
 }

@@ -95,7 +95,6 @@ public class UserEditController extends SimpleFormController
         String message;
         UserEditCommand cmd = (UserEditCommand) object;
         User user = cmd.getUser();
-        user.setCreatedBy(createdBy);
         user.setUserState(UserState.NEW);
         try
         {
