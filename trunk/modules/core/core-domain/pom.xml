@@ -16,12 +16,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.grouter.platform.core</groupId>
+  <groupId>org.grouter.modules.core</groupId>
   <artifactId>core-domain</artifactId>
   <packaging>jar</packaging>
   <name>${artifactId}</name>
   <parent>
-    <groupId>org.grouter.platform</groupId>
+    <groupId>org.grouter.modules</groupId>
     <artifactId>core</artifactId>
     <version>0.1.1-SNAPSHOT</version>
   </parent>                      
@@ -36,7 +36,7 @@
   -->
   <dependencies>
     <dependency>
-      <groupId>org.grouter.platform.common</groupId>
+      <groupId>org.grouter.modules.common</groupId>
       <artifactId>common-util</artifactId>
       <version>${project.version}</version>
     </dependency>
