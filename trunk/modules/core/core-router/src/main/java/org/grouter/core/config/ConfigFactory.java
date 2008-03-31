@@ -126,7 +126,7 @@ public class ConfigFactory
         {
             final Node nodeEntity = new Node();
             nodeEntity.setDisplayName(configNode.getDisplayName());
-            nodeEntity.setIdNo(configNode.getId().getStringValue());
+            nodeEntity.setIdNo(configNode.getIdno().getStringValue());
             nodeEntity.setReceiver(configNode.getReceiver());
             nodeEntity.setSource(configNode.getSource());
             nodeEntity.setCreateDirectories(configNode.getCreateDirectories());
@@ -144,7 +144,7 @@ public class ConfigFactory
                 {
                     // create in node home folder
                     String uriDefaultValidPath = (router.getHomePath() + File.separator + "nodes" + File.separator +
-                            configNode.getId().getStringValue() + File.separator + "backup").replace(FILE_PREFIX, "/");
+                            configNode.getIdno().getStringValue() + File.separator + "backup").replace(FILE_PREFIX, "/");
                     nodeEntity.setBackupUri(uriDefaultValidPath);
                 }
                 
