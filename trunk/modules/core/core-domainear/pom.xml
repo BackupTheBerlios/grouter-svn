@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.grouter.platform</groupId>
+  <groupId>org.grouter.modules</groupId>
   <artifactId>core-domainear</artifactId>
   <packaging>ear</packaging>
   <name>${artifactId}</name>
@@ -23,7 +23,7 @@
   -->
   <dependencies>
     <dependency>
-      <groupId>org.grouter.platform.common</groupId>
+      <groupId>org.grouter.modules.common</groupId>
       <artifactId>common-util</artifactId>
       <version>${project.version}</version>
     </dependency>
