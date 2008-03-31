@@ -56,6 +56,11 @@ public class RouterDAOImpl extends GenericHibernateDAO<Router, String> implement
         return qr.list();
     }
 
+    public void delete( final String routerId )
+    {
+        throw new UnsupportedOperationException("Not allowing a delete of a Router - would need a dlete of all Nodes.  ");
+    }
+
     /*   public List<Router> findByProjection()
     {
         Criteria qriteria = getSession().createCriteria(getEntityClass())
