@@ -32,7 +32,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     final static Long MESSAGE_ID = -1L;
     final static Long NODE_ID = -1L;
     final static Long NODE_ID_FTP = -2L;
-    final static String ROUTER_ID = "rid_1";
+    final static String ROUTER_ID = "--rid_1";
     final static String ENDPOINT_ID = "-1";
     final static Long SETTINGS_ID = -1L;
     final static Long JOB_ID = -1L;
