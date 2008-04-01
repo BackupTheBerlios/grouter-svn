@@ -16,7 +16,7 @@
         <module>common</module>
         <!-- module>webservice</module -->
         <module>core</module>
-        <!--module>presentation</module -->
+        <module>presentation</module>
         <!-- module>domainear</module-->
         <!--module>router</module -->
     </modules>
