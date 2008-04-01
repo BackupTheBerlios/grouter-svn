@@ -57,7 +57,7 @@ class SpringAppController implements Controller, ApplicationContextAware
         WebApplicationContext webApplicationContext = (WebApplicationContext) GlobalBeanLocator.getInstance().getApplicationContext();
         RouterService gRouterServiceService = (RouterService) webApplicationContext.getBean(beanName);
 
-        Message message = gRouterServiceService.findMessageById("MESSAGE1");
+        Message message = gRouterServiceService.findMessageById(  new Long(1)   );
         //     logger.info("grouterServiceImpl...." + message.getContent());
         return new ModelAndView("message.jsp", "message", message);
     }

@@ -47,7 +47,7 @@ public class MessageBean
         this.message = message;
     }
 
-    public List<Message> getMessages( String nodeid )
+    public List<Message> getMessages( Long nodeid )
     {
         List<Message> messages =  grouterService.findAllMessages( nodeid  );
         return messages;

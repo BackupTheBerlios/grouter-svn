@@ -125,7 +125,7 @@ public final class NodeCallbackThread implements Runnable
                             {
                                 logger.debug("Fire update event..");
                                 // if something has changed fire update event
-                                this.nodes.put(node.getId(), node);
+                                this.nodes.put(node.getIdNo(), node);
                                 fireNodeUpdatedEvent(node);
                             } else
                             {
@@ -136,7 +136,7 @@ public final class NodeCallbackThread implements Runnable
                         {
                             // else if node does not exist store the node in the map
                             logger.debug("Storing node in map");
-                            this.nodes.put(node.getId(), node);
+                            this.nodes.put(node.getIdNo(), node);
                             fireNodeUpdatedEvent(node);
                         }
                     }
@@ -170,10 +170,10 @@ public final class NodeCallbackThread implements Runnable
             ScriptSession asession = clients.get(key);
             Util utilAll = new Util(asession);
             logger.info("Setting value on :" + node.getId() + " to #" + node.getNumberOfMessagesHandled().toString());
-            utilAll.setValue(node.getId(), node.getNumberOfMessagesHandled().toString());
+            utilAll.setValue(node.getIdNo(), node.getNumberOfMessagesHandled().toString());
 
             Effect effect = new Effect(asession);     //, duration: 15
-            effect.highlight(node.getId(), "{ duration: 2, queue: {position: 'end', scope: '" + node.getId() + "', limit:1}}"); //"{startcolor:'e6e6fa', queue: {position: 'end', scope: 'price', limit:1}}");
+            effect.highlight(node.getIdNo(), "{ duration: 2, queue: {position: 'end', scope: '" + node.getIdNo() + "', limit:1}}"); //"{startcolor:'e6e6fa', queue: {position: 'end', scope: 'price', limit:1}}");
             // highlight a row
             // effect.highlight("row_" + node.getId(), "{ duration: 1, queue: {position: 'end', scope: 'row_" + node.getId() + "', limit:1}}"); //"{startcolor:'e6e6fa', queue: {position: 'end', scope: 'price', limit:1}}");
         }

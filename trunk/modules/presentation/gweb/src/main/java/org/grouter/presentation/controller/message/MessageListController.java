@@ -70,7 +70,7 @@ public class MessageListController extends AbstractController
 
         if (nodeId != null)
         {
-            List<Message> messages = routerService.findAllMessages(nodeId);
+            List<Message> messages = routerService.findAllMessages( Long.parseLong(nodeId));
             map.put("messages", messages);
             map.put("messagesSize", messages.size());
             map.put("selectedNodeId", nodeId );

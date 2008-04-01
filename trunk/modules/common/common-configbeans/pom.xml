@@ -28,6 +28,12 @@
       <artifactId>xbean</artifactId>
     </dependency>
 
+
+      <dependency>
+         <groupId>javax.xml</groupId>
+         <artifactId>jsr173</artifactId>
+    </dependency>      
+
     <!--dependency>
        <groupId>jaxb</groupId>
        <artifactId>jaxb-api</artifactId>
