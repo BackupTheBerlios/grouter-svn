@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Grouter displayName="Router 1" id="grouter_id_1" rmiRegistryPort="1099" rmiServicePort="2000"
+<Grouter displayName="Router 1" id="grouter_id_1" rmiRegistryPort="2099" rmiServicePort="2098"
          description="Test router for file nodes"
          home="file://temp/grouter"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
          xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
+
 
   <Settings>
     <Jndi>
@@ -17,34 +18,23 @@
     <Logging>
       <jms.loggingQueue>queue/GrouterQueue</jms.loggingQueue>
     </Logging>
-     <!-- This overrides datasource set in spring context files -->
+    <!-- This overrides datasource set in spring context files -->
     <DataSource>
-      <dialect>org.hibernate.dialect.MySQLInnoDBDialect</dialect>
-      <driverClassName>org.gjt.mm.mysql.Driver</driverClassName>
-      <url>jdbc:mysql://localhost:3306/grouter</url>
-      <userName>grouter</userName>
-      <password>grouter</password>
+      <dialect>org.gjt.mm.mysql.Driver</dialect>
+      <driverClassName>kjhkjk</driverClassName>
+      <url></url>
+      <userName></userName>
+      <password></password>
     </DataSource>
+      <General>
+          <forceCreateHomePathOnStartUp>true</forceCreateHomePathOnStartUp>
+      </General>
   </Settings>
 
-  <GlobalJobs>
-    <Job id="backuphandler" jobType="ARCHIVER">
-      <displayname></displayname>
-      <cron>0/10 * * * * ?</cron>
-      <contextparam name="ftpAuthUser" value=""/>
-      <contextparam name="ftpAuthPassword" value=""/>
-      <contextparam name="ftpPort" value=""/>
-      <contextparam name="fileList" value="/pub/pictures/ascii/art07,/pub/pictures/ascii/art08"/>
-    </Job>
-    <Job id="1s23" jobType="ARCHIVER">
-      <displayname></displayname>
-      <cron></cron>
-    </Job>
-  </GlobalJobs>
 
   <Nodes>
-    <Node id="filetest11212" createuniquename="true" source="BACARGO_C2K" receiver="C2K1">
-      <description>Test node 1</description>
+    <Node idno="filetest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
+      <description>blaba albaba</description>
       <displayName>FileTest</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>
@@ -59,22 +49,42 @@
       <outBoundEndPoint id="filewriter_1" endPointType="FILE_WRITER">
         <uri>file://temp/grouter/nodes/filetest/out</uri>
         <clazzname>a classname</clazzname>
-        <cron>0/7 * * * * ?</cron>
+        <cron>0/5 * * * * ?</cron>
       </outBoundEndPoint>
     </Node>
 
-    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="internal">
+    <Node idno="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true" >
+      <displayName>Ftp to file</displayName>
+      <createdOn>2007-01-01</createdOn>
+      <modifiedOn>2007-01-01</modifiedOn>
+      <inBoundEndPoint id="ftpreader_1" endPointType="FTP_READER">
+        <uri>ftp://ftp.sunet.se/</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/30 * * * * ?</cron>
+        <contextparam name="ftpAuthUser" value=""/>
+        <contextparam name="ftpAuthPassword" value=""/>
+        <contextparam name="ftpPort" value=""/>
+        <contextparam name="fileList" value="/pub/pictures/ascii/art07,/pub/pictures/ascii/art08"/>
+      </inBoundEndPoint>
+      <outBoundEndPoint id="ftp_to_filewriter_1" endPointType="FILE_WRITER">
+        <uri>file://temp/grouter/nodes/ftptest/out</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/5 * * * * ?</cron>
+      </outBoundEndPoint>
+    </Node>
+
+    <Node idno="filetest2" createuniquename="true" source="FINNAIR" receiver="C2K" createDirectories="true">
       <description>Another file to file node</description>
       <displayName>FileToFileTest2</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>
       <backup/>
-      <inBoundEndPoint id="filtest12_reader" endPointType="FILE_READER">
+      <inBoundEndPoint id="filtest1" endPointType="FILE_READER">
         <uri>file://temp/grouter/nodes/filetest2/in</uri>
         <clazzname>a classname</clazzname>
         <cron>0/5 * * * * ?</cron>
       </inBoundEndPoint>
-      <outBoundEndPoint id="filtest2_reader" endPointType="FILE_WRITER">
+      <outBoundEndPoint id="filtest2" endPointType="FILE_WRITER">
         <uri>file://temp/grouter/nodes/filetest2/out</uri>
         <clazzname>a classname</clazzname>
         <cron>0/5 * * * * ?</cron>
