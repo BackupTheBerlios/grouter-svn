@@ -84,21 +84,45 @@ Assembly descriptor for the full Mule distribution.
         <include>log4j:log4j</include>
         <include>org.hibernate:*</include>
         <include>cglib:cglib-nodep</include>
+        <include>ehcache:*</include>
+        <include>org.apache.lucene:lucene-core</include>
+        
+        
         <include>aspectj:*</include>
         <include>asm:*</include>
         <include>org.springframework:spring</include>
         <include>org.springframework:spring-hibernate3</include>
-        <include>org.springframework:spring-aspects</include>
         <include>org.springframework:spring-core</include>
         <include>org.springframework:spring-dao</include>
         <include>org.springframework:spring-context</include>
-        <include>org.springframework:spring-support</include>
         <include>org.springframework:spring-jdbc</include>
 		<include>mysql:mysql-connector-java</include>
         <include>quartz:quartz</include>
-        <include>xmlbeans:xmlbeans</include>
+        <include>xmlbeans:xbean</include>
+        <include>javax.xml:jsr173</include>
+        <include>javax.transaction:jta</include>
+        <include>com.javasoft:javaee</include>
+        
+        
         <include>org.apache.ftpserver:ftpserver-core</include>
         <include>org.slf4j:*</include>
+
+        <include>commons-beanutils:commons-beanutils</include>
+        <include>commons-collections:commons-collections</include>
+        <include>commons-email:commons-email</include>
+        <include>commons-io:commons-io</include>
+        <include>commons-httpclient:commons-httpclient</include>
+        <include>commons-lang:commons-lang</include>
+        <include>commons-logging:commons-logging</include>
+        <include>commons-discovery:commons-discovery</include>
+        <include>commons-validator:commons-validator</include>
+
+
+		<include>dom4j:dom4j</include>
+
+
+           
+
         
       </includes>
       <!-- no XML -->
