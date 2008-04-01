@@ -66,26 +66,46 @@ Assembly descriptor for the full Mule distribution.
         Libraries
     ============================
     -->
-      <dependencySets>
-
-    
-     <!-- Mule libraries -->
+  <dependencySets>
     <dependencySet>
+      <!-- This stops all transitive dependencies -->
+      <!-- useTransitiveDependencies>true</useTransitiveDependencies -->
       <outputDirectory>lib/grouter</outputDirectory>
       <!-- outputFileNameMapping>${artifactId}.${extension}</outputFileNameMapping -->
       <scope>runtime</scope>
       <includes>
-        <!-- Core -->
-        <!-- include>org.grouter.platform.core:core-router</include -->
-        <!-- Transports -->
-        <!-- Modules -->
-        <!-- Tools -->
+        <!-- Core Modules-->
+        <include>org.grouter.modules.core:core-router</include>
+        <include>org.grouter.modules.core:core-domain</include>
+        <include>org.grouter.modules.common:common-configbeans</include>
+        <include>org.grouter.modules.common:common-util</include>
+
+        <!-- Third party-->
+        <include>log4j:log4j</include>
+        <include>org.hibernate:*</include>
+        <include>cglib:cglib-nodep</include>
+        <include>aspectj:*</include>
+        <include>asm:*</include>
+        <include>org.springframework:spring</include>
+        <include>org.springframework:spring-hibernate3</include>
+        <include>org.springframework:spring-aspects</include>
+        <include>org.springframework:spring-core</include>
+        <include>org.springframework:spring-dao</include>
+        <include>org.springframework:spring-context</include>
+        <include>org.springframework:spring-support</include>
+        <include>org.springframework:spring-jdbc</include>
+		<include>mysql:mysql-connector-java</include>
+        <include>quartz:quartz</include>
+        <include>xmlbeans:xmlbeans</include>
+        <include>org.apache.ftpserver:ftpserver-core</include>
+        <include>org.slf4j:*</include>
+        
       </includes>
       <!-- no XML -->
-      <excludes>
+      <!--excludes>
           <exclude>xml-apis:xml-apis</exclude>
           <exclude>xerces:xercesImpl</exclude>
-      </excludes>
+      </excludes -->
     </dependencySet>
  </dependencySets>
 </assembly>
