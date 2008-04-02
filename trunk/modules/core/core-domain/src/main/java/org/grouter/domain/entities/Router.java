@@ -62,7 +62,7 @@ public class Router extends BaseEntity
     private Set<Node> nodes = new HashSet<Node>();
 
     @ManyToOne
-    @JoinColumn(name = "settings_fk", nullable = false)
+    @JoinColumn(name = "settings_fk")
     private Settings settings;
 
     @Column(name = "startedon")
