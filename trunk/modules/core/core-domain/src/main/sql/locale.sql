@@ -1,6 +1,10 @@
 create table locale
 (
     id bigint(20) not null,
+        createdon timestamp,
+        modifiedon timestamp,
+        createdby bigint(20),
+        modifiedby bigint(20),    
     language varchar(255),
     country varchar(255),
     sort bigint(20),

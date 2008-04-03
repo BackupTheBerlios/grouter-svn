@@ -1,9 +1,11 @@
 create table endpoint
 (
-    id varchar(36) not null,
---    idno varchar(36) ,
-    createdon datetime,
-    modifiedon datetime,
+    id bigint(20) NOT NULL auto_increment,
+    idno varchar(36) ,
+    createdon timestamp,
+    modifiedon timestamp,
+    createdby bigint(20),
+    modifiedby bigint(20),
     uri varchar(1000),
     clazzname varchar(1000),
     cron varchar(1000),

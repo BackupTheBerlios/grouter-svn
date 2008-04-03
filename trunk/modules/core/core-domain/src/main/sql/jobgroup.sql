@@ -1,8 +1,10 @@
 CREATE TABLE if not exists jobgroup
 (
   id bigint(20) NOT NULL auto_increment,
-  created datetime  null,
-  modified datetime  null,
+    createdon timestamp,
+    modifiedon timestamp,
+    createdby bigint(20),
+    modifiedby bigint(20),
   displayname varchar(255) NOT NULL,
   PRIMARY KEY  (id),
   KEY (id)

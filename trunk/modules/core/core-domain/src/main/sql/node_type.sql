@@ -1,9 +1,11 @@
 CREATE TABLE node_type (
   id bigint(20) NOT NULL,
   idno varchar(36) not null,
-    createdon datetime,
-    modifiedon datetime,
-  name varchar(255) default NULL,
+      createdon timestamp,
+      modifiedon timestamp,
+      createdby bigint(20),
+      modifiedby bigint(20),
+    name varchar(255) default NULL,
   position bigint(20) default NULL,
   PRIMARY KEY  (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -1,10 +1,12 @@
 create table settings
 (
---    id varchar(36) not null,
     id bigint(20) NOT NULL auto_increment,
---    idno varchar(36) not null,
-    createdon datetime,
-    modifiedon datetime,
+    createdon timestamp,
+    modifiedon timestamp,
+    createdby bigint(20),
+    modifiedby bigint(20),
     primary key (id)
+ --   FOREIGN KEY (createdby) REFERENCES  user (id),
+--    FOREIGN KEY (modifiedby) REFERENCES  user (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

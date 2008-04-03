@@ -2,8 +2,10 @@ create table job_context
 (
     id bigint(20) not null auto_increment,
     idno varchar(36) not null,
-    createdon datetime,
-    modifiedon datetime,
+    createdon timestamp,
+    modifiedon timestamp,
+    createdby bigint(20),
+    modifiedby bigint(20),
     keyname varchar(1000) not null,
     value varchar(1000) not null,
     job_fk bigint(20) not null,
