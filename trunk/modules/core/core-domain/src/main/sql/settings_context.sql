@@ -2,8 +2,8 @@ create table settings_context
 (
     id bigint(20) not null auto_increment,
     idno varchar(36),
-    createdon timestamp,
-    modifiedon timestamp,
+    createdon datetime,
+    modifiedon datetime,
     createdby bigint(20),
     modifiedby bigint(20),
     keyname varchar(1000) not null,

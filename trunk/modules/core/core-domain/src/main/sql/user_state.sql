@@ -1,6 +1,10 @@
 create table user_state
  (
      id bigint(20) not null,
+      createdon datetime ,
+       modifiedon datetime ,
+       createdby bigint(20) ,
+       modifiedby bigint(20),
      name varchar(255),
      primary key (id)
  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -2,8 +2,8 @@ CREATE TABLE if not exists job_type
 (
   id bigint(20) NOT NULL,
   idno varchar(36) not null,
-    createdon timestamp,
-    modifiedon timestamp,
+    createdon datetime,
+    modifiedon datetime,
     createdby bigint(20),
     modifiedby bigint(20),
   name varchar(255) default NULL,

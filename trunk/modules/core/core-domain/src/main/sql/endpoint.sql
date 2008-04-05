@@ -2,8 +2,8 @@ create table endpoint
 (
     id bigint(20) NOT NULL auto_increment,
     idno varchar(36) ,
-    createdon timestamp,
-    modifiedon timestamp,
+    createdon datetime,
+    modifiedon datetime,
     createdby bigint(20),
     modifiedby bigint(20),
     uri varchar(1000),

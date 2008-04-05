@@ -1,8 +1,8 @@
 create table locale
 (
     id bigint(20) not null,
-        createdon timestamp,
-        modifiedon timestamp,
+        createdon datetime,
+        modifiedon datetime,
         createdby bigint(20),
         modifiedby bigint(20),    
     language varchar(255),

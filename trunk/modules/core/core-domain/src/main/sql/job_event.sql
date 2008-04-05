@@ -2,8 +2,8 @@ create table job_event
 (
     id bigint(20) not null auto_increment,
     idno varchar(36) not null,
-    createdon timestamp,
-    modifiedon timestamp,
+    createdon datetime,
+    modifiedon datetime,
     createdby bigint(20),
     modifiedby bigint(20),
     message varchar(1000) not null,
