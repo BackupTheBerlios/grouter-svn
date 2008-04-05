@@ -37,20 +37,20 @@ public class JobContext extends BaseEntity
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    Long id;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "job_fk")
-    Job job;
+    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "job_fk", nullable = false)
+    private Job job;
 
     @Column(name = "keyname")
     @NotNull
-    String keyName;
+    private String keyName;
 
 
     @Column(name = "value")
     @NotNull
-    String value;
+    private String value;
 
 
     public JobContext()

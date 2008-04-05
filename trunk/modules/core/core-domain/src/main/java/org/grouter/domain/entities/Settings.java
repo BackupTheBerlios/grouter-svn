@@ -38,16 +38,12 @@ public class Settings extends BaseEntity
 {
     @Id
     @Column(name = "id")
-    //@GeneratedValue(generator = "system-uuid")
-    //@GenericGenerator(name = "system-uuid", strategy = "assigned")
+    //@GeneratedValue(generator = "system-uuid"), @GenericGenerator(name = "system-uuid", strategy = "assigned")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private Long id;
 
-
-    //@OneToMany ( mappedBy = "settings", targetEntity = SettingsContext.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-
-    @org.hibernate.annotations.CollectionOfElements
+    @org.hibernate.annotations.CollectionOfElements(fetch=FetchType.EAGER)
     @JoinTable( name = "settings_context", joinColumns = @JoinColumn(name = "settings_fk"))
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @org.hibernate.annotations.MapKey(columns = @Column(name="keyname"))
@@ -60,7 +56,12 @@ public class Settings extends BaseEntity
 
     public Settings( final Map<String, String> settingsContext)
     {
-        //this.id = id;
+        this.settingsContext = settingsContext;
+    }
+
+    public Settings(final AuditInfo auditInfo, final Map<String, String> settingsContext)
+    {
+        super(auditInfo);
         this.settingsContext = settingsContext;
     }
 
@@ -69,17 +70,17 @@ public class Settings extends BaseEntity
         return id;
     }
 
-    public void setId(Long id)
+    public void setId(final Long id)
     {
         this.id = id;
     }
 
-    public Map getSettingsContext()
+    public Map<String,String> getSettingsContext()
     {
         return settingsContext;
     }
 
-    public void setSettingsContext(final Map settingsContext)
+    public void setSettingsContext(final Map<String,String> settingsContext)
     {
         this.settingsContext = settingsContext;
     }

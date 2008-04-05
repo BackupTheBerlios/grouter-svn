@@ -28,28 +28,28 @@ import javax.persistence.*;
  * {@link EndPoint}:s.
  *
  * @author Georges Polyzois
+ * @see org.grouter.domain.entities.EndPoint
  */
 
 @Entity
 @Table(name = "endpoint_context")
-public class EndPointContext  //extends BaseEntity
+public class EndPointContext  extends BaseEntity
 {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    Long id;
+    private Long id;
 
     @Column(name = "keyname")
-    String keyName;
+    private String keyName;
 
     @Column(name = "value")
-    String value;
+    private String value;
 
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinColumn(name = "endpoint_fk", nullable = true)
-    EndPoint endPoint;
-
+    @JoinColumn(name = "endpoint_fk", nullable = false)
+    private EndPoint endPoint;
 
     public EndPointContext(final EndPoint endPoint)
     {
@@ -99,9 +99,6 @@ public class EndPointContext  //extends BaseEntity
         this.value = value;
     }
 
-
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
-    @JoinColumn(name = "endpoint_fk", nullable = false)
     public EndPoint getEndPoint()
     {
         return endPoint;
@@ -111,6 +108,4 @@ public class EndPointContext  //extends BaseEntity
     {
         this.endPoint = endPoint;
     }
-
-
 }

@@ -51,7 +51,7 @@ public class Role extends BaseEntity
     public static final Role ADMIN = new Role(1L, "ROLE_ADMIN");
     public static final Role REVIEWER = new Role(2L, "ROLE_REVIEWER");
     public static final Role SUPER_REVIEWER = new Role(3L, "ROLE_SUPER_REVIEWER");
-    public final static Role EDITOR = new Role(4L, "ROLE_EDITOR");
+    public static final Role EDITOR = new Role(4L, "ROLE_EDITOR");
 
     private final static Map<Long, Role> valueOfMap = new LinkedHashMap<Long, Role>(4);
 
@@ -82,7 +82,6 @@ public class Role extends BaseEntity
     {
         this.id = id;
     }
-
 
     public static Role valueOf(Long id)
     {
@@ -130,7 +129,6 @@ public class Role extends BaseEntity
      * @throws NullPointerException if anotherRole is null.
      * @throws ClassCastException   if anotherRole is not an Role object.
      */
-    /*
     public int compareTo(Object anotherRole) throws ClassCastException
     {
         //optimizing
@@ -143,5 +141,4 @@ public class Role extends BaseEntity
         return getId().compareTo(compareToRole.getId());
     }
 
-*/
 }

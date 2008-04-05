@@ -23,9 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
 import org.hibernate.LazyInitializationException;
 
-import javax.persistence.Transient;
-import javax.persistence.Embedded;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -33,8 +31,7 @@ import java.io.Serializable;
  *
  * @author Georges Polyzois
  */
-// public class BaseEntity<ID extends Serializable> implements Serializable   Could not get this to work
-@Embeddable
+@MappedSuperclass
 public class BaseEntity<ID extends Serializable> implements Serializable
 {
     @Transient
@@ -43,8 +40,14 @@ public class BaseEntity<ID extends Serializable> implements Serializable
     @Embedded
     private AuditInfo auditInfo;
 
+    public BaseEntity()
+    {
+    }
 
-    // private ID id;
+    public BaseEntity(AuditInfo auditInfo)
+    {
+        this.auditInfo = auditInfo;
+    }
 
     /**
      * A convenience method for outputting all attributes in the instances' state.

@@ -39,11 +39,6 @@ public class JobEvent extends BaseEntity
     @NotNull
     Long id;
 
-    @Column(name = "createdOn")
-    @NotNull
-    Date created;
-
-
     @Column(name = "message")
     @NotNull
     String message;
@@ -59,17 +54,6 @@ public class JobEvent extends BaseEntity
     @Column(name = "position")
     Long position;
 
-
-    public Date getCreated()
-    {
-        return created;
-    }
-
-    public void setCreated(Date created)
-    {
-        this.created = created;
-    }
-
     public String getMessage()
     {
         return message;
@@ -79,7 +63,6 @@ public class JobEvent extends BaseEntity
     {
         this.message = message;
     }
-
 
     public Long getPosition()
     {
@@ -101,7 +84,6 @@ public class JobEvent extends BaseEntity
     {
         this.processTimeInMs = processTimeInMs;
     }
-
 
     public Long getRunTimeInMinutes()
     {
@@ -125,7 +107,6 @@ public class JobEvent extends BaseEntity
             return 0L;
         }
     }
-
 
     public Long getId()
     {
@@ -152,7 +133,6 @@ public class JobEvent extends BaseEntity
     {
         return "JobEvent{" +
                 "id=" + id +
-                ", createdOn=" + created +
                 ", message='" + message + '\'' +
                 ", job=" + job +
                 ", processTimeInMs=" + processTimeInMs +

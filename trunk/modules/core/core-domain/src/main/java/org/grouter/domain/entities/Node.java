@@ -43,15 +43,14 @@ public class Node extends BaseEntity
 {
     @Id
     @Column(name = "id")
-    //@GeneratedValue(generator = "system-uuid")
-    //@GenericGenerator(name = "system-uuid", strategy = "assigned")
-     @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(generator = "system-uuid"), @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @DocumentId
     // Hibernate search
+    @DocumentId
     private Long id;
 
-    @Column(name = "idno", nullable = false)
+    @Column(name = "idno", nullable = true)
     private String idNo;
 
     @NotNull
@@ -64,36 +63,27 @@ public class Node extends BaseEntity
     @JoinColumn(name = "nodestatus_fk", nullable = true)
     private NodeStatus nodeStatus;
 
-    @Column(name = "statusmessage", nullable = false)
+    @Column(name = "statusmessage", nullable = true)
     @Field(index = Index.TOKENIZED, store = Store.YES)
     // Hibernate SystemServiceImpl  - fields to be indexed
     private String statusMessage;
 
 
     // A nodes sender - if one is provided by the message itself that sender is used to override this
-    @Column(name = "source", nullable = false)
+    @Column(name = "source", nullable = true)
     @Field(index = Index.TOKENIZED, store = Store.YES)
     // Hibernate SystemServiceImpl  - fields to be indexed
     private String source;
 
     // A nodes receiver - if one is provided by the message itself that receiver is used to override this
-    @Column(name = "receiver", nullable = false)
+    @Column(name = "receiver", nullable = true)
     @Field(index = Index.TOKENIZED, store = Store.YES)
-    // Hibernate SystemServiceImpl  - fields to be indexed
     private String receiver;
 
+    // Messages must be stored on a Node, deleting a node should delete the messages - a verz dangerous
+    // operation - since all history gets lost
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "node")
     private Set<Message> messages = new HashSet<Message>();
-
-    @Column(name = "modifiedon")
-    @Field(index = Index.TOKENIZED, store = Store.YES)
-    // Hibernate SystemServiceImpl  - fields to be indexed
-    private Date modifiedOn;
-
-    @Column(name = "createdon")
-    @Field(index = Index.TOKENIZED, store = Store.YES)
-    // Hibernate SystemServiceImpl  - fields to be indexed
-    private Date createdOn;
 
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
     @JoinColumn(name = "router_fk", nullable = true)
@@ -162,17 +152,6 @@ public class Node extends BaseEntity
         this.id = id;
     }
 
-    public Date getModifiedOn()
-    {
-        return modifiedOn;
-    }
-
-    public void setModifiedOn(Date modifiedOn)
-    {
-        this.modifiedOn = modifiedOn;
-    }
-
-
     public Set<Message> getMessages()
     {
         return messages;
@@ -202,18 +181,6 @@ public class Node extends BaseEntity
     {
         this.router = router;
     }
-
-
-    public Date getCreatedOn()
-    {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn)
-    {
-        this.createdOn = createdOn;
-    }
-
 
     public EndPoint getInBound()
     {

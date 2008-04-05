@@ -25,9 +25,9 @@ import javax.persistence.*;
 
 
 /**
- * Domain class.
+ * Hold key value pairs for a Routers settings.
  *
- * @Author Georges Polyzois
+ * @author Georges Polyzois
  */
 @Entity
 @Table(name = "settings_context")
@@ -50,17 +50,17 @@ public class SettingsContext extends BaseEntity
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    Long id;
+    private Long id;
 
     @Column(name = "keyname")
     String keyname;
 
     @Column(name = "value")
-    String value;
+    private String value;
 
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
     @JoinColumn(name = "settings_fk", nullable = false)
-    Settings settings;
+    private Settings settings;
 
     public SettingsContext()
     {

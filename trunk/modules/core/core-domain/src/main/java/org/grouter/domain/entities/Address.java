@@ -40,24 +40,37 @@ public class Address extends BaseEntity
     //@DocumentId
     private Long id;
 
+    @Column(name = "idno", nullable = true)
+    private String idNo;
+
+
     @Transient
     private Country country;
+
     @Column(name = "phone")
     private String phone;
+
     @Column(name = "mobilephone")
     private String mobilephone;
+
     @Column(name = "street")
     private String street;
+
     @Column(name = "zip")
     private String zip;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "fax")
     private String fax;
+
     @Column(name = "homepageurl")
     private String homepageUrl;
+
     @Column(name = "companyname")
     private String companyname;
+
     @Column(name = "email")
     @Email
     private String email;
@@ -175,5 +188,16 @@ public class Address extends BaseEntity
     public void setEmail(String email)
     {
         this.email = email;
+    }
+
+
+    public String getIdNo()
+    {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo)
+    {
+        this.idNo = idNo;
     }
 }

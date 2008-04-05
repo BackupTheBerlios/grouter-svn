@@ -258,22 +258,6 @@ public class User extends BaseEntity
         this.locale = locale;
     }
 
-    // TODO
-    // This is also set  in super class - but the mapping from that class did not work....
-    @Embedded
-    private AuditInfo auditInfo;
-
-    public AuditInfo getAuditInfo()
-        {
-            return auditInfo;
-        }
-
-        public void setAuditInfo(AuditInfo auditInfo)
-        {
-            this.auditInfo = auditInfo;
-        }
-
-
     /**
      * Sorting inmemory using {@link java.util.Collections} sort will do sort by message.
      *

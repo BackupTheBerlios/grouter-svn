@@ -24,6 +24,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.NotNull;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -42,64 +43,64 @@ import java.util.Map;
 //@Indexed( index="indexes/job" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
 public class Job extends BaseEntity
 {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @DocumentId
-    Long id;
+    private Long id;
 
     @Column(name = "displayname")
     @NotNull
     @Field(index = Index.TOKENIZED, store = Store.YES)
-    String displayName;
+    private String displayName;
 
 //    @Column(name = "jobordernumber")
 //    @NotNull
 //    Long jobOrderNumber;
 
-    @ManyToOne
-    @NotNull
-    JobGroup jobGroup;
+    //    @ManyToOne
+    //    @NotNull
+ //   JobGroup jobGroup;
 
-    @Column(name = "cron_expression")
+    @Column(name = "cronexpression")
     @NotNull
     @Field(index = Index.TOKENIZED, store = Store.YES)
-    String cronExpression;
+    private String cronExpression;
 
     //List<JobEvent> jobEvents = new ArrayList<JobEvent>();
+
+
+    //@Column(name = "startedon")
+    //@Field(index = Index.TOKENIZED, store = Store.YES)
+    private Date startedOn;
+
+    //@Column(name = "endedOn")
+    //@Field(index = Index.TOKENIZED, store = Store.YES)
+    private Date endedOn;
 
     @ManyToOne
     @JoinColumn(name = "job_state_fk")
     @NotNull
-    JobState jobState;
-
-    @Column
-    @Field(index = Index.TOKENIZED, store = Store.YES)
-    Date startedOn;
-
-    @Column
-    @Field(index = Index.TOKENIZED, store = Store.YES)
-    Date finishedAt;
+    private JobState jobState;
 
 
     @ManyToOne
     @JoinColumn(name = "job_type_fk")
     @NotNull
-    JobType jobType;
+    private JobType jobType;
 
     @ManyToOne
     @JoinColumn(name = "router_fk")
     @NotNull
-    Router router;
+    private Router router;
 
-    // on or off
-//    Boolean enabled;
-
-    @OneToMany(targetEntity = org.grouter.domain.entities.JobContext.class,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    Map jobContext = new HashMap();
+    @org.hibernate.annotations.CollectionOfElements(fetch = FetchType.EAGER)
+    @JoinTable(name = "job_context", joinColumns = @JoinColumn(name = "job_fk"))
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @org.hibernate.annotations.MapKey(columns = @Column(name = "keyname"))
+    @Column(name = "value")
+    Map<String, String> jobContext = new HashMap<String, String>();
 
 
     public Job()
@@ -109,8 +110,7 @@ public class Job extends BaseEntity
     public Job(final Long id, final String displayName, final String cronExpression,
                final JobState jobState,
                final JobType jobType,
-               final Router router
-    )
+               final Router router)
     {
         this.id = id;
         this.displayName = displayName;
@@ -201,14 +201,14 @@ public class Job extends BaseEntity
         this.startedOn = startedOn;
     }
 
-    public Date getFinishedAt()
+    public Date getEndedOn()
     {
-        return finishedAt;
+        return endedOn;
     }
 
-    public void setFinishedAt(final Date finishedAt)
+    public void setEndedOn(final Date endedOn)
     {
-        this.finishedAt = finishedAt;
+        this.endedOn = endedOn;
     }
 
 }

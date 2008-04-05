@@ -33,6 +33,11 @@ public class AuditInfo
     @JoinColumn(name = "modifiedby")
     User modifiedBy;
 
+    public AuditInfo()
+    {
+        this.createdOn = new Date();
+        this.modifiedOn = new Date();
+    }
 
     public Date getCreatedOn()
     {

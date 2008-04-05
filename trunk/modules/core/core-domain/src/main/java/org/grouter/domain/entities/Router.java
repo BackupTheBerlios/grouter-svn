@@ -58,10 +58,10 @@ public class Router extends BaseEntity
      * on the item in the Set
      *
      */
-    @OneToMany(mappedBy = "router",cascade=CascadeType.REMOVE)
+    @OneToMany(mappedBy = "router",cascade=CascadeType.ALL)
     private Set<Node> nodes = new HashSet<Node>();
 
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.ALL} )
     @JoinColumn(name = "settings_fk")
     private Settings settings;
 
@@ -88,31 +88,9 @@ public class Router extends BaseEntity
         this.homePath = homePath;
     }
 
-
-    public Integer getRmiServicePort()
-    {
-        return rmiServicePort;
-    }
-
-    public void setRmiServicePort(Integer rmiServicePort)
-    {
-        this.rmiServicePort = rmiServicePort;
-    }
-
-    public Integer getRmiRegistryPort()
-    {
-        return rmiRegistryPort;
-    }
-
-    public void setRmiRegistryPort(Integer rmiRegistryPort)
-    {
-        this.rmiRegistryPort = rmiRegistryPort;
-    }
-
     public Router()
     {
     }
-
 
     public Router(String id, String displayName)
     {
@@ -273,5 +251,25 @@ public class Router extends BaseEntity
         }
     }
 
+
+    public Integer getRmiServicePort()
+    {
+        return rmiServicePort;
+    }
+
+    public void setRmiServicePort(Integer rmiServicePort)
+    {
+        this.rmiServicePort = rmiServicePort;
+    }
+
+    public Integer getRmiRegistryPort()
+    {
+        return rmiRegistryPort;
+    }
+
+    public void setRmiRegistryPort(Integer rmiRegistryPort)
+    {
+        this.rmiRegistryPort = rmiRegistryPort;
+    }
 
 }

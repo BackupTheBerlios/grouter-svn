@@ -19,7 +19,7 @@
 
 package org.grouter.domain.entities;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
@@ -47,9 +47,9 @@ public class EndPoint extends BaseEntity
     @Id
     @NotNull
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "assigned")
-    private String id;
+    //@GeneratedValue(generator = "system-uuid")@GenericGenerator(name = "system-uuid", strategy = "assigned")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(name = "clazzname")
     private String clazzName;
@@ -58,7 +58,7 @@ public class EndPoint extends BaseEntity
     private String uri;
 
     @Column(name = "cron")
-    private String scheduleCron;
+    private String cron;
 
     // Unidirectional ManyToOne
     @ManyToOne(targetEntity = EndPointType.class)
@@ -69,14 +69,17 @@ public class EndPoint extends BaseEntity
     @Transient
     transient Filter filter;
 
-//    @OneToMany( targetEntity = org.grouter.domain.entities.EndPointContext.class,
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.EAGER )
-//    @JoinTable( message="endpoint_context",
-//                joinColumns = @JoinColumn(message="endpoint_fk"))
-    //    @OnDelete( action = OnDeleteAction.CASCADE )
-    @Transient
-    Map endPointContext = new HashMap();
+    @org.hibernate.annotations.CollectionOfElements  (fetch=FetchType.EAGER)
+    @JoinTable( name = "endpoint_context", joinColumns = @JoinColumn(name = "endpoint_fk"))
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @org.hibernate.annotations.MapKey(columns = @Column(name="keyname"))
+    @Column(name = "value")
+    Map<String,String> endPointContext = new HashMap<String,String>();
+
+
+    public EndPoint()
+    {
+    }
 
     public Filter getFilter()
     {
@@ -88,14 +91,14 @@ public class EndPoint extends BaseEntity
         this.filter = filter;
     }
 
-    public String getScheduleCron()
+    public String getCron()
     {
-        return scheduleCron;
+        return cron;
     }
 
-    public void setScheduleCron(String scheduleCron)
+    public void setCron(String cron)
     {
-        this.scheduleCron = scheduleCron;
+        this.cron = cron;
     }
 
     public String getClazzName()
@@ -129,12 +132,12 @@ public class EndPoint extends BaseEntity
         this.endPointType = endPointType;
     }
 
-    public String getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(final Long id)
     {
         this.id = id;
     }
@@ -155,7 +158,7 @@ public class EndPoint extends BaseEntity
                 "id='" + id + '\'' +
                 ", uri='" + uri + '\'' +
                 ", clazzName='" + clazzName + '\'' +
-                ", scheduleCron='" + scheduleCron + '\'' +
+                ", cron='" + cron + '\'' +
                 ", endPointType=" + endPointType +
                 ", filter=" + filter +
                 '}';

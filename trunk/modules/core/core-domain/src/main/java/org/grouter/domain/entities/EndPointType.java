@@ -15,7 +15,7 @@ import java.util.*;
 @Entity
 @Table(name = "endpoint_type")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class EndPointType //extends BaseEntity
+public class EndPointType extends BaseEntity
 {
     @Id
     @Column(name = "id")
@@ -80,7 +80,7 @@ public class EndPointType //extends BaseEntity
     }
 
 
-    public void setName(String name)
+    public void setName(final String name)
     {
         this.name = name;
     }
@@ -90,7 +90,7 @@ public class EndPointType //extends BaseEntity
         return id;
     }
 
-    public void setId(Long id)
+    public void setId(final Long id)
     {
         this.id = id;
     }

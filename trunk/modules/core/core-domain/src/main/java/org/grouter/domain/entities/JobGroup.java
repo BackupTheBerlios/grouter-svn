@@ -11,11 +11,10 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-@Entity
-@Table(name = "jobgroup")
-public class JobGroup
+//@Entity
+//@Table(name = "jobgroup")
+public class JobGroup extends BaseEntity
 {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,8 +23,8 @@ public class JobGroup
 
 
     // An ordered list of jobs - execute one job at a time
-    @OneToMany(mappedBy = "jobGroup")
-    @OrderBy("jobOrderNumber")
+    //@OneToMany(mappedBy = "jobGroup")
+    //@OrderBy("")
     private List<Job> jobs = new ArrayList<Job>();
 
 

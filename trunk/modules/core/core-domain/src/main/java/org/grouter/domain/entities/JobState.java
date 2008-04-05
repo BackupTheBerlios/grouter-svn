@@ -42,10 +42,10 @@ public class JobState extends BaseEntity
     @GeneratedValue(generator = "system-long")
     @GenericGenerator(name = "system-long", strategy = "assigned")
     @NotNull
-    Long id;
+    private Long id;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
 
     public static final JobState PENDING = new JobState(1L, "PENDING");
