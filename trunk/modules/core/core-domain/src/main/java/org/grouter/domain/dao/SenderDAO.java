@@ -17,38 +17,20 @@
  * under the License.
  */
 
-package org.grouter.domain.dao.spring;
+package org.grouter.domain.dao;
 
-import org.apache.log4j.Logger;
-import org.grouter.domain.dao.RoleDAO;
 import org.grouter.domain.entities.Role;
-import org.hibernate.Session;
+import org.grouter.domain.entities.Receiver;
+import org.grouter.domain.entities.Sender;
+
 
 /**
- * Hibernate-specific implementation of the {@link org.grouter.domain.dao.RoleDAO} interface.
+ * Interface for {@link Sender} DAO operations.
  *
  * @author Georges Polyzois
+ * @see Sender
  */
-public class RoleDAOImpl extends GenericHibernateDAO<Role, Long> implements RoleDAO
+public interface SenderDAO extends GenericDAO<Sender, Long>
 {
-    Logger logger = Logger.getLogger(RoleDAOImpl.class);
-
-    /**
-     * For reflection purposes, i.e. Spring needs this.
-     */
-    public RoleDAOImpl()
-    {
-        super(Role.class);
-    }
-
-    public RoleDAOImpl(Session session)
-    {
-        super(Role.class, session);
-    }
-
-    public Role save(Role role)
-    {
-         throw new UnsupportedOperationException("New roles can not be saved.");
-    }
 
 }

@@ -24,4 +24,6 @@
     <bean id="endPointDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.EndPointDAOImpl"/>
     <bean id="settingsDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.SettingsDAOImpl"/>
     <bean id="jobDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.JobDAOImpl"/>
+    <bean id="receiverDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.ReceiverDAOImpl"/>
+    <bean id="senderDAO" parent="abstractDao" class="org.grouter.domain.dao.spring.SenderDAOImpl"/>
 </beans>

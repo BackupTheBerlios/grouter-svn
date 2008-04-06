@@ -29,7 +29,6 @@ public class MessageDAOTest extends AbstractDAOTests
         Receiver receiver = new Receiver("A test receiver");
         message.addToReceivers(receiver);
         message.setSender(sender);
-        message.setCreationTimestamp(new java.sql.Timestamp(System.currentTimeMillis()));
         sender.addToMessages(message);
         messageDAO.save(message);
         log.debug("Saved instance with id : " + message.getId());

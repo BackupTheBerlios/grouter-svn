@@ -29,4 +29,7 @@ public interface SettingsDAO extends GenericDAO<Settings, Long>
     void delete(Settings entity);
 
 
+    void delete( Long entity );
+
+
 }

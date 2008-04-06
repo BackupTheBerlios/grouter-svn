@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.dao.EndPointDAO;
 import org.grouter.domain.entities.EndPoint;
 
+import java.util.Map;
+
 /**
  * DAO tests for mappings, cascade saves etc.
  *
@@ -12,14 +14,8 @@ import org.grouter.domain.entities.EndPoint;
  */
 public class EndPointDAOTest extends AbstractDAOTests
 {
-    EndPointDAO endPointDAO;
-    private static Log log = LogFactory.getLog(NodeDAOTest.class);
+    private static Log log = LogFactory.getLog(EndPointDAOTest.class);
 
-
-    public void setEndPointDAO(EndPointDAO endPointDAO)
-    {
-        this.endPointDAO = endPointDAO;
-    }
 
     @Override
     public void testLazyCollections()
@@ -32,16 +28,14 @@ public class EndPointDAOTest extends AbstractDAOTests
     {
         EndPoint endPoint = endPointDAO.findById(ENDPOINT_ID);
 
-        //  setComplete();
         assertNotNull(endPoint.toString());
-        //      assertEquals(ENDPOINT_ID, endPoint.getId());
 
-//        Map map = node.getInBound().getEndPointContext();
-//        assertEquals( "localhost", map.get( "ftpHost" ) );
-//        assertEquals( "12345", map.get( "ftpPort" ) );
+        Map map = endPoint.getEndPointContext();
+        assertEquals( "localhost", map.get( "ftpHost" ) );
+        assertEquals( "12345", map.get( "ftpPort" ) );
     }
 
-    @Override
+    @Override                       
     public void testDelete()
     {
         assertTrue(true);

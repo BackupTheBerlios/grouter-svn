@@ -1,8 +1,7 @@
 package org.grouter.domain.dao.spring;
 
 import org.apache.commons.io.FileUtils;
-import org.grouter.domain.dao.MessageDAO;
-import org.grouter.domain.dao.NodeDAO;
+import org.grouter.domain.dao.*;
 import org.hibernate.SessionFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
@@ -33,7 +32,9 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     final static Long NODE_ID = -1L;
     final static Long NODE_ID_FTP = -2L;
     final static String ROUTER_ID = "--rid_1";
-    final static String ENDPOINT_ID = "-1";
+    final static Long RECEIVER_ID = -1L;
+    final static Long SENDER_ID = -1L;
+    final static Long ENDPOINT_ID = -1L;
     final static Long SETTINGS_ID = -1L;
     final static Long JOB_ID = -1L;
     Long USER_ID = -1L;
@@ -43,6 +44,13 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     SessionFactory sessionFactory;
     MessageDAO messageDAO;
     NodeDAO nodeDAO;
+    EndPointDAO endPointDAO;
+    RoleDAO roleDAO;
+    RouterDAO routerDAO;
+    JobDAO jobDAO;
+    ReceiverDAO receiverDAO;
+    SenderDAO senderDAO;
+
 
     /**
      * Injected.
@@ -116,6 +124,8 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     /**
      * Subclasses need to override this and implement a test whereby they load an entity and verify that
      * some of the loaded attributes ot hhe entity are valid.
+     * This test exercises the entity and its mapping so that if the database is changed - column dropped -
+     * or renamed we will catch it here.
      */
     abstract void testFindById();
 
@@ -139,5 +149,37 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     public void setNodeDAO(NodeDAO nodeDAO)
     {
         this.nodeDAO = nodeDAO;
+    }
+
+    public void setEndPointDAO(EndPointDAO endPointDAO)
+    {
+        this.endPointDAO = endPointDAO;
+    }
+
+
+    public void setRoleDAO(RoleDAO roleDAO)
+    {
+        this.roleDAO = roleDAO;
+    }
+
+
+    public void setRouterDAO(RouterDAO routerDAO)
+    {
+        this.routerDAO = routerDAO;
+    }
+
+    public void setJobDAO(final JobDAO jobDAO)
+    {
+        this.jobDAO = jobDAO;
+    }
+
+    public void setReceiverDAO(ReceiverDAO receiverDAO)
+    {
+        this.receiverDAO = receiverDAO;
+    }
+
+    public void setSenderDAO(SenderDAO senderDAO)
+    {
+        this.senderDAO = senderDAO;
     }
 }

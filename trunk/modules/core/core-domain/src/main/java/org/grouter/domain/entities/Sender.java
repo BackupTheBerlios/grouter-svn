@@ -20,6 +20,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -36,27 +37,28 @@ import java.util.Set;
 public class Sender extends BaseEntity
 {
     @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+    @Column(name = "id", nullable = false)
+    //@GeneratedValue(generator = "system-uuid") @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    private Long id;
 
 
-    @ManyToOne(targetEntity = Address.class)
-    @JoinColumn(name = "address_fk", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_fk")
     private Address address;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany
+    @OneToMany (fetch = FetchType.LAZY )
     private Set<Message> messages = new HashSet<Message>();
 
     public Sender()
     {
     }
 
-    public Sender(String name, String id)
+    public Sender(String name, Long id)
     {
         this.name = name;
         this.id = id;
@@ -89,7 +91,7 @@ inverseJoinColumns = { @JoinColumn(message = "contact_info_fk", referencedColumn
         this.messages = messages;
     }
 
-    public void setId(String id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -110,7 +112,7 @@ inverseJoinColumns = { @JoinColumn(message = "contact_info_fk", referencedColumn
     }
 
 
-    public String getId()
+    public Long getId()
     {
         return id;
     }

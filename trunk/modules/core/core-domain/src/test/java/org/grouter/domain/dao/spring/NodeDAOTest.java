@@ -26,6 +26,11 @@ public class NodeDAOTest extends AbstractDAOTests
         assertEquals(NODE_ID_FTP, node.getId());
         assertEquals(NodeStatus.NOTSTARTED.getId(), node.getNodeStatus().getId());
 
+        node = nodeDAO.findById(NODE_ID);
+        assertNotNull(node.toString());
+        assertEquals(NODE_ID, node.getId());
+        assertEquals(NodeStatus.SCHEDULED_TO_START.getId(), node.getNodeStatus().getId());
+
         Map map = node.getInBound().getEndPointContext();
         assertEquals("localhost", map.get("ftpHost"));
         assertEquals("12345", map.get("ftpPort"));
@@ -34,18 +39,18 @@ public class NodeDAOTest extends AbstractDAOTests
     public void testDelete()
     {
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
-//        assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
         nodeDAO.delete(NODE_ID);
         flushSession();
-//        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
-        //       assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
         // one node left with two enpoints
 //        assertEquals(2, jdbcTemplate.queryForInt("SELECT count(*) FROM endpoint"));
 
 //        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
 //        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
-        nodeDAO.delete(NODE_ID_FTP);
-        flushSession();
+//        nodeDAO.delete(NODE_ID_FTP);
+//        flushSession();
 //        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM router WHERE id = '" + ROUTER_ID + "'"));
 //        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM node WHERE router_fk = '" + ROUTER_ID + "'"));
         // no node left and no enpoints
@@ -64,6 +69,9 @@ public class NodeDAOTest extends AbstractDAOTests
         node.setDisplayName("A node");
         node.setNodeStatus(NodeStatus.NOTSTARTED);
 
+        Router router = routerDAO.findById( ROUTER_ID );
+        node.setRouter(router);
+
         nodeDAO.save(node);
         flushSession();
 
@@ -72,6 +80,7 @@ public class NodeDAOTest extends AbstractDAOTests
         Long id = node.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
         assertEquals("A node", map.get("displayname"));
+        assertEquals(1L, map.get("nodestatus_fk"));
     }
 
     public void testStoreWithEndpoints()
@@ -79,9 +88,11 @@ public class NodeDAOTest extends AbstractDAOTests
         Node node = new Node();
         node.setDisplayName("A node");
 
+        Router router = routerDAO.findById( ROUTER_ID );
+        node.setRouter(router);
+
         EndPoint inboundEndpoint = new EndPoint();
-        inboundEndpoint.setId("id1");
-        inboundEndpoint.setScheduleCron("* * * * * ");
+        inboundEndpoint.setCron("* * * * * ");
         inboundEndpoint.setUri("file://temp/in");
         inboundEndpoint.setEndPointType(EndPointType.FILE_READER);
 
@@ -93,8 +104,7 @@ public class NodeDAOTest extends AbstractDAOTests
         inboundEndpoint.setEndPointContext(contextMap);
 
         EndPoint outBoundPoint = new EndPoint();
-        outBoundPoint.setId("id");
-        outBoundPoint.setScheduleCron("* * * * * ");
+        outBoundPoint.setCron("* * * * * ");
         outBoundPoint.setUri("file://temp/out");
         outBoundPoint.setEndPointType(EndPointType.FILE_WRITER);
 

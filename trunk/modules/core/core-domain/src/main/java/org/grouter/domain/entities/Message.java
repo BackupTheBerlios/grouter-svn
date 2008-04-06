@@ -72,20 +72,19 @@ public class Message extends BaseEntity implements Comparable
 {
     @Id
     @Column(name = "id")
-    //@GeneratedValue(generator = "system-uuid")
-    //@GenericGenerator(name = "system-uuid", strategy = "uuid")
+    //@GeneratedValue(generator = "system-uuid"), @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @DocumentId
     // Hibernate search
     private Long id;
 
-    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "receiver_message",
             joinColumns = {@JoinColumn(name = "message_fk")},
             inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
     private Set<Receiver> receivers = new HashSet<Receiver>();
 
-    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "sender_fk", nullable = true)
     private Sender sender;
 
@@ -96,16 +95,8 @@ public class Message extends BaseEntity implements Comparable
     // Hibernate SystemServiceImpl  - fields to be indexed
     private String content;
 
-    @Column(name = "counter")
-    private BigInteger counter;
-
-
-    @Column(name = "creationtimestamp")
-    private Timestamp creationTimestamp;
-
-
     @NotNull
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "node_fk", nullable = false)
     private Node node;
 
@@ -198,11 +189,6 @@ public class Message extends BaseEntity implements Comparable
     }
 
 
-    public Timestamp getCreationTimestamp()
-    {
-        return creationTimestamp;
-    }
-
 
     //    @ManyToOne()
     public Node getNode()
@@ -215,24 +201,10 @@ public class Message extends BaseEntity implements Comparable
         this.node = node;
     }
 
-    public void setCreationTimestamp(Timestamp creationTimestamp)
-    {
-        this.creationTimestamp = creationTimestamp;
-    }
 
     public void setId(Long id)
     {
         this.id = id;
-    }
-
-    public BigInteger getCounter()
-    {
-        return counter;
-    }
-
-    public void setCounter(BigInteger counter)
-    {
-        this.counter = counter;
     }
 
     public int compareTo(final Object compareTo)

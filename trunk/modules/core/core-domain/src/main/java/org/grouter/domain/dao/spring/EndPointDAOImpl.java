@@ -28,7 +28,7 @@ import org.hibernate.Session;
  *
  *
  */
-public class EndPointDAOImpl extends GenericHibernateDAO<EndPoint, String> implements EndPointDAO
+public class EndPointDAOImpl extends GenericHibernateDAO<EndPoint, Long> implements EndPointDAO
 {
     /**
      * For reflection purposes, i.e. Spring needs this.

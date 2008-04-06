@@ -29,5 +29,6 @@ import org.grouter.domain.entities.Role;
  */
 public interface RoleDAO extends GenericDAO<Role, Long>
 {
+    Role save(Role role);
 
 }

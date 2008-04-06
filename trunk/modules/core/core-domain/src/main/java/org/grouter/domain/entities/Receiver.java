@@ -27,13 +27,39 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A Receiver of a message.
+ *
+ * @author Georges Polyzois
+ */
 @Entity
 @Table(name = "receiver")
 public class Receiver implements Serializable
 {
-    private String id;
+    @Id
+    @Column(name = "id", nullable = false)
+    //@GeneratedValue(generator = "system-uuid") @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    private Long id;
+
+    @ManyToOne( fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_fk")
     private Address address;
+
+    @Column(name = "name")
     private String name;
+
+    /**
+     * The "mappedBy" makes Hibernate ignore changes made to this class - Receiver -
+     * and that the other end of the association is the master. Corresponda to inverse=true
+     * in Hibernate and has to message the inverse property of the target entity.
+     *
+     * @return
+     */
+    @ManyToMany(mappedBy = "receivers",fetch = FetchType.LAZY)
+    @JoinTable( name = "receiver_message", joinColumns = {@JoinColumn(name = "receiver_fk")},
+            inverseJoinColumns = {@JoinColumn(name = "message_fk")} )
     private Set<Message> messages = new HashSet();
 
     public Receiver()
@@ -46,19 +72,7 @@ public class Receiver implements Serializable
         this.name = name;
     }
 
-    /**
-     * The "mappedBy" makes Hibernate ignore changes made to this class - Receiver -
-     * and that the other end of the association is the master. Corresponda to inverse=true
-     * in Hibernate and has to message the inverse property of the target entity.
-     *
-     * @return
-     */
-    @ManyToMany(mappedBy = "receivers")
-    @JoinTable(
-            name = "receiver_message",
-            joinColumns = {@JoinColumn(name = "receiver_fk")},
-            inverseJoinColumns = {@JoinColumn(name = "message_fk")}
-    )
+
     public Set<Message> getMessages()
     {
         return messages;
@@ -75,7 +89,6 @@ public class Receiver implements Serializable
         return address;
     }
 
-    @Column(name = "name")
     public String getName()
     {
         return name;
@@ -86,16 +99,10 @@ public class Receiver implements Serializable
         this.name = name;
     }
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @NotNull
-    public String getId()
+    public Long getId()
     {
         return id;
     }
-
 
     public void addToMessages(Message message)
     {
@@ -110,7 +117,7 @@ public class Receiver implements Serializable
     }
 
 
-    public void setId(String id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -119,5 +126,4 @@ public class Receiver implements Serializable
     {
         this.address = address;
     }
-
 }

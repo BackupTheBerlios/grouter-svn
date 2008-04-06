@@ -29,7 +29,6 @@ public class RouterMessageFactory
         Receiver receiver = new Receiver("A test receiver" + sequenceNumber);
         message.addToReceivers(receiver);
         message.setSender(sender);
-        message.setCreationTimestamp(timestamp);
         sender.addToMessages(message);
 
         Set<Message> messages = new HashSet<Message>();

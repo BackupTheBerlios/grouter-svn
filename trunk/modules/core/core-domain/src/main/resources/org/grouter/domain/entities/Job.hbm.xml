@@ -9,7 +9,7 @@
     <property name="displayName" not-null="true" type="java.lang.String" column="displayname"/>
     <property name="cronExpression" not-null="true" type="java.lang.String" column="cron_expression"/>
     <property name="startedOn" not-null="true" type="timestamp" column="started_on"/>
-    <property name="finishedAt" not-null="true" type="timestamp" column="finished_at"/>
+    <property name="endedOn" not-null="true" type="timestamp" column="finished_at"/>
 
 
     <many-to-one

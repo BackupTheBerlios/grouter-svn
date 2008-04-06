@@ -18,30 +18,16 @@ import java.util.Map;
  * @author Georges Polyzois
  */
 public class JobDAOTest extends AbstractDAOTests
-{
+{                                                            
     private static Log log = LogFactory.getLog(JobDAOTest.class);
-    private JobDAO jobDAO;
-    private RouterDAO routerDAO;
-
-    public void setRouterDAO(final RouterDAO routerDAO)
-    {
-        this.routerDAO = routerDAO;
-    }
-
-    public void setJobDAO(final JobDAO jobDAO)
-    {
-        this.jobDAO = jobDAO;
-    }
 
     @Override
     public void testFindById()
     {
-       // setComplete();
         Job found = jobDAO.findById(JOB_ID);
         assertNotNull(found.toString());
         assertEquals(JOB_ID, found.getId());
         assertEquals("displayname", found.getDisplayName());
-       // setComplete();
     }
 
     @Override
@@ -49,7 +35,7 @@ public class JobDAOTest extends AbstractDAOTests
     {
         Router router = routerDAO.findById(ROUTER_ID);
 
-        Job job = new Job(123L, "displayname", "cronexpr", JobState.RUNNING, JobType.BACKUP, router);
+        Job job = new Job( "displayname", "cronexpr", JobState.RUNNING, JobType.BACKUP, router);
         job.setDisplayName("A displayname");
         jobDAO.save(job);
         flushSession();

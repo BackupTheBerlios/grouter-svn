@@ -2,8 +2,8 @@
 <Grouter name="grouter"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://grouter.org/config.xsd ../../main/xsd/config.xsd"
-         xsi:noNamespaceSchemaLocation="../../main/xsd/config.xsd">
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../common-configbeans/src/main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../../../common-configbeans/src/main/xsd/config.xsd">
 
   <Node id="filetest-filetest" createuniquename="true">
     <name>A name</name>

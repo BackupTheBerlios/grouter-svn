@@ -59,7 +59,7 @@ public class Node extends BaseEntity
     // Hibernate SystemServiceImpl  - fields to be indexed
     private String displayName;
 
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.REFRESH })
     @JoinColumn(name = "nodestatus_fk", nullable = true)
     private NodeStatus nodeStatus;
 
@@ -80,12 +80,12 @@ public class Node extends BaseEntity
     @Field(index = Index.TOKENIZED, store = Store.YES)
     private String receiver;
 
-    // Messages must be stored on a Node, deleting a node should delete the messages - a verz dangerous
-    // operation - since all history gets lost
-    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "node")
+    // Messages must be stored on a Node, deleting a node should delete the messages - a very
+    // dangerous operation - since all history gets lost
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "node", fetch = FetchType.LAZY )
     private Set<Message> messages = new HashSet<Message>();
 
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "router_fk", nullable = true)
     private Router router;
 

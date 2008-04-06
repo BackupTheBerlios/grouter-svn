@@ -46,10 +46,4 @@ public class JobDAOImpl extends GenericHibernateDAO<Job, Long> implements JobDAO
         super(Job.class, session);
     }
 
-
-    protected void setSession(Session s)
-    {
-        session = s;
-    }
-
 }

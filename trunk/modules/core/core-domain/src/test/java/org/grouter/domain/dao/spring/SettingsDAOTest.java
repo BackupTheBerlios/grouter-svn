@@ -41,12 +41,17 @@ public class SettingsDAOTest extends AbstractDAOTests
     {
         // we are not deleteing settings - overrideing delete in DAOImpl
         // settings
-        settingsDAO.delete(SETTINGS_ID);
+        try
+        {
+            settingsDAO.delete(SETTINGS_ID);
+            flushSession();
+            fail("Should not delete settings");
 
-        flushSession();
+        } catch (Exception e)
+        {
+            //expected
+        }
 
-        Settings settings = settingsDAO.findById(SETTINGS_ID);
-        assertNotNull(settings.toString());
     }
 
 

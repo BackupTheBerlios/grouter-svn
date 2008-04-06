@@ -1,6 +1,6 @@
 create table receiver
 (
-    id varchar(36) not null,
+    id bigint(20) NOT NULL auto_increment,
     name varchar(255),
     address_fk bigint(20),
     primary key (id),

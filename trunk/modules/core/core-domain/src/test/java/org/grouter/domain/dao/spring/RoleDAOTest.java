@@ -12,14 +12,7 @@ import org.grouter.domain.entities.Role;
  */
 public class RoleDAOTest extends AbstractDAOTests
 {
-    RoleDAO roleDAO;
-    private static Log log = LogFactory.getLog(NodeDAOTest.class);
-
-
-    public void setRoleDAO(RoleDAO roleDAO)
-    {
-        this.roleDAO = roleDAO;
-    }
+    private static Log log = LogFactory.getLog(RoleDAOTest.class);
 
     @Override
     public void testFindById()
@@ -35,16 +28,21 @@ public class RoleDAOTest extends AbstractDAOTests
         found = roleDAO.findById(Role.REVIEWER.getId());
         assertNotNull(found.toString());
         assertEquals(Role.REVIEWER.getId(), found.getId());
-
-
     }
 
     @Override
     public void testSave()
     {
         Role user = null;
-        roleDAO.save(user);
-        flushSession();
+        try
+        {
+            roleDAO.save(user);
+            flushSession();
+            fail("Role can not be saved");
+        } catch (Exception e)
+        {
+            //expected
+        }
     }
 
     @Override

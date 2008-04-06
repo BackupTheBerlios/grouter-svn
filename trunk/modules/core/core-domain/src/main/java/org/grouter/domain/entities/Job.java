@@ -75,7 +75,7 @@ public class Job extends BaseEntity
     //@Field(index = Index.TOKENIZED, store = Store.YES)
     private Date startedOn;
 
-    //@Column(name = "endedOn")
+    @Column(name = "endedon")
     //@Field(index = Index.TOKENIZED, store = Store.YES)
     private Date endedOn;
 
@@ -90,9 +90,9 @@ public class Job extends BaseEntity
     @NotNull
     private JobType jobType;
 
+    // May or may not belong to a router. Can be a global not router specific job
     @ManyToOne
     @JoinColumn(name = "router_fk")
-    @NotNull
     private Router router;
 
     @org.hibernate.annotations.CollectionOfElements(fetch = FetchType.EAGER)
@@ -107,12 +107,11 @@ public class Job extends BaseEntity
     {
     }
 
-    public Job(final Long id, final String displayName, final String cronExpression,
+    public Job(final String displayName, final String cronExpression,
                final JobState jobState,
                final JobType jobType,
                final Router router)
     {
-        this.id = id;
         this.displayName = displayName;
         this.cronExpression = cronExpression;
         this.jobState = jobState;
@@ -196,19 +195,20 @@ public class Job extends BaseEntity
         return startedOn;
     }
 
-    public void setStartedOn(final Date startedOn)
+    public void setStartedOn(Date startedOn)
     {
         this.startedOn = startedOn;
     }
+
 
     public Date getEndedOn()
     {
         return endedOn;
     }
 
-    public void setEndedOn(final Date endedOn)
+    public void setEndedOn(Date endedOn)
     {
         this.endedOn = endedOn;
     }
-
+       
 }

@@ -1,9 +1,10 @@
 create table sender
 (
-    id varchar(36) not null,
---    idno varchar(36) not null,
+    id bigint(20) NOT NULL auto_increment,
     createdon datetime,
     modifiedon datetime,
+    createdby bigint(20),
+    modifiedby bigint(20),
     name varchar(255),
     address_fk bigint(20),
     primary key (id),

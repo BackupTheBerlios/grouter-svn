@@ -40,11 +40,12 @@
                 <value>org.grouter.domain.entities.SettingsContext</value>
 
 
-                <!--value>org.grouter.domain.entities.Job</value>
+                <value>org.grouter.domain.entities.Job</value>
                 <value>org.grouter.domain.entities.JobType</value>
                 <value>org.grouter.domain.entities.JobContext</value>
+                <!--value>org.grouter.domain.entities.JobGroup</value-->
                 <value>org.grouter.domain.entities.JobState</value>
-                <value>org.grouter.domain.entities.JobEvent</value -->
+                <value>org.grouter.domain.entities.JobEvent</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -58,10 +59,7 @@
                 <prop key="hibernate.generate_statistics">true</prop>
                 <prop key="hibernate.cache.use_structured_entries">true</prop>
 
-
                 <prop key="hibernate.validator.autoregister_listeners">false</prop>
-
-
 
                 <prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</prop>
                 <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider
@@ -79,9 +77,3 @@
         </property>
     </bean>
 </beans>
-
-
-
-
-
-

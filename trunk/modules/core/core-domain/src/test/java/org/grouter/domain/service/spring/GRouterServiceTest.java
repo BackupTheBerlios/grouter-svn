@@ -42,7 +42,6 @@ public class GRouterServiceTest extends AbstractServiceTests
         Receiver receiver = new Receiver("A test receiver");
         message.addToReceivers(receiver);
         message.setSender(sender);
-        message.setCreationTimestamp(timestamp);
         sender.addToMessages(message);
 
         Set<Message> messages = new HashSet<Message>();
@@ -64,7 +63,7 @@ public class GRouterServiceTest extends AbstractServiceTests
 
         service.saveMessage(message);
 
-        logger.debug("## Saved instance with id : " + message.getId() + " timestamp " + message.getCreationTimestamp());
+        logger.debug("## Saved instance with id : " + message.getId() );
         assertNotNull(message.getId());
 
 

@@ -20,8 +20,10 @@
 package org.grouter.domain.dao.spring;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.dao.RoleDAO;
-import org.grouter.domain.entities.Role;
+import org.grouter.domain.dao.ReceiverDAO;
+import org.grouter.domain.dao.SenderDAO;
+import org.grouter.domain.entities.Receiver;
+import org.grouter.domain.entities.Sender;
 import org.hibernate.Session;
 
 /**
@@ -29,26 +31,20 @@ import org.hibernate.Session;
  *
  * @author Georges Polyzois
  */
-public class RoleDAOImpl extends GenericHibernateDAO<Role, Long> implements RoleDAO
+public class SenderDAOImpl extends GenericHibernateDAO<Sender, Long> implements SenderDAO
 {
-    Logger logger = Logger.getLogger(RoleDAOImpl.class);
+    Logger logger = Logger.getLogger(SenderDAOImpl.class);
 
     /**
      * For reflection purposes, i.e. Spring needs this.
      */
-    public RoleDAOImpl()
+    public SenderDAOImpl()
     {
-        super(Role.class);
+        super(Sender.class);
     }
 
-    public RoleDAOImpl(Session session)
+    public SenderDAOImpl(Session session)
     {
-        super(Role.class, session);
+        super(Sender.class, session);
     }
-
-    public Role save(Role role)
-    {
-         throw new UnsupportedOperationException("New roles can not be saved.");
-    }
-
 }
