@@ -43,12 +43,13 @@ public class Node extends BaseEntity
 {
     @Id
     @Column(name = "id")
-    //@GeneratedValue(generator = "system-uuid"), @GenericGenerator(name = "system-uuid", strategy = "assigned")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(generator = "system-uuid")  This can be used if you will not assign the key yourself
+    @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    //@GeneratedValue(strategy = GenerationType.AUTO)  This can be used if you have autoincrement set in db
     @NotNull
     // Hibernate search
     @DocumentId
-    private Long id;
+    private String id;
 
     @Column(name = "idno", nullable = true)
     private String idNo;
@@ -122,9 +123,6 @@ public class Node extends BaseEntity
     @Transient
     transient private Long numberOfMessagesHandled;
 
-    //@Transient
-    //private User modifiedByUser;
-
 
     public Node()
     {
@@ -136,18 +134,18 @@ public class Node extends BaseEntity
      * @param id         id of the node
      * @param dislayName a message to display
      */
-    public Node(Long id, String dislayName)
+    public Node(String id, String dislayName)
     {
         this.id = id;
         this.displayName = dislayName;
     }
 
-    public Long getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(Long id)
+    public void setId(String id)
     {
         this.id = id;
     }

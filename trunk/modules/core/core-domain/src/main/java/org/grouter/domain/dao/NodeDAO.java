@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Georges Polyzois
  */
-public interface NodeDAO extends GenericDAO<Node, Long>
+public interface NodeDAO extends GenericDAO<Node, String>
 {
     /**
      * Use to get all all nodes for a given router with number of messages set on each node.
@@ -39,7 +39,7 @@ public interface NodeDAO extends GenericDAO<Node, Long>
     List<Node> findNodesWithNumberOfMessages(String routerId);
 
 
-    Long getNumberOfMessages(Long nodeId);
+    Long getNumberOfMessages(String nodeId);
 
     /**
      * Find all nodes for a given routerid and init endpoint if set to true.

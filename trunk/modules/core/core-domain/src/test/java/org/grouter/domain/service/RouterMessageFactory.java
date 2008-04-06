@@ -34,7 +34,7 @@ public class RouterMessageFactory
         Set<Message> messages = new HashSet<Message>();
         messages.add(message);
 
-        Node node = new Node(-1234L, "name");
+        Node node = new Node("-test1234", "name");
         //messages, new Date(), null,new Date());
         node.setMessages(messages);
         message.setNode(node);

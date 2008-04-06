@@ -20,6 +20,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
@@ -47,9 +48,8 @@ public class EndPoint extends BaseEntity
     @Id
     @NotNull
     @Column(name = "id", nullable = false)
-    //@GeneratedValue(generator = "system-uuid")@GenericGenerator(name = "system-uuid", strategy = "assigned")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    private String id;
 
     @Column(name = "clazzname")
     private String clazzName;
@@ -79,6 +79,11 @@ public class EndPoint extends BaseEntity
 
     public EndPoint()
     {
+    }
+
+    public EndPoint(String id)
+    {
+        this.id = id;
     }
 
     public Filter getFilter()
@@ -132,12 +137,12 @@ public class EndPoint extends BaseEntity
         this.endPointType = endPointType;
     }
 
-    public Long getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(final Long id)
+    public void setId(final String id)
     {
         this.id = id;
     }

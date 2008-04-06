@@ -8,7 +8,7 @@ create table endpoint_context
     modifiedby bigint(20),
     keyname varchar(1000) not null,
     value varchar(1000) not null,
-    endpoint_fk bigint(20) not null,
+    endpoint_fk varchar(36) not null,
     primary key (id),
     key(endpoint_fk),
     key(keyname),

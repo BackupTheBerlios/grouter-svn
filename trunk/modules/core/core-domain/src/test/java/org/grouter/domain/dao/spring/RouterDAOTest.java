@@ -30,23 +30,17 @@ public class RouterDAOTest extends AbstractDAOTests
 
         Map<String, String> context = new HashMap<String, String>();
         context.put("key", "value");
-
         Settings settings = new Settings(auditInfo, context);
         router.setSettings( settings );
 
-
-
-        Node node = new Node();
+        Node node = new Node("id","a node name");
         node.setAuditInfo(auditInfo);
-        node.setDisplayName("a node name");
         Set<Node> nodes = new HashSet<Node>();
         nodes.add(node);
         node.setRouter( router );
 
         EndPoint start = new EndPoint();
         start.setAuditInfo( auditInfo );
-        //start.se
-
         router.setNodes(  nodes );
 
         routerDAO.save(router);
@@ -54,14 +48,11 @@ public class RouterDAOTest extends AbstractDAOTests
 
         flushSession();
 
-
         String id = router.getId();
         Map motorDealerMap = jdbcTemplate.queryForMap("SELECT * FROM router WHERE id = ?",
                 new Object[]{id});
         assertEquals("a name", motorDealerMap.get("displayname"));
         assertEquals("/file", motorDealerMap.get("homepath"));
-      //  assertEquals("jndi", motorDealerMap.get("settings_fk"));
-
     }
 
     public void testLazyCollections()

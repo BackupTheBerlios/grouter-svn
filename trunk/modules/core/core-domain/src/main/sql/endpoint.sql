@@ -1,6 +1,7 @@
 create table endpoint
 (
-    id bigint(20) NOT NULL auto_increment,
+--    id bigint(20) NOT NULL auto_increment,
+    id varchar(36) not null,
     idno varchar(36) ,
     createdon datetime,
     modifiedon datetime,

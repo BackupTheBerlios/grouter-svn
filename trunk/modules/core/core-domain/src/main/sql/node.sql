@@ -1,6 +1,7 @@
 create table node
 (
-    id bigint(20) NOT NULL auto_increment,
+    -- id is given by unique name of the node
+    id varchar(36) not null,
     idno varchar(36),
     createdon datetime,
     modifiedon datetime,
@@ -14,8 +15,8 @@ create table node
     receiver varchar(36),
     internalqueueurl varchar(2048),
     backupuri varchar(1000),
-    inbound_endpoint_fk bigint(20),
-    outbound_endpoint_fk bigint(20),
+    inbound_endpoint_fk varchar(36),
+    outbound_endpoint_fk varchar(36),
     router_fk varchar(36)  not null,
     nodestatus_fk bigint(20),
     primary key (id),

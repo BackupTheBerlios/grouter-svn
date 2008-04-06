@@ -75,7 +75,7 @@ public interface RouterService
      * @param nodeId a node for which we want all messages
      * @return a list of {@link Message}s
      */
-    List<Message> findAllMessages(Long nodeId);
+    List<Message> findAllMessages(String nodeId);
 
 
     /**
@@ -142,7 +142,7 @@ public interface RouterService
     Map<Long, EndPointType> findAllEndPointTypes();
 
 
-    Node findNodeById(Long nodeId);
+    Node findNodeById(String nodeId);
 
 
     /**

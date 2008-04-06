@@ -27,7 +27,7 @@ import org.grouter.domain.entities.EndPoint;
  *
  * @author Georges Polyzois
  */
-public interface EndPointDAO extends GenericDAO<EndPoint, Long>
+public interface EndPointDAO extends GenericDAO<EndPoint, String>
 {
 
 }

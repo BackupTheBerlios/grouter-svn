@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * @author Georges Polyzois
  */
-public class NodeDAOImpl extends GenericHibernateDAO<Node, Long> implements NodeDAO
+public class NodeDAOImpl extends GenericHibernateDAO<Node, String> implements NodeDAO
 {
     /**
      * For reflection purposes, i.e. Spring needs this.
@@ -62,7 +62,7 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, Long> implements Node
         return nodes;
     }
 
-    public Long getNumberOfMessages(Long nodeId)
+    public Long getNumberOfMessages(String nodeId)
     {
         String hsql = "select count(obj) from Message obj where obj.node.id = :nodeid";
         Session session = getSession();
@@ -102,8 +102,6 @@ public class NodeDAOImpl extends GenericHibernateDAO<Node, Long> implements Node
                         .add(Projections.sqlProjection(
                         sqlFragment, new String[]{"numOfItems"}, new Type[]{Hibernate.LONG}))
                 );
-
-
         return criteria.list();
     }
 }

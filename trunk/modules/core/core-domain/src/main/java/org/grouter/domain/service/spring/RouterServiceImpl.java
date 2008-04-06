@@ -130,7 +130,7 @@ public class RouterServiceImpl implements RouterService
     }
 
 
-    public List<Message> findAllMessages(final Long nodeId)
+    public List<Message> findAllMessages(final String nodeId)
     {
         return messageDAO.findMessagesForNode(nodeId);
     }
@@ -181,7 +181,7 @@ public class RouterServiceImpl implements RouterService
         return routerDAO.findById(routerId);
     }
 
-    public Node findNodeById(Long nodeId)
+    public Node findNodeById(String nodeId)
     {
         return nodeDAO.findById(nodeId);
     }

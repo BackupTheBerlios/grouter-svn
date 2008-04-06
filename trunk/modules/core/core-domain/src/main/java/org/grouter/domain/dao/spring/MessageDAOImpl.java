@@ -52,7 +52,7 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, Long> implement
     }
 
 
-    public List<Message> findMessagesForNode(Long nodeId)
+    public List<Message> findMessagesForNode(String nodeId)
     {
         /* String hsql = "from Message obj where obj.node.id = :nodeid";
      Session session = getSession();

@@ -5,26 +5,26 @@ insert into settings_context(id,keyname, value,settings_fk) values ( -1,'test_ke
 
 insert into router (id, startedon, uptime, displayname, homepath , description ,  settings_fk) values ('--rid_1', '2006-10-13 15:51:53', 100000000, 'ROUTER_TEST', '/homeofrouter'  ,'a description', -1);
 
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( -1, 'file://temp/in', 'clazzname.FileReader','* * * * * ', 1);
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( -2, 'file://temp/out', 'clazzname.FilWriter','* * * * * ', 2);
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( -3, 'ftp://127.0.0.1/in', 'clazzname.FtpReader','* * * * * ', 3);
-insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( -4, 'ftp://127.0.0.1/out', 'clazzname.FtpWriter','* * * * * ', 2);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '-inendpoint1', 'file://temp/in', 'clazzname.FileReader','* * * * * ', 1);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '-outendpoint2', 'file://temp/out', 'clazzname.FilWriter','* * * * * ', 2);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ('-inendpoint3', 'ftp://127.0.0.1/in', 'clazzname.FtpReader','* * * * * ', 3);
+insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '-outendpoint4', 'ftp://127.0.0.1/out', 'clazzname.FtpWriter','* * * * * ', 2);
 
-insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1000, 'ftpHost', 'localhost', -1);
-insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1001, 'ftpPort', '12345', -1);
-insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1002, 'fileList', 'file1,file2', -1);
+insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1000, 'ftpHost', 'localhost', '-inendpoint1');
+insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1001, 'ftpPort', '12345', '-inendpoint1');
+insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1002, 'fileList', 'file1,file2', '-inendpoint1');
 
-insert into node (id, idno, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, displayname, nodestatus_fk, createdby, modifiedby) values (-1, 'nodeidno_1', -1, -2, '2006-10-13 15:51:53', '--rid_1', 'FILE-TO-FILE1',2,1,1);
-insert into node (id, idno, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, displayname, nodestatus_fk, createdby, modifiedby) values (-2, 'nodeidno_1', -3, -4, '2006-10-14 15:51:53',  '--rid_1', 'FTP-TO-FILE', 1,1,1);
+insert into node (id, idno, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, displayname, nodestatus_fk, createdby, modifiedby) values ('-node1', 'nodeidno_1', '-inendpoint1', '-outendpoint2', '2006-10-13 15:51:53', '--rid_1', 'FILE-TO-FILE1',2,1,1);
+insert into node (id, idno, inbound_endpoint_fk, outbound_endpoint_fk, modifiedon, router_fk, displayname, nodestatus_fk, createdby, modifiedby) values ('-node2', 'nodeidno_1', '-inendpoint3', '-outendpoint4', '2006-10-14 15:51:53',  '--rid_1', 'FTP-TO-FILE', 1,1,1);
                                         
 insert into sender ( id, name) values ( -1 ,'Sender name 1');
 
-insert into message (id, createdon, sender_fk, node_fk, content) values (-1, NOW(), '-senderid_1', -1, 'A message 1');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-2, NOW(), '-senderid_1', -1, 'A message 2');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-3, NOW(), '-senderid_1', -1, 'A message 3');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-4, NOW(), '-senderid_1', -1, 'A message 4');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-5, NOW(), '-senderid_1', -1, 'A message 5');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-6, NOW(), '-senderid_1', -1, 'A message 6');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-1, NOW(), -1, "-node1", 'A message 1');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-2, NOW(), -1, "-node1", 'A message 2');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-3, NOW(), -1, "-node1", 'A message 3');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-4, NOW(), -1, "-node1", 'A message 4');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-5, NOW(), -1, "-node1", 'A message 5');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-6, NOW(), -1, "-node1", 'A message 6');
          
 insert into receiver (id, name ) values ( -1, 'A receiver 1');
 insert into receiver (id, name ) values ( -2, 'A receiver 2');

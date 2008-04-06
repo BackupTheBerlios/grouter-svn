@@ -78,7 +78,7 @@ public class Message extends BaseEntity implements Comparable
     // Hibernate search
     private Long id;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "receiver_message",
             joinColumns = {@JoinColumn(name = "message_fk")},
             inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
@@ -96,7 +96,7 @@ public class Message extends BaseEntity implements Comparable
     private String content;
 
     @NotNull
-    @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "node_fk", nullable = false)
     private Node node;
 

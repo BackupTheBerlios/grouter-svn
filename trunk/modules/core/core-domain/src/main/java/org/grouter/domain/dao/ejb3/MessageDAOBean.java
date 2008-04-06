@@ -47,7 +47,7 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, Long> implements Mes
         throw new NotImplementedException();
     }
 
-    public List<Message> findMessagesForNode(Long nodeId)
+    public List<Message> findMessagesForNode(String nodeId)
     {
         throw new NotImplementedException();
     }

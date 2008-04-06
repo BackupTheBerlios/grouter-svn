@@ -18,7 +18,6 @@ public class NodeDAOTest extends AbstractDAOTests
 {
     private static Log log = LogFactory.getLog(NodeDAOTest.class);
 
-
     public void testFindById()
     {
         Node node = nodeDAO.findById(NODE_ID_FTP);
@@ -65,8 +64,8 @@ public class NodeDAOTest extends AbstractDAOTests
      */
     public void testSave()
     {
-        Node node = new Node();
-        node.setDisplayName("A node");
+        Node node = new Node("id123","A node");
+        node.setId( "id123" );
         node.setNodeStatus(NodeStatus.NOTSTARTED);
 
         Router router = routerDAO.findById( ROUTER_ID );
@@ -77,7 +76,7 @@ public class NodeDAOTest extends AbstractDAOTests
 
         assertNotNull(node.getNodeStatus().getId());
 
-        Long id = node.getId();
+        String id = node.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
         assertEquals("A node", map.get("displayname"));
         assertEquals(1L, map.get("nodestatus_fk"));
@@ -85,13 +84,12 @@ public class NodeDAOTest extends AbstractDAOTests
 
     public void testStoreWithEndpoints()
     {
-        Node node = new Node();
-        node.setDisplayName("A node");
+        Node node = new Node( "test","A node" );
 
         Router router = routerDAO.findById( ROUTER_ID );
         node.setRouter(router);
 
-        EndPoint inboundEndpoint = new EndPoint();
+        EndPoint inboundEndpoint = new EndPoint("indid1");
         inboundEndpoint.setCron("* * * * * ");
         inboundEndpoint.setUri("file://temp/in");
         inboundEndpoint.setEndPointType(EndPointType.FILE_READER);
@@ -103,7 +101,7 @@ public class NodeDAOTest extends AbstractDAOTests
         contextMap.put(endPointContext2.getKeyName(), endPointContext2.getValue());
         inboundEndpoint.setEndPointContext(contextMap);
 
-        EndPoint outBoundPoint = new EndPoint();
+        EndPoint outBoundPoint = new EndPoint("endpid");
         outBoundPoint.setCron("* * * * * ");
         outBoundPoint.setUri("file://temp/out");
         outBoundPoint.setEndPointType(EndPointType.FILE_WRITER);
@@ -115,7 +113,7 @@ public class NodeDAOTest extends AbstractDAOTests
         flushSession();
 
 
-        Long id = node.getId();
+        String id = node.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM node WHERE id = ?", new Object[]{id});
         assertEquals("A node", map.get("displayname"));
 

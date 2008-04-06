@@ -184,13 +184,12 @@ public class Router extends BaseEntity
     public String printNodes()
     {
         StringBuffer buf = new StringBuffer();
-
         if (nodes != null)
         {
             buf.append("Nodes (total:" + nodes.size() + ")\n");
             for (Node node : nodes)
             {
-                buf.append(node.getId()).append("\n");
+                buf.append( "Node id:" + node.getId()).append( " " + node.getIdNo() ).append("\n");
             }
         } else
         {

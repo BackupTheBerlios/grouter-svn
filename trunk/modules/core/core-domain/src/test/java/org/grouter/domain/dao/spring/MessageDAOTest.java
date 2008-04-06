@@ -24,7 +24,7 @@ public class MessageDAOTest extends AbstractDAOTests
     {
         //Sender sender = new Sender("A test sender");
         Message message = new Message("A test message");
-        Receiver receiver = new Receiver("A test receiver");
+        Receiver receiver = receiverDAO.findById( RECEIVER_ID );
         message.addToReceivers(receiver);
         message.setNode(nodeDAO.findById(NODE_ID));
         messageDAO.save(message);
