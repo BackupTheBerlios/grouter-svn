@@ -48,7 +48,6 @@
             <groupId>com.javasoft</groupId>
             <artifactId>javaee</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.javasoft</groupId>
             <artifactId>jstl</artifactId>

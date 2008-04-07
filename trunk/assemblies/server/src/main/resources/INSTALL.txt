@@ -22,6 +22,35 @@ set GROUTER_HOME=C:\grouter
 set PATH=%PATH%;%GROUTER_HOME%\bin
 (or by using the System utility in the Control Panel for Windows NT/2000/XP)
 
+
+Mysql (macosx)
+-----
+
+
+1. Drop if you have any existing grouter database already.
+mysqladmin -u root -pyhepwd DROP grouter;
+
+2. Start up mysql the mysql demon
+> sudo ./mysql/bin/mysqld_safe
+
+3. Create database instance:
+> mysqladmin -u root -pthepwd  CREATE grouter
+And then reload the database
+>mysqladmin -u root -pthepwd reload;
+
+4. Grant grouter user
+As root create a mingle user
+mysql -u root -pthepwd  mysql
+Then create the mingle user with (INSERT...)
+mysql> GRANT ALL PRIVILEGES ON grouter.* TO 'grouter'@'localhost'  IDENTIFIED BY 'grouter' WITH GRANT OPTION;
+
+5. Login as grouter
+mysql>  -p -u grouter
+
+6 Under databse/mysql use: 
+mysql_importcraete_db.sh
+
+
 +--------------+
 | DISTRIBUTION |
 +--------------+
