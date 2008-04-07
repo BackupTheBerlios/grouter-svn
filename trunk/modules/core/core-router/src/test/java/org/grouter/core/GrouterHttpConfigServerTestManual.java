@@ -22,7 +22,7 @@ public class GrouterHttpConfigServerTestManual extends TestCase //extends Abstra
      */
     public static void useHttpConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_http.xml");
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config-http-node.xml");
         RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
         router.start();
     }

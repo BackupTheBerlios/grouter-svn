@@ -28,7 +28,7 @@ public class GrouterFtpConfigServerTestManual extends TestCase //extends Abstrac
      */
     public static void useFFtpConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_ftp.xml");
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config-ftp-node.xml");
         RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
         router.start();
     }
@@ -47,7 +47,7 @@ public class GrouterFtpConfigServerTestManual extends TestCase //extends Abstrac
 
     public void testStartUpGrouterThread() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config-file-nodes.xml");
         RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
         router.start();
     }
@@ -60,7 +60,7 @@ public class GrouterFtpConfigServerTestManual extends TestCase //extends Abstrac
      */
     public void testStartGrouterWithValidConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config-file-nodes.xml");
         RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
 
         assertNotNull(router);

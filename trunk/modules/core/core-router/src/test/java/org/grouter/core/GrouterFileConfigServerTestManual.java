@@ -1,10 +1,10 @@
 package org.grouter.core;
 
 import junit.framework.TestCase;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.ApplicationContext;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class GrouterFileConfigServerTestManual extends TestCase //extends Abstra
      */
     public static void useFileConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config-file-nodes.xml");
         RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
         router.start();
     }
@@ -47,7 +47,7 @@ public class GrouterFileConfigServerTestManual extends TestCase //extends Abstra
 
     public void testStartUpGrouterThread() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config-file-nodes.xml");
         RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
         router.start();
     }
@@ -60,7 +60,7 @@ public class GrouterFileConfigServerTestManual extends TestCase //extends Abstra
      */
     public void testStartGrouterWithValidConfig() throws Exception
     {
-        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config_grouter_file.xml");
+        ClassPathResource classPathResource = new ClassPathResource("routerconfig/config-file-nodes.xml");
         RouterServerImpl router = new RouterServerImpl(classPathResource.getFile().toString());
 
         assertNotNull(router);
