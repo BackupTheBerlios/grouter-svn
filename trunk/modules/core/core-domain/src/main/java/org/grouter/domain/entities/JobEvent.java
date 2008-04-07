@@ -22,7 +22,6 @@ package org.grouter.domain.entities;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * A Job can fire of an event which will be stored for lateer viewing.
@@ -53,6 +52,8 @@ public class JobEvent extends BaseEntity
 
     @Column(name = "position")
     Long position;
+    private static final int MS_TO_MINUTES = 60000;
+    private static final int MS_TO_MINUTE = 1000;
 
     public String getMessage()
     {
@@ -90,7 +91,7 @@ public class JobEvent extends BaseEntity
 
         if (processTimeInMs != null && processTimeInMs > 0)
         {
-            return processTimeInMs / 60000;
+            return processTimeInMs / MS_TO_MINUTES;
         } else
         {
             return 0L;
@@ -101,7 +102,7 @@ public class JobEvent extends BaseEntity
     {
         if (processTimeInMs != null && processTimeInMs > 0)
         {
-            return processTimeInMs / 1000;
+            return processTimeInMs / MS_TO_MINUTE;
         } else
         {
             return 0L;

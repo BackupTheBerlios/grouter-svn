@@ -1,24 +1,24 @@
 package org.grouter.core.readers;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.ftpserver.ConfigurableFtpServerContext;
+import org.apache.ftpserver.FtpServer;
+import org.apache.ftpserver.config.PropertiesConfiguration;
+import org.apache.ftpserver.interfaces.FtpServerContext;
+import org.apache.ftpserver.listener.mina.MinaListener;
+import org.apache.log4j.Logger;
+import org.grouter.core.AbstractRouterTests;
+import org.grouter.domain.entities.EndPoint;
+import org.grouter.domain.entities.EndPointContext;
+import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.Node;
+import org.springframework.core.io.ClassPathResource;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 import java.net.ServerSocket;
-
-import org.apache.log4j.Logger;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.io.FileUtils;
-import org.apache.ftpserver.FtpServer;
-import org.apache.ftpserver.ConfigurableFtpServerContext;
-import org.apache.ftpserver.config.PropertiesConfiguration;
-import org.apache.ftpserver.listener.mina.MinaListener;
-import org.apache.ftpserver.interfaces.FtpServerContext;
-import org.grouter.core.AbstractRouterTests;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.EndPoint;
-import org.grouter.domain.entities.EndPointType;
-import org.grouter.domain.entities.EndPointContext;
-import org.springframework.core.io.ClassPathResource;
+import java.util.*;
 
 /**
  * Extend this class for tests against an inmemoty ftp server instance.
@@ -91,15 +91,14 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
      */
     public void createNode()
     {
-        ftpToFile = new Node(-4343L, "ftpToFileNode");
+        ftpToFile = new Node("-test1", "ftpToFileNode");
         ftpToFile.setBackupUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/backup");
         ftpToFile.setInternalQueueUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/internalq");
 
         EndPoint inbound = new EndPoint();
         inbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/in");
         inbound.setEndPointType(EndPointType.FILE_READER);
-        inbound.setScheduleCron("0/5 * * * * ?");
-        inbound.setId("1");
+        inbound.setCron("0/5 * * * * ?");
         EndPointContext endPointContext3 = new EndPointContext(FtpReaderJob.FTP_PORT, "12345", inbound);
         Map map = new HashMap();
         map.put(endPointContext3.getKeyName(), endPointContext3);
@@ -110,8 +109,7 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
         outbound.setEndPointType(EndPointType.FILE_WRITER);
         outbound.setUri(BASE_FOLDER_FOR_TEST + File.separator + ftpToFile.getDisplayName() + "/out");
         outbound.setEndPointType(EndPointType.FILE_WRITER);
-        outbound.setScheduleCron("0/5 * * * * ?");
-        outbound.setId("2");
+        outbound.setCron("0/5 * * * * ?");
 
         ftpToFile.setInBound(inbound);
         ftpToFile.setOutBound(outbound);

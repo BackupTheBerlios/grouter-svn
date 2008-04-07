@@ -110,7 +110,7 @@ public class NodeEditController extends SimpleFormController
 
         if ( id != null )
         {
-            Node node = routerService.findNodeById( Long.parseLong(id) );
+            Node node = routerService.findNodeById( id );
             cmd = new NodeCommand( node );
         }
         else

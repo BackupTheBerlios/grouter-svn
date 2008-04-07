@@ -22,10 +22,9 @@
 
 
   <Nodes>
-    <Node idno="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="false">
+    <Node id="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
       <displayName>Ftp to file</displayName>
       <createdOn>2007-01-01</createdOn>
-      <modifiedOn>2007-01-01</modifiedOn>
       <inBoundEndPoint id="ftpreader_1" endPointType="FTP_READER">
         <uri>ftp://ftp.sunet.se/</uri>
         <clazzname>a classname</clazzname>
@@ -33,7 +32,7 @@
         <contextparam name="ftpAuthUser" value=""/>
         <contextparam name="ftpAuthPassword" value=""/>
         <contextparam name="ftpPort" value=""/>
-        <contextparam name="fileList" value="/pub/pictures/ascii/art07,/pub/pictures/ascii/art08"/>
+        <contextparam name="fileList" value="/pub/lang/java/javasoft/docs/source_license,/pub/lang/java/javasoft/docs/source_license.pdf"/>
       </inBoundEndPoint>
       <outBoundEndPoint id="filewriter_1" endPointType="FILE_WRITER">
         <uri>file://temp/grouter/nodes/ftptest/out</uri>

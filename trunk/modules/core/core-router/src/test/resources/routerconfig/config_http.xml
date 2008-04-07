@@ -20,7 +20,7 @@
   </Settings>
 
   <Nodes>
-    <Node idno="httptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
+    <Node id="httptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
       <displayName>Http to file</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>
@@ -29,7 +29,7 @@
         <clazzname>a classname</clazzname>
         <cron>0/10 * * * * ?</cron>
         <contextparam name="httpPort" value="8080"/>
-        <contextparam name="fileList" value="/status"/>
+        <contextparam name="fileList" value="/gweb/node/search.do"/>
       </inBoundEndPoint>
       <outBoundEndPoint id="filewriter_1_httptest" endPointType="FILE_WRITER">
         <uri>file://temp/grouter/nodes/httptest/out</uri>

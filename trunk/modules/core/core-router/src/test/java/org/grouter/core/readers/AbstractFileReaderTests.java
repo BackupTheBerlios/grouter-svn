@@ -1,17 +1,19 @@
 package org.grouter.core.readers;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
-import org.grouter.domain.entities.*;
-import org.grouter.core.command.AbstractCommand;
+import org.apache.log4j.Logger;
 import org.grouter.core.AbstractRouterTests;
+import org.grouter.core.command.AbstractCommand;
+import org.grouter.domain.entities.EndPoint;
+import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.Node;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.Set;
-import java.util.HashSet;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  *
@@ -81,22 +83,20 @@ public abstract class AbstractFileReaderTests extends AbstractRouterTests
      */
     public void createNode()
     {
-        fileToFileNode = new Node(-1234L, "ftpToFileNode");
+        fileToFileNode = new Node("-qwerty", "ftpToFileNode");
         fileToFileNode.setBackupUri( router.getHomePath() + "/nodes/" + fileToFileNode.getId() + "/internal/backup" );
 //        fileToFileNode.setInternalQueueUri( BASE_FOLDER_FOR_TEST + File.separator + fileToFileNode.getDisplayName() + "/internalq" );
 
         EndPoint inbound = new EndPoint();
         inbound.setUri(router.getHomePath() + "/nodes/" + fileToFileNode.getId() + "/in");
         inbound.setEndPointType( EndPointType.FILE_READER );
-        inbound.setScheduleCron( "0/5 * * * * ?" );
-        inbound.setId( "1" );
+        inbound.setCron( "0/5 * * * * ?" );
 
         EndPoint outbound = new EndPoint(  );
         outbound.setEndPointType(EndPointType.FILE_WRITER);
         outbound.setUri(router.getHomePath() + "/nodes/"+ fileToFileNode.getId() + "/out");
         outbound.setEndPointType( EndPointType.FILE_WRITER );
-        outbound.setScheduleCron( "0/5 * * * * ?" );
-        outbound.setId( "2" );
+        outbound.setCron( "0/5 * * * * ?" );
 
         fileToFileNode.setInBound( inbound );
         fileToFileNode.setOutBound( outbound );

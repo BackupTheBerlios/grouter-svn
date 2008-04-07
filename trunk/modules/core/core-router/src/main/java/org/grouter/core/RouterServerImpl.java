@@ -27,10 +27,7 @@ import org.grouter.core.config.ConfigFactory;
 import org.grouter.core.util.SchedulerService;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.domain.RouterCache;
-import org.grouter.domain.entities.EndPointType;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.Router;
-import org.grouter.domain.entities.SettingsContext;
+import org.grouter.domain.entities.*;
 import org.grouter.domain.service.RouterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -39,6 +36,7 @@ import org.springframework.remoting.rmi.RmiServiceExporter;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Date;
 
 /**
  * Main class for grouter - parses config file, updates database, exposes remote interface,
@@ -181,6 +179,11 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
     private void updatePersistentState()
     {
         logger.info("Saving router state in database");
+        AuditInfo auditInfo = new AuditInfo();
+        auditInfo.setModifiedOn( new Date() );
+        auditInfo.setModifiedBy( User.ADMIN );
+        router.setAuditInfo( auditInfo );
+
         routerService.saveRouter(router);
         routerService.updateStateForNotConfiguredNodes(router.getId(), router.getNodes());
         logger.info("Router state saved in database");
@@ -287,7 +290,7 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
         //onExit();
     }
 
-    // todo
+    // todo do checks ofr other endpoint types - if a ftp type try to ping it ,....
     private void forceMakeDirectories()
     {
         String homePath = router.getHomePath();
@@ -296,24 +299,39 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
             if (node.getCreateDirectories().booleanValue() == true)
             {
                 logger.info("Trying to create node directories. Path for this node:" + homePath + node.getId());
+                String pathInternalIn = null;
                 try
                 {
-                    org.apache.commons.io.FileUtils.forceMkdir(new File(homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in"));
-                    org.apache.commons.io.FileUtils.forceMkdir(new File(homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out"));
+                    // Internal in directories
+                    pathInternalIn = homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in";
+                    org.apache.commons.io.FileUtils.forceMkdir(new File(pathInternalIn));
                 } catch (IOException e)
                 {
-                    logger.error("Could not create directory for :" + homePath + node.getId());
+                    logger.error("Could not create directory for :" + pathInternalIn);
+                }
+
+                String pathInternalOut = null;
+                try
+                {
+                    //Internal out
+                    pathInternalOut = homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out";
+                    org.apache.commons.io.FileUtils.forceMkdir(new File(pathInternalOut));
+                }
+                catch(IOException ex)
+                {
+                    logger.error("Could not create directory for :" + pathInternalOut);
                 }
 
                 if (node.getInBound().getEndPointType().equals(EndPointType.FILE_READER))
                 {
-
+                    String internalInPath = null;
                     try
                     {
-                        org.apache.commons.io.FileUtils.forceMkdir(new File(homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "in"));
+                        internalInPath = homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "in";
+                        org.apache.commons.io.FileUtils.forceMkdir(new File(internalInPath));
                     } catch (IOException e)
                     {
-                        logger.error("Could not create directory for :" + homePath + node.getId());
+                        logger.error("Could not create directory for :" + internalInPath);
                     }
                 }
             } else
@@ -351,7 +369,7 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
      * @param nodeId id of node to stop
      * @throws RemoteException if we encounter som exception trying to stop a node
      */
-    public void stopNode(Long nodeId) throws RemoteException
+    public void stopNode(String nodeId) throws RemoteException
     {
         Node node = routerService.findNodeById(nodeId);
 

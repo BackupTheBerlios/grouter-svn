@@ -1,13 +1,9 @@
 package org.grouter.domain.entities;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
-
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.Embeddable;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 /**
@@ -22,16 +18,16 @@ public class AuditInfo
 {
     @Column(name = "createdon")
     //@Field(index = Index.TOKENIZED, store = Store.YES)
-    Date createdOn;
+    private Date createdOn;
     @Column(name = "modifiedon")
     //@Field(index = Index.TOKENIZED, store = Store.YES)
-    Date modifiedOn;
+    private Date modifiedOn;
     @ManyToOne
     @JoinColumn(name = "createdby")
-    User createdBy;
+    private User createdBy;
     @ManyToOne
     @JoinColumn(name = "modifiedby")
-    User modifiedBy;
+    private User modifiedBy;
 
     public AuditInfo()
     {

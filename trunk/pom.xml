@@ -479,11 +479,12 @@
                <artifactId>geronimo-spec-jta</artifactId>
                <version>1.0.1B-rc4</version>
            </dependency -->
-            <!-- Uploaded this to my repos -->
+            <!-- Uploaded this to my repo -->
             <dependency>
                 <groupId>com.javasoft</groupId>
                 <artifactId>javaee</artifactId>
                 <version>1.5</version>
+                <scope>provide</scope>
             </dependency>
             <dependency>
                 <groupId>com.javasoft</groupId>

@@ -33,7 +33,7 @@
 
 
   <Nodes>
-    <Node idno="filetest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
+    <Node id="filetest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true">
       <description>blaba albaba</description>
       <displayName>FileTest</displayName>
       <createdOn>2007-01-01</createdOn>
@@ -53,7 +53,7 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node idno="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true" >
+    <Node id="ftptest" createuniquename="true" source="BACARGO_C2K" receiver="C2K" createDirectories="true" >
       <displayName>Ftp to file</displayName>
       <createdOn>2007-01-01</createdOn>
       <modifiedOn>2007-01-01</modifiedOn>
@@ -73,7 +73,7 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node idno="filetest2" createuniquename="true" source="FINNAIR" receiver="C2K" createDirectories="true">
+    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="C2K" createDirectories="true">
       <description>Another file to file node</description>
       <displayName>FileToFileTest2</displayName>
       <createdOn>2007-01-01</createdOn>

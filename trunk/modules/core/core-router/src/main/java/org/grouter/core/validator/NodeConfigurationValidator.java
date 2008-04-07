@@ -1,21 +1,12 @@
 package org.grouter.core.validator;
 
-import org.springframework.validation.Validator;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.grouter.domain.entities.Router;
-import org.grouter.domain.entities.Node;
 import org.grouter.core.util.file.FileUtils;
-import org.apache.commons.validator.EmailValidator;
-
-import java.util.Set;
+import org.grouter.domain.entities.Node;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
- * Created by IntelliJ IDEA.
- * User: georgespolyzois
- * Date: Mar 20, 2008
- * Time: 6:39:34 PM
- * To change this template use File | Settings | File Templates.
+ * not used...
  */
 public class NodeConfigurationValidator implements Validator
 {

@@ -3,8 +3,8 @@ package org.grouter.core.util;
 import junit.framework.TestCase;
 import org.grouter.domain.entities.Node;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Georges
@@ -32,7 +32,7 @@ public class TestSchedulerService extends TestCase
     public void testStart()
     {
 
-        Node node = new Node(-321L,"name");
+        Node node = new Node("-test","name");
         Set<Node> setNodes = new HashSet<Node>();
         setNodes.add( node );
         

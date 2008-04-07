@@ -1,9 +1,9 @@
 package org.grouter.core.command;
 
 import junit.framework.TestCase;
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.Node;
 
 /**
  *
@@ -29,10 +29,8 @@ public class FileWriteCommandTest extends TestCase
         node.setIdNo("anid");
 
         EndPoint inboundEndpoint = new EndPoint();
-        inboundEndpoint.setId("id1");
 
         EndPoint outBoundPoint = new EndPoint();
-        outBoundPoint.setId("id");
         outBoundPoint.setEndPointType(EndPointType.FILE_WRITER);
 
         node.setInBound(inboundEndpoint);

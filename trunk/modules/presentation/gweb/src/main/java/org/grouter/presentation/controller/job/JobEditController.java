@@ -80,11 +80,7 @@ public class JobEditController extends SimpleFormController
     {
         String message;
         JobCommand cmd = ( JobCommand ) object;
-
         Job job = cmd.getJob();
-
-        logger.debug( "########   Job " + job );
-
 
         try
         {

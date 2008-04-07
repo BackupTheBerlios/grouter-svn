@@ -105,7 +105,7 @@ public class SchedulerService
                 JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), FileReaderJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
-                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
             if (node.getInBound().getEndPointType().getId() == EndPointType.FTP_READER.getId())
@@ -114,7 +114,7 @@ public class SchedulerService
                 JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), FtpReaderJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
-                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
             if (node.getInBound().getEndPointType().getId() == EndPointType.JMS_READER.getId())
@@ -122,7 +122,7 @@ public class SchedulerService
                 JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), JmsReaderJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
-                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
 
             }
@@ -133,7 +133,7 @@ public class SchedulerService
                 JobDetail jobDetail = new JobDetail(node.getInBound().getId().toString(), getTriggerGroup(node), HttpReaderJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
-                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getScheduleCron());
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, true), getTriggerGroup(node), node.getInBound().getCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
 
             }
@@ -146,7 +146,7 @@ public class SchedulerService
                 JobDetail jobDetail = new JobDetail(node.getOutBound().getId().toString(), getTriggerGroup(node), CommandConsumerJob.class);
                 jobDetail.getJobDataMap().put("node", node);
                 jobDetail.getJobDataMap().put("queue", blockingQueue);
-                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, false), getTriggerGroup(node), node.getOutBound().getScheduleCron());
+                CronTrigger cronTrigger = new CronTrigger(getTriggerName(node, false), getTriggerGroup(node), node.getOutBound().getCron());
                 scheduler.scheduleJob(jobDetail, cronTrigger);
             }
             node.setNodeStatus(NodeStatus.SCHEDULED_TO_START);
@@ -214,11 +214,11 @@ public class SchedulerService
     {
         logger.info("Rescheduling node : " + node.getDisplayName());
         CronTrigger cronTriggerIn = (CronTrigger) scheduler.getTrigger(getTriggerName(node, true), getTriggerGroup(node));
-        cronTriggerIn.setCronExpression(node.getInBound().getScheduleCron());
+        cronTriggerIn.setCronExpression(node.getInBound().getCron());
         scheduler.rescheduleJob(getTriggerName(node, true), getTriggerGroup(node), cronTriggerIn);
 
         CronTrigger cronTriggerOut = (CronTrigger) scheduler.getTrigger(getTriggerName(node, false), getTriggerGroup(node));
-        cronTriggerOut.setCronExpression(node.getOutBound().getScheduleCron());
+        cronTriggerOut.setCronExpression(node.getOutBound().getCron());
         scheduler.rescheduleJob(getTriggerName(node, false), getTriggerGroup(node), cronTriggerOut);
     }
 

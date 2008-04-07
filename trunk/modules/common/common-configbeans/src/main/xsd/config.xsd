@@ -53,6 +53,7 @@
     <!-- Nodes -->
     <xs:complexType name="nodesType">
         <xs:sequence>
+            <!-- A Router can have many Nodes -->
             <xs:element name="Node" type="nodeType" maxOccurs="unbounded" minOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
@@ -68,9 +69,20 @@
             <xs:element name="inBoundEndPoint" type="endPoint" minOccurs="1"/>
             <xs:element name="outBoundEndPoint" type="endPoint" minOccurs="1"/>
         </xs:sequence>
-        <xs:attribute name="idno" use="required"/>
+        <!-- The id of the node. If changed a new node will be created - the old one will still be there but
+        set to notused -->
+        <xs:attribute name="id" use="required"/>
+        <!-- Will create a unique name of a input message, this is usuallz always preferred. But
+        if there is a need to always have the same if of the message then set this to true.
+         A unique name is generated as a GUID, e.g. 245aa3edc0a80105009ca3700be70194
+         -->
         <xs:attribute name="createuniquename" type="xs:boolean"/>
+        <!-- See EndPointType - for definition of all types of supported ones.
+        E.g. filereader, ftpreader etc.
+        -->
         <xs:attribute name="endPointType" type="xs:boolean"/>
+        <!-- Create direcotries if not present, works for internal dir, back up dirs and
+        dir for enpointtypes filereader/filewriter -->
         <xs:attribute name="createDirectories" type="xs:boolean" use="required"/>
         <!--
         A source is an optional attribute on a Node indicating from which source

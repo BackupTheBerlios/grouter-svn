@@ -24,7 +24,9 @@
 </div>
 
 <div id="content">
-    <form:form commandName="jobcommand" id="form">
+
+<form:form commandName="jobcommand" id="jobEditForm" cssClass="decoratedform">
+    
         <table>
             <tr>
                 <td>Router:</td>

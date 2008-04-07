@@ -19,22 +19,19 @@
 
 package org.grouter.core.config;
 
-import org.apache.log4j.Logger;
-import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.StringUtils;
-import org.grouter.domain.entities.*;
-import org.grouter.config.GrouterDocument;
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 import org.grouter.config.Context;
-import org.grouter.config.NodesType;
+import org.grouter.config.GrouterDocument;
 import org.grouter.config.NodeType;
+import org.grouter.config.NodesType;
 import org.grouter.core.util.file.FileUtils;
+import org.grouter.domain.entities.*;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.HashMap;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Use this factory (or assemblee) to create Node entities from corresponding xml binding type of object.
@@ -72,7 +69,7 @@ public class ConfigFactory
         {
             uri = grouterconfig.getHome().replace(FILE_PREFIX, "/");
         }
-        if (!FileUtils.isValidDir(uri) )
+        if (!FileUtils.isValidDir(uri))
         {
             throw new IllegalArgumentException("Homepath of Grouter did not exist");
         }
@@ -87,11 +84,11 @@ public class ConfigFactory
      * Extract settings from xml representation to domain.
      *
      * @param grouterconfig the xml representtation of a grouter configuration
-     * @param router the domain entity
+     * @param router        the domain entity
      * @return domain entity represetnting settings
      */
     private static Settings getSettingsFromConfig(final GrouterDocument.Grouter grouterconfig,
-                                                  final Router router )
+                                                  final Router router)
     {
         Map<String, String> settingsContext = new HashMap<String, String>();
         settingsContext.put(SettingsContext.KEY_SETTINGS_JNDI_JAVA_NAMING_FACTORY_INITIAL, grouterconfig.getSettings().getJndi().getNamingFactoryInitial());
@@ -109,7 +106,7 @@ public class ConfigFactory
             settingsContext.put(SettingsContext.KEY_SETTINGS_DATASOURCE_USERNAME, grouterconfig.getSettings().getDataSource().getUserName());
             settingsContext.put(SettingsContext.KEY_SETTINGS_DATASOURCE_PASSWORD, grouterconfig.getSettings().getDataSource().getPassword());
         }
-       // return new Settings(router.getId(), settingsContext);
+        // return new Settings(router.getId(), settingsContext);
         return new Settings(settingsContext);
     }
 
@@ -118,15 +115,22 @@ public class ConfigFactory
                                       final Router router) throws IllegalArgumentException
     {
         Set<Node> result = new HashSet<Node>();
-
         NodesType nodes = grouterconfig.getNodes();
         NodeType[] nodeArr = nodes.getNodeArray();
 
         for (NodeType configNode : nodeArr)
         {
             final Node nodeEntity = new Node();
+
+            AuditInfo auditInfo = new AuditInfo();
+            auditInfo.setCreatedBy(User.ADMIN);
+            auditInfo.setModifiedBy(User.ADMIN);
+            auditInfo.setCreatedOn(new Date());
+            auditInfo.setModifiedOn(new Date());
+            nodeEntity.setAuditInfo(auditInfo);
+
             nodeEntity.setDisplayName(configNode.getDisplayName());
-            nodeEntity.setIdNo(configNode.getIdno().getStringValue());
+            nodeEntity.setId(configNode.getId().getStringValue());
             nodeEntity.setReceiver(configNode.getReceiver());
             nodeEntity.setSource(configNode.getSource());
             nodeEntity.setCreateDirectories(configNode.getCreateDirectories());
@@ -135,7 +139,7 @@ public class ConfigFactory
             if (configNode.isSetBackup())
             {
                 // we need to handle backups. Check if we should override default backup location
-                if ( !StringUtils.isEmpty(configNode.getBackup().getOverrideDefaultUri() ))
+                if (!StringUtils.isEmpty(configNode.getBackup().getOverrideDefaultUri()))
                 {
                     // Use override path
                     String uriValid = configNode.getBackup().getOverrideDefaultUri().replace(FILE_PREFIX, "/");
@@ -144,16 +148,15 @@ public class ConfigFactory
                 {
                     // create in node home folder
                     String uriDefaultValidPath = (router.getHomePath() + File.separator + "nodes" + File.separator +
-                            configNode.getIdno().getStringValue() + File.separator + "backup").replace(FILE_PREFIX, "/");
+                            configNode.getId().getStringValue() + File.separator + "backup").replace(FILE_PREFIX, "/");
                     nodeEntity.setBackupUri(uriDefaultValidPath);
                 }
-                
+
                 if (!FileUtils.isValidDir(nodeEntity.getBackupUri()) && !nodeEntity.getCreateDirectories())
                 {
                     throw new IllegalArgumentException("CreateDirectory flag for node was false and path did not " +
                             "exist - was :" + nodeEntity.getBackupUri());
-                }
-                else if (!FileUtils.isValidDir(nodeEntity.getBackupUri()) && nodeEntity.getCreateDirectories())
+                } else if (!FileUtils.isValidDir(nodeEntity.getBackupUri()) && nodeEntity.getCreateDirectories())
                 {
                     // Try to create the folder
                     try
@@ -193,7 +196,17 @@ public class ConfigFactory
     private static EndPoint getEndPoint(final Node nodeEntity, final org.grouter.config.EndPoint endPoint) throws IllegalArgumentException
     {
         EndPoint result = new EndPoint();
+        result.setId(endPoint.getId());
         boolean supportedEndpointtypeFound = false;
+
+
+        AuditInfo auditInfo = new AuditInfo();
+        auditInfo.setCreatedBy(User.ADMIN);
+        auditInfo.setModifiedBy(User.ADMIN);
+        auditInfo.setCreatedOn(new Date());
+        auditInfo.setModifiedOn(new Date());
+        nodeEntity.setAuditInfo(auditInfo);
+        result.setAuditInfo(auditInfo);
 
         String uriValid = null;
         if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FILE_READER) ||
@@ -201,9 +214,7 @@ public class ConfigFactory
         {
             uriValid = endPoint.getUri().replace(FILE_PREFIX, "/");
             supportedEndpointtypeFound = true;
-        }
-
-        if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_READER) ||
+        } else if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_READER) ||
                 endPoint.getEndPointType().equals(org.grouter.config.EndPointType.FTP_WRITER))
         {
             String urlpath = endPoint.getUri();
@@ -211,16 +222,12 @@ public class ConfigFactory
             uriValid = urlpath.replaceAll("/", "");
             endPoint.setUri(uriValid);
             supportedEndpointtypeFound = true;
-        }
-
-        if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.JMS_READER) ||
+        } else if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.JMS_READER) ||
                 endPoint.getEndPointType().equals(org.grouter.config.EndPointType.JMS_WRITER))
         {
             uriValid = endPoint.getUri();
             supportedEndpointtypeFound = true;
-        }
-
-        if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.HTTP_READER))
+        } else if (endPoint.getEndPointType().equals(org.grouter.config.EndPointType.HTTP_READER))
         {
             String urlpath = endPoint.getUri();
             urlpath = urlpath.replace("http://", "");
@@ -240,17 +247,16 @@ public class ConfigFactory
         Map<String, String> endPointContextMap = new HashMap<String, String>();
         if (context != null && context.length > 0)
         {
-            for (Context context1 : context)
+            for (Context item : context)
             {
-                //EndPointContext endPointContext = new EndPointContext(context1.getDisplayName(), context1.getValue(), result);
-                endPointContextMap.put(context1.getName(), context1.getValue());
+                //EndPointContext endPointContext = new EndPointContext(item.getDisplayName(), item.getValue(), result);
+                endPointContextMap.put(item.getName(), item.getValue());
             }
         }
 
         result.setClazzName(endPoint.getClazzname());
         result.setUri(uriValid);
-        result.setId(endPoint.getId());
-        result.setScheduleCron(endPoint.getCron());
+        result.setCron(endPoint.getCron());
         result.setEndPointContext(endPointContextMap);
 
         EndPointType type = EndPointType.valueOf(new Long(endPoint.getEndPointType().intValue()));

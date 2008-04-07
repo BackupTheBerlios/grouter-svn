@@ -1,19 +1,19 @@
 package org.grouter.core;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
-import org.grouter.domain.entities.*;
+import org.apache.log4j.Logger;
 import org.grouter.core.command.AbstractCommand;
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StringUtils;
+import org.grouter.domain.entities.Router;
 import org.hibernate.SessionFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.util.StringUtils;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.List;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Base class for running grouter tests. Creates a router, directories and populates
@@ -137,14 +137,14 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
         EndPoint inbound = new EndPoint();
         inbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/in");
         inbound.setEndPointType( EndPointType.FILE_READER );
-        inbound.setScheduleCron( "0/5 * * * * ?" );
+        inbound.setCron( "0/5 * * * * ?" );
         inbound.setId( "1" );
 
         EndPoint outbound = new EndPoint(  );
         outbound.setEndPointType(EndPointType.FILE_WRITER);
         outbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/out");
         outbound.setEndPointType( EndPointType.FILE_WRITER );
-        outbound.setScheduleCron( "0/5 * * * * ?" );
+        outbound.setCron( "0/5 * * * * ?" );
         outbound.setId( "2" );
 
         fileToFileNode.setInBound( inbound );
@@ -158,14 +158,14 @@ public abstract class AbstractRouterTests extends AbstractTransactionalDataSourc
         EndPoint inbound = new EndPoint();
         inbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/in");
         inbound.setEndPointType( EndPointType.FTP_READER );
-        inbound.setScheduleCron( "0/5 * * * * ?" );
+        inbound.setCron( "0/5 * * * * ?" );
         inbound.setId( "1" );
 
         EndPoint outbound = new EndPoint(  );
         outbound.setEndPointType(EndPointType.FILE_WRITER);
         outbound.setUri(BASE_FOLDER_FOR_TEST + router.getId() + "/out");
         outbound.setEndPointType( EndPointType.FILE_WRITER );
-        outbound.setScheduleCron( "0/5 * * * * ?" );
+        outbound.setCron( "0/5 * * * * ?" );
         outbound.setId( "2" );
 
         fileToFileNode.setInBound( inbound );

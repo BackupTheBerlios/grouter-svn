@@ -19,15 +19,14 @@
 
 package org.grouter.core.command;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.NodeStatus;
-import org.grouter.domain.service.spring.logging.LogStrategy;
+import org.apache.log4j.Logger;
+import org.grouter.domain.entities.*;
 import org.grouter.domain.service.BeanLocator;
+import org.grouter.domain.service.spring.logging.LogStrategy;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * A concrete command to be performed by a consumer, held by the CommandInvoker. </br>
@@ -41,13 +40,9 @@ public class FileWriteCommand extends AbstractCommand
     LogStrategy logStrategy;
     BeanLocator beanLocator;
 
-
-
     public FileWriteCommand()
     {
-
     }
-
 
     /**
      * Constructor.
@@ -62,8 +57,6 @@ public class FileWriteCommand extends AbstractCommand
             throw new IllegalArgumentException("You must provide a Node !!");
         }
         this.node = node;
-
-
     }
 
 
@@ -112,6 +105,11 @@ public class FileWriteCommand extends AbstractCommand
             Message message = new Message();
             message.setContent(commandMessage.getMessage());
             message.setNode(node);
+            AuditInfo auditInfo = new AuditInfo();
+            auditInfo.setModifiedOn(new Date());
+            auditInfo.setCreatedOn(new Date());
+            auditInfo.setCreatedBy( User.ADMIN );
+            message.setAuditInfo(auditInfo);
             logStrategy.log(message);
         }
     }

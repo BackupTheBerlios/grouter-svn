@@ -1,9 +1,9 @@
 package org.grouter.core.command;
 
 import junit.framework.TestCase;
-import org.grouter.domain.entities.Node;
 import org.grouter.domain.entities.EndPoint;
 import org.grouter.domain.entities.EndPointType;
+import org.grouter.domain.entities.Node;
 
 /**
  * Unit testing the CommandFactoty.
@@ -30,10 +30,8 @@ public class CommandFactoryTest extends TestCase
         node.setIdNo("anid");
 
         EndPoint inboundEndpoint = new EndPoint();
-        inboundEndpoint.setId("id1");
 
         EndPoint outBoundPoint = new EndPoint();
-        outBoundPoint.setId("id");
         outBoundPoint.setEndPointType(EndPointType.FILE_WRITER);
 
         node.setInBound(inboundEndpoint);

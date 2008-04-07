@@ -43,11 +43,10 @@
   </GlobalJobs>
 
   <Nodes>
-    <Node idno="filetest11212" createuniquename="true" source="BACARGO_C2K" receiver="C2K1" createDirectories="true">
+    <Node id="filetest" createuniquename="true" source="BACARGO_C2K" receiver="C2K1" createDirectories="true">
       <description>Test node 1</description>
-      <displayName>FileTest</displayName>
+      <displayName>FileToFileTest_1</displayName>
       <createdOn>2007-01-01</createdOn>
-      <modifiedOn>2007-01-01</modifiedOn>
       <backup>
         <overrideDefaultUri>file://temp/grouter/nodes/filetest/backupoverride</overrideDefaultUri>
       </backup>
@@ -63,11 +62,10 @@
       </outBoundEndPoint>
     </Node>
 
-    <Node idno="filetest2" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
+    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
       <description>Another file to file node</description>
-      <displayName>FileToFileTest2</displayName>
+      <displayName>FileToFileTest_2</displayName>
       <createdOn>2007-01-01</createdOn>
-      <modifiedOn>2007-01-01</modifiedOn>
       <backup/>
       <inBoundEndPoint id="filtest12_reader" endPointType="FILE_READER">
         <uri>file://temp/grouter/nodes/filetest2/in</uri>

@@ -49,6 +49,7 @@ public class JMSLogStrategyImpl implements LogStrategy
     //    private final static String LOG_Q_NAME = "grouter/logq";
     private AbstractSenderDestination queueDestination;
     private static InitialContext initialContext;
+    private static final int TIME_TO_LIVE_MS = 4000;
 
     {
 
@@ -67,7 +68,7 @@ public class JMSLogStrategyImpl implements LogStrategy
             Map<String, String> settingsContext = RouterCache.getSettingsContextCache().getSettings().getSettingsContext();
             queueDestination = new QueueSenderDestination(settingsContext.get(SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE)
                     , settingsContext.get(SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), null,
-                    getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
+                    getInitialContext(settingsContext), TIME_TO_LIVE_MS, AcknowledgeMode.NONE);
             queueDestination.bind();
             queueDestination.sendMessage("A message");
 
@@ -87,7 +88,7 @@ public class JMSLogStrategyImpl implements LogStrategy
 
             queueDestination = new QueueSenderDestination(settingsContext.get(SettingsContext.KEY_SETTINGS_LOGGING_JMSLOGGINGQUEUE),
                     settingsContext.get(SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), new NeverRebind(),
-                    getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
+                    getInitialContext(settingsContext), TIME_TO_LIVE_MS, AcknowledgeMode.NONE);
 
             queueDestination.bind();
             queueDestination.sendMessage("A message");
