@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Change the path to the config.xsd file to ../config.xsd 
+Settings below are for working directly from trunk.
+-->
+
 <Grouter displayName="router2" description="Test router for jms" id="grouter_id_3"
          home="file://temp/grouter"
          xmlns="http://grouter.org/config.xsd"
