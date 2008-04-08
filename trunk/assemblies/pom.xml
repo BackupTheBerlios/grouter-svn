@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <parent>
+        <groupId>org.grouter</groupId>
+        <artifactId>grouter</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+	<version>0.1.1-SNAPSHOT</version>
+    <groupId>org.grouter</groupId>
+    <artifactId>assemblies</artifactId>
+    <packaging>pom</packaging>
+    <name>${groupId}:${artifactId} - Release</name>
+    <description>Includes the Grouter server with all of its modules and transports.</description>
+
+    <distributionManagement>
+        <repository>
+            <id>grouter-dist-releases</id>
+            <name>Grouter Distributions Release Repository</name>
+            <url>dav:https://dav.codehaus.org/dist/groutr/</url>
+        </repository>
+        <snapshotRepository>
+            <id>grouter-dist-snapshots</id>
+            <name>Grouter Distributions Snapshot Repository</name>
+            <url>dav:https://dav.codehaus.org/snapshots.dist/grouter/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <repositoryId>grouter-dist-releases</repositoryId>
+                    <snapshotRepositoryId>grouter-dist-snapshots</snapshotRepositoryId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <!-- module>jboss</module -->
+        <module>server</module>
+    </modules>
+
+    
+</project>
