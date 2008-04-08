@@ -31,7 +31,7 @@
 <div id="contentBox" dir="ltr">
 
 <div id="downloadbox" dir="ltr">
-<p><a href="download.html"><img src="pics/folder-open.gif" alt="" align="bottom" border="0" height="14" width="26"></a><a href="download.php"> Download grouter - ver 0.0.1 </a> </p>
+<p><a href="download.html"><img src="pics/folder-open.gif" alt="" align="bottom" border="0" height="14" width="26"></a><a href="download.php"> Download grouter - ver 0.1.1 </a> </p>
 <ul>
   <li>
     <p style="margin-bottom: 0cm;"><a href="systemrequirements.html">System Requirements</a>
@@ -54,14 +54,20 @@
 </ul>
 </div>
 
-<h2 class="western">Grouter introduction</h2>
+<h2 class="western">Grouter intro</h2>
 
-<p>Grouter is a message router for receiving messages and sending
-messages on different endpoints. One Grouter contains one or several nodes and each node holds on inbound endpoint and one outbound endpoint.  
-An endpoint can be of different types like file, ftp, http etc. <br/>
-Attached to a Node one can specify a filter or even a transformation. Associated to an endpoint is an endpointcontext holding information needed for a specific endpointtype - e.g. for a ftp endpointtype a url, a port and a file list can be given. <br/>
+<p>Grouter is a message router and job scheduler all in one. Althought the grouter can be used as a fancy tool for editing,creating and viewing jobs and their execution - 
+the main purpose is for receiving messages and sending
+messages on different endpoints. A Grouter contains one or several nodes and each node holds on inbound endpoint and one outbound endpoint.  <br/>
+An endpoint can be of different types like file, ftp, http etc. handling different types of protocols. <br/>
+Attached to a Node one can specify a filter or even a transformation. Finally, associated to an endpoint is an endpointcontext holding information needed for a specific endpointtype - e.g. for a ftp endpointtype a url, a port and a file list can be given. <br/>
+The grouter web component enables users to manage users, nodes, jobs and query against the database or against a Lucened index for messages and other indexed entities.<br/>
+The core grouter uses a command pattern decoupling inbound and outbound enpoints for great flexibility and also to enable a template pattern for how a message is handled on in and out bound endpoints.
+<br/><br/>
+The domain model looks like below UML class:<br/>
 <img src="pics/small_domain.png" alt="uml diagram" />
-<p>The grouter consists of different components: </p>
+<br/>
+<p>The groutercomponents </p>
 <ul>
 <li>core
     <ul> 
