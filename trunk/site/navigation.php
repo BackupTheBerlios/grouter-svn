@@ -12,7 +12,7 @@
     <p style="margin-bottom: 0cm;"><a href="download.php">download</a> </p>
   </li>
   <li>
-    <p style="margin-bottom: 0cm;"><a href="download.php#installation">maven site  </a> </p>
+    <p style="margin-bottom: 0cm;"><a href="mavensite/integration.html"">maven site  </a> </p>
   </li>
   <li>
     <p style="margin-bottom: 0cm;"><a href="mavensite/"></a></p>

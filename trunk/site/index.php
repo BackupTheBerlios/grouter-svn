@@ -56,9 +56,9 @@
 
 <h2 class="western">Grouter intro</h2>
 
-<p>Grouter is a message router and job scheduler all in one. Althought the grouter can be used as a fancy tool for editing,creating and viewing jobs and their execution - 
-the main purpose is for receiving messages and sending
-messages on different endpoints. A Grouter contains one or several nodes and each node holds on inbound endpoint and one outbound endpoint.  <br/>
+<p>Grouter is a message router and job scheduler all rooled into one. 
+
+ Grouter contains one or several nodes and each node holds on inbound endpoint and one outbound endpoint.  <br/>
 An endpoint can be of different types like file, ftp, http etc. handling different types of protocols. <br/>
 Attached to a Node one can specify a filter or even a transformation. Finally, associated to an endpoint is an endpointcontext holding information needed for a specific endpointtype - e.g. for a ftp endpointtype a url, a port and a file list can be given. <br/>
 The grouter web component enables users to manage users, nodes, jobs and query against the database or against a Lucened index for messages and other indexed entities.<br/>
