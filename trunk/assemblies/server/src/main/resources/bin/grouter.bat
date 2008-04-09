@@ -45,7 +45,7 @@ if "%GROUTER_APP%" == "" (
     )
 )
 
-set _WRAPPER_BASE=%MGROUTER_HOME%\sbin\wrapper
+set _WRAPPER_BASE=%GROUTER_HOME%\sbin\wrapper
 
 rem ###############################################################
 set _WRAPPER_EXE=%_WRAPPER_BASE%-windows-x86-32.exe
