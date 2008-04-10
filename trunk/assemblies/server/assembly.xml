@@ -106,9 +106,9 @@ Assembly descriptor for the full Mule distribution.
         <include>aspectj:*</include>
         <include>asm:*</include>
         <include>org.springframework:spring</include>
-        <include>org.springframework:spring-hibernate3</include>
+        <include>org.springframework:spring-orm</include>
         <include>org.springframework:spring-core</include>
-        <include>org.springframework:spring-dao</include>
+        <include>org.springframework:spring-tx</include>
         <include>org.springframework:spring-context</include>
         <include>org.springframework:spring-jdbc</include>
 		<include>mysql:mysql-connector-java</include>
