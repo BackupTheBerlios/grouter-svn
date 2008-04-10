@@ -31,7 +31,7 @@ public class HibernateSearchIndexContextListener implements ApplicationContextAw
 
     public void initialize()
     {
-        logger.info("##################Initializing the search index");
+        logger.info("Initializing the search index");
         systemService.initIndex();
     }
 

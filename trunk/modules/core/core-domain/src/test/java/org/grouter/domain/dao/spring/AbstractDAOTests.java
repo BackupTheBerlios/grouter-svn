@@ -1,7 +1,10 @@
 package org.grouter.domain.dao.spring;
 
 import org.apache.commons.io.FileUtils;
+import org.grouter.common.hibernatesearch.FullIndexHandler;
 import org.grouter.domain.dao.*;
+import org.grouter.domain.entities.Message;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
@@ -182,4 +185,20 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     {
         this.senderDAO = senderDAO;
     }
+
+    /**
+     * Init index for unit test.
+      */
+    protected void setUpIndex()
+    {
+        FullIndexHandler fullIndexHandler = new FullIndexHandler();
+        fullIndexHandler.doFullIndex(1000, Message.class, getSession());
+    }
+
+
+    protected Session getSession()
+    {
+        return sessionFactory.getCurrentSession();
+    }
+
 }

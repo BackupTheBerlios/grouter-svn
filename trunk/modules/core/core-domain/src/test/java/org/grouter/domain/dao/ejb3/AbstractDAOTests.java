@@ -9,20 +9,22 @@ import java.util.List;
 
 
 /**
+ * Base class for testing EJB3 enitites
+ *
  * @author Georges Polyzois
  */
 public abstract class AbstractDAOTests extends AbstractJpaTests
 {
-
-
     @Override
     protected String[] getConfigLocations()
     {
 
-        return new String[]
+       return new String[]
                 {
-                        "context-domain-dao.xml", "context-domain-datasource.xml",
-                        "context-domain-sessionfactory.xml"
+                        "context-domain-datasource.xml",
+                        "context-domain-sessionfactory.xml",
+                        "context-domain-dao.xml",
+                        "context-domain-service.xml"
                 };
     }
 

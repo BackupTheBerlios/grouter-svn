@@ -3,7 +3,6 @@ package org.grouter.domain.service.spring;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.dao.MessageDAO;
-import org.grouter.domain.entities.Message;
 import org.grouter.domain.service.RouterService;
 import org.springframework.jms.core.JmsTemplate;
 
@@ -26,7 +25,7 @@ public class GRouterQueueListenerImplTest extends AbstractServiceTests
     }
 
 
-    public void testCreateMessage() throws Exception
+   /* public void testCreateMessage() throws Exception
     {
         assertTrue(true);
 
@@ -42,7 +41,7 @@ public class GRouterQueueListenerImplTest extends AbstractServiceTests
 
         // logger.debug("####  " + (String)message2.getContent() );
 
-    }
+    }*/
 
     public void setJmsTemplate(JmsTemplate jmsTemplate)
     {
