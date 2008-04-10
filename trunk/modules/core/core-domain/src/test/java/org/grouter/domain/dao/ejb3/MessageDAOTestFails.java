@@ -10,7 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.dao.spring.MessageDAOImpl;
 
-public class MessageDAOTestFails extends AbstractDAOTests
+public class MessageDAOTestFails //extends AbstractDAOTests
 {
     private static Log log = LogFactory.getLog(MessageDAOTestFails.class);
     protected MessageDAOImpl messageDAO;
@@ -18,7 +18,7 @@ public class MessageDAOTestFails extends AbstractDAOTests
 
     public void fails_testSaveMessage()
     {
-        assertTrue(true);
+        //assertTrue(true);
         /*MessageDAO messageDAO = (MessageDAO) DAOFactory.getFactory(DAOFactory.FactoryType.EJB3_PERSISTENCE);
         Sender sender = new Sender("A test sender");
         Message message = new Message("A test message");
@@ -37,7 +37,7 @@ public class MessageDAOTestFails extends AbstractDAOTests
 
     public void fails_testFinder()
     {
-        assertTrue(true);
+        //as sertTrue(true);
         /*
         MessageDAO messageDAO = (MessageDAO) DAOFactory.getFactory(DAOFactory.FactoryType.EJB3_PERSISTENCE);
         Message resultNotFound = messageDAO.findById( -123L );

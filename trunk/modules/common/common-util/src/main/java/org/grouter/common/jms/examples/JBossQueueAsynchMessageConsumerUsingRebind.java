@@ -1,13 +1,13 @@
 package org.grouter.common.jms.examples;
 
 import org.apache.log4j.Logger;
-import org.grouter.common.jms.QueueSenderDestination;
 import org.grouter.common.jms.QueueListenerDestination;
 import org.grouter.common.jndi.JNDIUtils;
 
-import javax.jms.*;
-import javax.naming.NamingException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  * Register and listen for messages asynch from Queueu.

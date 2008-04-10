@@ -5,8 +5,8 @@ import org.grouter.common.jms.AcknowledgeMode;
 import org.grouter.common.jms.QueueSenderDestination;
 import org.grouter.common.jndi.JNDIUtils;
 
-import javax.naming.NamingException;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  * Produces messages on queue.
@@ -46,7 +46,7 @@ public class ManualJBossQMsgProducerUsingRebind extends AbstractJBossExample imp
                     SettingsContext.KEY_SETTINGS_JNDI_QUEUECONNECTIONFACTORY), new NeverRebind(),
                     getInitialContext(settingsContext), 4000, AcknowledgeMode.NONE);
            */
-        queueDestination = new QueueSenderDestination(QUEUE_TEST_QUEUE, "UIL2ConnectionFactory",   null, iniCtx, 4000, AcknowledgeMode.NONE);
+        queueDestination = new QueueSenderDestination(AbstractJBossExample.QUEUE_TEST_QUEUE, "UIL2ConnectionFactory",   null, iniCtx, 4000, AcknowledgeMode.NONE);
         queueDestination.bind();
     }
 
@@ -76,7 +76,7 @@ public class ManualJBossQMsgProducerUsingRebind extends AbstractJBossExample imp
             try
             {
                 send("Message nr "+ i++);
-                Thread.sleep(SLEEP);
+                Thread.sleep(AbstractJBossExample.SLEEP);
             } catch (Exception e)
             {
                 logger.error(e,e);

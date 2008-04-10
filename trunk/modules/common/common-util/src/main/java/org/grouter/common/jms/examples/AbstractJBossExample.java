@@ -2,8 +2,8 @@ package org.grouter.common.jms.examples;
 
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
-import javax.jms.QueueSession;
 import javax.jms.QueueReceiver;
+import javax.jms.QueueSession;
 
 public abstract class AbstractJBossExample
 {

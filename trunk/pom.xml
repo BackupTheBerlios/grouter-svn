@@ -893,7 +893,7 @@
                 <groupId>activemq</groupId>
                 <artifactId>activemq-core</artifactId>
                 <version>3.2.4</version>
-                <scope>test</scope>
+                <!-- scope>test</scope -->
                 <exclusions>
                     <exclusion>
                         <groupId>activecluster</groupId>
@@ -1122,7 +1122,15 @@
                 <configuration>
                     <!-- Display failed tests only -->
                     <showSuccess>false</showSuccess>
-                </configuration>
+                                    <argLine>-Xms64m -Xmx256m</argLine>
+                                    <excludes>
+                                        <exclude implementation="java.lang.String">**/Abstract*.*</exclude>
+                                        <!-- The org.mule.tck classes are in the test directory but are not runnable tests. -->
+                                        <exclude implementation="java.lang.String">org/grouter/common/jms/examples/**</exclude>
+                                    </excludes>
+               </configuration>
+
+
             </plugin>
 
 

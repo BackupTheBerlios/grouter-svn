@@ -11,7 +11,7 @@ import org.springframework.jms.core.JmsTemplate;
  *
  * @author Georges Polyzois
  */
-public class GRouterQueueListenerImplTest extends AbstractServiceTests
+public class GRouterQueueListenerImplTest //extends AbstractServiceTests
 {
     private static Log logger = LogFactory.getLog(GRouterQueueListenerImplTest.class);
     RouterService service;
@@ -21,7 +21,7 @@ public class GRouterQueueListenerImplTest extends AbstractServiceTests
 
     public GRouterQueueListenerImplTest()
     {
-        setAutowireMode(AUTOWIRE_BY_NAME);
+//        setAutowireMode(AUTOWIRE_BY_NAME);
     }
 
 
