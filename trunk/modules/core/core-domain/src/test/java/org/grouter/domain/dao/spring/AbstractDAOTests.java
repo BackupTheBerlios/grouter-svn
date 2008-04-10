@@ -142,7 +142,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
      * Subclasses need to override this and implement a test whereby they save an entity and verify that
      * the entity was actually saved.
      */
-    abstract void testSave();
+    abstract void testSave() throws Exception;
 
     public void setMessageDAO(MessageDAO messageDAO)
     {

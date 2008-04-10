@@ -2,9 +2,8 @@ package org.grouter.domain.dao.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.dao.RoleDAO;
-import org.grouter.domain.entities.Role;
 import org.grouter.domain.entities.Receiver;
+import org.hibernate.LazyInitializationException;
 
 import java.util.Map;
 
@@ -47,7 +46,10 @@ public class ReceiverDAOTest extends AbstractDAOTests
         {
             found.getMessages().toString();
             fail("Should not load messages eagerly");
-        } catch (Exception e)
+        } catch (LazyInitializationException e)
+        {
+            //expected
+        }catch (Exception e)
         {
             //expected
         }

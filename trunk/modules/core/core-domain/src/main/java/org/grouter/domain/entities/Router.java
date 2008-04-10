@@ -58,7 +58,7 @@ public class Router extends BaseEntity
      * on the item in the Set
      *
      */
-    @OneToMany(mappedBy = "router",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "router",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Node> nodes = new HashSet<Node>();
 
     @ManyToOne( cascade = {CascadeType.ALL} )

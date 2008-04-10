@@ -2,9 +2,7 @@ package org.grouter.domain.dao.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.entities.Receiver;
 import org.grouter.domain.entities.Sender;
-import org.grouter.domain.dao.SenderDAO;
 
 import java.util.Map;
 
@@ -54,7 +52,7 @@ public class SenderDAOTest extends AbstractDAOTests
     }
 
     @Override
-    public void testDelete()
+    public void testDelete() 
     {
         try
         {
@@ -62,6 +60,7 @@ public class SenderDAOTest extends AbstractDAOTests
             flushSession();
         } catch (Exception e)
         {
+
             //expected
         }
     }

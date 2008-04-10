@@ -116,7 +116,7 @@ public class MessageDAOTest extends AbstractDAOTests
             assertEquals(0, settingsStatistics.getMissCount());
             assertEquals(numberOfMessages * i, settingsStatistics.getHitCount());
             stopWatch.reset();
-            System.out.println(settingsStatistics);
+            logger.debug(settingsStatistics);
             endTransaction();
 
             // spring creates a transaction when test starts - so we first end it then start a new in the loop
