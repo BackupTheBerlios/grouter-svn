@@ -64,7 +64,7 @@
     <!--
     | Description will go to generated documentation reports.
     -->
-    <description>GRouter provides routing for messages with destinations including jms, ejb, file, email etc.
+    <description>Grouter is a message router and job scheduler all rolled into one. 
     </description>
 
     <!--
@@ -97,15 +97,16 @@
     <developers>
         <developer>
             <id>gepo01</id>
-            <name>Georges Polyzios</name>
-            <email>georges polyzois ATTHIS gmail dotcom</email>
-            <organization>Cefao</organization>
+            <name>Georges Polyzois</name>
+            <email>georges polyzois @ATTHISgmail.dot.com</email>
+            <organization>-</organization>
             <organizationUrl>http://grouter.berlios.de</organizationUrl>
+            <url>http://acupof.blogspot.com/</url>
             <roles>
                 <role>developer</role>
             </roles>
             <properties>
-                <picUrl>http://grouter.berlios.de/logotype.gif</picUrl>
+
             </properties>
         </developer>
     </developers>
@@ -237,7 +238,7 @@
         <maven.compile.target>1.5</maven.compile.target>
         <commons-logging-version>1.1</commons-logging-version>
         <junit-version>3.8.1</junit-version>
-        <spring-version>2.0.8</spring-version>
+        <spring-version>2.5.3</spring-version>
         <coberturaVersion>2.2</coberturaVersion>
     </properties>
 
@@ -590,8 +591,8 @@
             </dependency>
 
             <dependency>
-            <groupId>ehcache</groupId>
-             <artifactId>ehcache</artifactId>
+                <groupId>ehcache</groupId>
+                <artifactId>ehcache</artifactId>
                 <version>1.1</version>
             </dependency>
 
@@ -602,9 +603,9 @@
             </dependency>
 
             <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0</version>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>1.0</version>
             </dependency>
 
 
@@ -654,11 +655,11 @@
                 <artifactId>spring</artifactId>
                 <version>${spring-version}</version>
             </dependency>
-            <dependency>
+            <!-- ver 2 dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-hibernate3</artifactId>
                 <version>${spring-version}</version>
-            </dependency>
+            </dependency -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aspects</artifactId>
@@ -669,14 +670,29 @@
                 <artifactId>spring-core</artifactId>
                 <version>${spring-version}</version>
             </dependency>
-            <dependency>
+            <!-- for version 2 dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-dao</artifactId>
+                <version>${spring-version}</version>
+            </dependency -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
                 <version>${spring-version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
                 <version>${spring-version}</version>
             </dependency>
             <dependency>
@@ -696,6 +712,16 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <!-- renamed to spring-test dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-mock</artifactId>
                 <version>${spring-version}</version>
                 <scope>test</scope>
@@ -705,7 +731,7 @@
                         <artifactId>struts</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
+            </dependency -->
 
             <!-- Template engines -->
             <dependency>
@@ -946,9 +972,9 @@
     | use mvn release:clean release:perform -DdryRun=true until you get it working.
     -->
     <scm>
-        <connection>https://geopol@svn.berlios.de/svnroot/repos/grouter/trunk</connection>
-        <developerConnection>https://geopol@svn.berlios.de/svnroot/repos/grouter/trunk</developerConnection>
-        <url>http://sasa/cgi-bin/viewcvs.cgi/</url>
+        <connection>scm:svn:https://geopol@svn.berlios.de/svnroot/repos/grouter/trunk</connection>
+        <developerConnection>scm:svn:https://geopol@svn.berlios.de/svnroot/repos/grouter/trunk</developerConnection>
+        <url>http://svn.berlios.de/wsvn/grouter/trunk/grouter/</url>
     </scm>
 
 
@@ -959,7 +985,50 @@
     |     mvn site
     -->
     <reporting>
+
         <plugins>
+            <!-- Module dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>summary</report>
+                            <report>cim</report>
+                            <report>scm-list</report>
+                            <report>issue-tracking</report>
+                            <report>dependencies</report>
+                            <report>dependency-convergence</report>
+                            <report>license</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+
+            <!-- To skip -Dpmd.skip=true and -Dcpd.skip=true -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <targetJdk>1.5</targetJdk>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <excludes>
+                        <exclude>**/*Bean.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- JDepdend -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+            </plugin>
+
             <!--
             |  This report is generated from POM meta data.
             -->
@@ -986,19 +1055,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <!-- 
-                     see 
-                        http://jira.codehaus.org/browse/MJAVADOC-145 
-                        http://jira.codehaus.org/browse/MJAVADOC-157
-                     which are not yet fixed in a publicly available release.
-                -->
-                <version>2.4-MULE-597051</version>
                 <configuration>
                     <minmemory>128m</minmemory>
                     <maxmemory>512m</maxmemory>
                     <charset>ISO-8859-1</charset>
                     <encoding>ISO-8859-1</encoding>
-                    <source>1.4</source>
+                    <source>1.5</source>
                     <!-- aggregate all when built from the top-level directory -->
                     <aggregate>true</aggregate>
                     <!-- Link to the external online JavaDoc -->
@@ -1018,28 +1080,8 @@
                     </links>
                     <groups>
                         <group>
-                            <title>Mule Core</title>
-                            <packages>org.mule*</packages>
-                        </group>
-                        <group>
-                            <title>Modules (not part of the Mule core)</title>
-                            <packages>org.mule.extras.*:org.mule.components.*</packages>
-                        </group>
-                        <group>
-                            <title>Transports (a.k.a. Providers)</title>
-                            <packages>org.mule.providers.*</packages>
-                        </group>
-                        <group>
-                            <title>Testing Framework</title>
-                            <packages>org.mule.tck*</packages>
-                        </group>
-                        <group>
-                            <title>Tools</title>
-                            <packages>org.mule.tools.*</packages>
-                        </group>
-                        <group>
-                            <title>Examples</title>
-                            <packages>org.mule.samples.*:org.mule.examples.*</packages>
+                            <title>Grouter</title>
+                            <packages>org.grouter*</packages>
                         </group>
                     </groups>
                 </configuration>
@@ -1105,18 +1147,16 @@
             </plugin>
 
             <!-- Checkstyle reports -->
-            <plugin>
+            <!-- plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <configLocation>codecheck/checkstyle.xml</configLocation>
                     <headerLocation>codecheck/LicenseHeader.txt</headerLocation>
-                    <!-- do not link to JXR output as that is aggregated and the checkstyle
-                         plugin does not recognize that.
-                    -->
+
                     <linkXRef>false</linkXRef>
                 </configuration>
-            </plugin>
+            </plugin-->
 
             <!-- Code Coverage by Cobertura -->
             <plugin>
@@ -1142,8 +1182,7 @@
 
 
     <!--
-   | Contains different elements for distributing artifacts or site
-   | generated html to remote repositories or web sites.
+   | Contains different elements for distributing artifacts or site generated html to remote repositories or web sites.
     -->
     <distributionManagement>
         <!--
@@ -1153,50 +1192,54 @@
         | To make a release you can do:   mvn release:perform
         | This will make a release to local and remote repositories. The release will include:
         |  1 - artifactid-version.jar
-        |  2 -  artifactid-version-javadoc.jar
+        |  2 - artifactid-version-javadoc.jar
         |  3 - artifactid-version-source.jar
         |  4 - artifactid-version.pom
         -->
         <repository>
-            <id>berlios</id>
+            <id>berlios_htdocs</id>
             <name>Berlios Repository</name>
-            <url>scp://grouter.berlios.org/dist</url>
+            <url>scp://shell.berlios.de:/home/groups/grouter/htdocs/mavensite/dist</url>
         </repository>
-
-
+        
         <!--
         | The site tag contain information needed for deploying
         | project generated html site to remote repository.
         | To be able to publish your html site use
         |     mvn site
         | followed by
+        |     mvn deploy
+        | or all in once
         |     mvn site-deploy
         | The id element is a unique id stored in your settings.xml file
         | under element settings/servers/server which could look like
         | <server>
-        |    <id>website</id>
-        |     <username>repouser</username>
+        |    <id>berlios_htdocs</id>
+        |     <username>userid</username>
         |     <password>repopwd</password>
         | </server>
         | The url element specifies where to copy the artifact. Maven
         | currently only supports SSH, which in this case would copy
         | the site to host grouter.berlios.org in the path
         | /www/docs/project/
+        |
+        | To test before deploy:
+        |    mvn site:stage -DstagingDirectory=/temp
+        |
         -->
         <site>
-            <id>website</id>
-            <url>scp://grouter.berlios.org/www/docs/project/</url>
+            <id>berlios_htdocs</id>
+            <url>scp://shell.berlios.de:/home/groups/grouter/htdocs/mavensite</url>
         </site>
     </distributionManagement>
 
 
     <!--
-    | Used on report creation. Put in something meaningful - this is
-    | your place in the sun ;-)
+    | Used on report creation. Put in something meaningful.
     -->
     <organization>
         <name>grouter</name>
-        <url>http://developer.berlios.org/grouter</url>
+        <url>http://grouter.berlios.de</url>
     </organization>
 
     <!--
@@ -1593,18 +1636,16 @@
             </plugin>
 
             <!-- Checkstyle reports -->
-            <plugin>
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <configLocation>codecheck/checkstyle.xml</configLocation>
                     <headerLocation>codecheck/LicenseHeader.txt</headerLocation>
-                    <!-- do not link to JXR output as that is aggregated and the checkstyle
-                         plugin does not recognize that.
-                    -->
+
                     <linkXRef>false</linkXRef>
                 </configuration>
-            </plugin>
+            </plugin -->
 
             <!-- Code Coverage by Cobertura -->
             <!-- Delete code coverage database when 'mvn clean' is executed -->

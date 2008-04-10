@@ -7,25 +7,31 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
        default-autowire="byName">
 
-  <bean id="dataSourceConfigurer"
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="location" value="file:/etc/grouter-environment.properties"/>
-    <property name="systemPropertiesModeName">
-      <value>SYSTEM_PROPERTIES_MODE_OVERRIDE</value>
-    </property>
-    <property name="searchSystemEnvironment">
-      <value type="boolean">true</value>
-    </property>
-    <property name="ignoreUnresolvablePlaceholders" value="true"/>
-    <!-- util:constant static-field="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDEr"/ -->
-  </bean>
+    
+
+    <!-- We want system properties to take precendence. -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="locations">
+        <list>
+            <!-- When assembled and released we want to use the conf of the grouter home -->
+            <value>file:/${GROUTER_HOME}/conf/grouter-environment.properties</value>
+            <!-- This is for when we are developing and do not have a grouter home env -->
+            <value>file:/etc/grouter-environment.properties</value>
+        </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="ignoreUnresolvablePlaceholders" value="false" />
+        <property name="searchSystemEnvironment" value="true" />
+
+        <!-- property name="location" value="file:/${GROUTER_HOME}/conf/grouter-environment.properties"/ -->
+        <!-- util:constant static-field="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDEr"/ -->
+    </bean>
 
 
 
-  <!-- use org.apache.commons.dbcp.BasicDataSource -->
-  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-        depends-on="dataSourceConfigurer"
-        lazy-init="true">
+    <!-- use org.apache.commons.dbcp.BasicDataSource -->
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="propertyConfigurer" lazy-init="true">
     <property name="driverClassName" value="${grouter.db.driver}"/>
     <property name="url" value="${grouter.db.url}"/>
     <property name="username" value="${grouter.db.username}"/>
