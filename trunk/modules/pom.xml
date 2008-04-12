@@ -14,11 +14,11 @@
     <name>${artifactId}</name>
     <modules>
         <module>common</module>
-        <!-- module>webservice</module -->
         <module>core</module>
         <module>presentation</module>
-        <!-- module>domainear</module-->
-        <!--module>router</module -->
+        <!-- module>domainear</module>
+        <module>router</module>
+        <module>webservice</module -->
     </modules>
 
 </project>

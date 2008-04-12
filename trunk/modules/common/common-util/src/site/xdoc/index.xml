@@ -4,8 +4,8 @@
 -->
 <document>
     <properties>
-        <author email="georges.polyzois@cybercomgroup.com">Georges Polyzois</author>
-        <title>CIP Maven Site</title>
+        <author email="gepo01@gmail.com">Georges Polyzois</author>
+        <title>Grouter - Util</title>
     </properties>
     <head>
     <!--meta ... /-->
@@ -20,7 +20,7 @@
             </subsection>
             <subsection name="Dependencies">
             <p>
-                <img src="./images/CIPUMLComponentDiagram.png"></img>
+                <img src="./images/diagram.png"></img>
                 </p>
             </subsection>
         </section>
@@ -32,8 +32,7 @@
         </section-->
         <!-- footer will be placed above the (c) -->
         <footer>
-            <A href="http://www.sonyericsson.com/">
-                <img src="http://www.sonyericsson.com/images/spgc/CWS31AFW_9378high_27_0_4001.gif" width="100" height="30" border="0" alt="SonyEricsson"/>
+            <A href="http://grouter.berlios.de/">
             </A>
         </footer>
     </body>

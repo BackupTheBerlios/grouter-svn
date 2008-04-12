@@ -1,11 +1,11 @@
 <!--
-Assembly descriptor for the full Mule distribution.
+Assembly descriptor for the full Grouter distribution.
 -->
 <assembly>
   <id>full</id>
   <formats>
     <!--format>dir</format-->
-    <format>tar.gz</format>
+    <format>zip</format>
   </formats>
 
   <fileSets>

@@ -4,7 +4,7 @@
 -->
 <document>
     <properties>
-        <author email="georges.polyzois@cybercomgroup.com">Georges Polyzois</author>
+        <author email="georges.polyzois">Georges Polyzois</author>
         <title>Index</title>
     </properties>
     <head>
@@ -19,7 +19,7 @@
         	nodeConfigs to model the system's deployment, the allocation is guided by the use of
         	deployment specifications.
             <subsection name="UML Diagram">
-            <p><img src="./images/CIPUMLDeploymentDiagram.png"></img></p>
+            <p><img src="./images/UMLDeploymentDiagram.png"></img></p>
 
             </subsection>
         </section>

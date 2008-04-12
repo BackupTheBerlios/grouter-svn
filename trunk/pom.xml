@@ -958,7 +958,7 @@
     -->
     <ciManagement>
         <system>cruisecontrol</system>
-        <url>http://localhost:9999/cruisecontrol</url>
+        <url>http://localhost:9999/hudson</url>
     </ciManagement>
 
     <!--
@@ -1238,6 +1238,7 @@
         <site>
             <id>berlios_htdocs</id>
             <url>scp://shell.berlios.de:/home/groups/grouter/htdocs/mavensite</url>
+            <!-- url>file://localhost</url -->
         </site>
     </distributionManagement>
 
@@ -1396,7 +1397,7 @@
             <!--
             | The site plugin will produce a nice Maven looking
             | project site - with reports according to your
-            | settings. It requires a project/src/site/site.xml file
+            | settings. It requires a project/src/site/site.xml_no file
             | in your projects.
             -->
             <plugin>
@@ -1404,7 +1405,7 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <configuration>
                     <locales>en</locales>
-                    <stagingDirectory>c:/temp</stagingDirectory>
+                    <stagingDirectory>/temp/site</stagingDirectory>
                 </configuration>
             </plugin>
 
@@ -1594,28 +1595,8 @@
                     </links>
                     <groups>
                         <group>
-                            <title>Mule Core</title>
-                            <packages>org.mule*</packages>
-                        </group>
-                        <group>
-                            <title>Modules (not part of the Mule core)</title>
-                            <packages>org.mule.extras.*:org.mule.components.*</packages>
-                        </group>
-                        <group>
-                            <title>Transports (a.k.a. Providers)</title>
-                            <packages>org.mule.providers.*</packages>
-                        </group>
-                        <group>
-                            <title>Testing Framework</title>
-                            <packages>org.mule.tck*</packages>
-                        </group>
-                        <group>
-                            <title>Tools</title>
-                            <packages>org.mule.tools.*</packages>
-                        </group>
-                        <group>
-                            <title>Examples</title>
-                            <packages>org.mule.samples.*:org.mule.examples.*</packages>
+                            <title>Grouter Core</title>
+                            <packages>org.grouter.*</packages>
                         </group>
                     </groups>
                 </configuration>

@@ -2,7 +2,7 @@
 <!-- 
 	See http://maven.apache.org/using/site.html for more info.
 -->
-<project name="CIP - Report">
+<project name="Grouter - Util">
 
     <bannerLeft>
 	<name>Berlios</name>
@@ -22,7 +22,7 @@
 	    <item name="grouter" href="../index.html"/>
 		    
         </menu>
-        <menu name="CIP">
+        <menu name="Grouter">
             <item name="Introduction" href="index.html"/>
 	    <item name="Deployment" href="deployment.html"/>
         </menu>
