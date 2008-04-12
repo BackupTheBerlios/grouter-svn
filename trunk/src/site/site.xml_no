@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Grouter">
+    <bannerLeft>
+        <name>Grouter</name>
+        <src>images/grouter_logo.png</src>
+        <href>http://grouter.berlios.de/</href>
+    </bannerLeft>
+    
+    <!--bannerRight>
+        <src>http://maven.apache.org/images/maven-small.gif</src>
+    </bannerRight-->
+    
+    <publishDate position="left" format="MMM-dd-yyyy HH:mm"/>
+    
+    <body>
+        <links>
+            <item name="grouter" href="http://grouter.berlios.de/"/>
+        </links>
+
+        <!--
+            TODO this link only works from the top level. Navigting to a module
+                 first generates the wrong link
+        <menu name="grouter">
+            <item name="Javadocs" href="apidocs"/>
+        </menu>
+        -->
+
+        <!-- adds a menu with all submodules -->
+        <menu name="Overview">
+  			<item name="Introduction" href="../documentation.php"/>
+		</menu>
+  		<menu ref="modules" />
+        <menu ref="reports"/>
+    </body>
+</project>
