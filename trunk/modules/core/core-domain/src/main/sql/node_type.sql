@@ -1,6 +1,5 @@
 CREATE TABLE node_type (
   id bigint(20) NOT NULL,
-  idno varchar(36) not null,
       createdon datetime,
       modifiedon datetime,
       createdby bigint(20),
