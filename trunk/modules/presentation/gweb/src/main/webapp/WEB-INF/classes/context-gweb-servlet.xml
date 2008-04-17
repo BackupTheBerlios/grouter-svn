@@ -3,7 +3,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
   http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
        default-autowire="byName">
 
     <!--
@@ -29,7 +29,6 @@
     </bean>
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
-
 
 
     <!--
@@ -93,10 +92,11 @@
     <bean name="/job/lwedit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
 
 
-
     <bean name="/security/**" class="org.grouter.presentation.controller.security.SecurityController">
-        <property name="login" value="security/login"/>  <!-- /gweb/seucurity/login.do  -->
-        <property name="loggedOut" value="security/logedout"/>  <!-- /gweb/seucurity/logedout.do  -->
+        <property name="login" value="security/login"/>
+        <!-- /gweb/seucurity/login.do  -->
+        <property name="loggedOut" value="security/logedout"/>
+        <!-- /gweb/seucurity/logedout.do  -->
         <property name="loginDenied" value="security/logindenied"/>
     </bean>
 
@@ -114,8 +114,7 @@
 
 
     <!-- DWR -->
-    <bean name="/**/*" class="org.springframework.web.servlet.mvc.ServletWrappingController">
-        <!-- property name="servletClass" value="uk.ltd.getahead.dwr.DWRServlet"/ -->
+    <!-- bean name="/**/*" class="org.springframework.web.servlet.mvc.ServletWrappingController">
         <property name="servletClass" value="org.directwebremoting.servlet.DwrServlet"/>
         <property name="initParameters">
             <props>
@@ -123,11 +122,7 @@
                 <prop key="pollAndCometEnabled">true</prop>
             </props>
         </property>
-    </bean>
-
-
-    <!-- Reverse Ajax -->
-    <!-- bean name="nodeCallbackThread" class="org.grouter.presentation.controller.node.NodeCallbackThread" / -->
+    </bean -->
 
 
     <!--bean id="dwrController" class="org.springframework.web.servlet.mvc.ServletWrappingController">

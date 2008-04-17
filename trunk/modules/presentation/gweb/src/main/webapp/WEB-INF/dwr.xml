@@ -6,33 +6,27 @@
 The DWR config file defines what classes DWR can create and remote for use by Javascript.
 List of classes and methods : http://localhost:8080/[YOUR-WEBAPP]/dwr/'
 
-The routerService should be acessible using
+E.g. the routerService should be acessible using
 http://localhost:8080/gweb/dwr/interface/routerService.js
 -->
 
 <dwr>
   <allow>
 
-    <!-- Entities that should be serializable to Jaavscrip structs -->
+    <!-- Entities that should be serializable to Javascript structs -->
     <convert converter="bean" match="org.grouter.domain.entities.*">
-      <!-- param name="include" value="id" / -->
     </convert>
 
     <create creator="spring" javascript="RouterService">
       <param name="beanName" value="routerService"/>
     </create>
 
+    
 
-
-    <!-- Reverse updater for Node list view -->
+    <!-- Reverse updater for Node list view. When client registers it will use callbacks to update -->
     <create creator="new" javascript="NodeCallbackThread" scope="request">
       <param name="class" value="org.grouter.presentation.controller.node.NodeCallbackThread"/>
     </create>
-    <!--create creator="spring" javascript="NodeCallbackThread" scope="application">
-      <param name="beanName" value="nodeCallbackThread"/>
-    </create-->
-
-    
 
 
   </allow>

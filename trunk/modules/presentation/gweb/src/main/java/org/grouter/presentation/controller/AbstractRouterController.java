@@ -37,7 +37,7 @@ abstract public class AbstractRouterController extends AbstractController
 
     static
     {
-        map.put( MESSAGE, "" );
-    }
+        map.put( MESSAGE, "" );                        
+    }                             
 
 }

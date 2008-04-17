@@ -2,6 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!-- 
+mvn clean assembly:assembly  -Dmaven.test.skip=true -->
    <parent>
         <groupId>org.grouter</groupId>
         <artifactId>grouter</artifactId>
@@ -15,7 +17,7 @@
     <name>${groupId}:${artifactId} - Release</name>
     <description>Includes the Grouter server with all of its modules and transports.</description>
 
-    <distributionManagement>
+    <!-- distributionManagement>
         <repository>
             <id>grouter-dist-releases</id>
             <name>Grouter Distributions Release Repository</name>
@@ -27,7 +29,7 @@
             <url>dav:https://dav.codehaus.org/snapshots.dist/grouter/</url>
             <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement -->
 
     <build>
         <plugins>

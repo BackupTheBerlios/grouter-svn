@@ -19,8 +19,8 @@
 
 package org.grouter.core.readers;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.grouter.core.command.AbstractCommand;
 import org.grouter.core.command.CommandMessage;
 import org.grouter.core.exception.ValidationException;
@@ -31,9 +31,9 @@ import org.quartz.UnableToInterruptJobException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
 
 /**
@@ -109,6 +109,7 @@ public class FileReaderJob extends AbstractReader
                     String message = getMessage(internalInFile);
                     CommandMessage cmdMessage = new CommandMessage(message, internalInFile);
                     commandMessages.add(cmdMessage);
+
                 }
                 catch (Exception ex)
                 {
@@ -116,6 +117,7 @@ public class FileReaderJob extends AbstractReader
                 }
             }
         }
+        logger.info( "Number of messages read :" + commandMessages.size() );
         return commandMessages;
     }
 

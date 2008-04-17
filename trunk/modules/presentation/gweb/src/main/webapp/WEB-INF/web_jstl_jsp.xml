@@ -16,9 +16,9 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-      classpath:/context-domain-aop.xml, classpath:/context-domain-dao.xml,
-      classpath:/context-domain-datasource.xml, classpath:/context-domain-service.xml,
-      classpath:/context-domain-sessionfactory.xml, classpath:/context-gweb-servlet.xml
+        classpath:/context-domain-aop.xml, classpath:/context-domain-dao.xml,
+        classpath:/context-domain-datasource.xml, classpath:/context-domain-service.xml,
+        classpath:/context-domain-sessionfactory.xml, classpath:/WEB-INF/classes/context-gweb-servlet.xml
     </param-value>
   </context-param>
 

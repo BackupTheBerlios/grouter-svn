@@ -3,8 +3,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd"
        default-autowire="byName">
 
     
@@ -16,8 +16,10 @@
         <list>
             <!-- When assembled and released we want to use the conf of the grouter home -->
             <value>file:/${GROUTER_HOME}/conf/grouter-environment.properties</value>
+            <value>file:///conf/grouter-environment.properties</value>
             <!-- This is for when we are developing and do not have a grouter home env -->
             <value>classpath:/test-local.properties</value>
+            <value>file:/etc/grouter-environment.properties</value>
         </list>
         </property>
         <property name="ignoreResourceNotFound" value="true" />

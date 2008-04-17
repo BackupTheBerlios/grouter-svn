@@ -82,5 +82,40 @@ Settings below are for working directly from trunk.
         <cron>0/5 * * * * ?</cron>
       </outBoundEndPoint>
     </Node>
+
+     <Node id="filetest3" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
+      <description>Another file 3</description>
+      <displayName>FileToFileTest_3</displayName>
+      <createdOn>2007-01-01</createdOn>
+      <backup/>
+      <inBoundEndPoint id="filtest13_reader" endPointType="FILE_READER">
+        <uri>file://temp/grouter/nodes/filetest3/in</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/5 * * * * ?</cron>
+      </inBoundEndPoint>
+      <outBoundEndPoint id="filtest3_reader" endPointType="FILE_WRITER">
+        <uri>file://temp/grouter/nodes/filetest3/out</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/5 * * * * ?</cron>
+      </outBoundEndPoint>
+    </Node>
+
+      <Node id="filetest4" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
+      <description>Another file 4</description>
+      <displayName>FileToFileTest_4</displayName>
+      <createdOn>2007-01-01</createdOn>
+      <backup/>
+      <inBoundEndPoint id="filtest14_reader" endPointType="FILE_READER">
+        <uri>file://temp/grouter/nodes/filetest4/in</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/5 * * * * ?</cron>
+      </inBoundEndPoint>
+      <outBoundEndPoint id="filtest4_reader" endPointType="FILE_WRITER">
+        <uri>file://temp/grouter/nodes/filetest4/out</uri>
+        <clazzname>a classname</clazzname>
+        <cron>0/5 * * * * ?</cron>
+      </outBoundEndPoint>
+    </Node>
+
   </Nodes>
 </Grouter>

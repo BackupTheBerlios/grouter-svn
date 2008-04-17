@@ -398,9 +398,9 @@
 
             <!-- Ajax library -->
             <dependency>
-                <groupId>uk.ltd.getahead</groupId>
+                <groupId>org.directwebremoting</groupId>
                 <artifactId>dwr</artifactId>
-                <version>2.0.1</version>
+                <version>2.0.2</version>
             </dependency>
 
             <!--  Components for the Swing gui - Jidesoft -->
@@ -593,7 +593,7 @@
             <dependency>
                 <groupId>ehcache</groupId>
                 <artifactId>ehcache</artifactId>
-                <version>1.1</version>
+                <version>1.2.3</version>
             </dependency>
 
             <dependency>
@@ -1308,6 +1308,39 @@
                 </configuration>
             </plugin>
 
+
+                        <!--
+            | For any J2EE web based applications we need to generate
+            | a war file with a web.xml etc. This plugin helps us
+            | with that.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <archiver>
+                        <mainClass>none</mainClass>
+                        <packageName>${package}</packageName>
+                        <!--manifestEntries>
+                            <label>development</label>
+                            <developer>${user.name}</developer>
+                            <build-date>${build.time}</build-date>
+                            <java-version>${java.version}</java-version>
+                            <server>server</server>
+                        </manifestEntries-->
+                        <archiveClasses>true</archiveClasses>
+                        <archive>
+                            <!-- Do not include META-INF/maven to avoid long file problems on windows -->
+                            <addMavenDescriptor>false</addMavenDescriptor>
+                        </archive>
+                    </archiver>
+
+                    <!-- webappDirectory>/Users/georgespolyzois/jboss/server/default/deploy/gweb.war</webappDirectory -->
+                </configuration>
+
+            </plugin>
+
             <!-- This will bring down source jars when creating Eclipse projects -->
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -1325,6 +1358,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <!--
                     | Dangerous since we will skip testing if true!
                     | Another way would be to use
@@ -1366,38 +1400,12 @@
                 </configuration>
             </plugin>
 
-            <!--
-            | For any J2EE web based applications we need to generate
-            | a war file with a web.xml etc. This plugin helps us
-            | with that.
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.0</version>
-                <configuration>
-                    <archiver>
-                        <mainClass>none</mainClass>
-                        <packageName>${package}</packageName>
-                        <!--manifestEntries>
-                            <label>development</label>
-                            <developer>${user.name}</developer>
-                            <build-date>${build.time}</build-date>
-                            <java-version>${java.version}</java-version>
-                            <server>server</server>
-                        </manifestEntries-->
-                    </archiver>
-
-                    <!-- webappDirectory>/Users/georgespolyzois/jboss/server/default/deploy/gweb.war</webappDirectory -->
-                </configuration>
-
-            </plugin>
-
+            
 
             <!--
             | The site plugin will produce a nice Maven looking
             | project site - with reports according to your
-            | settings. It requires a project/src/site/site.xml_no file
+            | settings. It requires a project/src/site/site.xml file
             | in your projects.
             -->
             <plugin>

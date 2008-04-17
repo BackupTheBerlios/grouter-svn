@@ -109,8 +109,6 @@
 
 <div id="content">
     <form id="mainForm" action="">
-
-
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td></td>
@@ -143,9 +141,7 @@
                                     src="/gweb/images/icon_stopped_15x15.gif"/></c:if>
                             <c:if test="${object.nodeStatus.id eq 5}"><img
                                     src="/gweb/images/icon_error_15x15.gif"/></c:if>
-
                         </td>
-
                         <td>
                             <c:out value="${object.displayName}"/>
                         </td>

@@ -25,6 +25,7 @@
             classpath:/context-domain-dao.xml
             classpath:/context-domain-service.xml
             classpath:/context-domain-sessionfactory.xml
+            classpath:/context-gweb-servlet.xml
             classpath:/context-gweb-security.xml
             classpath:/context-domain-search.xml
         </param-value>
@@ -94,10 +95,13 @@
     </servlet>
 
 
+    <!--
+    Pre Spring 2 confirutaion
+    -->
     <servlet>
      <display-name>DWR Servlet</display-name>
      <servlet-name>dwr-invoker</servlet-name>
-     <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+     <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
      <init-param>
        <param-name>debug</param-name>
        <param-value>true</param-value>
@@ -117,11 +121,6 @@
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
-    <!--servlet-mapping>
-        <servlet-name>gweb</servlet-name>
-        <url-pattern>/dwr/*</url-pattern>
-    </servlet-mapping -->
-    
     <!-- servlet-mapping>
         <servlet-name>org.grouter.presentation.gwt.gweb-module GwebRemoteService</servlet-name>
         <url-pattern>
