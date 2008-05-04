@@ -1,29 +1,28 @@
+<%@ page import="java.io.PrintWriter" %>
 <ul class="menu tabbed">
     <li>
-		<span id="pretty" title="Routers - the available Routers you can manage">
+		<span id="menu1" title="Routers - list available grouters">
             <a href="/gweb/router/list.do">Routers</a>
         </span>
     </li>
     <li>
-        <span id="pretty2" title="Messages - query router for messages">
+        <span id="menu2" title="Messages - search handled messages">
         <a href="/gweb/message/search.do">Messages</a>
-        </span>    
+        </span>
     </li>
     <li>
-        <span id="pretty3" title="Node - query a node for messages, get real time messages processed by a node.">
+        <span id="menu3" title="Node - search, manage a node, view node processing (real time)">
         <a href="/gweb/node/search.do">Nodes</a>
             </span>
     </li>
     <li>
-        <span id="pretty4" title="Users - manage users for authentication and authorization to the grouter">
+        <span id="menu4" title="Users - search, manage users for authentication and authorization">
         <a href="/gweb/user/list.do">Users</a>
             </span>
     </li>
     <li>
-        <span id="pretty5" title="Scheduler - manage jobs">
+        <span id="menu5" title="Scheduler - manage jobs">
         <a href="/gweb/job/list.do">Scheduler</a>
             </span>
     </li>
 </ul>
-
-

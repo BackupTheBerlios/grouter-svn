@@ -138,7 +138,6 @@
     <div id="content">
 
         
-
         <form class="decoratedform" id="loginForm" method="POST" action="/gweb/j_acegi_security_check">
             <table>
                 <tr>

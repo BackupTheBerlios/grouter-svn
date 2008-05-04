@@ -25,6 +25,7 @@
 
 div#userSettings
 {
+    border-radius: 1.6em;
     font: 11px Verdana, Arial, Helvetica, sans-serif;
     color: blue;
     float:right;
@@ -38,11 +39,12 @@ div#userSettings
     -moz-border-radius-bottomleft: 10px;
     -moz-border-radius-bottomright: 10px;
     -moz-border-radius-bottomright: 10px;
+    border-radius: 1.6em;
 }
 
 #logoBar
 {
-	background-image: url( "/gweb/images/titlegradient.png" );
+	background-image: url( "../images/titlegradient.png" );
 	background-repeat: repeat-x;
 	height: 33px;
 }
@@ -84,6 +86,8 @@ div#body
     margin: 0 auto;
     padding: 5px 5px;
     font-size: 11pt;
+    width: 99%;
+    text-align: center;
 
 }
 
@@ -99,14 +103,35 @@ div#contentHeader {
 
 }
 
-div#content {
+div#mainContent {
+    border-radius: 1.6em;
     font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
-    margin: 5px;
     padding: 5px;
+    margin: 3px;
     background: white;
     display: inline-table;
     border: 2px solid #afcff9;
     width: 98%;
+    padding: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomright: 10px;
+
+    text-align: left;  
+}
+
+
+div#mainContentCentered {
+    font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
+    padding: 5px;
+    margin: 0 auto;
+    background: white;
+    display: inline-table;
+    border: 2px solid #afcff9;
+    width: auto;
+    padding: 5px;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
@@ -120,11 +145,17 @@ img {
 
 div#form {
     font: 9px Verdana, Arial, Helvetica, sans-serif;
+    display: inline;
+    margin:0px;
+    margin: 0px;
+        padding: 0px;
+
+
 }
 
 div#formPanel {
-        margin: 5px;
-        padding: 5px;
+        margin: 0px;
+        padding: 0px;
         background: white;
         display: inline-table;
         border: 1px solid #afcff9;
@@ -155,18 +186,22 @@ div#formPanelButtons {
 * Used to display operations like edit, delete etc.
 */
 div#menuAction {
+    
     background: #f4f4f2;
     font: 9px Verdana, Arial, Helvetica, sans-serif;
     display: inline-table;
+    margin: 3px;
     padding: 10px;
     border: 2px solid #afcff9;
-    margin: 5px;
-    width: 100%;
+    width: 98%;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
     -moz-border-radius-bottomright: 10px;
     -moz-border-radius-bottomright: 10px;
+    border-radius:10px;
+
+    text-align: left;
 }
 
 div#paragraph {
@@ -175,14 +210,14 @@ div#paragraph {
     font: 12px Verdana, Arial, Helvetica, sans-serif;
     display: inline-table;
     border: 2px solid #afcff9;
-    margin: 5px;
-    width: 100%;
+    margin: 3px;
+    width: 98%;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 10px;
     -moz-border-radius-bottomright: 10px;
     -moz-border-radius-bottomright: 10px;
-
+    border-radius: 1.6em;
 }
 
 div#paragraphHeader {
@@ -244,7 +279,7 @@ table tr td {
 
 table.pagedList th {
     font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
-    background-image: url( "/gweb/images/columnheader_gradient.gif" );
+    background-image: url( "../images/columnheader_gradient.gif" );
     height: 18px;
     padding: 2px;
     border-left: 2px solid lightgray;
@@ -292,17 +327,23 @@ span.message {
 a.iconlink {
     text-decoration: none;
     font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
-    margin: 5px;
-    padding: 5px;
+    margin: 0px;
+    padding: 0px;
     vertical-align: top;
 }
 
 a.iconlink img {
     vertical-align: middle;
+    margin: 0px;
+        padding: 0px;
+        
 }
 
 img.icon {
     vertical-align: top;
+    margin: 0px;
+        padding: 0px;
+        
 }
 
 <!--
@@ -366,12 +407,12 @@ form.decoratedform table.errornorgif, label.errornorgif {
 
 
 em.error {
-    background: url( "images/unchecked.gif" ) no-repeat 0px 0px;
+    background: url( "../images/unchecked.gif" ) no-repeat 0px 0px;
     padding-left: 16px;
 }
 
 em.success {
-    background: url( "images/checked.gif" ) no-repeat 0px 0px;
+    background: url( "../images/checked.gif" ) no-repeat 0px 0px;
     padding-left: 16px;
 }
 

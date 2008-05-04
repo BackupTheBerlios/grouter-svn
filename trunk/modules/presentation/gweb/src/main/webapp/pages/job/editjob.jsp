@@ -23,7 +23,7 @@
     Edit Job.
 </div>
 
-<div id="content">
+<div id="mainContent">
 
 <form:form commandName="jobcommand" id="jobEditForm" cssClass="decoratedform">
     

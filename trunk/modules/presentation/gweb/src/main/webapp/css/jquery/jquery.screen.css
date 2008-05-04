@@ -14,34 +14,55 @@
 .jquery   { color: #00a; }
 .plugin   { color: red; }
 
-#tooltip.pretty {
-    font: 13px, bold, Verdana, Arial, Helvetica, sans-serif;
 
+
+#tooltip.menuToolTipSmal {
+    font: 10px, bold, Verdana, Arial, Helvetica, sans-serif;
+	border: none;
+	width: 120px;
+	padding:5px;
+	height: 80px;
+	opacity: 0.8;
+	background: url("../../images/jquery/shadow_smal.png");
+}
+
+#tooltip.menuToolTipSmal h3 {
+    font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
+    margin-bottom: 0.75em;
+	font-size: 12pt;
+	width: 120px;
+	text-align: left;
+}
+#tooltip.menuToolTipSmal div { width: 120px; text-align: left; }
+
+
+
+#tooltip.menuToolTip {
+    font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;
 	border: none;
 	width: 210px;
 	padding:20px;
 	height: 135px;
 	opacity: 0.8;
-	background: url('/gweb/images/jquery/shadow.png');
+	background: url("../../images/jquery/shadow.png");
 }
 
-#tooltip.pretty h3 {
-    font: 14px, bold, Verdana, Arial, Helvetica, sans-serif;
-
+#tooltip.menuToolTip h3 {
+    font: 12px, bold, Verdana, Arial, Helvetica, sans-serif;
     margin-bottom: 0.75em;
 	font-size: 12pt;
 	width: 220px;
 	text-align: left;
 }
-#tooltip.pretty div { width: 220px; text-align: left; }
+#tooltip.menuToolTip div { width: 220px; text-align: left; }
 
 #tooltip.fancy {
-	background: url('/gweb/images/jquery/shadow2.png');
+	background: url("../../images/jquery/shadow2.png");
 	padding-top: 5em;
 	height: 100px;
 }
 #tooltip.fancy.viewport-right {
-	background: url('/gweb/images/jquery/shadow2-reverse.png');
+	background: url("../../images/jquery/shadow2-reverse.png");
 }
 
 #extended { margin: 2em 0; }

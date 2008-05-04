@@ -107,7 +107,7 @@
 
 <br>
 
-<div id="content">
+<div id="mainContent">
     <form id="mainForm" action="">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>

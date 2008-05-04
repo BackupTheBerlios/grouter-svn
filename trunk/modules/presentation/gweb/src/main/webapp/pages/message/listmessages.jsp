@@ -21,11 +21,6 @@
 
 
 
-<div id="paragraph" >
-    Search messages.
-</div>
-<br/>
-
 <div id="menuAction" >
     <div id="form">
             <table border="0">
@@ -69,7 +64,7 @@
 
 
 
-<div id="content">
+<div id="mainContent">
 
 
 
@@ -84,42 +79,6 @@
         </display:table>
 
 
-    <form id="mainForm" action="">
-        <!-- table border="0" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-                <td></td>
-                <td align="right">Number of messages :
-                    <c:out value="{nodesSize}"/>
-                </td>
-            </tr>
-        </table -->
-        <!-- table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
-
-            <thead>
-                <tr>
-                    <th><a href="?sortBy=id">Id</a></th>
-                    <th><a href="?sortBy=firstName">Created</a></th>
-                    <th><a href="?sortBy=firstName">Content</a></th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="{messages}" var="object">
-                    <tr>
-                        <td>
-                            <c:out value="{object.id}"/>
-                        </td>
-                        <td>
-                            <c:out value="{object.creationTimestamp}"/>
-                        </td>
-                        <td>
-                            <c:out value="{object.content}"/>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table  -->
-
-    </form>
 
 
 </div>

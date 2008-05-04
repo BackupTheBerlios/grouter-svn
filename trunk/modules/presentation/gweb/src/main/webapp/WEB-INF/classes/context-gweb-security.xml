@@ -47,7 +47,7 @@
   <bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
     <property name="authenticationManager" ref="authenticationManager" />
     <property name="authenticationFailureUrl" value="/security/logindenied.do" />
-    <property name="defaultTargetUrl" value="/message/list.do" />
+    <property name="defaultTargetUrl" value="/message/search.do" />
     <property name="alwaysUseDefaultTargetUrl" value="false" />
     <property name="filterProcessesUrl" value="/j_acegi_security_check" />
   </bean>

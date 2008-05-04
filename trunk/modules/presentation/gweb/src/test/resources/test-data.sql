@@ -35,6 +35,7 @@ insert into user_role (id, user_id, role_id) values (-2, -1, 2);
 insert into user_role (id, user_id, role_id) values (-3, -1, 3);
 
 
+
 -- Jobs
 
 -- ADDDATE( CURDATE(), 1 )

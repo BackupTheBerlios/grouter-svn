@@ -64,8 +64,9 @@ class UserDeleteController extends AbstractRouterController
 
         if (id != null)
         {
-            userService.delete( id );
-            map.put(MESSAGE, "message=" + "User was deleted " + "(id=" + id + ")" );
+            // In case of an exception we are automagic redirecting to databaseerror view
+                userService.delete( id );
+                map.put(MESSAGE, "message=" + "User was deleted " + "(id=" + id + ")" );
         }
 
 

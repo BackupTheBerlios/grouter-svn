@@ -65,6 +65,7 @@
                 <!-- The error page under /pages/error folder -->
                 <prop key="java.lang.Exception">error/error</prop>
                 <prop key="Exception">error/error</prop>
+                <prop key="org.hibernate.exception.ConstraintViolationException">error/databaseerror</prop>
             </props>
         </property>
     </bean>

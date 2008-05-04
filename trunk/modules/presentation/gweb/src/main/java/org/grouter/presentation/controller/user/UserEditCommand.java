@@ -19,11 +19,8 @@
 
 package org.grouter.presentation.controller.user;
 
-import org.grouter.domain.entities.User;
 import org.grouter.domain.entities.Address;
-import org.grouter.domain.entities.Role;
-
-import java.util.List;
+import org.grouter.domain.entities.User;
 
 /**
  * @author Georges Polyzois
@@ -35,6 +32,12 @@ public class UserEditCommand
     public UserEditCommand(User user)
     {
         this.user = user;
+        if(user.getAddress() == null )
+        {
+            // To avoid null property when Spring walks the path in spring:bind and the User did not have any address
+            user.setAddress( new Address() );
+        }
+
     }
 
     public UserEditCommand()

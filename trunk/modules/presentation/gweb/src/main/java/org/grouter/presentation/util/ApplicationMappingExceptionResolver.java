@@ -23,8 +23,6 @@ import java.util.Map;
  *
  * @author Georges Polyzois
  */
-
-
 public class ApplicationMappingExceptionResolver extends SimpleMappingExceptionResolver {
 
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

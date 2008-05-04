@@ -24,7 +24,7 @@
 </div>
 
 
-<div id="content">
+<div id="mainContent">
 
     <form:form commandName="nodecommand" id="form">
         <table>

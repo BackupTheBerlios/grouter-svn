@@ -16,28 +16,15 @@
 </head>
 <body>
 
+
 <jsp:include page="menu.jsp"/>
 
-<div id="menuAction">
-    <div id="form">
-        <table border="0">
-            <tr>
-                <td>
-                    <form action="" enctype="multipart/form-data" name="mainForm" method="get">
-                        Search:
-                        <input id="searchText" value="" name="searchText" type="text">
-                        <input type="submit" value="Search" name="search" size="10"/>
-                    </form>
-                </td>
-
-            </tr>                                                                                         
-        </table>
-
-    </div>
+<div id="paragraph" >
+    <c:out value="${message}"/>
 </div>
 
 
-<div id="content">
+<div id="mainContent">
 
     <display:table name="${messages}" export="true" id="row" class="dataTable" pagesize="10"
                    cellspacing="0" decorator="org.displaytag.decorator.TotalTableDecorator"

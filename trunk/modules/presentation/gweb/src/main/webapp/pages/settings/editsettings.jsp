@@ -21,7 +21,7 @@
 </div>
 
 
-<div id="content">
+<div id="mainContent">
     <form:form commandName="settingcommand" id="form">
         <table>
             <tr>

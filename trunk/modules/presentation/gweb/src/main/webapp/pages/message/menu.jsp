@@ -1,4 +1,6 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"  %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
 
@@ -11,13 +13,16 @@
         <spring:message code="message.menu.action.list"/>
     </a>
 
-    <span class="warning">
-        <c:out value="${object.warning}"/>
-    </span>
+    
 
-    <span class="message">
-        <c:out value="${object.message}"/>
-    </span>
+
+    <div id="form" align="right">
+        <form action="/gweb/message/search.do" enctype="multipart/form-data" name="searchUsersForm"
+              method="get">
+            <input id="searchText" value="" name="searchText" type="text">
+            <input type="submit" value="Search" name="search" size="10"/>
+        </form>
+    </div>
 
 
 </div>

@@ -9,7 +9,7 @@
 
 <div id="contentHeader">Grouter login.</div>
 
-<div id="content">
+<div id="mainContent">
     Choose grouter and enter user name and pwd to login.
 
 

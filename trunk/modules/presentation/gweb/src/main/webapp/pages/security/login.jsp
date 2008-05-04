@@ -4,6 +4,7 @@
         Login
     </title>
 
+    <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/page_main.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/>
     <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
@@ -85,13 +86,10 @@
 <body>
 
 
-<div id="paragraph" nowrap>
-    Provide your login credentials. If you forgot you passord you can use the forgot password.
-</div>
+<div id="mainContentCentered">
 
-
-<div id="content">
     <form class="cmxform" id="loginForm" method="POST" action="/gweb/j_acegi_security_check">
+
         <table>
             <tr>
                 <td nowrap><label for="j_username">User name</label></td>
@@ -107,12 +105,14 @@
                 </td>
                 <td></td>
             </tr>
+            <tr >
+                <td></td>
+                <td colspan="2" align="right">
+                   <input name="submit" id="loginsubmit_button" type="submit" value="Log in" align="right"/>     
+                </td>
+            </tr>
         </table>
-        <input name="submit" id="loginsubmit_button" type="submit" value="Log in"/>
     </form>
-
-
-
 </div>
 
 <script type="text/javascript">

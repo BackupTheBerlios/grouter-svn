@@ -27,7 +27,7 @@
 </div>
 
 
-<div id="content">
+<div id="mainContentCentered">
 
 
 <form:form commandName="usereditcommand" id="userEditForm" cssClass="decoratedform">
@@ -86,10 +86,6 @@
                     </select>
                 </spring:bind>
                 <br/><form:errors path="user.userRoles" cssClass="error"/>
-
-
-
-
             </td>
         </tr>
     </table>

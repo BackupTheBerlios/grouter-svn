@@ -18,8 +18,9 @@
 </head>
 <body>
 
-                                          asasasa
-<div id="paragraph" nowrap>         aasasa
+
+<div id="paragraph" nowrap>
+    AAAAAAAA
     An unexpected error was caught by the system.
 </div>
 
@@ -35,11 +36,11 @@
 
 
  <div id="paragraph" nowrap>
-             AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
         <table>
             <tr>
-                <td valign="top">Message:</td>
-                <td><img src="/gweb/images/icon_error_15x15.gif" alt=""/> <%= exception.getMessage() %>
+                <td valign="top"><img src="/gweb/images/icon_error_15x15.gif" alt=""/> Caught exception from databse operation:</td>
+                <td> <%= exception.getMessage() %>
                 </td>
             </tr>
             <tr>
