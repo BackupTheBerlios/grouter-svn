@@ -16,17 +16,19 @@
 
 <body>
 
-<jsp:include page="../job/menu.jsp"/>
+<jsp:include page="../job/menujob.jsp"/>
 
 
-<div id="paragraph">
-    Edit Job.
-</div>
 
-<div id="mainContent">
+<div id="mainContentCentered">
 
 <form:form commandName="jobcommand" id="jobEditForm" cssClass="decoratedform">
-    
+    <div id="formPanel">
+
+        <label >
+        Job
+    </label>
+
         <table>
             <tr>
                 <td>Router:</td>
@@ -63,6 +65,7 @@
                 </td>
             </tr>
         </table>
+        </div>
     </form:form>
 </div>
 </body>

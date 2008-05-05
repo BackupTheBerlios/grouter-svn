@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ * Delegates to Service for querying in free text against Lucen index.
  *
  * @author Georges Polyzois
  */
@@ -42,28 +42,35 @@ public class UserSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
     private static final String VIEW_TAMPLATE = "user/listusers";
-
-
     private UserService userService;
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+
 
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+            throws Exception
+    {
         Map<String, Object> map = new HashMap<String, Object>();
 
+        // Query string
         String searchText = ServletRequestUtils.getStringParameter(request, "searchText", null);
 
-        if (StringUtils.isNotEmpty(searchText)) {
+        if (StringUtils.isNotEmpty(searchText))
+        {
             List<User> users = userService.searchUsers(searchText);
             map.put("users", users);
         }
 
         return new ModelAndView(VIEW_TAMPLATE, map);
+    }
+
+
+
+
+    public void setUserService(UserService userService)
+    {
+        this.userService = userService;
     }
 
 }

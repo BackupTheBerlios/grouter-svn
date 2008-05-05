@@ -17,7 +17,7 @@
 <body>
 
 
-<jsp:include page="menu.jsp"/>
+<jsp:include page="menumessage.jsp"/>
 
 <div id="paragraph" >
     <c:out value="${message}"/>

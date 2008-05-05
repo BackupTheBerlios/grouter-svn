@@ -25,7 +25,7 @@
 
 <body onload="init();">
 
-<jsp:include page="menu.jsp"/>
+<jsp:include page="menurouter.jsp"/>
 
 <br/>
 

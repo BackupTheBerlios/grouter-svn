@@ -11,27 +11,18 @@
     <title>
         <spring:message code="user.title.list"/>
     </title>
-
-
 </head>
-
-
 <body>
 
-
 <jsp:include page="menu.jsp"/>
-
 
 <div id="message">
     <c:out value="${message}"/>
 </div>
 
-
 <div id="mainContentCentered">
 
-
 <form:form commandName="usereditcommand" id="userEditForm" cssClass="decoratedform">
-
 <div id="formPanel">
 
     <label >

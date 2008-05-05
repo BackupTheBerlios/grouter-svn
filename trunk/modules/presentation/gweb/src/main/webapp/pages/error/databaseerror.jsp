@@ -24,7 +24,7 @@
     An unexpected error was caught by the system.
 </div>
 
-<jsp:include page="menu.jsp"/>
+<jsp:include page="menuerror.jsp"/>
 
 
 <div id="content">

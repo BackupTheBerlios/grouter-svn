@@ -20,19 +20,16 @@
 package org.grouter.presentation.controller.user;
 
 import org.apache.log4j.Logger;
-import org.grouter.domain.entities.Role;
-import org.grouter.domain.entities.User;
-import org.grouter.domain.entities.UserState;
-import org.grouter.domain.entities.UserRole;
+import org.grouter.domain.entities.*;
 import org.grouter.domain.service.UserService;
 import org.grouter.presentation.controller.security.SecurityManagerImpl;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -85,23 +82,28 @@ public class UserEditController extends SimpleFormController
             throws Exception
     {
         // Get the user id of logged on user
-        Long userId = securityManager.getUserIdAsLong();
-        User createdBy = new User();
-        createdBy.setId(userId);
-
-        //List<Role> seelctedRoles = (List<Role>)req.getParameterValues("roles");
-
+        Long logedOnUserId = securityManager.getUserIdAsLong();
+        User loggedOnUser = userService.findById( logedOnUserId );
 
         String message;
         UserEditCommand cmd = (UserEditCommand) object;
         User user = cmd.getUser();
         user.setUserState(UserState.NEW);
+        AuditInfo auditInfo = new AuditInfo();
+        auditInfo.setCreatedBy( loggedOnUser );
+        auditInfo.setModifiedBy( loggedOnUser );
+        user.setAuditInfo( auditInfo  );
+
+        Set<UserRole> userRoles = user.getUserRoles();
+        for (Iterator<UserRole> userRoleIterator = userRoles.iterator(); userRoleIterator.hasNext();)
+        {
+            UserRole userRole = userRoleIterator.next();
+            userRole.setUser( user );
+        }          
+
         try
         {
-            // delete
-
-
-
+            // delete                             
             //userService.deleteUserRoles( user.getId() );
             userService.save(user);
             message = "Saved";
@@ -129,7 +131,7 @@ public class UserEditController extends SimpleFormController
         final UserEditCommand cmd;
         final Long id = getId(request, ID);
         logger.debug("Get for id : " + id);
-
+                                                    
         if (id != null)
         {
             User user = userService.findById(id);
@@ -150,7 +152,7 @@ public class UserEditController extends SimpleFormController
      * @param id      an id
      * @return an id
      */
-    private Long getId(HttpServletRequest request, String id)
+    private Long getId(HttpServletRequest request, String id)           
     {
         if ((request != null) && (request.getParameter(id) != null))
         {

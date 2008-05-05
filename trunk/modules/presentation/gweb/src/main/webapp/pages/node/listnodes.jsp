@@ -27,7 +27,7 @@
         function handleGetData(str)
         {
             DWRUtil.setValue("id_reply", data);
-        }
+        }                  
 
         function handleGetData2()
         {
@@ -73,7 +73,7 @@
 
 
 
-<jsp:include page="../node/menu.jsp"/>
+<jsp:include page="../node/menunode.jsp"/>
 
 
 

@@ -12,7 +12,7 @@
     </li>
     <li>
         <span id="menu3" title="Node - search, manage a node, view node processing (real time)">
-        <a href="/gweb/node/search.do">Nodes</a>
+        <a href="/gweb/node/list.do">Nodes</a>
             </span>
     </li>
     <li>

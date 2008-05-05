@@ -13,16 +13,13 @@
     <title>
         Jobs :: List
     </title>
-    <link href='<c:out value='${requestScope.CONTEXT_PATH}'/>/css/main.css' rel="stylesheet"/>
+    <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+
 </head>
 <body>
 
 
-<div id="paragraph" nowrap>
-    Jobs are scheduled via cron expression. A job can have different states.
-</div>
-
-<jsp:include page="menu.jsp"/>
+<jsp:include page="menujob.jsp"/>
 
 
 <div id="content">
