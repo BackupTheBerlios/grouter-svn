@@ -2,14 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <title>
-        Routers :: List
+        <spring:message code="router.title.list"/>
     </title>
     <link href="../css/common.css" type="text/css" rel="stylesheet"/>
 
@@ -19,75 +18,36 @@
             DWRUtil.useLoadingMessage();
         }
     </script>
-
 </head>
-
 
 <body onload="init();">
 
 <jsp:include page="menurouter.jsp"/>
 
-<br/>
-
-<div id="message" style="display:none;">
-    <c:out value="${message}"/>
-</div>
-
-<div id="content">
+<div id="mainContent">
     <form action="">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-                <td></td>
-                <td align="right"> Number of router :
-                    <c:out value="${usersSize}"/>
-                </td>
-            </tr>
-        </table>
+        <display:table name="${routers}" export="true" id="row" class="dataTable" pagesize="5" cellspacing="0"
+                       decorator="org.displaytag.decorator.TotalTableDecorator" requestURI="/gweb/router/list.do">
 
-        <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Created</th>
-                    <th>Modified</th>
-                    <th># nodes</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${routers}" var="object">
-                    <tr>
-                        <td>
-                            <c:out value="${object.id}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.displayName}"/>
-                        </td>
-                        <td>
+            <display:column property="id" titleKey="router.list.table.id" sortable="true" class="name"
+                            headerClass="name"/>
+            <display:column property="displayName" titleKey="router.list.table.displayName" sortable="true" class="name"
+                            headerClass="name"/>
+            <display:column property="description" titleKey="router.list.table.description" sortable="true"
+                            class="orderNumber" headerClass="orderNumber" />
+            <display:column property="startedOn" titleKey="router.list.table.startedOn" sortable="true"
+                            class="orderNumber" headerClass="orderNumber" format="{0,date,short}"/>
+            <display:column  titleKey="router.list.table.email" sortable="false"
+                            class="orderNumber" headerClass="orderNumber">
+                <a href="/gweb/node/list.do?routerid=${row.id}"> nodes </a>
+            </display:column>
+            <display:column  title="Action" sortable="false" >
+                <a href="edit.do?id=${row.id}" >Edit</a> 
+            </display:column>
 
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                            <a href='edit.do?id=<c:out value="${object.id}"/>' class="iconlink">
-                                <img src="/gweb/images/edit_24x24.png" alt="Delete" width="14"
-                                     height="14"> Edit </a> &nbsp;
-
-                            <a href='delete.do?id=<c:out value="${object.id}"/>' class="iconlink">
-                                <img src="/gweb/images/remove_24x24.png" alt="Delete" width="14"
-                                     height="14">Delete </a>
-                            
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        </display:table>
     </form>
+
 </div>
 </body>
 </html>

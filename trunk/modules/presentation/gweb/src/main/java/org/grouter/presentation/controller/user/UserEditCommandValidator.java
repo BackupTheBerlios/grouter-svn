@@ -1,14 +1,10 @@
 package org.grouter.presentation.controller.user;
 
-import org.springframework.validation.Validator;
+import org.apache.commons.validator.EmailValidator;
+import org.grouter.domain.service.UserService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
-import org.grouter.domain.service.UserService;
-import org.grouter.domain.entities.User;
-import org.grouter.domain.entities.EntityValidator;
-import org.hibernate.validator.InvalidValue;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.validator.EmailValidator;
+import org.springframework.validation.Validator;
 
 /**
  * Validates the user form.
@@ -47,13 +43,10 @@ public class UserEditCommandValidator implements Validator
             errors.rejectValue( "user.address.email", "userEditCommand.user.address.emailInvalid", "Email is invalid.");
         }
 
-
         if(  userEditCommand.getUser().getUserRoles()  == null || userEditCommand.getUser().getUserRoles().size() == 0  )
         {
             errors.rejectValue( "user.userRoles", "userEditCommand.user.userRoles", "Email is invalid.");
 
         }
-
-
     }
 }

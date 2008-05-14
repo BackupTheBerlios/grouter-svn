@@ -24,16 +24,16 @@ import org.grouter.domain.entities.Node;
 /**
  * @author Georges Polyzois
  */
-class NodeCommand
+class NodeEditCommand
 {
     private Node node = new Node();
 
 
-    public NodeCommand()
+    public NodeEditCommand()
     {
     }
 
-    public NodeCommand(Node node)
+    public NodeEditCommand(Node node)
     {
         this.node = node;
     }

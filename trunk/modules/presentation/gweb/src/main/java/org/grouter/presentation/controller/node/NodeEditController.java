@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Handles the edit form for a Node.
+ * Handles the edit form for a Node.                                 
  *
  * @author Georges Polyzois
  */
@@ -41,11 +41,11 @@ public class NodeEditController extends SimpleFormController
 {
     private static Logger logger = Logger.getLogger( NodeEditController.class );
     private final static String ID = "id";
-    private static final String FORMVIEW = "node/editNode";
-    private static final String SUCCESSVIEW = "node/list.do";
+    private static final String FORMVIEW = "node/editnode";
+    private static final String SUCCESSVIEW = "redirect:list.do";
+    private static final String NODECOMMAND = "nodeEditCommand";
     private RouterService routerService;
-    private static final String NODECOMMAND = "nodecommand";
-
+    private NodeEditCommandValidator nodeEditCommandValidator = new NodeEditCommandValidator();
 
     public void setRouterService(RouterService routerService)
     {
@@ -58,10 +58,11 @@ public class NodeEditController extends SimpleFormController
     public NodeEditController(  )
     {
         setSessionForm( true );
-        setCommandClass( NodeCommand.class );
+        setCommandClass( NodeEditCommand.class );
         setFormView(FORMVIEW);
         setSuccessView(SUCCESSVIEW);
         setCommandName(NODECOMMAND);
+        setValidator( nodeEditCommandValidator ); 
     }
 
 
@@ -73,7 +74,7 @@ public class NodeEditController extends SimpleFormController
             throws Exception
     {
         String message;
-        NodeCommand cmd = ( NodeCommand ) object;
+        NodeEditCommand cmd = (NodeEditCommand) object;
 
 
         Node node = cmd.getNode();
@@ -92,8 +93,8 @@ public class NodeEditController extends SimpleFormController
         Map<String, Object> model = new HashMap<String, Object>(  );
         model.put( "message", message );
 
-        return showForm( req, res, bex, model );
-        //return new ModelAndView( LIST_VIEW + "?listingDate=" + listingDate, model );
+        // to same view return showForm( req, res, bex, model );
+        return new ModelAndView(SUCCESSVIEW, model);
     }
 
 
@@ -104,18 +105,18 @@ public class NodeEditController extends SimpleFormController
     protected Object formBackingObject( HttpServletRequest request )
             throws Exception
     {
-        NodeCommand cmd;
+        NodeEditCommand cmd;
         String id = ServletRequestUtils.getStringParameter( request, ID, null );
         logger.debug("GET -> id : " + id);
 
         if ( id != null )
         {
             Node node = routerService.findNodeById( id );
-            cmd = new NodeCommand( node );
+            cmd = new NodeEditCommand( node );
         }
         else
         {
-            cmd = new NodeCommand(  );
+            cmd = new NodeEditCommand(  );
         }
 
         return cmd;

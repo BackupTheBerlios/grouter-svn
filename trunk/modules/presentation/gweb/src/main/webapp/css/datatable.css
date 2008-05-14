@@ -18,8 +18,8 @@
 .dataTable th {
     font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
     background-image: url( "../images/columnheader_gradient.gif" );
-    height: 18px;
-    padding: 2px;
+    height: 16px;
+    padding: 1px;
     border-left: 2px solid lightgray;
     text-align: left;
     white-space: nowrap;
@@ -77,7 +77,7 @@
 }
 
 .dataTable tr:hover {
-    background: #eee;
+    background: lavender;
     text-align: left;
 }
 

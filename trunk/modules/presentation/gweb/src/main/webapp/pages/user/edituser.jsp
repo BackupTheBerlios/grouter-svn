@@ -25,7 +25,7 @@
 <form:form commandName="usereditcommand" id="userEditForm" cssClass="decoratedform">
 <div id="formPanel">
 
-    <label >
+    <label>
         User
     </label>
 
@@ -35,7 +35,6 @@
             <td><form:input path="user.firstName"/>*
                 <br/>
                 <form:errors path="user.firstName" cssClass="error"/>
-
             </td>
         </tr>
         <tr>

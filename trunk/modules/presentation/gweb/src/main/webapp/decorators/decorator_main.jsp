@@ -12,7 +12,7 @@
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>Grouter - <decorator:title/></title>
     <link href="/gweb/css/page_main.css" type="text/css" rel="stylesheet" />
     <link href="/gweb/css/datatable.css" rel="stylesheet" type="text/css" >
@@ -40,9 +40,7 @@
     <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
 
 
-
-
-     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/page_main.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/page_main.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/>
     <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>

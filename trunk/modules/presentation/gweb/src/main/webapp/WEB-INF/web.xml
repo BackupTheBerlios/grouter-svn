@@ -56,6 +56,21 @@
         <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
     </filter>
 
+    <!-- Filter converts posting of forms to UTF-8 instead of default ISO-8859-1 as per servlet specification -->
+    <filter>
+        <filter-name>charsetFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>charsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <filter-mapping>
         <filter-name>Acegi Filter Chain Proxy</filter-name>
         <url-pattern>/*</url-pattern>

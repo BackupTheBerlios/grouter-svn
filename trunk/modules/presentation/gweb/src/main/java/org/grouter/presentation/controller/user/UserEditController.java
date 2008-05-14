@@ -134,13 +134,14 @@ public class UserEditController extends SimpleFormController
                                                     
         if (id != null)
         {
+            // Edit existing one
             User user = userService.findById(id);
             cmd = new UserEditCommand(user);
         } else
         {
+            // New User
             cmd = new UserEditCommand();
         }
-
         return cmd;
     }
 

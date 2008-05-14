@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
@@ -11,40 +11,27 @@
     <title>
         Node :: Edit
     </title>
-
 </head>
 <body>
 
-<div id="menuAction">
 
-</div>
+<div id="mainContentCentered">
+    <form:form commandName="nodeEditCommand" id="nodeCommandForm" cssClass="decoratedform">
 
-<div id="paragraph">
-    Edit node.
-</div>
-
-
-<div id="mainContent">
-
-    <form:form commandName="nodecommand" id="form">
+    <label >
+        Node
+    </label>
         <table>
             <tr>
-                <td>Id:</td>
+                <td><spring:message code="user.edit.form.user.label.firstname"/></td>
                 <td><form:input path="node.id" disabled="true"/></td>
-                <td><form:errors path="node.id"/></td>
+                <td><form:errors path="node.id"cssClass="error"/></td>
             </tr>
             <tr>
                 <td>Name:</td>
                 <td><form:input path="node.displayName"/></td>
                 <td><form:errors path="node.displayName"/></td>
             </tr>
-            <tr>
-                <td>Last name:</td>
-                <td><form:input path="node.createdOn"/></td>
-            </tr>
-            <tr>
-                <td></td>
-
             <tr>
                 <td></td>
                 <td align="right" colspan="3">
@@ -53,8 +40,6 @@
             </tr>
         </table>
     </form:form>
-
-
 </div>
 </body>
 </html>

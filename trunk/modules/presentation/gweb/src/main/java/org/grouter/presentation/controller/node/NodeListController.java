@@ -59,7 +59,7 @@ public class NodeListController extends AbstractController
 
         String routerId = ServletRequestUtils.getStringParameter(request, "routerid", null);
 
-                                    
+        // Populates list with routers for selection
         List<Router> routers = routerService.findAll();
         map.put("routers", routers);
 
@@ -67,8 +67,14 @@ public class NodeListController extends AbstractController
         {
             List<Node> nodes = routerService.findAllNodes( routerId );
             map.put("nodes", nodes);
-            map.put("nodesSize", nodes.size() );
             map.put("selectedRouterId",routerId );
+        }
+        else if ( routers.size() > 0 )
+        {
+            List<Node> nodes = routerService.findAllNodes(  routers.get(0).getId() );
+            map.put("nodes", nodes);
+            map.put("selectedRouterId",routers.get(0).getId() );
+
         }
 
         return new ModelAndView(LIST_VIEW, map);

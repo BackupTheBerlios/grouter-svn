@@ -52,71 +52,93 @@
 
 <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
 
+<link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/page_main.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/>
+<script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
+<script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
+<script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
+<script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
+<script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
+<script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
+<script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script>
+
 
 <script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("#loginForm").validate();
+    });
+
+
     $(function()
     {
-        $('#pretty').tooltip({
+        $('#menu1').tooltip({
             track: true,
             delay: 0,
             showURL: false,
             showBody: " - ",
-            extraClass: "pretty",
+            extraClass: "menuToolTipSmal",
             fixPNG: true,
             opacity: 0.95,
             left: 0
         });
-        $('#pretty2').tooltip({
+        $('#menu2').tooltip({
             track: true,
             delay: 0,
             showURL: false,
             showBody: " - ",
-            extraClass: "pretty",
+            extraClass: "menuToolTipSmal",
             fixPNG: true,
             opacity: 0.95,
             left: -0
         });
-        $('#pretty3').tooltip({
+        $('#menu3').tooltip({
             track: true,
             delay: 0,
             showURL: true,
             showBody: " - ",
-            extraClass: "pretty",
+            extraClass: "menuToolTipSmal",
             fixPNG: true,
             opacity: 0.95,
             left: 0
         });
-        $('#pretty4').tooltip({
+        $('#menu4').tooltip({
             track: true,
             delay: 0,
             showURL: false,
             showBody: " - ",
-            extraClass: "pretty",
+            extraClass: "menuToolTipSmal",
             fixPNG: true,
             opacity: 0.95,
             left: 0
         });
 
-        $('#pretty5').tooltip({
+        $('#menu5').tooltip({
             track: true,
             delay: 0,
             showURL: false,
             showBody: " - ",
-            extraClass: "pretty",
+            extraClass: "menuToolTipSmal",
             fixPNG: true,
             opacity: 0.95,
             left: 0
         });
 
+        $('#searchHelp').tooltip({
+            track: true,
+            delay: 0,
+            showURL: true,
+            showBody: " - ",
+            extraClass: "menuToolTip",
+            fixPNG: true,
+            opacity: 0.95,
+            left: 0
+        });
     });
-
-    // hide big stack trace
-    function init()
-    {
-        Element.hide('stacktrace');
-    }
-
 </script>
+
+
 
 </head>
 
@@ -126,11 +148,7 @@
 <div id="body">
     <div id="logoBar">
         <img id="logo" src="/gweb/images/browser.png" width="48" height="48" alt="logo"/>
-
     </div>
-
-    <br/>
-
 
     <div id="menu">
         <jsp:include page="/pages/menu/menu.jsp"/>

@@ -67,55 +67,10 @@
         callOnLoad(init);
     </script>
 </head>
-
 <body onload="init();">
-
-
-
-
 <jsp:include page="../node/menunode.jsp"/>
-
-
-
-<br>
-
-<div id="menuAction">
-    <table border="0">
-        <tr>
-            <td>
-                <form id="menuform" action="" enctype="multipart/form-data" name="mainForm"
-                      method="get">
-                    List nodes for router:
-                    <select id="routerid" name="routerid" onchange="this.form.submit()">
-                        <option value="">--- router ---</option>
-                        <c:forEach items="${routers}" var="object">
-                            <option
-                                    <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if>
-                                    value="${object.id}">${object.id}</option>
-                        </c:forEach>
-                    </select>
-                    <!-- Update in realtime: -->
-                    Register for updates (realtime):<input id="checkboxIsRegisterdForCallbacks"
-                                                           type="checkbox" value="Read"
-                                                           onclick="registerForCallbacks()"/>
-
-                </form>
-            </td>
-        </tr>
-    </table>
-</div>
-
-<br>
-
 <div id="mainContent">
     <form id="mainForm" action="">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-                <td></td>
-                <td align="right">Number of nodes :<c:out value="${nodesSize}"/>
-                </td>
-            </tr>
-        </table>
         <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
@@ -155,7 +110,7 @@
                             <c:out value="${object.outBound.uri}"/>
                         </td>
                         <td>
-                            <a href='edit.do?id=<c:out value="${object.id}"/>'> Details </a>
+                            <a href='edit.do?id=<c:out value="${object.id}"/>'> Edit </a>
                             <a href='send.do?id=<c:out value="${object.id}"/>&operation=stop'> Stop </a>
                             <a href='send.do?id=<c:out value="${object.id}"/>&operation=start'> Start </a>
                         </td>

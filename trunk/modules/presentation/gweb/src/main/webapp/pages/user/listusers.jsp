@@ -5,7 +5,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 
-<% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">

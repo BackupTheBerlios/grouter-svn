@@ -22,26 +22,41 @@
 <jsp:include page="menujob.jsp"/>
 
 
-<div id="content">
-    <form id="mainForm" action="">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-                <td></td>
-                <td align="right">Number of jobs :
-                    <c:out value="${jobsSize}"/>
-                </td>
-            </tr>
-        </table>
 
+<div id="mainContent">
+    <form action="">
+        <display:table name="${jobs}" export="true" id="row" class="dataTable" pagesize="5" cellspacing="0"
+                       decorator="org.displaytag.decorator.TotalTableDecorator" requestURI="/gweb/user/list.do">
 
+            <display:column property="id" titleKey="jobs.list.table.id" sortable="true" class="name"
+                            headerClass="name"/>
+            <display:column property="startedOn" titleKey="jobs.list.table.startedon" sortable="true" class="name"
+                            headerClass="name"/>
+            <display:column property="firstName" titleKey="user.list.table.finishedon" sortable="true"
+                            class="orderNumber" headerClass="orderNumber" format="{0,date,short}"/>
+            <display:column property="lastName" titleKey="user.list.table.lastname" sortable="true" class="orderNumber"
+                            headerClass="orderNumber"/>
+            <display:column property="address.phone" titleKey="user.list.table.phone" sortable="true"
+                            class="orderNumber" headerClass="orderNumber"/>
+            <display:column property="address.email" titleKey="user.list.table.email" sortable="true"
+                            class="orderNumber" headerClass="orderNumber"/>
+            <display:column property="address.companyname" titleKey="user.list.table.companyname" sortable="true"
+                            class="orderNumber" headerClass="orderNumber"/>
+            <!-- display:column sortable="false" paramId="id" paramProperty="id" -->
+                <!--input type='checkbox' id='id'/ -->
+            <!--/display:column -->
+            <!-- display:column value="Edit" title="" sortable="false" href='edit.do' paramId="id" paramProperty="id"/ -->
+            <display:column  title="Action" sortable="false" >
+                <a href="edit.do?id=${row.id}" >Edit</a> |
+                <a href="delete.do?id=${row.id}" >Delete</a>
+            </display:column>
 
-
-
+        </display:table>
+    </form>
+</div>
 
         <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
-
             <thead>
-
                 <tr>
                     <th><a href="?sortBy=id">State</a></th>
                     <th><a href="?sortBy=firstName">Started</a></th>

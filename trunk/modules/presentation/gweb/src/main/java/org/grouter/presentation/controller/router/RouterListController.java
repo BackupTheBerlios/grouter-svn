@@ -57,9 +57,6 @@ public class RouterListController extends AbstractController
         Map<String, Object> map = new HashMap<String, Object>();
         List<Router> routers = routerService.findAll();
         map.put("routers", routers);
-        map.put("routersSize", routers.size());
-
-
         return new ModelAndView(LIST_VIEW, map);
     }
 
