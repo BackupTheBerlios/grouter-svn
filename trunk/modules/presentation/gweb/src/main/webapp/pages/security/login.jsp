@@ -90,7 +90,14 @@
 
     <form class="cmxform" id="loginForm" method="POST" action="/gweb/j_acegi_security_check">
 
-        <table>
+        <table >
+            <tr bgcolor="#afcff9" class="font: 11px, bold, Verdana, Arial, Helvetica, sans-serif;">
+                <td colspan="2">
+
+                    <label ><img src="/gweb/images/user.gif"  alt="" />&nbsp;   Login</b></label>
+
+                </td>
+            </tr>
             <tr>
                 <td nowrap><label for="j_username">User name</label></td>
                 <td  nowrap><input type="text" name="j_username" class="required" minlength="4"

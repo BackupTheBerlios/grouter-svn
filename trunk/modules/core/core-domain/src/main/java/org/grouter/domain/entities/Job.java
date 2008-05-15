@@ -19,12 +19,9 @@
 
 package org.grouter.domain.entities;
 
-import org.hibernate.search.annotations.DocumentId;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
-import org.hibernate.validator.NotNull;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.search.annotations.*;
+import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -40,7 +37,7 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "job")
-//@Indexed( index="indexes/job" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
+@Indexed( index="indexes/job" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
 public class Job extends BaseEntity
 {
     @Id

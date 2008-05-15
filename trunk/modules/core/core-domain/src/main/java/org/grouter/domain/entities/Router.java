@@ -20,6 +20,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.*;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
@@ -35,19 +36,24 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "router")
+@Indexed(index = "indexes/node")
 public class Router extends BaseEntity
 {
     @Id
     @NotNull
     @Column(name = "id", nullable = false)
     @GenericGenerator(name = "system-uuid", strategy = "assigned")
+    // Hibernate search
+    @DocumentId
     private String id;
 
     @NotNull
     @Column(name = "displayname")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String displayName;
 
     @Column(name = "description")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String description;
 
     /*
@@ -78,6 +84,7 @@ public class Router extends BaseEntity
     private Integer rmiServicePort;
 
     @Column(name = "homepath")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String homePath;
 
 

@@ -19,6 +19,7 @@
 
 package org.grouter.domain.entities;
 
+import org.hibernate.search.annotations.*;
 import org.hibernate.validator.Email;
 
 import javax.persistence.*;
@@ -32,47 +33,56 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
+@Indexed(index = "indexes/address")
 public class Address extends BaseEntity
 {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@DocumentId
+    @DocumentId
     private Long id;
 
     @Column(name = "idno", nullable = true)
     private String idNo;
 
-
     @Transient
     private Country country;
 
     @Column(name = "phone")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String phone;
 
     @Column(name = "mobilephone")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String mobilephone;
 
     @Column(name = "street")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String street;
 
     @Column(name = "zip")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String zip;
 
     @Column(name = "city")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String city;
 
     @Column(name = "fax")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String fax;
 
     @Column(name = "homepageurl")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String homepageUrl;
 
     @Column(name = "companyname")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String companyname;
 
     @Column(name = "email")
     @Email
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String email;
 
     public Address()

@@ -28,7 +28,10 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -47,6 +50,7 @@ public class User extends BaseEntity
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @DocumentId
+    @Boost(2.5f)
     //@NotNull
     private Long id;
 
@@ -55,6 +59,7 @@ public class User extends BaseEntity
     @Length(min = 5, max = MAX_USER_NAME_LENGTH)
     @NotNull
     @Field(index = Index.TOKENIZED, store = Store.YES)
+    @Boost(2.5f)  // probability to reach the top of the search list will be multiplied by 2.5
     private String userName;
 
     @Column(name = "firstname")
@@ -88,7 +93,8 @@ public class User extends BaseEntity
 
     @ManyToOne ( cascade = {CascadeType.ALL}, fetch=FetchType.EAGER )
     @JoinColumn(name = "address_fk" )
-    private Address address = new Address();
+    @IndexedEmbedded    
+    private Address address;
 
     /*
      * The inverse target property of the target entity. We do not need to enter the foreign

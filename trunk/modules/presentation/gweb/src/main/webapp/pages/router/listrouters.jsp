@@ -37,10 +37,10 @@
                             class="orderNumber" headerClass="orderNumber" />
             <display:column property="startedOn" titleKey="router.list.table.startedOn" sortable="true"
                             class="orderNumber" headerClass="orderNumber" format="{0,date,short}"/>
-            <display:column  titleKey="router.list.table.email" sortable="false"
+            <display:column  titleKey="router.list.table.nodes" sortable="false"
                             class="orderNumber" headerClass="orderNumber">
-                <a href="/gweb/node/list.do?routerid=${row.id}"> nodes </a>
-            </display:column>
+                <a href="/gweb/node/list.do?routerid=${row.id}"> <img src="/gweb/images/gtk-goto-first-rtl.png" alt=""/> </a>
+            </display:column>                                              
             <display:column  title="Action" sortable="false" >
                 <a href="edit.do?id=${row.id}" >Edit</a> 
             </display:column>

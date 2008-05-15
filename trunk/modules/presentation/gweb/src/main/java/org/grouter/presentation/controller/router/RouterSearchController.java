@@ -17,11 +17,9 @@
  * under the License.
  */
 
-package org.grouter.presentation.controller.message;
+package org.grouter.presentation.controller.router;
 
-import org.apache.log4j.Logger;
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
+import org.apache.commons.lang.StringUtils;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.service.RouterService;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -35,14 +33,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A controller for Message listing.
- * 
+ * Hibernate search.
+ *
  * @author Georges Polyzois
  */
-public class MessageListController extends AbstractController
+public class RouterSearchController extends AbstractController
 {
-    private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String LIST_VIEW = "message/listmessages";
+    private static final String LIST_VIEW = "router/listrouters";
 
     private RouterService routerService;
 
@@ -61,30 +58,15 @@ public class MessageListController extends AbstractController
     {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        String nodeId = ServletRequestUtils.getStringParameter(request, "nodeid", null);
-        String routerId = ServletRequestUtils.getStringParameter(request, "routerid", null);
+        String searchText = ServletRequestUtils.getStringParameter(request, "searchText", null);
 
-        List<Router> routers = routerService.findAllDistinct();
-        map.put("routers", routers);
-
-
-        if (nodeId != null)
+        if (StringUtils.isNotEmpty(searchText))
         {
-            List<Message> messages = routerService.findAllMessages( nodeId);
-            map.put("messages", messages);
-            map.put("selectedNodeId", nodeId );
-
-        }
-
-        if ( routerId != null)
-        {
-            List<Node> nodes = routerService.findAllNodes( routerId );
-            map.put("nodes", nodes);
-            map.put("selectedRouterId", routerId );
+            List<Router> routers = routerService.searchRouter(searchText);
+            map.put("routers", routers);
         }
 
         return new ModelAndView(LIST_VIEW, map);
     }
-
 
 }

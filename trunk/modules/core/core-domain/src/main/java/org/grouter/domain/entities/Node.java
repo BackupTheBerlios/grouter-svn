@@ -25,7 +25,6 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -87,7 +86,7 @@ public class Node extends BaseEntity
     private Set<Message> messages = new HashSet<Message>();
 
     @ManyToOne
-    @JoinColumn(name = "router_fk", nullable = true)
+    @JoinColumn(name = "router_fk", nullable = false)
     private Router router;
 
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})

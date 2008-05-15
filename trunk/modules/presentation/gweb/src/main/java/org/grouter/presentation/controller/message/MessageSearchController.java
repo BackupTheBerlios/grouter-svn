@@ -18,7 +18,7 @@ import java.util.Map;
 public class MessageSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String LIST_VIEW = "message/searchmessages";
+    private static final String LIST_VIEW = "message/listmessages";
 
     private RouterService routerService;
 
@@ -40,9 +40,7 @@ public class MessageSearchController extends AbstractController
 
         if( StringUtils.isNotEmpty( searchText ) )
         {
-            logger.info("Querying index for :" + searchText);
             List<Message> messages = routerService.searchMessages( searchText );
-            logger.info("Found number of messages :" + messages.size() );
             map.put("messages", messages);
         }
 

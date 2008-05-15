@@ -22,12 +22,11 @@ package org.grouter.domain.service.spring;
 import org.grouter.domain.dao.UserDAO;
 import org.grouter.domain.dao.UserRoleDAO;
 import org.grouter.domain.entities.User;
-import org.grouter.domain.entities.UserState;
 import org.grouter.domain.entities.UserRole;
+import org.grouter.domain.entities.UserState;
 import org.grouter.domain.service.UserService;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Handles operations on Users and user roles.
@@ -64,12 +63,8 @@ public class UserServiceImpl implements UserService
         return userDAO.findAll(hql);
     }
 
-
     public void save(User user)
     {
-        
-
-
         userDAO.save(user);
     }
 
@@ -80,7 +75,7 @@ public class UserServiceImpl implements UserService
 
     public User findById(Long id)
     {
-        return userDAO.findById(id);
+        return userDAO.findById(id,"address");
     }
 
     public void changeState(final Long id, final UserState userState)
@@ -101,7 +96,9 @@ public class UserServiceImpl implements UserService
 
     public List<User> searchUsers(String searchText)
     {
-        return userDAO.findFromIndex(searchText, "userName", "id", "lastName");
+        return userDAO.findFromIndex(searchText, "userName", "id", "lastName","firstName", "address.mobilephone",
+                "address.phone","address.street", "address.zip", "address.city", "address.fax", "address.homepageurl",
+                "address.companyname", "address.email");
     }
 
     public UserRole findUserRoleById(Long id)

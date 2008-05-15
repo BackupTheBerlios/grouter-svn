@@ -19,7 +19,7 @@
 
 
     <!--
-       E.g. http://www.myapp.com/home?lang=en_GB
+       E.g. http://www.myapp.com/home?lang=en_GB will change the  locale
     -->
     <bean id="localeChangeInterceptor"
           class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
@@ -86,6 +86,7 @@
     <bean name="/user/delete.do" class="org.grouter.presentation.controller.user.UserDeleteController"/>
 
     <bean name="/router/list.do" class="org.grouter.presentation.controller.router.RouterListController"/>
+    <bean name="/router/search.do" class="org.grouter.presentation.controller.router.RouterSearchController"/>
 
     <bean name="/job/edit.do" class="org.grouter.presentation.controller.job.JobEditController"/>
     <bean name="/job/list.do" class="org.grouter.presentation.controller.job.JobListController"/>

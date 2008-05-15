@@ -124,12 +124,20 @@ public interface RouterService
 
 
     /**
-     * Find messages for this node.
+     * Find nodes for this node.
      *
      * @param searchText text to use for index search
      * @return a list of {@link Node}s
      */
     List<Node> searchNodes(String searchText);
+
+    /**
+     * Find messages for this node.
+     *
+     * @param searchText text to use for index search
+     * @return a list of {@link Node}s
+     */
+    List<Router> searchRouter(String searchText);
 
 
     /**

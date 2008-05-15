@@ -41,6 +41,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     final static Long SETTINGS_ID = -1L;
     final static Long JOB_ID = -1L;
     Long USER_ID = -1L;
+    Long USER_NOADDRESS_ID = -2L;  // no address on this user
     Long ADMIN_ID = 1L;
     final static int TOTALNUMBEROFUSERS = 7;
 

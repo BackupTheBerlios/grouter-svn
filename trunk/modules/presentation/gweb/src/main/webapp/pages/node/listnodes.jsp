@@ -74,17 +74,23 @@
         <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
+                    <th><a href="?sortBy=id">Id</a></th>
                     <th><a href="?sortBy=id">Status</a></th>
                     <th><a href="?sortBy=firstName">Name</a></th>
                     <th><a href="?sortBy=firstName">#Messages</a></th>
                     <th><a href="?sortBy=firstName">In</a></th>
                     <th><a href="?sortBy=firstName">Out</a></th>
-                    <th></th>
+                    <th>Messages</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${nodes}" var="object">
                     <tr>
+                        <td>
+                                                    <c:out value="${object.id}"/>
+                                                </td>
+
                         <td width="5">
                             <c:if test="${object.nodeStatus.id eq 1}"><img
                                     src="/gweb/images/icon_notstarted_15x15.gif"/></c:if>
@@ -110,6 +116,11 @@
                             <c:out value="${object.outBound.uri}"/>
                         </td>
                         <td>
+                            <a href="/gweb/message/list.do?nodeid=${object.id}"> <img src="/gweb/images/gtk-goto-first-rtl.png" alt=""/> </a>
+                        </td>
+
+                        <td>
+
                             <a href='edit.do?id=<c:out value="${object.id}"/>'> Edit </a>
                             <a href='send.do?id=<c:out value="${object.id}"/>&operation=stop'> Stop </a>
                             <a href='send.do?id=<c:out value="${object.id}"/>&operation=start'> Start </a>

@@ -29,12 +29,14 @@ public class HibernateSearchIndexContextListener implements ApplicationContextAw
         initialize();
     }
 
+    /**
+     * Initializes the index - run on deployment.
+     */
     public void initialize()
     {
         logger.info("Initializing the search index");
         systemService.initIndex();
     }
-
 
     protected Session getSession()
     {
@@ -44,10 +46,8 @@ public class HibernateSearchIndexContextListener implements ApplicationContextAw
         //return ((SessionFactory) getApplicationContext().getBean("sessionFactory")).getCurrentSession();
     }
 
-
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
     {
-
         this.applicationContext = applicationContext;
     }
 

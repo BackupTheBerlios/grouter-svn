@@ -170,6 +170,12 @@ public class RouterServiceImpl implements RouterService
                 "modifiedOn", "createdOn");
     }
 
+    public List<Router> searchRouter(String searchText)
+    {
+        return routerDAO.findFromIndex(searchText, "displayName", "id", "description", "homePath");
+
+    }
+
     public Map<Long, EndPointType> findAllEndPointTypes()
     {
         return EndPointType.values;

@@ -815,10 +815,10 @@
                         <groupId>tomcat</groupId>
                         <artifactId>jasper-runtime</artifactId>
                     </exclusion>
-                    <exclusion>
+                    <!-- exclusion>
                         <groupId>itext</groupId>
                         <artifactId>itext</artifactId>
-                    </exclusion>
+                    </exclusion -->
                     <exclusion>
                         <groupId>struts</groupId>
                         <artifactId>struts</artifactId>
@@ -841,8 +841,11 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
-            <!-- Database jdbc drivers -->
+            <dependency>
+                <groupId>com.lowagie</groupId>
+                <artifactId>itext</artifactId>
+                <version>2.1.0</version>
+            </dependency>
             <dependency>
                 <groupId>postgresql</groupId>
                 <artifactId>postgresql</artifactId>

@@ -20,9 +20,7 @@
 package org.grouter.domain.dao.spring;
 
 import org.grouter.domain.dao.SystemDAO;
-import org.grouter.domain.entities.Message;
-import org.grouter.domain.entities.Node;
-import org.grouter.domain.entities.User;
+import org.grouter.domain.entities.*;
 import org.hibernate.*;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -46,6 +44,8 @@ public class SystemDAOImpl extends HibernateDaoSupport implements SystemDAO
         doFullIndex(1000, User.class, getSession());
         //doFullIndex(1000, Job.class, getSession());
         doFullIndex(1000, Node.class, getSession());
+        doFullIndex(1000, Address.class, getSession());
+        doFullIndex(1000, Router.class, getSession());
     }
 
 
