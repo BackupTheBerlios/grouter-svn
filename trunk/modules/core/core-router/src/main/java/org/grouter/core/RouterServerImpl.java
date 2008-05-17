@@ -51,7 +51,7 @@ import java.util.Date;
  */
 final public class RouterServerImpl implements Runnable, RemoteRouterService
 {
-
+                  
     private static Logger logger = Logger.getLogger(RouterServerImpl.class);
     // spring context
     ApplicationContext context;
