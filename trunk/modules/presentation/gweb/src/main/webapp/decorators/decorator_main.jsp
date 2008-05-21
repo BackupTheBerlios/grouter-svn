@@ -126,16 +126,11 @@
             });
         });
     </script>
-
-
     <!-- JQuery Validation plugin -->
     <!-- link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
     <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script -->
-
-
-
     <decorator:head/>
 </head>
 
