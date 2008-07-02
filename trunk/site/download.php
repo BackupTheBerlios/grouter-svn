@@ -1,44 +1,35 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
-
-  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
-  <title>Welcome to Grouter</title>
-  <style type="text/css" media="all">
-@import url("./css/site.css");
-.style2 {color: #003399}
-  </style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Welcome to Grouter</title>
+    <link href="css/page_main.css" type="text/css" rel="stylesheet" />
+    <link href="css/lightwindow.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" charset="iso8859-1" src="javascripts/common.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="javascripts/engine.js"></script>
+    <script type="text/javascript" charset="iso8859-1" src="javascripts/util.js"></script>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
 </head>
+<body>
+<div id="mainContent">
+        <?php include ("menu_logo_and_search.php"); ?>
 
+In progress....
 
-<body style="direction: ltr;" lang="en-GB">
-
-<!-- Banner -->
-<div id="banner" dir="ltr">
-	<img src="pics/browser.png"/> 
-<p style="margin-bottom: 0cm;"><span class="style2"><a name="bannerLeft"></a></span><br>
-</p>
-</div>
-
-<!-- Navigation -->
-<?php include ("breadcrumb.php"); ?>
-
-<!-- Navigation -->
-<?php include ("navigation.php"); ?>
-
-
-
-
-
-<div id="bodyColumn" dir="ltr">
-<div id="contentBox" dir="ltr">
-<h2 class="western">Download grouter </h2>
-<p>Unfortunately there is no stable release yet. See documentation section for checking out and building a release. </p>
-<p>&nbsp;</p>
-<p>In the future binaries will be put <a href="ftp://ftp.berlios.de/pub/grouter/">here</a> </p>
-</div>
-
+		<h1>Download </h1><br/>
+        Unfortunately there is no stable release yet. See documentation section for checking out and building a release.<br/>
+        <br/>
+        In the future binaries will be put here :
+        <a href="ftp://ftp.berlios.de/pub/grouter/" >ftp://ftp.berlios.de/pub/grouter/ </a>
+        <br/>
+        <br/>
+        <br/>
+        <?php include ("footer.php"); ?>
 </div>
 
 </body>
+
 </html>
+
+
+

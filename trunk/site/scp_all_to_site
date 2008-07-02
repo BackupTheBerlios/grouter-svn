@@ -1,4 +1,11 @@
-# scp *.php gepo01@shell.berlios.de:/home/groups/grouter/htdocs
+scp *.php gepo01@shell.berlios.de:/home/groups/grouter/htdocs
 
 scp -r css/ gepo01@shell.berlios.de:/home/groups/grouter/htdocs
+
+scp -r images/ gepo01@shell.berlios.de:/home/groups/grouter/htdocs
+
+
+scp -r javascripts/ gepo01@shell.berlios.de:/home/groups/grouter/htdocs
+
+
 

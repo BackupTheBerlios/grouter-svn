@@ -936,15 +936,35 @@
 
             <!-- Gwt and mygwt -->
             <dependency>
-                <groupId>org.google.gwt</groupId>
+                <groupId>com.google.gwt</groupId>
                 <artifactId>gwt-user</artifactId>
-                <version>1.4.61</version>
+                <version>1.5</version>
             </dependency>
             <dependency>
+                <groupId>org.gwt-sl</groupId>
+                <artifactId>gwt-sl</artifactId>
+                <version>0.1.5</version>
+            </dependency>
+
+            <!-- Integration test -->
+            <dependency>
+                <groupId>org.concordion</groupId>
+                <artifactId>concordion</artifactId>
+                <version>1.3.0</version>
+                <scope>test</scope>
+            </dependency>
+            
+
+            <!-- dependency>
+                <groupId>com.extjs</groupId>
+                <artifactId>gxt</artifactId>
+                <version>1.0.beta3</version>
+            </dependency -->
+            <!-- pre 10. release dependency>
                 <groupId>org.mygwt</groupId>
                 <artifactId>mygwt</artifactId>
                 <version>0.4.3</version>
-            </dependency>
+            </dependency -->
         </dependencies>
     </dependencyManagement>
 
@@ -1116,7 +1136,7 @@
             </plugin>
 
             <!--
-                When there is JXR cross-refernce output available,
+                When there is JXR cross-reference output available,
                 it will be linked to in case of test failures
              -->
             <plugin>
@@ -1125,15 +1145,13 @@
                 <configuration>
                     <!-- Display failed tests only -->
                     <showSuccess>false</showSuccess>
-                                    <argLine>-Xms64m -Xmx256m</argLine>
-                                    <excludes>
-                                        <exclude implementation="java.lang.String">**/Abstract*.*</exclude>
-                                        <!-- The org.mule.tck classes are in the test directory but are not runnable tests. -->
-                                        <exclude implementation="java.lang.String">org/grouter/common/jms/examples/**</exclude>
-                                    </excludes>
-               </configuration>
-
-
+                    <argLine>-Xms64m -Xmx256m</argLine>
+                    <excludes>
+                        <exclude implementation="java.lang.String">**/Abstract*.*</exclude>
+                        <!-- The org.mule.tck classes are in the test directory but are not runnable tests. -->
+                        <exclude implementation="java.lang.String">org/grouter/common/jms/examples/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
 
