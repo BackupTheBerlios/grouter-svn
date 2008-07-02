@@ -58,7 +58,7 @@ public class UserRoleDAOImpl extends GenericHibernateDAO<UserRole, Long> impleme
 
     public UserRole findUserRoleByUserIdAndRoleId(Long userid, Long roleId)
     {
-        String hsql = "from UserRole obj where obj.user.id = :userid and obj.role.id = :roleide ";
+        String hsql = "select obj from UserRole obj where obj.user.id = :userid and obj.role.id = :roleide ";
         Session session = getSession();
         Query qr = session.createQuery(hsql);
         qr.setParameter("userid", userid);

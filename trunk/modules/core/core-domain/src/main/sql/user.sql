@@ -22,7 +22,8 @@ CREATE TABLE user (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into user (id, username, user_state_fk, createdon , modifiedon) values (1, 'system', 3, NOW() ,NOW());
-insert into user (id, username, password, user_state_fk, createdon , modifiedon) values (2, 'admin', 'nimda', 3, NOW() ,NOW());
-insert into user (id, username, password, user_state_fk, createdon , modifiedon) values (3, 'view', 'view', 3, NOW() ,NOW());
+insert into user (id, username, user_state_fk, createdon , modifiedon,createdby,modifiedby) values (1, 'system', 3, NOW() ,NOW(),1,1);
+insert into user (id, username, password, user_state_fk, createdon , modifiedon,createdby,modifiedby) values (2, 'admin', 'nimda', 3, NOW() ,NOW(),1,1);
+insert into user (id, username, password, user_state_fk, createdon , modifiedon,createdby,modifiedby) values (3, 'view', 'view', 3, NOW() ,NOW(),1,1);
+
 

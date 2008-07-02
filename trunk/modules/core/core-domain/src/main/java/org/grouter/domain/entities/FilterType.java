@@ -31,8 +31,8 @@ import javax.persistence.*;
  */
 
 
-@Entity
-@Table(name = "filter_type")
+//@Entity
+//@Table(name = "filter_type")
 public class FilterType extends BaseEntity
 {
     @Id

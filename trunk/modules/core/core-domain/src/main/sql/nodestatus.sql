@@ -10,12 +10,12 @@ create table nodestatus
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into nodestatus (id, name) values (1,'NOTSTARTED');
-insert into nodestatus (id, name) values (2,'SCHEDULED_TO_START');
-insert into nodestatus (id, name) values (3,'RUNNING');
-insert into nodestatus (id, name) values (4,'RESCHEDULED_TO_START');
-insert into nodestatus (id, name) values (5,'STOPPED');
-insert into nodestatus (id, name) values (6,'ERROR');
-insert into nodestatus (id, name) values (7,'NOT_CONFIGURED_TO_START');
+insert into nodestatus (id, createdon, modifiedon,createdby,modifiedby,name) values (1,NOW(),NOW(),1,1,'NOTSTARTED');
+insert into nodestatus (id, createdon, modifiedon,createdby,modifiedby,name) values (2,NOW(),NOW(),1,1,'SCHEDULED_TO_START');
+insert into nodestatus (id, createdon, modifiedon,createdby,modifiedby,name) values (3,NOW(),NOW(),1,1,'RUNNING');
+insert into nodestatus (id, createdon, modifiedon,createdby,modifiedby,name) values (4,NOW(),NOW(),1,1,'RESCHEDULED_TO_START');
+insert into nodestatus (id, createdon, modifiedon,createdby,modifiedby,name) values (5,NOW(),NOW(),1,1,'STOPPED');
+insert into nodestatus (id, createdon, modifiedon,createdby,modifiedby,name) values (6,NOW(),NOW(),1,1,'ERROR');
+insert into nodestatus (id, createdon, modifiedon,createdby,modifiedby,name) values (7,NOW(),NOW(),1,1,'NOT_CONFIGURED_TO_START');
 
 

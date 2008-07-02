@@ -92,6 +92,10 @@
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
         </dependency>
+              <dependency>
+            <groupId>org.concordion</groupId>
+            <artifactId>concordion</artifactId>
+        </dependency>
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>

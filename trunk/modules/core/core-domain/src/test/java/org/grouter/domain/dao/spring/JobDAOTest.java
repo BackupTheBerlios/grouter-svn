@@ -11,6 +11,7 @@ import org.grouter.domain.entities.Router;
 import org.hibernate.LazyInitializationException;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * DAO tests for mappings, cascade saves etc.
@@ -85,6 +86,14 @@ public class JobDAOTest extends AbstractDAOTests
         jobDAO.delete(JOB_ID);
         flushSession();
         assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + JOB_ID));
+    }
+
+
+
+    public void testFindAll()
+    {
+        List<Job> job = jobDAO.findAll();
+        assertEquals(TOTALNUMBEROFUSERS, user.size());
     }
 
 

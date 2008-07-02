@@ -11,10 +11,10 @@
         </span>
     </li>
     <li>
-            <span id="menu2" title="Messages - search handled messages">
-                <a href="/gweb/message/list.do">Messages</a>
-            </span>
-        </li>
+        <span id="menu2" title="Messages - search handled messages">
+            <a href="/gweb/message/list.do">Messages</a>
+        </span>
+    </li>
     <li>
         <span id="menu4" title="Users - search, manage users for authentication and authorization">
             <a href="/gweb/user/list.do">Users</a>

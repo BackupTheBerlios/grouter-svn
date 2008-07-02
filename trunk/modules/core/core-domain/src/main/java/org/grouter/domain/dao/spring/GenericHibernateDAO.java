@@ -169,7 +169,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
     }
 
 
-   /* public void deleteNoLoad(final ID id)
+    /*
+   public void deleteNoLoad(final ID id)
     {
         String hqlDelete = "delete Customer c where c.name = :oldName";
         int deletedEntities = s.createQuery( hqlDelete )
@@ -177,7 +178,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> extends Hi
                 .executeUpdate();
 
         getSession().delete(findById(id));
-    }*/
+    }  */
 
     @SuppressWarnings("unchecked")
     public List<T> findByCriteria(final Criterion... criterion)

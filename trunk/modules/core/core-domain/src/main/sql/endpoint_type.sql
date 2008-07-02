@@ -9,10 +9,10 @@ create table endpoint_type
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-insert into endpoint_type (id, name) values (1,'fileReader');
-insert into endpoint_type (id, name) values (2,'fileWriter');
-insert into endpoint_type (id, name) values (3,'ftpReader');
-insert into endpoint_type (id, name) values (4,'ftpWriter');
-insert into endpoint_type (id, name) values (5,'jmsReader');
-insert into endpoint_type (id, name) values (6,'jmsWriter');
-insert into endpoint_type (id, name) values (7,'httpReader');
+insert into endpoint_type (id, name, createdon, modifiedon,createdby,modifiedby) values (1,'fileReader', NOW(),NOW(),1,1);
+insert into endpoint_type (id, name, createdon, modifiedon,createdby,modifiedby) values (2,'fileWriter', NOW(),NOW(),1,1);
+insert into endpoint_type (id, name, createdon, modifiedon,createdby,modifiedby) values (3,'ftpReader', NOW(),NOW(),1,1);
+insert into endpoint_type (id, name, createdon, modifiedon,createdby,modifiedby) values (4,'ftpWriter', NOW(),NOW(),1,1);
+insert into endpoint_type (id, name, createdon, modifiedon,createdby,modifiedby) values (5,'jmsReader', NOW(),NOW(),1,1);
+insert into endpoint_type (id, name, createdon, modifiedon,createdby,modifiedby) values (6,'jmsWriter', NOW(),NOW(),1,1);
+insert into endpoint_type (id, name, createdon, modifiedon,createdby,modifiedby) values (7,'httpReader', NOW(),NOW(),1,1);

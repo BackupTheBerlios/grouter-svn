@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net"  %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
+
 
 
 <!-- %@ taglib uri="http://displaytag.sf.net" prefix="display" % -->
@@ -24,8 +27,6 @@
 
 <div id="mainContent">
 
-
-
         <display:table name="${messages}" export="true" id="row" class="dataTable" pagesize="20"
                        cellspacing="0" decorator="org.displaytag.decorator.TotalTableDecorator"  requestURI="/gweb/message/list.do">
 
@@ -35,10 +36,6 @@
 
             <display:column value="Detail" title="" sortable="false" href='edit.do' paramId="id" paramProperty="id" />
         </display:table>
-
-
-
-
 </div>
 </body>
 </html>

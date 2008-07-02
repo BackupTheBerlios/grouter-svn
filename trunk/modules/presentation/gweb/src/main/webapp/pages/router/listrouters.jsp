@@ -3,6 +3,8 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+<%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
+
 
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">

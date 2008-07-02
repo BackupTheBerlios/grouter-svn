@@ -10,4 +10,5 @@ CREATE TABLE if not exists job_type
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into job_type (id, name) values (1, 'backup'); 
+insert into job_type (id, name) values (1, 'SYNCHRONOUS');
+insert into job_type (id, name) values (2, 'ASSYNCHRONOUS'); 

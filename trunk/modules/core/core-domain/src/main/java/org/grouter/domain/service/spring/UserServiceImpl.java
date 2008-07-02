@@ -84,12 +84,19 @@ public class UserServiceImpl implements UserService
         {
             throw new IllegalArgumentException("User id was null");
         }
-        if (UserState.values.get(userState) == null)
+        if ( !UserState.values.containsKey(userState.getId()) )
         {
-            throw new IllegalArgumentException("Provided state does not exist. user :" + userState);
+            throw new IllegalArgumentException("Provided state does not exist. User state was " + userState);
         }
 
         User user = findById(id);
+
+        if(  user.getUserState().equals( UserState.BLOCKED ) && userState.equals( UserState.NEW ) )
+        {
+            throw new IllegalStateException( "A blocked user can not be set to state new" );
+
+        }
+
         user.setUserState(userState);
         save(user);
     }

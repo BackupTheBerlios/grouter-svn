@@ -15,8 +15,10 @@ CREATE TABLE user_role (
 
 
 -- Add all admin users
-insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 1);
+insert into user_role(user_id, role_id, createdon, modifiedon,createdby,modifiedby) values( ( select id from user where username = 'admin' ), 1,NOW(),NOW(),1,1);
 -- Add all reviewers
-insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 2);
+insert into user_role(user_id, role_id, createdon, modifiedon,createdby,modifiedby) values( ( select id from user where username = 'admin' ), 2,NOW(),NOW(),1,1);
 -- Add all super reviewers
-insert into user_role(user_id, role_id) values( ( select id from user where username = 'admin' ), 3);
+insert into user_role(user_id, role_id, createdon, modifiedon,createdby,modifiedby) values( ( select id from user where username = 'admin' ), 3,NOW(),NOW(),1,1);
+-- Add role editor
+insert into user_role(user_id, role_id, createdon, modifiedon,createdby,modifiedby) values( ( select id from user where username = 'admin' ), 4,NOW(),NOW(),1,1);

@@ -128,6 +128,11 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
         throw new NotImplementedException("implemente this");
     }
 
+    public List<Router> searchRouter(String searchText)
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public Map findAllEndPointTypes()
     {
         throw new NotImplementedException("implemente this");

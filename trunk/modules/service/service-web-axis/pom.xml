@@ -9,9 +9,9 @@
         <artifactId>platform</artifactId>
         <version>0.1.1-SNAPSHOT</version>
     </parent>
-    <modules>
+    <!-- modules>
         <module>ws-service</module>
         <module>ws-service-client</module>
         <module>war-ws</module>
-    </modules>
+    </modules -->
 </project>

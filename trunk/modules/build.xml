@@ -7,7 +7,6 @@
     <property name="applicationserverHome" value="/Applications/resin....."/>
     <property name="warInLocalRepost" value="/org/grouter/...../2.0-SNAPSHOT/gweb-1.0-SNAPSHOT.war"/>
 
-
     <!-- Deploy war modules to Resing on test server -->
     <target name="recreate_db" description="Recreate the database">
         <echo>Running database clean script and restore</echo>
@@ -29,8 +28,8 @@
         </exec>
     </target>
 
-    <!-- Deploy war modules to Resing on test server -->
-    <target name="redeploy_war" description="Redeploy deploly war file from local repostitory">
+    <!-- Deploy war modules to test server -->
+    <target name="test.deploy" description="Redeploy deploly war file from local repostitory">
         <echo></echo>
         <echo></echo>
         <echo>Copying gweb war file to resing web app for deployment</echo>

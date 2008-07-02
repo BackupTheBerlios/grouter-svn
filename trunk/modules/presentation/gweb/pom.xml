@@ -44,6 +44,14 @@
         | Third party dependencies
         |-->
         <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.gwt-sl</groupId>
+            <artifactId>gwt-sl</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.javasoft</groupId>
             <artifactId>javaee</artifactId>
         </dependency>
@@ -80,14 +88,6 @@
             <artifactId>displaytag</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mygwt</groupId>
-            <artifactId>mygwt</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
@@ -99,12 +99,14 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.concordion</groupId>
+            <artifactId>concordion</artifactId>
+        </dependency>
         <!--
         | Test: Needed for HttpUnitTests!
         |-->
@@ -127,7 +129,7 @@
     </dependencies>
     <build>
         <!--  Skip version number in war name -> simplifies depeloy process -->
-        <finalName>gweb.war</finalName>
+        <finalName>gweb</finalName>
         <plugins>
             <!-- Run using mvn jetty6:run  -->
             <plugin>

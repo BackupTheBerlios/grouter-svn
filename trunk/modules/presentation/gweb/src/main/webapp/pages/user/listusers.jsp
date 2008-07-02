@@ -7,7 +7,7 @@
 
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
+<html>
 <head>
     <title>
         <spring:message code="user.title.list"/>

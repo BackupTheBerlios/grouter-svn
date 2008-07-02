@@ -88,7 +88,8 @@
                 <c:forEach items="${nodes}" var="object">
                     <tr>
                         <td>
-                                                    <c:out value="${object.id}"/>
+                            <a href='edit.do?id=<c:out value="${object.id}"/>'><c:out value="${object.id}"/> </a>
+
                                                 </td>
 
                         <td width="5">

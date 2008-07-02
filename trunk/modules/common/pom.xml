@@ -16,7 +16,7 @@
     	need to have this binary instead.
     	 So you will need to build this module seperatly before  building the
     	 rest of the modules.-->
-        <!-- module>common-configbeans</module -->
+        <module>common-configbeans</module>
         <module>common-util</module>
     </modules>
 </project>

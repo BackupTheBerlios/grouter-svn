@@ -13,7 +13,8 @@
     <modules>
          <!-- module>gswing</module -->
         <module>gweb</module>
-            
+        <!-- module>gwtweb</module -->
+
         </modules>
 
 </project>
