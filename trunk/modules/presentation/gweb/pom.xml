@@ -28,6 +28,9 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
         </dependency>
+
+   
+
         <!-- dependency>
          <groupId>velocity</groupId>
          <artifactId>velocity</artifactId>
@@ -43,14 +46,14 @@
         <!--
         | Third party dependencies
         |-->
-        <dependency>
+        <!-- dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
         </dependency>
         <dependency>
             <groupId>org.gwt-sl</groupId>
             <artifactId>gwt-sl</artifactId>
-        </dependency>
+        </dependency -->
         <dependency>
             <groupId>com.javasoft</groupId>
             <artifactId>javaee</artifactId>

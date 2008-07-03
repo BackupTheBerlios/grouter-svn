@@ -935,16 +935,16 @@
             </dependency>
 
             <!-- Gwt and mygwt -->
-            <dependency>
+            <!-- dependency>
                 <groupId>com.google.gwt</groupId>
                 <artifactId>gwt-user</artifactId>
-                <version>1.5</version>
+                <version>1.5.M!</version>
             </dependency>
             <dependency>
                 <groupId>org.gwt-sl</groupId>
                 <artifactId>gwt-sl</artifactId>
                 <version>0.1.5</version>
-            </dependency>
+            </dependency -->
 
             <!-- Integration test -->
             <dependency>
