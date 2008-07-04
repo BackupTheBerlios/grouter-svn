@@ -2,6 +2,11 @@
 # scp -r javax gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
 #scp -r org gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
 # --dry-run   --exclude=.svn									    	
-rsync -avz -e ssh --recursive --progress --verbose --compress --exclude=.svn /Users/georgespolyzois/grouter/trunk/grouter/tools/mavenrepos  gepo01@shell.berlios.de:/home/groups/grouter/htdocs
+
+# On ubuntu
+rsync -avz -e ssh --recursive --progress --verbose --compress --exclude=.svn /home/geopol/projects/grouter/tools/mavenrepos  gepo01@shell.berlios.de:/home/groups/grouter/htdocs
+
+
+# rsync -avz -e ssh --recursive --progress --verbose --compress --exclude=.svn /Users/georgespolyzois/grouter/trunk/grouter/tools/mavenrepos  gepo01@shell.berlios.de:/home/groups/grouter/htdocs
 #rsync -e ssh --recursive --progress --verbose --compress --exclude=.svn org gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
 #rsync -e ssh --recursive --progress --verbose --compress --exclude=.svn javax gepo01@shell.berlios.de:/home/groups/grouter/htdocs/mavenrepos
