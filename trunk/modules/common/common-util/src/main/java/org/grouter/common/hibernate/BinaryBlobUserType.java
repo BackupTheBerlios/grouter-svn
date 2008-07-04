@@ -126,7 +126,7 @@ public class BinaryBlobUserType  implements UserType
      * @throws HibernateException
      * @throws SQLException
      */
-    public void nullSafeSet(PreparedStatement preparedStatment, Object value, int index) throws
+    public void nullSafeSet(java.sql.PreparedStatement preparedStatment, Object value, int index) throws
     HibernateException, SQLException
     {
         int tempBlobId = -1;
