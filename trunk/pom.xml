@@ -935,16 +935,16 @@
             </dependency>
 
             <!-- Gwt and mygwt -->
-            <!-- dependency>
+            <dependency>
                 <groupId>com.google.gwt</groupId>
                 <artifactId>gwt-user</artifactId>
-                <version>1.5.M!</version>
+                <version>1.5</version>
             </dependency>
             <dependency>
                 <groupId>org.gwt-sl</groupId>
                 <artifactId>gwt-sl</artifactId>
-                <version>0.1.5</version>
-            </dependency -->
+                <version>0.1.5</version>            
+            </dependency>
 
             <!-- Integration test -->
             <dependency>
@@ -1385,7 +1385,7 @@
                     | Another way would be to use
                     |  mvn -Dmaven.test.skip=true clean install
                     -->
-                    <!-- skip>true</skip -->
+                    <skip>true</skip>
                     <includes>
                         <include implementation="java.lang.String">**/*.java</include>
                         <include>${basedir}/src/config</include>
