@@ -25,7 +25,6 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -229,7 +228,7 @@ public class BinaryBlobUserType  implements UserType
             }
         }
 
-        try
+  /*      try
         {
    // ORACLE         preparedStatment.setBlob(index, tempBlob);
             preparedStatment.setBlob(index, null);  // Just so that it comiles...
@@ -246,6 +245,7 @@ public class BinaryBlobUserType  implements UserType
                 //ignore
             }
         }
+        */
     }
 
     /**
