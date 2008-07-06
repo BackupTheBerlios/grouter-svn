@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Grouter home="/temp/grouter" displayName="grouter_1" id="grouter_1" rmiRegistryPort="1099"
+         rmiServicePort="2000"
+         xmlns="http://grouter.org/config.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../main/xsd/config.xsd">
+
+  <Settings>
+    <Jndi>
+      <naming.factory.initial>org.jnp.interfaces.NamingContextFactory</naming.factory.initial>
+      <naming.provider.url>jnp://localhost:1099</naming.provider.url>
+      <naming.factory.url.pkgs>org.jboss.naming:org.jnp.interfaces</naming.factory.url.pkgs>
+      <naming.queueconnectionfactoy>UIL2ConnectionFactory</naming.queueconnectionfactoy>
+    </Jndi>
+    <Logging>
+      <jms.loggingQueue>queue/GrouterQueue</jms.loggingQueue>
+    </Logging>
+  </Settings>
+
+
+  <Node id="filetest-filetest" createuniquename="true" senderStatic="BACARGO" receiverStatic="C2K">
+    <description>A name</description>
+    <createdOn>2007-01-01</createdOn>
+    <modifiedOn>2007-01-01</modifiedOn>
+    <inBoundEndPoint id="filereader_1" endPointType="FILE_READER">
+      <uri>file://temp/in</uri>
+      <clazzname>a classname</clazzname>
+      <cron>* * * *</cron>
+    </inBoundEndPoint>
+    <outBoundEndPoint id="filereader_2" endPointType="FILE_WRITER">
+      <uri>file://temp/out</uri>
+      <clazzname>a classname</clazzname>
+      <cron>* * * *</cron>
+    </outBoundEndPoint>
+  </Node>
+
+
+  <!--inFolderConfig>
+     <inFolderPath>in</inFolderPath>
+     <pollIntervallMilliSeconds>5000</pollIntervallMilliSeconds>
+     <skipFirstblankline>false</skipFirstblankline>
+     <batchReadConfig isBatchOn="false">
+         <batchSize>10</batchSize>
+         <batchThreshold>10</batchThreshold>
+     </batchReadConfig>
+ </inFolderConfig>
+ <outFolderConfig>
+     <outFolderPath>out</outFolderPath>
+ </outFolderConfig>
+ <backup backupHandlerOn="true" archiveroOn="true">
+     <backupFolderPath>backup/</backupFolderPath>
+     <archiveFolderPath>archived/</archiveFolderPath>
+ </backup>
+ <transform transformOn="false"/>
+ <error  errorHandlerOn="true">
+     <errorFolderPath>error/</errorFolderPath>
+     <errorInFolderPath>error_info</errorInFolderPath>
+     <sortOnResend>false</sortOnResend>
+     <CronJob>Every minute@0/20 * * * * ?</CronJob>
+     <errorNotification errorNotificationOn="true">
+         <notifyEveryIntervallInMilliSeconds>180000</notifyEveryIntervallInMilliSeconds>
+         <numberOfErrors>1</numberOfErrors>
+         <emailNotification>
+             <emailOnFailure>/template/emailerrornotification.xml</emailOnFailure>
+         </emailNotification>
+         <sms>
+             <smsOnFailure>/template/down.xml</smsOnFailure>
+             <smsService>/in</smsService>
+         </sms>
+     </errorNotification>
+ </error>
+ <inactivity inactivityOn="false">
+     <maxInactivityPeriodInMilliSeconds>120000</maxInactivityPeriodInMilliSeconds>
+     <emailOnInactivity>/template/erroronincativity.xml</emailOnInactivity>
+ </inactivity -->
+  <!--applicationlogger>
+      <appender type="RollingFileAppender">
+          <maxfilesize>100KB</maxfilesize>
+          <maxbackupindex>10</maxbackupindex>
+      </appender>
+      <logpattern>%d{yyyy-MM-dd HH:mm:ss};%p;%t;%x;%m;%n</logpattern>
+      <logfolderpath>/log</logfolderpath>
+      <loglevel>DEBUG</loglevel>
+  </applicationlogger>
+  <messagelogger>
+      <appender type="DailyRollingFileAppender">
+          <rollingschedule>'.'yyyy-MM-dd-a</rollingschedule>
+      </appender>
+      <logpattern>%d{yyyy-MM-dd HH:mm:ss};%p;%t;%x;%m;%n</logpattern>
+      <logfolderpath>/log</logfolderpath>
+      <loglevel>DEBUG</loglevel>
+  </messagelogger-->
+
+</Grouter>
