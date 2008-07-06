@@ -11,12 +11,15 @@
     <packaging>pom</packaging>
     <name>${artifactId}</name>
     <modules>
-    	<!-- Removed : intellij adds a source dep to this module, but
+    	<!--	
+    	Removed : intellij adds a source dep to this module, but
     	since this module only generates sources under /target we 
     	need to have this binary instead.
-    	 So you will need to build this module seperatly before  building the
-    	 rest of the modules.-->
-        <module>common-configbeans</module>
+    	So you will need to build this module seperatly before  building the
+    	rest of the modules.
+    	Finally i moved this stuff into grouter/generated
+    	-->
+        <!-- module>common-configbeans</module -->
         <module>common-util</module>
     </modules>
 </project>
