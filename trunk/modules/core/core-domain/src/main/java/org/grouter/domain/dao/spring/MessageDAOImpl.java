@@ -58,13 +58,6 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, Long> implement
         Session session = getSession();
         Query qr = session.createQuery(hsql);
         return (List<Message>) qr.setParameter("nodeid", nodeId).list();
-
-        /*
-        Criteria criteria = getSession().createCriteria(Message.class);
-        criteria.add(Expression.eq("node.id", nodeId));
-        return criteria.addOrder(Order.asc("id")).list();
-        */
-
     }
 
 
@@ -76,26 +69,4 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, Long> implement
         qr.setCacheable(true);
         return (List<Message>) qr.list();
     }
-
-    /*
-   public List<Message> findMessagesFromIndex(final String queryForMe)
-   {
-
-       FullTextSession fullTextSession = SystemServiceImpl.createFullTextSession(getSession());
-
-       MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"content"}, new StandardAnalyzer());
-       Query query = null;
-       try
-       {
-           query = parser.parse( queryForMe );
-           org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Message.class );
-           return hibQuery.list();
-       } catch (ParseException e)
-       {
-           e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-       }
-       return null;
-
-
-   } */
 }
