@@ -51,7 +51,7 @@ class JobDeleteController extends AbstractRouterController
             throws Exception
     {
         Map<String, Object> map = new HashMap<String, Object>();
-        Long id = getId(request, ID);
+        String id = getId(request, ID);
         logger.debug("Got request to delete job with id : " + id);
 
                       
@@ -74,13 +74,13 @@ class JobDeleteController extends AbstractRouterController
      * @param id  an id
      * @return an id
      */
-    private Long getId(HttpServletRequest request, String id)
+    private String getId(HttpServletRequest request, String id)
     {
         if ((request != null) && (request.getParameter(id) != null))
         {
             try
             {
-                return ServletRequestUtils.getLongParameter(request, id);
+                return ServletRequestUtils.getStringParameter(request, id);
             }
             catch (ServletRequestBindingException e)
             {

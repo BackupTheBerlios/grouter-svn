@@ -22,7 +22,7 @@ package org.grouter.presentation.controller.router;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Router;
 import org.grouter.domain.service.RouterService;
-import org.grouter.presentation.controller.job.JobCommand;
+import org.grouter.presentation.controller.job.JobEditCommand;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -56,7 +56,7 @@ public class RouterEditController extends SimpleFormController
     public RouterEditController(  )
     {
         setSessionForm( true );
-        setCommandClass( JobCommand.class );
+        setCommandClass( JobEditCommand.class );
         setFormView( FORMVIEW );
         setSuccessView( SUCCESSVIEW );
         setCommandName(ROUTER);

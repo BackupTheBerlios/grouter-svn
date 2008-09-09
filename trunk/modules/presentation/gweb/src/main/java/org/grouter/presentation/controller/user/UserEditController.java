@@ -39,7 +39,10 @@ import java.util.*;
 /**
  * Handles the edit form for a Node.
  *
+ *
+ *
  * @author Georges Polyzois
+ * @see AbstractFormController#handleRequestInternal()
  */
 public class UserEditController extends SimpleFormController
 {

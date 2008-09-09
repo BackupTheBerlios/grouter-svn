@@ -16,12 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.grouter.presentation.controller.user;
+package org.grouter.presentation.controller.job;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.grouter.domain.entities.User;
-import org.grouter.domain.service.UserService;
+import org.grouter.domain.entities.Message;
+import org.grouter.domain.service.RouterService;
 import org.grouter.presentation.controller.message.MessageListController;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,41 +33,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
- * Delegates to Service for querying in free text against Lucen index.
+ * Uses Lucene index to query
  *
  * @author Georges Polyzois
  */
-public class UserSearchController extends AbstractController
+public class JobSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String VIEW_TAMPLATE = "user/listusers";
-    private UserService userService;
+    private static final String LIST_VIEW = "message/listmessages";
 
+    private RouterService routerService;
+
+
+    public void setRouterService(RouterService routerService)
+    {
+        this.routerService = routerService;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
-            throws Exception
-    {
+            throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        // Query string
         String searchText = ServletRequestUtils.getStringParameter(request, "searchText", null);
 
-        if (StringUtils.isNotEmpty(searchText))
+        if( StringUtils.isNotEmpty( searchText ) )
         {
-            List<User> users = userService.searchUsers(searchText);
-            map.put("users", users);
+            List<Message> messages = routerService.searchMessages( searchText );
+            map.put("messages", messages);
         }
 
-        return new ModelAndView(VIEW_TAMPLATE, map);
+        return new ModelAndView(LIST_VIEW, map);
     }
 
-
-
-
-    public void setUserService(UserService userService)
-    {
-        this.userService = userService;
-    }
 
 }
