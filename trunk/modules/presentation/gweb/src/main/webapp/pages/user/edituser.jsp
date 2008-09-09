@@ -61,15 +61,15 @@
 
                 <spring:bind path="usereditcommand.user.userRoles">
                     <select name="${status.expression}" multiple="multiple" style="width: 150px">
-                        <c:forEach items="${allroles}" var="role">
+                        <c:forEach items="${allroles}" var="varrole">
                             <c:forEach items="${usereditcommand.user.userRoles}" var="currentRole">
-                                <c:if test="${currentRole.role.id == role.id}">
+                                <c:if test="${currentRole.role.id == varrole.id}">
                                     <c:set var="selected" value="true"/> 
                                 </c:if>
                                 </c:forEach>
-                                <option value="${role.id}"
+                                <option value="${varrole.id}"
                                 <c:if test="${selected}">selected="selected"</c:if>>
-                                    ${role.name}
+                                    ${varrole.name}
                                 </option>
                                 <c:remove var="selected"/>
                         </c:forEach>

@@ -89,9 +89,7 @@
                     <tr>
                         <td>
                             <a href='edit.do?id=<c:out value="${object.id}"/>'><c:out value="${object.id}"/> </a>
-
-                                                </td>
-
+                        </td>
                         <td width="5">
                             <c:if test="${object.nodeStatus.id eq 1}"><img
                                     src="/gweb/images/icon_notstarted_15x15.gif"/></c:if>

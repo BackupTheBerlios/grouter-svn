@@ -20,7 +20,7 @@
 
 
 <div id="paragraph" nowrap>
-    AAAAAAAA
+    
     An unexpected error was caught by the system.
 </div>
 

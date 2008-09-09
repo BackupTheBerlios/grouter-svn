@@ -1,31 +1,21 @@
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"  %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
 
 
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
+<html>
 <head>
     <title>
         <spring:message code="router.title.list"/>
     </title>
     <link href="../css/common.css" type="text/css" rel="stylesheet"/>
-
-    <script type="text/javascript">
-        function init()
-        {
-            DWRUtil.useLoadingMessage();
-        }
-    </script>
 </head>
 
-<body onload="init();">
-
+<body>
 <jsp:include page="menurouter.jsp"/>
-
 <div id="mainContent">
     <form action="">
         <display:table name="${routers}" export="true" id="row" class="dataTable" pagesize="5" cellspacing="0"
@@ -43,10 +33,6 @@
                             class="orderNumber" headerClass="orderNumber">
                 <a href="/gweb/node/list.do?routerid=${row.id}"> <img src="/gweb/images/gtk-goto-first-rtl.png" alt=""/> </a>
             </display:column>                                              
-            <display:column  title="Action" sortable="false" >
-                <a href="edit.do?id=${row.id}" >Edit</a> 
-            </display:column>
-
         </display:table>
     </form>
 

@@ -18,8 +18,8 @@
 </head>
 <body>
 
-                                          asasasa
-<div id="paragraph" nowrap>         aasasa
+
+<div id="paragraph" nowrap>
     An unexpected error was caught by the system.
 </div>
 
@@ -35,7 +35,6 @@
 
 
  <div id="paragraph" nowrap>
-             AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         <table>
             <tr>
                 <td valign="top">Message:</td>

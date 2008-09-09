@@ -268,7 +268,7 @@ ul.tabbed li.active {
 */
 table tr td {
     font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
-    height: 18px;
+    height: 14px;
     padding: 2px;
     text-align: left;
     vertical-align:top;
@@ -278,7 +278,7 @@ table tr td {
 table.pagedList th {
     font: 11px Verdana, Arial, Helvetica, sans-serif, bold;
     background-image: url( "../images/columnheader_gradient.gif" );
-    height: 18px;
+    height: 14px;
     padding: 2px;
     border-left: 2px solid lightgray;
     text-align: left;
