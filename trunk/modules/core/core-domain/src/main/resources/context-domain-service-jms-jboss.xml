@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+       default-autowire="byName">
+
+    <bean name="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:ConnectionFactory"/>
+    </bean>
+
+    <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+    </bean>
+
+    <!-- jms destination already defined in jboss -->
+    <bean name="testDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="queue/GrouterQueue"/>
+    </bean>
+
+    <!-- jmsTemplate for client -->
+    <!-- bean name="testMessageTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="defaultDestination" ref="testDestination"/>
+        <property name="receiveTimeout" value="1"/>
+    </bean  -->
+
+    <!-- jms asynchronous listener for client -->
+    <bean id="messageListenerService" class="org.grouter.domain.service.spring.RouterQueueListenerImpl"/>
+    <bean id="testMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="concurrentConsumers" value="1"/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+        <property name="destination" ref="testDestination"/>
+        <property name="messageListener" ref="messageListenerService"/>
+    </bean>
+
+</beans>

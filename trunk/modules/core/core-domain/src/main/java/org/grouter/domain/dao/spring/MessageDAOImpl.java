@@ -54,15 +54,16 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, Long> implement
 
     public List<Message> findMessagesForNode(String nodeId)
     {
-        /* String hsql = "from Message obj where obj.node.id = :nodeid";
-     Session session = getSession();
-     Query qr = session.createQuery(hsql);
-     return (List<Message>) qr.setParameter("nodeid", nodeId).list();*/
+        String hsql = "from Message obj where obj.node.id = :nodeid";
+        Session session = getSession();
+        Query qr = session.createQuery(hsql);
+        return (List<Message>) qr.setParameter("nodeid", nodeId).list();
 
-
+        /*
         Criteria criteria = getSession().createCriteria(Message.class);
         criteria.add(Expression.eq("node.id", nodeId));
         return criteria.addOrder(Order.asc("id")).list();
+        */
 
     }
 

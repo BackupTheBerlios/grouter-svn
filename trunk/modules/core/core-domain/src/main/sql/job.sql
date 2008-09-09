@@ -1,6 +1,7 @@
 CREATE TABLE if not exists job (
-  id bigint(36) not null auto_increment,
-  idno varchar(36) ,
+--  id bigint(36) not null auto_increment,
+  id varchar(36) not null,
+  idno varchar(36) unique,
   createdon datetime,
   modifiedon datetime,
   createdby bigint(20),

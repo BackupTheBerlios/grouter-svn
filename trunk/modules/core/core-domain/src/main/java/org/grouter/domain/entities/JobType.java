@@ -52,8 +52,8 @@ public class JobType extends BaseEntity
 
 
     // waiting to start
-    public static final JobType BACKUP = new JobType(1L, "SINGLE");
-    public static final JobType MAIL = new JobType(2L, "MAIL");
+    public static final JobType SYNCHRONOUS = new JobType(1L, "SYNCHRONOUS");
+    public static final JobType ASSYNCHRONOUS = new JobType(2L, "ASSYNCHRONOUS");
 
 
     public static Map<Long, JobType> valueOfMap = new HashMap<Long, JobType>();
@@ -70,8 +70,8 @@ public class JobType extends BaseEntity
 
     static
     {
-        valueOfMap.put(BACKUP.getId(), BACKUP);
-        valueOfMap.put(MAIL.getId(), MAIL);
+        valueOfMap.put(SYNCHRONOUS.getId(), SYNCHRONOUS);
+        valueOfMap.put(ASSYNCHRONOUS.getId(), ASSYNCHRONOUS);
     }
 
     public static JobType valueOf(Long id)

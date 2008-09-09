@@ -21,6 +21,8 @@ import java.util.List;
 public class JobDAOTest extends AbstractDAOTests
 {                                                            
     private static Log log = LogFactory.getLog(JobDAOTest.class);
+    private static final String ID_JOB_WITH_NO_ROUTER = "-3";
+    private static final int NUMEROFJOBS = 3;
 
     @Override
     public void testFindById()
@@ -28,7 +30,7 @@ public class JobDAOTest extends AbstractDAOTests
         Job found = jobDAO.findById(JOB_ID);
         assertNotNull(found.toString());
         assertEquals(JOB_ID, found.getId());
-        assertEquals("displayname", found.getDisplayName());
+        assertEquals("Job 1", found.getDisplayName());
     }
 
     @Override
@@ -36,11 +38,12 @@ public class JobDAOTest extends AbstractDAOTests
     {
         Router router = routerDAO.findById(ROUTER_ID);
 
-        Job job = new Job( "displayname", "cronexpr", JobState.RUNNING, JobType.BACKUP, router);
+        Job job = new Job( "-id123", "displayname", "cronexpr", JobState.RUNNING, JobType.SYNCHRONOUS, router);
         job.setDisplayName("A displayname");
+        job.setIdNo("no");
         jobDAO.save(job);
         flushSession();
-        Long id = job.getId();
+        String id = job.getId();
         Map map = jdbcTemplate.queryForMap("SELECT * FROM job WHERE id = ?", new Object[]{id});
         assertEquals("A displayname", map.get("displayname"));
     }
@@ -82,10 +85,10 @@ public class JobDAOTest extends AbstractDAOTests
     @Override
     public void testDelete()
     {
-        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + JOB_ID));
-        jobDAO.delete(JOB_ID);
+        assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + ID_JOB_WITH_NO_ROUTER));
+        jobDAO.delete(ID_JOB_WITH_NO_ROUTER);
         flushSession();
-        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + JOB_ID));
+        assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM job WHERE id =" + ID_JOB_WITH_NO_ROUTER));
     }
 
 
@@ -93,7 +96,7 @@ public class JobDAOTest extends AbstractDAOTests
     public void testFindAll()
     {
         List<Job> job = jobDAO.findAll();
-    //    assertEquals(TOTALNUMBEROFUSERS, user.size());
+        assertEquals(NUMEROFJOBS, job.size());
     }
 
 

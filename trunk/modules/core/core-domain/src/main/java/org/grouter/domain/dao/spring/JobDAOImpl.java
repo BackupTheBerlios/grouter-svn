@@ -29,7 +29,7 @@ import org.hibernate.Session;
  *
  * @author Georges Polyzois
  */
-public class JobDAOImpl extends GenericHibernateDAO<Job, Long> implements JobDAO
+public class JobDAOImpl extends GenericHibernateDAO<Job, String> implements JobDAO
 {
     Logger logger = Logger.getLogger(JobDAOImpl.class);
 

@@ -65,12 +65,12 @@ public class JobServiceImpl implements JobService
     }
 
 
-    public Job findById(Long id)
+    public Job findById(String id)
     {
         return jobDAO.findById(id);
     }
 
-    public void delete(final Long id)
+    public void delete(final String id)
     {
         jobDAO.delete(id);
     }

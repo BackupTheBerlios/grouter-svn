@@ -67,6 +67,21 @@ public class Router extends BaseEntity
     @OneToMany(mappedBy = "router",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Node> nodes = new HashSet<Node>();
 
+
+
+    /*
+     * The inverse target property of the target entity. We do not need to enter the foreign
+     * key kolumn as we do in the hbm mapping file -> less verbose.
+     * mappedBy means inverse="true"  meaning that any changes made to this collection
+     * is not persisted. If you want to persist it you need to call job.setRouter(...)
+     * on the item in the Set
+     *
+     */
+    @OneToMany(mappedBy = "router",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Job> jobs = new HashSet<Job>();
+
+
+
     @ManyToOne( cascade = {CascadeType.ALL} )
     @JoinColumn(name = "settings_fk")
     private Settings settings;
@@ -186,6 +201,16 @@ public class Router extends BaseEntity
     public void setSettings(final Settings settings)
     {
         this.settings = settings;
+    }
+
+    public Set<Job> getJobs()
+    {
+        return jobs;
+    }
+
+    public void setJobs(Set<Job> jobs)
+    {
+        this.jobs = jobs;
     }
 
     public String printNodes()

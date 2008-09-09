@@ -42,11 +42,8 @@ public class Node extends BaseEntity
 {
     @Id
     @Column(name = "id")
-    //@GeneratedValue(generator = "system-uuid")  This can be used if you will not assign the key yourself
     @GenericGenerator(name = "system-uuid", strategy = "assigned")
-    //@GeneratedValue(strategy = GenerationType.AUTO)  This can be used if you have autoincrement set in db
     @NotNull
-    // Hibernate search
     @DocumentId
     private String id;
 

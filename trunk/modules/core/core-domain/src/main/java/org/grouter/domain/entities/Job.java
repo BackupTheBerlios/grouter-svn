@@ -20,6 +20,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.NotNull;
 
@@ -40,17 +41,22 @@ import java.util.Map;
 @Indexed( index="indexes/job" )  // Entity will be indexed for querying using Hibernate SystemServiceImpl
 public class Job extends BaseEntity
 {
+    // @Id @Column(name = "id")  @GeneratedValue(strategy = GenerationType.) @NotNull @DocumentId     private Long id;
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "system-uuid", strategy = "assigned")
     @NotNull
     @DocumentId
-    private Long id;
+    private String id;
 
     @Column(name = "displayname")
     @NotNull
     @Field(index = Index.TOKENIZED, store = Store.YES)
     private String displayName;
+
+    @Column(name = "idno")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    private String idNo;
 
 //    @Column(name = "jobordernumber")
 //    @NotNull
@@ -76,8 +82,9 @@ public class Job extends BaseEntity
     //@Field(index = Index.TOKENIZED, store = Store.YES)
     private Date endedOn;
 
+
     @ManyToOne
-    @JoinColumn(name = "job_state_fk")
+    @JoinColumn(name = "job_state_fk" )
     @NotNull
     private JobState jobState;
 
@@ -104,11 +111,12 @@ public class Job extends BaseEntity
     {
     }
 
-    public Job(final String displayName, final String cronExpression,
+    public Job(final String id, final String displayName, final String cronExpression,
                final JobState jobState,
                final JobType jobType,
                final Router router)
     {
+        this.id = id;
         this.displayName = displayName;
         this.cronExpression = cronExpression;
         this.jobState = jobState;
@@ -116,12 +124,12 @@ public class Job extends BaseEntity
         this.router = router;
     }
 
-    public Long getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(final Long id)
+    public void setId(String id)
     {
         this.id = id;
     }
@@ -207,5 +215,12 @@ public class Job extends BaseEntity
     {
         this.endedOn = endedOn;
     }
-       
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
 }

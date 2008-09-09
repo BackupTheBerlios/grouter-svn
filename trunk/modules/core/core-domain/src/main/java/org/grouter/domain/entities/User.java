@@ -108,7 +108,7 @@ public class User extends BaseEntity
     private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 
-    // static initialized types - users that are alwqys creatd in the system
+    // static initialized types - users that are always creatd in the system
     public static final User SYSTEM = new User(1L);
     public static final User ADMIN = new User(2L);
     private final static Map<Long, User> valueOfMap = new LinkedHashMap<Long, User>(2);

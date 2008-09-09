@@ -39,7 +39,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     final static Long SENDER_ID = -1L;
     final static String ENDPOINT_ID = "-inendpoint1";
     final static Long SETTINGS_ID = -1L;
-    final static Long JOB_ID = -1L;
+    final static String JOB_ID = "-1";
     Long USER_ID = -1L;
     Long USER_NOADDRESS_ID = -2L;  // no address on this user
     Long ADMIN_ID = 1L;

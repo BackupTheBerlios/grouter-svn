@@ -11,10 +11,10 @@ create table job_state
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name) values (1,NOW(),NOW(),1,1,'PENDING', 'Starting status when job is not started yet');
-insert into job_state (id, createdon, modifiedon,createdby,modifiedby,name) values (2,NOW(),NOW(),1,1,'RUNNING', 'Job is running');
-insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name) values (3,NOW(),NOW(),1,1,'STOPPING', 'Job is stopping');
-insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name) values (4,NOW(),NOW(),1,1,'STOPPED', 'Job has stopped');
-insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name) values (5,NOW(),NOW(),1,1,'ERROR', 'Job has error and can not continue processing');
+insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name,description) values (1,NOW(),NOW(),1,1,'PENDING', 'Starting status when job is not started yet');
+insert into job_state (id, createdon, modifiedon,createdby,modifiedby,name,description) values (2,NOW(),NOW(),1,1,'RUNNING', 'Job is running');
+insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name,description) values (3,NOW(),NOW(),1,1,'STOPPING', 'Job is stopping');
+insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name,description) values (4,NOW(),NOW(),1,1,'STOPPED', 'Job has stopped');
+insert into job_state (id,createdon, modifiedon,createdby,modifiedby, name,description) values (5,NOW(),NOW(),1,1,'ERROR', 'Job has error and can not continue processing');
 
 

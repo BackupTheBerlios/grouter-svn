@@ -27,7 +27,7 @@ import org.grouter.domain.entities.Job;
  *
  * @author Georges Polyzois
  */
-public interface JobDAO extends GenericDAO<Job, Long>
+public interface JobDAO extends GenericDAO<Job, String>
 {
 
 }

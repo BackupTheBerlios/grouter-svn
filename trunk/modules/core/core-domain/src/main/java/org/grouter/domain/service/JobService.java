@@ -65,7 +65,7 @@ public interface JobService
      * @param id of user
      * @return a User
      */
-    Job findById(Long id);
+    Job findById(String id);
 
 
     /**
@@ -73,7 +73,7 @@ public interface JobService
      *
      * @param id
      */
-    void delete(Long id);
+    void delete(String id);
 
 
 }

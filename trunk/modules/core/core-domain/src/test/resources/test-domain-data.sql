@@ -9,7 +9,7 @@ insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '-ine
 insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '-outendpoint2', 'file://temp/out', 'clazzname.FilWriter','* * * * * ', 2);
 insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ('-inendpoint3', 'ftp://127.0.0.1/in', 'clazzname.FtpReader','* * * * * ', 3);
 insert into endpoint (id, uri, clazzname, cron, endpoint_type_fk) values ( '-outendpoint4', 'ftp://127.0.0.1/out', 'clazzname.FtpWriter','* * * * * ', 2);
-
+                        
 insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1000, 'ftpHost', 'localhost', '-inendpoint1');
 insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1001, 'ftpPort', '12345', '-inendpoint1');
 insert into endpoint_context (id, keyname, value, endpoint_fk) values (-1002, 'fileList', 'file1,file2', '-inendpoint1');
@@ -51,9 +51,9 @@ insert into user (id, username, password, firstname, lastname, address_fk, user_
 insert into user_role (id, user_id, role_id) values (-6, -4, 1);
 
 -- Jobs
-insert into job (id,idno,displayname,cronexpression,startedon, endedon, job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( -1,'jobno' ,'displayname','* * * * *', Now(), ADDDATE( CURDATE(), 1 ) ,1,1,'--rid_1',1,1 , Now(), Now());
-insert into job (id,idno,displayname,cronexpression,startedon, endedon, job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( -2,'jobno','a name','* * * * *',Now(), ADDDATE( CURDATE(), 1 ), 2,1,'--rid_1' ,1,1 , Now(), Now());
-insert into job (id,idno,displayname,cronexpression,startedon, endedon, job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( -3,'jobno','Display name 3','* * * * *', Now(), ADDDATE( CURDATE(), 1 ),3,1,'--rid_1' ,1,1 , Now(), Now());
+insert into job (id,idno,displayname,cronexpression,startedon, endedon, job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( '-1','jobno1' ,'Job 1','* * * * *', Now(), ADDDATE( CURDATE(), 1 ) ,1,1,'--rid_1',1,1 , Now(), Now());
+insert into job (id,idno,displayname,cronexpression,startedon, endedon, job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( '-2','jobno2','Job 2','* * * * *',Now(), ADDDATE( CURDATE(), 1 ), 2,1,'--rid_1' ,1,1 , Now(), Now());
+insert into job (id,idno,displayname,cronexpression,startedon, endedon, job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( '-3','jobno3','Job 3','* * * * *', Now(), ADDDATE( CURDATE(), 1 ),3,1,null ,1,1 , Now(), Now());
 -- insert into job (id,idno,displayname,cronexpression,job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( -1,'jobno' ,'displayname','* * * * *',1,1,'--rid_1',1,1 , Now(), Now());
 -- insert into job (id,idno,displayname,cronexpression,job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( -2,'jobno','a name','* * * * *', 2,1,'--rid_1' ,1,1 , Now(), Now());
 -- insert into job (id,idno,displayname,cronexpression,job_state_fk,job_type_fk,router_fk, createdby, modifiedby, createdon, modifiedon) values ( -3,'jobno','another name','* * * * *',  3,1,'--rid_1' ,1,1 , Now(), Now());
