@@ -23,6 +23,7 @@
 package org.grouter.domain.entities;
 
 
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
@@ -63,17 +64,14 @@ public class User extends BaseEntity
     private String userName;
 
     @Column(name = "firstname")
-    @NotNull
     @Field(index = Index.TOKENIZED, store = Store.YES)
     private String firstName;
 
     @Column(name = "lastname")
-    @NotNull
     @Field(index = Index.TOKENIZED, store = Store.YES)
     private String lastName;
 
     @Column(name = "password")
-    @NotNull
     private String password;
 
     @Column(name = "expireson")
@@ -103,8 +101,11 @@ public class User extends BaseEntity
      * is not persisted. If you want to persist it you need to call node.setRouter(...)
      * on the item in the Set
      *
+     * We are using cascade on delete in DB - avoids a delete for every user_role row
+     * -> @org.hibernate.annotations.OnDelete(action= OnDeleteAction.CASCADE)
      */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @org.hibernate.annotations.OnDelete(action= OnDeleteAction.CASCADE)
     private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 

@@ -72,5 +72,9 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, Long> implements Mes
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    public void deleteNoLoad(Long aLong) {
+        throw new NotImplementedException();
+    }
 }
 

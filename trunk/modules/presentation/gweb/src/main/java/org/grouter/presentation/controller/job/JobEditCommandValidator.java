@@ -23,11 +23,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * Created by IntelliJ IDEA.
- * User: georgespolyzois
- * Date: Sep 5, 2008
- * Time: 9:33:54 PM
- * To change this template use File | Settings | File Templates.
+ *
+ * @author Georges Polyzois
  */
 public class JobEditCommandValidator implements Validator {
 
@@ -42,7 +39,7 @@ public class JobEditCommandValidator implements Validator {
 
     public boolean supports(Class clazz)
     {
-        return JobEditCommandValidator.class.isAssignableFrom(clazz);
+        return JobEditCommand.class.isAssignableFrom(clazz);
     }
 
     public void validate(Object object, Errors errors)

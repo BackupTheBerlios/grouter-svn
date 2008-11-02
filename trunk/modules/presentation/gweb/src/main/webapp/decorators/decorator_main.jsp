@@ -19,38 +19,29 @@
     <link href="/gweb/css/datatable.css" rel="stylesheet" type="text/css" >
     <link href="/gweb/css/lightwindow.css" type="text/css" rel="stylesheet"/>         
 
-    <!-- script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script -->
-
-    <script type="text/javascript" charset="iso8859-1" src="../javascripts/common.js"></script>
+    <!-- script type="text/javascript" charset="iso8859-1" src="../javascripts/common.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
-    <!-- script type="text/javascript" charset="iso8859-1" src="/javascripts/effects.js"></script -->
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/common.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/prototype.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/effects.js"></script>
-    <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/scriptaculous.js"></script -->
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/util.js"></script>
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script>
-    <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/lightwindow-2.0.js"></script -->
-    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/lightwindow-2.0.js"></script>
-    <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/accordion-2.0.js"></script -->
-    <!-- script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/accordion-2.0.js"></script -->
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/dwr/interface/RouterService.js"></script >
+    <script type="text/javascript" charset="iso8859-1" src="/gweb/javascripts/lightwindow-2.0.js"></script-->
     <link rel="icon" href="/gweb/images/favicon.ico" type="image/x-icon"/>
 
 
     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/page_main.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.tooltip.css"/>
-    <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
+    <script src="/gweb/javascripts/jquery/jquery-1.2.6.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script>
+    <script src="/gweb/javascripts/jquery/jquery.form.js" type="text/javascript"></script>
 
 
     <script type="text/javascript">
@@ -126,11 +117,6 @@
             });
         });
     </script>
-    <!-- JQuery Validation plugin -->
-    <!-- link rel="stylesheet" type="text/css" media="screen" href="/gweb/css/jquery/jquery.screen.css"/>
-    <script src="/gweb/javascripts/jquery/jquery.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script -->
     <decorator:head/>
 </head>
 

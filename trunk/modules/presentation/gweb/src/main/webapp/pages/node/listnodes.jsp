@@ -1,17 +1,17 @@
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"  %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
-
-<% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
-
 <html>
 <head>
+
     <title>
-        Nodes :: List
+        <spring:message code="node.title.list"/>
     </title>
-    <script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
+    <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+    <!-- script type="text/javascript" charset="iso8859-1" src="../../javascripts/engine.js"></script>
     <script type="text/javascript" charset="iso8859-1" src="../../javascripts/util.js"></script>
     <script type="text/javascript" charset="iso8859-1"
             src="/gweb/javascripts/prototype.js"></script>
@@ -40,7 +40,6 @@
             {
                 DWRUtil.setValue(data[i].id, data[i].numberOfMessagesHandled + 2);
             }
-            //DWRUtil.setValue("reply", data[0].numberOfMessagesHandled);
         }
 
         function registerForCallbacks()
@@ -65,69 +64,126 @@
         }
 
         callOnLoad(init);
+    </script -->
+
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            // hides the slickbox as soon as the DOM is ready
+            // (a little sooner than page load)
+
+            $('#searchbox').hide();
+
+            // toggles the slickbox on clicking the noted link
+            $('a#search-toggle').click(function()
+            {
+                $('#searchbox').toggle(100);
+                return false;
+            });
+        });
     </script>
+
 </head>
-<body onload="init();">
-<jsp:include page="../node/menunode.jsp"/>
+<body>
+
+
+<div id="menuAction">
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <a href="list.do" class="iconlink"><img src="/gweb/images/view_detailed_24x24.png" alt="List"/>
+                    <spring:message code="node.menu.action.list"/>
+
+                </a>
+
+                <a href="edit.do" params="lightwindow_width=400,lightwindow_height=400"
+                   class="lightwindow page-options iconlink"> <img src="/gweb/images/edit_add_24x24.png" alt="New">
+                </a>
+            </td>
+            <td>
+                <div id="form" align="right">
+                    <form action="/gweb/node/search.do" enctype="multipart/form-data" name="searchUsersForm"
+                          method="get">
+                                    <span id="searchHelp" title="Google like queries -
+                        To search for test, tests or tester, you can use the search: <br/>
+                        test*
+                        <br/>
+                        To search for 'text' or 'test' you can use the search: <br/>
+                        te?t   <br/>
+                        More info : http://lucene.apache.org/
+                        ">?</span>
+                        <input id="searchText" value="" name="searchText" type="text">
+                        <input type="submit" value="Search" name="search" size="10"/>
+                    </form>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                <a href="#" id="search-toggle">Search</a>
+
+                <div id="searchbox">
+                    <form id="menuform" action="" enctype="multipart/form-data" name="mainForm"
+                          method="get">
+                        Selected router:
+                        <select id="routerid" name="routerid" onchange="this.form.submit()">
+                            <option value="">--- router ---</option>
+                            <c:forEach items="${routers}" var="object">
+                                <option
+                                        <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if>
+                                        value="${object.id}">${object.id}</option>
+                            </c:forEach>
+                        </select>
+                        <!-- Update in realtime: -->
+                        Updates (realtime):<input id="checkboxIsRegisterdForCallbacks"
+                                                  type="checkbox" value="Read"
+                                                  onclick="registerForCallbacks()"/>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+
+
 <div id="mainContent">
     <form id="mainForm" action="">
-        <table class="pagedList" border="0" width="100%" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th><a href="?sortBy=id">Id</a></th>
-                    <th><a href="?sortBy=id">Status</a></th>
-                    <th><a href="?sortBy=firstName">Name</a></th>
-                    <th><a href="?sortBy=firstName">#Messages</a></th>
-                    <th><a href="?sortBy=firstName">In</a></th>
-                    <th><a href="?sortBy=firstName">Out</a></th>
-                    <th>Messages</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${nodes}" var="object">
-                    <tr>
-                        <td>
-                            <a href='edit.do?id=<c:out value="${object.id}"/>'><c:out value="${object.id}"/> </a>
-                        </td>
-                        <td width="5">
-                            <c:if test="${object.nodeStatus.id eq 1}"><img
-                                    src="/gweb/images/icon_notstarted_15x15.gif"/></c:if>
-                            <c:if test="${object.nodeStatus.id eq 2}"><img
-                                    src="/gweb/images/icon_running_15x15.png"/></c:if>
-                            <c:if test="${object.nodeStatus.id eq 3}"><img
-                                    src="/gweb/images/icon_success_15x15.gif"/></c:if>
-                            <c:if test="${object.nodeStatus.id eq 4}"><img
-                                    src="/gweb/images/icon_stopped_15x15.gif"/></c:if>
-                            <c:if test="${object.nodeStatus.id eq 5}"><img
-                                    src="/gweb/images/icon_error_15x15.gif"/></c:if>
-                        </td>
-                        <td>
-                            <c:out value="${object.displayName}"/>
-                        </td>
-                        <td id="${object.id}">
-                            <c:out value="${object.numberOfMessagesHandled}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.inBound.uri}"/>
-                        </td>
-                        <td>
-                            <c:out value="${object.outBound.uri}"/>
-                        </td>
-                        <td>
-                            <a href="/gweb/message/list.do?nodeid=${object.id}"> <img src="/gweb/images/gtk-goto-first-rtl.png" alt=""/> </a>
-                        </td>
-
-                        <td>
-
-                            <a href='edit.do?id=<c:out value="${object.id}"/>'> Edit </a>
-                            <a href='send.do?id=<c:out value="${object.id}"/>&operation=stop'> Stop </a>
-                            <a href='send.do?id=<c:out value="${object.id}"/>&operation=start'> Start </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <display:table name="${nodes}" export="true" id="row" class="dataTable" pagesize="5" cellspacing="0"
+                       decorator="org.displaytag.decorator.TotalTableDecorator" requestURI="/gweb/node/list.do">
+            <display:column titleKey="node.list.table.messages" sortable="false"
+                            class="orderNumber" headerClass="orderNumber" style="width:10px;">
+                <a href="/gweb/node/list.do?nodeid=${row.id}"> <img src="/gweb/images/gtk-goto-first-rtl.png" alt=""/>
+                </a>
+            </display:column>
+            <display:column property="id" titleKey="node.list.table.id" sortable="true" class="name"
+                            headerClass="name" style="width: 15px;"/>
+            <display:column property="displayName" titleKey="node.list.table.displayName" sortable="true" class="name"
+                            headerClass="name"/>
+            <display:column property="displayName" titleKey="node.list.table.displayName" sortable="true" class="name"
+                            headerClass="name">
+                <c:if test="${object.nodeStatus.id eq 1}"><img
+                        src="/gweb/images/icon_notstarted_15x15.gif"/></c:if>
+                <c:if test="${row.nodeStatus.id eq 2}"><img
+                        src="/gweb/images/icon_running_15x15.png"/></c:if>
+                <c:if test="${row.nodeStatus.id eq 3}"><img
+                        src="/gweb/images/icon_success_15x15.gif"/></c:if>
+                <c:if test="${row.nodeStatus.id eq 4}"><img
+                        src="/gweb/images/icon_stopped_15x15.gif"/></c:if>
+                <c:if test="${row.nodeStatus.id eq 5}"><img
+                        src="/gweb/images/icon_error_15x15.gif"/></c:if>
+            </display:column>
+            <display:column property="numberOfMessagesHandled" titleKey="node.list.table.numberOfMessagesHandled" sortable="true"
+                            class="orderNumber" headerClass="orderNumber"/>
+            <display:column property="inBound.uri" titleKey="node.list.table.inbound.uri" sortable="true"
+                            class="orderNumber" headerClass="orderNumber"/>
+            <display:column property="outBound.uri" titleKey="node.list.table.outbound.uri" sortable="true"
+                            class="orderNumber" headerClass="orderNumber"/>
+            
+        </display:table>
 
     </form>
 </div>

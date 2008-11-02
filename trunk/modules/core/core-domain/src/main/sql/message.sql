@@ -6,10 +6,9 @@ create table message
     modifiedon datetime,
     createdby bigint(20),
     modifiedby bigint(20),
+    sender_fk varchar(36),
     content varchar(255) not null,
     node_fk varchar(34) not null,
-    foreign key (node_fk ) references node (id),
-    sender_fk varchar(36),
---    foreign key (sender_fk) references sender (id),
+    foreign key (node_fk ) references node (id)  ON DELETE CASCADE,
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

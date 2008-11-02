@@ -150,6 +150,10 @@ public interface GenericDAO<T, ID extends Serializable>
     void delete(ID id);
 
 
+
+    void deleteNoLoad(final ID id);
+
+
     /**
      * We are using Hibernate SystemServiceImpl. In order to update the index for a specific entity use
      * this method.

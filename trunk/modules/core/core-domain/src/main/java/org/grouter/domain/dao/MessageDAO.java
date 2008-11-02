@@ -41,8 +41,8 @@ public interface MessageDAO extends GenericDAO<Message, Long>
     List<Message> findMessagesForNode(String nodeId);
 
 
-    // suing a cache
-    public List<Message> findAllMessages();
+    // using a cache
+    List<Message> findAllMessages();
 
 
 }

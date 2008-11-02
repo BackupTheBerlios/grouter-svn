@@ -47,7 +47,7 @@ public class RouterQueueMDB implements MessageListener
     //@JndiInject(jndiName = ExternalSystemsLocal.LOOKUP_NAME)
     //private ExternalSystemsHandler externalSystemsHandler;
 
-    private static Logger logger = Logger.getLogger(RouterQueueMDB.class);
+    private final static Logger logger = Logger.getLogger(RouterQueueMDB.class);
 
     // This does not work in jboss...
     //@EJB

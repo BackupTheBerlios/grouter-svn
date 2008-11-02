@@ -45,7 +45,7 @@ public class RouterBeanService implements RouterLocalService, RouterRemoteServic
 {
     //Seam @Logger annotation is used to inject the component's Log instance
     // @Logger
-    private static Logger logger = Logger.getLogger(RouterBeanService.class);
+    private final static Logger logger = Logger.getLogger(RouterBeanService.class);
 
     @PersistenceContext(unitName = PersistenceContextName.PERSISTENCE)
     private EntityManager entityManager;

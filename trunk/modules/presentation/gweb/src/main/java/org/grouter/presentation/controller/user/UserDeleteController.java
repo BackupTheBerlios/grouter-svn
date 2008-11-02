@@ -36,42 +36,44 @@ import java.util.Map;
  *
  * @author Georges Polyzois
  */
-class UserDeleteController extends AbstractRouterController
-{
+class UserDeleteController extends AbstractRouterController {
     private static Logger logger = Logger.getLogger(UserListController.class);
     private UserService userService;
     protected static final String LIST_VIEW = "redirect:/user/list.do?";
 
 
-    /**       
+    /**
      * Injected.
      *
      * @param userService the service
      */
-    public void setUserService(UserService userService)
-    {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
-            throws Exception
-    {
+            throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         Long id = getId(request, ID);
         logger.debug("Got request to delete user with id : " + id);
 
 
-        if (id != null)
-        {
-            // In case of an exception we are automagic redirecting to databaseerror view
-                userService.delete( id );
-                map.put(MESSAGE, "message=" + "User was deleted " + "(id=" + id + ")" );
+        if (id != null) {
+            try {
+                // In case of an exception we are automagic redirecting to databaseerror view
+                userService.delete(id);
+                map.put(MESSAGE, "message=" + "User was deleted, id=" + id );
+            } catch (Exception e)
+            {
+                logger.error(e,e);
+                map.put(MESSAGE, "message=" + "Failed to delete user, id=" + id );
+            }
         }
 
 
         logger.debug("Redirecting to :" + LIST_VIEW);
-        return new ModelAndView(LIST_VIEW , map);
+        return new ModelAndView(LIST_VIEW, map);
     }
 
 
@@ -79,19 +81,15 @@ class UserDeleteController extends AbstractRouterController
      * Helper.
      *
      * @param request a HttpServletRequest
-     * @param id  an id
+     * @param id      an id
      * @return an id
      */
-    private Long getId(HttpServletRequest request, String id)
-    {
-        if ((request != null) && (request.getParameter(id) != null))
-        {
-            try
-            {
+    private Long getId(HttpServletRequest request, String id) {
+        if ((request != null) && (request.getParameter(id) != null)) {
+            try {
                 return ServletRequestUtils.getLongParameter(request, id);
             }
-            catch (ServletRequestBindingException e)
-            {
+            catch (ServletRequestBindingException e) {
                 logger.error("Could not get id from request - probably not a valid Long", e);
             }
         }

@@ -15,24 +15,26 @@
 </head>
 
 <body>
+
+
 <jsp:include page="menurouter.jsp"/>
-<div id="mainContent">
+<div id="mainContent" >
     <form action="">
         <display:table name="${routers}" export="true" id="row" class="dataTable" pagesize="5" cellspacing="0"
                        decorator="org.displaytag.decorator.TotalTableDecorator" requestURI="/gweb/router/list.do">
-
+            <display:column  titleKey="router.list.table.nodes" sortable="false"
+                            class="orderNumber" headerClass="orderNumber" style="width:10px;">
+                <a href="/gweb/node/list.do?routerid=${row.id}"> <img src="/gweb/images/gtk-goto-first-rtl.png" alt=""/> </a>
+            </display:column>
             <display:column property="id" titleKey="router.list.table.id" sortable="true" class="name"
-                            headerClass="name"/>
+                            headerClass="name" style="width: 15px;"/>
             <display:column property="displayName" titleKey="router.list.table.displayName" sortable="true" class="name"
                             headerClass="name"/>
             <display:column property="description" titleKey="router.list.table.description" sortable="true"
                             class="orderNumber" headerClass="orderNumber" />
             <display:column property="startedOn" titleKey="router.list.table.startedOn" sortable="true"
-                            class="orderNumber" headerClass="orderNumber" format="{0,date,short}"/>
-            <display:column  titleKey="router.list.table.nodes" sortable="false"
-                            class="orderNumber" headerClass="orderNumber">
-                <a href="/gweb/node/list.do?routerid=${row.id}"> <img src="/gweb/images/gtk-goto-first-rtl.png" alt=""/> </a>
-            </display:column>                                              
+                            class="orderNumber" headerClass="orderNumber" format="{0,date,dd-MM-yyyy HH:mm:ss}"/>
+
         </display:table>
     </form>
 

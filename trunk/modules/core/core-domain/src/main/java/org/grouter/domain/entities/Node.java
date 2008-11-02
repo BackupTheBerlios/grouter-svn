@@ -20,6 +20,7 @@
 package org.grouter.domain.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
@@ -36,8 +37,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "node")
-@Indexed(index = "indexes/node")
-// Entity will be indexed for querying using Hibernate SystemServiceImpl
+@Indexed(index = "indexes/node")  
+// and makes restarts/reindexing take veeery long
 public class Node extends BaseEntity
 {
     @Id
@@ -78,8 +79,10 @@ public class Node extends BaseEntity
     private String receiver;
 
     // Messages must be stored on a Node, deleting a node should delete the messages - a very
-    // dangerous operation - since all history gets lost
+    // dangerous operation - since all history gets lost. We are using a Hibernate extension for this
+    // to avoid doing a delete n number of times. A Node can have a lot of messages -> much more efficient
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "node", fetch = FetchType.LAZY )
+    @org.hibernate.annotations.OnDelete(action= OnDeleteAction.CASCADE)
     private Set<Message> messages = new HashSet<Message>();
 
     @ManyToOne

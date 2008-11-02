@@ -6,8 +6,12 @@ import org.apache.commons.logging.LogFactory;
 import org.grouter.domain.entities.Message;
 import org.grouter.domain.entities.Receiver;
 import org.hibernate.LazyInitializationException;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.stat.SecondLevelCacheStatistics;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,7 +28,7 @@ public class MessageDAOTest extends AbstractDAOTests
     {
         //Sender sender = new Sender("A test sender");
         Message message = new Message("A test message");
-        Receiver receiver = receiverDAO.findById( RECEIVER_ID );
+        Receiver receiver = receiverDAO.findById(RECEIVER_ID);
         message.addToReceivers(receiver);
         message.setNode(nodeDAO.findById(NODE_ID));
         messageDAO.save(message);
@@ -32,7 +36,7 @@ public class MessageDAOTest extends AbstractDAOTests
 
         flushSession();
 
-        Long id =  message.getId();
+        Long id = message.getId();
 
         Map map = jdbcTemplate.queryForMap("SELECT * FROM message WHERE id = ?",
                 new Object[]{id});
@@ -97,6 +101,24 @@ public class MessageDAOTest extends AbstractDAOTests
             System.out.println(settingsStatistics);
             //System.out.println(sessionFactory.getStatistics().getSecondLevelCacheStatistics("org.grouter.domain.entities.Message"));
         }
+    }
+
+
+    public void testFindByCriteria()
+    {
+        Date startDate = new Date();
+
+        Criterion critId = Restrictions.eq("id", new Long(2));
+        Criterion crit = Restrictions.between("auditInfo.createdOn", startDate, startDate);
+        Criterion critContent = Restrictions.like("content", "A message%");
+
+
+        List results = messageDAO.findByCriteria(crit, critContent);
+        assertNotNull(results);
+
+        assertTrue( "Should have some messages" ,results.size() > 0 );
+
+
     }
 
 

@@ -22,12 +22,12 @@ package org.grouter.core.config;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
-import org.grouter.config.Context;
-import org.grouter.config.GrouterDocument;
-import org.grouter.config.NodeType;
-import org.grouter.config.NodesType;
+import org.grouter.config.*;
+import org.grouter.config.JobType;
 import org.grouter.core.util.file.FileUtils;
 import org.grouter.domain.entities.*;
+import org.grouter.domain.entities.EndPoint;
+import org.grouter.domain.entities.EndPointType;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,8 +77,12 @@ public class ConfigFactory
         router.setHomePath(uri);
         router.setSettings(getSettingsFromConfig(grouterconfig, router));
         router.setNodes(getNodes(grouterconfig, router));
+        router.setJobs(getJobs(grouterconfig, router));
         return router;
     }
+
+
+
 
     /**
      * Extract settings from xml representation to domain.
@@ -123,8 +127,8 @@ public class ConfigFactory
             final Node nodeEntity = new Node();
 
             AuditInfo auditInfo = new AuditInfo();
-            auditInfo.setCreatedBy(User.ADMIN);
-            auditInfo.setModifiedBy(User.ADMIN);
+            auditInfo.setCreatedBy(User.ADMIN.getId());
+            auditInfo.setModifiedBy(User.ADMIN.getId());
             auditInfo.setCreatedOn(new Date());
             auditInfo.setModifiedOn(new Date());
             nodeEntity.setAuditInfo(auditInfo);
@@ -185,6 +189,45 @@ public class ConfigFactory
         return result;
     }
 
+    private static Set<Job> getJobs(final GrouterDocument.Grouter grouterconfig,
+                                      final Router router) throws IllegalArgumentException
+    {
+        Set<Job> result = new HashSet<Job>();
+        JobsType nodes = grouterconfig.getJobs();
+        JobType[] nodeArr = nodes.getJobArray();
+
+        for (JobType configNode : nodeArr)
+        {
+            final Job entity = new Job();
+
+            AuditInfo auditInfo = new AuditInfo();
+            auditInfo.setCreatedBy(User.ADMIN.getId());
+            auditInfo.setModifiedBy(User.ADMIN.getId());
+            auditInfo.setCreatedOn(new Date());
+            auditInfo.setModifiedOn(new Date());
+            entity.setAuditInfo(auditInfo);
+
+            entity.setDisplayName(configNode.getDisplayname());
+            entity.setId(configNode.getId().getStringValue());
+            entity.setCronExpression(configNode.getCron());
+            entity.setStartedOn(new Date());
+            entity.setJobState( JobState.RUNNING );
+
+            if( configNode.getJobType().equals(org.grouter.config.JobTypeType.ASSYNCHRONOUS) )
+            {
+                entity.setJobType( org.grouter.domain.entities.JobType.ASSYNCHRONOUS);
+            }
+            if( configNode.getJobType().equals(org.grouter.config.JobTypeType.SYNCHRONOUS) )
+            {
+                entity.setJobType( org.grouter.domain.entities.JobType.SYNCHRONOUS);
+            }
+            entity.setRouter(router);
+
+            result.add(entity);
+        }
+        return result;
+    }
+
 
     /**
      * Create an EndPoint from an EndPoint configuration instance.
@@ -201,8 +244,8 @@ public class ConfigFactory
 
 
         AuditInfo auditInfo = new AuditInfo();
-        auditInfo.setCreatedBy(User.ADMIN);
-        auditInfo.setModifiedBy(User.ADMIN);
+        auditInfo.setCreatedBy(User.ADMIN.getId());
+        auditInfo.setModifiedBy(User.ADMIN.getId());
         auditInfo.setCreatedOn(new Date());
         auditInfo.setModifiedOn(new Date());
         nodeEntity.setAuditInfo(auditInfo);

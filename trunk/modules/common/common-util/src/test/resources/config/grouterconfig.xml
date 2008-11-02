@@ -2,7 +2,7 @@
 <GrouterConfig name="grouter"
               xmlns="http://grouter.org/config.xsd"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../cmn-configbeans/src/xsd/config.xsd"
+              xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../common-configbeans/src/xsd/config.xsd"
               xsi:noNamespaceSchemaLocation="../../../../../cmn-configbeans/src/xsd/config.xsd">
     <GlobalSettings>
            <ArchiveHandler>

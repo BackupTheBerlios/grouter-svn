@@ -38,7 +38,7 @@ import java.util.List;
 public class UserListController extends AbstractRouterController
 {
     private static Logger logger = Logger.getLogger(UserListController.class);
-    private static final String LIST_VIEW = "user/listusers";
+    private static final String LIST_VIEW = "user/listusers";   // jsp page
     private UserService userService;
 
     /**

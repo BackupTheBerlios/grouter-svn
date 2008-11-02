@@ -2,8 +2,6 @@ package org.grouter.domain.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 /**
@@ -22,16 +20,17 @@ public class AuditInfo
     @Column(name = "modifiedon")
     //@Field(index = Index.TOKENIZED, store = Store.YES)
     private Date modifiedOn;
-    @ManyToOne
-    @JoinColumn(name = "createdby")
-    private User createdBy;
-    @ManyToOne
-    @JoinColumn(name = "modifiedby")
-    private User modifiedBy;
+    //@ManyToOne
+    //@JoinColumn(name = "createdby")
+    @Column(name = "createdby")
+    private Long createdBy;
+    //@ManyToOne
+    //@JoinColumn(name = "modifiedby")
+    @Column(name = "modifiedby")
+    private Long modifiedBy;
 
     public AuditInfo()
     {
-        this.createdOn = new Date();
         this.modifiedOn = new Date();
     }
 
@@ -55,23 +54,19 @@ public class AuditInfo
         this.modifiedOn = modifiedOn;
     }
 
-    public User getCreatedBy()
-    {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy)
-    {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
-    public User getModifiedBy()
-    {
+    public Long getModifiedBy() {
         return modifiedBy;
     }
 
-    public void setModifiedBy(User modifiedBy)
-    {
+    public void setModifiedBy(Long modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
 }

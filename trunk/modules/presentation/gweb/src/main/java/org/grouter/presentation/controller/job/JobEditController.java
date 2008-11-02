@@ -115,7 +115,6 @@ public class JobEditController extends SimpleFormController {
     /**
      * Callback method for intializing command/form bean.
      */
-    @Override
     protected Object formBackingObject(HttpServletRequest request)
             throws Exception {
         JobEditCommand cmd;

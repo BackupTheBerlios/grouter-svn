@@ -1,9 +1,9 @@
 CREATE TABLE user (
   id bigint(20) NOT NULL auto_increment,
-  createdon datetime ,
-  modifiedon datetime ,
-  createdby bigint(20) ,
-  modifiedby bigint(20), 
+  createdon datetime NOT NULL,
+  modifiedon datetime NOT NULL,
+  createdby bigint(20) NOT NULL,
+  modifiedby bigint(20) NOT NULL, 
   username varchar(255) default NULL,
   firstname varchar(50) default NULL,
   lastname varchar(50) default NULL,

@@ -108,7 +108,7 @@ public class FileWriteCommand extends AbstractCommand
             AuditInfo auditInfo = new AuditInfo();
             auditInfo.setModifiedOn(new Date());
             auditInfo.setCreatedOn(new Date());
-            auditInfo.setCreatedBy( User.ADMIN );
+            auditInfo.setCreatedBy( User.ADMIN.getId() );
             message.setAuditInfo(auditInfo);
             logStrategy.log(message);
         }

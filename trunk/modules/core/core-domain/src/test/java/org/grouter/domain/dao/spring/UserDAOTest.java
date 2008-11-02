@@ -55,7 +55,7 @@ public class UserDAOTest extends AbstractDAOTests
         AuditInfo auditInfo = new AuditInfo();
         auditInfo.setCreatedOn(new Date());
         auditInfo.setModifiedOn(new Date());
-        auditInfo.setCreatedBy(User.SYSTEM);
+        auditInfo.setCreatedBy(User.SYSTEM.getId());
 
         User user = new User();
         user.setAuditInfo(auditInfo);
@@ -137,7 +137,8 @@ public class UserDAOTest extends AbstractDAOTests
         assertEquals(3, jdbcTemplate.queryForInt("SELECT count(*) FROM user_role WHERE user_id =" + USER_ID));
         assertEquals(4, jdbcTemplate.queryForInt("SELECT count(*) FROM role"));
         assertEquals(1, jdbcTemplate.queryForInt("SELECT count(*) FROM address where id=-1"));
-        userDAO.delete(USER_ID);
+        User user = (User) userDAO.load( USER_ID );
+        userDAO.delete(user);
         // Should cascade a delete to the Address entity
         flushSession();
         assertEquals(0, jdbcTemplate.queryForInt("SELECT count(*) FROM user WHERE id =" + USER_ID));

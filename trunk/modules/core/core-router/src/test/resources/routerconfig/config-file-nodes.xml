@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-Change the path to the config.xsd file to ../config.xsd
-Settings below are for working directly from trunk.
--->
-<Grouter displayName="Router 1" id="grouter_id_1" rmiRegistryPort="4099" rmiServicePort="4000"
+<Grouter displayName="Router 1" id="GR1" rmiRegistryPort="4099" rmiServicePort="4000"
          description="Test router for file nodes"
-         home="file://temp/grouter"
+         home="file://temp/grouter3"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
-         xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
+         xsi:schemaLocation="http://grouter.org/config.xsd config.xsd"
+         xsi:noNamespaceSchemaLocation="config.xsd">
 
   <Settings>
     <Jndi>
@@ -31,91 +27,60 @@ Settings below are for working directly from trunk.
     </DataSource>
   </Settings>
 
-  <GlobalJobs>
-    <Job idno="backuphandler" jobType="ARCHIVER">
-      <displayname></displayname>
+  <Jobs>
+    <Job id="GR1JO1" jobType="ASSYNCHRONOUS">
+      <displayname>A job</displayname>
       <cron>0/10 * * * * ?</cron>
       <contextparam name="ftpAuthUser" value=""/>
       <contextparam name="ftpAuthPassword" value=""/>
       <contextparam name="ftpPort" value=""/>
       <contextparam name="fileList" value="/pub/pictures/ascii/art07,/pub/pictures/ascii/art08"/>
     </Job>
-    <Job idno="1s23" jobType="ARCHIVER">
-      <displayname></displayname>
-      <cron></cron>
+    <Job id="GR1JO2" jobType="SYNCHRONOUS">
+      <displayname>Disp name</displayname>
+      <cron>* 3 2 2 1</cron>
     </Job>
-  </GlobalJobs>
+      <Job id="GR1JO3" jobType="SYNCHRONOUS">
+      <displayname>Test 123</displayname>
+      <cron>* *  * * *</cron>
+    </Job>
+  </Jobs>
 
   <Nodes>
-    <Node id="filetest" createuniquename="true" source="BACARGO_C2K" receiver="C2K1" createDirectories="true">
+    <Node id="GR1NO1" createuniquename="true" source="BACARGO_C2K" receiver="C2K1" createDirectories="true">
       <description>Test node 1</description>
       <displayName>FileToFileTest_1</displayName>
       <createdOn>2007-01-01</createdOn>
       <backup>
-        <overrideDefaultUri>file://temp/grouter/nodes/filetest/backupoverride</overrideDefaultUri>
+        <overrideDefaultUri>file://temp/grouter3/nodes/GR1NO1/backupoverride</overrideDefaultUri>
       </backup>
-      <inBoundEndPoint id="filereader_1" endPointType="FILE_READER">
-        <uri>file://temp/grouter/nodes/filetest/in</uri>
+      <inBoundEndPoint id="GR1NO1ETIN" endPointType="FILE_READER">
+        <uri>file://temp/grouter3/nodes/GR1NO1/in</uri>
         <clazzname>a classname</clazzname>
         <cron>0/5 * * * * ?</cron>
       </inBoundEndPoint>
-      <outBoundEndPoint id="filewriter_1" endPointType="FILE_WRITER">
-        <uri>file://temp/grouter/nodes/filetest/out</uri>
+      <outBoundEndPoint id="GR1NO1ETOUT" endPointType="FILE_WRITER">
+        <uri>file://temp/grouter3/nodes/GR1NO1/out</uri>
         <clazzname>a classname</clazzname>
         <cron>0/7 * * * * ?</cron>
       </outBoundEndPoint>
     </Node>
 
-    <Node id="filetest2" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
+    <Node id="GR1NO2" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
       <description>Another file to file node</description>
       <displayName>FileToFileTest_2</displayName>
       <createdOn>2007-01-01</createdOn>
       <backup/>
-      <inBoundEndPoint id="filtest12_reader" endPointType="FILE_READER">
-        <uri>file://temp/grouter/nodes/filetest2/in</uri>
+      <inBoundEndPoint id="GR1NO2ETIN" endPointType="FILE_READER">
+        <uri>file://temp/grouter3/nodes/GR1NO2/in</uri>
         <clazzname>a classname</clazzname>
         <cron>0/5 * * * * ?</cron>
       </inBoundEndPoint>
-      <outBoundEndPoint id="filtest2_reader" endPointType="FILE_WRITER">
-        <uri>file://temp/grouter/nodes/filetest2/out</uri>
+      <outBoundEndPoint id="GR1NO2ETOUT" endPointType="FILE_WRITER">
+        <uri>file://temp/grouter3/nodes/GR1NO2/out</uri>
         <clazzname>a classname</clazzname>
         <cron>0/5 * * * * ?</cron>
       </outBoundEndPoint>
     </Node>
-
-     <Node id="filetest3" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
-      <description>Another file 3</description>
-      <displayName>FileToFileTest_3</displayName>
-      <createdOn>2007-01-01</createdOn>
-      <backup/>
-      <inBoundEndPoint id="filtest13_reader" endPointType="FILE_READER">
-        <uri>file://temp/grouter/nodes/filetest3/in</uri>
-        <clazzname>a classname</clazzname>
-        <cron>0/5 * * * * ?</cron>
-      </inBoundEndPoint>
-      <outBoundEndPoint id="filtest3_reader" endPointType="FILE_WRITER">
-        <uri>file://temp/grouter/nodes/filetest3/out</uri>
-        <clazzname>a classname</clazzname>
-        <cron>0/5 * * * * ?</cron>
-      </outBoundEndPoint>
-    </Node>
-
-      <Node id="filetest4" createuniquename="true" source="FINNAIR" receiver="internal" createDirectories="true">
-      <description>Another file 4</description>
-      <displayName>FileToFileTest_4</displayName>
-      <createdOn>2007-01-01</createdOn>
-      <backup/>
-      <inBoundEndPoint id="filtest14_reader" endPointType="FILE_READER">
-        <uri>file://temp/grouter/nodes/filetest4/in</uri>
-        <clazzname>a classname</clazzname>
-        <cron>0/5 * * * * ?</cron>
-      </inBoundEndPoint>
-      <outBoundEndPoint id="filtest4_reader" endPointType="FILE_WRITER">
-        <uri>file://temp/grouter/nodes/filetest4/out</uri>
-        <clazzname>a classname</clazzname>
-        <cron>0/5 * * * * ?</cron>
-      </outBoundEndPoint>
-    </Node>
-
   </Nodes>
 </Grouter>

@@ -181,7 +181,7 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
         logger.info("Saving router state in database");
         AuditInfo auditInfo = new AuditInfo();
         auditInfo.setModifiedOn( new Date() );
-        auditInfo.setModifiedBy( User.ADMIN );
+        auditInfo.setModifiedBy( User.ADMIN.getId() );
         router.setAuditInfo( auditInfo );
 
         routerService.saveRouter(router);
@@ -305,6 +305,7 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
                     // Internal in directories
                     pathInternalIn = homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "in";
                     org.apache.commons.io.FileUtils.forceMkdir(new File(pathInternalIn));
+                    logger.info("Created node path:" + homePath + node.getId());
                 } catch (IOException e)
                 {
                     logger.error("Could not create directory for :" + pathInternalIn);
@@ -316,6 +317,7 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
                     //Internal out
                     pathInternalOut = homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "internal" + File.separator + "out";
                     org.apache.commons.io.FileUtils.forceMkdir(new File(pathInternalOut));
+                    logger.info("Created node path:" + homePath + node.getId());
                 }
                 catch(IOException ex)
                 {
@@ -329,6 +331,7 @@ final public class RouterServerImpl implements Runnable, RemoteRouterService
                     {
                         internalInPath = homePath + File.separator + "nodes" + File.separator + node.getId() + File.separator + "in";
                         org.apache.commons.io.FileUtils.forceMkdir(new File(internalInPath));
+                        logger.info("Created node path:" + homePath + node.getId());
                     } catch (IOException e)
                     {
                         logger.error("Could not create directory for :" + internalInPath);

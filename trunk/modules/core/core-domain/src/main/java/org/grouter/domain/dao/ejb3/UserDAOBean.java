@@ -55,4 +55,8 @@ public class UserDAOBean extends GenericEjb3DAO<User, Long> implements UserDAO
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    public void deleteNoLoad(Long aLong) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

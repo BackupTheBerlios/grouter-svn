@@ -7,10 +7,8 @@ CREATE TABLE user_role (
   user_id bigint(20) NOT NULL,
   role_id bigint(20) NOT NULL,
   PRIMARY KEY  (id),
---  KEY (user_id),
---  KEY (role_id),
-  FOREIGN KEY (user_id) REFERENCES user (id),
-  FOREIGN KEY (role_id) REFERENCES role(id)
+  FOREIGN KEY (role_id) REFERENCES role (id),
+  FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

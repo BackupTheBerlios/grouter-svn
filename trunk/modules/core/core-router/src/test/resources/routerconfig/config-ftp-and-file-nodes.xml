@@ -8,8 +8,8 @@ Settings below are for working directly from trunk.
          home="file://temp/grouter"
          xmlns="http://grouter.org/config.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../common/common-configbeans/src/main/xsd/config.xsd"
-         xsi:noNamespaceSchemaLocation="../../../../../../common/common-configbeans/src/main/xsd/config.xsd">
+         xsi:schemaLocation="http://grouter.org/config.xsd ../../../../../../../generated/common-configbeans/src/main/xsd/config.xsd"
+         xsi:noNamespaceSchemaLocation="../../../../../../../generated/common-configbeans/src/main/xsd/config.xsd">
 
 
   <Settings>

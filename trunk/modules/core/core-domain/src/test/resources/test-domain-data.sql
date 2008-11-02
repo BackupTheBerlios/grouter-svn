@@ -34,20 +34,20 @@ insert into receiver_message (receiver_fk , message_fk) values ( -2,  -1 );
 
 -- User
 insert into address (id,  phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-1,  '0046 8 12345', '0046 701 12345', 'Kungsgatan', '12', 'Stockholm', '12345', 'http://www.stockholm.se', 'Sweden', 'Lšnneberga', 'astrid.lindgren@stockholm.se');
-insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (-1, 'ast', 'rid','Astrid', 'Lindgren',  -1, 3 );
+insert into user (id, createdon, modifiedon, createdby, modifiedby, username, password, firstname, lastname, address_fk, user_state_fk) values (-1, NOW(), NOW(), 1,1,    'ast', 'rid','Astrid', 'Lindgren',  -1, 3 );
 insert into user_role (id, user_id, role_id) values (-1, -1, 1);
 insert into user_role (id, user_id, role_id) values (-2, -1, 2);
 insert into user_role (id, user_id, role_id) values (-3, -1, 3);
 
-insert into user (id, username, password, firstname, lastname,user_state_fk) values (-2, 'ken', 'obi','Obi', 'Van',3 );
+insert into user (id, createdon, modifiedon, createdby, modifiedby,username, password, firstname, lastname,user_state_fk) values (-2, NOW(), NOW(), 1,1,'ken', 'obi','Obi', 'Van',3 );
 insert into user_role (id, user_id, role_id) values (-4, -2, 1);
 
 insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-3,  '0011 8 12345', '0011 701 12345', 'Swazzistrasse', '5555', 'Nairobi', '3333', 'http://www.zurich.ch', 'Swaziland', 'Company3', 'email@gmail.com');
-insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (-3, 'pla', 'ton','Platon', '',  -3, 3 );
+insert into user (id,createdon, modifiedon, createdby, modifiedby, username, password, firstname, lastname, address_fk, user_state_fk) values (-3, NOW(), NOW(), 1,1,'pla', 'ton','Platon', '',  -3, 3 );
 insert into user_role (id, user_id, role_id) values (-5, -3, 1);
 
 insert into address (id, phone, mobilephone, street, zip, city, fax, homepageurl, country, companyname, email) values (-4,  '0031 8 12345', '0031 701 12345', 'Athensroad', '6666', 'Athens', '444', 'http://www.zurich.ch', 'Greece', 'Company4', 'email@gmail.com');
-insert into user (id, username, password, firstname, lastname, address_fk, user_state_fk) values (-4, 'sok', 'tonrates','Sokrates', '',  -4, 3 );
+insert into user (id, createdon, modifiedon, createdby, modifiedby,username, password, firstname, lastname, address_fk, user_state_fk) values (-4, NOW(), NOW(), 1,1,'sok', 'tonrates','Sokrates', '',  -4, 3 );
 insert into user_role (id, user_id, role_id) values (-6, -4, 1);
 
 -- Jobs

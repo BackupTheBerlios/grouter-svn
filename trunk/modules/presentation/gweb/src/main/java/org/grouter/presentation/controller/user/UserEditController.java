@@ -92,10 +92,11 @@ public class UserEditController extends SimpleFormController
         UserEditCommand cmd = (UserEditCommand) object;
         User user = cmd.getUser();
         user.setUserState(UserState.NEW);
-        AuditInfo auditInfo = new AuditInfo();
-        auditInfo.setCreatedBy( loggedOnUser );
-        auditInfo.setModifiedBy( loggedOnUser );
-        user.setAuditInfo( auditInfo  );
+        AuditInfo auditInfo = user.getAuditInfo();
+        auditInfo.setCreatedBy( loggedOnUser.getId() );
+        auditInfo.setModifiedBy( loggedOnUser.getId() );
+        auditInfo.setModifiedOn( new Date() );
+        //user.setAuditInfo( auditInfo  );
 
         Set<UserRole> userRoles = user.getUserRoles();
         for (Iterator<UserRole> userRoleIterator = userRoles.iterator(); userRoleIterator.hasNext();)

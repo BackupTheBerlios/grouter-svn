@@ -2,7 +2,6 @@ package org.grouter.domain.dao.spring;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.grouter.domain.dao.RouterDAO;
 import org.grouter.domain.entities.*;
 import org.hibernate.LazyInitializationException;
 
@@ -26,7 +25,7 @@ public class RouterDAOTest extends AbstractDAOTests
         router.setHomePath("/file");
 
         AuditInfo auditInfo = new AuditInfo();
-        auditInfo.setCreatedBy( User.ADMIN );
+        auditInfo.setCreatedBy( User.ADMIN.getId() );
 
         Map<String, String> context = new HashMap<String, String>();
         context.put("key", "value");

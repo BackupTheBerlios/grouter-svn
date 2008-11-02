@@ -77,6 +77,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     {
         return new String[]
                 {
+                        "context-domain-aop.xml",
                         "context-domain-datasource.xml",
                         "context-domain-sessionfactory.xml",
                         "context-domain-dao.xml",

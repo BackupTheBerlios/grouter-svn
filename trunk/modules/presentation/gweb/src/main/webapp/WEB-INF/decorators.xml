@@ -16,6 +16,18 @@
     </excludes>
 
 
+<excludes>
+        <pattern>/user/search.do</pattern>
+    </excludes>
+    <excludes>
+        <pattern>/user/search</pattern>
+    </excludes>
+    <excludes>
+        <pattern>/user/search*</pattern>
+    </excludes>
+
+
+
     <decorator name="lightwindow" page="decorator_llightwindow.jsp">
             <pattern>/user/lwedit.do</pattern>
     </decorator>
@@ -28,20 +40,22 @@
         <pattern>/node/*</pattern>
         <pattern>/job/*</pattern>
         <pattern>/message/*</pattern>
-        <pattern>/user/*</pattern>
+        <pattern>/user/list.do</pattern>
+        <pattern>/user/edit.do</pattern>
         <pattern>/security/*</pattern>
         <pattern>/errorpage.jsp</pattern>
+
     </decorator>
 
 
-
-
-
-    <!-- decorator name="message" page="decorator.jsp">
-         <pattern>/message/list.do</pattern>
-   </decorator>
-
-   <decorator name="main" page="main.dec">
-         <pattern>*.do</pattern>
-   </decorator -->
+<excludes>
+        <pattern>/user/search.do</pattern>
+    </excludes>
+    <excludes>
+        <pattern>/user/search</pattern>
+    </excludes>
+    <excludes>
+        <pattern>/user/search*</pattern>
+    </excludes>
+    
 </decorators>

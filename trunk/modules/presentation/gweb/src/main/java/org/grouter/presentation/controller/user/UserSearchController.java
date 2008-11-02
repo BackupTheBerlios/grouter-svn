@@ -34,20 +34,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Delegates to Service for querying in free text against Lucen index.
+ * Delegates to Service for querying in free text against Lucene index.
  *
  * @author Georges Polyzois
  */
 public class UserSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String VIEW_TAMPLATE = "user/listusers";
+    private static final String VIEW_TAMPLATE = "user/ajaxform_searchusersresult.jsp";
     private UserService userService;
 
     @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
+    public ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
             throws Exception
     {
+        logger.debug("");
         Map<String, Object> map = new HashMap<String, Object>();
 
         // Query string
@@ -61,8 +62,6 @@ public class UserSearchController extends AbstractController
 
         return new ModelAndView(VIEW_TAMPLATE, map);
     }
-
-
 
 
     public void setUserService(UserService userService)
