@@ -19,19 +19,14 @@
 package org.grouter.presentation.gwt.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.gwtext.client.core.EventObject;
+import com.gwtext.client.core.FxConfig;
 import com.gwtext.client.core.Margins;
 import com.gwtext.client.core.RegionPosition;
-import com.gwtext.client.widgets.Button;
 import com.gwtext.client.widgets.Panel;
 import com.gwtext.client.widgets.TabPanel;
-import com.gwtext.client.widgets.Viewport;
-import com.gwtext.client.widgets.event.ButtonListenerAdapter;
-import com.gwtext.client.widgets.event.TabPanelListenerAdapter;
 import com.gwtext.client.widgets.layout.BorderLayout;
 import com.gwtext.client.widgets.layout.BorderLayoutData;
 import com.gwtext.client.widgets.layout.FitLayout;
-import com.gwtext.client.widgets.layout.VerticalLayout;
 import com.gwtext.client.widgets.tree.TreeNode;
 import com.gwtext.client.widgets.tree.TreePanel;
 
@@ -161,9 +156,14 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
         panel.setBorder(false);
         panel.setPaddings(15);
         panel.setLayout(new FitLayout());
+        panel.getEl().fadeIn( new FxConfig(0) );
+        panel.getEl().fadeOut( new FxConfig(0) );
 
         Panel borderPanel = new Panel();
         borderPanel.setLayout(new BorderLayout());
+        borderPanel.getEl().fadeIn( new FxConfig(0) );
+        borderPanel.getEl().fadeOut( new FxConfig(0) );
+
 
         //add north panel
         //createNortPanel(borderPanel);
@@ -177,7 +177,7 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
 
         panel.add(borderPanel);
 
-        Viewport viewport = new Viewport(panel);
+      //  Viewport viewport = new Viewport(panel);
 
         /* // Create a Dock Panel
         DockPanel dock = new DockPanel();
@@ -247,7 +247,7 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
     private void createAndAddCenterPanel(Panel borderPanel)
     {
         Panel panel = new Panel();
-        final TabPanel tabPanel = new TabPanel();
+      /*  final TabPanel tabPanel = new TabPanel();
 
          panel.setBorder(false);
          panel.setPaddings(15);
@@ -282,7 +282,7 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
              addTab();
          }
          verticalPanel.add(tabPanel);
-         panel.add(verticalPanel);
+         panel.add(verticalPanel);   */
 
 
 
@@ -303,7 +303,13 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
          tab.setIconCls("tab-icon");
          tab.setHtml("Tab Body " + index + "<br/><br/>" );  
          tab.setClosable(true);
-         tabPanel.add(tab);
+           tab.getEl().fadeIn( new FxConfig(0) );
+                    tab.getEl().fadeOut( new FxConfig(0) );
+
+
+           tabPanel.add(tab);
+
+
          return tab;
      }
 
@@ -316,12 +322,15 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
         westPanel.setBodyStyle("background-color: EEEEEE");
         westPanel.setCollapsible(true);
         westPanel.setWidth(200);
+        westPanel.getEl().fadeIn( new FxConfig(0) );
+        westPanel.getEl().fadeOut( new FxConfig(0) );
 
         BorderLayoutData westData = new BorderLayoutData(RegionPosition.WEST);
         westData.setSplit(true);
         westData.setMinSize(175);
         westData.setMaxSize(400);
         westData.setMargins(new Margins(0, 5, 0, 0));
+
 
 
         final TreePanel treePanel = new SampleTree();
