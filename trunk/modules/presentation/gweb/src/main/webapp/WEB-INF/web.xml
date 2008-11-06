@@ -113,7 +113,6 @@
 
     <!--
     Pre Spring 2 confirutaion
-    -->
     <servlet>
      <display-name>DWR Servlet</display-name>
      <servlet-name>dwr-invoker</servlet-name>
@@ -123,11 +122,10 @@
        <param-value>true</param-value>
      </init-param>
    </servlet>
-
    <servlet-mapping>
      <servlet-name>dwr-invoker</servlet-name>
      <url-pattern>/dwr/*</url-pattern>
-   </servlet-mapping>
+   </servlet-mapping -->
 
     <!--
     All .do urls goes to gweb context
@@ -143,12 +141,15 @@
             /org.grouter.presentation.gwt.gweb-module/org.grouter.presentation.gwt.gweb-module/GwebRemoteService
         </url-pattern>
     </servlet-mapping -->
-                     
-    <!-- servlet-mapping>
-     <servlet-name>gweb</servlet-name>
-     <url-pattern>*.dec</url-pattern>
-   </servlet-mapping -->
 
+    <!--
+    All request to /router.rpc will be directed to Springs dispatcher servlet 
+    which in turn will dispatch it to correct servlet according to our context-servlet.xml file mappings
+    -->
+    <servlet-mapping>
+        <servlet-name>gweb</servlet-name>
+        <url-pattern>/router.rpc</url-pattern>
+    </servlet-mapping>
 
     <!--                            -->
     <!-- Adding support for GWT-SL  -->

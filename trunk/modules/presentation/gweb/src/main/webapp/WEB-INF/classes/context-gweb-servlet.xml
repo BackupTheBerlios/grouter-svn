@@ -70,11 +70,11 @@
         </property>
     </bean>
 
-    <!-- GWT service / controller wrapping calls from client side to server side controller -->
+    <!-- Router GWT service controller wrapping calls from client side to server side controller -->
     <bean id="GWTRemoteService" class="org.grouter.presentation.gwt.server.GWTRemoteServiceImpl">
         <property name="routerService" ref="routerService" />
     </bean>
-    <bean name="/gwt.rpc" class="org.grouter.presentation.gwt.server.GWTRemoteServiceImpl"/>
+    <bean name="/router.rpc" class="org.grouter.presentation.gwt.server.GWTRemoteServiceImpl"/>
 
     <!-- Spring controllers -->
     <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController"/>

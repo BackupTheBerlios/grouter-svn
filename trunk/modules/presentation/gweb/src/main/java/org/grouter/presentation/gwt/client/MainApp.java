@@ -21,12 +21,14 @@ package org.grouter.presentation.gwt.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.gwtext.client.core.FxConfig;
 import com.gwtext.client.core.Margins;
+import com.gwtext.client.core.Position;
 import com.gwtext.client.core.RegionPosition;
+import com.gwtext.client.widgets.Button;
 import com.gwtext.client.widgets.Panel;
 import com.gwtext.client.widgets.TabPanel;
-import com.gwtext.client.widgets.layout.BorderLayout;
-import com.gwtext.client.widgets.layout.BorderLayoutData;
-import com.gwtext.client.widgets.layout.FitLayout;
+import com.gwtext.client.widgets.form.FormPanel;
+import com.gwtext.client.widgets.form.TextField;
+import com.gwtext.client.widgets.layout.*;
 import com.gwtext.client.widgets.tree.TreeNode;
 import com.gwtext.client.widgets.tree.TreePanel;
 
@@ -156,19 +158,14 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
         panel.setBorder(false);
         panel.setPaddings(15);
         panel.setLayout(new FitLayout());
-        panel.getEl().fadeIn( new FxConfig(0) );
-        panel.getEl().fadeOut( new FxConfig(0) );
 
         Panel borderPanel = new Panel();
         borderPanel.setLayout(new BorderLayout());
-        borderPanel.getEl().fadeIn( new FxConfig(0) );
-        borderPanel.getEl().fadeOut( new FxConfig(0) );
-
+        borderPanel.getEl().fadeIn(new FxConfig(0));
+        borderPanel.getEl().fadeOut(new FxConfig(0));
 
         //add north panel
         //createNortPanel(borderPanel);
-
-
 
 
         createAndAddWestPanel(borderPanel);
@@ -177,7 +174,7 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
 
         panel.add(borderPanel);
 
-      //  Viewport viewport = new Viewport(panel);
+        //  Viewport viewport = new Viewport(panel);
 
         /* // Create a Dock Panel
         DockPanel dock = new DockPanel();
@@ -247,157 +244,156 @@ public class MainApp implements EntryPoint, ApplicationStateEventListener
     private void createAndAddCenterPanel(Panel borderPanel)
     {
         Panel panel = new Panel();
-      /*  final TabPanel tabPanel = new TabPanel();
+        panel.setBorder(false);
+        panel.setPaddings(15);
 
-         panel.setBorder(false);
-         panel.setPaddings(15);
-         Panel verticalPanel = new Panel();
-         verticalPanel.setLayout(new VerticalLayout(15));
-            Button button = new Button("Add Tab", new ButtonListenerAdapter() {
-             public void onClick(Button button, EventObject e) {
-                 Panel tab = addTab(tabPanel);
-                 tabPanel.activate(tab.getId());
-                 tabPanel.scrollToTab(tab, true);
-             }
-         });
-         button.setIconCls("new-tab-icon");
-         verticalPanel.add(button);
+        FormPanel formPanel = new FormPanel();
+        formPanel.setLabelAlign(Position.TOP);
+        formPanel.setTitle("Inner Tabs");
+        formPanel.setPaddings(5);
+        formPanel.setWidth(600);
+
+        Panel topPanel = new Panel();
+        topPanel.setLayout(new ColumnLayout());
+        topPanel.setBorder(false);
+
+        Panel firstColumn = new Panel();
+        firstColumn.setLayout(new FormLayout());
+        firstColumn.setBorder(false);
+
+        firstColumn.add(new TextField("First Name", "first"), new AnchorLayoutData("95%"));
+        firstColumn.add(new TextField("Company", "company"), new AnchorLayoutData("95%"));
+        topPanel.add(firstColumn, new ColumnLayoutData(0.5));
+
+        Panel secondColumn = new Panel();
+        secondColumn.setLayout(new FormLayout());
+        secondColumn.setBorder(false);
+
+        secondColumn.add(new TextField("Last Name", "last"), new AnchorLayoutData("95%"));
+        secondColumn.add(new TextField("Email", "email"), new AnchorLayoutData("95%"));
+        topPanel.add(secondColumn, new ColumnLayoutData(0.5));
+
+        formPanel.add(topPanel);
+
+        TabPanel tabPanel = new TabPanel();
+        tabPanel.setPlain(true);
+        tabPanel.setActiveTab(0);
+        tabPanel.setHeight(235);
+
+        Panel firstTab = new Panel();
+        firstTab.setTitle("Personal Details");
+        firstTab.setLayout(new FormLayout());
+        firstTab.setPaddings(10);
+
+        firstTab.add(new TextField("First Name", "first", 230, "James"));
+        firstTab.add(new TextField("Last  Name", "last", 230));
+        firstTab.add(new TextField("Company", "company", 230));
+        firstTab.add(new TextField("Email", "email", 230));
+        tabPanel.add(firstTab);
+
+        Panel secondTab = new Panel();
+        secondTab.setTitle("Phone Numbers");
+        secondTab.setLayout(new FormLayout());
+        secondTab.setPaddings(10);
+
+        secondTab.add(new TextField("Home", "home", 230, "(888) 555-2222"));
+        secondTab.add(new TextField("Business", "business", 230));
+        secondTab.add(new TextField("Mobile", "mobile", 230));
+        secondTab.add(new TextField("Fax", "fax", 230));
+        tabPanel.add(secondTab);
 
 
-         tabPanel.setResizeTabs(true);
-         tabPanel.setMinTabWidth(115);
-        tabPanel.setTabWidth(135);
-         tabPanel.setEnableTabScroll(true);
-         tabPanel.setWidth(450);  
-         tabPanel.setHeight(250);
-         tabPanel.setActiveTab(0);
+        formPanel.add(tabPanel);
+        formPanel.addButton(new Button("Save"));
+        formPanel.addButton(new Button("Cancel"));
 
-         tabPanel.addListener(new TabPanelListenerAdapter() {
-             public void onContextMenu(TabPanel source, Panel tab, EventObject e) {
-                 showMenu(tab, e);
-             }
-         });
+        panel.add(formPanel);
 
-         for (int index = 0; index < 7; index++) {
-             addTab();
-         }
-         verticalPanel.add(tabPanel);
-         panel.add(verticalPanel);   */
-
-
-
-
-
-
-
+        //   RootPanel.get().add(panel);  
 
 
         borderPanel.add(panel, new BorderLayoutData(RegionPosition.CENTER));
     }
 
 
-       private Panel addTab(final TabPanel tabPanel, int index) {
-         Panel tab = new Panel();
-         tab.setAutoScroll(true);
-         tab.setTitle("New Tab " + (++index));
-         tab.setIconCls("tab-icon");
-         tab.setHtml("Tab Body " + index + "<br/><br/>" );  
-         tab.setClosable(true);
-           tab.getEl().fadeIn( new FxConfig(0) );
-                    tab.getEl().fadeOut( new FxConfig(0) );
+    private Panel addTab(final TabPanel tabPanel, int index)
+    {
+        Panel tab = new Panel();
+        tab.setAutoScroll(true);
+        tab.setTitle("New Tab " + (++index));
+        tab.setIconCls("tab-icon");
+        tab.setHtml("Tab Body " + index + "<br/><br/>");
+        tab.setClosable(true);
+        tab.getEl().fadeIn(new FxConfig(0));
+        tab.getEl().fadeOut(new FxConfig(0));
 
 
-           tabPanel.add(tab);
+        tabPanel.add(tab);
 
 
-         return tab;
-     }
+        return tab;
+    }
 
 
     private void createAndAddWestPanel(Panel borderPanel)
     {
-        Panel westPanel = new Panel();
-        westPanel.setHtml("<p>west panel</p>");
-        westPanel.setTitle("West");
-        westPanel.setBodyStyle("background-color: EEEEEE");
-        westPanel.setCollapsible(true);
-        westPanel.setWidth(200);
-        westPanel.getEl().fadeIn( new FxConfig(0) );
-        westPanel.getEl().fadeOut( new FxConfig(0) );
-
         BorderLayoutData westData = new BorderLayoutData(RegionPosition.WEST);
         westData.setSplit(true);
         westData.setMinSize(175);
         westData.setMaxSize(400);
         westData.setMargins(new Margins(0, 5, 0, 0));
 
-
-
         final TreePanel treePanel = new SampleTree();
-        treePanel.setTitle("Default Appearance");
         treePanel.setWidth(190);
         treePanel.setHeight(400);
-
 
         borderPanel.add(treePanel, westData);
     }
 
 
-       class SampleTree extends TreePanel {
+    class SampleTree extends TreePanel
+    {
+        public SampleTree()
+        {
+            TreeNode root = new TreeNode("Routers");
 
-           public SampleTree() {
+            TreeNode router1 = new TreeNode("Router 1");
+            router1.setExpanded(true);
+            TreeNode node1 = new TreeNode("Node 1");
+            node1.setLeaf(true);
+            TreeNode node2 = new TreeNode("Node 2");
+            node2.setLeaf(true);
+            TreeNode node3 = new TreeNode("Node 3");
+            node3.setLeaf(true);
+            router1.appendChild(node1);
+            router1.appendChild(node2);
+            router1.appendChild(node3);
+            root.appendChild(router1);
 
-               TreeNode root = new TreeNode("Company Heirarchy");
+            TreeNode configuration = new TreeNode("Configuration");
+            configuration.setExpanded(true);
+            TreeNode database = new TreeNode("Database");
+            database.setLeaf(true);
+            configuration.appendChild(database);
+            TreeNode jndi = new TreeNode("JNDI");
+            jndi.setLeaf(true);
+            configuration.appendChild(jndi);
+            TreeNode logging = new TreeNode("Logging");
+            logging.setLeaf(true);
+            configuration.appendChild(logging);
 
-               TreeNode ceo = new TreeNode("Julie W. Walker");
-               ceo.setExpanded(true);
+            root.appendChild(configuration);
 
-               TreeNode manager1 = new TreeNode("William J. Vear");
-               manager1.setExpanded(true);
-               TreeNode manager2 = new TreeNode("Dennis E. Walker");  
-               manager2.setExpanded(true);
-               TreeNode manager3 = new TreeNode("Joann R. Williams");
-               manager3.setExpanded(true);
 
-               ceo.appendChild(manager1);
-               ceo.appendChild(manager2);
-               ceo.appendChild(manager3);
+            setRootVisible(false);
 
-               TreeNode director1 = new TreeNode("Robert L. Carbaugh");
-               director1.setExpanded(true);
-
-               TreeNode director2 = new TreeNode("Agnes H. Keene");
-               director2.setExpanded(true);
-
-               manager1.appendChild(director1);
-               manager1.appendChild(director2);
-
-               TreeNode director3 = new TreeNode("Erin T. Marks");
-               manager2.appendChild(director3);
-
-               manager3.appendChild(new TreeNode("Harry L. Krieger"));
-
-               director1.appendChild(new TreeNode("Jim H. Baker"));
-               director1.appendChild(new TreeNode("Randy M. Smith"));
-               director1.appendChild(new TreeNode("Annie P. Burke"));
-               director2.appendChild(new TreeNode("Shirley P. Tanaka"));
-               director2.appendChild(new TreeNode("Anthony C. Decarlo"));
-               director2.appendChild(new TreeNode("Katherine D. Saenz"));
-               director3.appendChild(new TreeNode("Carolyn M. Gauna"));
-               director3.appendChild(new TreeNode("Johanna E. Armistead"));
-               director3.appendChild(new TreeNode("Duane E. Ashe"));
-               director3.appendChild(new TreeNode("Norman N. Gardner"));
-               root.appendChild(ceo);
-
-               setRootVisible(false);
-
-               setTitle("Company");
-               setWidth(200);
-               setHeight(400);
-               setRootNode(root);
-               root.setExpanded(true);
-           }
-       }
+            setTitle("Grouter");
+            setWidth(200);
+            setHeight(400);
+            setRootNode(root);
+            root.setExpanded(true);
+        }
+    }
 
 
 }
