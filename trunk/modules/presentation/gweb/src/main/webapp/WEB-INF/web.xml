@@ -10,12 +10,13 @@
     </context-param>
 
     <!--
+
      Tell spring which context files we want to use, if none are specified then the
      applicationContext.xml is used (if any).
     If not specified otherwise, the context
     loader will look for a Spring configuration file at /WEB-INF/applicationContext.xml.
-    But this location doesn’t lend itself to breaking up the application con-
-    text across application layers, so you’ll probably want to override this default.
+    But this location does not lend itself to breaking up the application con-
+    text across application layers, so you will probably want to override this default.
     -->
     <context-param>      
         <param-name>contextConfigLocation</param-name>

@@ -1,6 +1,6 @@
 <!--
 To se application go to url:
-http://localhost:8888/org.grouter.presentation.gwt.gweb/gweb.html
+http://localhost:8080/gweb/org.grouter.presentation.gwt.MainApp/MainApp.html
 -->
 <module>
     <!-- Inherit the core Web Toolkit stuff. -->
@@ -12,21 +12,23 @@ http://localhost:8888/org.grouter.presentation.gwt.gweb/gweb.html
     <inherits name="com.google.gwt.user.theme.chrome.ChromeResources"/>
     <inherits name="com.google.gwt.user.theme.dark.DarkResources"/>
 
+    <!-- third party -->
+
+     <inherits name="com.gwtext.GwtExt"/>
+
     <!-- Enable debug ID. -->
     <inherits name="com.google.gwt.user.Debug"/>
     <set-property name="gwt.enableDebugId" value="true"/>
 
-    <!-- Add third party libs -->
-    <!-- pre 1.0 release inherits name='net.mygwt.ui.MyGWT'/   -->
-    <!-- inherits name='com.extjs.gxt.ui.GXT'/ -->
 
-    <!--source path='dto' / -->
+
+    <!-- Add third party libs -->
 
     <!-- Main entrypoint to application -->
     <entry-point class='org.grouter.presentation.gwt.client.MainApp'/>
 
     <!-- servlet path="/GWTRemoteService" class="org.grouter.presentation.gwt.server.GWTRemoteServiceImpl/ -->
-    <stylesheet src='gweb.css'/>
+    <stylesheet src='MainApp.css'/>
 
     <!-- define-property> Initially define properties. -->
 

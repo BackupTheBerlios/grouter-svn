@@ -10,7 +10,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Settings" type="settingsType" maxOccurs="1" minOccurs="1"/>
-                <xs:element name="GlobalJobs" type="jobsType" maxOccurs="1" minOccurs="0"/>
+                <xs:element name="Jobs" type="jobsType" maxOccurs="1" minOccurs="0"/>
                 <xs:element name="Nodes" type="nodesType" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="displayName" type="xs:string" use="required"/>
@@ -45,8 +45,11 @@
             <xs:element name="cron" type="xs:string" maxOccurs="1" minOccurs="1"/>
             <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="idno" use="required"/>
-        <xs:attribute name="jobType" type="jobTypeType"/>
+        <!-- The id of the node. If changed a new node will be created - the old one will still be there but
+        set to notused -->
+        <xs:attribute name="id" use="required"/>
+        <!-- xs:attribute name="idno" use="required"/ -->
+        <xs:attribute name="jobType" type="jobTypeType" />
     </xs:complexType>
 
 
@@ -104,7 +107,7 @@
             <xs:element name="contextparam" type="context" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="endPointType" type="endPointType"/>
-        <xs:attribute name="idno" type="xs:string"/>
+        <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
 
     <xs:simpleType name="endPointType">
@@ -122,7 +125,8 @@
 
     <xs:simpleType name="jobTypeType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="ARCHIVER"/>
+            <xs:enumeration value="SYNCHRONOUS"/>
+            <xs:enumeration value="ASSYNCHRONOUS"/>
         </xs:restriction>
     </xs:simpleType>
 

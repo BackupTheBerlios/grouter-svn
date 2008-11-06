@@ -8,6 +8,10 @@
     </excludes>
 
     <excludes>
+        <pattern>/js/*</pattern>
+    </excludes>
+
+    <excludes>
         <pattern>/css/*</pattern>
     </excludes>
 
@@ -16,7 +20,7 @@
     </excludes>
 
 
-<excludes>
+    <excludes>
         <pattern>/user/search.do</pattern>
     </excludes>
     <excludes>
@@ -27,12 +31,11 @@
     </excludes>
 
 
-
     <decorator name="lightwindow" page="decorator_llightwindow.jsp">
-            <pattern>/user/lwedit.do</pattern>
+        <pattern>/user/lwedit.do</pattern>
     </decorator>
     <decorator name="lightwindow" page="decorator_llightwindow.jsp">
-            <pattern>/job/lwedit.do</pattern>
+        <pattern>/job/lwedit.do</pattern>
     </decorator>
 
     <decorator name="main" page="decorator_main.jsp">
@@ -48,7 +51,7 @@
     </decorator>
 
 
-<excludes>
+    <excludes>
         <pattern>/user/search.do</pattern>
     </excludes>
     <excludes>
@@ -57,5 +60,5 @@
     <excludes>
         <pattern>/user/search*</pattern>
     </excludes>
-    
+
 </decorators>
