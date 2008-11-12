@@ -41,7 +41,7 @@ import java.util.Map;
 public class UserSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String VIEW_TAMPLATE = "user/ajaxform_searchusersresult.jsp";
+    private static final String VIEW_TAMPLATE = "user/ajaxform_searchusersresult";
     private UserService userService;
 
     @Override

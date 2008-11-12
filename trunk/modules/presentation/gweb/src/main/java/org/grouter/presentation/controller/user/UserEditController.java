@@ -42,7 +42,6 @@ import java.util.*;
  *
  *
  * @author Georges Polyzois
- * @see AbstractFormController#handleRequestInternal()
  */
 public class UserEditController extends SimpleFormController
 {
