@@ -1,9 +1,12 @@
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<% request.setAttribute("CONTEXT_PATH", request.getContextPath()); %>
+
+
 <html>
 <head>
     <title>
@@ -42,8 +45,16 @@
                 $('#searchbox').toggle(100);
                 return false;
             });
+
+            $("#searchMessagesForm").ajaxForm({
+                type: 'POST',
+                target: '#mainContent'
+            });
+
         });
     </script>
+
+
 </head>
 <body>
 
@@ -60,7 +71,7 @@
                     <form action="" enctype="multipart/form-data" name="mainForm" method="get">
                         Router:
                         <select id="routerid" name="routerid" onchange="this.form.submit()">
-                            <option value="">--- router ---</option>
+                            <option value="">Select router</option>
                             <c:forEach items="${routers}" var="object">
                                 <option
                                         <c:if test="${selectedRouterId eq object.id}">selected="selected"</c:if>
@@ -69,7 +80,7 @@
                         </select>
                         Node:
                         <select id="nodeid" name="nodeid" onchange="this.form.submit()">
-                            <option value="">--- node ---</option>
+                            <option value="">Select node</option>
                             <c:forEach items="${nodes}" var="object">
                                 <option
                                         <c:if test="${selectedNodeId eq object.id}">selected="selected"</c:if>
@@ -84,11 +95,24 @@
             <td>
                 <a href="#" id="search-toggle">Search</a>
                 <div id="searchbox">
-                    <form action="" enctype="multipart/form-data" name="mainForm" method="get">
-                        Id:<input id="id" value=""/>
-                        From date:<input id="fromdate" value=""/>
-                        To date: <input id="todate" value=""/>
-                    </form>
+                   <form:form action="/gweb/message/search.do"
+                              id="searchMessagesForm" cssClass="decoratedform" method="POST" name="searchMessagesForm" >
+
+                        <spring:message code="message.search.form.label.id"/>
+                        <form:input path="messageId" />
+    
+                        <spring:message code="message.search.form.label.nodeId"/>
+                        <select id="nodeId" >
+                            <option value="">Select node</option>
+                            <c:forEach items="${nodes}" var="object">
+                                <option
+                                        <c:if test="${selectedNodeId eq object.id}">selected="selected"</c:if>
+                                        value="${object.id}">${object.displayName}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="submit" value="Search" name="search" size="10"/>
+
+                    </form:form>
                 </div>
             </td>
         </tr>
@@ -96,19 +120,14 @@
 </div>
 
 
+<div id="message">
+    <c:out value="${message}"/>
+</div>
+
+
 <div id="mainContent">
-    <form action="">
-        <display:table name="${messages}" export="true" id="row" class="dataTable" pagesize="20"
-                       cellspacing="0" decorator="org.displaytag.decorator.TotalTableDecorator"
-                       requestURI="/gweb/message/list.do">
-            <display:column property="id" title="Id" sortable="true" class="orderNumber" headerClass="orderNumber"
-                            style="width: 15px;"/>
-            <display:column property="auditInfo.createdOn" title="Created" sortable="true" class="orderNumber"
-                            headerClass="orderNumber" format="{0,date,dd-MM-yyyy HH:mm:ss}"/>
-            <display:column property="content" title="Content" sortable="true" class="orderNumber"
-                            headerClass="orderNumber"/>
-            <display:column value="Detayil" title="" sortable="false" href='edit.do' paramId="id" paramProperty="id"/>
-        </display:table>
+    <form id="mainForm" action="">
+        <jsp:include page="messageTableInclude.jsp"/>
     </form>
 </div>
 </body>

@@ -29,7 +29,7 @@
     </tx:advice -->
 
                                                  
-    <aop:aspectj-autoproxy/>
+    <!-- aop:aspectj-autoproxy/ -->
 
     <!--
     Aspect for loggin signature and result from a method call in a Service bean. Also logs time to execute
@@ -43,5 +43,6 @@
                     method="logAroundMethod"
                     pointcut-ref="servicePointcut"/>
         </aop:aspect>
+
     </aop:config -->
 </beans>

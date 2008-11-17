@@ -84,7 +84,7 @@ public interface RouterService
      * @param searchText text to use for index search
      * @return a list of {@link Message}s
      */
-    List<Message> searchMessages(String searchText);
+    //List<Message> searchMessages(String searchText);
 
 
     /**

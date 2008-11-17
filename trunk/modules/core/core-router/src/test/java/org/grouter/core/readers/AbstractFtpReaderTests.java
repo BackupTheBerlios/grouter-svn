@@ -2,11 +2,8 @@ package org.grouter.core.readers;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.ftpserver.ConfigurableFtpServerContext;
 import org.apache.ftpserver.FtpServer;
-import org.apache.ftpserver.config.PropertiesConfiguration;
 import org.apache.ftpserver.interfaces.FtpServerContext;
-import org.apache.ftpserver.listener.mina.MinaListener;
 import org.apache.log4j.Logger;
 import org.grouter.core.AbstractRouterTests;
 import org.grouter.domain.entities.EndPoint;
@@ -161,7 +158,7 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
     {
         assertTrue(USERS_FILE.getAbsolutePath() + " must exist", USERS_FILE.exists());
         Properties configProps = new Properties();
-        configProps.setProperty("config.listeners.default.class", MinaListener.class.getName());
+//TODO        configProps.setProperty("config.listeners.default.class", MinaListener.class.getName());
         configProps.setProperty("config.listeners.default.port", Integer.toString(port));
         configProps.setProperty("config.user-manager.class", "org.apache.ftpserver.usermanager.PropertiesUserManager");
         configProps.setProperty("config.user-manager.admin", "admin");
@@ -179,7 +176,7 @@ public abstract class AbstractFtpReaderTests extends AbstractRouterTests
     protected void initServer() throws Exception
     {
         findFreePort();
-        serverContext = new ConfigurableFtpServerContext(new PropertiesConfiguration(createConfig()));
+//TODO        serverContext = new ConfigurableFtpServerContext(new PropertiesConfiguration(createConfig()));
         server = new FtpServer(serverContext);
         server.start();
     }

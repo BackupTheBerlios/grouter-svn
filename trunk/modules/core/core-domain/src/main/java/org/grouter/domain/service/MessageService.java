@@ -17,39 +17,31 @@
  * under the License.
  */
 
-package org.grouter.domain.dao;
+package org.grouter.domain.service;
 
 import org.grouter.domain.entities.Message;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.Date;
 import java.util.List;
 
+
 /**
- * Business DAO operations related to the <tt>Message</tt> entity.
- * <p/>
+ * Main interface for operations with the grouter message service layer.
  *
  * @author Georges Polyzois
  */
-public interface MessageDAO extends GenericDAO<Message, Long>
+@Remote
+@Local
+public interface MessageService
 {
-    public enum QueryColumn
-    {
-        ZIP, CONTACTPERSON, PHONE
-    }
-
-    List<Message> findConcrete(Class concreteClass);
-
-    List<Message> findMessagesForNode(String nodeId);
+    final static String BEANNAME = "messageService";
 
 
+    List<Message> findMessage( final Long id, final Date fromDate, final Date toDate, final String nodeId);
 
 
-    List<Message> findMessagesBy(final Long messageId, final Date fromDate, final Date toDate, final String nodeId);
-
-
-
-    // using a cache
-    //List<Message> findAllMessages();
 
 
 }

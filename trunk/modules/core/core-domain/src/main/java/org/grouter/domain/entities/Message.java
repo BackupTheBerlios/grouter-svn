@@ -21,13 +21,10 @@ package org.grouter.domain.entities;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -62,6 +59,11 @@ import java.util.Set;
  * @Author Georges Polyzois
  */
 
+@NamedQueries(
+        @NamedQuery(
+                name = "message.findMessageByNodeId",
+                query = "from Message obj where obj.node.id = :nodeid")
+)
 
 @Indexed(index = "indexes/message")
 // Entity will be indexed for querying using Hibernate SystemServiceImpl
@@ -80,8 +82,8 @@ public class Message extends BaseEntity implements Comparable
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "receiver_message",
-            joinColumns = {@JoinColumn(name = "message_fk")},
-            inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
+               joinColumns = {@JoinColumn(name = "message_fk")},
+               inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
     private Set<Receiver> receivers = new HashSet<Receiver>();
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
@@ -187,7 +189,6 @@ public class Message extends BaseEntity implements Comparable
         this.getReceivers().remove(receiver);
         receiver.removeFromMessages(this);
     }
-
 
 
     //    @ManyToOne()

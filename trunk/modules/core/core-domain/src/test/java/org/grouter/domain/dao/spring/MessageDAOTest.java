@@ -9,6 +9,7 @@ import org.hibernate.LazyInitializationException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.stat.SecondLevelCacheStatistics;
+import org.joda.time.DateTime;
 
 import java.util.Date;
 import java.util.List;
@@ -39,7 +40,7 @@ public class MessageDAOTest extends AbstractDAOTests
         Long id = message.getId();
 
         Map map = jdbcTemplate.queryForMap("SELECT * FROM message WHERE id = ?",
-                new Object[]{id});
+                                           new Object[]{id});
         assertEquals("A test message", map.get("content"));
 
     }
@@ -104,6 +105,23 @@ public class MessageDAOTest extends AbstractDAOTests
     }
 
 
+    public void testFindMessagesBy()
+    {
+
+        List<Message> messages = messageDAO.findMessagesBy(null, null, null, null);
+        assertEquals(0, messages.size());
+
+        DateTime starDateTime = new DateTime(2006, 1, 1, 0, 0, 0, 0);
+        DateTime endDateTime = new DateTime(2007, 12, 31, 0, 0, 0, 0);
+        List<Message> messages2 = messageDAO.findMessagesBy(null, starDateTime.toDate(), endDateTime.toDate(), null);
+        assertEquals(11, messages2.size());
+
+        List<Message> messages3 = messageDAO.findMessagesBy(null, starDateTime.toDate(), endDateTime.toDate(), NODE_ID);
+        assertEquals(11, messages3.size());
+
+
+    }
+
     public void testFindByCriteria()
     {
         Date startDate = new Date();
@@ -116,7 +134,7 @@ public class MessageDAOTest extends AbstractDAOTests
         List results = messageDAO.findByCriteria(crit, critContent);
         assertNotNull(results);
 
-        assertTrue( "Should have some messages" ,results.size() > 0 );
+        assertTrue("Should have some messages", results.size() > 0);
 
 
     }
@@ -132,7 +150,7 @@ public class MessageDAOTest extends AbstractDAOTests
         for (int i = 0; i < 10; i++)
         {
             stopWatch.start();
-            messageDAO.findAllMessages();
+            //        messageDAO.findAllMessages();
             stopWatch.stop();
             System.out.println("Query time : " + stopWatch.getTime());
             assertEquals(0, settingsStatistics.getMissCount());

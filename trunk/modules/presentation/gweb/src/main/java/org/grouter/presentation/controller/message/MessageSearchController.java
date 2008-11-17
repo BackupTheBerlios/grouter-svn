@@ -18,13 +18,13 @@
  */
 package org.grouter.presentation.controller.message;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.grouter.domain.entities.Message;
+import org.grouter.domain.service.MessageService;
 import org.grouter.domain.service.RouterService;
-import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+import org.springframework.web.servlet.mvc.AbstractCommandController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,37 +38,71 @@ import java.util.Map;
  *
  * @author Georges Polyzois
  */
-public class MessageSearchController extends AbstractController
+public class MessageSearchController extends AbstractCommandController
 {
     private static Logger logger = Logger.getLogger(MessageListController.class);
-    private static final String LIST_VIEW = "message/listmessages";
-
+    private static final String LIST_VIEW = "message/ajaxformMessageSearchResult.jsp";
+    private MessageService messageService;
+    private MessageSearchCommandValidator messageSearchCommandValidator = new MessageSearchCommandValidator();
     private RouterService routerService;
 
-
-    public void setRouterService(RouterService routerService)
+    public MessageSearchController()
     {
-        this.routerService = routerService;
+        setCommandClass( MessageSearchCommand.class );
+ //       setCommandName( "messagesearchcommand"); // name in form tag of corresponding view
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    protected ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception
+    {
+
         Map<String, Object> map = new HashMap<String, Object>();
 
-        String searchText = ServletRequestUtils.getStringParameter(request, "searchText", null);
+        MessageSearchCommand cmd = (MessageSearchCommand) command;
 
-        if( StringUtils.isNotEmpty( searchText ) )
+        /*String nodeId = ServletRequestUtils.getStringParameter(request, "search.nodeId", null);
+        String id = ServletRequestUtils.getStringParameter(request, "search.id", null);
+        Integer idInt = null;
+        if( id != null )
         {
-            List<Message> messages = routerService.searchMessages( searchText );
-            map.put("messages", messages);
+            idInt = Integer.parseInt(id);
         }
+
+        String fromDateStr = ServletRequestUtils.getStringParameter(request, "search.fromDate", null);
+        String toDateStr = ServletRequestUtils.getStringParameter(request, "search.toDate", null);
+        Date fromDate = null;
+        Date toDate = null;
+        if( fromDateStr != null )
+        {
+            DateTime dateTime = DateUtil.getFromString(fromDateStr);
+            fromDate = dateTime.toDate();
+        }
+        if( toDateStr != null )
+        {
+            DateTime dateTime = DateUtil.getFromString(toDateStr);
+            toDate = dateTime.toDate();
+        }
+          */
+
+        List<Message> messages = messageService.findMessage(cmd.getMessageId(),null, null, cmd.getNodeId());
+        map.put("messages", messages);
+        map.put("command",cmd);
 
         return new ModelAndView(LIST_VIEW, map);
     }
 
 
+    public void setMessageService(MessageService messageService)
+    {
+        this.messageService = messageService;
+    }
+
+
+    public void setRouterService(RouterService routerService)
+    {
+        this.routerService = routerService;
+    }
 }

@@ -57,8 +57,6 @@
         <tr>
             <td><spring:message code="user.edit.form.user.label.role"/></td>
             <td>
-
-
                 <spring:bind path="usereditcommand.user.userRoles">
                     <select name="${status.expression}" multiple="multiple" style="width: 150px">
                         <c:forEach items="${allroles}" var="varrole">

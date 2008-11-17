@@ -22,11 +22,14 @@ package org.grouter.domain.dao.spring;
 import org.grouter.domain.dao.MessageDAO;
 import org.grouter.domain.entities.Message;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,12 +55,48 @@ public class MessageDAOImpl extends GenericHibernateDAO<Message, Long> implement
     }
 
 
-    public List<Message> findMessagesForNode(String nodeId)
+    public List<Message> findMessagesForNode(final String nodeId)
     {
-        String hsql = "from Message obj where obj.node.id = :nodeid";
-        Session session = getSession();
-        Query qr = session.createQuery(hsql);
+        Query qr = getSession().getNamedQuery("message.findMessageByNodeId");
         return (List<Message>) qr.setParameter("nodeid", nodeId).list();
+    }
+
+    public List<Message> findMessagesBy(final Long messageId, final Date fromDate, final Date toDate, final String nodeId)
+    {
+        Criteria crit = getSession().createCriteria( getEntityClass() );
+
+        crit.setFetchMode("receivers", FetchMode.DEFAULT);
+        crit.setFetchMode("node", FetchMode.DEFAULT);
+
+        if( messageId == null && fromDate == null && toDate == null && nodeId == null )
+        {
+            return new ArrayList<Message>();
+        }
+
+        if (messageId != null)
+        {
+            crit.add( Restrictions.idEq(messageId));
+            crit.addOrder( Order.asc("id") );
+
+        }
+        if (nodeId != null)
+        {
+            crit.add( Restrictions.eq("node.id",nodeId));
+            crit.addOrder( Order.asc("id") );
+
+        }
+        if (fromDate != null)
+        {
+            crit.add( Restrictions.ge("auditInfo.createdOn", fromDate));
+            crit.addOrder( Order.asc("auditInfo.createdOn") );
+        }
+        if (toDate != null)
+        {
+            crit.add( Restrictions.le("auditInfo.createdOn", toDate));
+            crit.addOrder( Order.asc("auditInfo.createdOn") );
+        }
+        List<Message> messages = crit.list(); 
+        return messages;
     }
 
 

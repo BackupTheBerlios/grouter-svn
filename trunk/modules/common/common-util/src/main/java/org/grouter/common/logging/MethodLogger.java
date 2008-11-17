@@ -26,7 +26,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * Can be declared in context-aop.xml as an aspect or with annotations which requires
+ * Can be declared in context-aop.xml as an aspect or
+ * with annotations which requires
  * <pre>
  *    <aop:aspectj-autoproxy/>
  * </pre>
@@ -47,9 +48,32 @@ public class MethodLogger
      * @return
      * @throws Throwable
      */
-    @Around("org.grouter.domain.dao.*.*(..)")
+    @Around( "org.grouter.service.*.*(..)")
     public Object logAroundMethod(ProceedingJoinPoint joinPoint) throws Throwable
     {
+        log.info(">> ");
+        Object retVal = log(joinPoint);
+        log.info("<<");
+        return retVal;
+    }
+
+    /**
+     * Starts a StopWatch and then calls underlying method which is weaved around and then tops the StopWatch
+     * and prints out call time and method signature and return value.
+     * @param joinPoint inn Spring AOP, a join point always represents a method execution.
+     * @return
+     * @throws Throwable
+     */
+    @Around( "org.grouter.presentation.controller.*.*(..)")
+    public Object logController(ProceedingJoinPoint joinPoint) throws Throwable
+    {
+        log.info(">> ");
+        Object retVal = log(joinPoint);
+        log.info("<<");
+        return retVal;
+    }
+
+    private Object log(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("Starting stopwatch");
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -73,6 +97,5 @@ public class MethodLogger
         return retVal;
     }
 
-    
 
 }

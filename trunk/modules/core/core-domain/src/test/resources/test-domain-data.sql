@@ -22,10 +22,21 @@ insert into sender ( id, name) values ( -1 ,'Sender name 1');
 insert into message (id, createdon, sender_fk, node_fk, content) values (-1, NOW(), -1, "-node1", 'A message 1');
 insert into message (id, createdon, sender_fk, node_fk, content) values (-2, NOW(), -1, "-node1", 'A message 2');
 insert into message (id, createdon, sender_fk, node_fk, content) values (-3, NOW(), -1, "-node1", 'A message 3');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-4, NOW(), -1, "-node1", 'A message 4');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-5, NOW(), -1, "-node1", 'A message 5');
-insert into message (id, createdon, sender_fk, node_fk, content) values (-6, NOW(), -1, "-node1", 'A message 6');
-         
+insert into message (id, createdon, sender_fk, node_fk, content) values (-4, '2007-10-02 22:22:22', -1, "-node1", 'A message 4');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-5, '2006-01-02 22:22:22', -1, "-node1", 'A message 5');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-6, '2007-01-20 22:22:22', -1, "-node1", 'A message 6');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-7, '2007-01-03 22:22:22', -1, "-node1", 'A message 6');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-8, '2007-12-02 22:22:22', -1, "-node1", 'A message 6');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-9, '2008-01-02 22:22:22', -1, "-node1", 'A message 6');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-10, '2007-03-02 22:22:22', -1, "-node1", 'A message 6');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-11, '2007-02-02 22:22:22', -1, "-node1", 'A message 6');
+
+insert into message (id, createdon, sender_fk, node_fk, content) values (-12, '2007-01-03 22:22:22', -1, "-node2", 'A message ');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-13, '2007-12-02 22:22:22', -1, "-node2", 'A message ');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-14, '2008-01-02 22:22:22', -1, "-node2", 'A message ');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-15, '2007-03-02 22:22:22', -1, "-node2", 'A message ');
+insert into message (id, createdon, sender_fk, node_fk, content) values (-16, '2007-02-02 22:22:22', -1, "-node2", 'A message ');
+
 insert into receiver (id, name ) values ( -1, 'A receiver 1');
 insert into receiver (id, name ) values ( -2, 'A receiver 2');
 insert into receiver_message (receiver_fk , message_fk) values ( -1,  -1 );

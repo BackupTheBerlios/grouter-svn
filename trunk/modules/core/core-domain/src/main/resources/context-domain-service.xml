@@ -80,8 +80,7 @@
 
 
     <!-- RouterService Target -->
-    <bean id="routerServiceTarget" name="grouterServiceTarget"
-          class="org.grouter.domain.service.spring.RouterServiceImpl">
+    <bean id="routerServiceTarget" class="org.grouter.domain.service.spring.RouterServiceImpl">
         <property name="messageDAO" ref="messageDAO"/>
         <property name="nodeDAO" ref="nodeDAO"/>
     </bean>
@@ -120,8 +119,26 @@
         </property>
     </bean>
 
+    <!--  MessageService Proxy -->
+    <bean id="messageService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!-- dwr:remote javascript="routerService"/ -->
+        <property name="proxyInterfaces" value="org.grouter.domain.service.MessageService"/>
+        <property name="interceptorNames">
+            <list>
+                <idref local="transactionInterceptor"/>
+                <idref local="messageServiceTarget"/>
+            </list>
+        </property>
+    </bean>
 
-    <!-- Grouter Service Target -->
+    <!-- MessageService Target -->
+    <bean id="messageServiceTarget" class="org.grouter.domain.service.spring.MessageServiceImpl">
+        <property name="messageDAO" ref="messageDAO"/>
+    </bean>
+
+
+
+    <!-- User Service Target -->
     <bean id="userServiceTarget" class="org.grouter.domain.service.spring.UserServiceImpl">
         <!-- property name="userDAO" ref="userDAO"/>
      <property name="userRoleDAO" ref="userRoleDAO"/ -->
@@ -141,6 +158,7 @@
                 org.grouter.domain.service.RouterService.*=PROPAGATION_REQUIRED
                 org.grouter.domain.service.UserService.*=PROPAGATION_REQUIRED
                 org.grouter.domain.service.JobService.*=PROPAGATION_REQUIRED
+                org.grouter.domain.service.MessageService.*=PROPAGATION_REQUIRED
                 org.grouter.domain.service.spring.RouterQueueListenerImpl.process*=PROPAGATION_REQUIRED
                 org.grouter.domain.search.HibernateSearchIndexContextListener.*=PROPAGATION_REQUIRED
             </value>

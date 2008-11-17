@@ -83,8 +83,14 @@ public class MessageListController extends AbstractController
             map.put("selectedRouterId", routerId );
         }
 
+        // Needs to be there for view to render
+        map.put( "command", new MessageSearchCommand() );
+
+
         return new ModelAndView(LIST_VIEW, map);
     }
+
+
 
 
 }

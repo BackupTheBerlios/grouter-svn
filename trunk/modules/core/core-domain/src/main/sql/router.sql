@@ -1,5 +1,6 @@
 create table router
 (
+
     id varchar(36) not null,
     -- id bigint(20) not null,
     -- idno varchar(36) not null,
@@ -21,3 +22,5 @@ create table router
     FOREIGN KEY (modifiedby) REFERENCES  user (id),
     foreign key (settings_fk) references settings (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ 

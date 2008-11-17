@@ -6,21 +6,13 @@
 
     <body>
 
-        <h1>User State</h1>
-
         <p>
-            When the state of a user is chang
-        </p>
-
-        <p>
-            The system therefore attempts to break a supplied full name into
-            its constituents by splitting around whitespace.
+           Depending on what state a user is in - when we use blockUser on the user service
+            we expect to get different user states depending on initial state of user.
         </p>
 
         <div class="example">
-
-            <h3>Examples</h3>
-
+            <h3>Table based example</h3>
             <table concordion:execute="#result = blockUser(#userId,#fromState,#toState)">
                 <tr>
                     <th concordion:set="#userId">User id</th>
@@ -41,27 +33,6 @@
                     <td>BLOCKED</td>
                 </tr>
             </table>
-
-            <!--h3>Examples</h3>
-
-            <table concordion:execute="#result = split(#fullName)">
-                <tr>
-                    <th concordion:set="#fullName">Full Name</th>
-                    <th concordion:assertEquals="#result.firstName">First Name</th>
-                    <th concordion:assertEquals="#result.lastName">Last Name</th>
-                </tr>
-                <tr>
-                    <td>John Smith</td>
-                    <td>John</td>
-                    <td>Smith</td>
-                </tr>
-                <tr>
-                    <td>David Peterson</td>
-                    <td>David</td>
-                    <td>Peterson</td>
-                </tr>
-            </table -->
-
         </div>
     </body>
 </html>

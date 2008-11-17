@@ -25,6 +25,7 @@ import org.grouter.domain.entities.Message;
 import org.hibernate.FetchMode;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -48,6 +49,16 @@ public class MessageDAOBean extends GenericEjb3DAO<Message, Long> implements Mes
     }
 
     public List<Message> findMessagesForNode(String nodeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Message> findMessagesBy(Long messageId, Date fromDate, Date toDate, String nodeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Message> findMessagesBy(Integer messageId, Date fromDate, Date toDate)
     {
         throw new NotImplementedException();
     }

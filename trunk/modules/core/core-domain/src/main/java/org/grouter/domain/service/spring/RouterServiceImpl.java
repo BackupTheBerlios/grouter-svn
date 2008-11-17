@@ -135,6 +135,7 @@ public class RouterServiceImpl implements RouterService
         return messageDAO.findMessagesForNode(nodeId);
     }
 
+
     public List<Message> searchMessages(String searchText)
     {
         return messageDAO.findFromIndex(searchText, "content", "id");

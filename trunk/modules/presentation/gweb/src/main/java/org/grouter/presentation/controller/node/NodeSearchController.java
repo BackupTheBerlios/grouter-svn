@@ -40,7 +40,7 @@ import java.util.Map;
 public class NodeSearchController extends AbstractController
 {
     private static Logger logger = Logger.getLogger(NodeSearchController.class);
-    private static final String LIST_VIEW = "node/searchnodes";
+    private static final String VIEW_TEMPLATE = "node/ajaxformNodeSearchResult";
 
     private RouterService routerService;
 
@@ -64,7 +64,7 @@ public class NodeSearchController extends AbstractController
             map.put("nodes", nodes);
         }
 
-        return new ModelAndView(LIST_VIEW, map);
+        return new ModelAndView(VIEW_TEMPLATE, map);
     }
 
 }

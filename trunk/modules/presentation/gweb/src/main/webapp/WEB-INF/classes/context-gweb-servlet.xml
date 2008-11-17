@@ -78,7 +78,9 @@
 
     <!-- Spring controllers -->
     <bean name="/message/list.do" class="org.grouter.presentation.controller.message.MessageListController"/>
-    <bean name="/message/search.do" class="org.grouter.presentation.controller.message.MessageSearchController"/>
+    <bean name="/message/search.do" class="org.grouter.presentation.controller.message.MessageSearchController" >
+        <property name="routerService" ref="routerService"/>
+    </bean>
     <bean name="/node/list.do" class="org.grouter.presentation.controller.node.NodeListController"/>
     <bean name="/node/edit.do" class="org.grouter.presentation.controller.node.NodeEditController"/>
     <bean name="/node/search.do" class="org.grouter.presentation.controller.node.NodeSearchController"/>

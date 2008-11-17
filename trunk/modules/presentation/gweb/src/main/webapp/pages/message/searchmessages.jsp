@@ -4,7 +4,7 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net"  %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
-<html>
+<!-- html>
 <head>
     <title>
         <spring:message code="message.title.search"  />
@@ -31,4 +31,4 @@
         </form>
 </div>
 </body>
-</html>
+</html -->

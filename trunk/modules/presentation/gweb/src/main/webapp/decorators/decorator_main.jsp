@@ -39,7 +39,7 @@
     <script src="/gweb/javascripts/jquery/jquery.validate.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/cmxforms.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.tooltip.js" type="text/javascript"></script>
-    <script src="/gweb/javascripts/jquery/jquery.bigrame.js" type="text/javascript"></script>
+    <script src="/gweb/javascripts/jquery/jquery.bgiframe.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.dimensions.js" type="text/javascript"></script>
     <script src="/gweb/javascripts/jquery/jquery.form.js" type="text/javascript"></script>
 

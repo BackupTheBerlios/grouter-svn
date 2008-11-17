@@ -1,15 +1,12 @@
 package org.grouter.domain.service.spring;
 
-import org.concordion.internal.ConcordionBuilder;
 import org.concordion.api.ResultSummary;
-import org.grouter.domain.dao.spring.AbstractDAOTests;
+import org.concordion.internal.ConcordionBuilder;
 
 /**
- * Created by IntelliJ IDEA.
- * User: georgespolyzois
- * Date: Jun 7, 2008
- * Time: 8:54:38 PM
- * To change this template use File | Settings | File Templates.
+ *
+ *
+ * @author Georges Polyzois
  */
 public abstract class AbstractConcordionTestCase extends AbstractServiceTests
 {

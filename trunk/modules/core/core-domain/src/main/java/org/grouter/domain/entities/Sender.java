@@ -19,7 +19,6 @@
 
 package org.grouter.domain.entities;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
@@ -28,7 +27,7 @@ import java.util.Set;
 
 
 /**
- * Domain class.
+ * Represents a Sender of a Message.
  *
  * @Author Georges Polyzois
  */

@@ -27,6 +27,7 @@
         </thead>
         <tbody>
 
+
             #foreach($object in $messages)
             <tr  >
                 <td>$date.format('yyyy-MM-dd',$object.date)

@@ -20,7 +20,6 @@ package org.grouter.presentation.controller.job;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.grouter.domain.entities.Message;
 import org.grouter.domain.service.RouterService;
 import org.grouter.presentation.controller.message.MessageListController;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -30,7 +29,6 @@ import org.springframework.web.servlet.mvc.AbstractController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -64,8 +62,8 @@ public class JobSearchController extends AbstractController
 
         if( StringUtils.isNotEmpty( searchText ) )
         {
-            List<Message> messages = routerService.searchMessages( searchText );
-            map.put("messages", messages);
+            // TODO List<Message> messages = routerService.searchMessages( searchText );
+            //map.put("messages", messages);
         }
 
         return new ModelAndView(LIST_VIEW, map);
