@@ -19,7 +19,7 @@
 
 package org.grouter.domain.entities;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.*;
 import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
@@ -34,6 +34,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "receiver")
+@Indexed(index = "indexes/receiver")
 public class Receiver implements Serializable
 {
     @Id
@@ -41,6 +42,7 @@ public class Receiver implements Serializable
     //@GeneratedValue(generator = "system-uuid") @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
+    @DocumentId
     private Long id;
 
     @ManyToOne( fetch = FetchType.EAGER)
@@ -48,6 +50,7 @@ public class Receiver implements Serializable
     private Address address;
 
     @Column(name = "name")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     private String name;
 
     /**
@@ -60,6 +63,7 @@ public class Receiver implements Serializable
     @ManyToMany(mappedBy = "receivers",fetch = FetchType.LAZY)
     @JoinTable( name = "receiver_message", joinColumns = {@JoinColumn(name = "receiver_fk")},
             inverseJoinColumns = {@JoinColumn(name = "message_fk")} )
+    @ContainedIn
     private Set<Message> messages = new HashSet();
 
     public Receiver()

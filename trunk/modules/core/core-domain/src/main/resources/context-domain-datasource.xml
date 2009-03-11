@@ -7,43 +7,58 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd"
        default-autowire="byName">
 
-    
 
     <!-- We want system properties to take precendence. -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
         <property name="locations">
-        <list>
-            <!-- When assembled and released we want to use the conf of the grouter home -->
-            <value>file:/${GROUTER_HOME}/conf/grouter-environment.properties</value>
-            <value>file:///conf/grouter-environment.properties</value>
-            <!-- This is for when we are developing and do not have a grouter home env -->
-            <value>classpath:/test-local.properties</value>
-            <value>file:/etc/grouter-environment.properties</value>
-        </list>
+            <list>
+                <!-- When assembled and released we want to use the conf of the grouter home -->
+                <!--
+              <value>file:///conf/grouter-environment.properties</value>  -->
+                <!-- This is for when we are developing and do not have a grouter home env -->
+                <value>classpath:/test-local.properties</value>
+                <value>file:/${GROUTER_HOME}/conf/grouter-environment.properties</value>
+                <!--   <value>file:/etc/grouter-environment.properties</value>   -->
+            </list>
         </property>
-        <property name="ignoreResourceNotFound" value="true" />
-        <property name="ignoreUnresolvablePlaceholders" value="false" />
-        <property name="searchSystemEnvironment" value="true" />
-
-        <!-- property name="location" value="file:/${GROUTER_HOME}/conf/grouter-environment.properties"/ -->
-        <!-- util:constant static-field="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDEr"/ -->
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
+        <property name="searchSystemEnvironment" value="true"/>
     </bean>
 
+    <!-- bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+    <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="searchContextAttributes" value="true"/>
+        <property name="contextOverride" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+        <list>
+            <value>classpath:application.properties</value>
+            <value>file:/${GROUTER_HOME}/conf/grouter-environment.properties</value>
+            <value>classpath:/test-local.properties</value>
+            <value>${config}</value> - e.g. -Dconfig=file://var/app/server1.properties
+        </list>
+    </property>
+</bean -->
 
 
     <!-- use org.apache.commons.dbcp.BasicDataSource -->
-  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="propertyConfigurer" lazy-init="true">
-    <property name="driverClassName" value="${grouter.db.driver}"/>
-    <property name="url" value="${grouter.db.url}"/>
-    <property name="username" value="${grouter.db.username}"/>
-    <property name="password" value="${grouter.db.password}"/>
-    <!--property name="defaultTransactionIsolation" value="2" />
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          depends-on="propertyConfigurer" lazy-init="true">
+        <property name="driverClassName" value="${grouter.db.driver}"/>
+        <property name="url" value="${grouter.db.url}"/>
+        <property name="username" value="${grouter.db.username}"/>
+        <property name="password" value="${grouter.db.password}"/>
+        <!--property name="defaultTransactionIsolation" value="2" />
     <property name="defaultAutoCommit" value="true" / -->
-    <!--property name="initialSize" value="100" />
+        <!--property name="initialSize" value="100" />
     <property name="maxActive" value="100" />
     <property name="maxWait" value="15000" />
     <property name="poolPreparedStatements" value="true" / -->
-  </bean>
+    </bean>
 
 </beans>

@@ -50,6 +50,7 @@
         </property>
         <property name="hibernateProperties">
             <props>
+                <prop key="hibernate.bytecode.provider">javassist</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>

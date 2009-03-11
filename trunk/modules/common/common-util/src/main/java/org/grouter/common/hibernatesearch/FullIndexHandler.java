@@ -26,22 +26,21 @@ import java.io.Serializable;
 
 
 /**
- *
  * To avoid OutOfMemoryExceptions we need to provide hibernate.search.worker.batch_size
  *
- * @depracated
  * @author Georges Polyzois
+ * @depracated
  */
 public class FullIndexHandler
 {
 
-    public void purgeEntity( Session session, Class entity, Serializable id)
+    public void purgeEntity(Session session, Class entity, Serializable id)
     {
         FullTextSession fullTextSession = Search.createFullTextSession(session);
         Transaction tx = fullTextSession.beginTransaction();
         //for (Customer customer : customers)
         //{
-            fullTextSession.purge( entity, id );
+        fullTextSession.purge(entity, id);
         //}
         tx.commit(); //index are written at commit time
     }
@@ -53,39 +52,44 @@ public class FullIndexHandler
      * @param session
      * @param entity
      */
-    public void purgeAll( Session session, Class entity )
+    public void purgeAll(Session session, Class entity)
     {
-        FullTextSession fullTextSession = Search.createFullTextSession(session);
-        Transaction tx = fullTextSession.beginTransaction();
-        fullTextSession.purgeAll( entity );
+        FullTextSession fullTextSession = Search.getFullTextSession(session);
+        //Transaction tx = session.beginTransaction();
+        fullTextSession.purgeAll(entity);
         //optionally optimize the index
-        //fullTextSession.getSearchFactory().optimize( Customer.class );
-        tx.commit(); //index are written at commit time 
+        fullTextSession.flushToIndexes();
+        fullTextSession.getSearchFactory().optimize( entity );
+        //tx.commit(); //index are written at commit time
     }
 
     /**
      * Creates index
-     * @param batchSize
+     *
+     * @param batchSize batch index parameter
+     * @param session the Hibernate session
+     * @param theIndexClass classes to index
      */
-    public void doFullIndex( int batchSize, Class theIndexClass , Session session)// Class... clazzes)
+    public void doFullIndex(int batchSize, Session session, Class... theIndexClass)
     {
         FullTextSession fullTextSession = Search.createFullTextSession(session);
         fullTextSession.setFlushMode(FlushMode.MANUAL);
         fullTextSession.setCacheMode(CacheMode.IGNORE);
-        //Transaction transaction = fullTextSession.beginTransaction();
-//Scrollable results will avoid loading too many objects in memory
-        ScrollableResults results = fullTextSession.createCriteria(theIndexClass).scroll(ScrollMode.FORWARD_ONLY);
-        int index = 0;
-        while (results.next())
+        //Scrollable results will avoid loading too many objects in memory
+        for (Class theClass : theIndexClass)
         {
-            index++;
-            fullTextSession.index(results.get(0)); //index each element
-            if (index % batchSize == 0)
+            ScrollableResults results = fullTextSession.createCriteria(theClass).scroll(ScrollMode.FORWARD_ONLY);
+            int index = 0;
+            while (results.next())
             {
-                session.clear(); //clear every batchSize since the queue is processed
+                index++;
+                fullTextSession.index(results.get(0)); //index each element
+                if (index % batchSize == 0)
+                {
+                    session.clear(); //clear every batchSize since the queue is processed
+                }
             }
         }
-        //transaction.commit();
     }
 
 }

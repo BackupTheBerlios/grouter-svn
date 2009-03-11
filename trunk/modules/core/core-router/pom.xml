@@ -27,21 +27,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>quartz</groupId>
             <artifactId>quartz</artifactId>
         </dependency>
@@ -59,26 +44,6 @@
             <groupId>org.apache.ftpserver</groupId>
             <artifactId>ftpserver-core</artifactId>
         </dependency>
-        <!--dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency -->
-
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
-
-        <!--dependency>
-            <groupId>xmlbeans</groupId>
-            <artifactId>xmlbeans-jsr173-api</artifactId>
-            <version>2.0-dev</version>
-        </dependency-->
     </dependencies>
 
     <build>

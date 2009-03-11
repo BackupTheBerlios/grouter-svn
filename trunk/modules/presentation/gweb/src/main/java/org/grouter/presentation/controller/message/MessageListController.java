@@ -45,7 +45,7 @@ public class MessageListController extends AbstractController
     private static final String LIST_VIEW = "message/listmessages";
 
     private RouterService routerService;
-
+                                           
 
     public void setRouterService(RouterService routerService)
     {

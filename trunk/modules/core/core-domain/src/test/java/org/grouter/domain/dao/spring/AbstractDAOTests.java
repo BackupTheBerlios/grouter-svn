@@ -1,16 +1,11 @@
 package org.grouter.domain.dao.spring;
 
-import org.apache.commons.io.FileUtils;
 import org.grouter.common.hibernatesearch.FullIndexHandler;
 import org.grouter.domain.dao.*;
 import org.grouter.domain.entities.Message;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 /**
  * Test the DAO using an external DB which is populated with data before the actual test is run
@@ -91,17 +86,17 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
      *
      * @return relative path to test data location
      */
-    protected String getTestDataLocation()
-    {
-        return "/test-domain-data.sql";
-    }
+  //  protected String getTestDataLocation()
+  //  {
+  //      return "/test-domain-data.sql";
+  //  }
 
     protected void flushSession()
     {
         sessionFactory.getCurrentSession().flush();
     }
 
-
+/*
     @Override
     protected void onSetUpInTransaction() throws Exception
     {
@@ -117,7 +112,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
                 jdbcTemplate.execute(line);
             }
         }
-    }
+    }     */
 
 
     /**
@@ -194,7 +189,10 @@ public abstract class AbstractDAOTests extends AbstractTransactionalDataSourceSp
     protected void setUpIndex()
     {
         FullIndexHandler fullIndexHandler = new FullIndexHandler();
-        fullIndexHandler.doFullIndex(1000, Message.class, getSession());
+       // Transaction trx = getSession().beginTransaction();
+        fullIndexHandler.purgeAll(getSession(), Message.class);
+ //       fullIndexHandler.doFullIndex(1000, getSession(), Message.class);
+        //trx.commit();
     }
 
 

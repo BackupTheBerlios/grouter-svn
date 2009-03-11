@@ -77,13 +77,13 @@ public class Message extends BaseEntity implements Comparable
     //@GeneratedValue(generator = "system-uuid"), @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @DocumentId
-    // Hibernate search
     private Long id;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "receiver_message",
                joinColumns = {@JoinColumn(name = "message_fk")},
                inverseJoinColumns = {@JoinColumn(name = "receiver_fk")})
+    @IndexedEmbedded
     private Set<Receiver> receivers = new HashSet<Receiver>();
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
@@ -91,10 +91,8 @@ public class Message extends BaseEntity implements Comparable
     private Sender sender;
 
     @NotNull
-    // Hibernate Validator
     @Column(name = "content", nullable = false)
     @Field(index = Index.TOKENIZED, store = Store.YES)
-    // Hibernate SystemServiceImpl  - fields to be indexed
     private String content;
 
     @NotNull

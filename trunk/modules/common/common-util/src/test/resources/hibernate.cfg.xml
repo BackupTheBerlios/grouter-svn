@@ -3,6 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>      
     <session-factory>
+        <property name="hibernate.bytecode.provider">javassist</property>
         <property name="hibernate.connection.url">jdbc:hsqldb:mem:domaintest</property>
         <property name="hibernate.cglib.use_reflection_optimizer">true</property>
         <property name="hibernate.connection.username">sa</property>
